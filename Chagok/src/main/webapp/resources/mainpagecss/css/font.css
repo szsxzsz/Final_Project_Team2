@@ -1,0 +1,85 @@
+@charset "UTF-8";
+
+@font-face {
+	font-family: 'Pretendard';
+	font-style:  normal;
+	font-weight: 100;
+	src:url(../font/Pretendard-Thin.eot);
+	src:url(../font/Pretendard-Thin.eot?#iefix) format('embedded-opentype'),
+		url(../font/Pretendard-Thin.woff2) format("woff2"),
+		url(../font/Pretendard-Thin.woff) format("woff"),
+		url(../font/Pretendard-Thin.ttf) format('truetype');
+}
+
+@font-face {
+	font-family: 'Pretendard';
+	font-style:  normal;
+	font-weight: 300;
+	src:url(../font/Pretendard-Light.eot);
+	src:url(../font/Pretendard-Light.eot?#iefix) format('embedded-opentype'),
+		url(../font/Pretendard-Light.woff2) format("woff2"),
+		url(../font/Pretendard-Light.woff) format("woff"),
+		url(../font/Pretendard-Light.ttf) format('truetype');
+}
+
+/*한글폰트 기준*/
+@font-face {
+	font-family: 'Pretendard';
+	font-style:  normal;
+	font-weight: 500;
+	src:url(../font/Pretendard-Medium.eot);
+	src:url(../font/Pretendard-Medium.eot?#iefix) format('embedded-opentype'),
+		url(../font/Pretendard-Medium.woff2) format("woff2"),
+		url(../font/Pretendard-Medium.woff) format("woff"),
+		url(../font/Pretendard-Medium.ttf) format('truetype');
+}
+
+@font-face {
+	font-family: 'Pretendard';
+	font-style:  normal;
+	font-weight: 700;
+	src:url(../font/Pretendard-Bold.eot);
+	src:url(../font/Pretendard-Bold.eot?#iefix) format('embedded-opentype'),
+		url(../font/Pretendard-Bold.woff2) format("woff2"),
+			url(../font/Pretendard-Bold.woff) format("woff"),
+		url(../font/Pretendard-Bold.ttf) format('truetype');
+}
+
+@font-face {
+	font-family: 'Pretendard';
+	font-style:  normal;
+	font-weight: 900;
+	src:url(../font/Pretendard-ExtraBold.eot);
+	src:url(../font/Pretendard-ExtraBold.eot?#iefix) format('embedded-opentype'),
+		url(../font/Pretendard-ExtraBold.woff2) format("woff2"),
+			url(../font/Pretendard-ExtraBold.woff) format("woff"),
+		url(../font/Pretendard-ExtraBold.ttf) format('truetype');
+}
+
+/*홈페이지 페이지 폰트*/
+/*GmarketSans*/
+@font-face {
+	font-family: 'GmarketSans';
+	font-style:  normal;
+	font-weight: 300;
+	src:url(../font/GmarketSansLight.woff2) format("woff2"),
+		url(../font/GmarketSansLight.woff) format("woff"),
+		url(../font/GmarketSansLight.ttf) format('truetype');
+}
+/*기준*/
+@font-face {
+	font-family: 'GmarketSans';
+	font-style:  normal;
+	font-weight: 500;
+	src:url(../font/GmarketSansMedium.woff2) format("woff2"),
+		url(../font/GmarketSansMedium.woff) format("woff"),
+		url(../font/GmarketSansMedium.ttf) format('truetype');
+}
+@font-face {
+	font-family: 'GmarketSans';
+	font-style:  normal;
+	font-weight: 700;
+	src:url(../font/GmarketSansBold.woff2) format("woff2"),
+		url(../font/GmarketSansBold.woff) format("woff"),
+		url(../font/GmarketSansBold.ttf) format('truetype');
+}

@@ -12,14 +12,26 @@ public class ChagokController {
 	
 	Logger mylog = LoggerFactory.getLogger(ChagokController.class);
 	
-	@GetMapping(value = "/assetmain")
-	public String test() throws Exception{
+	// http://localhost:8080/chagok/main
+	@GetMapping(value = "/main")
+	public String mainGET() {
 		
-		mylog.debug("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+		return "/chagok/main";
+	}
+	
+	// http://localhost:8080/chagok/assetmain
+	@GetMapping(value = "/assetmain")
+	public String assetmainGET() throws Exception{
 		
 		return "/chagok/assetmain";
 	}
 	
-	// 테스트 주석
+	// http://localhost:8080/chagok/commumain
+	@GetMapping(value = "/commumain")
+	public String commumainGET() throws Exception{
+		
+		return "/chagok/commumain";
+	}
+	
 	
 }

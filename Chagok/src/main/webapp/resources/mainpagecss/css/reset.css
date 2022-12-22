@@ -1,0 +1,102 @@
+@charset "UTF-8";
+
+/* reset */
+@charset "utf-8";
+
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, p, table, th,
+	td, form, fieldset, legend, textarea, input, select, textarea, button,
+	article, aside, dialog, footer, header, section, footer, nav, figure,
+	main {
+	margin: 0;
+	padding: 0
+}
+
+article, aside, dialog, footer, header, section, footer, nav, figure,
+	main {
+	display: block
+}
+
+html, body {
+	height: 100%
+}
+
+body {
+	-webkit-text-size-adjust: none;
+	-webkit-user-select: none;
+	user-select: none;
+	word-break: break-word;
+	overflow-wrap: break-word;
+	word-wrap: break-word
+}
+
+body, input, select, textarea, button {
+	font-family: -apple-system, system, "Helvetica Neue", "Helvetica",
+		Roboto, "HiraKakuProN-W3", "Apple SD Gothic Neo", Meiryo, "Droid Sans",
+		sans-serif;
+	letter-spacing: -0.5px
+}
+
+fieldset, li, img {
+	border: 0;
+	vertical-align: top
+}
+
+ul, ol, li {
+	list-style: none
+}
+
+button {
+	overflow: visible;
+	border: 0;
+	background-color: transparent;
+	cursor: pointer;
+	font-size: inherit
+}
+
+button::focus {
+	outline: 0
+}
+
+button::-moz-focus-inner {
+	padding: 0;
+	border: 0
+}
+
+address, caption, em, i {
+	font-style: normal
+}
+
+button, a {
+	color: inherit;
+	-webkit-tap-highlight-color: rgba(0, 0, 0, 0.05);
+	-ms-tap-highlight-color: rgba(0, 0, 0, 0.05)
+}
+
+a {
+	text-decoration: none;
+	color: inherit
+}
+/*a:focus,a:active{color:inherit}*/
+/* a:active,a:focus{background-color:transparent} */
+table {
+	border-collapse: collapse;
+	border-spacing: 0
+}
+
+iframe {
+	display: block;
+	width: 100%;
+	border: none
+}
+
+.blind, legend {
+	overflow: hidden;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 1px;
+	height: 1px;
+	font-size: 1px;
+	text-indent: -9999px;
+	white-space: nowrap
+}
