@@ -20,4 +20,6 @@ public class ChagokController {
 		return "home";
 	}
 	
+	// 테스트 주석
+	
 }
