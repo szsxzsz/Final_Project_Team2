@@ -12,12 +12,12 @@ public class ChagokController {
 	
 	Logger mylog = LoggerFactory.getLogger(ChagokController.class);
 	
-	@GetMapping(value = "/test")
+	@GetMapping(value = "/assetmain")
 	public String test() throws Exception{
 		
 		mylog.debug("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 		
-		return "home";
+		return "/chagok/assetmain";
 	}
 	
 }
