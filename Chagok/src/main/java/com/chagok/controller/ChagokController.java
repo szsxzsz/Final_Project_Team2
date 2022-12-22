@@ -20,4 +20,6 @@ public class ChagokController {
 		return "/chagok/assetmain";
 	}
 	
+	// 테스트 주석
+	
 }
