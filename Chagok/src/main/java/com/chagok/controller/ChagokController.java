@@ -12,6 +12,7 @@ public class ChagokController {
 	
 	Logger mylog = LoggerFactory.getLogger(ChagokController.class);
 	
+	// 차곡 메인사이트 
 	// http://localhost:8080/chagok/main
 	@GetMapping(value = "/main")
 	public String mainGET() {
@@ -19,6 +20,8 @@ public class ChagokController {
 		return "/chagok/main";
 	}
 	
+	
+	// 자산관리 파트 메인
 	// http://localhost:8080/chagok/assetmain
 	@GetMapping(value = "/assetmain")
 	public String assetmainGET() throws Exception{
@@ -26,6 +29,18 @@ public class ChagokController {
 		return "/chagok/assetmain";
 	}
 	
+	///////////////////////////// 자산관리 관련 - 영민 구현중 /////////////////////////////
+	
+	
+	
+	
+	
+	
+	
+	///////////////////////////// 자산관리 관련 - 영민 구현중 /////////////////////////////
+	
+	
+	// 커뮤니티 파트 메인
 	// http://localhost:8080/chagok/commumain
 	@GetMapping(value = "/commumain")
 	public String commumainGET() throws Exception{
