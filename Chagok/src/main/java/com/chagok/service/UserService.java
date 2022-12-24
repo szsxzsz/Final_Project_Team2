@@ -1,0 +1,20 @@
+package com.chagok.service;
+
+import com.chagok.domain.UserVO;
+
+public interface UserService {
+
+	// 회원가입
+	public void userJoin(UserVO vo);
+	
+	//아이디 중복 체크
+	public int checkId(String id);
+	
+	// 로그인 체크
+	public boolean userLogin(UserVO vo);
+	
+	// 특정 회원정보 조회
+	public UserVO getUser(String id);
+	
+	
+}
