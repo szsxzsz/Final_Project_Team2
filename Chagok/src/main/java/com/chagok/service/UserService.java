@@ -7,8 +7,11 @@ public interface UserService {
 	// 회원가입
 	public void userJoin(UserVO vo);
 	
-	//아이디 중복 체크
+	// 아이디 중복 체크
 	public int checkId(String id);
+	
+	// 닉네임 중복 체크
+	public int checkNick(String nick);
 	
 	// 로그인 체크
 	public boolean userLogin(UserVO vo);

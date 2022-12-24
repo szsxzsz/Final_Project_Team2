@@ -40,17 +40,20 @@ public class UserDAOImpl implements UserDAO {
 		
 	}
 	
-
 	@Override
 	public int checkId(String id) {
-		
 		int result = sqlSession.selectOne(NAMESPACE+".checkId",id);
+		return result;
+	}
+	
+	@Override
+	public int checkNick(String nick) {
+		int result = sqlSession.selectOne(NAMESPACE+".checkNick",nick);
 		return result;
 	}
 
 	@Override
 	public UserVO getUser(String id) {
-		// "com.itwillbs.mapper.MemberMapper.[ID]"
 		UserVO vo = sqlSession.selectOne(NAMESPACE+".getUser",id);
 				
 		System.out.println(" DAO : " +vo);

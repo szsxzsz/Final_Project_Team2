@@ -1,19 +1,15 @@
 package com.chagok.controller;
 
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.chagok.domain.UserVO;
@@ -72,7 +68,6 @@ public class ChagokController {
 		// 실패 - login페이지
 		String resultURI="";
 		if(loginStatus) {
-			//return "redirect:/member/main";
 			resultURI = "redirect:/chagok/main";
 			session.setAttribute("id", vo.getId());
 		}else {
@@ -80,54 +75,65 @@ public class ChagokController {
 		}
 		
 		return resultURI;
-	}
+	 }
 
-	// http://localhost:8080/chagok/register
-	@GetMapping(value = "/register")
-	public String registerGET() throws Exception {
-		mylog.info("/chagok/registerForm -> 정보입력창(view) 이동");
-		return "/chagok/register";
-	}
-
-	@PostMapping(value = "/register")
-	public String registerPOST(UserVO vo) throws Exception {
-		mylog.info("/chagok/registerPro -> DB 정보저장");
-
-		// 전달정보저장
-		mylog.info(vo.toString());
-		service.userJoin(vo);
-
-		return "redirect:/chagok/login";
-	}
-
-	/*
-	 * //produces는 ajax가 데이터 넘겨받을때 깨짐 방지
-	 * 
-	 * @RequestMapping(value = "/idCheck", method = RequestMethod.POST, produces =
-	 * "application/text; charset=utf8")
-	 * 
-	 * @ResponseBody public String idCheck(HttpServletRequest request) {
-	 * 
-	 * String id = request.getParameter("id"); int result=service.idCheck(id);
-	 * return Integer.toString(result); }
-	 */
-
-	
-	@PostMapping("/checkId")
-	public String checkId(@RequestBody String id) {	// 받을 데이터타입이 텍스트라 스트링으로함 반드시 리퀘스트바디를 붙힐것! ajax 통신시
-		System.out.println("/user/checkId : post");
-		System.out.println("param : " + id );
+	 // http://localhost:8080/chagok/register
+	 @GetMapping(value = "/register")
+	 public String registerGET() throws Exception {
+		 mylog.info("/chagok/registerForm -> 정보입력창(view) 이동");
+		 return "/chagok/register";
+	 }
 		
-		int checkNum = service.checkId(id);
+	 @PostMapping(value = "/register")
+	 public String registerPOST(UserVO vo) throws Exception {
+		 mylog.info("/chagok/registerPro -> DB 정보저장");
 		
-		if(checkNum == 1) {
-			System.out.println("아이디가 중복되었다.");
-			return "duplicated";
+		 // 전달정보저장
+		 mylog.info(vo.toString());
+		 service.userJoin(vo);
+		
+		 return "redirect:/chagok/login";
+	 }
+		
+	 @PostMapping("/checkId")
+	 @ResponseBody
+	 public String checkId(@RequestBody String id) {	// 받을 데이터타입이 텍스트라 스트링으로함 반드시 리퀘스트바디를 붙힐것! ajax 통신시
+		 System.out.println("/user/checkId : post");
+		 System.out.println("param : " + id );
+		
+		 int checkNum = service.checkId(id);
+		 System.out.println("checkNum : " + checkNum );
+		 if(checkNum != 0) {
+		 	 System.out.println("아이디가 중복되었다.");
+			 return "duplicated";
 			
-		}else {
-			System.out.println("아이디 사용 가능");
-			return "available";
-		}
+		 }else {
+			 System.out.println("아이디 사용 가능");
+			 return "available";
+		 }
+	 }
+	
+	 @PostMapping("/checkNick")
+	 @ResponseBody
+	 public String checkNick(@RequestBody String nick) {	// 받을 데이터타입이 텍스트라 스트링으로함 반드시 리퀘스트바디를 붙힐것! ajax 통신시
+		 System.out.println("/user/checkNick : post");
+		 System.out.println("param : " + nick );
 		
-	}
+		 int checkNum = service.checkNick(nick);
+		 System.out.println("checkNum : " + checkNum );
+		
+		 if(checkNum != 0) {
+		 	 System.out.println("닉네임 중복");
+			 return "duplicated";
+			
+		 }else {
+			 System.out.println("닉네임 사용 가능");
+			 return "available";
+		 }
+	 }
+	
+	
+	
+	
+	
 }

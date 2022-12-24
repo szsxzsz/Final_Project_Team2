@@ -23,12 +23,16 @@ public class UserServiceImpl implements UserService {
 		dao.createUser(vo);
 		mylog.info(" DAO 호출 -> 서비스 -> 컨트롤러 ");
 	}
-
 	
 	@Override
 	public int checkId(String id) {
-		
 		int result = dao.checkId(id);
+		return result;
+	}
+	
+	@Override
+	public int checkNick(String nick) {
+		int result = dao.checkNick(nick);
 		return result;
 	}
 

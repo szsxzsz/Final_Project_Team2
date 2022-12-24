@@ -10,8 +10,11 @@ public interface UserDAO {
 	// 회원가입
 	public void createUser(UserVO vo);
 	
-	//아이디 체크
+	// 아이디 체크
 	public int checkId(String id);
+	
+	// 닉네임 체크
+	public int checkNick(String nick);
 		
 	// 특정 회원정보 조회
 	public UserVO getUser(String id);
