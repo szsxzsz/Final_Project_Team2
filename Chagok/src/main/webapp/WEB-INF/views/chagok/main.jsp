@@ -19,7 +19,7 @@
 <meta property="og:url" content="https://www.novusmay.com/samq/">
 <meta property="og:image" content="https://i.imgur.com/syK7Oa0.jpg">
 <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.png">
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/resources/mainpagecss/css/vendor/slick.css">
+<%-- <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/resources/mainpagecss/css/vendor/slick.css"> --%>
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath }/resources/mainpagecss/css/vendor/slick-theme.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/resources/mainpagecss/css/reset.css">
