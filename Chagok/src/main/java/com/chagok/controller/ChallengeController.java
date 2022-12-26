@@ -26,6 +26,13 @@ public class ChallengeController {
 		
 		return "/challenge/plusFeed";
 	}
+	
+	// http://localhost:8080/challenge/plusdetail
+	@GetMapping(value = "/plusdetail")
+	public String plusdetailGET() throws Exception{
+		
+		return "/challenge/plusdetail";
+	}
 }
 
 
