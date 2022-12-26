@@ -16,7 +16,6 @@ import com.chagok.domain.UserVO;
 import com.chagok.service.UserService;
 
 @Controller
-@RequestMapping("/chagok/*")
 public class ChagokController {
 
 	@Inject
@@ -24,21 +23,19 @@ public class ChagokController {
 
 	Logger mylog = LoggerFactory.getLogger(ChagokController.class);
 
-	// http://localhost:8080/chagok/main
 	@GetMapping(value = "/main")
 	public String mainGET() {
 
 		return "/chagok/main";
 	}
 
-	// http://localhost:8080/chagok/assetmain
 	@GetMapping(value = "/assetmain")
 	public String assetmainGET() throws Exception {
 
 		return "/chagok/assetmain";
 	}
 
-	// http://localhost:8080/chagok/commumain
+
 	@GetMapping(value = "/commumain")
 	public String commumainGET() throws Exception {
 
