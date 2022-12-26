@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class ChagokController {
 	
-	Logger mylog = LoggerFactory.getLogger(ChagokController.class);
+	private static final Logger mylog = LoggerFactory.getLogger(HomeController.class);
 	
 	// 차곡 메인사이트 
 	// http://localhost:8080/main
