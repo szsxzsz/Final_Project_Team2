@@ -7,41 +7,28 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/chagok/*")
 public class ChagokController {
 	
 	Logger mylog = LoggerFactory.getLogger(ChagokController.class);
 	
 	// 차곡 메인사이트 
-	// http://localhost:8080/chagok/main
+	// http://localhost:8080/main
 	@GetMapping(value = "/main")
 	public String mainGET() {
 		
 		return "/chagok/main";
 	}
 	
-	
 	// 자산관리 파트 메인
-	// http://localhost:8080/chagok/assetmain
+	// http://localhost:8080/assetmain
 	@GetMapping(value = "/assetmain")
 	public String assetmainGET() throws Exception{
 		
 		return "/chagok/assetmain";
 	}
-	
-	///////////////////////////// 자산관리 관련 - 영민 구현중 /////////////////////////////
-	
-	
-	
-	
-	
-	
-	
-	///////////////////////////// 자산관리 관련 - 영민 구현중 /////////////////////////////
-	
-	
+
 	// 커뮤니티 파트 메인
-	// http://localhost:8080/chagok/commumain
+	// http://localhost:8080/commumain
 	@GetMapping(value = "/commumain")
 	public String commumainGET() throws Exception{
 		

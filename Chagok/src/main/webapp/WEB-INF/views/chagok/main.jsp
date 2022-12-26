@@ -119,8 +119,8 @@
 					<br><br><br>
 						<h1>임시 링크 입니다 기능 만들어지기 전까진 요기로 이동하세요<br><br></h1>
 						
-						<a href="/chagok/commumain">커뮤니티 메인 가기</a><br><br>
-						<a href="/chagok/assetmain">자산관리 메인 가기</a><br>
+						<a href="/commumain">커뮤니티 메인 가기</a><br><br>
+						<a href="/assetmain">자산관리 메인 가기</a><br>
 					
 					<br><br><br>
 					

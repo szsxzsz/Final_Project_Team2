@@ -34,12 +34,6 @@
 </style>
 </head>
 
-
-
-
-
-
-
 <body>
 	<div class="inner">
 		<header class="header">
