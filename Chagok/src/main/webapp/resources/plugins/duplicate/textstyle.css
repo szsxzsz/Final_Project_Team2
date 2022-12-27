@@ -1,0 +1,21 @@
+@charset "UTF-8";
+
+#textstyle {
+    color: #f53648ad;
+    font-size: 12px;
+    line-height: 2px;
+    display: block;
+    margin-top: 12px;
+    margin-left: 5px;
+    margin-bottom: 25px;
+}
+
+#textstyle2 {
+    color: #31C6D4;
+    font-size: 12px;
+    line-height: 2px;
+    display: block;
+    margin-top: 12px;
+    margin-left: 5px;
+    margin-bottom: 25px;
+}

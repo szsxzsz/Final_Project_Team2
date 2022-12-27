@@ -168,6 +168,8 @@ ehthumbs.db
 ehthumbs_vista.db
 
 # Dump file
+
+target/
 *.stackdump
 
 # Folder config file
