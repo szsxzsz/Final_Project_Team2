@@ -12,7 +12,7 @@ public class ChallengeVO {
 	private String c_title;
 	private String c_file;
 	private int c_pcnt;
-	private Timestamp c_period;
+	private int c_period;
 	private Timestamp c_start;
 	private int c_deposit;
 	private String c_content;

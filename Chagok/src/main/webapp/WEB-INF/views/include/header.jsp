@@ -25,6 +25,8 @@
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/resources/mainpagecss/css/reset.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/resources/mainpagecss/css/font.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/resources/mainpagecss/css/style.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/resources/plugins/modal/minusModal.css">
+
 <style id="__web-inspector-hide-shortcut-style__">
 .__web-inspector-hide-shortcut__, .__web-inspector-hide-shortcut__ *,
 	.__web-inspector-hidebefore-shortcut__::before,
@@ -35,6 +37,7 @@
 </head>
 
 <body>
+
 	<div class="inner">
 		<header class="header">
 			<div class="wrap">
