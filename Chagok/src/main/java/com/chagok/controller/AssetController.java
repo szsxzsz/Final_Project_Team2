@@ -18,10 +18,10 @@ public class AssetController {
 		return "/asset/myAsset";
 	}
 	
-	///////////////////세영////////////////////
+	///////////////////세영//////////////////////
 	@GetMapping("/abook_List")
 	public String abook_ListGET() {
-		return "/asset/abook_List";
+		return "/asset/abook_List"; 
 	}
 	///////////////////세영////////////////////
 	
