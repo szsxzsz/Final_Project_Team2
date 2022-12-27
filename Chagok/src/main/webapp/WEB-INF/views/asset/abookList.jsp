@@ -1,9 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
-<br><br><br><br><br>
 
+<%@ include file="../include/header.jsp" %>
 <%@ include file="../include/sidebarAsset.jsp" %>
+
+ <br> <br> <br> 
 
 	<h1>가계부 내역 조회</h1>
 
