@@ -31,9 +31,9 @@ public class AssetController {
 	}
 	
 	///////////////////세영//////////////////////
-	@GetMapping("/abook_List")
-	public String abook_ListGET() {
-		return "/asset/abook_List"; 
+	@GetMapping("/abookList")
+	public String abookListGET() {
+		return "/asset/abookList"; 
 	}
 	///////////////////세영////////////////////
 	
