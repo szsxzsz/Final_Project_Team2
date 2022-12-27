@@ -17,11 +17,14 @@ import com.chagok.service.UserService;
 
 @Controller
 public class ChagokController {
-
+		
+	private static final Logger mylog = LoggerFactory.getLogger(ChagokController.class);
+	
 	@Inject
 	private UserService service;
-
-	Logger mylog = LoggerFactory.getLogger(ChagokController.class);
+	
+	// 차곡 메인사이트 
+	// http://localhost:8080/main
 
 	@GetMapping(value = "/main")
 	public String mainGET() {
