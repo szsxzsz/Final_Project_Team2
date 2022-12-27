@@ -32,6 +32,13 @@
 	visibility: hidden !important;
 }
 </style>
+
+<jsp:include page="../include/header.jsp"/>
+<style type="text/css">
+.custom_inner {
+	width: auto;
+}
+</style>
 </head>
 
 
@@ -42,49 +49,6 @@
 
 <body>
 	<div class="inner">
-		<header class="header">
-			<div class="wrap">
-				<h1 class="logo">
-					<a href="/index.aspx">차곡</a>
-				</h1>
-				<div class="pc_menu">
-					<ul class="menu_list">
-						<li class="menu click"><a href="/index.aspx">샘큐</a></li>
-
-
-						<li class="menu"><a href="/home/news.aspx">소식</a></li>
-						<li class="menu inquiry"><button type="button"
-								onclick="pop_inquiry_show();">문의</button></li>
-					</ul>
-					<div class="join_bx">
-						<a href="/login.aspx" class="btn_login">로그인</a> <a
-							href="/login.aspx?view=join" class="btn_join">회원가입</a>
-					</div>
-				</div>
-				<div class="mob_menu">
-					<button type="button" class="mob_btn">
-						<span class="line l1 init top_reverse"></span> <span
-							class="line l2 init mid_reverse"></span> <span
-							class="line l3 init bot_reverse"></span>
-					</button>
-					<div class="menu_wrap">
-						<div class="t_txt">
-							<p>알아서 관리해줘서</p>
-							<p>고마워, 샘큐! 베리 감사!</p>
-						</div>
-						<ul class="menu_list">
-							<li class="menu click"><a href="/index.aspx">차곡</a></li>
-
-							<li class="menu"><a href="/home/news.aspx">소식</a></li>
-							<li class="menu inquiry"><button type="button"
-									onclick="pop_inquiry_show();">문의</button></li>
-						</ul>
-					</div>
-				</div>
-			</div>
-		</header>
-
-
 		<div class="container home" data-name="home">
 			<section class="section_main">
 				<div class="cnt">
@@ -119,8 +83,8 @@
 					<br><br><br>
 						<h1>임시 링크 입니다 기능 만들어지기 전까진 요기로 이동하세요<br><br></h1>
 						
-						<a href="/chagok/commumain">커뮤니티 메인 가기</a><br><br>
-						<a href="/chagok/assetmain">자산관리 메인 가기</a><br>
+						<a href="/commumain">커뮤니티 메인 가기</a><br><br>
+						<a href="/assetmain">자산관리 메인 가기</a><br>
 					
 					<br><br><br>
 					
@@ -418,7 +382,7 @@
 						</li> -->
 							<div class="slick-list draggable">
 								<div class="slick-track"
-									style="opacity: 1; width: 25000px; transform: translate3d(-745px, 0px, 0px);">
+									style="opacity: 1; width: auto; transform: translate3d(-745px, 0px, 0px);">
 									<li class="item sale slick-slide slick-cloned"
 										data-slick-index="-1" id="" aria-hidden="true" tabindex="-1">
 										<div class="left_bx">
