@@ -1,3 +1,4 @@
+@import "reset.css";
 @import
 	url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic)
 	; /*!
@@ -418,7 +419,7 @@ a:hover, a:active, a:focus {
 	position: absolute;
 	top: 0;
 	left: 0;
-	padding-top: 50px;
+/* 	padding-top: 50px; */
 	min-height: 100%;
 	width: 230px;
 	z-index: 810;
