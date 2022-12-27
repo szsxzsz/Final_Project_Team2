@@ -4,7 +4,7 @@
 <html>
 
 <head class="">
-<title>차곡</title>
+<title>SAMQ - 스마트한 자산관리 솔루션</title>
 <meta charset="utf-8">
 <meta name="viewport"
 	content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=yes,viewport-fit=cover">
@@ -55,7 +55,7 @@ $(window).scroll(function () {
 <style type="text/css">
 .custom_inner {
 	display: flex;
-    height: 90px;
+    height: 75px;
     background: rgba(255, 255, 255,1);
     padding: 0 100px 0 100px;
     align-items: center;
@@ -85,8 +85,8 @@ $(window).scroll(function () {
     opacity: 0.95;
 }
 .custom_inner .logo img {
-	    width: 70px;
-    height: 70px;
+	width: 170px;
+     height: 72px; 
     opacity: 0.95;
 }
 .custom_inner #a:hover,
@@ -156,8 +156,9 @@ border: 3px solid rgb(98 184 225 / 40%);
 <body>
 	<div class="custom_inner">
 		<div class="logo">
-			<img id="logo" src="../resources/dist/img/credit/chagoklogo.png"
-				class="logo_img"><p id="a">차곡</p>
+<!-- 			<img id="logo" src="../resources/dist/img/credit/chagoklogo.png" -->
+			<img id="logo" src="../resources/dist/img/credit/pre-logo4.png" class="logo_img">
+<!-- 			<p id="a">차곡</p> -->
 		</div>
 		<div class="category">
 			<div class="challange">
@@ -181,4 +182,3 @@ border: 3px solid rgb(98 184 225 / 40%);
 
 
 </body>
-</html>

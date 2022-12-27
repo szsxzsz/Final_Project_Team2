@@ -1,5 +1,7 @@
 package com.chagok.controller;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
@@ -15,6 +17,10 @@ import com.chagok.apiDomain.ResponseTokenVO;
 import com.chagok.apiDomain.UserInfoResponseVO;
 import com.chagok.service.OpenBankingService;
 
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.chagok.domain.AbookVO;
+import com.chagok.service.ReportService;
 
 @Controller
 @RequestMapping("/asset/*")
@@ -22,11 +28,13 @@ public class AssetController {
 	
 	private static final Logger mylog = LoggerFactory.getLogger(AssetController.class);
 	
-	@Inject
-	private OpenBankingService openBankingService;
+	private ReportService rptService;
 	
 	// http://localhost:8080/asset/myAsset
 	///////////////////영민////////////////////
+	@Inject
+	private OpenBankingService openBankingService;
+	
 	@GetMapping("/myAsset")
 	public String myAssetGET() {
 		
@@ -56,11 +64,22 @@ public class AssetController {
 	///////////////////영민////////////////////
 	
 	///////////////////세영//////////////////////
-	@GetMapping("/abook_List")
-	public String abook_ListGET() {
-		return "/asset/abook_List"; 
+	@GetMapping("/abookList")
+	public String abookListGET() {
+		return "/asset/abookList"; 
 	}
 	///////////////////세영////////////////////
 	
-	
+//	http://localhost:8080/asset/rptTest?mno=1
+	@GetMapping("/rptTest")
+	public String rptTest(@RequestParam("mno") int mno, Model model) throws Exception {
+		mylog.debug("mno : "+mno);
+		// service에서 DB 가져오기
+		List<AbookVO> abList = rptService.rptTest(mno);
+		
+		// model로 전달
+		model.addAttribute("abList", abList);
+		
+		return "/asset/cateReport";
+	}
 }

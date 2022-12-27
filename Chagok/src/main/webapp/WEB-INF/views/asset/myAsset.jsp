@@ -16,7 +16,7 @@
 	}
 </script>
 	
-	<h1> 내 자산 </h1>
+	<h1 style="margin: 100px 20px 0 0"> 내 자산 </h1>
 	
 	<form action="https://testapi.openbanking.or.kr/oauth/2.0/authorize" method="get" onsubmit="return userCheck();">
 		<!-- 고정값 : code -->
