@@ -22,7 +22,7 @@
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/resources/mainpagecss/css/vendor/slick.css">
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath }/resources/mainpagecss/css/vendor/slick-theme.css">
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/resources/mainpagecss/css/reset.css">
+<link rel="stylesheet" type="text/css" href="../resources/mainpagecss/css/reset.css">
 <link rel="stylesheet" type="text/css" href="../resources/mainpagecss/css/font.css">
 <link rel="stylesheet" type="text/css" href="../resources/mainpagecss/css/style.css">
 <style id="__web-inspector-hide-shortcut-style__">
@@ -39,7 +39,113 @@
 .custom_inner {
 	width: auto;
 }
+
+
 </style>
+
+
+<!-- 헤더 a태그 css  -->
+<style type="text/css">
+.custom_inner {
+	display: flex;
+    height: 75px;
+    background: rgba(255, 255, 255,1);
+    padding: 0 100px 0 100px;
+    align-items: center;
+    border-bottom: 1px solid #bfb7b773;
+    flex-direction: row;
+    justify-content: space-between;
+    box-shadow: 0 0 3px 0 rgb(156, 170, 171,70%);
+/* 	position: fixed;  */
+    z-index: 99999;
+    width: auto;
+    top: 0px;
+    transition-property : height;
+    transition-duration : 1s;  
+}
+
+.custom_inner .logo {
+	display: flex;
+	align-items: center;
+}
+
+
+.custom_inner #a {
+	width: 170px;
+    font-size: 60px;
+    padding-left: 30px;
+    letter-spacing: 10px;
+    opacity: 0.95;
+}
+.custom_inner .logo img {
+	width: 140px;
+     height: 60px; 
+    opacity: 0.95;
+}
+.custom_inner #a:hover,
+.custom_inner .logo img:hover{
+    opacity: 1;
+}
+
+.custom_inner .category {
+    display: flex;
+    width: 1192px;
+    flex-direction: row;
+    justify-content: center;
+	margin: 0px;
+}
+.custom_inner .category div{
+	width: 86px;
+    height: auto;
+    text-align: center;
+    margin: 0 10px 0 10px;
+    font-size: 22px;
+
+}
+.custom_inner .category p {
+    padding-bottom: 5px;
+    border-bottom: 2px solid rgba(255, 219, 131 / 0%);
+    padding-top: 5px;
+    
+}
+.custom_inner .category p:hover{
+border-bottom: 2px solid rgba(255, 219, 131 / 80%);
+transition : border-bottom 0.5s;
+transition : color 0.3s;
+color : rgba(255, 219, 131 / 80%);
+}
+.custom_inner .user_menu {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    width: 240px;
+}
+
+.custom_inner .user_menu div {
+	width: 70px;
+    height: auto;
+    text-align: center;
+    margin-left: 10px;
+    }
+.custom_inner .user_menu .login,
+.custom_inner .user_menu .join{
+border: 3px solid rgb(255 191 131 / 40%);
+    border-radius: 9px;
+    width: 85px;
+    height: auto;
+    text-align: center;
+    font-size: 17px;
+    padding: 5px;
+    margin-right: 5px;
+    }
+.custom_inner .user_menu .login:hover,
+.custom_inner .user_menu .join:hover{
+ border: 3px solid rgb(255 191 131 / 80%);
+ background: rgb(176 224 229 / 5%);
+ }   
+</style>
+<!-- 헤더 a태그 css  -->
+
 </head>
 
 
@@ -54,7 +160,7 @@
 						<dl class="top">
 							<dt>차곡</dt>
 							<dd>
-								<span><i><i class="mob">기업용</i> 자동화 자산관리의 시작</i></span>
+								<span><i><i class="mob"></i> 현명한 자산관리의 시작</i></span>
 							</dd>
 						</dl>
 						<dl class="btm">

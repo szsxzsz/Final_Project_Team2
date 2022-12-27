@@ -774,7 +774,7 @@ translateY
 	left: 22px;
 	height: 36px;
 	padding: 0 20px;
-	background-color: #e7f3f8;
+	background-color: #FFDB83;
 	font-size: 18px;
 	line-height: 36px;
 	border-radius: 18px
@@ -796,7 +796,7 @@ translateY
 	left: 50%;
 	width: 100%;
 	height: 13px;
-	background-color: #E7F3F8;
+	background-color: #FFDB83;
 	border-radius: 10px;
 	content: "";
 	-webkit-transform: translateX(-50%);
@@ -1283,7 +1283,7 @@ translateY
 	float: left;
 	width: 146px;
 	height: 50px;
-	background-color: #e7f3f8;
+	background-color: #FFDB83;
 	font-size: 14px;
 	font-weight: 300;
 	line-height: 50px;
@@ -1434,7 +1434,7 @@ translateY
 	float: left;
 	height: 50px;
 	padding: 0 20px;
-	background-color: #e7f3f8;
+	background-color: #FFDB83;
 	font-size: 16px;
 	font-weight: 300;
 	line-height: 50px;
@@ -2288,7 +2288,7 @@ opacity
 	display: block;
 	width: 144px;
 	height: 36px;
-	background-color: #e7f3f8;
+	background-color: #FFDB83;
 	font-size: 16px;
 	font-weight: 300;
 	text-align: center;
@@ -2883,7 +2883,7 @@ opacity
 .price .section_tab .tab_area .info_cnt .item_bx .calc {
 	margin-top: 25px;
 	padding: 20px;
-	background-color: #e7f3f8;
+	background-color: #FFDB83;
 	border-top: none;
 	border-radius: 10px
 }
@@ -3876,7 +3876,7 @@ opacity
 		left: -1px;
 		width: 53px;
 		height: 53px;
-		background-color: #e7f3f8;
+		background-color: #FFDB83;
 		border-radius: 50%;
 		content: "";
 		z-index: 1000
@@ -4854,7 +4854,7 @@ opacity
 	}
 	.pop_inquiry .top_area>dl>dt>span {
 		padding: 5px 10px;
-		background-color: #e7f3f8;
+		background-color: #FFDB83;
 		font-size: 14px;
 		font-weight: 300;
 		border-radius: 18px

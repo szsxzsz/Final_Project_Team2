@@ -74,10 +74,10 @@ button, a {
 
 a {
 	text-decoration: none;
-	color: inherit;
+	color: #000;
 }
-/*a:focus,a:active{color:inherit}*/
-/* a:active,a:focus{background-color:transparent} */
+a:focus,a:active{color:#FFDB83;}
+a:active,a:focus{background-color:transparent}
 table {
 	border-collapse: collapse;
 	border-spacing: 0

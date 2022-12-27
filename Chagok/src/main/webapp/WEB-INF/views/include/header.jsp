@@ -129,7 +129,7 @@ color : rgba(255, 219, 131 / 80%);
     }
 .custom_inner .user_menu .login,
 .custom_inner .user_menu .join{
-border: 3px solid rgb(98 184 225 / 40%);
+border: 3px solid rgb(255 191 131 / 40%);
     border-radius: 9px;
     width: 85px;
     height: auto;
@@ -140,7 +140,7 @@ border: 3px solid rgb(98 184 225 / 40%);
     }
 .custom_inner .user_menu .login:hover,
 .custom_inner .user_menu .join:hover{
- border: 3px solid rgb(98 184 225 / 80%);
+ border: 3px solid rgb(255 191 131 / 80%);
  background: rgb(176 224 229 / 5%);
  }   
 </style>
@@ -168,8 +168,8 @@ border: 3px solid rgb(98 184 225 / 40%);
 			</div>
 		</div>
 		<div class="user_menu">
-			<div class="login"><p style="font-family: 'GmarketSans'">로그인</p></div>
-			<div class="join"><p style="font-family: 'GmarketSans'">회원가입</p></div>
+			<div class="login"><a href="/login"><p style="font-family: 'GmarketSans'">로그인</p></a></div>
+			<div class="join"><a href="/register"><p style="font-family: 'GmarketSans'">회원가입</p></a></div>
 		</div>
 	</div>
 
