@@ -29,20 +29,24 @@ public class ChagokController {
 		return "/chagok/main";
 	}
 
+	
+	// 자산관리 파트 메인
+	// http://localhost:8080/assetmain
 	@GetMapping(value = "/assetmain")
 	public String assetmainGET() throws Exception {
 
 		return "/chagok/assetmain";
 	}
 
-
+	// 커뮤니티 파트 메인
+	// http://localhost:8080/commumain
 	@GetMapping(value = "/commumain")
 	public String commumainGET() throws Exception {
 
 		return "/chagok/commumain";
 	}
 
-	// http://localhost:8080/chagok/login
+	// http://localhost:8080/login
 	@GetMapping(value = "/login")
 	public String loginGET() throws Exception {
 
@@ -74,7 +78,7 @@ public class ChagokController {
 		return resultURI;
 	 }
 
-	 // http://localhost:8080/chagok/register
+	 // http://localhost:8080/register
 	 @GetMapping(value = "/register")
 	 public String registerGET() throws Exception {
 		 mylog.info("/chagok/registerForm -> 정보입력창(view) 이동");

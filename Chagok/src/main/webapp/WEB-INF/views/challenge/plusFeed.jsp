@@ -1,53 +1,66 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="../include/header.jsp" %>
+<%@ include file="../include/sidebar.jsp" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <h1 style="padding: 0 15px 0 15px;"> 저축형 차곡 챌린지 </h1>
-
-    <!-- Main content -->
-    <section class="content">
+${plusPeoList }
+ <!-- Main content -->
+<section class="content">
+	<div class="row">
+		<div class="col-lg-5 mx-6 aos-init aos-animate" data-aos="fade-right" >
+	        <img class="img-responsive" src="${pageContext.request.contextPath }/resources/dist/img/photo1.png" alt="Photo" style="width:500px; height:400px;">
+		</div>
+		<div class="col-lg-6 pt-4 pt-lg-0 content aos-init aos-animate" data-aos="fade-left" >
+			 <h3><span style="color: #66BB7A; font-weight: bold;">[저축형]</span> ${vo.c_title }</h3>
+			 <jsp:useBean id="now" class="java.util.Date" />
+			 <fmt:parseNumber value="${now.time / (1000*60*60*24)}" integerOnly="true" var="nowfmtTime" scope="request"/>
+			 <fmt:parseNumber value="${vo.c_start.time / (1000*60*60*24)}" integerOnly="true" var="startTime" scope="request"/>
+			<c:if test="${startTime - nowfmtTime < 1}">
+				<p class="fst-italic">챌린지가 시작되었습니다!</p>
+			</c:if>
+			<c:if test="${startTime - nowfmtTime > 0}">
+				<p class="fst-italic">챌린지가 &nbsp;&nbsp;  <span style="color: #66BB7A; font-weight: bold; font-size: 20px;"> ${startTime - nowfmtTime }</span> 일 후에 시작됩니다!</p>
+			</c:if>
+			<br><br>
+			<div class="row">
+				<div class="col-lg-6" style="line-height: 180%">
+	             <div class="progress-group" style="width: 280px;" >
+	               <span class="progress-text">챌린지 장 </span>
+	               <span class="progress-number"><b>${vo.c_host }</b>님</span>
+	             </div>
+	             <div class="progress-group" style="width: 280px;">
+	               <span class="progress-text">챌린지 인원</span>
+	               <span class="progress-number"><b>${vo.c_person }</b>/ ${vo.c_pcnt }</span>
+	             </div>
+	             <div class="progress-group" style="width: 280px;">
+	               <span class="progress-text">예치금</span>
+	               <span class="progress-number"><b>${vo.c_deposit }</b>꿀</span>
+	             </div>  
+	          	 <div class="progress-group" style="width: 280px;">
+	               <span class="progress-text">챌린지 기간</span>
+	               <span class="progress-number"><b>${vo.c_period }</b>주</span>
+	             </div>  
+	             <div class="progress-group" style="width: 280px;">
+	               <span class="progress-text">챌린지 시작일</span>
+	               <span class="progress-number">
+	               	<b><fmt:formatDate value="${vo.c_start }" pattern="YYYY-MM-dd"/></b>
+	               </span>
+	              </div>
+	         	</div>
+	       </div>
+		</div>
+	</div>
     <div class="row">
-	    <div class="col-xs-12">
-		    <table border="2" style="margin: 10px;">
-		    	<tr>
-		    		<td rowspan="7"><img src="${pageContext.request.contextPath }/resources/tablesetting2.jpg" style="max-height: 500px; max-width: 800px;"> </td>
-		    		<td colspan="3" align="right"><h3><span style="color: #10A19D;">[저축형]</span> 한달동안 같이 50만원 모아보실 분</h3> </td>
-		    	</tr>
-		    	<tr>
-		    		<td colspan="2" align="right">챌린지가 <span style="color: #FFBF00;">5</span>일 후 시작됩니다!</td>
-		    	</tr>
-		    	<tr>
-		    		<th width="40px;">챌린지 장</th>
-		    		<td>주일민 님</td>
-		    	</tr>
-		    	<tr>
-		    		<th>챌린지 인원</th>
-		    		<td>10명</td>
-		    	</tr>
-		    	<tr>
-		    		<th>챌린지 기간</th>
-		    		<td>4주</td>
-		    	</tr>
-		    	<tr>
-		    		<th>챌린지 시작일</th>
-		    		<td>2022-12-26</td>
-		    	</tr>
-		    	<tr>
-		    		<th>챌린지 예치금</th>
-		    		<td>1000 꿀</td>
-		    	</tr>
-		    </table>    
-	    </div> <!-- ./col-xs-12  -->
-    </div> <!--./row  -->
-    <div class="row">
-        <div class="col-xs-8 text-center">
-		    <div class="box" style="background: #FAF8F1;
-		    						position: relative;
-								    padding-left: 10px;
-								    padding-right: 10px;">
-		    	<h4><span style="color: #10A19D;">7</span>일 동안 <span style="color: #10A19D;"> 100,000 </span>원씩 저축하는 조건이 있습니다.</h4>
+	    <div class="d-flex justify-content-center">
+		    <div class="box">
+		        <div class="col-md-12 text-center" style="background: #FAF8F1;">
+				    	<h4><span style="color: #10A19D;">7</span>일 마다 <span style="color: #10A19D;"> 100,000 </span>원씩 저축하는 조건이 있습니다.</h4>
+		    	</div>
 		    </div>
-    	</div>
+		</div>
     </div>
       <div class="row">
         <div class="col-xs-12">
@@ -69,25 +82,39 @@
             <div class="box-body table-responsive no-padding">
               <table class="table table-hover">
                 <tr>
-                  <th width="5px;">No.</th>
-                  <th width="40px;">참가자</th>
-                  <th>Progress</th>
-                  <th width="20px;">Label</th>
-                  <th width="20px;">Status</th>
-                  <th width="80px;">저축 금액</th>
+                  <th class="col-md-1">No.</th>
+                  <th class="col-md-1">참가자</th>
+                  <th class="col-md-4">진행률</th>
+                  <th class="col-md-1">횟수</th>
+                  <th class="col-md-1">Status</th>
+                  <th class="col-md-2" style="text-align: center;">저축 금액</th>
                 </tr>
+					${vo.c_host}
+                <c:forEach var="plusPeople" begin="0" end="${plusPeoList.size()-1}" items="${plusPeoList}">
+                <c:set var="i" value="${i+1 }"/>
                 <tr>
-                  <td>1</td>
-                  <td>John Doe</td>
+                  <td>${i }</td>
+                  <td>${plusPeople.mno}</td>
                   <td>
-                    <div class="progress progress-xs progress-striped active">
-                      <div class="progress-bar progress-bar-success" style="width: 100%"></div>
-                    </div>
+                  	<c:if test="${plusPeople.pl_cnt == vo.c_total }">
+	                    <div class="progress progress-xs progress-bar-green">
+	                      <div class="progress-bar progress-bar-success" style="width: 100%"></div>
+	                    </div>
+                  	</c:if>
+                  	<c:if test=""></c:if>
                   </td>
-                  <td><span class="badge bg-green">10/10</span></td>
-                  <td><span class="label label-success">성공</span></td>
-                  <td>500,000</td>
+                  <td><span class="badge bg-green">${plusPeople.pl_cnt}/${vo.c_total }</span></td>
+                  <td>
+                  	<c:if test="${plusPeople.pl_cnt == vo.c_total }">
+                  		<span class="label label-success">성공</span>
+                  	</c:if>
+                  	<c:if test="${plusPeople.pl_cnt != vo.c_total }">
+                  		<span class="label label-danger">실패</span>
+                  	</c:if>
+                  </td>
+                  <td style="text-align: right; padding-right: 4%; vertical-align: 10%;"><fmt:formatNumber type="number" maxFractionDigits="3" value="${plusPeople.pl_sum}" /><b>&nbsp;원</b></td>
                 </tr>
+                </c:forEach>
                 <tr>
                   <td>2</td>
                   <td>Alexander </td>
@@ -150,9 +177,9 @@
 		<button onclick="closeSocket();">끝내기</button>
 	</div>
     <!-- <!-- 칭찬하기/주시하기  @@@@@@@@@@@@@@@@@@@@@@@@@ -->
-    <div class="col-xs-11" style="margin-left: 10px; ">
+    <div class="col-xs-12" style="margin-left: 10px; ">
 	 <div class="row">
-	  <h3 class=" text-center">한달동안 같이 50만원 모아보실 분</h3>
+	  <h3 class=" text-center">${vo.c_title }</h3>
 	   <div class="messaging">
 	      <div class="inbox_msg">
 	        <div class="inbox_people">
@@ -203,29 +230,6 @@
 	              <div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
 	              <div class="received_msg">
 	                <div class="received_withd_msg">
-	                  <p>Test, which is a new approach to have</p>
-	                  <span class="time_date"> 11:01 AM    |    Yesterday</span></div>
-	              </div>
-	            </div>
-	            <div class="outgoing_msg">
-	              <div class="sent_msg">
-	                <p>Apollo University, Delhi, India Test</p>
-	                <span class="time_date"> 11:01 AM    |    Today</span> </div>
-	            </div>
-	            <div class="incoming_msg">
-	              <div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
-	              <div class="received_msg">
-	                <div class="received_withd_msg">
-	                  <p>We work directly with our designers and suppliers,
-	                    and sell direct to you, which means quality, exclusive
-	                    products, at a price anyone can afford.</p>
-	                  <span class="time_date"> 11:01 AM    |    Today</span></div>
-	              </div>
-	            </div>
-	            <div class="incoming_msg">
-	              <div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
-	              <div class="received_msg">
-	                <div class="received_withd_msg">
 	                  <p>
 	              		<div id="message1"></div>
 	                  </p>
@@ -242,17 +246,6 @@
 	        </div>
 	      </div>
 	      </div>
-	      
-	      
-		  이름:<input type="text" id="nick">
-		<input type="button" id="enterBtn" value="입장">
-		<input type="button" id="exitBtn" value="나가기">
-	    
-	    <h1>대화 영역</h1>
-	    <div id="chatArea"><div id="chatMessageArea"></div></div>
-	    <br>
-	    <input type="text" id="message">
-	    <input type="button" id="sendBtn" value="전송">
 	  <!-- <!-- 칭찬하기/주시하기  @@@@@@@@@@@@@@@@@@@@@@@@@ -->
 	  <!-- /.content-wrapper -->
 	</div>

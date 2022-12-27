@@ -43,9 +43,16 @@
 		where id=#{id} and pw=#{pw}
 	</select>
   
-  
+  	
+  	<!--  챌린지 정보 가져오기  -->
 	<select id="getChallengeInfo" resultType="com.chagok.domain.ChallengeVO">
-		select * from challenge 
-		where cno = #{cno}
-	</select>  
+	select * from challenge where cno = #{cno}
+	</select>
+	
+	
+	<!-- [저축형]챌린지 참가자 조회-->
+	<select id="getPlusPeople" resultType="com.chagok.domain.PlusVO">
+		select * from plus p inner join user u
+		where cno = #{cno} and p.mno = u.mno
+	</select>
   </mapper>
