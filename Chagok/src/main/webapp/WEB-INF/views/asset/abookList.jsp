@@ -1,12 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
-
 <%@ include file="../include/header.jsp" %>
 <%@ include file="../include/sidebarAsset.jsp" %>
 
  <br> <br> <br> 
-
+	
 	<h1>가계부 내역 조회</h1>
 
 	<div class="box">
@@ -70,9 +69,7 @@
 					</tr>
 				</tbody>
 			</table>
+			
 		</div>
-
 	</div>
-	
-	
 <%@ include file="../include/footer.jsp" %>

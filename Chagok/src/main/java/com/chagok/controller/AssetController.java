@@ -68,6 +68,8 @@ public class AssetController {
 	public String abookListGET() {
 		return "/asset/abookList"; 
 	}
+	
+	
 	///////////////////세영////////////////////
 	
 //	http://localhost:8080/asset/rptTest?mno=1
