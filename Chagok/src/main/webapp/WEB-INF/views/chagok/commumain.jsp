@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 
 <%@ include file="../include/header.jsp" %>
+
 <%@ include file="../include/sidebar.jsp" %>
 
 <h1> 커뮤니티 메인 </h1>
