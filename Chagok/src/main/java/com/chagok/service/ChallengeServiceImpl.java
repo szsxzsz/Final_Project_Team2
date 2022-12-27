@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import com.chagok.domain.ChallengeVO;
 import com.chagok.persistence.ChallengeDAO;
 
-
 @Service
 public class ChallengeServiceImpl implements ChallengeService{
 	
@@ -26,6 +25,7 @@ public class ChallengeServiceImpl implements ChallengeService{
 		return dao.getChallengeInfo(cno);
 	}
 	
+
 	
 	
 }

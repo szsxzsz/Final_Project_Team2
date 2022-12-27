@@ -23,9 +23,9 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 	public ChallengeVO getChallengeInfo(int cno) {
 		mylog.debug("cno : "+cno);
 		ChallengeVO vo = sqlSession.selectOne(NAMESPACE+".getChallengeInfo", cno);
+		
 		return vo;
 	}
-	
 	
 	
 }
