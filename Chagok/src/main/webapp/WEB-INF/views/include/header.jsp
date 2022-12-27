@@ -24,34 +24,27 @@
 	href="${pageContext.request.contextPath }/resources/mainpagecss/css/vendor/slick.css">
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath }/resources/mainpagecss/css/vendor/slick-theme.css">
-<link rel="stylesheet" type="text/css"
-	href="${pageContext.request.contextPath }/resources/mainpagecss/css/reset.css">
-<link rel="stylesheet" type="text/css"
-	href="${pageContext.request.contextPath }/resources/mainpagecss/css/font.css">
-<link rel="stylesheet" type="text/css"
-	href="${pageContext.request.contextPath }/resources/mainpagecss/css/style.css">
+<!-- <link rel="stylesheet" type="text/css" -->
+<%-- 	href="${pageContext.request.contextPath }/resources/mainpagecss/css/reset.css"> --%>
+<link rel="stylesheet" type="text/css" href="../resources/mainpagecss/css/font.css">
+<link rel="stylesheet" type="text/css" href="../resources/mainpagecss/css/style.css">
 <style id="__web-inspector-hide-shortcut-style__">
 .__web-inspector-hide-shortcut__, .__web-inspector-hide-shortcut__ *,
 	.__web-inspector-hidebefore-shortcut__::before,
 	.__web-inspector-hideafter-shortcut__::after {
 	visibility: hidden !important;
 }
+.p{
+    font-family: 'GmarketSans';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    margin: 0 0 0 0px;
+}
+
 </style>
 <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
 
-<!-- <script>
-$(window).scroll(function () {
-	var height = $(document).scrollTop();
-	if(height > 0){
-		$('.custom_inner').css("background","rgb(204 213 241 / 50%)");
-		$('.custom_inner').css("height","75px");
-	}else {
-		$('.custom_inner').css("background","rgba(255, 255, 255,1)");
-		$('.custom_inner').css("height","90px");
-	}
-	}); 
-
-</script> -->
 
 <style type="text/css">
 .custom_inner {
@@ -64,7 +57,7 @@ $(window).scroll(function () {
     flex-direction: row;
     justify-content: space-between;
     box-shadow: 0 0 3px 0 rgb(156, 170, 171,70%);
-	position: fixed; 
+/* 	position: fixed;  */
     z-index: 99999;
     width: 100%;
     top: 0px;
@@ -86,8 +79,8 @@ $(window).scroll(function () {
     opacity: 0.95;
 }
 .custom_inner .logo img {
-	width: 170px;
-     height: 72px; 
+	width: 140px;
+     height: 60px; 
     opacity: 0.95;
 }
 .custom_inner #a:hover,
@@ -100,7 +93,7 @@ $(window).scroll(function () {
     width: 1192px;
     flex-direction: row;
     justify-content: center;
-
+	margin: 0px;
 }
 .custom_inner .category div{
 	width: 86px;
@@ -112,15 +105,15 @@ $(window).scroll(function () {
 }
 .custom_inner .category p {
     padding-bottom: 5px;
-    border-bottom: 2px solid rgba(98 184 225 / 0%);
+    border-bottom: 2px solid rgba(255, 219, 131 / 0%);
     padding-top: 5px;
     
 }
 .custom_inner .category p:hover{
-border-bottom: 2px solid rgba(98 184 225 / 80%);
+border-bottom: 2px solid rgba(255, 219, 131 / 80%);
 transition : border-bottom 0.5s;
 transition : color 0.3s;
-color : rgba(98 184 225 / 80%);
+color : rgba(255, 219, 131 / 80%);
 }
 .custom_inner .user_menu {
     display: flex;
@@ -158,26 +151,26 @@ border: 3px solid rgb(98 184 225 / 40%);
 	<div class="custom_inner">
 		<div class="logo">
 <!-- 			<img id="logo" src="../resources/dist/img/credit/chagoklogo.png" -->
-			<img id="logo" src="../resources/dist/img/credit/pre-logo4.png" class="logo_img">
+			<a href="/main"><img id="logo" src="../resources/dist/img/credit/pre-logo4.png" class="logo_img" ></a>
 <!-- 			<p id="a">차곡</p> -->
 		</div>
 		<div class="category">
-			<div class="challange">
-				<p>챌린지</p>
+			<div id="header-center" class="challange">
+				<a href="/commumain"><p style="font-family: 'GmarketSans'">챌린지</p></a>
 			</div>
 			<div class="community">
-				<p>커뮤니티</p>
+				<a href="/commumain"><p style="font-family: 'GmarketSans'">커뮤니티</p></a>
 			</div>
 			<div class="management">
-				<p>자산관리</p>
+				<a href="/assetmain"><p style="font-family: 'GmarketSans'">자산관리</p></a>
 			</div>
 			<div class="notice">
-				<p>공지사항</p>
+				<p style="font-family: 'GmarketSans'">공지사항</p>
 			</div>
 		</div>
 		<div class="user_menu">
-			<div class="login"><p>로그인</p></div>
-			<div class="join"><p>회원가입</p></div>
+			<div class="login"><p style="font-family: 'GmarketSans'">로그인</p></div>
+			<div class="join"><p style="font-family: 'GmarketSans'">회원가입</p></div>
 		</div>
 	</div>
 

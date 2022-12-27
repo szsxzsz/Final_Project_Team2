@@ -23,6 +23,8 @@ public class AssetController {
 	public String abookListGET() {
 		return "/asset/abookList"; 
 	}
+	
+	
 	///////////////////세영////////////////////
 	
 }

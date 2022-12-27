@@ -74,7 +74,7 @@ button, a {
 
 a {
 	text-decoration: none;
-	color: inherit
+	color: inherit;
 }
 /*a:focus,a:active{color:inherit}*/
 /* a:active,a:focus{background-color:transparent} */
