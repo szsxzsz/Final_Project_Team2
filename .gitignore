@@ -168,8 +168,6 @@ ehthumbs.db
 ehthumbs_vista.db
 
 # Dump file
-
-target/
 *.stackdump
 
 # Folder config file
@@ -188,4 +186,6 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+
+target/
 # End of https://www.toptal.com/developers/gitignore/api/macos,windows,eclipse,java,git,maven

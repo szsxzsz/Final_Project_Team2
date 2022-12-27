@@ -44,6 +44,26 @@ public class ChallengeController {
 		return "/challenge/plusdetail";
 	}
 	
+	// http://localhost:8080/challenge/minusFeed?cno=1
+	// http://localhost:8080/challenge/minusFeed
+	@GetMapping(value="/minusFeed")
+	public String minusFeed(Model model,@RequestParam("cno") int cno,HttpSession session) throws Exception {
+		mylog.debug(" 수 지 : minusFeed Get 호출 ");
+		
+		ChallengeVO vo = service.getChallengeInfo(cno);
+		
+		   // 연결된 뷰페이지로 정보 전달(model)
+		   model.addAttribute("vo", vo);
+		   
+		   return "/challenge/minusFeed";
+	}
+	
+	
+	@PostMapping(value="/minusFeedPOST")
+	public String minusFeedPOST() throws Exception {
+		
+		return "/challenge/minusFeed";
+	}
 	@PostMapping(value="/plusdetailPOST")
 	public String plusdetailPOST() throws Exception {
 		
@@ -57,6 +77,14 @@ public class ChallengeController {
 		
 		return "/challenge/minusdetail";
 	}
+	
+	// http://localhost:8080/challenge/echo
+		@GetMapping(value = "/echo")
+		public String echoGET() throws Exception{
+			
+			return "/challenge/echo";
+		}
+	
 }
 
 

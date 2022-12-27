@@ -18,12 +18,14 @@ public class ChallengeServiceImpl implements ChallengeService{
 	private ChallengeDAO dao;
 	
 	@Override
-	public ChallengeVO getChallengeInfo(int cno) {
-		mylog.debug("getChallengeInfo(int cno) 호출"+cno);
+	public ChallengeVO getChallengeInfo(Integer cno) {
+		mylog.debug("getChallengeInfo(int cno) 호출");
 		ChallengeVO vo = dao.getChallengeInfo(cno);
 		mylog.debug("getChallengeInfo(cno) 처리 결과 : "+vo);
 		return dao.getChallengeInfo(cno);
 	}
+	
+
 	
 	
 }

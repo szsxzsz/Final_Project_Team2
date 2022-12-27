@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 
 <%@ include file="../include/header.jsp" %>
+<%@ include file="../include/sidebar.jsp" %>
 
 
 <h1>저축형 차곡 챌린지</h1>
