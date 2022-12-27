@@ -72,12 +72,27 @@ button, a {
 	-ms-tap-highlight-color: rgba(0, 0, 0, 0.05)
 }
 
+/* a { */
+/* 	text-decoration: none; */
+/* 	color: #000; */
+/* } */
+/* a:focus,a:active{color:#FFDB83;} */
+/* a:active,a:focus{background-color:transparent} */
 a {
-	text-decoration: none;
 	color: #000;
+	text-decoration: none
 }
-a:focus,a:active{color:#FFDB83;}
-a:active,a:focus{background-color:transparent}
+
+a:focus, a:hover {
+	color: #FFDB83;
+	text-decoration: none;
+}
+
+a:focus {
+	outline: thin dotted;
+	outline: 5px auto -webkit-focus-ring-color;
+	outline-offset: -2px
+}
 table {
 	border-collapse: collapse;
 	border-spacing: 0

@@ -852,6 +852,7 @@ translateY
 	font-size: 18px;
 	line-height: 55px;
 	border-radius: 9px
+	
 }
 
 .home .section_main .cnt .title_bx .btm>dd .btn_bx>[class*='btn_']:hover
@@ -862,7 +863,9 @@ translateY
 
 .home .section_main .cnt .title_bx .btm>dd .btn_bx>[class*='btn_']+[class*='btn_']
 	{
-	margin-left: 20px
+	margin-left: 20px;
+		color:#000;
+
 }
 
 .home .section_main .cnt .title_bx .btm>dd .btn_bx .btn_inquiry {

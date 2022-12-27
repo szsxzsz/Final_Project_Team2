@@ -23,8 +23,8 @@
 	href="${pageContext.request.contextPath }/resources/mainpagecss/css/vendor/slick.css">
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath }/resources/mainpagecss/css/vendor/slick-theme.css">
-<!-- <link rel="stylesheet" type="text/css" -->
-<%-- 	href="${pageContext.request.contextPath }/resources/mainpagecss/css/reset.css"> --%>
+<link rel="stylesheet" type="text/css"
+	href="${pageContext.request.contextPath }/resources/mainpagecss/css/reset.css">
 <link rel="stylesheet" type="text/css" href="../resources/mainpagecss/css/font.css">
 <link rel="stylesheet" type="text/css" href="../resources/mainpagecss/css/style.css">
 <style id="__web-inspector-hide-shortcut-style__">
@@ -33,13 +33,13 @@
 	.__web-inspector-hideafter-shortcut__::after {
 	visibility: hidden !important;
 }
-.p{
-    font-family: 'GmarketSans';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-    margin: 0 0 0 0px;
-}
+/* .p{ */
+/*     font-family: 'GmarketSans'; */
+/*     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff'); */
+/*     font-weight: normal; */
+/*     font-style: normal; */
+/*     margin: 0 0 0 0px; */
+/* } */
 
 </style>
 <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
@@ -89,7 +89,7 @@
 
 .custom_inner .category {
     display: flex;
-    width: 1192px;
+/*     width: 1192px; */
     flex-direction: row;
     justify-content: center;
 	margin: 0px;
@@ -103,7 +103,7 @@
 
 }
 .custom_inner .category p {
-    padding-bottom: 5px;
+/*     padding-bottom: 5px; */
     border-bottom: 2px solid rgba(255, 219, 131 / 0%);
     padding-top: 5px;
     
@@ -131,7 +131,7 @@ color : rgba(255, 219, 131 / 80%);
 .custom_inner .user_menu .join{
 border: 3px solid rgb(255 191 131 / 40%);
     border-radius: 9px;
-    width: 85px;
+    width: 87px;  
     height: auto;
     text-align: center;
     font-size: 17px;

@@ -70,6 +70,7 @@ public class AssetController {
 	}
 	
 	
+	
 	///////////////////세영////////////////////
 	
 //	http://localhost:8080/asset/rptTest?mno=1
