@@ -18,8 +18,18 @@
 	
 	<!-- 회원가입 아이디 체크  -->
 	<select id="checkId" resultType="int">
+		<![CDATA[
 			SELECT count(*) FROM user
 			WHERE id = #{id}
+		]]>
+	</select>
+	
+	<!-- 회원가입 닉네임 체크  -->
+	<select id="checkNick" resultType="int">
+		<![CDATA[
+			SELECT count(*) FROM user
+			WHERE nick = #{nick}
+		]]>
 	</select>
 	
 	<!-- 특정회원정보 조회 -->
@@ -33,4 +43,9 @@
 		where id=#{id} and pw=#{pw}
 	</select>
   
+  
+	<select id="getChallengeInfo" resultType="com.chagok.domain.ChallengeVO">
+		select * from challenge 
+		where cno = #{cno}
+	</select>  
   </mapper>
