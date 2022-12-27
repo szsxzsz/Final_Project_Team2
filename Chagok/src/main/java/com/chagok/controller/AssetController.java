@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/asset/*")
 public class AssetController {
 	
-	private static final Logger mylog = LoggerFactory.getLogger(HomeController.class);
+	private static final Logger mylog = LoggerFactory.getLogger(AssetController.class);
 	
 	@GetMapping("/myAsset")
 	public String myAssetGET() {
