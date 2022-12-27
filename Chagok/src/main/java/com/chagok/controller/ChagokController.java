@@ -17,11 +17,11 @@ import com.chagok.service.UserService;
 
 @Controller
 public class ChagokController {
-
-	@Inject
-	private UserService service;
-
-	Logger mylog = LoggerFactory.getLogger(ChagokController.class);
+		
+	private static final Logger mylog = LoggerFactory.getLogger(ChagokController.class);
+	
+	// 차곡 메인사이트 
+	// http://localhost:8080/main
 
 	@GetMapping(value = "/main")
 	public String mainGET() {
@@ -29,13 +29,17 @@ public class ChagokController {
 		return "/chagok/main";
 	}
 
+	
+	// 자산관리 파트 메인
+	// http://localhost:8080/assetmain
 	@GetMapping(value = "/assetmain")
 	public String assetmainGET() throws Exception {
 
 		return "/chagok/assetmain";
 	}
 
-
+	// 커뮤니티 파트 메인
+	// http://localhost:8080/commumain
 	@GetMapping(value = "/commumain")
 	public String commumainGET() throws Exception {
 

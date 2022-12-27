@@ -168,6 +168,7 @@ a:hover, a:active, a:focus {
 }
 
 .main-header>.navbar {
+	margin-top: 95px;
 	-webkit-transition: margin-left .3s ease-in-out;
 	-o-transition: margin-left .3s ease-in-out;
 	transition: margin-left .3s ease-in-out;
@@ -456,6 +457,7 @@ a:hover, a:active, a:focus {
 }
 
 .sidebar {
+	margin-top: 95px;
 	padding-bottom: 10px
 }
 
