@@ -3,6 +3,7 @@
 
 <%@ include file="../include/header.jsp" %>
 
+
 <h1>저축형 차곡 챌린지</h1>
 
 <%-- ${vo } --%>
@@ -24,7 +25,7 @@
              </div>
              <div class="progress-group" style="width: 280px;">
                <span class="progress-text">챌린지 인원</span>
-               <span class="progress-number"><b>${vo.c_person }</b>/ ${vo.c_pnt }</span>
+               <span class="progress-number"><b>${vo.c_person }</b>/ ${vo.c_pcnt }</span>
              <div class="progress-group" style="width: 280px;">
                <span class="progress-text">예치금</span>
                <span class="progress-number"><b>${vo.c_deposit }</b>꿀</span>
