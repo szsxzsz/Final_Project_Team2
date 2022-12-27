@@ -20,6 +20,9 @@ public class ChagokController {
 		
 	private static final Logger mylog = LoggerFactory.getLogger(ChagokController.class);
 	
+	@Inject
+	private UserService service;
+	
 	// 차곡 메인사이트 
 	// http://localhost:8080/main
 
