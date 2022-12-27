@@ -9,7 +9,7 @@
 
 <%-- ${vo } --%>
 
-<div class="row">
+<div class="row" style="margin-left:30px; margin-top:30px;">
 	<div class="col-lg-4 aos-init aos-animate" data-aos="fade-right">
 <!--         <img class="img-responsive" src="../../dist/img/photo1.png" alt="Photo" style="width:500px; height:250px;"> -->
         <img class="img-responsive" src="${pageContext.request.contextPath }/resources/dist/img/photo1.png" alt="Photo" style="width:500px; height:250px;">
