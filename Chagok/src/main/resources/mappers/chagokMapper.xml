@@ -43,4 +43,9 @@
 		where id=#{id} and pw=#{pw}
 	</select>
   
+  
+	<select id="getChallengeInfo" resultType="com.chagok.domain.ChallengeVO">
+		select * from challenge 
+		where cno = #{cno}
+	</select>  
   </mapper>

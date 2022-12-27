@@ -19,7 +19,7 @@
 <meta property="og:url" content="https://www.novusmay.com/samq/">
 <meta property="og:image" content="https://i.imgur.com/syK7Oa0.jpg">
 <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.png">
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/resources/mainpagecss/css/vendor/slick.css">
+<%-- <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/resources/mainpagecss/css/vendor/slick.css"> --%>
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath }/resources/mainpagecss/css/vendor/slick-theme.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/resources/mainpagecss/css/reset.css">
@@ -119,8 +119,8 @@
 					<br><br><br>
 						<h1>임시 링크 입니다 기능 만들어지기 전까진 요기로 이동하세요<br><br></h1>
 						
-						<a href="/chagok/commumain">커뮤니티 메인 가기</a><br><br>
-						<a href="/chagok/assetmain">자산관리 메인 가기</a><br>
+						<a href="/commumain">커뮤니티 메인 가기</a><br><br>
+						<a href="/assetmain">자산관리 메인 가기</a><br>
 					
 					<br><br><br>
 					

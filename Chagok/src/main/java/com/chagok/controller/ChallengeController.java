@@ -30,6 +30,7 @@ public class ChallengeController {
 		
 		return "/challenge/plusFeed";
 	}
+<<<<<<< HEAD
 //	// http://localhost:8080/challenge/plusdetail
 //	@GetMapping(value = "/plusdetail")
 //	public String plusdetailGET(Model model,@RequestParam("cno") int cno, HttpSession session) throws Exception{
@@ -62,6 +63,34 @@ public class ChallengeController {
 	public String echoGET() throws Exception{
 		
 		return "/challenge/echo";
+=======
+	
+	// http://localhost:8080/challenge/plusdetail
+	@GetMapping(value = "/plusdetail")
+	public String plusdetailGET(Model model,@RequestParam("cno") int cno, HttpSession session) throws Exception{
+		mylog.debug("plusdetailGET 호출");
+		mylog.debug(cno+"");
+		
+		ChallengeVO vo = service.getChallengeInfo(cno);
+		
+		model.addAttribute("vo", vo); // plusdetail로 정보전달
+		
+		return "/challenge/plusdetail";
+	}
+	
+	@PostMapping(value="/plusdetailPOST")
+	public String plusdetailPOST() throws Exception {
+		
+		return "/challenge/plusdetail";
+	}
+	
+	// http://localhost:8080/challenge/minusdetail
+	@GetMapping(value = "/minusdetail")
+	public String minusdetailGET() throws Exception{
+		mylog.debug("minusdetailGET 호출");
+		
+		return "/challenge/minusdetail";
+>>>>>>> branch 'develop_community' of https://github.com/Ju-Yeongmin/Final_Project_Team2.git
 	}
 }
 
