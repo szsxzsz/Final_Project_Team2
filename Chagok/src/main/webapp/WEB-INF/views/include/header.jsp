@@ -98,7 +98,7 @@
 	width: 86px;
     height: auto;
     text-align: center;
-    margin: 0 10px 0 10px;
+    margin: 0 10px 0 10px; 
     font-size: 22px;
 
 }
