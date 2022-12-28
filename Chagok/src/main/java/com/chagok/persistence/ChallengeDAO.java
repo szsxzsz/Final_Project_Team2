@@ -14,4 +14,7 @@ public interface ChallengeDAO {
 	// [저축형]챌린지 참가자 조회 
 	public List<PlusVO> getPlusPeople(Integer cno);
 	
+	// 후기글 쓰기
+	public void createReview(ChallengeVO vo) throws Exception;
+	
 }

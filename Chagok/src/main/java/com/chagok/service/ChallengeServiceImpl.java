@@ -33,6 +33,12 @@ public class ChallengeServiceImpl implements ChallengeService{
 		mylog.debug("getPlusPeople("+cno+") 호출");
 		return dao.getPlusPeople(cno);
 	}
+
+	@Override
+	public void createReview(ChallengeVO vo) throws Exception {
+		dao.createReview(vo);
+		
+	}
 	
 	
 

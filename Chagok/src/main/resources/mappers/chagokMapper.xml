@@ -55,4 +55,10 @@
 		where cno = #{cno} and p.mno = u.mno
 	</select>
 
+	<!-- 후기글 작성 -->
+	<insert id="create">
+		insert into board (cno,b_title,b_content,b_writer,b_sort)
+		values (#{cno},#{b_title},#{b_content},#{b_writer},#{b_sort})
+	</insert>
+	
   </mapper>

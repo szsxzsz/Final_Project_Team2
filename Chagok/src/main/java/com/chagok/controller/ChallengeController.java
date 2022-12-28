@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.chagok.domain.ChallengeVO;
 import com.chagok.domain.PlusVO;
@@ -101,6 +102,62 @@ public class ChallengeController {
 		
 		return "/challenge/chat";
 	}
+	
+	// http://localhost:8080/challenge/feedgo?cno=1
+			@GetMapping(value = "/feedgo")
+			public String feedgoGET(@RequestParam("cno") int cno, Model model) throws Exception {
+				
+				mylog.debug(cno+"");
+				
+				model.addAttribute("feed", service.getChallengeInfo(cno));
+				
+				return "/challenge/feedgo";
+			}
+				
+			// http://localhost:8080/challenge/notice
+			@GetMapping(value = "/notice")
+			public String noticeGET() throws Exception {
+				return "/challenge/notice";
+			}
+			
+			// http://localhost:8080/challenge/review?cno=1
+			@GetMapping(value = "/review")
+			public String reviewGET(@RequestParam("cno") int cno, Model model,HttpSession session) throws Exception {
+				
+				mylog.debug(cno+"");
+				
+				model.addAttribute("review", service.getChallengeInfo(cno));
+				
+				return "/challenge/review";
+			}
+			@PostMapping(value = "/review")
+			public String reviewPOST(ChallengeVO vo, RedirectAttributes rttr) throws Exception {
+				mylog.debug(" reviewPOST 호출");
+				
+				mylog.debug(vo+"");
+				
+				service.createReview(vo);
+				
+				mylog.debug("게시판 글쓰기 완료");
+				
+				rttr.addFlashAttribute("result", "createOK");
+				
+				return "redirect:/challenge/reviewboard";
+			}
+			
+			
+			// http://localhost:8080/challenge/reviewboard
+			@GetMapping(value = "/reviewboard")
+			public String reviewboardGET() throws Exception {
+				return "/challenge/reviewboard";
+			}
+			
+			// http://localhost:8080/challenge/noticecontent
+			@GetMapping(value = "/noticecontent")
+			public String noticecontentGET() throws Exception {
+				return "/challenge/noticecontent";
+			}
+	
 }
 
 

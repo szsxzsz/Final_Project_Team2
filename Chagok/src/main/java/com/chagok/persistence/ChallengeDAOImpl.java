@@ -38,6 +38,13 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 		
 		return PPeopleList;
 	}
+
+	@Override
+	public void createReview(ChallengeVO vo) throws Exception {
+		
+		sqlSession.insert(NAMESPACE + ".create", vo);
+		
+	}
 	
 	 
 	
