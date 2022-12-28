@@ -34,6 +34,7 @@ import com.chagok.service.OpenBankingService;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.chagok.domain.AbookVO;
+import com.chagok.domain.CategoryVO;
 import com.chagok.service.AccountService;
 import com.chagok.domain.ReportVO;
 import com.chagok.service.OpenBankingService;
@@ -144,18 +145,21 @@ public class AssetController {
 	//서비스 객체 주입
 	@Inject
 	private AbookService service;
-	
+//	http://localhost:8080/asset/abookList?mno=1
 	@GetMapping("/abookList")
-	public String abookList(HttpSession session,Model model,@ModelAttribute("result") String result) throws Exception {
+	public String abookList(@RequestParam("mno") int mno, HttpSession session,Model model) throws Exception {
 		mylog.debug(" /abooklist 호출 -> DB 출력 ");
 		
 		// 전달받은 정보 x
-		mylog.debug(" 전달정보 : "+result);
+		mylog.debug(" 전달정보 : "+mno);
 		
 		// 서비스 -> DAO 게시판 리스트 가져오기
-		List<AbookVO> abookList = service.getAbookList();
-		// 연결되어 있는 뷰페이지로 정보 전달 (Model 객체)
+		List<AbookVO> abookList = service.getAbookList(mno);
+		List<CategoryVO> cateList = service.CateList();
+		mylog.debug("Controller+@@@@@@@@@@@@@@@@@@@2"+cateList);		
+		// 연결되어 있는 뷰 페이지로 정보 전달 (Model 객체)
 		model.addAttribute("abookList", abookList);
+		model.addAttribute("cateList", cateList);
 		
 		return "/asset/abookList"; 
 	}
