@@ -4,12 +4,14 @@ import java.util.Iterator;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,6 +19,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.chagok.apiDomain.RequestTokenVO;
 import com.chagok.apiDomain.ResponseTokenVO;
 import com.chagok.apiDomain.UserInfoResponseVO;
+import com.chagok.service.AbookService;
+import com.chagok.service.OpenBankingService;
+
+import org.springframework.web.bind.annotation.RequestParam;
+
 import com.chagok.domain.AbookVO;
 import com.chagok.domain.ReportVO;
 import com.chagok.service.OpenBankingService;
@@ -68,11 +75,24 @@ public class AssetController {
 	///////////////////영민////////////////////
 	
 	///////////////////세영//////////////////////
+	//서비스 객체 주입
+	@Inject
+	private AbookService service;
+	
 	@GetMapping("/abookList")
-	public String abookListGET() {
+	public String abookList(HttpSession session,Model model,@ModelAttribute("result") String result) throws Exception {
+		mylog.debug(" /abooklist 호출 -> DB 출력 ");
+		
+		// 전달받은 정보 x
+		mylog.debug(" 전달정보 : "+result);
+		
+		// 서비스 -> DAO 게시판 리스트 가져오기
+		List<AbookVO> abookList = service.getAbookList();
+		// 연결되어 있는 뷰페이지로 정보 전달 (Model 객체)
+		model.addAttribute("abookList", abookList);
+		
 		return "/asset/abookList"; 
 	}
-	
 	
 	
 	///////////////////세영////////////////////

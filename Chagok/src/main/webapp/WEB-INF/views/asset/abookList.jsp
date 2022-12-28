@@ -5,7 +5,7 @@
 <%@ include file="../include/sidebarAsset.jsp"%>
 
 <h1>가계부 내역 조회</h1>
-
+${abookList }
 <div class="box">
 	<div class="box-header">
 		<h3 class="box-title">Responsive Hover Table</h3>
