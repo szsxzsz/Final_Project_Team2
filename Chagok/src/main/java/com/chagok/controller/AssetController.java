@@ -1,5 +1,10 @@
 package com.chagok.controller;
 
+import java.text.DateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -11,15 +16,18 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import com.chagok.apiDomain.AccountHistoryRequestVO;
+import com.chagok.apiDomain.AccountHistoryResponseListVO;
+import com.chagok.apiDomain.AccountHistoryResponseVO;
+import com.chagok.apiDomain.AccountVO;
 import com.chagok.apiDomain.RequestTokenVO;
 import com.chagok.apiDomain.ResponseTokenVO;
 import com.chagok.apiDomain.UserInfoResponseVO;
-import com.chagok.service.OpenBankingService;
-
-import org.springframework.web.bind.annotation.RequestParam;
-
 import com.chagok.domain.AbookVO;
+import com.chagok.service.AccountService;
+import com.chagok.service.OpenBankingService;
 import com.chagok.service.ReportService;
 
 @Controller
@@ -30,10 +38,13 @@ public class AssetController {
 	
 	private ReportService rptService;
 	
-	// http://localhost:8080/asset/myAsset
 	///////////////////영민////////////////////
+	// http://localhost:8080/asset/myAsset
 	@Inject
 	private OpenBankingService openBankingService;
+	
+	@Inject
+	private AccountService accountService; 
 	
 	@GetMapping("/myAsset")
 	public String myAssetGET() {
@@ -42,21 +53,74 @@ public class AssetController {
 	}
 	
 	@RequestMapping(value = "/callback", method = RequestMethod.GET)
-	public String getToken(RequestTokenVO requestTokenVO, Model model) throws Exception {
+	public String getToken(RequestTokenVO requestTokenVO, Model model, AccountHistoryRequestVO accountHistoryRequestVO) throws Exception {
 		//////////////// 사용자인증 API (3-legged) ////////////////
 		
+		// 현재 시간정보
+		LocalDate now = LocalDate.now();
+		String from_date = now.minusMonths(6).format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+		String to_date = now.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+		
+		// 토큰 생성
 		ResponseTokenVO responseTokenVO = openBankingService.requestToken(requestTokenVO);
 		
 		// 정보를 들고 jsp 이동 (model 객체)
 		model.addAttribute("responseTokenVO", responseTokenVO);
 		
-///		//////////////// 사용자 정보 조회 => DB(member 테이블)에 저장 ////////////////
 		if (responseTokenVO != null) {
+			//////////////// 사용자 정보, 계좌정보 조회 => DB(user, account 테이블)에 저장 ////////////////
 			UserInfoResponseVO userInfoResponseVO = openBankingService.getUserInfo(responseTokenVO);
+			// 사용자 정보
+			model.addAttribute("userInfoResponseVO", userInfoResponseVO);
+			// 계좌 정보
+			List<AccountVO> accountList = userInfoResponseVO.getRes_list();
+			model.addAttribute("accountList", accountList);
+//			accountService.insertAccountInfo(userInfoResponseVO.getRes_list());
+			
+			//////////////// 계좌 거래내역 조회 => DB(account_history 테이블)에 저장 ////////////////
+			List<AccountHistoryRequestVO> accountHistoryRequesList = new ArrayList<AccountHistoryRequestVO>();
+			for (int i = 0; i < accountList.size(); i++) {
+				accountHistoryRequestVO.setAccess_token(responseTokenVO.getAccess_token());
+				accountHistoryRequestVO.setBank_tran_id("M202202513U2TEAM000"+i);
+				accountHistoryRequestVO.setFintech_use_num(accountList.get(i).getFintech_use_num());
+				accountHistoryRequestVO.setInquiry_type("A");
+				accountHistoryRequestVO.setInquiry_base("D");
+				accountHistoryRequestVO.setFrom_date(from_date);
+				accountHistoryRequestVO.setTo_date(to_date);
+				accountHistoryRequestVO.setSort_order("D");
+				
+				accountHistoryRequesList.add(accountHistoryRequestVO);
+			}
+			
+			AccountHistoryResponseListVO accountHistoryResponseListVO = openBankingService.getAccountHistory(accountHistoryRequesList);
+
+			
+			
+
+			//////////////// 카드정보 조회 => DB(member 테이블)에 저장 ////////////////
 		}
+		return "/asset/apiTest";
+	}
+	
+	@RequestMapping(value = "/callbackCenter", method = RequestMethod.GET)
+	public String getTokenCenter(RequestTokenVO requestTokenVO, Model model) throws Exception{
+		////////////////사용자인증 API (2-legged) ////////////////
+				
+		ResponseTokenVO responseTokenVO = openBankingService.requestTokenCenter(requestTokenVO);
 		
+		// 정보를 들고 jsp 이동 (model 객체)
+		model.addAttribute("responseTokenVO", responseTokenVO);
 		
-		
+		if (responseTokenVO != null) {
+			//////////////// 사용자 정보 조회 => DB(member 테이블)에 저장 ////////////////
+			UserInfoResponseVO userInfoResponseVO = openBankingService.getUserInfo(responseTokenVO);
+			// 사용자 정보
+			model.addAttribute("userInfoResponseVO", userInfoResponseVO);
+			// 계좌 정보
+			model.addAttribute("accountList", userInfoResponseVO.getRes_list());
+			//////////////// 계좌 정보 조회 => DB(member 테이블)에 저장 ////////////////
+			
+		}
 		return "/asset/apiTest";
 	}
 	
