@@ -4,7 +4,7 @@
 <html>
 
 <head class="">
-<title>SAMQ - 스마트한 자산관리 솔루션</title>
+<title>차곡</title>
 <meta charset="utf-8">
 <meta name="viewport"
 	content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=yes,viewport-fit=cover">
