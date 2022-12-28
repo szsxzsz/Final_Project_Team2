@@ -47,7 +47,7 @@
     <p class="login-box-msg" style="font-family: 'Gowun Dodum', sans-serif; font-size: 18px;"><b>로그인</b></p>
 	<!-- <p class="login-box-msg">Sign in to start your session</p> -->
 	
-    <form action="/chagok/login" method="post">
+    <form action="" method="post">
       <div class="form-group has-feedback">
         <input type="email" class="form-control" id="id" name="id" placeholder="이메일">
         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
@@ -68,6 +68,7 @@
         <!-- /.col -->
         <div class="col-xs-12">
           <div class="checkbox icheck">
+         	<div id="textstyle">${message }</div> 
         	<div class="idCheck" id="textstyle"> </div>
         	<div class="pwCheck" id="textstyle"> </div>
           </div>

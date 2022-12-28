@@ -17,6 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.chagok.domain.ChallengeVO;
 import com.chagok.domain.PlusVO;
+import com.chagok.domain.UserVO;
 import com.chagok.service.ChallengeService;
 
 @Controller
@@ -122,8 +123,13 @@ public class ChallengeController {
 
 	// http://localhost:8080/challenge/chat
 	@GetMapping(value = "/chat")
-	public String chatGET() throws Exception {
-
+	public String chatGET(Model model) throws Exception{
+		mylog.debug("==================================");
+		UserVO user = new UserVO();
+		mylog.debug("@ChatController, GET Chat / Username : " + user.getNick());
+		
+		model.addAttribute("user", user.getNick());
+		
 		return "/challenge/chat";
 	}
 

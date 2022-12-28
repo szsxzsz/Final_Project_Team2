@@ -101,7 +101,7 @@ $(function(){
 		if(/^[A-Za-z0-9_]+[A-Za-z0-9]*[@]{1}[A-Za-z0-9]+[A-Za-z0-9]*[.]{1}[A-Za-z]{1,3}$/.test($('#id').val())){
 			$.ajax({
 	    		 type :'post', // 서버에 전송하는 http방식
-	    		 url :'/chagok/checkId', // 서버 요청 url
+	    		 url :'/checkId', // 서버 요청 url
 	    		 headers : {'Content-Type' : 'application/json'},
 	    		 dataType : 'text', //서버로 부터 응답받을 데이터의 형태 
 		   		 data : id, // 서버로 전송할 데이터 // 위에서 지정한 const id 
@@ -138,7 +138,7 @@ $(function(){
 			$('.pwCheck').html("4자 이상 입력하세요.");
 		}
 		
-		if($("#pw").val().length > 5){
+		if($("#pw").val().length > 4){
 			if(!$("#pw").val()=="" && !/^(?=.*[a-zA-Z])(?=.*[0-9]).{0,}$/.test($('#pw').val())){ 
 				$('.pwCheck').html("영문자,숫자를 포함하여 4~16자로 입력하세요.");
 			}
@@ -191,7 +191,7 @@ $(function(){
 		if(nick.length > 1){
 			$.ajax({
 				type :'post', // 서버에 전송하는 http방식
-		   		 url :'/chagok/checkNick', // 서버 요청 url
+		   		 url :'/checkNick', // 서버 요청 url
 		   		 headers : {'Content-Type' : 'application/json'},
 		   		 dataType : 'text', //서버로 부터 응답받을 데이터의 형태 
 		   		 data : nick, // 서버로 전송할 데이터 // 위에서 지정한 const id 

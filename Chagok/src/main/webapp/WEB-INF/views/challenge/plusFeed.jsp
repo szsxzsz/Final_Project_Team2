@@ -1,3 +1,4 @@
+<%@page import="java.util.Date"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="../include/header.jsp" %>
@@ -5,9 +6,57 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
+<script>
+	 /* $(document).ready(function(){
+		 $.ajax({
+    		 type :'GET', // 서버에 전송하는 http방식
+    		 url :'/getPlusData', // 서버 요청 url
+    		 contentType:"application/json",
+    		 dataType : 'json', //서버로 부터 응답받을 데이터의 형태 
+	   		 data : cno, // 서버로 전송할 데이터
+	   		 success : function(result) { // 매개변수에 통신성공시 데이터가 저장된다.
+					//서버와 통신성공시 실행할 내용 작성.
+					console.log('통신 성공! ' + result);
+		   		 	if(){
+	   		 			$('.progressBar').html('<b id="textstyle2">사용가능</b>');
+		   		 		
+		   		 	} else if(){
+		   		 		 $('.progressBar').html('<b id="textstyle">이미 사용 중인 이메일 주소입니다.</b>');
+		   		 		
+		   		 	}
+		   		 	
+	   		 
+				},
+				error : function(request, status, error)  { //통신에 실패했을때
+					console.log('통신실패');
+			        console.log("code: " + request.status)
+			        console.log("message: " + request.responseText)
+			        console.log("error: " + error);
+				}
+     	}); // end ajax
+			
+		
+	}); */
+$(document).ready(function(){
+	 var endDate = new Date(${vo.c_start.time}+(60*60*24*1000*7*${vo.c_period}));
+	 
+	 month = ''+(endDate.getMonth() +1),
+	 day = ''+ endDate.getDate(),
+	 year = endDate.getFullYear();
+	 
+	 if(month.length < 2) month = '0' + month;
+	 if(day.length < 2) day = '0' + day;
+	 
+ 	 $('#endDate').append([year,month,day].join('-'));
+	
+});	
+</script>
 <h1 style="padding: 0 15px 0 15px;"> 저축형 차곡 챌린지 </h1>
-${plusPeoList }
  <!-- Main content -->
+ <br> <br> <br> <br> 
+ ${vo.c_period*1000*60*60*24*7}<br>
+ ${vo.c_period}<br>
+ ${vo.c_start}
 <section class="content">
 	<div class="row">
 		<div class="col-lg-5 mx-6 aos-init aos-animate" data-aos="fade-right" >
@@ -18,6 +67,7 @@ ${plusPeoList }
 			 <jsp:useBean id="now" class="java.util.Date" />
 			 <fmt:parseNumber value="${now.time / (1000*60*60*24)}" integerOnly="true" var="nowfmtTime" scope="request"/>
 			 <fmt:parseNumber value="${vo.c_start.time / (1000*60*60*24)}" integerOnly="true" var="startTime" scope="request"/>
+			  
 			<c:if test="${startTime - nowfmtTime < 1}">
 				<p class="fst-italic">챌린지가 시작되었습니다!</p>
 			</c:if>
@@ -49,6 +99,12 @@ ${plusPeoList }
 	               	<b><fmt:formatDate value="${vo.c_start }" pattern="YYYY-MM-dd"/></b>
 	               </span>
 	              </div>
+	             <div class="progress-group" style="width: 280px;">
+	               <span class="progress-text">챌린지 종료일</span>
+	               <span class="progress-number">
+	               	<span id="endDate"></span>
+	               </span>
+	              </div>
 	         	</div>
 	       </div>
 		</div>
@@ -57,7 +113,20 @@ ${plusPeoList }
 	    <div class="d-flex justify-content-center">
 		    <div class="box">
 		        <div class="col-md-12 text-center" style="background: #FAF8F1;">
-				    	<h4><span style="color: #10A19D;">7</span>일 마다 <span style="color: #10A19D;"> 100,000 </span>원씩 저축하는 조건이 있습니다.</h4>
+				    	<h4><span style="color: #10A19D;">
+				    	<c:if test="${vo.c_freq == 1 }">
+				    		7
+				    	</c:if>
+				    	<c:if test="${vo.c_freq == 2 }">
+				    		3
+				    	</c:if>
+				    	<c:if test="${vo.c_freq == 3 }">
+				    		2
+				    	</c:if>
+				    		</span>일 마다 
+				    	<span style="color: #10A19D;">
+				    	<fmt:formatNumber value="${vo.c_amount / vo.c_period}" pattern=",000"/>
+				    	</span>원씩 저축하는 조건이 있습니다.</h4>
 		    	</div>
 		    </div>
 		</div>
@@ -89,56 +158,49 @@ ${plusPeoList }
                   <th class="col-md-1">Status</th>
                   <th class="col-md-2" style="text-align: center;">저축 금액</th>
                 </tr>
-					${vo.c_host}
+					<%-- ${ (plusPeople.pl_cnt * 100) / (vo.c_total * 100)} --%>
                 <c:forEach var="plusPeople" begin="0" end="${plusPeoList.size()-1}" items="${plusPeoList}">
                 <c:set var="i" value="${i+1 }"/>
+                ${plusPeople}
                 <tr>
                   <td>${i }</td>
                   <td>${plusPeople.mno}</td>
                   <td>
-                  	<c:if test="${plusPeople.pl_cnt == vo.c_total }">
-	                    <div class="progress progress-xs progress-bar-green">
-	                      <div class="progress-bar progress-bar-success" style="width: 100%"></div>
-	                    </div>
-                  	</c:if>
-                  	<c:if test=""></c:if>
+                  	<div id="progressBar"></div>
+	                  	<c:if test="${plusPeople.pl_cnt == vo.c_total }">
+		                    <div class="progress progress-xs progress-bar-green">
+		                      <div class="progress-bar progress-bar-success" style="width: 100.0%"></div>
+		                    </div>
+	                  	</c:if>
+	                  	<c:if test="${(plusPeople.pl_cnt / vo.c_total) == 0 }">
+		                    <div class="progress progress-xs progress-striped active">
+		                      <div class="progress-bar progress-bar-primary" style="width: 5%"></div>
+		                    </div>
+	                  	</c:if>
+	                  	<c:if test="${(plusPeople.pl_cnt / vo.c_total) != 0 && (plusPeople.pl_cnt / vo.c_total) <= 0.25 }">
+		                    <div class="progress progress-xs progress-striped active">
+		                      <div class="progress-bar progress-bar-primary" style="width: ${(plusPeople.pl_cnt / vo.c_total)*100}%"></div>
+		                    </div>
+	                  	</c:if>
+	                  	<c:if test="${(plusPeople.pl_cnt / vo.c_total) > 0.25 && (plusPeople.pl_cnt / vo.c_total) <= 0.9 }">
+		                    <div class="progress progress-xs progress-striped active">
+		                      <div class="progress-bar progress-bar-primary" style="width: ${(plusPeople.pl_cnt / vo.c_total)*100}%"></div>
+		                    </div>
+	                  	</c:if>
+	              <%-- </c:if> --%>
                   </td>
                   <td><span class="badge bg-green">${plusPeople.pl_cnt}/${vo.c_total }</span></td>
                   <td>
-                  	<c:if test="${plusPeople.pl_cnt == vo.c_total }">
+                  	<c:if test="${plusPeople.pl_cnt == vo.c_total && plusPeople.pl_finish == true }">
                   		<span class="label label-success">성공</span>
                   	</c:if>
-                  	<c:if test="${plusPeople.pl_cnt != vo.c_total }">
+                  	<c:if test="${plusPeople.pl_cnt != vo.c_total && plusPeople.pl_finish == false}">
                   		<span class="label label-danger">실패</span>
                   	</c:if>
                   </td>
                   <td style="text-align: right; padding-right: 4%; vertical-align: 10%;"><fmt:formatNumber type="number" maxFractionDigits="3" value="${plusPeople.pl_sum}" /><b>&nbsp;원</b></td>
                 </tr>
                 </c:forEach>
-                <tr>
-                  <td>2</td>
-                  <td>Alexander </td>
-                  <td>
-                    <div class="progress progress-xs progress-striped active">
-                      <div class="progress-bar progress-bar-danger" style="width: 25%"></div>
-                    </div>
-                  </td>
-                  <td><span class="badge bg-red">25%</span></td>
-                  <td><span class="label label-danger">실패</span></td>
-                  <td>125,000</td>
-                </tr>
-                <tr>
-                  <td>3</td>
-                  <td>Clean</td>
-                  <td>
-                    <div class="progress progress-xs progress-striped active">
-                      <div class="progress-bar progress-bar-success" style="width: 100%"></div>
-                    </div>
-                  </td>
-                  <td><span class="badge bg-green">10/10</span></td>
-                  <td><span class="label label-success">성공</span></td>
-                  <td>500,000</td>
-                </tr>
                 <tr>
                   <td>3</td>
                   <td>Bob Doe</td>
@@ -151,18 +213,6 @@ ${plusPeoList }
                   <td><span class="label label-primary">진행중</span></td>
                   <td>350,000</td>
                 </tr>
-                <tr>
-                  <td>4</td>
-                  <td>Mike Doe</td>
-                  <td>
-                    <div class="progress progress-xs">
-                      <div class="progress-bar progress-bar-yellow" style="width: 50%"></div>
-                    </div>
-                  </td>
-                  <td><span class="badge bg-yellow">5/10</span></td>
-                  <td><span class="label label-warning">실패</span></td>
-                  <td>250,000</td>
-                </tr>
               </table>
             </div>
             <!-- /.box-body -->
@@ -173,8 +223,8 @@ ${plusPeoList }
     </section>
     <!-- /.content -->
 	<div>
-		<button onclick="openSocket();">채팅하기</button>
-		<button onclick="closeSocket();">끝내기</button>
+		<button onclick="open();">채팅하기</button>
+		<button onclick="close();">끝내기</button>
 	</div>
     <!-- <!-- 칭찬하기/주시하기  @@@@@@@@@@@@@@@@@@@@@@@@@ -->
     <div class="col-xs-12" style="margin-left: 10px; ">

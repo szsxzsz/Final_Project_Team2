@@ -1,60 +1,69 @@
 /**
- * 로그인 - login.jsp 적용 파일
+ * 회원가입 - register.jsp 적용파일
  */
 $(document).ready(function(){
-	   	   
-	   $('#signbtn').click(function(){
-	    var id = $('#id').val();   
-	    var pw = $('#pw').val();
-	    
-	    var check_id = /^[A-Za-z0-9_]+[A-Za-z0-9]*[@]{1}[A-Za-z0-9]+[A-Za-z0-9]*[.]{1}[A-Za-z]{1,3}$/; // 이메일 양식 검사    
-	    var check_pw = /^[a-zA-Z0-9]{4,16}$/; // 비밀번호 유효성 검사 (영문/숫자 4-16)
-	    
-			//  이메일 공백 확인
-		    if (id == "" || id == null) {
-		       Swal.fire({
-		            title: '이메일을 입력해주세요.', 
-		            /* title: '${pageContext.request.contextPath}/chagok', */
-		            icon: 'warning'
-		          });
-		         $('#id').focus();
-		         return false;
-		     } 
-			
-		     // 이메일 유효성 체크
-		     if (!check_id.test(id)) {
-		          $('.idCheck').html('이메일 양식이 올바르지 않습니다.');
-		           $('#id').val("");
-		          $('#id').focus();
-		           return false;
-		    } else {
-		         $('.idCheck').html('');
-		     }
-			
-		    // 비밀번호 공백 확인
-		    if (pw == "" || pw == null) {
-		       Swal.fire({
-		            title: '비밀번호를 입력해주세요.',
-		            icon: 'warning'
-		          });
-		        $('#pw').focus();
-		        return false;
-		    } 
-		    
-		    // 비밀번호 유효성 체크
-		     if (!check_pw.test(pw)) {
-		         $('.pwCheck').html('영문 및 숫자 4-16자로 입력해주세요.');
-		         $('#pw').val("");
-		         $('#pw').focus();
-		         return false;
-		     } else {
-		        $('.pwCheck').html('');
-		     }
-		    
-	   });    
-});	 
+   
+   $('#sbtn').click(function(){
+   
+    var id = $('#id').val();   
+    var pw = $('#pw').val();
 
-//유효성 체크
+    var check_id = /^[A-Za-z0-9_]+[A-Za-z0-9]*[@]{1}[A-Za-z0-9]+[A-Za-z0-9]*[.]{1}[A-Za-z]{1,3}$/; // 이메일 양식 검사    
+    var check_pw = /^[a-zA-Z0-9]{4,16}$/; // 비밀번호 유효성 검사 (영문/숫자 4-16)
+
+    //  이메일 공백 확인
+    if (id == "" || id == null) {
+       Swal.fire({
+            title: '이메일을 입력해주세요.', 
+            icon: 'warning'
+          });
+         $('#id').focus();
+         return false;
+     } 
+    if(!check_id.test(id)){
+       Swal.fire({
+		  	title: '이메일 형식으로 입력해주세요.', 
+            icon: 'warning'
+          });
+       	 $('#id').focus();
+       	return false;
+     }   
+
+    // 비밀번호 공백 확인
+    if (pw == "" || pw == null) {
+       Swal.fire({
+            title: '비밀번호를 입력해주세요.',
+            icon: 'warning'
+          });
+        $('#pw').focus();
+        return false;
+    }   
+    
+    // 비밀번호 재입력 공백 확인
+    if (rpw == "" || rpw == null) {
+       Swal.fire({
+            title: '비밀번호를 다시 입력해주세요.',
+            icon: 'warning'
+          });
+         $('#rpw').focus();
+         return false;
+     } 
+    
+    // 비밀번호 일치 체크
+    if($("#pw").val() != $("#rpw").val()){
+       $('.pwReCheck').html('비밀번호가 일치하지 않습니다.');
+        $("#rpw").val("");
+        $("#pw").focus();
+        return false;
+    } else {
+        $('.pwReCheck').html('');
+    }   
+    
+   });
+   
+});
+
+// 유효성 체크
 $(function(){
 
 	////////이메일 ///////////////////
@@ -71,7 +80,7 @@ $(function(){
 		if(/^[A-Za-z0-9_]+[A-Za-z0-9]*[@]{1}[A-Za-z0-9]+[A-Za-z0-9]*[.]{1}[A-Za-z]{1,3}$/.test($('#id').val())){
 			$.ajax({
 	    		 type :'post', // 서버에 전송하는 http방식
-	    		 url :'/chagok/checkId', // 서버 요청 url
+	    		 url :'/checkId', // 서버 요청 url
 	    		 headers : {'Content-Type' : 'application/json'},
 	    		 dataType : 'text', //서버로 부터 응답받을 데이터의 형태 
 		   		 data : id, // 서버로 전송할 데이터 // 위에서 지정한 const id 
@@ -81,9 +90,9 @@ $(function(){
 						console.log(result === 'available');
 		   		 
 			   		 	if(result === 'available'){
-			   		 		 $('.idCheck').html('<b id="textstyle2">사용가능</b>');
+			   		 		 $('.idCheck').html('<b id="textstyle">다시 확인하세요</b>');
 			   		 	}else{
-			   		 		 $('.idCheck').html('<b id="textstyle">이미 사용 중인 이메일 주소입니다.</b>');
+			   		 		 $('.idCheck').html('<b id="textstyle2">유효한 이메일 주소입니다.</b>');
 			   		 	}
 					},
 					error : function(request, status, error)  { //통신에 실패했을때
@@ -108,7 +117,7 @@ $(function(){
 			$('.pwCheck').html("4자 이상 입력하세요.");
 		}
 		
-		if($("#pw").val().length > 5){
+		if($("#pw").val().length > 4){
 			if(!$("#pw").val()=="" && !/^(?=.*[a-zA-Z])(?=.*[0-9]).{0,}$/.test($('#pw').val())){ 
 				$('.pwCheck').html("영문자,숫자를 포함하여 4~16자로 입력하세요.");
 			}
@@ -142,9 +151,9 @@ $(function(){
 		}
 	});
 	/////////////// 비밀번호 확인 //////////////////////
-//	 아이디(로그인 전용 아이디) 또는 비밀번호를 잘못 입력했습니다.
-//	 입력하신 내용을 다시 확인해주세요.
-});
+
+});  // jQeury 끝
+
 
 $(function () {
     $('input').iCheck({

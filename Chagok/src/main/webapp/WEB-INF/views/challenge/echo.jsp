@@ -1,73 +1,61 @@
-<%@ page session="true" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<script src="../resources/js/sockjs.min.js"></script>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-    <title>Home</title>
-    <meta charset="UTF-8"/>
-    <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>웹 소켓 통신</title>
+<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.min.js"></script>
 </head>
 <body>
-    <form id="chatForm">
-        <div class="chat_start_main">
-            상담 CHAT
-        </div>
-        <div class="chat_main" style="display:none;">
-            <div class="modal-header" style="height:20%;">
-                상담 CHAT 
-            </div>
-            <div class="modal-content" id="chat" style="height:60%;">
-                
-            </div>
-            <div class="modal-footer">
-                <input type="text" id="message" class="form-control" style="height:20%;" placeholder="메세지를 입력하세요"/>    
-            </div>
-        </div>
-<!--         <button class="">send</button> -->
-    </form>
+    <div>
+        <input type="text" id="messageinput">
+    </div>
+    
+    <div>
+        <button onclick="openSocket();">Open</button>
+        <button onclick="send();">Send</button>
+        <button onclick="closeSocket();">close</button>
+    </div>
+    
+    <div id="message"></div>
     <script>
-//전역변수 선언-모든 홈페이지에서 사용 할 수 있게 index에 저장
-var socket = null;
-$(document).ready(function(){
-    if(!isEmpty($("#session_id").val()))
-            connectWS();
-});
-    $(".chat_start_main").click(function(){
-        $(this).css("display","none");
-        $(".chat_main").css("display","inline");
-    })
-    $(".chat_main .modal-header").click(function(){
-        $(".chat_start_main").css("display","inline");
-        $(".chat_main").css("display","none");
-    });
- 
-    function connectWS(){
-        var sock = new SockJS("/echo");
-            socket =sock;
-        sock.onopen = function() {
-               console.log('info: connection opened.');
-        };
-        sock.onmessage = function(e){
-//             console.log(e);
-//             var strArray = e.data.split(":");
-//             if(e.data.indexof(":") > -1){
-//                 $(".chat_start_main").text(strArray[0]+"님이 메세지를 보냈습니다.");
-//             }
-//             else{
-//             }
-            $("#chat").append(e.data + "<br/>");
+        var ws;
+        var messages = document.getElementById("message");
+        
+        function openSocket(){
+            if(ws!==undefined && ws.readyState!==WebSocket.CLOSED)
+            {
+                writeResponse("WebSocket is already opend.");
+                return;
+            } 
+            
+            //웹소켓 객체 만드는 코드
+            ws = new WebSocket('ws://localhost:8080/echo');
+            
+            ws.onopen=function(event){
+                if(event.data===undefined) return;
+                writeResponse(event.data);
+            };
+            ws.onmessage=function(event){
+                writeResponse(event.data);
+            };
+            ws.onclose=function(event){
+                writeResponse("Connection closed");
+            }
         }
-        sock.onclose = function(){
-            $("#chat").append("연결 종료");
-//              setTimeout(function(){conntectWs();} , 10000); 
+        function send(){
+            var text = document.getElementById("messageinput").value;
+            ws.send(text);
+            text="";
         }
-        sock.onerror = function (err) {console.log('Errors : ' , err);};
- 
-        $("#chatForm").submit(function(event){
-            event.preventDefault();
-                sock.send($("#message").val());
-                $("#message").val('').focus();    
-        });
-    }
-</script>
+        function closeSocket(){
+            ws.close();
+        }
+        function writeResponse(text){
+            message.innerHTML+="<br/>"+text;
+        }
+    </script>
 </body>
 </html>
