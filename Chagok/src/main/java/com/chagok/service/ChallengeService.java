@@ -14,5 +14,8 @@ public interface ChallengeService {
 	public List<PlusVO> getPlusPeople(Integer cno);
 
 	// 후기글 작성
-	public void createReview(ChallengeVO vo) throws Exception;
+	public void createReview(ChallengeVO vo);
+	
+	// 챌린지 정보 (리스트)
+	public List<ChallengeVO> getChallengeList(Integer cno);
 }

@@ -40,9 +40,19 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 	}
 
 	@Override
-	public void createReview(ChallengeVO vo) throws Exception {
+	public void createReview(ChallengeVO vo) {
 		
 		sqlSession.insert(NAMESPACE + ".create", vo);
+		
+	}
+
+	@Override
+	public List<ChallengeVO> getChallengeList(Integer cno) {
+		mylog.debug(" getChallengeList(Integer cno) 호출");
+		
+		List<ChallengeVO> challengeList = sqlSession.selectList(NAMESPACE+".getChallengeInfo");
+		
+		return challengeList;
 		
 	}
 	

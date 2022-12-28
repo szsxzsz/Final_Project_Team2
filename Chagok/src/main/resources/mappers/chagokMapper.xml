@@ -60,5 +60,5 @@
 		insert into board (cno,b_title,b_content,b_writer,b_sort)
 		values (#{cno},#{b_title},#{b_content},#{b_writer},#{b_sort})
 	</insert>
-	
+		
   </mapper>

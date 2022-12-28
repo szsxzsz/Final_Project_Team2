@@ -35,9 +35,14 @@ public class ChallengeServiceImpl implements ChallengeService{
 	}
 
 	@Override
-	public void createReview(ChallengeVO vo) throws Exception {
+	public void createReview(ChallengeVO vo){
 		dao.createReview(vo);
 		
+	}
+
+	@Override
+	public List<ChallengeVO> getChallengeList(Integer cno) {
+		return dao.getChallengeList(cno);
 	}
 	
 	
