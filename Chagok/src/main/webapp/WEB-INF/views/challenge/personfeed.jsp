@@ -10,26 +10,26 @@
 ${feed }
 <div class="box box-primary">
 	<div class="box-header with-border">
-		<h3 class="box-title">[차곡] 한달동안 같이 50만원 모아보실 분!</h3>
+		<h3 class="box-title">${feed.c_title }</h3>
 	</div>
 
 	<div class="box-body">
 		<strong><i class="fa fa-book margin-r-5"></i> 주최자 </strong>
-		<p class="text-muted"></p>
+		<p class="text-muted"> ${feed.c_host }</p>
 		<hr>
 		<strong><i class="fa fa-map-marker margin-r-5"></i> 챌린지 인원</strong>
-		<p class="text-muted">8명</p>
+		<p class="text-muted">${feed.c_person }</p>
 		<hr>
 		<strong><i class="fa fa-table"></i> 챌린지 기간</strong>
 		<p>
-			<span class="label label-danger">4주</span>
+			<span class="label label-danger">${feed.c_period }</span>
 		</p>
 		<hr>
 		<strong><i class="fa fa-file-text-o margin-r-5"></i> 챌린지 시작일</strong>
-		<p> 2022-12-24</p>
+		<p> ${feed.c_start }</p>
 		<hr>
 		<strong><i class="fa fa-file-text-o margin-r-5"></i> 예치금 </strong>
-		<p> 10,000 꿀머니</p>
+		<p> ${feed.c_deposit }</p>
 	</div>
 
 </div>
@@ -52,7 +52,6 @@ ${feed }
 					<li>
 						<img src="" alt="User Image"> 
 							<a class="users-list-name" href="#">${feed.c_person }</a> 
-<!-- 						<span class="users-list-date">오늘</span> -->
 					</li>
 				</ul>
 
