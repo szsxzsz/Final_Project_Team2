@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import com.chagok.domain.AbookVO;
+import com.chagok.domain.ReportVO;
 
 @Repository
 public class ReportDAOImpl implements ReportDAO {
@@ -30,8 +31,11 @@ public class ReportDAOImpl implements ReportDAO {
 	}
 
 	@Override
-	public List<AbookVO> getCntCate(Integer mno) throws Exception {
-		return null;
+	public List<ReportVO> getCateCnt(Integer mno) throws Exception {
+		mylog.debug("getCateCnt() 호출");
+		List<ReportVO> cntcateList = sqlSession.selectList(NAMESPACE+".getCateCnt", mno);
+		mylog.debug("ctRpt1 : "+cntcateList.size());
+		return cntcateList;
 	}
 	
 	
