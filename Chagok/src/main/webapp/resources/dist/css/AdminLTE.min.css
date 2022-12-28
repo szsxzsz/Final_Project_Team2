@@ -1,3 +1,4 @@
+
 @import
 	url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic)
 	; /*!
@@ -18,7 +19,7 @@ html, body {
 body {
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
-	font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial,
+	font-family: ''GmarketSans', 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial,
 		sans-serif;
 	font-weight: 400;
 	overflow-x: hidden;
@@ -137,17 +138,17 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
-	font-family: 'Source Sans Pro', sans-serif
+	font-family: 'Pretendard','Source Sans Pro', sans-serif
 }
 
 a {
-	color: #3c8dbc
+	color: inherit;
 }
 
 a:hover, a:active, a:focus {
 	outline: none;
 	text-decoration: none;
-	color: #72afd2
+	color: #FFDB83;
 }
 
 .page-header {
@@ -168,6 +169,7 @@ a:hover, a:active, a:focus {
 }
 
 .main-header>.navbar {
+	margin-top: 95px;
 	-webkit-transition: margin-left .3s ease-in-out;
 	-o-transition: margin-left .3s ease-in-out;
 	transition: margin-left .3s ease-in-out;
@@ -417,7 +419,7 @@ a:hover, a:active, a:focus {
 	position: absolute;
 	top: 0;
 	left: 0;
-	padding-top: 50px;
+/* 	padding-top: 50px; */
 	min-height: 100%;
 	width: 230px;
 	z-index: 810;
@@ -456,6 +458,7 @@ a:hover, a:active, a:focus {
 }
 
 .sidebar {
+/* 	margin-top: 95px; */
 	padding-bottom: 10px
 }
 

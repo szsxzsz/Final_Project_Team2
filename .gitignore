@@ -186,6 +186,8 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+
+target/
 # End of https://www.toptal.com/developers/gitignore/api/macos,windows,eclipse,java,git,maven
 
 target/
