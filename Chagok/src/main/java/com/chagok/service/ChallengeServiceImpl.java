@@ -27,6 +27,13 @@ public class ChallengeServiceImpl implements ChallengeService{
 		mylog.debug("getChallengeInfo(cno) 처리 결과 : "+vo);
 		return dao.getChallengeInfo(cno);
 	}
+	
+	@Override
+	public ChallengeVO getCt_top(Integer cno) {
+		mylog.debug("getCt_top(int cno) 호출");
+		ChallengeVO vo = dao.getCt_top(cno);
+		return dao.getCt_top(cno);
+	}
 
 	@Override
 	public List<PlusVO> getPlusPeople(Integer cno) {

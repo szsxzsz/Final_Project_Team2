@@ -8,8 +8,10 @@ import com.chagok.domain.PlusVO;
 public interface ChallengeDAO {
 	
 	// 챌린지 정보 불러오기 (사진 / 카테고리 / 제목 / 장 / 인원 / 기간 / 시작일 /예치금)
-
 	public ChallengeVO getChallengeInfo(int cno);	
+	
+	// ct_top (카테고리 대분류) 불러오기
+	public ChallengeVO getCt_top(int cno);
 	
 	// [저축형]챌린지 참가자 조회 
 	public List<PlusVO> getPlusPeople(Integer cno);

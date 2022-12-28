@@ -74,7 +74,7 @@
       <li><a href="#" class="link-black text-sm"><i class="fa fa-share margin-r-5" style="font-size:1.3em;"><b>Share</b></i></a></li>
     </ul>
         </div>
-        <input class="btn btn-block btn-success btn-lg" type="button" value="참여하기" onclick="location.href='plusFeed.jsp'" style="width:218px; margin-left: 950px;">
+        <input class="btn btn-block btn-success btn-lg" type="button" value="참여하기" onclick="location.href=''" style="width:218px; margin-left: 950px;">
 
 
                     <!-- 대략적인 틀 작성을 위해 일단은 글 써두고 나중에 데이터 넘겨받기 -->

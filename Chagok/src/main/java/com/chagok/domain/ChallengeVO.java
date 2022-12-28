@@ -23,6 +23,7 @@ public class ChallengeVO {
 	private int c_total;
 	private int c_amount;
 	private int c_min;
-	private int c_person;
+	private String c_person;
 	private int ctno;
+	private String ct_top;
 }

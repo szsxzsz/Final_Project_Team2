@@ -42,11 +42,15 @@
 		select * from user
 		where id=#{id} and pw=#{pw}
 	</select>
-  
   	
   	<!--  챌린지 정보 가져오기  -->
 	<select id="getChallengeInfo" resultType="com.chagok.domain.ChallengeVO">
 	select * from challenge where cno = #{cno}
+	</select>
+	
+	<!-- ct_top만 가져오기 -->
+	<select id="getCt_top" resultType="com.chagok.domain.ChallengeVO">
+	select ct_top from category where ctno=(select ctno from challenge where cno = #{cno}); 
 	</select>
 	
 	<!-- [저축형]챌린지 참가자 조회-->

@@ -29,6 +29,13 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 		
 		return vo;
 	}
+	
+	@Override
+	public ChallengeVO getCt_top(int cno) {
+		ChallengeVO vo = sqlSession.selectOne(NAMESPACE+".getCt_top", cno);
+		
+		return vo;
+	}
 
 	@Override
 	public List<PlusVO> getPlusPeople(Integer cno) {

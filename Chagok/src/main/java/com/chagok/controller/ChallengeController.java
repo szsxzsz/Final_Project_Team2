@@ -42,18 +42,32 @@ public class ChallengeController {
 		return "/challenge/plusFeed";
 	}
 	
-	// http://localhost:8080/challenge/plusdetail
+	// http://localhost:8080/challenge/plusdetail?cno=2
 	@GetMapping(value = "/plusdetail")
 	public String plusdetailGET(Model model,@RequestParam("cno") int cno, HttpSession session) throws Exception{
 		mylog.debug("plusdetailGET 호출");
 		mylog.debug(cno+"");
 		
 		ChallengeVO vo = service.getChallengeInfo(cno);
-		
+		ChallengeVO vo2 = service.getCt_top(cno);
 		model.addAttribute("vo", vo); // plusdetail로 정보전달
+		model.addAttribute("vo2", vo2);
 		
 		return "/challenge/plusdetail";
 	}
+	
+//	// http://localhost:8080/challenge/minusdetail?cno=2
+//	@GetMapping(value = "/minusdetail")
+//	public String minusdetailGET(Model model,@RequestParam("cno") int cno, HttpSession session) throws Exception{
+//		mylog.debug("minusdetailGET 호출");
+//		mylog.debug(cno+"");
+//		
+//		ChallengeVO vo = service.getChallengeInfo(cno);
+//		
+//		model.addAttribute("vo", vo); // minusdetail로 정보전달
+//		
+//		return "/challenge/minusdetail";
+//	}
 	
 	// http://localhost:8080/challenge/minusFeed?cno=1
 	// http://localhost:8080/challenge/minusFeed
