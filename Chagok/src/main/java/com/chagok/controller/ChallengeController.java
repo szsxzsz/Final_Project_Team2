@@ -201,6 +201,7 @@ public class ChallengeController {
 //		String nick = request.getParameter();
 		ChallengeVO vo = service.getmyChallenge(nick);
 		model.addAttribute("nick", nick);
+		model.addAttribute("vo", vo);
 		
 		return "/challenge/mychallenge";
 	}

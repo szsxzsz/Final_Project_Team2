@@ -67,7 +67,7 @@
 	
 	<!-- 내 챌린지 정보 가져오기 -->
 	<select id="getmyChallenge" resultType="com.chagok.domain.ChallengeVO">
-	select * from challenge where c_person like '%#{nick}%'
+	select * from challenge where c_person like concat('%',#{nick},'%')
 	</select>
 		
   </mapper>
