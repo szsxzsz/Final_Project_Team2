@@ -65,23 +65,19 @@
 		values (#{cno},#{b_title},#{b_content},#{b_writer},#{b_sort})
 	</insert>
 	
-	<!-- 내 챌린지 정보 가져오기 -->
-	<select id="getmyChallenge" resultType="com.chagok.domain.ChallengeVO">
-	select * from challenge A join category B
-	on A.ctno = B.ctno
-	where c_person like concat('%',#{nick},'%')
-	</select>
+   <!-- 내 챌린지 정보 가져오기 -->
+   <select id="getmyChallenge" resultType="com.chagok.domain.ChallengeVO">
+   select * from challenge A join category B
+   on A.ctno = B.ctno
+   where c_person like concat('%',#{nick},'%')
+   </select>
+
 	
 	<!-- [절약형]챌린지 참가자 조회-->
 	<select id="getMinusPeople" resultType="com.chagok.domain.MinusVO">
 		select * from minus m inner join user u
 		where cno = #{cno} and m.mno = u.mno
 	</select>
-	
-	
-	
-	
-	
 	
 	
 		

@@ -196,14 +196,12 @@ public class ChallengeController {
 		return "/challenge/noticecontent";
 	}
 	
-	// http://localhost:8080/challenge/mychallenge?nick=사용자
+	// http://localhost:8080/challenge/mychallenge?nick=회원
 	@GetMapping("/mychallenge")
 	public String mychallengeGET(Model model, @RequestParam("nick") String nick) throws Exception {
 		mylog.debug(nick);
 		
 		List<ChallengeVO> mychallengeList = service.getmyChallenge(nick);
-//		mychallengeList.
-//		ChallengeVO vo2 = service.getCt_top(cno);
 		
 		model.addAttribute("nick", nick);
 		model.addAttribute("mychallengeList", mychallengeList);
