@@ -4,6 +4,8 @@ import java.util.List;
 
 import com.chagok.apiDomain.AccountHistoryRequestVO;
 import com.chagok.apiDomain.AccountHistoryResponseVO;
+import com.chagok.apiDomain.CardInfoRequestVO;
+import com.chagok.apiDomain.CardInfoResponseVO;
 import com.chagok.apiDomain.RequestTokenVO;
 import com.chagok.apiDomain.ResponseTokenVO;
 import com.chagok.apiDomain.UserInfoResponseVO;
@@ -23,4 +25,7 @@ public interface OpenBankingDAO {
 	
 	// 계좌 내역조회
 	public List<AccountHistoryResponseVO> getAccountHistory(List<AccountHistoryRequestVO> list) throws Exception;
+	
+	// 카드 목록 조회
+	public CardInfoResponseVO getCardInfo(CardInfoRequestVO cardInfoRequestVO) throws Exception;
 }

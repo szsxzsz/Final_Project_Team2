@@ -19,6 +19,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import com.chagok.apiDomain.AccountHistoryRequestVO;
 import com.chagok.apiDomain.AccountHistoryResponseVO;
+import com.chagok.apiDomain.CardInfoRequestVO;
+import com.chagok.apiDomain.CardInfoResponseVO;
 import com.chagok.apiDomain.RequestTokenVO;
 import com.chagok.apiDomain.ResponseTokenVO;
 import com.chagok.apiDomain.UserInfoResponseVO;
@@ -124,7 +126,8 @@ public class OpenBankingDAOImpl implements OpenBankingDAO{
 		
 		return restTemplate.exchange(requestUrl, HttpMethod.POST, param, ResponseTokenVO.class).getBody();
 	}
-
+	
+	// 계좌 내역 조회
 	@Override
 	public List<AccountHistoryResponseVO> getAccountHistory(List<AccountHistoryRequestVO> list) throws Exception {
 		
@@ -157,13 +160,35 @@ public class OpenBankingDAOImpl implements OpenBankingDAO{
 					HttpMethod.GET, param, AccountHistoryResponseVO.class).getBody());
 		}
 		
-		mylog.debug("응답 리스트 : "+accountHistoryResponseList);
-		
-		
 		return accountHistoryResponseList;
 	}
+	
+	// 카드 목록 조회
+	@Override
+	public CardInfoResponseVO getCardInfo(CardInfoRequestVO cardInfoRequestVO) throws Exception {
+		
+		httpHeaders = new HttpHeaders();
+		restTemplate = new RestTemplate();
+		
+		
+		String requestUrl = "https://testapi.openbanking.or.kr/v2.0/cards";
+		
+		// httpHeaders(token) 담아서 감 => httpEntity
+		HttpEntity<String> param = 
+				new HttpEntity<String>(setHeaderAccessToken(cardInfoRequestVO.getAccess_token()));
+		
+		UriComponents uriBuilder = UriComponentsBuilder.fromHttpUrl(requestUrl)
+				.queryParam("bank_tran_id", cardInfoRequestVO.getBank_tran_id())
+				.queryParam("user_seq_no", cardInfoRequestVO.getUser_seq_no())
+				.queryParam("bank_code_std", cardInfoRequestVO.getBank_code_std())
+				.queryParam("member_bank_code", cardInfoRequestVO.getMember_bank_code())
+				.build();
+		
+		return restTemplate.exchange(uriBuilder.toString(), 
+				HttpMethod.GET, param, CardInfoResponseVO.class).getBody();
+	}
 
-
+	
 	
 	
 	

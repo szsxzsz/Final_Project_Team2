@@ -3,8 +3,10 @@ package com.chagok.controller;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
@@ -21,6 +23,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.chagok.apiDomain.AccountHistoryRequestVO;
 import com.chagok.apiDomain.AccountHistoryResponseVO;
 import com.chagok.apiDomain.AccountVO;
+import com.chagok.apiDomain.CardInfoRequestVO;
+import com.chagok.apiDomain.CardInfoResponseVO;
 import com.chagok.apiDomain.RequestTokenVO;
 import com.chagok.apiDomain.ResponseTokenVO;
 import com.chagok.apiDomain.UserInfoResponseVO;
@@ -59,7 +63,7 @@ public class AssetController {
 	}
 	
 	@RequestMapping(value = "/callback", method = RequestMethod.GET)
-	public String getToken(RequestTokenVO requestTokenVO, Model model) throws Exception {
+	public String getToken(RequestTokenVO requestTokenVO, Model model, CardInfoRequestVO cardInfoRequestVO) throws Exception {
 		//////////////// 사용자인증 API (3-legged) ////////////////
 		
 		// 현재 시간정보
@@ -81,7 +85,7 @@ public class AssetController {
 			// 계좌 정보
 			List<AccountVO> accountList = userInfoResponseVO.getRes_list();
 			model.addAttribute("accountList", accountList);
-//			accountService.insertAccountInfo(userInfoResponseVO.getRes_list());
+//			accountService.insertAccountInfo(userInfoResponseVO.getRes_list()); // 디비 저장
 			
 			mylog.debug("계좌 리스트 : " + accountList);
 			
@@ -91,16 +95,13 @@ public class AssetController {
 				AccountHistoryRequestVO accountHistoryRequestVO = new AccountHistoryRequestVO();
 				
 				accountHistoryRequestVO.setAccess_token(responseTokenVO.getAccess_token());
-				accountHistoryRequestVO.setBank_tran_id("M202202513U2TEAM009"+i);
+				accountHistoryRequestVO.setBank_tran_id("M202202513U2TEAMA15"+i);
 				accountHistoryRequestVO.setFintech_use_num(accountList.get(i).getFintech_use_num());
 				accountHistoryRequestVO.setInquiry_type("A");
 				accountHistoryRequestVO.setInquiry_base("D");
 				accountHistoryRequestVO.setFrom_date(from_date);
 				accountHistoryRequestVO.setTo_date(to_date);
 				accountHistoryRequestVO.setSort_order("D");
-				
-				mylog.debug("accountHistoryRequestVO : " + accountHistoryRequestVO);
-				mylog.debug(i + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 				
 				accountHistoryRequestList.add(accountHistoryRequestVO);
 			}
@@ -110,12 +111,37 @@ public class AssetController {
 			List<AccountHistoryResponseVO> accountHistoryResponseList = openBankingService.getAccountHistory(accountHistoryRequestList);
 			model.addAttribute("accountHistoryResponseList", accountHistoryResponseList);
 			
-			accountService.insertAccountHistory(accountHistoryResponseList);
+//			accountService.insertAccountHistory(accountHistoryResponseList); // 디비 저장
 			
-			//////////////// 카드정보 조회 => DB(member 테이블)에 저장 ////////////////
+			//////////////// 카드목록 조회 => DB(card 테이블)에 저장 ////////////////
+			
+			cardInfoRequestVO.setAccess_token(responseTokenVO.getAccess_token());
+			cardInfoRequestVO.setBank_tran_id("M202202513U2TEAMC007");
+			cardInfoRequestVO.setUser_seq_no(responseTokenVO.getUser_seq_no());
+			cardInfoRequestVO.setBank_code_std("399"); // fix, 오픈뱅킹만 사용가능
+			cardInfoRequestVO.setMember_bank_code("399"); // fix, 오픈뱅킹만 사용가능
+			CardInfoResponseVO cardInfoResponseVO = openBankingService.getCardInfo(cardInfoRequestVO);
+			
+			model.addAttribute("cardInfoResponseVO", cardInfoResponseVO);
+			
+			accountService.insertCardInfo(cardInfoResponseVO);
+			
+			
 		}
 		return "/asset/apiTest";
 	}
+	
+	@GetMapping("/callbackCard")
+	public String registCard(RequestTokenVO requestTokenVO, Model model) throws Exception{
+		
+		model.addAttribute("requestTokenVO", requestTokenVO);
+		
+		return "/asset/cardTest";
+	}
+	
+	
+	
+	
 	
 	@RequestMapping(value = "/callbackCenter", method = RequestMethod.GET)
 	public String getTokenCenter(RequestTokenVO requestTokenVO, Model model) throws Exception{
