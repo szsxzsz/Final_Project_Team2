@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.chagok.domain.ChallengeVO;
+import com.chagok.domain.MinusVO;
 import com.chagok.domain.PlusVO;
 import com.chagok.persistence.ChallengeDAO;
 
@@ -59,15 +60,13 @@ public class ChallengeServiceImpl implements ChallengeService{
 		return dao.getmyChallenge(nick);
 	}
 
+	@Override
+	public List<MinusVO> getMinusPeople(int cno) {
+		mylog.debug("getMinusPeople("+cno+") 호출");
+		return dao.getMinusPeople(cno);
+	}
 	
 
-//	@Override
-//	public ChallengeVO getmyChallenge(String nick) {
-//		ChallengeVO vo = dao.getmyChallenge(nick);
-//		mylog.debug("getmyChallenge(String nick) : "+vo);
-//		return dao.getmyChallenge(nick);
-//	}
-	
 	
 
 	

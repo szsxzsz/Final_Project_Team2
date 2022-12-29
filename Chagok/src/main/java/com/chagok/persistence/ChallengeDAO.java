@@ -3,6 +3,7 @@ package com.chagok.persistence;
 import java.util.List;
 
 import com.chagok.domain.ChallengeVO;
+import com.chagok.domain.MinusVO;
 import com.chagok.domain.PlusVO;
 
 public interface ChallengeDAO {
@@ -24,5 +25,8 @@ public interface ChallengeDAO {
 	
 	// 내 챌린지 ( 챌린지유형 / 카테고리 / 챌린지제목 / 챌린지기간 / 챌린지상태 )
 	public List<ChallengeVO> getmyChallenge(String nick);
+	
+	// [절약형]챌린지 참가자 조회 
+	public List<MinusVO> getMinusPeople(Integer cno);
 	
 }
