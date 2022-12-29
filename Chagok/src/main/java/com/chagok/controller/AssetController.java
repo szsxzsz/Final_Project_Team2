@@ -143,6 +143,7 @@ public class AssetController {
 	///////////////////영민////////////////////
 	
 	///////////////////세영//////////////////////
+	
 	//서비스 객체 주입
 	@Inject
 	private AbookService service;
@@ -158,6 +159,7 @@ public class AssetController {
 		List<AbookVO> abookList = service.getAbookList(mno);
 		List<CategoryVO> cateList = service.CateList();
 		mylog.debug("Controller+@@@@@@@@@@@@@@@@@@@2"+cateList);		
+		
 		// 연결되어 있는 뷰 페이지로 정보 전달 (Model 객체)
 		model.addAttribute("abookList", abookList);
 		model.addAttribute("cateList", cateList);
