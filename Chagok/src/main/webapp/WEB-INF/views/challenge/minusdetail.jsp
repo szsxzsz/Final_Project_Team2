@@ -7,7 +7,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <h1 style="padding-left: 50px;">절약형 차곡 챌린지</h1>
-
 <%-- ${vo } --%>
 
 <div class="row" style="margin-left:30px; margin-top:30px;">

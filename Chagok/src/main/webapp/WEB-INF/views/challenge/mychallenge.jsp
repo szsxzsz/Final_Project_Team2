@@ -6,7 +6,7 @@
 
 	<h1>내 챌린지</h1>
 	
-	${vo }
+	${mychallengeList }
 	<div class="col-xs-12 table-responsive">
 	<table class="table table-striped">
 		<thead>
@@ -19,23 +19,20 @@
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach var="vo" items="">
+			<c:forEach var="vo" items="${mychallengeList }">
 			<tr>
-				<td>${vo.c_sort}</td>
-				<td>${vo2.ct_top }</td>
+				<c:if test="${vo.c_sort eq 0 }">
+				<td>저축형</td>
+				</c:if>
+				<c:if test="${vo.c_sort eq 1 }">
+				<td>절약형</td>
+				</c:if>
+				<td>${vo.ct_top }</td>
 				<td>${vo.c_title }</td>
 				<td>${vo.c_period }</td>
 				<td>${vo.c_status }</td>
 			</tr>
 			</c:forEach>
-			<tr>
-				<td>1</td>
-				<td>Need for Speed IV</td>
-				<td>Wes Anderson umami biodiesel</td>
-				<td>$50.00</td>
-			</tr>
-			
-			
 		</tbody>
 	</table>
 </div>

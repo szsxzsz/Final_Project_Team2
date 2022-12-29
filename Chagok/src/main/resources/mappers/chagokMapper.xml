@@ -67,7 +67,11 @@
 	
 	<!-- 내 챌린지 정보 가져오기 -->
 	<select id="getmyChallenge" resultType="com.chagok.domain.ChallengeVO">
-	select * from challenge where c_person like concat('%',#{nick},'%')
+	select * from challenge A join category B
+	on A.ctno = B.ctno
+	where c_person like concat('%',#{nick},'%')
 	</select>
+
+	
 		
   </mapper>

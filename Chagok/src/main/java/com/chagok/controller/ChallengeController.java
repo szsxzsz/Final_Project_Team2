@@ -198,10 +198,12 @@ public class ChallengeController {
 	public String mychallengeGET(Model model, @RequestParam("nick") String nick) throws Exception {
 		mylog.debug(nick);
 		
-//		String nick = request.getParameter();
-		ChallengeVO vo = service.getmyChallenge(nick);
+		List<ChallengeVO> mychallengeList = service.getmyChallenge(nick);
+//		mychallengeList.
+//		ChallengeVO vo2 = service.getCt_top(cno);
+		
 		model.addAttribute("nick", nick);
-		model.addAttribute("vo", vo);
+		model.addAttribute("mychallengeList", mychallengeList);
 		
 		return "/challenge/mychallenge";
 	}

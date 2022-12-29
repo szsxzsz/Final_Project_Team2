@@ -23,6 +23,6 @@ public interface ChallengeDAO {
 	public List<ChallengeVO> getChallengeList(Integer cno); 
 	
 	// 내 챌린지 ( 챌린지유형 / 카테고리 / 챌린지제목 / 챌린지기간 / 챌린지상태 )
-	public ChallengeVO getmyChallenge(String nick);
+	public List<ChallengeVO> getmyChallenge(String nick);
 	
 }
