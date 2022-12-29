@@ -15,5 +15,10 @@
   		</foreach>
   	</insert>
   	
+  	<insert id="insertAccountHistory">
+  		insert into account_history(tran_date, tran_time, inout_type, tran_amt, after_balance_amt, branch_name, fintech_use_num, bank_tran_id) 
+  		values (#{tran_date}, #{tran_time}, #{inout_type}, #{tran_amt}, #{after_balance_amt}, #{branch_name}, #{fintech_use_num}, #{bank_tran_id}) 
+  	</insert>
+  	
   	
   </mapper>

@@ -6,6 +6,7 @@ import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
 
+import com.chagok.apiDomain.AccountHistoryResponseVO;
 import com.chagok.apiDomain.AccountVO;
 import com.chagok.persistence.AccountDAO;
 
@@ -18,6 +19,11 @@ public class AccountServiceImpl implements AccountService{
 	@Override
 	public void insertAccountInfo(List<AccountVO> list) throws Exception {
 		accountDAO.insertAccountInfo(list);
+	}
+
+	@Override
+	public void insertAccountHistory(List<AccountHistoryResponseVO> list) throws Exception {
+		accountDAO.insertAccountHistory(list);
 	}
 	
 	

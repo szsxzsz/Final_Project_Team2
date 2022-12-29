@@ -1,7 +1,12 @@
 package com.chagok.persistence;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -13,7 +18,6 @@ import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.chagok.apiDomain.AccountHistoryRequestVO;
-import com.chagok.apiDomain.AccountHistoryResponseListVO;
 import com.chagok.apiDomain.AccountHistoryResponseVO;
 import com.chagok.apiDomain.RequestTokenVO;
 import com.chagok.apiDomain.ResponseTokenVO;
@@ -28,6 +32,8 @@ public class OpenBankingDAOImpl implements OpenBankingDAO{
 	
 	private HttpHeaders httpHeaders; // http 헤더 정보 관리 클래스
 	private RestTemplate restTemplate; // REST방식 API 요청
+	
+	private static final Logger mylog = LoggerFactory.getLogger(OpenBankingDAOImpl.class);
 	
 	// 헤더에 토큰 추가 메서드
 	public HttpHeaders setHeaderAccessToken(String access_token) {
@@ -120,8 +126,41 @@ public class OpenBankingDAOImpl implements OpenBankingDAO{
 	}
 
 	@Override
-	public AccountHistoryResponseListVO getAccountHistory(List<AccountHistoryRequestVO> list) throws Exception {
-		return null;
+	public List<AccountHistoryResponseVO> getAccountHistory(List<AccountHistoryRequestVO> list) throws Exception {
+		
+		httpHeaders = new HttpHeaders();
+		restTemplate = new RestTemplate();
+		
+		LocalDateTime now = LocalDateTime.now();
+		
+		String formatedNow = now.format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
+		String requestUrl = "https://testapi.openbanking.or.kr/v2.0/account/transaction_list/fin_num";
+		
+		List<AccountHistoryResponseVO> accountHistoryResponseList = new ArrayList<AccountHistoryResponseVO>();
+		
+		for (int i = 0; i < list.size(); i++) {
+			
+			HttpEntity<String> param = 
+					new HttpEntity<String>(setHeaderAccessToken(list.get(i).getAccess_token()));
+			UriComponents uriBuilder = UriComponentsBuilder.fromHttpUrl(requestUrl)
+					.queryParam("bank_tran_id", list.get(i).getBank_tran_id())
+					.queryParam("fintech_use_num", list.get(i).getFintech_use_num())
+					.queryParam("inquiry_type", list.get(i).getInquiry_type())
+					.queryParam("inquiry_base", list.get(i).getInquiry_base())
+					.queryParam("from_date", list.get(i).getFrom_date())
+					.queryParam("to_date", list.get(i).getTo_date())
+					.queryParam("sort_order", list.get(i).getSort_order())
+					.queryParam("tran_dtime", formatedNow)
+					.build();
+			
+			accountHistoryResponseList.add(restTemplate.exchange(uriBuilder.toString(), 
+					HttpMethod.GET, param, AccountHistoryResponseVO.class).getBody());
+		}
+		
+		mylog.debug("응답 리스트 : "+accountHistoryResponseList);
+		
+		
+		return accountHistoryResponseList;
 	}
 
 

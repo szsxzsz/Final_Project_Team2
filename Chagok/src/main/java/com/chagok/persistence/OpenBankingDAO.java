@@ -3,7 +3,6 @@ package com.chagok.persistence;
 import java.util.List;
 
 import com.chagok.apiDomain.AccountHistoryRequestVO;
-import com.chagok.apiDomain.AccountHistoryResponseListVO;
 import com.chagok.apiDomain.AccountHistoryResponseVO;
 import com.chagok.apiDomain.RequestTokenVO;
 import com.chagok.apiDomain.ResponseTokenVO;
@@ -23,5 +22,5 @@ public interface OpenBankingDAO {
 	public ResponseTokenVO requestTokenCenter(RequestTokenVO requestTokenVO) throws Exception;
 	
 	// 계좌 내역조회
-	public AccountHistoryResponseListVO getAccountHistory(List<AccountHistoryRequestVO> list) throws Exception;
+	public List<AccountHistoryResponseVO> getAccountHistory(List<AccountHistoryRequestVO> list) throws Exception;
 }

@@ -1,6 +1,7 @@
 package com.chagok.apiDomain;
 
 public class AccountHistoryVO {
+	private String bank_tran_id;
 	private String tran_date;
 	private String tran_time;
 	private String inout_type;
@@ -8,6 +9,13 @@ public class AccountHistoryVO {
 	private String tran_amt;
 	private String after_balance_amt;
 	private String branch_name;
+	
+	public String getBank_tran_id() {
+		return bank_tran_id;
+	}
+	public void setBank_tran_id(String bank_tran_id) {
+		this.bank_tran_id = bank_tran_id;
+	}
 	public String getTran_date() {
 		return tran_date;
 	}

@@ -1,8 +1,6 @@
 package com.chagok.controller;
 
-import java.text.DateFormat;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -22,20 +20,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.chagok.apiDomain.AccountHistoryRequestVO;
-import com.chagok.apiDomain.AccountHistoryResponseListVO;
 import com.chagok.apiDomain.AccountHistoryResponseVO;
 import com.chagok.apiDomain.AccountVO;
 import com.chagok.apiDomain.RequestTokenVO;
 import com.chagok.apiDomain.ResponseTokenVO;
 import com.chagok.apiDomain.UserInfoResponseVO;
-import com.chagok.service.AbookService;
-import com.chagok.service.OpenBankingService;
-
-import org.springframework.web.bind.annotation.RequestParam;
-
 import com.chagok.domain.AbookVO;
-import com.chagok.service.AccountService;
 import com.chagok.domain.ReportVO;
+import com.chagok.service.AbookService;
+import com.chagok.service.AccountService;
 import com.chagok.service.OpenBankingService;
 import com.chagok.service.ReportService;
 import com.google.gson.Gson;
@@ -66,7 +59,7 @@ public class AssetController {
 	}
 	
 	@RequestMapping(value = "/callback", method = RequestMethod.GET)
-	public String getToken(RequestTokenVO requestTokenVO, Model model, AccountHistoryRequestVO accountHistoryRequestVO) throws Exception {
+	public String getToken(RequestTokenVO requestTokenVO, Model model) throws Exception {
 		//////////////// 사용자인증 API (3-legged) ////////////////
 		
 		// 현재 시간정보
@@ -90,11 +83,15 @@ public class AssetController {
 			model.addAttribute("accountList", accountList);
 //			accountService.insertAccountInfo(userInfoResponseVO.getRes_list());
 			
+			mylog.debug("계좌 리스트 : " + accountList);
+			
 			//////////////// 계좌 거래내역 조회 => DB(account_history 테이블)에 저장 ////////////////
-			List<AccountHistoryRequestVO> accountHistoryRequesList = new ArrayList<AccountHistoryRequestVO>();
+			List<AccountHistoryRequestVO> accountHistoryRequestList = new ArrayList<AccountHistoryRequestVO>();
 			for (int i = 0; i < accountList.size(); i++) {
+				AccountHistoryRequestVO accountHistoryRequestVO = new AccountHistoryRequestVO();
+				
 				accountHistoryRequestVO.setAccess_token(responseTokenVO.getAccess_token());
-				accountHistoryRequestVO.setBank_tran_id("M202202513U2TEAM000"+i);
+				accountHistoryRequestVO.setBank_tran_id("M202202513U2TEAM009"+i);
 				accountHistoryRequestVO.setFintech_use_num(accountList.get(i).getFintech_use_num());
 				accountHistoryRequestVO.setInquiry_type("A");
 				accountHistoryRequestVO.setInquiry_base("D");
@@ -102,14 +99,19 @@ public class AssetController {
 				accountHistoryRequestVO.setTo_date(to_date);
 				accountHistoryRequestVO.setSort_order("D");
 				
-				accountHistoryRequesList.add(accountHistoryRequestVO);
+				mylog.debug("accountHistoryRequestVO : " + accountHistoryRequestVO);
+				mylog.debug(i + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+				
+				accountHistoryRequestList.add(accountHistoryRequestVO);
 			}
 			
-			AccountHistoryResponseListVO accountHistoryResponseListVO = openBankingService.getAccountHistory(accountHistoryRequesList);
-
+			mylog.debug("요청 리스트 : " + accountHistoryRequestList);
 			
+			List<AccountHistoryResponseVO> accountHistoryResponseList = openBankingService.getAccountHistory(accountHistoryRequestList);
+			model.addAttribute("accountHistoryResponseList", accountHistoryResponseList);
 			
-
+			accountService.insertAccountHistory(accountHistoryResponseList);
+			
 			//////////////// 카드정보 조회 => DB(member 테이블)에 저장 ////////////////
 		}
 		return "/asset/apiTest";

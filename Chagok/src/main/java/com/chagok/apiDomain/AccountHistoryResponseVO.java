@@ -6,9 +6,23 @@ public class AccountHistoryResponseVO {
 		private String api_tran_id;
 		private String api_tran_dtm;
 		private String bank_tran_date;
+		private String bank_tran_id;
+		private String fintech_use_num;
 		private List<AccountHistoryVO> res_list;
 		private String balance_amt;
 		
+		public String getBank_tran_id() {
+			return bank_tran_id;
+		}
+		public void setBank_tran_id(String bank_tran_id) {
+			this.bank_tran_id = bank_tran_id;
+		}
+		public String getFintech_use_num() {
+			return fintech_use_num;
+		}
+		public void setFintech_use_num(String fintech_use_num) {
+			this.fintech_use_num = fintech_use_num;
+		}
 		public String getBalance_amt() {
 			return balance_amt;
 		}

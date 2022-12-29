@@ -7,7 +7,6 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 
 import com.chagok.apiDomain.AccountHistoryRequestVO;
-import com.chagok.apiDomain.AccountHistoryResponseListVO;
 import com.chagok.apiDomain.AccountHistoryResponseVO;
 import com.chagok.apiDomain.RequestTokenVO;
 import com.chagok.apiDomain.ResponseTokenVO;
@@ -38,7 +37,7 @@ public class OpenBankingServiceImpl implements OpenBankingService{
 	}
 
 	@Override
-	public AccountHistoryResponseListVO getAccountHistory(List<AccountHistoryRequestVO> list) throws Exception {
+	public List<AccountHistoryResponseVO> getAccountHistory(List<AccountHistoryRequestVO> list) throws Exception {
 		return openBankingDAO.getAccountHistory(list);
 	}
 
