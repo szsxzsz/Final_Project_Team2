@@ -16,7 +16,14 @@
   
   	<!-- //////////////////////// cateReport //////////////////////// -->
   	<!-- [1] 최다 지출 카테고리 -->
-  	
-  	
-  	
+	<select id="getCateCnt" resultType="ReportVO">
+		select count(ab.abno) cateCnt, ct.ct_bottom cateName
+		from account_book ab inner join category ct on ab.ctno=ct.ctno 
+		where ab.mno=#{mno} and ab_inout=1 and
+		ab.ab_date between LAST_DAY(NOW() - interval 1 month) + interval 1 DAY and LAST_DAY(NOW()) 
+		group by cateName
+		order by cateCnt desc;
+	</select>
+	
+	
   </mapper>
