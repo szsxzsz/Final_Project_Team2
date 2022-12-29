@@ -56,9 +56,9 @@
 		    <div class="box">
 		        <div class="col-md-12 text-center" style="background: #FAF8F1; height: 50px;">
 				    	<h4 style="marfin-top: 14px;">
-				    	총<span style="color: #10A19D;">${vo.c_total }</span>번을
-				    	<span style="color: #10A19D;">${vo.c_freq }</span>일 마다 
-				    	<span style="color: #10A19D;">${vo.c_amount }</span>원씩 저축하는 조건이 있습니다.
+<%-- 				    	총<span style="color: #10A19D;">${vo.c_total }</span>번을 --%>
+				    	<span style="color: #10A19D;">${vo.c_period }</span>주 동안
+				    	총<span style="color: #10A19D;"> ${vo.c_amount }</span>원 절약하게 됩니다!
 				    	</h4>
 		    	</div>
 		    </div>
@@ -77,7 +77,6 @@
         <input class="btn btn-block btn-success btn-lg" type="button" value="참여하기" onclick="location.href=''" style="width:218px; margin-left: 950px;">
 
 
-                    <!-- 대략적인 틀 작성을 위해 일단은 글 써두고 나중에 데이터 넘겨받기 -->
 
 	</div>
 <%@ include file="../include/footer.jsp" %>

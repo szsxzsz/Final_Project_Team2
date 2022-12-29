@@ -126,7 +126,7 @@ $(document).ready(function(){
 				    		</span>일 마다 
 				    	<span style="color: #10A19D;">
 				    	<fmt:formatNumber value="${vo.c_amount / vo.c_period}" pattern=",000"/>
-				    	</span>원씩 저축하는 조건이 있습니다.</h4>
+				    	</span>원씩 저축하게 됩니다!</h4>
 		    	</div>
 		    </div>
 		</div>

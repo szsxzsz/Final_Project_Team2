@@ -64,21 +64,6 @@ public class ChallengeController {
 		return "/challenge/plusdetail";
 	}
 
-	
-//	// http://localhost:8080/challenge/minusdetail?cno=2
-//	@GetMapping(value = "/minusdetail")
-//	public String minusdetailGET(Model model,@RequestParam("cno") int cno, HttpSession session) throws Exception{
-//		mylog.debug("minusdetailGET 호출");
-//		mylog.debug(cno+"");
-//		
-//		ChallengeVO vo = service.getChallengeInfo(cno);
-//		
-//		model.addAttribute("vo", vo); // minusdetail로 정보전달
-//		
-//		return "/challenge/minusdetail";
-//	}
-
-
 
 	// http://localhost:8080/challenge/minusFeed?cno=1
 	// http://localhost:8080/challenge/minusFeed
@@ -106,10 +91,15 @@ public class ChallengeController {
 		return "/challenge/plusdetail";
 	}
 
-	// http://localhost:8080/challenge/minusdetail
+	// http://localhost:8080/challenge/minusdetail?cno=2
 	@GetMapping(value = "/minusdetail")
-	public String minusdetailGET() throws Exception {
+	public String minusdetailGET(Model model,@RequestParam("cno") int cno, HttpSession session) throws Exception {
 		mylog.debug("minusdetailGET 호출");
+		mylog.debug(cno+"");
+		
+		ChallengeVO vo = service.getChallengeInfo(cno);
+		
+		model.addAttribute("vo", vo); // minusdetail로 정보전달
 
 		return "/challenge/minusdetail";
 	}
@@ -201,6 +191,18 @@ public class ChallengeController {
 	@GetMapping(value = "/noticecontent")
 	public String noticecontentGET() throws Exception {
 		return "/challenge/noticecontent";
+	}
+	
+	// http://localhost:8080/challenge/mychallenge?nick=사용자
+	@GetMapping("/mychallenge")
+	public String mychallengeGET(Model model, @RequestParam("nick") String nick) throws Exception {
+		mylog.debug(nick);
+		
+//		String nick = request.getParameter();
+		ChallengeVO vo = service.getmyChallenge(nick);
+		model.addAttribute("nick", nick);
+		
+		return "/challenge/mychallenge";
 	}
 
 }

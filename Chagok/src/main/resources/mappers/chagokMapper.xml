@@ -50,7 +50,7 @@
 	
 	<!-- ct_top만 가져오기 -->
 	<select id="getCt_top" resultType="com.chagok.domain.ChallengeVO">
-	select ct_top from category where ctno=(select ctno from challenge where cno = #{cno}); 
+	select ct_top from category where ctno=(select ctno from challenge where cno = #{cno})
 	</select>
 	
 	<!-- [저축형]챌린지 참가자 조회-->
@@ -64,5 +64,10 @@
 		insert into board (cno,b_title,b_content,b_writer,b_sort)
 		values (#{cno},#{b_title},#{b_content},#{b_writer},#{b_sort})
 	</insert>
+	
+	<!-- 내 챌린지 정보 가져오기 -->
+	<select id="getmyChallenge" resultType="com.chagok.domain.ChallengeVO">
+	select * from challenge where c_person like '%#{nick}%'
+	</select>
 		
   </mapper>

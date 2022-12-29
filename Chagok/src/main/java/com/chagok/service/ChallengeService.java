@@ -21,4 +21,7 @@ public interface ChallengeService {
 	
 	// 챌린지 정보 (리스트)
 	public List<ChallengeVO> getChallengeList(Integer cno);
+	
+	// 내 챌린지 ( 챌린지유형 / 카테고리 / 챌린지제목 / 챌린지기간 / 챌린지상태 )
+	public ChallengeVO getmyChallenge(String nick);
 }

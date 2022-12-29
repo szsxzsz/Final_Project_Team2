@@ -51,6 +51,13 @@ public class ChallengeServiceImpl implements ChallengeService{
 	public List<ChallengeVO> getChallengeList(Integer cno) {
 		return dao.getChallengeList(cno);
 	}
+
+	@Override
+	public ChallengeVO getmyChallenge(String nick) {
+		ChallengeVO vo = dao.getmyChallenge(nick);
+		mylog.debug("getmyChallenge(String nick) : "+vo);
+		return dao.getmyChallenge(nick);
+	}
 	
 	
 

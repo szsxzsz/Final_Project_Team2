@@ -62,6 +62,15 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 		return challengeList;
 		
 	}
+
+	@Override
+	public ChallengeVO getmyChallenge(String nick) {
+		mylog.debug(" getmyChallenge(String nick) 호출");
+		
+		ChallengeVO vo = sqlSession.selectOne(NAMESPACE+".getmyChallenge", nick);
+		
+		return vo;
+	}
 	
 	 
 	
