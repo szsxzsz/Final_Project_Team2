@@ -2,12 +2,11 @@
    pageEncoding="UTF-8"%>
 <%@ include file="../include/header.jsp"%>
 <%@ include file="../include/sidebar.jsp"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <script>
 
 </script>
-<h1>challenge/minusFeed.jsp</h1>
-
 <section id="about" class="about">
    <div class="container">
       <div class="section-title">
@@ -16,68 +15,88 @@
       
      ${vo }
       / http://localhost:8080/challenge/minusFeed?cno=1
-      <div class="row">
-         <div class="col-lg-4 aos-init aos-animate" data-aos="fade-right">
-            <img src="${vo.c_file }" class="img-fluid" alt="">
-         </div>
-         <div class="col-lg-8 pt-4 pt-lg-0 content aos-init aos-animate"
-            data-aos="fade-left">
-            <h3>${vo.ctno }${vo.c_title }</h3>
-            <div class="row">
-               <div class="col-lg-6">
-                  <ul>
-                     <li><i class="bi bi-chevron-right"></i> <strong>챌린지장
-                           :</strong> <span>${vo.c_host }</span></li>
-                     <li><i class="bi bi-chevron-right"></i> <strong>챌린지인원
-                           :</strong> <span>${vo.c_person }</span></li>
-                     <li><i class="bi bi-chevron-right"></i> <strong>챌린지기간
-                           :</strong> <span>${vo.c_period }</span></li>
-                     <li><i class="bi bi-chevron-right"></i> <strong>챌린지시작일
-                           :</strong> <span>${vo.c_start }</span></li>
-                     <li><i class="bi bi-chevron-right"></i> <strong>예치금
-                           :</strong> <span>${vo.c_deposit }</span></li>
-                  </ul>
-               </div>
-            </div>
-         </div>
-      </div>
+     
+      <div class="row" style="margin-left:30px; margin-top:30px;">
+	<div class="col-lg-4 aos-init aos-animate" data-aos="fade-right">
+<!--        아래 이미지 주소는 디비에서 꺼내오는걸로 바꿔야해요 -->
+        <img class="img-responsive" src="/resources/dist/img/photo1.png" alt="Photo" style="width:500px; height:250px;">
+	</div>
+	<div class="col-lg-8 pt-4 pt-lg-0 content aos-init aos-animate" data-aos="fade-left" style="padding-left: 50px; width: 600;">
+		<h3><span style="color: #66BB7A; font-weight: bold;">[${vo.ctno }]</span>${vo.c_title } </h3>		
+		<div class="row">
+			<div class="col-lg-6">
+             <div class="progress-group" style="width: 280px;">
+               <span class="progress-text">챌린지 장 </span>
+               <span class="progress-number"><b>${vo.c_host }</b>님</span>
+             </div>
+             <div class="progress-group" style="width: 280px;">
+               <span class="progress-text">챌린지 인원</span>
+               <span class="progress-number"><b></b>/ </span>
+             <div class="progress-group" style="width: 280px;">
+               <span class="progress-text">예치금</span>
+               <span class="progress-number"><b>${vo.c_deposit }</b>꿀</span>
+          	 <div class="progress-group" style="width: 280px;">
+               <span class="progress-text">챌린지 기간</span>
+               <span class="progress-number"><b>${vo.c_period }</b></span>
+             <div class="progress-group" style="width: 280px;">
+               <span class="progress-text">챌린지 시작일</span>
+               <span class="progress-number"><b>${vo.c_start }</b></span>
+              </div>
+         	</div>
+       </div>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
    </div>
 </section>
 <section class="content">
    <div class="box box-default">
       <div class="box-header with-border">
-         <h3 class="box-title">을(를) 원 절약하는 조건이 있습니다.</h3>
+      	<div class="text-center">
+         <h3 class="box-title">${vo.c_title }을(를) ${vo.c_amount }원 절약하는 조건이 있습니다.</h3>
+      </div>
       </div>
       <!--          <div class="box-body">The great content goes here</div> -->
    </div>
+   
+   
+   
+<!--    가계부 연동하기 모달 -->
+<!-- 모달 css 파일 : resources -> plugins -> modal -> minusModal.css  -->
+	<div class="modal fade" id="modal-default" style="margin-top: 10%;">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title">나의 가계부 연동</h4>
+				</div>
+				<div class="modal-body">
+					<p>~ 가계부 내용 ~</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default pull-left"
+						data-dismiss="modal">닫기</button>
+					<button type="button" class="btn btn-primary">저장하기</button>
+				</div>
+			</div>
 
-<div class="modal fade" id="modal-default">
-<div class="modal-dialog">
-<div class="modal-content">
-<div class="modal-header">
-<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-<span aria-hidden="true">&times;</span></button>
-<h4 class="modal-title">Default Modal</h4>
-</div>
-<div class="modal-body">
-<p>~ 가계부 내용 ~</p>
-</div>
-<div class="modal-footer">
-<button type="button" class="btn btn-default pull-left" data-dismiss="modal">닫기</button>
-<button type="button" class="btn btn-primary">저장하기</button>
-</div>
-</div>
+		</div>
+	</div>
 
-</div>
-
-</div>
-
-   <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-default">
-가계부 연동하기
-</button>
+	<button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-default" style="margin-left: 90%">
+	가계부 연동하기
+	</button>
 </section>
 
+
+
 <!-- Main content -->
+${minusPeoList }
 <section class="content">
    <div class="row">
       <div class="col-md-12">
@@ -86,27 +105,50 @@
             <div class="box-body no-padding">
                <table class="table table-striped">
                   <tr>
-                     <th style="width: 10px">No.</th>
-                     <th style="width: 200px">닉네임</th>
+                     <th class="col-md-1">No.</th>
+                     <th class="col-md-1">닉네임</th>
                      <th>진행도</th>
-                     <th style="width: 200px">남은 금액</th>
+                     <th class="col-md-1">잔여 금액</th>
+                     <th class="col-md-1">달성 여부</th>
                   </tr>
+                  
+                 <%
+                  String[] colorArr = {"progress-bar-danger","progress-bar-yellow","progress-bar-primary", "progress-bar-success"};
+                  %>
+<%--                  <%=colorArr[1] %> --%>
+<%--                  <c:set var="ca" value="${colorArr }" /> --%>
+                <c:forEach var="minusPeople" begin="0" end="${minusPeoList.size()-1}" items="${minusPeoList}" varStatus="status">
+<%--                 <c:forEach var="colorArr" begin="0" end="arr.size()-1" items="colorArr"> --%>
+                <c:set var="i" value="${i+1 }"/>
                   <tr>
-                     <td>1.</td>
-                     <td>${vo.c_host }</td>
+                     <td>${i }.</td>
+                     <td>${minusPeople.mno }</td>
                      <td>
-                        <div class="progress progress-xs">
-                           <div class="progress-bar progress-bar-danger"
-                              style="width: 55%"></div>
+                        <div class="progress progress-xs progress-striped active">
+                           <div class="progress-bar ${ca[status.index] }"
+                              style="width: ${minusPeople.m_sum/vo.c_amount *100}%"></div>
                         </div>
                      </td>
-                     <td><span class="badge bg-red">55%</span></td>
+                     <td><span class="badge bg-red">${minusPeople.m_sum }</span></td>
+                  <td>
+<%--                   	<c:if test="${minusPeople.pl_cnt == vo.c_total }"> --%>
+<!--                   		<span class="label label-success">성공</span> -->
+<%--                   	</c:if> --%>
+                  	<c:if test="${minusPeople.m_sum <= 0 }">
+                  		<span class="label label-danger">실패</span>
+                  	</c:if>
+                  </td>
                   </tr>
+                  </c:forEach>
+<%--                   </c:forEach> --%>
+                  
+                  
+                  
                   <tr>
                      <td>2.</td>
-                     <td>${vo.c_person}</td>
+                     <td> </td>
                      <td>
-                        <div class="progress progress-xs">
+                        <div class="progress progress-xs progress-striped active">
                            <div class="progress-bar progress-bar-yellow"
                               style="width: 70%"></div>
                         </div>
@@ -239,5 +281,5 @@
 
 
 
-
+</div>
 <%@ include file="../include/footer.jsp"%>

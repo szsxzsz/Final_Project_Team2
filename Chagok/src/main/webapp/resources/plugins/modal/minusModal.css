@@ -1,13 +1,14 @@
 @charset "UTF-8";
 
 .example-modal .modal {
-      position: relative;
-      top: auto;
+      display: none;
+	  position: absolute;
+      top: 50%;
       bottom: auto;
       right: auto;
-      left: auto;
-      display: block;
+      left: 50%;
       z-index: 1;
+      transform: translate(-50%, -50%);
     }
 
     .example-modal .modal {
