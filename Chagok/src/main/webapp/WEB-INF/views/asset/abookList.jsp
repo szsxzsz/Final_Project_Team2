@@ -54,34 +54,26 @@ th {
 	display: flex;
 	align-items: center;
 }
+
+.btn-group-xs>.btn, .btn-xs {
+    padding: 1px 5px;
+    font-size: 12px;
+    line-height: 1.5;
+    border-radius: 3px;
+}
+
+.box-body2 {
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;
+	border-bottom-right-radius: 3px;
+	border-bottom-left-radius: 3px;
+	padding: 10px;
+	overflow-x: hidden;	
+}
+
 </style>
-<script type="text/javascript">
-	/* 설정 */
-	const config = {
-		dateFormat: 'yy-mm-dd',
-	    prevText: '이전 달',
-	    nextText: '다음 달',
-	    monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
-	    monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
-	    dayNames: ['일','월','화','수','목','금','토'],
-	    dayNamesShort: ['일','월','화','수','목','금','토'],
-	    dayNamesMin: ['일','월','화','수','목','금','토'],
-	    yearSuffix: '년',
-        changeMonth: true,
-        changeYear: true
-	}
-	
-	/* 캘린더 */
-	$(function() {
-	  $( "input[name='publeYear']" ).datepicker(config);
-	});
-	
-	
-	</script>
-</head>
 
 <!-- contenteditable  -->
-
 <style type="text/css">
 table {
 	border-collapse: collapse;
@@ -93,7 +85,12 @@ table {
 	margin: 5px;
 }
 </style>
-<div class="box-body table-responsive no-padding">
+
+
+
+</head>
+
+<div class="box-body2 table-responsive">
 	<%-- 	${cateList }+@ --%>
 	<div class="box">
 		<!-- 날짜 -->
@@ -109,35 +106,75 @@ table {
 				</div>
 			</div>
 			<!-- 날짜 -->
+		</div>	
+	</div>
+	
+	
+		<button class="btn btn-warning btn-xs" onclick="add_row()">행 추가하기</button>
+		<button class="btn btn-warning btn-xs" onclick="delete_row()">행 삭제하기</button>
+		
+		<select id="s1" onchange="optionChange();">
+	        <option selected="selected">대분류</option>
+	        <option value="a">식비</option>
+	        <option value="b">의복/미용</option>
+	    </select>
+	      <select id="s2">
+	        <option selected="selected">소분류</option>
+	    </select>
+	    <br> <br>
+	    
+<script>
+  function add_row() {
+    var my_tbody = document.getElementById('my-tbody');
+    var row = my_tbody.insertRow(0); // 상단에 추가
+//     var row = my_tbody.insertRow( my_tbody.rows.length ); // 하단에 추가
+    var cell1 = row.insertCell(0);
+    var cell2 = row.insertCell(1);
+    var cell3 = row.insertCell(2);
+    var cell4 = row.insertCell(3);
+    var cell5 = row.insertCell(4);
+    var cell6 = row.insertCell(5);
+    var cell7 = row.insertCell(6);
+    var cell8 = row.insertCell(7);
+    
+    cell1.innerHTML = '지출';
+    cell2.innerHTML = '	<input type="date" style="width:150px;"  height:25px;> ';
+    cell3.innerHTML = ' <input type="text" name="ab_content" style="width:150px; "> ';
+    cell4.innerHTML = ' <input type="text" name="ab_amount" style="width:120px;"> ';
+    cell5.innerHTML = ' <input type="text" name="ab_method" style="width:100px;"> ';
+    cell6.innerHTML = ' <select name="ctno"> <option value="13"> 기타 </select> ';
+    cell7.innerHTML = ' <select name="ctno"> <option value="13"> 기타 </select> ';
+    cell8.innerHTML = ' <input type="text" name="ab_memo" style="width:100px;"> ';
+    
+  }
 
-		</div>
-		<div class="box-header with-border">
-			<h3 class="box-title">가계부 내역 조회</h3>
-			<div class="box-tools">
-				<div class="input-group input-group-sm hidden-xs"
-					style="width: 150px;">
-					<input type="text" name="table_search"
-						class="form-control pull-right" placeholder="Search">
-					<div class="input-group-btn">
-						<button type="submit" class="btn btn-default">
-							<i class="fa fa-search"></i>
-						</button>
-					</div>
-				</div>
-			</div>
-		</div>
-		<table class="table table-hover">
-			<tbody>
+  function delete_row() {
+    var my_tbody = document.getElementById('my-tbody');
+    if (my_tbody.rows.length < 1) return;
+    my_tbody.deleteRow(0); // 상단부터 삭제
+//     my_tbody.deleteRow( my_tbody.rows.length-1 ); // 하단부터 삭제
+  }
+  
+</script>
+<!-- 				<div> -->
+<!-- 					<button id='btn-add-row'>행 추가하기</button> -->
+<!-- 					<button id='btn-delete-row'>행 삭제하기</button> -->
+<!-- 				</div> -->
+		<div style="width:95%; height: 400px; margin: auto;"> 
+		<table class="table table-hover" id="mytable">
+			<thead>
 				<tr id="th-bg">
 					<th style="width: 50px"><b>분류</b></th>
 					<th style="width: 150px">날짜</th>
-					<th style="width: 250px">내용</th>
+					<th style="width: 200px">내용</th>
 					<th style="width: 120px">금액</th>
-					<th style="width: 150px">거래수단</th>
+					<th style="width: 100px">거래수단</th>
 					<th style="width: 100px">카테고리</th>
 					<th style="width: 100px">소분류</th>
-					<th>메모</th>
+					<th style="width: 100px">메모</th>
 				</tr>
+			</thead>	
+			<tbody id="my-tbody">
 				<c:forEach var="vo" items="${abookList}">
 					<c:forEach var="vo2" items="${cateList}">
 
@@ -146,9 +183,10 @@ table {
 							<td>
 								<div class="rowColumn" contenteditable="false"
 									data-default="
-                	<c:if test="${vo.ab_inout eq '1'}">지출</c:if>
-                	<c:if test="${vo.ab_inout eq '2'}">수입</c:if>
-                	<c:if test="${vo.ab_inout eq '3'}">이체</c:if>">
+				                	<c:if test="${vo.ab_inout eq '1'}">지출</c:if>
+				                	<c:if test="${vo.ab_inout eq '2'}">수입</c:if>
+				                	<c:if test="${vo.ab_inout eq '3'}">이체</c:if>">
+				                	
 									<c:if test="${vo.ab_inout eq '1'}">지출</c:if>
 									<c:if test="${vo.ab_inout eq '2'}">수입</c:if>
 									<c:if test="${vo.ab_inout eq '3'}">이체</c:if>
@@ -186,14 +224,15 @@ table {
 							</td>
 						</tr>
 					</c:forEach>
-				</c:forEach>
+					</c:forEach>
 			</tbody>
 		</table>
+		</div>
 	</div>
+	
 	<script type="text/javascript">
     // @brief contenteditable 속성을 가진경우
     contents = document.getElementsByClassName("rowColumn");
-
 
     document.addEventListener("DOMContentLoaded", function() {
 
@@ -294,8 +333,58 @@ table {
     });
 </script>
 
+<script type="text/javascript">
+	/* 설정 */
+	const config = {
+		dateFormat: 'yy-mm-dd',
+	    prevText: '이전 달',
+	    nextText: '다음 달',
+	    monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+	    monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+	    dayNames: ['일','월','화','수','목','금','토'],
+	    dayNamesShort: ['일','월','화','수','목','금','토'],
+	    dayNamesMin: ['일','월','화','수','목','금','토'],
+	    yearSuffix: '년',
+        changeMonth: true,
+        changeYear: true
+	}
+	
+	/* 캘린더 */
+	$(function() {
+	  $( "input[name='publeYear']" ).datepicker(config);
+	});
+	
+</script>
 
-</div>
+    <script>
+        $("#datepicker").datepicker();
+    </script>
+
+<!-- Datepicker -->
+
+   <script>
+      function optionChange() {
+        var a = ['식비-1','식비-2','식비-3'];
+        var b = ['의복/미용-1','의복/미용-2','의복/미용-3'];
+        var v = $( '#s1' ).val();
+        var o;
+        if ( v == 'a' ) {
+          o = a;
+        } else if ( v == 'b' ) {
+          o = b;
+        } else {
+          o = [];
+        }
+        $( '#s2' ).empty();
+        $( '#s2' ).append( '<option>클릭</option>' );
+        for ( var i = 0; i < o.length; i++ ) {
+          $( '#s2' ).append( '<option>' + o[ i ] + '</option>' );
+        }
+      }
+    </script>
+
+
+
 
 
 <%@ include file="../include/footer.jsp"%>
