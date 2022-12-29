@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.chagok.domain.AbookVO;
+import com.chagok.domain.CategoryVO;
 import com.chagok.persistence.AbookDAO;
 
 @Service
@@ -19,10 +20,18 @@ public class AbookServiceImpl implements AbookService{
 	private AbookDAO dao;
 	
 	@Override
-	public List<AbookVO> getAbookList() throws Exception {
+	public List<AbookVO> getAbookList(int mno) throws Exception {
 		mylog.debug("♡♡♡♡ Service -> DAO 호출 ");
-		return dao.getAbookList();
+		return dao.getAbookList(mno);
 	}
 
+	@Override
+	public List<CategoryVO> CateList() throws Exception {
+		mylog.debug("♡♡♡♡ Service -> DAO 호출 ");
+		
+		return dao.CateList();
+	}
+
+	
 	
 }
