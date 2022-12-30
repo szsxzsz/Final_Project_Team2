@@ -1,6 +1,7 @@
 package com.chagok.persistence;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -9,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
+import com.chagok.domain.BoardVO;
 import com.chagok.domain.ChallengeVO;
 import com.chagok.domain.MinusVO;
 import com.chagok.domain.PlusVO;
@@ -58,7 +60,8 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 	public List<ChallengeVO> getChallengeList(Integer cno) {
 		mylog.debug(" getChallengeList(Integer cno) 호출");
 		
-		List<ChallengeVO> challengeList = sqlSession.selectList(NAMESPACE+".getChallengeInfo");
+		List<ChallengeVO> challengeList = sqlSession.selectList(NAMESPACE+".getChallengeInfo",cno);
+		mylog.debug(cno+"번 챌린지 참가자 수 : "+challengeList.size());
 		
 		return challengeList;
 		
@@ -80,6 +83,34 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 		mylog.debug(cno+"번 챌린지 참가자 수(절약형) : "+MPeopleList.size());
 		return MPeopleList;
 	}
+	@Override
+	public List<Map<String, Object>> getMinusCheck(Integer cno) {
+		mylog.debug(cno+"번 챌린지 참가자 정보 호출(절약형)");
+		List<Map<String, Object>> MCheckList = sqlSession.selectList(NAMESPACE+".getMinus",cno);
+		mylog.debug(cno+"번 챌린지 참가자 수(절약형) : "+MCheckList.size());
+		return MCheckList;
+	}
+
+	@Override
+	public List<Map<String, Object>> getPlusCheck(Integer cno) {
+		mylog.debug(cno+"번 챌린지 참가자 정보 호출(절약형)");
+		List<Map<String, Object>> PCheckList = sqlSession.selectList(NAMESPACE+".getPlus",cno);
+		mylog.debug(cno+"번 챌린지 참가자 수(절약형) : "+PCheckList.size());
+		return PCheckList;
+	}
+
+	@Override
+	public List<BoardVO> getReviewBoard() {
+		mylog.debug(" getReviewBoard() 호출");
+		
+		List<BoardVO> boardList = sqlSession.selectList(NAMESPACE+".reviewboard");
+		
+		mylog.debug("게시판 글 개수 : "+boardList.size()+"");
+		
+		return boardList;
+	}
+	
+	
 	 
 	
 }

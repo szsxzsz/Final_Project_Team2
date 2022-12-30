@@ -1,7 +1,9 @@
 package com.chagok.service;
 
 import java.util.List;
+import java.util.Map;
 
+import com.chagok.domain.BoardVO;
 import com.chagok.domain.ChallengeVO;
 import com.chagok.domain.MinusVO;
 import com.chagok.domain.PlusVO;
@@ -29,4 +31,13 @@ public interface ChallengeService {
 
 	// [절약형]챌린지 참가자 조회 
 	public List<MinusVO> getMinusPeople(int cno);
+
+	// [절약형]챌린지 참가자 조회 
+	public List<Map<String, Object>> getMinusCheck(int cno);
+	
+	// [저축형]챌린지 참가자 조회 
+	public List<Map<String, Object>> getPlusCheck(int cno);
+	
+	// 후기글 게시판 리스트
+	public List<BoardVO> getReviewBoard();
 }

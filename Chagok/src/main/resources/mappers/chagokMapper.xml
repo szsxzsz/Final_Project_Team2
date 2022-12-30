@@ -73,12 +73,28 @@
    </select>
 
 	
-	<!-- [절약형]챌린지 참가자 조회-->
+	<!-- [절약형]챌린지 참가자 조회  -->
 	<select id="getMinusPeople" resultType="com.chagok.domain.MinusVO">
 		select * from minus m inner join user u
 		where cno = #{cno} and m.mno = u.mno
 	</select>
+
+	<!-- [저축형]챌린지 참가자 조회(피드용) -->
+	<select id="getPlus" resultType="map">
+		select * from plus p inner join user u
+		where cno = #{cno} and p.mno = u.mno
+	</select>
 	
+	<!-- [절약형]챌린지 참가자 조회(피드용)  -->
+	<select id="getMinus" resultType="map">
+		select * from minus m inner join user u
+		where cno = #{cno} and m.mno = u.mno
+	</select>
 	
+	<!-- 후기글 게시글 확인 -->
+	<select id="reviewboard" resultType="com.chagok.domain.BoardVO">
+		select * from board 
+		where b_sort like concat('review','%')
+	</select>
 		
   </mapper>
