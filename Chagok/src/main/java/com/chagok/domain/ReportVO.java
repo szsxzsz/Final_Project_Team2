@@ -10,4 +10,6 @@ public class ReportVO {
 	private int cateCnt;
 	private String cateName;
 	
+	// 2. getCateSum
+	private int cateSum;
 }
