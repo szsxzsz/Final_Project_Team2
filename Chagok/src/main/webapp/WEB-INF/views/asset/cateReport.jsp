@@ -113,7 +113,7 @@
 						</div>
 						<div class="box-body">
 							<div class="chart">
-								<canvas id="barChart" style="height: 193px; width: 661px;"
+								<canvas id="barchart" style="height: 193px; width: 661px;"
 									height="193" width="661"></canvas>
 							</div>
 						</div>
@@ -135,12 +135,18 @@
 
 <script type="text/javascript">
 
-var j = ${catecntjson}
+var j = ${catejson}
 var jObj = JSON.stringify(j);
-var jData = JSON.parse(jObj)
+var jData = JSON.parse(jObj);
+
+var j2 = ${catejson2}
+var jObj2 = JSON.stringify(j2);
+var jData2 = JSON.parse(jObj2);
 
 var labelList = new Array();
 var valueList = new Array();
+var labelList2 = new Array();
+var valueList2 = new Array();
 var colorList = new Array();
 
 colorList = [
@@ -154,12 +160,17 @@ colorList = [
 
 for(var i=0; i<jData.length; i++) {
 	var d = jData[i];
-	labelList.push(d.catename);
-	valueList.push(d.catecnt);
+	labelList.push(d.cateName);
+	valueList.push(d.cateCnt);
 }
 
+for(var i=0; i<jData2.length; i++) {
+	var d = jData2[i];
+	labelList2.push(d.cateCnt);
+	valueList2.push(d.cateSum);
+}
 
-var data = {
+var datadonut = {
 	labels: labelList,
 	datasets: [{
 		label: 'Total Population',
@@ -176,11 +187,34 @@ var data = {
 	}
 };
 
+var databar = {
+	labels: labelList2,
+	datasets: [{
+		label: 'Total Population',
+		data: valueList2,
+		backgroundColor: colorList,
+		borderWidth: 2
+	}],
+	options: {
+		scales: {
+			y: {
+				beginAtZero: true
+			}
+		}
+	}
+};
+
 var ctx = document.getElementById('donutchart').getContext('2d');
+var ctx2 = document.getElementById('barchart').getContext('2d');
 var donutchart = new Chart(ctx, {
-	      type: 'doughnut',
-		  data: data
+	type: 'doughnut',
+	data: datadonut
 });
+var linechart = new Chart(ctx2, {
+	type: 'bar',
+	data: databar
+});
+
 
 </script>
 

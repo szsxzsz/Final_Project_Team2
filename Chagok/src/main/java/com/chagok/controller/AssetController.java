@@ -222,39 +222,61 @@ public class AssetController {
 	public String cateReport(@RequestParam("mno") int mno, Model model) throws Exception {
 //	public String cateReport() throws Exception {
 		mylog.debug("mno : "+mno);
-//		Map<String, Object> map = new HashMap<String, Object>();
-//		map.put("catecnt", abList);
 		
+		// 1. service에서 DB 가져오기
 		/////////////// [1]  최다 지출 카테고리 ///////////////
-	    // service에서 DB 가져오기
 		List<ReportVO> cateCntList = rptService.getCateCnt(mno);
 		mylog.debug("cateCntList : "+cateCntList.size());
-//		mylog.debug("cateCntList : "+cateCntList.toString());
+//		
+		/////////////// [2]  최대 지출 카테고리 ///////////////
+		List<ReportVO> cateSumList = rptService.getCateSum(mno);
+		mylog.debug("cateSumList : "+cateSumList.toString());
+		
+		// 2. List -> JSON으로 가공하기
+		// VO의 catecnt, catename 추출 -> 변수에 임시 저장 -> JSONArr에 저장
 		Gson gson = new Gson();
 		JsonArray jArr = new JsonArray();
-//		
-		// List -> JSON으로 가공하기
-		// VO의 catecnt, catename 추출 -> 변수에 임시 저장 -> JSONArr에 저장
-		Iterator<ReportVO> it = cateCntList.iterator();
-		while(it.hasNext()) {
-			ReportVO cateCntVO = it.next();
-			int catecnt = cateCntVO.getCateCnt();
-			String catename = cateCntVO.getCateName();
+		
+		Iterator<ReportVO> it1 = cateCntList.iterator();
+		while(it1.hasNext()) {
+			ReportVO cateCntVO = it1.next();
+			int cateCnt = cateCntVO.getCateCnt();
+			String cateName = cateCntVO.getCateName();
 			
-			JsonObject obj = new JsonObject();
-			obj.addProperty("catecnt", catecnt);
-			obj.addProperty("catename", catename);
-			jArr.add(obj);
+			JsonObject obj1 = new JsonObject();
+			obj1.addProperty("cateCnt", cateCnt);
+			obj1.addProperty("cateName", cateName);
+			jArr.add(obj1);
 		}
-//		
-//		// model로 전달
-		String catecntjson = gson.toJson(jArr);
-		mylog.debug("json : "+catecntjson);
-//		mylog.debug("확인:"+cateCntList.get(0));
-//		map.put("catecnt", cateCntList.get(0));
-//		map.put("catename", cateCntList.get(1));
-		model.addAttribute("catecntjson", catecntjson);
+		
+		Gson gson2 = new Gson();
+		JsonArray jArr2 = new JsonArray();
+		Iterator<ReportVO> it2 = cateSumList.iterator();
+		while(it2.hasNext()) {
+			ReportVO cateSumVO = it2.next();
+			int cateSum = cateSumVO.getCateSum();
+			String cateName = cateSumVO.getCateName();
+			
+			JsonObject obj2 = new JsonObject();
+			obj2.addProperty("cateSum", cateSum);
+			obj2.addProperty("cateName", cateName);
+			jArr2.add(obj2);
+		}
+		
+		// 2. vo->map에 담기
+//		Map<String, Object> map = new HashMap<String, Object>();
+//		map.put("catecnt", catecnt);
+//		map.put("catename", catename);
+		
+//		// 3. model로 전달
+		String catejson = gson.toJson(jArr);
+		String catejson2 = gson2.toJson(jArr2);
+		mylog.debug("json : "+catejson);
+		mylog.debug("json2 : "+catejson2);
+		model.addAttribute("catejson", catejson);
+		model.addAttribute("catejson2", catejson2);
 //		model.addAttribute("cateCntList", cateCntList);
+//		model.addAttribute("map", map);
 		return "/asset/cateReport";
 		
 //		return map;
