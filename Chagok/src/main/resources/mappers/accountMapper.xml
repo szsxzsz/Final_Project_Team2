@@ -20,5 +20,9 @@
   		values (#{tran_date}, #{tran_time}, #{inout_type}, #{tran_amt}, #{after_balance_amt}, #{branch_name}, #{fintech_use_num}, #{bank_tran_id}) 
   	</insert>
   	
+  	<insert id="insertCardInfo">
+  		insert into card(card_id, bank_tran_id, user_seq_no, card_num_masked, card_name)
+  		values (#{card_id}, #{bank_tran_id}, #{user_seq_no}, #{card_num_masked}, #{card_name})
+  	</insert>
   	
   </mapper>

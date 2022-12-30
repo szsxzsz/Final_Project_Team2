@@ -55,7 +55,7 @@
 	
 	<hr>
 	
-	계좌내역 조회
+	계좌내역 조회 <br>
 	accountHistoryResponseList : ${accountHistoryResponseList }
 	
 	<c:forEach var="list" items="${accountHistoryResponseList }">
@@ -92,6 +92,30 @@
 	<hr>
 	
 	</c:forEach>
+	
+	카드 목록 조회 <br>
+	거래고유번호 : ${cardInfoResponseVO.bank_tran_id }<br>
+	사용자일련번호 : ${cardInfoResponseVO.user_seq_no }<br>
+	등록된 카드 수 : ${cardInfoResponseVO.card_cnt }<br>
+	
+	<table>
+		<tr>
+			<th>카드식별자</th>
+			<th>마스킹된 카드번호</th>
+			<th>상품명</th>
+			<th>본인/가족 구분</th>
+		</tr>
+		
+		<c:forEach var="cardList" items="${cardInfoResponseVO.card_list }">
+			<tr>
+				<td>${cardList.card_id }</td>
+				<td>${cardList.card_num_masked }</td>
+				<td>${cardList.card_name }</td>
+				<td>${cardList.card_member_type }</td>
+			</tr>
+		</c:forEach>
+	
+	</table>
 	
 </body>
 </html>
