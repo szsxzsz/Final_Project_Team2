@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.chagok.domain.ChallengeVO;
+import com.chagok.domain.MinusVO;
 import com.chagok.domain.PlusVO;
 import com.chagok.domain.UserVO;
 import com.chagok.service.ChallengeService;
@@ -79,34 +80,21 @@ public class ChallengeController {
 		return "/challenge/plusdetail";
 	}
 
-	
-//	// http://localhost:8080/challenge/minusdetail?cno=2
-//	@GetMapping(value = "/minusdetail")
-//	public String minusdetailGET(Model model,@RequestParam("cno") int cno, HttpSession session) throws Exception{
-//		mylog.debug("minusdetailGET 호출");
-//		mylog.debug(cno+"");
-//		
-//		ChallengeVO vo = service.getChallengeInfo(cno);
-//		
-//		model.addAttribute("vo", vo); // minusdetail로 정보전달
-//		
-//		return "/challenge/minusdetail";
-//	}
-
-
 
 	// http://localhost:8080/challenge/minusFeed?cno=1
 	// http://localhost:8080/challenge/minusFeed
-	@GetMapping(value = "/minusFeed")
-	public String minusFeed(Model model, @RequestParam("cno") int cno, HttpSession session) throws Exception {
+	@GetMapping(value="/minusFeed")
+	public String minusFeed(Model model,@RequestParam("cno") int cno,HttpSession session) throws Exception {
 		mylog.debug(" 수 지 : minusFeed Get 호출 ");
-
+		
 		ChallengeVO vo = service.getChallengeInfo(cno);
-
-		// 연결된 뷰페이지로 정보 전달(model)
-		model.addAttribute("vo", vo);
-
-		return "/challenge/minusFeed";
+		List<MinusVO> minusPeoList = service.getMinusPeople(cno);
+		
+	   // 연결된 뷰페이지로 정보 전달(model)
+	   model.addAttribute("vo", vo);
+	   model.addAttribute("minusPeoList", minusPeoList);
+	   
+	   return "/challenge/minusFeed";
 	}
 
 	@PostMapping(value = "/minusFeedPOST")
@@ -121,10 +109,19 @@ public class ChallengeController {
 		return "/challenge/plusdetail";
 	}
 
-	// http://localhost:8080/challenge/minusdetail
+	// http://localhost:8080/challenge/minusdetail?cno=2
 	@GetMapping(value = "/minusdetail")
-	public String minusdetailGET() throws Exception {
+	public String minusdetailGET(Model model,@RequestParam("cno") int cno, HttpSession session) throws Exception {
 		mylog.debug("minusdetailGET 호출");
+		mylog.debug(cno+"");
+		
+		ChallengeVO vo = service.getChallengeInfo(cno);
+		
+		ChallengeVO vo2 = service.getCt_top(cno);
+		
+		model.addAttribute("vo", vo); // minusdetail로 정보전달
+		
+		model.addAttribute("vo2", vo2);
 
 		return "/challenge/minusdetail";
 	}
@@ -222,6 +219,19 @@ public class ChallengeController {
 	@GetMapping(value = "/noticecontent")
 	public String noticecontentGET() throws Exception {
 		return "/challenge/noticecontent";
+	}
+	
+	// http://localhost:8080/challenge/mychallenge?nick=회원
+	@GetMapping("/mychallenge")
+	public String mychallengeGET(Model model, @RequestParam("nick") String nick) throws Exception {
+		mylog.debug(nick);
+		
+		List<ChallengeVO> mychallengeList = service.getmyChallenge(nick);
+		
+		model.addAttribute("nick", nick);
+		model.addAttribute("mychallengeList", mychallengeList);
+		
+		return "/challenge/mychallenge";
 	}
 
 }

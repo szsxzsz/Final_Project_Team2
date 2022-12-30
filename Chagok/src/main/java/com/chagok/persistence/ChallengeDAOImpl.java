@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import com.chagok.domain.ChallengeVO;
+import com.chagok.domain.MinusVO;
 import com.chagok.domain.PlusVO;
 
 @Repository
@@ -63,7 +64,23 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 		return challengeList;
 		
 	}
+
+	@Override
+	public List<ChallengeVO> getmyChallenge(String nick) {
+		mylog.debug(" getmyChallenge(String nick) 호출");
+		
+		List<ChallengeVO> mychallengeList  = sqlSession.selectList(NAMESPACE+".getmyChallenge", nick);
+		
+		return mychallengeList;
+	}
 	
+	@Override
+	public List<MinusVO> getMinusPeople(Integer cno) {
+		mylog.debug(cno+"번 챌린지 참가자 정보 호출(절약형)");
+		List<MinusVO> MPeopleList = sqlSession.selectList(NAMESPACE+".getMinusPeople",cno);
+		mylog.debug(cno+"번 챌린지 참가자 수(절약형) : "+MPeopleList.size());
+		return MPeopleList;
+	}
 	 
 	
 }

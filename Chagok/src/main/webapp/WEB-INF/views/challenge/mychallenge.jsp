@@ -1,0 +1,64 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ include file="../include/header.jsp" %>
+<%@ include file="../include/sidebar.jsp" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+	<h1>내 챌린지</h1>
+	
+	${mychallengeList }
+	<div class="col-xs-12 table-responsive">
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th><h3>챌린지유형</h3></th>
+				<th><h3>카테고리</h3></th>
+				<th><h3>챌린지 제목</h3></th>
+				<th><h3>챌린지 기간</h3></th>
+				<th><h3>챌린지 상태</h3></th>
+			</tr>
+		</thead>
+		<tbody>
+			<c:forEach var="vo" items="${mychallengeList }">
+			<tr>
+				<c:if test="${vo.c_sort eq 0 }">
+				<td>저축형</td>
+				</c:if>
+				<c:if test="${vo.c_sort eq 1 }">
+				<td>절약형</td>
+				</c:if>
+				<td>${vo.ct_top }</td>
+				
+				
+				<td><a href>${vo.c_title }</a></td><!-- 아.. 이거 주소이동 어떻게하지 ㅠ 저축형이랑 절약형이랑 if 써야하나..? -->
+				<td>${vo.c_period }주</td>
+				<c:if test="${vo.c_status eq 0 }">
+				<td><span style="color: #000000; font-weight: bold;">승인 대기</span></td>
+				</c:if>
+				<c:if test="${vo.c_status eq 1 }">
+				<td><span style="color: #F39C12; font-weight: bold;">모집 중</span></td>
+				</c:if>
+				<c:if test="${vo.c_status eq 2 }">
+				<td><span style="color: #00A65A; font-weight: bold;">진행 중</span></td>
+				</c:if>
+				<c:if test="${vo.c_status eq 3 }">
+				<td><span style="color: #3498DB; font-weight: bold;">챌린지 성공</span></td>
+				</c:if>
+				<c:if test="${vo.c_status eq 4 }">
+				<td><span style="color: #DD4B39; font-weight: bold;">챌린지 실패</span></td>
+				</c:if>
+				<c:if test="${vo.c_status eq 5 }">
+				<td><span style="color: #444444; font-weight: bold;">모집 실패</span></td>
+				</c:if>
+				<c:if test="${vo.c_status eq 6 }">
+				<td><span style="color: #444444; font-weight: bold;">승인 거절</span></td>
+				</c:if>
+			</tr>
+			</c:forEach>
+		</tbody>
+	</table>
+</div>
+	
+	
+	</div>
+<%@ include file="../include/footer.jsp" %>

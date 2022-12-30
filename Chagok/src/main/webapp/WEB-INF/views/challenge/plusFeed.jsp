@@ -134,7 +134,11 @@
 				    		</span>일 마다 
 				    	<span style="color: #10A19D;">
 				    	<fmt:formatNumber value="${vo.c_amount / vo.c_period}" pattern=",000"/>
+<<<<<<< HEAD
 				    	</span>원씩 저축하세요</h4>
+=======
+				    	</span>원씩 저축하게 됩니다!</h4>
+>>>>>>> branch 'develop_community' of https://github.com/Ju-Yeongmin/Final_Project_Team2.git
 		    	</div>
 		    </div>
 		</div>
