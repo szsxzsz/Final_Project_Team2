@@ -44,9 +44,7 @@ import com.google.gson.JsonObject;
 public class AssetController {
 	
 	private static final Logger mylog = LoggerFactory.getLogger(AssetController.class);
-	
-	@Inject
-	private ReportService rptService;
+
 	
 	///////////////////영민////////////////////
 	// http://localhost:8080/asset/myAsset
@@ -176,6 +174,7 @@ public class AssetController {
 	///////////////////영민////////////////////
 	
 	///////////////////세영//////////////////////
+	
 	//서비스 객체 주입
 	@Inject
 	private AbookService service;
@@ -191,6 +190,7 @@ public class AssetController {
 		List<AbookVO> abookList = service.getAbookList(mno);
 		List<CategoryVO> cateList = service.CateList();
 		mylog.debug("Controller+@@@@@@@@@@@@@@@@@@@2"+cateList);		
+		
 		// 연결되어 있는 뷰 페이지로 정보 전달 (Model 객체)
 		model.addAttribute("abookList", abookList);
 		model.addAttribute("cateList", cateList);
@@ -205,6 +205,9 @@ public class AssetController {
 	
 	
 	///////////////////MJ////////////////////
+	
+	@Inject
+	private ReportService rptService;
 	// mno 세션으로 받아오기
 	
 //	http://localhost:8080/asset/rptTest?mno=1
@@ -227,36 +230,65 @@ public class AssetController {
 	public String cateReport(@RequestParam("mno") int mno, Model model) throws Exception {
 //	public String cateReport() throws Exception {
 		mylog.debug("mno : "+mno);
-//	    Map<String, Object> map = new HashMap<String, Object>();
-//		map.put("catecnt", abList);
-
-	    // service에서 DB 가져오기
-		List<ReportVO> cntcateList = rptService.getCateCnt(mno);
-		mylog.debug("cntcateList : "+cntcateList.size());
-//		mylog.debug("cntcateList : "+cntcateList.toString());
+		// 1. service에서 DB 가져오기
+		/////////////// [1]  최다 지출 카테고리 ///////////////
+		List<ReportVO> cateCntList = rptService.getCateCnt(mno);
+		mylog.debug("cateCntList : "+cateCntList.size());
+//		
+		/////////////// [2]  최대 지출 카테고리 ///////////////
+//		List<ReportVO> cateSumList = rptService.getCateSum(mno);
+//		mylog.debug("cateSumList : "+cateSumList.toString());
+		
+		// 2. List -> JSON으로 가공하기
+		// VO의 catecnt, catename 추출 -> 변수에 임시 저장 -> JSONArr에 저장
 		Gson gson = new Gson();
 		JsonArray jArr = new JsonArray();
-//		
-		// List -> JSON으로 가공하기
-		// VO의 catecnt, catename 추출 -> 변수에 임시 저장 -> JSONArr에 저장
-		Iterator<ReportVO> it = cntcateList.iterator();
-		while(it.hasNext()) {
-			ReportVO cntCate = it.next();
-			int catecnt = cntCate.getCateCnt();
-			String catename = cntCate.getCateName();
+		
+		Iterator<ReportVO> it1 = cateCntList.iterator();
+		while(it1.hasNext()) {
+			ReportVO cateCntVO = it1.next();
+			int cateCnt = cateCntVO.getCateCnt();
+			int cateSum = cateCntVO.getCateSum();
+			String cateName = cateCntVO.getCateName();
 			
-			JsonObject obj = new JsonObject();
-			obj.addProperty("catecnt", catecnt);
-			obj.addProperty("catename", catename);
-			jArr.add(obj);
+			JsonObject obj1 = new JsonObject();
+			obj1.addProperty("cateCnt", cateCnt);
+			obj1.addProperty("cateSum", cateSum);
+			obj1.addProperty("cateName", cateName);
+			jArr.add(obj1);
 		}
-//		
-//		// model로 전달
-		String cntcatejson = gson.toJson(jArr);
-		mylog.debug("json : "+cntcatejson);
-		model.addAttribute("cntcatejson", cntcatejson);
-//		model.addAttribute("cntcateList", cntcateList);
+		
+//		Gson gson2 = new Gson();
+//		JsonArray jArr2 = new JsonArray();
+//		Iterator<ReportVO> it2 = cateSumList.iterator();
+//		while(it2.hasNext()) {
+//			ReportVO cateSumVO = it2.next();
+//			int cateSum = cateSumVO.getCateSum();
+//			String cateName = cateSumVO.getCateName();
+//			
+//			JsonObject obj2 = new JsonObject();
+//			obj2.addProperty("cateSum", cateSum);
+//			obj2.addProperty("cateName", cateName);
+//			jArr2.add(obj2);
+//		}
+		
+		// 2. vo->map에 담기
+//		Map<String, Object> map = new HashMap<String, Object>();
+//		map.put("catecnt", catecnt);
+//		map.put("catename", catename);
+		
+//		// 3. model로 전달
+		String catejson = gson.toJson(jArr);
+//		String catejson2 = gson2.toJson(jArr2);
+		mylog.debug("json : "+catejson);
+//		mylog.debug("json2 : "+catejson2);
+		model.addAttribute("catejson", catejson);
+//		model.addAttribute("catejson2", catejson2);
+//		model.addAttribute("cateCntList", cateCntList);
+//		model.addAttribute("map", map);
 		return "/asset/cateReport";
+		
+//		return map;
 	}
 	
 	///////////////////MJ////////////////////

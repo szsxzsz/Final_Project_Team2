@@ -29,14 +29,17 @@ public class ReportDAOImpl implements ReportDAO {
 		mylog.debug("rptTest(mno) 호출");
 		return sqlSession.selectList(NAMESPACE+".rptTest", mno);
 	}
-
+	
 	@Override
 	public List<ReportVO> getCateCnt(Integer mno) throws Exception {
 		mylog.debug("getCateCnt() 호출");
-		List<ReportVO> cntcateList = sqlSession.selectList(NAMESPACE+".getCateCnt", mno);
-		mylog.debug("ctRpt1 : "+cntcateList.size());
-		return cntcateList;
+		List<ReportVO> cateCntList = sqlSession.selectList(NAMESPACE+".getCateCnt", mno);
+		mylog.debug("cateCntList : "+cateCntList.size());
+		return cateCntList;
 	}
+
+
+	
 	
 	
 }
