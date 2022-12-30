@@ -20,7 +20,7 @@ public interface ChallengeDAO {
 	public List<Map<String, Object>> getPlusPeople(Integer cno);
 	
 	// 후기글 쓰기
-	public void createReview(ChallengeVO vo);
+	public void createReview(BoardVO vo);
 	
 	// 챌린지정보 리스트(참여인원리스트)
 	public List<ChallengeVO> getChallengeList(Integer cno); 

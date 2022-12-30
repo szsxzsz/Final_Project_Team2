@@ -20,7 +20,7 @@ public interface ChallengeService {
 	public List<Map<String, Object>> getPlusPeople(Integer cno);
 
 	// 후기글 작성
-	public void createReview(ChallengeVO vo);
+	public void createReview(BoardVO vo);
 	
 	// 챌린지 정보 (리스트)
 	public List<ChallengeVO> getChallengeList(Integer cno);

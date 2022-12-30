@@ -50,7 +50,7 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 	}
 
 	@Override
-	public void createReview(ChallengeVO vo) {
+	public void createReview(BoardVO vo) {
 		
 		sqlSession.insert(NAMESPACE + ".create", vo);
 		

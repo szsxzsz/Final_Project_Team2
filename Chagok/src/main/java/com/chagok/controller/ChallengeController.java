@@ -232,7 +232,7 @@ public class ChallengeController {
 	}
 
 	@PostMapping(value = "/review")
-	public String reviewPOST(ChallengeVO vo, RedirectAttributes rttr) throws Exception {
+	public String reviewPOST(BoardVO vo, RedirectAttributes rttr) throws Exception {
 		mylog.debug(" reviewPOST 호출");
 
 		mylog.debug(vo + "");

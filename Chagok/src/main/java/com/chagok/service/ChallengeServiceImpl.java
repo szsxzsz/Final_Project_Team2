@@ -45,7 +45,7 @@ public class ChallengeServiceImpl implements ChallengeService{
 	}
 
 	@Override
-	public void createReview(ChallengeVO vo){
+	public void createReview(BoardVO vo){
 		dao.createReview(vo);
 		
 	}
