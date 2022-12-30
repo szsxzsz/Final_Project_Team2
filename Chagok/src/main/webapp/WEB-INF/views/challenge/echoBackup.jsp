@@ -100,31 +100,41 @@
     
     
     <script>
-    var sockJs;
-    function openSocket(){
-        if(sockJs!==undefined && sockJs.readyState!==WebSocket.CLOSED)
-        {
-            writeResponse("WebSocket is already opend.");
-            return;
-        } 
+        var ws;
+        var messages = document.getElementById("message");
         
-        //웹소켓 객체 만드는 코드
-        sockJs = new SockJS('http://localhost:8080/echo');
-        
-        sockJs.onopen=function(event){
-            if(event.data===undefined) return;
-            writeResponse(event.data);
-        };
-        sockJs.onmessage=function(event){
-            writeResponse(event.data);
-        };
-        sockJs.onclose=function(event){
-            writeResponse("Connection closed");
+        function openSocket(){
+            if(ws!==undefined && ws.readyState!==WebSocket.CLOSED)
+            {
+                writeResponse("WebSocket is already opend.");
+                return;
+            } 
+            
+            //웹소켓 객체 만드는 코드
+            ws = new WebSocket('ws://localhost:8080/echo');
+            
+            ws.onopen=function(event){
+                if(event.data===undefined) return;
+                writeResponse(event.data);
+            };
+            ws.onmessage=function(event){
+                writeResponse(event.data);
+            };
+            ws.onclose=function(event){
+                writeResponse("Connection closed");
+            }
         }
-    }
-    function writeResponse(text){
-        message.innerHTML+="<br/>"+text;
-    }
+        function send(){
+            var text = document.getElementById("messageinput").value;
+            ws.send(text);
+            text="";
+        }
+        function closeSocket(){
+            ws.close();
+        }
+        function writeResponse(text){
+            message.innerHTML+="<br/>"+text;
+        }
     </script>
     <script type="text/javascript">
 	$(document).ready(function(){

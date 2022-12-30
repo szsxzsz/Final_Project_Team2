@@ -40,11 +40,25 @@ public class ChallengeController {
 		mylog.debug("plusfeedGET() 호출");
 
 		ChallengeVO chVO = service.getChallengeInfo(cno);
-		List<PlusVO> plusPeoList = service.getPlusPeople(cno);
+		List<Map<String, Object>> plusPeoList = service.getPlusPeople(cno);
 
 		model.addAttribute("vo", chVO);
 		model.addAttribute("plusPeoList", plusPeoList);
 
+		return "/challenge/plusFeed";
+	}
+	
+	// http://localhost:8080/challenge/plusfeed?cno=2
+	@PostMapping(value = "/plusfeed")
+	public String plusfeedPOST(Model model, int cno, HttpSession session) throws Exception {
+		mylog.debug("plusfeedGET() 호출");
+		
+		ChallengeVO chVO = service.getChallengeInfo(cno);
+		List<Map<String, Object>> plusPeoList = service.getPlusPeople(cno);
+		
+		model.addAttribute("vo", chVO);
+		model.addAttribute("plusPeoList", plusPeoList);
+		
 		return "/challenge/plusFeed";
 	}
 	
@@ -106,7 +120,11 @@ public class ChallengeController {
 		
 		ChallengeVO vo = service.getChallengeInfo(cno);
 		
+		ChallengeVO vo2 = service.getCt_top(cno);
+		
 		model.addAttribute("vo", vo); // minusdetail로 정보전달
+		
+		model.addAttribute("vo2", vo2);
 
 		return "/challenge/minusdetail";
 	}
@@ -115,6 +133,12 @@ public class ChallengeController {
 	@GetMapping(value = "/echo")
 	public String echoGET() throws Exception {
 
+		return "/challenge/echo";
+	}
+	
+	@PostMapping(value = "/echo")
+	public String echoPOST() throws Exception {
+		
 		return "/challenge/echo";
 	}
 

@@ -39,7 +39,7 @@ public class ChallengeServiceImpl implements ChallengeService{
 	}
 
 	@Override
-	public List<PlusVO> getPlusPeople(Integer cno) {
+	public List<Map<String, Object>> getPlusPeople(Integer cno){
 		mylog.debug("getPlusPeople("+cno+") 호출");
 		return dao.getPlusPeople(cno);
 	}

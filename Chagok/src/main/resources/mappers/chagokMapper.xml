@@ -54,7 +54,7 @@
 	</select>
 	
 	<!-- [저축형]챌린지 참가자 조회-->
-	<select id="getPlusPeople" resultType="com.chagok.domain.PlusVO">
+	<select id="getPlusPeople" resultType="map">
 		select * from plus p inner join user u
 		where cno = #{cno} and p.mno = u.mno
 	</select>
@@ -71,7 +71,6 @@
    on A.ctno = B.ctno
    where c_person like concat('%',#{nick},'%')
    </select>
-
 	
 	<!-- [절약형]챌린지 참가자 조회  -->
 	<select id="getMinusPeople" resultType="com.chagok.domain.MinusVO">

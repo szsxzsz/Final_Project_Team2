@@ -65,6 +65,7 @@ public class ChagokController {
 		
 		// 서비스 - DAO(로그인체크)
 		boolean loginStatus = service.userLogin(vo);
+		vo = service.getUser(vo.getId());
 		
 		mylog.debug(" 로그인 상태 : " + loginStatus);
 		// 로그인 여부에 따라서 페이지 이동
@@ -72,8 +73,8 @@ public class ChagokController {
 		// 실패 - login페이지
 		String resultURI="";
 		if(loginStatus) {
+			session.setAttribute("nick", vo.getNick());
 			resultURI = "redirect:/main";
-			session.setAttribute("id", vo.getId());
 		}else {
 			rttr.addFlashAttribute("message", "아이디 또는 비밀번호를 잘못 입력했습니다. 입력하신 내용을 다시 확인해주세요.");
 			resultURI = "redirect:/login";

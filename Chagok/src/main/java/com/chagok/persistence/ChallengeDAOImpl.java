@@ -41,9 +41,9 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 	}
 
 	@Override
-	public List<PlusVO> getPlusPeople(Integer cno) {
+	public List<Map<String, Object>> getPlusPeople(Integer cno){
 		mylog.debug(cno+"번 챌린지 참가자 정보 호출(저축형)");
-		List<PlusVO> PPeopleList = sqlSession.selectList(NAMESPACE+".getPlusPeople",cno);
+		List<Map<String, Object>> PPeopleList = sqlSession.selectList(NAMESPACE+".getPlusPeople",cno);
 		mylog.debug(cno+"번 챌린지 참가자 수(저축형) : "+PPeopleList.size());
 		
 		return PPeopleList;
