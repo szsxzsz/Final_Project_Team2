@@ -1,6 +1,7 @@
 package com.chagok.service;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -8,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import com.chagok.domain.BoardVO;
 import com.chagok.domain.ChallengeVO;
 import com.chagok.domain.MinusVO;
 import com.chagok.domain.PlusVO;
@@ -37,13 +39,13 @@ public class ChallengeServiceImpl implements ChallengeService{
 	}
 
 	@Override
-	public List<PlusVO> getPlusPeople(Integer cno) {
+	public List<Map<String, Object>> getPlusPeople(Integer cno){
 		mylog.debug("getPlusPeople("+cno+") 호출");
 		return dao.getPlusPeople(cno);
 	}
 
 	@Override
-	public void createReview(ChallengeVO vo){
+	public void createReview(BoardVO vo){
 		dao.createReview(vo);
 		
 	}
@@ -54,9 +56,9 @@ public class ChallengeServiceImpl implements ChallengeService{
 	}
 
 	@Override
-	public ChallengeVO getmyChallenge(String nick) {
-		ChallengeVO vo = dao.getmyChallenge(nick);
-		mylog.debug("getmyChallenge(String nick) : "+vo);
+	public List<ChallengeVO> getmyChallenge(String nick) {
+		List<ChallengeVO> mychallengeList = dao.getmyChallenge(nick);
+		mylog.debug("getmyChallenge(String nick) : "+mychallengeList);
 		return dao.getmyChallenge(nick);
 	}
 
@@ -64,6 +66,25 @@ public class ChallengeServiceImpl implements ChallengeService{
 	public List<MinusVO> getMinusPeople(int cno) {
 		mylog.debug("getMinusPeople("+cno+") 호출");
 		return dao.getMinusPeople(cno);
+	}
+	
+	@Override
+	public List<Map<String, Object>> getMinusCheck(int cno) {
+		mylog.debug("getMinusPeople("+cno+") 호출");
+		return dao.getMinusCheck(cno);
+	}
+	
+	@Override
+	public List<Map<String, Object>> getPlusCheck(int cno) {
+		mylog.debug("getMinusPeople("+cno+") 호출");
+		return dao.getPlusCheck(cno);
+	}
+
+	@Override
+	public List<BoardVO> getReviewBoard() {
+		
+		return dao.getReviewBoard();
+		
 	}
 	
 

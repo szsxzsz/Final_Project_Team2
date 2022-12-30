@@ -1,10 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <%@ include file="../include/header.jsp" %>
 <%@ include file="../include/sidebar.jsp" %>
 
 <h1>후기글 게시판</h1>
+${boardList}
 <div class="col-xs-12 table-responsive">
 	<table class="table table-striped">
 		<thead>
@@ -18,14 +21,16 @@
 			</tr>
 		</thead>
 		<tbody>
+			<c:forEach items="#{boardList }" var="boardList">
 			<tr>
-				<td>1</td>
-				<td>Call of Duty</td>
-				<td>455-981-221</td>
-				<td>El snort testosterone trophy driving gloves handsome</td>
-				<td>El snort testosterone trophy driving gloves handsome</td>
-				<td>$64.50</td>
+				<td>${boardList.b_title }</td>
+				<td>21</td>
+				<td>${boardList.b_title }</td>
+				<td>${boardList.b_content }</td>
+				<td>11</td>
+				<td>12</td>
 			</tr>
+			</c:forEach>
 			<tr>
 				<td>1</td>
 				<td>Need for Speed IV</td>

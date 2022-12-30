@@ -1,7 +1,9 @@
 package com.chagok.persistence;
 
 import java.util.List;
+import java.util.Map;
 
+import com.chagok.domain.BoardVO;
 import com.chagok.domain.ChallengeVO;
 import com.chagok.domain.MinusVO;
 import com.chagok.domain.PlusVO;
@@ -15,18 +17,27 @@ public interface ChallengeDAO {
 	public ChallengeVO getCt_top(int cno);
 	
 	// [저축형]챌린지 참가자 조회 
-	public List<PlusVO> getPlusPeople(Integer cno);
+	public List<Map<String, Object>> getPlusPeople(Integer cno);
 	
 	// 후기글 쓰기
-	public void createReview(ChallengeVO vo);
+	public void createReview(BoardVO vo);
 	
 	// 챌린지정보 리스트(참여인원리스트)
 	public List<ChallengeVO> getChallengeList(Integer cno); 
 	
 	// 내 챌린지 ( 챌린지유형 / 카테고리 / 챌린지제목 / 챌린지기간 / 챌린지상태 )
-	public ChallengeVO getmyChallenge(String nick);
+	public List<ChallengeVO> getmyChallenge(String nick);
 	
 	// [절약형]챌린지 참가자 조회 
 	public List<MinusVO> getMinusPeople(Integer cno);
+
+	// [절약형]챌린지 참가자 조회 
+	public List<Map<String, Object>> getMinusCheck(Integer cno);
+
+	// [저축형]챌린지 참가자 조회 
+	public List<Map<String, Object>> getPlusCheck(Integer cno);
+	
+	// 후기글 리스트 조회
+	public List<BoardVO> getReviewBoard();
 	
 }
