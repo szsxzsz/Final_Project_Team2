@@ -4,9 +4,46 @@
 <%@ include file="../include/sidebar.jsp"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<!-- <script> -->
+<div id="message"></div>
 <script>
-
+    var ws;
+    var messages = document.getElementById("message");
+    
+    function open(){
+        if(ws!==undefined && ws.readyState!==WebSocket.CLOSED)
+        {
+            writeResponse("WebSocket is already opend.");
+            return;
+        } 
+        
+        //웹소켓 객체 만드는 코드
+        ws = new WebSocket('ws://localhost:9090/ws/echo');
+        
+        ws.onopen=function(event){
+            if(event.data===undefined) return;
+            writeResponse(event.data);
+        };
+        ws.onmessage=function(event){
+            writeResponse(event.data);
+        };
+        ws.onclose=function(event){
+            writeResponse("Connection closed");
+        }
+    }
+    function send(){
+        var text = document.getElementById("messageinput").value;
+        ws.send(text);
+        text="";
+    }
+    function close(){
+        ws.close();
+    }
+    function writeResponse(text){
+        message.innerHTML+="<br/>"+text;
+    }
 </script>
+<!-- </script> -->
 <section id="about" class="about">
    <div class="container">
       <div class="section-title">
@@ -69,8 +106,7 @@
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 					<h4 class="modal-title">나의 가계부 연동</h4>
@@ -125,15 +161,15 @@ ${minusPeoList }
                      <td>${minusPeople.mno }</td>
                      <td>
                         <div class="progress progress-xs progress-striped active">
-                           <div class="progress-bar ${ca[status.index] }"
+                           <div class="progress-bar ${colorArr[status.index] }"
                               style="width: ${minusPeople.m_sum/vo.c_amount *100}%"></div>
                         </div>
                      </td>
                      <td><span class="badge bg-red">${minusPeople.m_sum }</span></td>
                   <td>
-<%--                   	<c:if test="${minusPeople.pl_cnt == vo.c_total }"> --%>
-<!--                   		<span class="label label-success">성공</span> -->
-<%--                   	</c:if> --%>
+                  	<c:if test="${minusPeople.m_sum > 0 }">
+                  		<span class="label label-success">진행중</span>
+                  	</c:if>
                   	<c:if test="${minusPeople.m_sum <= 0 }">
                   		<span class="label label-danger">실패</span>
                   	</c:if>
@@ -192,22 +228,26 @@ ${minusPeoList }
 
 
 <!-- 주시/칭찬하기 -->
-
+<div>
+		<button onclick="open();" data-toggle="modal" data-target="#modal-default" style="margin-left: 90%">채팅on</button>
+		<button onclick="close();">채팅off</button>
+</div>
+	
 <div class="box box-success">
    <div class="box-header ui-sortable-handle" style="cursor: move;">
       <i class="fa fa-comments-o"></i>
       <h3 class="box-title">${vo.c_title }</h3>
-      <div class="box-tools pull-right" data-toggle="tooltip" title=""
-         data-original-title="Status">
-         <div class="btn-group" data-toggle="btn-toggle">
-            <button type="button" class="btn btn-default btn-sm active">
-               <i class="fa fa-square text-green"></i>
-            </button>
-            <button type="button" class="btn btn-default btn-sm">
-               <i class="fa fa-square text-red"></i>
-            </button>
-         </div>
-      </div>
+<!--       <div class="box-tools pull-right" data-toggle="tooltip" title="" -->
+<!--          data-original-title="Status"> -->
+<!--          <div class="btn-group" data-toggle="btn-toggle"> -->
+<!--             <button type="button" class="btn btn-default btn-sm active"> -->
+<!--                <i class="fa fa-square text-green"></i> -->
+<!--             </button> -->
+<!--             <button type="button" class="btn btn-default btn-sm"> -->
+<!--                <i class="fa fa-square text-red"></i> -->
+<!--             </button> -->
+<!--          </div> -->
+<!--       </div> -->
    </div>
    <div class="slimScrollDiv"
       style="position: relative; overflow: hidden; width: auto; height: 250px;">
@@ -220,17 +260,17 @@ ${minusPeoList }
             <p class="message">
                <a href="#" class="name"> <small class="text-muted pull-right"><i
                      class="fa fa-clock-o"></i> 2:15</small> Mike Doe
-               </a> I would like to meet you to discuss the latest news about the
-               arrival of the new theme. They say it is going to be one the best
-               themes on the market
+               </a> 웹소켓 구현 어케하누 ~
             </p>
-            <div class="attachment">
-               <h4>Attachments:</h4>
-               <p class="filename">Theme-thumbnail-image.jpg</p>
-               <div class="pull-right">
-                  <button type="button" class="btn btn-primary btn-sm btn-flat">Open</button>
-               </div>
-            </div>
+            
+<!--             채팅 첨부파일 양식  -->
+<!--             <div class="attachment"> -->
+<!--                <h4>Attachments:</h4> -->
+<!--                <p class="filename">Theme-thumbnail-image.jpg</p> -->
+<!--                <div class="pull-right"> -->
+<!--                   <button type="button" class="btn btn-primary btn-sm btn-flat">Open</button> -->
+<!--                </div> -->
+<!--             </div> -->
 
          </div>
 
@@ -241,22 +281,17 @@ ${minusPeoList }
             <p class="message">
                <a href="#" class="name"> <small class="text-muted pull-right"><i
                      class="fa fa-clock-o"></i> 5:15</small> Alexander Pierce
-               </a> I would like to meet you to discuss the latest news about the
-               arrival of the new theme. They say it is going to be one the best
-               themes on the market
+               </a> 어 케 하 누 !
             </p>
          </div>
 
 
          <div class="item">
-            <img src="dist/img/user2-160x160.jpg" alt="user image"
-               class="offline">
+            <img src="dist/img/user2-160x160.jpg" alt="user image" class="offline">
             <p class="message">
                <a href="#" class="name"> <small class="text-muted pull-right"><i
                      class="fa fa-clock-o"></i> 5:30</small> Susan Doe
-               </a> I would like to meet you to discuss the latest news about the
-               arrival of the new theme. They say it is going to be one the best
-               themes on the market
+               </a> 왜 안 되 누 !
             </p>
          </div>
 
@@ -267,17 +302,29 @@ ${minusPeoList }
          style="width: 7px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 7px; background: rgb(51, 51, 51); opacity: 0.2; z-index: 90; right: 1px;"></div>
    </div>
 
-   <div class="box-footer">
-      <div class="input-group">
-         <input class="form-control" placeholder="Type message...">
-         <div class="input-group-btn">
-            <button type="button" class="btn btn-success">
-               <i class="fa fa-plus"></i>
-            </button>
-         </div>
-      </div>
-   </div>
+<div class="input_msg_write">
+ <input type="text" class="write_msg" id="messageinput" placeholder="Type a message" />
+ <button class="msg_send_btn" onclick="send();"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
+<!--  <div class="input-group-btn"> -->
+<!--             <button type="button" class="btn btn-success"> -->
+<!--                <i class="fa fa-plus"></i> -->
+<!--             </button> -->
+<!--          </div> -->
 </div>
+
+<!--    <div class="box-footer"> -->
+<!--       <div class="input-group"> -->
+<!--          <input class="form-control" placeholder="Type message..."> -->
+<!--          <div class="input-group-btn"> -->
+<!--             <button type="button" class="btn btn-success"> -->
+<!--                <i class="fa fa-plus"></i> -->
+<!--             </button> -->
+<!--          </div> -->
+<!--       </div> -->
+<!--    </div> -->
+</div>
+
+
 
 
 
