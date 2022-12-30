@@ -102,7 +102,11 @@ public class ChallengeController {
 		
 		ChallengeVO vo = service.getChallengeInfo(cno);
 		
+		ChallengeVO vo2 = service.getCt_top(cno);
+		
 		model.addAttribute("vo", vo); // minusdetail로 정보전달
+		
+		model.addAttribute("vo2", vo2);
 
 		return "/challenge/minusdetail";
 	}

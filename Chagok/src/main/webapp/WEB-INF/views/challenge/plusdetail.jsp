@@ -67,11 +67,10 @@
 
         <div class="form-group" style="padding-top: 50px; padding-left: 36px; width: 1166px; margin-bottom: 30px;">
            	<span style = "font-size: 16px; font-family: 'Pretendard','Source Sans Pro', sans-serif;"><strong>챌린지 설명</strong></span>
-<!--             <textarea class="form-control" rows="3"></textarea> -->
 				 <textarea class="form-control" rows="3" style="margin-top:15px;" readonly>${vo.c_content }</textarea>
                           
     <ul class="list-inline pull-right" style="margin-top: 10px;">
-      <li><a href="#" class="link-black text-sm"><i class="fa fa-share margin-r-5" style="font-size:1.3em;"><b>Share</b></i></a></li>
+      <li><a href="#" class="link-black text-sm"><i class="fa fa-share margin-r-5" style="font-size:1.2em;"><b>Share</b></i></a></li>
     </ul>
         </div>
         <input class="btn btn-block btn-success btn-lg" type="button" value="참여하기" onclick="location.href='plusFeed.jsp'" style="width:218px; margin-left: 950px;">

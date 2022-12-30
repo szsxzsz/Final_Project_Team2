@@ -28,7 +28,9 @@
 				<td>절약형</td>
 				</c:if>
 				<td>${vo.ct_top }</td>
-				<td>${vo.c_title }</td> <!-- 아.. 이거 주소이동 어떻게하지 ㅠ 저축형이랑 절약형이랑 if 써야하나..? -->
+				
+				
+				<td><a href>${vo.c_title }</a></td><!-- 아.. 이거 주소이동 어떻게하지 ㅠ 저축형이랑 절약형이랑 if 써야하나..? -->
 				<td>${vo.c_period }주</td>
 				<c:if test="${vo.c_status eq 0 }">
 				<td><span style="color: #000000; font-weight: bold;">승인 대기</span></td>

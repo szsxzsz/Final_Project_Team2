@@ -71,7 +71,6 @@
    on A.ctno = B.ctno
    where c_person like concat('%',#{nick},'%')
    </select>
-
 	
 	<!-- [절약형]챌린지 참가자 조회-->
 	<select id="getMinusPeople" resultType="com.chagok.domain.MinusVO">
