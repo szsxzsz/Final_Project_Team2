@@ -7,6 +7,14 @@ public class ResponseTokenVO {
 	private String refresh_token;
 	private String scope;
 	private String user_seq_no;
+	private String client_use_code;
+	
+	public String getClient_use_code() {
+		return client_use_code;
+	}
+	public void setClient_use_code(String client_use_code) {
+		this.client_use_code = client_use_code;
+	}
 	public String getAccess_token() {
 		return access_token;
 	}
