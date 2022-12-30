@@ -29,7 +29,7 @@ public class ReportDAOImpl implements ReportDAO {
 		mylog.debug("rptTest(mno) 호출");
 		return sqlSession.selectList(NAMESPACE+".rptTest", mno);
 	}
-
+	
 	@Override
 	public List<ReportVO> getCateCnt(Integer mno) throws Exception {
 		mylog.debug("getCateCnt() 호출");
@@ -38,13 +38,6 @@ public class ReportDAOImpl implements ReportDAO {
 		return cateCntList;
 	}
 
-	@Override
-	public List<ReportVO> getCateSum(Integer mno) throws Exception {
-		mylog.debug("getCateSum() 호출");
-		List<ReportVO> cateSumList = sqlSession.selectList(NAMESPACE+".getCateSum", mno);
-		mylog.debug("cateSumList : "+cateSumList.size());
-		return cateSumList;
-	}
 
 	
 	

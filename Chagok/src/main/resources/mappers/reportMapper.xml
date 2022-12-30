@@ -10,29 +10,19 @@
   		select * from account_book
   		where mno=#{mno}
   	</select>
-  
+
   	<!-- //////////////////////// dateReport //////////////////////// -->
   
   
   	<!-- //////////////////////// cateReport //////////////////////// -->
-  	<!-- [1] 최다 지출 카테고리 -->
+  	<!-- [1] 최다, 최대 지출 카테고리 -->
 	<select id="getCateCnt" resultType="ReportVO">
-		select count(ab.abno) cateCnt, ct.ct_bottom cateName
+<!-- 		select count(ab.abno) cateCnt, ct.ct_bottom cateName -->
+		select count(ab.abno) cateCnt, sum(ab.ab_amount) cateSum, ct.ct_bottom cateName
 		from account_book ab inner join category ct on ab.ctno=ct.ctno 
 		where ab.mno=#{mno} and ab_inout=1 and
 		ab.ab_date between LAST_DAY(NOW() - interval 1 month) + interval 1 DAY and LAST_DAY(NOW()) 
 		group by cateName
-		order by cateCnt desc;
+<!-- 		order by cateCnt desc; -->
 	</select>
-	
-	<!-- [2] 최대 지출 카테고리 -->
-	<select id="getCateSum" resultType="ReportVO">
-		select sum(ab.ab_amount) cateSum, ct.ct_bottom cateName
-		from account_book ab inner join category ct on ab.ctno=ct.ctno 
-		where ab.mno=#{mno} and ab_inout=1 and
-		ab.ab_date between LAST_DAY(NOW() - interval 1 month) + interval 1 DAY and LAST_DAY(NOW()) 
-		group by cateName
-		order by cateSum desc;
-	</select>
-	
   </mapper>
