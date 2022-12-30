@@ -86,8 +86,58 @@ table {
 }
 </style>
 
+<script type="text/javascript">
 
+function insertTr(){
 
+	var insertTr = "";
+	  
+	  insertTr += "<tr>";
+	  insertTr += "<td>lee20</td>";
+	  insertTr += "<td>이순신</td>";
+	  insertTr += "<td>부산</td>";
+	  insertTr += "</tr>";
+	    
+	  $("#memDiv").prepend(insertTr);
+
+	}
+	
+</script>
+
+<script>
+  function add_row() {
+    var my_tbody = document.getElementById('my-tbody');
+    var row = my_tbody.insertRow(0); // 상단에 추가
+//     var row = my_tbody.insertRow( my_tbody.rows.length ); // 하단에 추가
+    var cell1 = row.insertCell(0);
+    var cell2 = row.insertCell(1);
+    var cell3 = row.insertCell(2);
+    var cell4 = row.insertCell(3);
+    var cell5 = row.insertCell(4);
+    var cell6 = row.insertCell(5);
+    var cell7 = row.insertCell(6);
+    var cell8 = row.insertCell(7);
+    
+    cell1.innerHTML = '지출';
+    cell2.innerHTML = '	<input type="date" style="width:150px;"  height:25px;> ';
+    cell3.innerHTML = ' <input type="text" name="ab_content" style="width:150px; "> ';
+    cell4.innerHTML = ' <input type="text" name="ab_amount" style="width:120px;"> ';
+    cell5.innerHTML = ' <input type="text" name="ab_method" style="width:100px;"> ';
+    cell6.innerHTML = ' <select name="ctno"> <option value="13"> 기타 </select> ';
+    cell7.innerHTML = ' <select name="ctno"> <option value="13"> 기타 </select> ';
+    cell8.innerHTML = ' <input type="text" name="ab_memo" style="width:100px;"> ';
+    
+    
+  }
+
+  function delete_row() {
+    var my_tbody = document.getElementById('my-tbody');
+    if (my_tbody.rows.length < 1) return;
+    my_tbody.deleteRow(0); // 상단부터 삭제
+//     my_tbody.deleteRow( my_tbody.rows.length-1 ); // 하단부터 삭제
+  }
+  
+</script>
 </head>
 
 <div class="box-body2 table-responsive">
@@ -123,39 +173,44 @@ table {
 	    </select>
 	    <br> <br>
 	    
-<script>
-  function add_row() {
-    var my_tbody = document.getElementById('my-tbody');
-    var row = my_tbody.insertRow(0); // 상단에 추가
-//     var row = my_tbody.insertRow( my_tbody.rows.length ); // 하단에 추가
-    var cell1 = row.insertCell(0);
-    var cell2 = row.insertCell(1);
-    var cell3 = row.insertCell(2);
-    var cell4 = row.insertCell(3);
-    var cell5 = row.insertCell(4);
-    var cell6 = row.insertCell(5);
-    var cell7 = row.insertCell(6);
-    var cell8 = row.insertCell(7);
-    
-    cell1.innerHTML = '지출';
-    cell2.innerHTML = '	<input type="date" style="width:150px;"  height:25px;> ';
-    cell3.innerHTML = ' <input type="text" name="ab_content" style="width:150px; "> ';
-    cell4.innerHTML = ' <input type="text" name="ab_amount" style="width:120px;"> ';
-    cell5.innerHTML = ' <input type="text" name="ab_method" style="width:100px;"> ';
-    cell6.innerHTML = ' <select name="ctno"> <option value="13"> 기타 </select> ';
-    cell7.innerHTML = ' <select name="ctno"> <option value="13"> 기타 </select> ';
-    cell8.innerHTML = ' <input type="text" name="ab_memo" style="width:100px;"> ';
-    
-  }
+<table>
+<colgroup>
+<col width="110">
+<col width="110">
+<col width="130">
+</colgroup>
+  <thead>
+  <tr>
+    <th>회원아이디</th>
+    <th>회원명</th>
+    <th>회원주소</th>
+  </tr>
+  </thead>
+</table>
+<table>
+<colgroup>
+<col width="110">
+<col width="110">
+<col width="130">
+</colgroup>
+<tbody id="memDiv">
+  <tr>
+    <td>hong99</td>
+    <td>홍길동</td>
+    <td>서울</td>
+  </tr>
+  <tr>
+    <td>sejong80</td>
+    <td>세종대왕</td>
+    <td>대전</td>
+  </tr>
+</tbody>
+</table>
+<button onclick="insertTr()">테이블 행추가</button>
 
-  function delete_row() {
-    var my_tbody = document.getElementById('my-tbody');
-    if (my_tbody.rows.length < 1) return;
-    my_tbody.deleteRow(0); // 상단부터 삭제
-//     my_tbody.deleteRow( my_tbody.rows.length-1 ); // 하단부터 삭제
-  }
-  
-</script>
+
+
+
 <!-- 				<div> -->
 <!-- 					<button id='btn-add-row'>행 추가하기</button> -->
 <!-- 					<button id='btn-delete-row'>행 삭제하기</button> -->
