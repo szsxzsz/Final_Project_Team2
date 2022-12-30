@@ -1,6 +1,7 @@
 package com.chagok.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.chagok.domain.ChallengeVO;
 import com.chagok.domain.MinusVO;
@@ -15,7 +16,7 @@ public interface ChallengeService {
 	public ChallengeVO getCt_top(Integer cno);
 	
 	// [저축형]챌린지 참가자 조회 
-	public List<PlusVO> getPlusPeople(Integer cno);
+	public List<Map<String, Object>> getPlusPeople(Integer cno);
 
 	// 후기글 작성
 	public void createReview(ChallengeVO vo);
