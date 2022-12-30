@@ -62,9 +62,19 @@ public class AccountDAOImpl implements AccountDAO{
 	// 카드 정보 저장
 	@Override
 	public void insertCardInfo(CardInfoResponseVO cardInfoResponseVO) throws Exception {
-		List<CardInfoVO> initList = new ArrayList<CardInfoVO>(cardInfoResponseVO.getCard_list());
-		Set<CardInfoVO> set = new HashSet<CardInfoVO>(initList);
-		List<CardInfoVO> list = new ArrayList<CardInfoVO>(set);
+		mylog.debug("@@@@@@@@@@@ : " + cardInfoResponseVO.getCard_list());
+		
+		List<CardInfoVO> list = new ArrayList<CardInfoVO>();
+		
+		for (CardInfoVO vo : cardInfoResponseVO.getCard_list()) {
+			if (!list.contains(vo)) {
+				list.add(vo);
+			}
+			
+		}
+		
+		mylog.debug("중복제거 리스트 : " + list);
+		
 		
 		Map<String, String> map = new HashMap<String, String>();
 		
