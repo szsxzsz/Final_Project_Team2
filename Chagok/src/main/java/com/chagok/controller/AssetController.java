@@ -222,23 +222,24 @@ public class AssetController {
 	public String cateReport(@RequestParam("mno") int mno, Model model) throws Exception {
 //	public String cateReport() throws Exception {
 		mylog.debug("mno : "+mno);
-//	    Map<String, Object> map = new HashMap<String, Object>();
+//		Map<String, Object> map = new HashMap<String, Object>();
 //		map.put("catecnt", abList);
-
+		
+		/////////////// [1]  최다 지출 카테고리 ///////////////
 	    // service에서 DB 가져오기
-		List<ReportVO> cntcateList = rptService.getCateCnt(mno);
-		mylog.debug("cntcateList : "+cntcateList.size());
-//		mylog.debug("cntcateList : "+cntcateList.toString());
+		List<ReportVO> cateCntList = rptService.getCateCnt(mno);
+		mylog.debug("cateCntList : "+cateCntList.size());
+//		mylog.debug("cateCntList : "+cateCntList.toString());
 		Gson gson = new Gson();
 		JsonArray jArr = new JsonArray();
 //		
 		// List -> JSON으로 가공하기
 		// VO의 catecnt, catename 추출 -> 변수에 임시 저장 -> JSONArr에 저장
-		Iterator<ReportVO> it = cntcateList.iterator();
+		Iterator<ReportVO> it = cateCntList.iterator();
 		while(it.hasNext()) {
-			ReportVO cntCate = it.next();
-			int catecnt = cntCate.getCateCnt();
-			String catename = cntCate.getCateName();
+			ReportVO cateCntVO = it.next();
+			int catecnt = cateCntVO.getCateCnt();
+			String catename = cateCntVO.getCateName();
 			
 			JsonObject obj = new JsonObject();
 			obj.addProperty("catecnt", catecnt);
@@ -247,11 +248,16 @@ public class AssetController {
 		}
 //		
 //		// model로 전달
-		String cntcatejson = gson.toJson(jArr);
-		mylog.debug("json : "+cntcatejson);
-		model.addAttribute("cntcatejson", cntcatejson);
-//		model.addAttribute("cntcateList", cntcateList);
+		String catecntjson = gson.toJson(jArr);
+		mylog.debug("json : "+catecntjson);
+//		mylog.debug("확인:"+cateCntList.get(0));
+//		map.put("catecnt", cateCntList.get(0));
+//		map.put("catename", cateCntList.get(1));
+		model.addAttribute("catecntjson", catecntjson);
+//		model.addAttribute("cateCntList", cateCntList);
 		return "/asset/cateReport";
+		
+//		return map;
 	}
 	
 	///////////////////MJ////////////////////

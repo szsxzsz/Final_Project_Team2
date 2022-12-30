@@ -33,10 +33,18 @@ public class ReportDAOImpl implements ReportDAO {
 	@Override
 	public List<ReportVO> getCateCnt(Integer mno) throws Exception {
 		mylog.debug("getCateCnt() 호출");
-		List<ReportVO> cntcateList = sqlSession.selectList(NAMESPACE+".getCateCnt", mno);
-		mylog.debug("ctRpt1 : "+cntcateList.size());
-		return cntcateList;
+		List<ReportVO> cateCntList = sqlSession.selectList(NAMESPACE+".getCateCnt", mno);
+		mylog.debug("ctRpt1 : "+cateCntList.size());
+		return cateCntList;
 	}
-	
+
+	@Override
+	public List<ReportVO> getCateSum(Integer mno) throws Exception {
+		mylog.debug("getCateSum() 호출");
+		List<ReportVO> cateSumList = sqlSession.selectList(NAMESPACE+".getCateCnt", mno);
+		mylog.debug("ctRpt1 : "+cateSumList.size());
+		return null;
+	}
+	 
 	
 }

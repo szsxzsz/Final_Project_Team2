@@ -31,9 +31,12 @@ public class ReportServiceImpl implements ReportService {
 		mylog.debug("getCateCnt() 호출");
 		return rptdao.getCateCnt(mno);
 	}
-	
 
-
+	@Override
+	public List<ReportVO> getCateSum(Integer mno) throws Exception {
+		mylog.debug("getCateSum() 호출");
+		return rptdao.getCateSum(mno);
+	}
 
 	
 }

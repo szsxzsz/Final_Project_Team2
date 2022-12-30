@@ -12,4 +12,7 @@ public interface ReportService {
 	
 	// [1] 최다 지출 카테고리
 	public List<ReportVO> getCateCnt(Integer mno) throws Exception;
+	
+	// [2] 최대 지출 카테고리
+	public List<ReportVO> getCateSum(Integer mno) throws Exception;
 }
