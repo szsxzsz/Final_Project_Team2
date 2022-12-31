@@ -70,25 +70,25 @@
             <li class="header">마이페이지</li>
             <li class="treeview">
               <a href="#">
-                <i class="fa fa-dashboard"></i> <span>챌린지</span> <i class="fa fa-angle-left pull-right"></i>
+                <i class="fa fa-trophy"></i> <span>챌린지</span> <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
-                <li><a href="/resources/index.html"><i class="fa fa-circle-o"></i> 모집 중 챌린지</a></li>
-                <li><a href="/resources/index2.html"><i class="fa fa-circle-o"></i> 내 챌린지</a></li>
-                <li><a href="/resources/index2.html"><i class="fa fa-circle-o"></i> 후기 게시판</a></li>
+                <li><a href="/chagok/challengemain"><i class="fa fa-circle-o"></i> 모집 중 챌린지</a></li>
+                <li><a href="/challenge/mychallenge"><i class="fa fa-circle-o"></i> 내 챌린지</a></li>
+                <li><a href="/challenge/review"><i class="fa fa-circle-o"></i> 후기 게시판</a></li>
               </ul>
             </li>
             <li class="treeview">
               <a href="#">
-                <i class="fa fa-files-o"></i>
+                <i class="fa fa-group"></i>
                 <span>커뮤니티</span>
                 <span class="label label-primary pull-right">4</span>
               </a>
               <ul class="treeview-menu">
-                <li><a href="../layout/top-nav.html"><i class="fa fa-circle-o"></i> 사도 돼?</a></li>
-                <li><a href="../layout/boxed.html"><i class="fa fa-circle-o"></i> 뉴스 / 재테크</a></li>
-                <li><a href="../layout/fixed.html"><i class="fa fa-circle-o"></i> 월말 결산</a></li>
-                <li><a href="../layout/collapsed-sidebar.html"><i class="fa fa-circle-o"></i> 자유 게시판</a></li>
+                <li><a href="../community/canibuy"><i class="fa fa-circle-o"></i> 사도 돼?</a></li>
+                <li><a href="../community/news"><i class="fa fa-circle-o"></i> 뉴스 / 재테크</a></li>
+                <li><a href="../community/balancing"><i class="fa fa-circle-o"></i> 월말 결산</a></li>
+                <li><a href="../community/free"><i class="fa fa-circle-o"></i> 자유 게시판</a></li>
               </ul>
             </li>
 <!--             <li> -->
@@ -98,13 +98,13 @@
 <!--             </li> -->
             <li class="treeview">
               <a href="#">
-                <i class="fa fa-pie-chart"></i>
+                <i class="fa fa-asterisk"></i>
                 <span>고객센터</span>
                 <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
-                <li><a href="../charts/chartjs.html"><i class="fa fa-circle-o"></i> 공지 게시판</a></li>
-                <li><a href="../charts/morris.html"><i class="fa fa-circle-o"></i> 신고 게시판</a></li>
+                <li><a href="../challenge/notice"><i class="fa fa-circle-o"></i> 공지 게시판</a></li>
+                <li><a href="../community/report"><i class="fa fa-circle-o"></i> 신고 게시판</a></li>
 <!--                 <li><a href="../charts/flot.html"><i class="fa fa-circle-o"></i> Flot</a></li> -->
 <!--                 <li><a href="../charts/inline.html"><i class="fa fa-circle-o"></i> Inline charts</a></li> -->
               </ul>
