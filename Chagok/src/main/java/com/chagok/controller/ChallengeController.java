@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.chagok.domain.BoardVO;
@@ -107,9 +108,16 @@ public class ChallengeController {
 	}
 
 	@PostMapping(value = "/plusdetailPOST")
-	public String plusdetailPOST() throws Exception {
-
-		return "/challenge/plusdetail";
+	@ResponseBody // ajax 값을 바로 jsp에 보내기 위해 사용
+	public String plusdetailPOST(@RequestParam("ctno") int ctno) throws Exception {
+		String result="N";
+		
+//		int gctno = ajaxService.samechallenge(ctno);
+		
+//		if(gctno == 1) result = "Y";
+		
+		return result;
+//		return "/challenge/plusdetail";
 	}
 
 	// http://localhost:8080/challenge/minusdetail?cno=2

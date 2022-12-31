@@ -4,6 +4,14 @@
 <%@ include file="../include/sidebar.jsp" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<%-- <% --%>
+<!-- // 로그인 세션제어 -->
+<!-- String nick = (String) session.getAttribute("nick"); -->
+<!-- if(nick == null){ -->
+<!-- 	response.sendRedirect("chagok/login"); -->
+<!-- } -->
+<%-- %> --%>
+
 <!-- <script type="text/javascript"> -->
 <!-- function page_move(){ -->
 	
