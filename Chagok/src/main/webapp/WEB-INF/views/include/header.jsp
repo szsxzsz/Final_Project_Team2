@@ -26,10 +26,8 @@
 	href="${pageContext.request.contextPath }/resources/mainpagecss/css/vendor/slick-theme.css">
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath }/resources/mainpagecss/css/reset.css">
-<<<<<<< HEAD
 <link rel="stylesheet" type="text/css" href="$../resources/mainpagecss/css/font.css">
 <link rel="stylesheet" type="text/css" href="$../resources/mainpagecss/css/style.css">
-=======
 <link rel="stylesheet" type="text/css" href="../resources/mainpagecss/css/font.css">
 <link rel="stylesheet" type="text/css" href="../resources/mainpagecss/css/style.css">
 
@@ -53,7 +51,6 @@
 	crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 
->>>>>>> branch 'develop_community' of https://github.com/Ju-Yeongmin/Final_Project_Team2.git
 <style id="__web-inspector-hide-shortcut-style__">
 .__web-inspector-hide-shortcut__, .__web-inspector-hide-shortcut__ *,
 	.__web-inspector-hidebefore-shortcut__::before,
