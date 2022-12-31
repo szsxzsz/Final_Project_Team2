@@ -268,13 +268,18 @@ public class ChallengeController {
 		return "/challenge/noticecontent";
 	}
 	
-	// http://localhost:8080/challenge/mychallenge?nick=회원
+	// http://localhost:8080/challenge/mychallenge
 	@GetMapping("/mychallenge")
-	public String mychallengeGET(Model model, @RequestParam("nick") String nick) throws Exception {
+	public String mychallengeGET(Model model, HttpSession session) throws Exception {
+		
+		String nick = (String)session.getAttribute("nick");
 		mylog.debug(nick);
 		
 		List<ChallengeVO> mychallengeList = service.getmyChallenge(nick);
 		
+		if(nick == null) {
+			return "/chagok/login";
+		}
 		model.addAttribute("nick", nick);
 		model.addAttribute("mychallengeList", mychallengeList);
 		
