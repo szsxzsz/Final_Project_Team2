@@ -3,24 +3,43 @@
 <%@ include file="../include/header.jsp"%>
 <%@ include file="../include/sidebar.jsp"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-<!-- <script> -->
-<div id="message"></div>
 <script>
+	$(document).ready(function(){
+		 var endDate = new Date(${vo.c_start.time} + (60*60*24*1000*7 * ${vo.c_period}));
+		 
+		 month = ''+(endDate.getMonth() +1),
+		 day = ''+ endDate.getDate(),
+		 year = endDate.getFullYear();
+		 
+		 if(month.length < 2) month = '0' + month;
+		 if(day.length < 2) day = '0' + day;
+		 
+	 	 $('#endDate').append([year,month,day].join('-'));
+		
+	});
+</script>
+<div id="message"></div>
+<script type="text/javascript">
     var ws;
     var messages = document.getElementById("message");
     
-    function open(){
-        if(ws!==undefined && ws.readyState!==WebSocket.CLOSED)
+    function openSocket(){
+    	
+    	alert(ws);
+    	
+         if(ws!==undefined && ws.readyState!==WebSocket.CLOSED)
         {
             writeResponse("WebSocket is already opend.");
             return;
         } 
-        
+         
         //웹소켓 객체 만드는 코드
-        ws = new WebSocket('ws://localhost:9090/ws/echo');
+        ws = new WebSocket('ws://localhost:8080/challenge/echo');
         
         ws.onopen=function(event){
+        	alert("SS");
             if(event.data===undefined) return;
             writeResponse(event.data);
         };
@@ -29,21 +48,21 @@
         };
         ws.onclose=function(event){
             writeResponse("Connection closed");
-        }
+        } 
     }
     function send(){
         var text = document.getElementById("messageinput").value;
         ws.send(text);
         text="";
     }
-    function close(){
+    function closeSocket(){
         ws.close();
     }
     function writeResponse(text){
         message.innerHTML+="<br/>"+text;
     }
 </script>
-<!-- </script> -->
+
 <section id="about" class="about">
    <div class="container">
       <div class="section-title">
@@ -53,46 +72,67 @@
      ${vo }
       / http://localhost:8080/challenge/minusFeed?cno=1
      
-      <div class="row" style="margin-left:30px; margin-top:30px;">
-	<div class="col-lg-4 aos-init aos-animate" data-aos="fade-right">
-<!--        아래 이미지 주소는 디비에서 꺼내오는걸로 바꿔야해요 -->
-        <img class="img-responsive" src="/resources/dist/img/photo1.png" alt="Photo" style="width:500px; height:250px;">
-	</div>
-	<div class="col-lg-8 pt-4 pt-lg-0 content aos-init aos-animate" data-aos="fade-left" style="padding-left: 50px; width: 600;">
-		<h3><span style="color: #66BB7A; font-weight: bold;">[${vo.ctno }]</span>${vo.c_title } </h3>		
-		<div class="row">
-			<div class="col-lg-6">
-             <div class="progress-group" style="width: 280px;">
-               <span class="progress-text">챌린지 장 </span>
-               <span class="progress-number"><b>${vo.c_host }</b>님</span>
-             </div>
-             <div class="progress-group" style="width: 280px;">
-               <span class="progress-text">챌린지 인원</span>
-               <span class="progress-number"><b></b>/ </span>
-             <div class="progress-group" style="width: 280px;">
-               <span class="progress-text">예치금</span>
-               <span class="progress-number"><b>${vo.c_deposit }</b>꿀</span>
-          	 <div class="progress-group" style="width: 280px;">
-               <span class="progress-text">챌린지 기간</span>
-               <span class="progress-number"><b>${vo.c_period }</b></span>
-             <div class="progress-group" style="width: 280px;">
-               <span class="progress-text">챌린지 시작일</span>
-               <span class="progress-number"><b>${vo.c_start }</b></span>
-              </div>
-         	</div>
-       </div>
-			</div>
+     <div class="row">
+		<div class="col-lg-5 mx-6 aos-init aos-animate" data-aos="fade-right" >
+	        <img class="img-responsive" src="${pageContext.request.contextPath }/resources/dist/img/photo1.png" alt="Photo" style="width:500px; height:400px;">
+		</div>
+		<div class="col-lg-6 pt-4 pt-lg-0 content aos-init aos-animate" data-aos="fade-left" >
+			 <h3><span style="color: #66BB7A; font-weight: bold;">[${vo.ct_top }]</span> ${vo.c_title }</h3>
+			 <jsp:useBean id="now" class="java.util.Date" />
+			 <fmt:parseNumber value="${now.time / (1000*60*60*24)}" integerOnly="true" var="nowfmtTime" scope="request"/>
+			 <fmt:parseNumber value="${vo.c_start.time / (1000*60*60*24)}" integerOnly="true" var="startTime" scope="request"/>
+			 <fmt:parseNumber value="${(vo.c_start.time + vo.c_period*7*1000*60*60*24) / (1000*60*60*24)}" integerOnly="true" var="endTime" scope="request"/>
+			<c:if test="${startTime - nowfmtTime <= 0 && nowfmtTime - endTime <= 0}">
+				<p class="fst-italic">챌린지가 <b>시작</b>되었습니다!</p>
+			</c:if>
+			<c:if test="${startTime - nowfmtTime > 0}">
+				<p class="fst-italic">챌린지가 &nbsp;&nbsp;  <span style="color: #66BB7A; font-weight: bold; font-size: 20px;"> ${startTime - nowfmtTime }</span> 일 후에 시작됩니다!</p>
+			</c:if>
+			<c:if test="${nowfmtTime - endTime > 0}">
+				<p class="fst-italic">챌린지가 <b>종료</b>되었습니다!</p>
+			</c:if>
+			<br><br>
+			<div class="row">
+				<div class="col-lg-6" style="line-height: 180%">
+	             <div class="progress-group" style="width: 280px;" >
+	               <span class="progress-text">챌린지 장 </span>
+	               <span class="progress-number"><b>${vo.c_host }</b>님</span>
+	             </div>
+	             <div class="progress-group" style="width: 280px;">
+	               <span class="progress-text">챌린지 인원</span>
+	               <span class="progress-number"><b>${plusPeoList.size() } </b>/ ${vo.c_pcnt }</span>
+	             </div>
+	             <div class="progress-group" style="width: 280px;">
+	               <span class="progress-text">예치금</span>
+	               <span class="progress-number"><b>${vo.c_deposit }</b>꿀</span>
+	             </div>  
+	          	 <div class="progress-group" style="width: 280px;">
+	               <span class="progress-text">챌린지 기간</span>
+	               <span class="progress-number"><b>${vo.c_period }</b>주</span>
+	             </div>  
+	             <div class="progress-group" style="width: 280px;">
+	               <span class="progress-text">챌린지 시작일</span>
+	               <span class="progress-number">
+	               	<b><fmt:formatDate value="${vo.c_start }" pattern="YYYY-MM-dd"/></b>
+	               </span>
+	              </div>
+	             <div class="progress-group" style="width: 280px;">
+	               <span class="progress-text">챌린지 종료일</span>
+	               <span class="progress-number">
+	               	<b><span id="endDate"></span></b>
+	               </span>
+	              </div>
+	         	</div>
+	       </div>
 		</div>
 	</div>
-</div>
-</div>
    </div>
 </section>
 <section class="content">
    <div class="box box-default">
       <div class="box-header with-border">
       	<div class="text-center">
-         <h3 class="box-title">${vo.c_title }을(를) ${vo.c_amount }원 절약하는 조건이 있습니다.</h3>
+         <h3 class="box-title">${vo.ct_top }을(를) ${vo.c_amount }원 절약하는 조건이 있습니다.</h3>
       </div>
       </div>
       <!--          <div class="box-body">The great content goes here</div> -->
@@ -229,8 +269,8 @@ ${minusPeoList }
 
 <!-- 주시/칭찬하기 -->
 <div>
-		<button onclick="open();" data-toggle="modal" data-target="#modal-default" style="margin-left: 90%">채팅on</button>
-		<button onclick="close();">채팅off</button>
+		<button onclick="openSocket();">채팅on</button>
+		<button onclick="closeSocket();">채팅off</button>
 </div>
 	
 <div class="box box-success">
