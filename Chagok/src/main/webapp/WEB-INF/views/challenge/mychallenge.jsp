@@ -4,11 +4,11 @@
 <%@ include file="../include/sidebar.jsp" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<script type="text/javascript">
-function page_move(){
+<!-- <script type="text/javascript"> -->
+<!-- function page_move(){ -->
 	
-}
-</script>
+<!--  } -->
+<!-- </script> -->
 
 	<h1>내 챌린지</h1>
 	
