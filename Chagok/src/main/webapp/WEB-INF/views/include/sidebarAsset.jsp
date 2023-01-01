@@ -92,8 +92,8 @@
                 <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
-                <li class="active"><a href="/asset/ctRpt?mno=1"><i class="fa fa-circle-o"></i> 날짜별 리포트</a></li>
-                <li><a href="advanced.html"><i class="fa fa-circle-o"></i> 카테고리별 리포트</a></li>
+                <li class="active"><a href="/asset/dtRpt"><i class="fa fa-circle-o"></i> 날짜별 리포트</a></li>
+                <li><a href="/asset/ctRpt"><i class="fa fa-circle-o"></i> 카테고리별 리포트</a></li>
               </ul>
             </li>
           </ul>
