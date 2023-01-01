@@ -288,14 +288,14 @@ public class ChallengeController {
 	
 	
 	
-	// http://localhost:8080/challenge/index
+	// http://localhost:8080/challenge/webSocket
 	// 웹소캣 채팅 !!
-	@GetMapping(value="/index")
-	public String index(Model model,HttpSession session) throws Exception {
+	@GetMapping(value="/webSocket")
+	public String webSocket(Model model,HttpSession session) throws Exception {
 		
 	   // 연결된 뷰페이지로 정보 전달(model)
 	   
-	   return "/challenge/index";
+	   return "/challenge/webSocket";
 	}
 	
 }
