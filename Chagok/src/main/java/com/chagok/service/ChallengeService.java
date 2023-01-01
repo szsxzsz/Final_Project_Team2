@@ -36,5 +36,18 @@ public interface ChallengeService {
 	
 	// 게시판 글 확인
 	public BoardVO getBoardContent(Integer bno);
+
+	// 후기글 게시판 리스트
+	public List<BoardVO> getReviewBoard();
 	
+	
+	// 챌린지 등록
+	public void challengeRegist(ChallengeVO vo) throws Exception;
+	
+	// 챌린지 목록
+	public List<ChallengeVO> getChallengeList() throws Exception;
+	
+	// 챌린지 목록(참여명수 구하기)
+	public List<Map<String, Object>> getPersonCnt() throws Exception;	
+
 }

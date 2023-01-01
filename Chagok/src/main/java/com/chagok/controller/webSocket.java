@@ -15,8 +15,8 @@ import com.google.gson.Gson;
 
 // 웹소캣 채팅 구현!!
 
-@ServerEndpoint("/index")
-public class index {
+@ServerEndpoint("/webSocket")
+public class webSocket {
   // 인라인 클래스 메시지 타입 클래스
   class ChatMessage {
     // id
@@ -132,7 +132,7 @@ public class index {
   }
   // 채팅 내용을 파일로 부터 읽어온다.
   private String readFile() {
-    // d드라이브의 chat 폴더의 chat 파일
+    // chat 내용 저장 장소 정하기~~
     File file = new File("/Users/szsxzsz/Desktop/chat/chat.txt");
     // 파일 있는지 검사
     if (!file.exists()) {
@@ -151,6 +151,7 @@ public class index {
     // 메시지 내용
     String msg = id + "]  " + message + "\n";
     // 파일을 저장한다.
+    // save into db : chat.insertChat
     try (FileOutputStream stream = new FileOutputStream("/Users/szsxzsz/Desktop/chat/chat.txt", true)) {
       stream.write(msg.getBytes("UTF-8"));
     } catch (Throwable e) {

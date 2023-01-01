@@ -40,7 +40,7 @@
       // WebSocket 접속 함수
       function connect() {
         // 웹 소켓 객체 생성
-        webSocket = new WebSocket("ws://localhost:8080/index");
+        webSocket = new WebSocket("ws://localhost:8080/webSocket");
         // 웹 소켓이 open되면 실행되는 이벤트
         webSocket.onopen = function(message) {
           // 채팅 textbox와 버튼의 disabled 해제

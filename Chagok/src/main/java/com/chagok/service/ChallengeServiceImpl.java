@@ -83,6 +83,41 @@ public class ChallengeServiceImpl implements ChallengeService{
 	
 	
 	
+	
+	// 챌린지 등록
+	@Override
+	public void challengeRegist(ChallengeVO vo) throws Exception {
+		mylog.debug(" challengeRegist(ChallengeVO vo) 호출 ");
+				
+		dao.challengeRegist(vo);
+		mylog.debug(" 챌린지 등록 완료 ");
+		
+	}
+	
+	
+	// 챌린지 목록
+	@Override
+	public List<ChallengeVO> getChallengeList() throws Exception {
+		mylog.debug(" getChallengeList() 호출");
+		
+		return dao.getChallengeList();
+	}
+
+	
+	// 챌린지 목록(참여명수 구하기)
+	@Override
+	public List<Map<String, Object>> getPersonCnt() throws Exception {
+		mylog.debug(" getPersonCnt() 호출 ");
+		
+		return dao.getPersonCnt();
+	}
+
+	@Override
+	public List<BoardVO> getReviewBoard() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 	
 
