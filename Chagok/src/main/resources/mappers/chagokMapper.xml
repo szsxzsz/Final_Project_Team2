@@ -95,5 +95,24 @@
 		select * from board 
 		where b_sort like concat('review','%')
 	</select>
-		
+	
+	
+	<!-- 챌린지 등록하기 --> 
+  	<insert id="challengeRegist">
+     	insert into challenge (c_title,ctno,c_period,c_start,c_pcnt,c_deposit,c_freq,c_amount,c_content,c_status,c_sort,c_min,c_file,c_thumbFile) 
+     	values (#{c_title},#{ctno},#{c_period},#{c_start},#{c_pcnt},#{c_deposit},#{c_freq},#{c_amount},#{c_content},#{c_status},#{c_sort},#{c_min},#{c_file},#{c_thumbFile})  
+  	</insert>
+  	
+  	<!-- 챌린지 목록 -->
+  	<select id="getChallengeList" resultType="com.chagok.domain.ChallengeVO">
+     	select * from challenge ch join category c
+		where ch.ctno = c.ctno;
+  	</select>
+  	
+  	<!-- 챌린지 목록(참여인원 명수 구하기) -->
+  	<select id="getPersonCnt" resultType="map">
+     	select c_person from challenge
+  	</select>
+  	
+
   </mapper>

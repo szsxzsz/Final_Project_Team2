@@ -111,6 +111,39 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 	}
 	
 	
-	 
+	
+	// 챌린지 등록
+	@Override
+	public void challengeRegist(ChallengeVO vo) throws Exception {
+		mylog.debug(" challengeRegist(ChallengeVO vo) 호출 ");
+		
+		sqlSession.insert(NAMESPACE + ".challengeRegist", vo);
+		mylog.debug(" 챌린지 등록(저축형) 완료! ");
+		
+	}
+	
+	
+	// 챌린지 목록
+	@Override
+	public List<ChallengeVO> getChallengeList() throws Exception {
+		mylog.debug(" getChallengeList() 호출 ");
+		
+		List<ChallengeVO> challengeList = sqlSession.selectList(NAMESPACE +".getChallengeList");
+		
+		return challengeList;
+	}
+
+	
+	// 챌린지 목록(참여명수 구하기)
+	@Override
+	public List<Map<String, Object>> getPersonCnt() {
+		mylog.debug(" 정보 호출 ");
+		
+		List<Map<String, Object>> pesonCnt = sqlSession.selectList(NAMESPACE+".getPersonCnt");
+		
+		return pesonCnt;
+	}
+	
+	
 	
 }

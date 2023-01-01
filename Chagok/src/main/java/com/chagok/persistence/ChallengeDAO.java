@@ -40,4 +40,13 @@ public interface ChallengeDAO {
 	// 후기글 리스트 조회
 	public List<BoardVO> getReviewBoard();
 	
+	// 챌린지 등록
+	public void challengeRegist(ChallengeVO vo) throws Exception;
+		
+	// 챌린지 목록
+	public List<ChallengeVO> getChallengeList() throws Exception;
+	
+	// 챌린지 목록(참여명수 구하기)
+	public List<Map<String, Object>> getPersonCnt() throws Exception;
+	
 }

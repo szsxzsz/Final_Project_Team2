@@ -1,18 +1,26 @@
 package com.chagok.controller;
 
+import java.util.List;
+import java.util.Map;
+import java.util.Spliterator;
+
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.chagok.domain.ChallengeVO;
 import com.chagok.domain.UserVO;
+import com.chagok.service.ChallengeService;
 import com.chagok.service.UserService;
 
 @Controller
@@ -22,6 +30,9 @@ public class ChagokController {
 	
 	@Inject
 	private UserService service;
+	
+	@Inject
+	private ChallengeService service2;
 	
 	// 차곡 메인사이트 
 	// http://localhost:8080/main
@@ -41,13 +52,36 @@ public class ChagokController {
 		return "/chagok/assetmain";
 	}
 
-	// 커뮤니티 파트 메인
+//	// 커뮤니티 파트 메인
+//	// http://localhost:8080/commumain
+//	@GetMapping(value = "/commumain")
+//	public String commumainGET() throws Exception {
+//
+//		return "/chagok/commumain";
+//	}
+	
+	// 챌린지 목록 불러오기 (커뮤메인)
 	// http://localhost:8080/commumain
-	@GetMapping(value = "/commumain")
-	public String commumainGET() throws Exception {
-
+	@GetMapping(value="/commumain")
+	public String getChallengeList(Model model, @ModelAttribute("result") String result) throws Exception {
+		mylog.debug(" /chagok/commumain 호출 ");
+		
+		// 전달받은 정보 x
+		mylog.debug(" 전달정보 : "+result);
+		
+		// 서비스 -> DAO 게시판 리스트 가져오기
+		List<ChallengeVO> challengeList = service2.getChallengeList();
+		List<Map<String, Object>> pesonCnt = service2.getPersonCnt();
+		
+		// 참여명수 구하기		
+		
+		// 연결되어 있는 뷰페이지로 정보 전달 (Model 객체)
+		model.addAttribute("challengeList", challengeList);
+		model.addAttribute("pesonCnt", pesonCnt);
+		
 		return "/chagok/commumain";
 	}
+	
 
 	// http://localhost:8080/login
 	@GetMapping(value = "/login")
