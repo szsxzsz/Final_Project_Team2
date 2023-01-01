@@ -182,7 +182,21 @@ public class ChagokController {
 			return "/asset/abookList";
 		}
 	
-	
+	 
+	// http://localhost:8080/challenge/detail?cno=1
+   @GetMapping(value = "/challenge/detail")
+   public String getChoseChallenge(Integer cno) {
+      ChallengeVO vo = service2.getChallengeInfo(cno);
+      int sort = vo.getC_sort();
+      
+      if(sort == 0) {
+         mylog.debug("저축형 챌린지로 이동");
+         return "redirect:/challenge/plusdetail?cno="+cno;
+      }else {
+         mylog.debug("절약형 챌린지로 이동");
+         return "redirect:/challenge/minusdetail?cno="+cno;
+      }
+   }
 	
 	
 }
