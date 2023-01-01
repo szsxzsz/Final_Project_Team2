@@ -288,6 +288,7 @@ public class ChallengeController {
 		if(nick == null) {
 			return "/chagok/login";
 		}
+		// else일 때
 		model.addAttribute("nick", nick);
 		model.addAttribute("mychallengeList", mychallengeList);
 		
