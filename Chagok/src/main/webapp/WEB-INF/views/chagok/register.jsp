@@ -42,7 +42,7 @@
 <body class="hold-transition register-page">
 <div class="register-box">
   <div class="register-logo">
-    <a href="#" style="font-family: 'Hi Melody', cursive;"><b>차곡</b></a>
+    <a href="#" style="font-family: 'Hi Melody', cursive;"><img src="${pageContext.request.contextPath }/resources/plugins/img/chagok_pig-removebg.png"><b>차곡</b></a>
   </div>
 
   <div class="register-box-body">
@@ -93,7 +93,7 @@
         Google+</a>
     </div>
 
-    <a href="login.html" class="text-center">I already have a membership</a>
+    <a href="/login" class="text-center">로그인</a>
   </div>
   <!-- /.form-box -->
 </div>

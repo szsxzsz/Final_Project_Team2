@@ -1,5 +1,7 @@
 package com.chagok.persistence;
 
+import java.util.Map;
+
 import com.chagok.domain.UserVO;
 
 public interface UserDAO {
@@ -23,6 +25,6 @@ public interface UserDAO {
 	public UserVO getUser(int mno);
 	
 	// 로그인 처리
-	public UserVO loginUser(UserVO vo);
+	public UserVO loginUserCheck(Map<String, String> loginMap);
 
 }

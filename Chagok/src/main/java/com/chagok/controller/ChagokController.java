@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Spliterator;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -37,7 +38,6 @@ public class ChagokController {
 	
 	// 차곡 메인사이트 
 	// http://localhost:8080/main
-
 	@GetMapping(value = "/main")
 	public String mainGET() {
 
@@ -91,31 +91,29 @@ public class ChagokController {
 	}
 
 	@PostMapping(value = "/login")
-	public String loginPOST(UserVO vo, Model model, HttpSession session, RedirectAttributes rttr) throws Exception {
+	public @ResponseBody Object loginPOST(@RequestBody Map<String, String> loginMap, HttpServletRequest request, UserVO vo, Model model) throws Exception {
 		mylog.debug(" loginPOST() 호출");
+		HttpSession session = request.getSession();
 		
-		// 전달정보 저장(userid, userpw)
+		// 전달정보 저장(id, pw)
 		mylog.debug(" 로그인 정보 : " +vo);
-
-		// 서비스 - DAO(로그인체크)
-		boolean loginStatus = service.userLogin(vo);
-		model.addAttribute("nick", vo.getNick());
+		mylog.debug(" 세션 정보 : " +session);
 		
-		mylog.debug(" 로그인 상태 : " + loginStatus);
-		String resultURI="";
-		
-		if(loginStatus) {
-			// 성공 - main 페이지
-			session.setAttribute("mno", vo.getMno());
-			resultURI = "redirect:/main";
-		}else {
-			// 실패 - login페이지
-			rttr.addFlashAttribute("message", "아이디 또는 비밀번호를 잘못 입력했습니다. 입력하신 내용을 다시 확인해주세요.");
-			resultURI = "redirect:/login";
+		if(session.getAttribute("user") != null) {
+			session.removeAttribute("user");
 		}
 		
-		return resultURI;
-	 }
+		UserVO userVO = service.loginUserCheck(loginMap);
+		
+		if(userVO != null) {
+			session.setAttribute("user", userVO);
+			
+			return userVO;
+		} else {
+			
+			return 0;
+		}
+	}
 
 	 // http://localhost:8080/register
 	 @GetMapping(value = "/register")
@@ -144,7 +142,7 @@ public class ChagokController {
 		 int checkNum = service.checkId(id);
 		 System.out.println("checkNum : " + checkNum );
 		 if(checkNum != 0) {
-		 	 System.out.println("아이디가 중복되었다.");
+		 	 System.out.println("아이디 중복");
 			 return "duplicated";
 			
 		 }else {
@@ -171,7 +169,17 @@ public class ChagokController {
 			 return "available";
 		 }
 	 }
-	
+	 
+	 @GetMapping(value = "/logout")
+	 public String logoutMain(HttpServletRequest request) throws Exception{
+		 
+		 mylog.debug("logout(HttpServletRequest)");
+		 HttpSession session = request.getSession();
+		 
+		 session.invalidate();
+		 
+		 return "redirect:/main";
+	 }
 	 
 	 // 가계부 가져오기 (연동) - 수지 
 	 @RequestMapping(value="/abookList")
