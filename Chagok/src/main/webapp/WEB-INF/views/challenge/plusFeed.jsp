@@ -1,63 +1,150 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ include file="../include/header.jsp" %>
 <%@ include file="../include/sidebar.jsp" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-
-<script>
-	$(document).ready(function(){
-		 var endDate = new Date(${vo.c_start.time}+(60*60*24*1000*7*${vo.c_period}));
-		 
-		 month = ''+(endDate.getMonth() +1),
-		 day = ''+ endDate.getDate(),
-		 year = endDate.getFullYear();
-		 
-		 if(month.length < 2) month = '0' + month;
-		 if(day.length < 2) day = '0' + day;
-		 
-	 	 $('#endDate').append([year,month,day].join('-'));
-		
-	});	
-</script>
+<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.min.js"></script>
 <script type="text/javascript">
-	var sockJs;
-	function openSocket(){
-	    if(sockJs!==undefined && sockJs.readyState!==WebSocket.CLOSED)
+	$(document).ready(function() {
+		$('#btnSend').on('click', function(evt) {
+			var currT = new Date().getHours() + ":" + new Date().getMinutes() + "  |  " + "Today";
+			var msg = $('#msg').val();
+			evt.preventDefault();
+			var html = $("#nextMsg").html();
+			if (sock.readyState !== 1 ) return;
+			//protocol: RoomNum, 보내는id, 내용 
+			sock.send(${vo.cno} + "," + '${sessionId}' + "," + msg); 
+			html += '<div class="outgoing_msg">'
+						+ '<div class="sent_msg">'
+			            + '<p>'+msg+'</p>'
+			            + '<span class="time_date"> '+ currT +'</span></div></div>';
+			$("#nextMsg").html(html+"\n");
+			$("#msg").val("");
+			console.log("ReceiveMessage:" + event.data+'\n');
+		});
+
+		$('#wsClose').on('click', function(e) {
+			socket.onclose();
+			
+		});
+		
+	});
+</script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js">
+	var sock;
+	connect();
+	
+	function connect(){
+		if(sock!==undefined && sock.readyState!==WebSocket.CLOSED)
 	    {
 	        writeResponse("WebSocket is already opend.");
 	        return;
 	    } 
 	    
 	    //웹소켓 객체 만드는 코드
-	    sockJs = new SockJS('http://localhost:8080/challenge/plusFeed');
-	    
-	    sockJs.onopen=function(event){
-	        if(event.data===undefined) return;
-	        writeResponse(event.data);
-	    };
-	    sockJs.onmessage=function(event){
-	        writeResponse(event.data);
-	    };
-	    sockJs.onclose=function(event){
-	        writeResponse("Connection closed");
-	    }
+// 	     sock = new SockJS('http://localhost:8080/challenge/plusfeed');
+	   	 sock = new SockJS("http://localhost:8080/challenge/app");
+	     stompClient = Stomp.over(sock);
+		 stompClient.connect({}, function(frame){
+	 	    	console.log('conneted : ' +frame);
+	 	    	stompClient.subscribe('/queue/chat/room/portfolio', function(response){
+	 	    		console.log(response);
+	 	    		console.log(JSON.parse(response.body));
+	 	    	});
+	 	    });
+	 	    socket.onopen=function(event){
+	 	        if(event.data===undefined) return;
+	 	        writeResponse(event.data);
+	 	    };
+	 	    socket.onmessage=function(event){
+	 	        writeResponse(event.data);
+	 	    };
+	 	    sockJs.onclose=function(event){
+	 	        writeResponse("Connection closed");
+	 	    }
+		 
+		 
+	     sock.onopen = function() {
+		     console.log('open');
+		     console.log('${nick}' );
+		     sock.send(${vo.cno} + "," + '${sessionId}' + ",ENTER"); 
+		     console.log(${vo.cno} + "," + '${sessionId}' + ",ENTER");
+		 };
+		 
+		 sock.onmessage = function(e){
+			var sm = e.data;
+			var sl = sm.split(',');
+			var sendId = sl[0];
+			var content = sl[1];
+			var html = $('#nextMsg').html();
+			if(content == "ENTER"){
+				html += "<div class='enter'>" + sendId + "님이 들어오셨습니다.</div>"; 
+			} else if(content == "OUT") {
+				html += "<div class='enter'>" + sendId + "님이 나가셨습니다.</div>"; 
+			} else if(sendId != '${sessionId}'){
+				var currT = new Date().getHours() + ":" + new Date().getMinutes(); 
+// 				html += '<div class="chat__message chat__message-to-me"><div class="chat__message-center"><h3 class="chat__message-username">' + sendId 
+// 							+ '</h3><span class="chat__message-body">' + content + '</span></div><span class="chat__message-time">' 
+// 							+ currT + '</span></div>';
+							
+				html += '<div class="incoming_msg">'
+						+ ' <div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>'
+			            + '<div class="received_msg"> <div class="received_withd_msg"><p>'+conent+'</p>'
+			            + '<span class="time_date"> '+ currT +'</span></div></div></div>';
+			}
+			$('#nextMsg').html(html);
+
+			console.log("ReceiveMessage: " + content+'\n');
+			
+		 };
+		 
+		 sock.onclose = function(event) {
+		     console.log('close');
+		 };
+		 
+		 sock.onerror = function(err){ console.log('Error : ', err );};
+		 
 	}
-	function writeResponse(text){
-	    message.innerHTML+="<br/>"+text;
+	
+	function writeResponse(){
+		sock.onmessage = function(e) {
+		     console.log('message', e.data);
+		     sock.close();
+		 };
+	   // message.innerHTML+="<br/>"+text;
 	}
-</script>
-<script type="text/javascript">
-	$(document).ready(function(){
-		$('#send').click(function(){
-			$('#controllmsg').css('visibility','visible ');
-			$('#msgSender').html('${plusPerson.mno}');
-			$('#msgTime').html('${now}');
-			return;
-		});
-	});
+	
+	function closeSocket(){
+		sock.onclose = function() {
+		     console.log('close');
+		 };
+	}
+	
+// 	    stompClient = Stomp.over(socket);
+// 	    stompClient.connect({}, function(frame){
+// 	    	console.log('conneted : ' +frame);
+// 	    	stompClient.subscribe('/', function(response){
+// 	    		console.log(response);
+// 	    		console.log(JSON.parse(response.body));
+// 	    	});
+// 	    });
+// 	    socket.onopen=function(event){
+// 	        if(event.data===undefined) return;
+// 	        writeResponse(event.data);
+// 	    };
+// 	    socket.onmessage=function(event){
+// 	        writeResponse(event.data);
+// 	    };
+// 	    sockJs.onclose=function(event){
+// 	        writeResponse("Connection closed");
+// 	    }
 </script>
 <h1 style="padding: 0 15px 0 15px;"> 저축형 차곡 챌린지 </h1>
+
+<%-- ${plusPeoList } --%>
+<%-- ${vo} --%>
  <!-- Main content -->
 <section class="content">
 	<div class="row">
@@ -68,8 +155,10 @@
 			 <h3><span style="color: #66BB7A; font-weight: bold;">[저축형]</span> ${vo.c_title }</h3>
 			 <jsp:useBean id="now" class="java.util.Date" />
 			 <fmt:parseNumber value="${now.time / (1000*60*60*24)}" integerOnly="true" var="nowfmtTime" scope="request"/>
-			 <fmt:parseNumber value="${vo.c_start.time / (1000*60*60*24)}" integerOnly="true" var="startTime" scope="request"/>
-			 <fmt:parseNumber value="${(vo.c_start.time + vo.c_period*7*1000*60*60*24) / (1000*60*60*24)}" integerOnly="true" var="endTime" scope="request"/>
+			 <fmt:parseDate value="${vo.c_start}" var="startDate" pattern="yyyy-MM-dd"/>
+			 <fmt:parseNumber value="${startDate.time / (1000*60*60*24)}" integerOnly="true" var="startTime" scope="request"/>
+			 <fmt:parseNumber value="${c_end.time / (1000*60*60*24)}" integerOnly="true" var="endTime" scope="request" />
+
 			<c:if test="${startTime - nowfmtTime <= 0 && nowfmtTime - endTime <= 0}">
 				<p class="fst-italic">챌린지가 <b>시작</b>되었습니다!</p>
 			</c:if>
@@ -101,13 +190,13 @@
 	             <div class="progress-group" style="width: 280px;">
 	               <span class="progress-text">챌린지 시작일</span>
 	               <span class="progress-number">
-	               	<b><fmt:formatDate value="${vo.c_start }" pattern="YYYY-MM-dd"/></b>
+	               	<b><fmt:formatDate value="${startDate }" pattern="YYYY-MM-dd"/></b>
 	               </span>
 	              </div>
 	             <div class="progress-group" style="width: 280px;">
 	               <span class="progress-text">챌린지 종료일</span>
 	               <span class="progress-number">
-	               	<b><span id="endDate"></span></b>
+	               	<b><fmt:formatDate value="${c_end }" pattern="YYYY-MM-dd"/></b>
 	               </span>
 	              </div>
 	         	</div>
@@ -134,15 +223,45 @@
 				    		</span>일 마다 
 				    	<span style="color: #10A19D;">
 				    	<fmt:formatNumber value="${vo.c_amount / vo.c_period}" pattern=",000"/>
-<<<<<<< HEAD
 				    	</span>원씩 저축하세요</h4>
-=======
-				    	</span>원씩 저축하게 됩니다!</h4>
->>>>>>> branch 'develop_community' of https://github.com/Ju-Yeongmin/Final_Project_Team2.git
 		    	</div>
 		    </div>
 		</div>
     </div>
+    <button class="btn btn-default" data-toggle="modal" data-target="#modal-default" style="margin-left: 90%">
+   			입금하기</button>
+<!-- 모달 css 파일 : resources -> plugins -> modal -> minusModal.css  -->
+	<div class="modal fade" id="modal-default" style="margin-top: 10%;">
+		<div class="modal-dialog" style=" height: 800px;">
+			<div class="modal-content" style=" height: 500px;">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title">입금</h4>
+				</div>
+				<div class="modal-body" >
+				<div class="frame">
+  					<div class="calculator">
+						<div class="result" id="result"></div>
+					    <div class="content2">
+					      <div class="key-wrap" id="key-wrap"></div>
+					      <div class="calc-wrap" id="calc-wrap"></div>
+					    </div>
+				    </div>
+			    </div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default pull-left"
+						data-dismiss="modal">닫기</button>
+					<button type="button" class="btn btn-primary">저장하기</button>
+				</div>
+			</div>
+    	</div>
+   	</div>
+   	<!-- 모달 창 -->
+    	<br>
       <div class="row">
         <div class="col-xs-12">
           <div class="box">
@@ -170,92 +289,92 @@
                   <th class="col-md-2" style="text-align: center;">저축 금액</th>
                   <th class="col-md-1">Status</th>
                 </tr>
-                <c:forEach var="plusPeople" begin="0" end="${plusPeoList.size()-1}" items="${plusPeoList}">
+                <c:forEach var="plusPeoList" begin="0" end="${plusPeoList.size()-1}" items="${plusPeoList}">
+           		<fmt:formatNumber value="${plusPeoList.pl_sum}" pattern="00" var="saveMoney" />
                 <c:set var="i" value="${i+1 }"/>
                 <tr>
                   <td>${i }</td>
-                  <td>${plusPeople.nick}</td>
-                  <td>
+                   <td>${plusPeoList.nick }</td> 
+                   <td> 
                   	  <c:if test="${nowfmtTime - endTime < 0}">
-	                  	<c:if test="${plusPeople.pl_sum == vo.c_amount }">
-		                  	<c:if test="${plusPeople.pl_cnt == vo.c_total }">
+ 	                  	<c:if test="${saveMoney == vo.c_amount }">
+		                  	<c:if test="${plusPeoList.pl_cnt == vo.c_total }">
 			                    <div class="progress progress-xs">
 			                      <div class="progress-bar progress-bar-success" style="width: 100%"></div>
 			                    </div>
 		                  	</c:if>
-		                  	<c:if test="${plusPeople.pl_cnt == 0 }">
+		                  	<c:if test="${plusPeoList.pl_cnt == 0 }">
 			                    <div class="progress progress-xs progress-striped active">
 			                      <div class="progress-bar progress-bar-yellow" style="width: 5%"></div>
 			                    </div>
 		                  	</c:if>
-		                  	<c:if test="${(plusPeople.pl_cnt / vo.c_total) != 0 && (plusPeople.pl_cnt / vo.c_total) < 1.0 }">
+		                  	<c:if test="${(plusPeoList.pl_cnt / vo.c_total) != 0 && (plusPeoList.pl_cnt / vo.c_total) < 1.0 }">
 			                    <div class="progress progress-xs progress-striped active">
-			                      <div class="progress-bar progress-bar-primary" style="width: ${(plusPeople.pl_cnt / vo.c_total)*100}%"></div>
+			                      <div class="progress-bar progress-bar-primary" style="width: ${(plusPeoList.pl_cnt / vo.c_total)*100}%"></div>
 			                    </div>
 		                  	</c:if>
 	                  	</c:if>
-	                  	<c:if test="${plusPeople.pl_sum != vo.c_amount }">
-		                    <c:if test="${plusPeople.pl_sum != 0 }">
+	                  	<c:if test="${saveMoney != vo.c_amount }">
+		                    <c:if test="${plusPeoList.pl_sum != 0 }">
 			                    <div class="progress progress-xs">
-			                      <div class="progress-bar progress-bar-red" style="width: ${(plusPeople.pl_cnt / vo.c_total)*100}%"></div>
+			                      <div class="progress-bar progress-bar-red" style="width: ${(plusPeoList.pl_cnt / vo.c_total)*100}%"></div>
 			                    </div>
 			                </c:if>
-		                    <c:if test="${plusPeople.pl_sum == 0 }">
+		                    <c:if test="${plusPeoList.pl_sum == 0 }">
 			                    <div class="progress progress-xs ">
 			                      <div class="progress-bar progress-bar-red" style="width: 5%"></div>
 			                    </div>
 		                  	</c:if>
-	                  	</c:if>
+	                  	</c:if> 
 	                  </c:if>
 	                  <c:if test="${nowfmtTime - endTime >= 0}">
-	                  	<c:if test="${plusPeople.pl_sum == vo.c_amount }">
+	                  	<c:if test="${saveMoney == vo.c_amount }">
 	                  		<div class="progress progress-xs">
 		                      <div class="progress-bar progress-bar-success" style="width: 100%"></div>
 		                    </div>
 	                  	</c:if>
-	                  	<c:if test="${plusPeople.pl_sum != vo.c_amount }">
+	                  	<c:if test="${saveMoney != vo.c_amount }">
 	                  		<div class="progress progress-xs">
-		                      <div class="progress-bar progress-bar-danger" style="width: ${(plusPeople.pl_cnt / vo.c_total)*100}%"></div>
+		                      <div class="progress-bar progress-bar-danger" style="width: ${(plusPeoList.pl_cnt / vo.c_total)*100}%"></div>
 		                    </div>
-	                  	</c:if>
+	                  	</c:if> 
 	                  </c:if>
                   </td>
                   
                   <td>
                   	<c:if test="${nowfmtTime - endTime >= 0}">
-                  		<c:if test="${plusPeople.pl_sum == vo.c_amount && plusPeople.pl_finish == true }">
-	                  		<span class="badge bg-green">${plusPeople.pl_cnt} / ${vo.c_total }</span>
+                  		<c:if test="${saveMoney == vo.c_amount && plusPeoList.pl_finish == true }">
+	                  		<span class="badge bg-green">${plusPeoList.pl_cnt} / ${vo.c_total }</span>
 	                  	</c:if>
-	                  	<c:if test="${plusPeople.pl_sum != vo.c_amount && plusPeople.pl_finish == false}">
-	                  		<span class="badge bg-red">${plusPeople.pl_cnt} / ${vo.c_total }</span>
+	                  	<c:if test="${saveMoney != vo.c_amount && plusPeoList.pl_finish == false}">
+	                  		<span class="badge bg-red">${plusPeoList.pl_cnt} / ${vo.c_total }</span>
 	                  	</c:if>
                		</c:if>
                		<c:if test="${nowfmtTime - endTime < 0}">
-                  		<c:if test="${plusPeople.pl_sum == vo.c_amount}">
-	                  		<span class="badge bg-light-blue">${plusPeople.pl_cnt} / ${vo.c_total }</span>
+                  		<c:if test="${saveMoney == vo.c_amount}">
+	                  		<span class="badge bg-light-blue">${plusPeoList.pl_cnt} / ${vo.c_total }</span>
 	                  	</c:if>
-	                  	<c:if test="${plusPeople.pl_sum != vo.c_amount && plusPeople.pl_finish == false}">
-	                  		<span class="badge bg-red">${plusPeople.pl_cnt} / ${vo.c_total }</span>
+	                  	<c:if test="${saveMoney != vo.c_amount && plusPeoList.pl_finish == false}">
+	                  		<span class="badge bg-red">${plusPeoList.pl_cnt} / ${vo.c_total }</span>
 	                  	</c:if>
                   	</c:if>
                   		
                   </td>
-                  <td style="text-align: right; padding-right: 4%; vertical-align: 10%;"><fmt:formatNumber type="number" maxFractionDigits="3" value="${plusPeople.pl_sum}" /><b>&nbsp;원</b></td>
+                  <td style="text-align: right; padding-right: 4%; vertical-align: 10%;"><fmt:formatNumber type="number" maxFractionDigits="3" value="${plusPeoList.pl_sum}" /><b>&nbsp;원</b></td>
                   <td>
-                  <!-- status  -->
                   	<c:if test="${nowfmtTime - endTime > 0}">
-	                  	<c:if test="${plusPeople.pl_sum == vo.c_amount && plusPeople.pl_finish == true }">
+	                  	<c:if test="${saveMoney == vo.c_amount && plusPeoList.pl_finish == true }">
 	                  		<span class="label label-success">성공</span>
 	                  	</c:if>
-	                  	<c:if test="${plusPeople.pl_sum != vo.c_amount && plusPeople.pl_finish == false}">
+	                  	<c:if test="${saveMoney != vo.c_amount && plusPeoList.pl_finish == false}">
 	                  		<span class="label label-danger">실패</span>
 	                  	</c:if>
                   	</c:if>
                   	<c:if test="${nowfmtTime - endTime <= 0}">
-                  		<c:if test="${plusPeople.pl_sum == vo.c_amount }">
+                  		<c:if test="${saveMoney == vo.c_amount }">
 	                  		<span class="label label-primary">진행중</span>
 	                  	</c:if>
-	                  	<c:if test="${plusPeople.pl_sum != vo.c_amount && plusPeople.pl_finish == false}">
+	                  	<c:if test="${saveMoney != vo.c_amount && plusPeoList.pl_finish == false}">
 	                  		<span class="label label-danger">실패</span>
 	                  	</c:if>
                   	</c:if>
@@ -271,21 +390,36 @@
       </div>
     </section>
     <!-- /.content -->
+    
 	<div>
 		메시지 : <input id="messageinput" type="text">
 	</div>
 	<div>
-		<button onclick="openSocket();">채팅하기</button>
+		<!-- <button onclick="connect();">채팅하기</button>
 		<button onclick="closeSocket();">끝내기</button>
-		<button onclick="send();">Send</button>
+		<button onclick="message">Send</button>
 	</div>
 	<div id="message"></div>
+	
+	<div id="messagePop"  style="border: 1px solid black;">
+	<div class="type-message">
+    	<div class="type-message__input">
+			<label>작성자 :</label><input type="text" id="writerId" value="" class="form-control" /> 
+			<input type="text" id="receiveId" class="form-control" /> 
+		</div>
+	</div>
+		<div class="row" style="margin-left: 20px;">
+			<p id="writer" class="pContent"></p>
+			<p id="receiver" class="pContent"></p>
+			<p id="content" class="pContent"></p>
+		</div>
+	</div>
+	
 
 <!--임시 채팅  -->
 <!-- <iframe src="/challenge/echo" id="inlineFrame" title="inline Frame" width="600" height="600">
 </iframe> -->
 <!--임시 채팅  -->
-
 <!-- <!-- 칭찬하기/주시하기  @@@@@@@@@@@@@@@@@@@@@@@@@ -->
     <div class="col-xs-12" style="margin-left: 10px; ">
 	 <div class="row">
@@ -303,7 +437,7 @@
 	              <div class="chat_people">
 	                <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
 	                <div class="chat_ib">
-	                  <h5>Sunil Rajput <span class="chat_date">Dec 25</span></h5>
+	                  <h5>${nick} <span class="chat_date">Dec 25</span></h5>
 	                  <p>Test, which is a new approach to have all solutions 
 	                    astrology under one roof.</p>
 	                </div>
@@ -323,6 +457,7 @@
 	        </div>
 	        <div class="mesgs">
 	          <div class="msg_history">
+				<main class="chat">
 	            <div class="incoming_msg">
 	              <div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
 	              <div class="received_msg">
@@ -331,26 +466,32 @@
 	                  <span class="time_date"> 11:01 AM    |    June 9</span></div>
 	              </div>
 	            </div>
+	            
 	            <div class="outgoing_msg">
 	              <div class="sent_msg">
 	                <p>Test which is a new approach to have all solutions</p>
 	                <span class="time_date"> 11:01 AM    |    June 9</span> </div>
 	            </div>
+	            
 	            <div class="incoming_msg">
 	              <div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
 	              <div class="received_msg">
 	                <div class="received_withd_msg">
 	                  <p>
-	              		<div id="message1"></div>
+	              		ㅇㄹㅇㅇㅇㅇ
 	                  </p>
 	                  <span class="time_date"> 11:01 AM    |    Today</span></div>
 	              </div>
 	            </div>
+            <!-- 받은 메시지 -->
+				<div id="nextMsg"></div>
+			<!-- 받은 메시지 -->
+			</main>
 	          </div>
 	          <div class="type_msg">
 	            <div class="input_msg_write">
-	              <input type="text" class="write_msg" id="messageinput" placeholder="Type a message" />
-	              <button class="msg_send_btn" onclick="send();"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
+	              <input type="text" class="msg" id="msg" placeholder="Type a message" />
+	              <button class="msg_send_btn" id="btnSend"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
 	            </div>
 	          </div>
 	        </div>
@@ -364,3 +505,59 @@
 </div>
 </div>
 <%@ include file="../include/footer.jsp" %>
+
+
+<!--계산기 -->
+<script type="text/javascript">
+	//get element
+	var numWrap = document.querySelector('.key-wrap');
+	var calcWrap = document.querySelector('.calc-wrap');
+	var result = document.querySelector('.result');
+	
+	//init data
+	const keyboard = [1, 2, 3, 4, 5, 6, 7, 8, 9, '00', 0, '='];
+	const calc = ['<', '+', '-'];
+	let formula = [];
+	
+	//append dom, event
+	for (const i in keyboard) {
+	  const btn = document.createElement('button');
+	  btn.classList.add('num');
+	  btn.classList.add('label-' + i);
+	  btn.value = keyboard[i];
+	  btn.innerText = keyboard[i];
+	  btn.addEventListener('click', calculate);
+	  numWrap.appendChild(btn);
+	}
+	for(const i in calc) {
+	  const btn = document.createElement('button');
+	  btn.classList.add('calc');
+	  btn.value = calc[i];
+	  btn.innerText = calc[i];
+	  btn.addEventListener('click', calculate);
+	  calcWrap.appendChild(btn);
+	}
+	
+	// calculate function
+	function calculate(e) {
+	  const value = e.target.value;
+	  if (value === '=') {
+	    const data = eval(formula.join('')) || '';
+	    formula = data.toString().split('');
+	  }
+	/*   else if (value === '00') formula = []; */
+	  else if (value === '<') formula.pop();
+	  else formula.push(value);
+	  
+	  result.innerText = formula.join('');
+	}
+	
+	
+	//---------------
+	//animation
+	const html = document.documentElement;
+	html.addEventListener("mousemove", function(e) {    
+	  html.style.setProperty('--x', e.clientX + 'px');  
+	  html.style.setProperty('--y', e.clientY + 'px');
+	});
+</script>

@@ -78,6 +78,11 @@
 		where cno = #{cno} and m.mno = u.mno
 	</select>
 	
-	
+	<!-- 챌린지 종료일자 정보 가져오기  -->
+	<select id="getChallengeEndDate" resultType="date">
+		select distinct(date_add(c_start, interval c_period week)) c_end 
+		from plus p inner join challenge c
+		where p.cno = c.cno and c.cno = #{cno}
+	</select>
 		
   </mapper>

@@ -1,5 +1,6 @@
 package com.chagok.service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -29,4 +30,7 @@ public interface ChallengeService {
 
 	// [절약형]챌린지 참가자 조회 
 	public List<MinusVO> getMinusPeople(int cno);
+	
+	// 챌린지 종료일자 정보 가져오기
+	public Date getChallengeEndDate(Integer cno);
 }

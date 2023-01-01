@@ -1,5 +1,6 @@
 package com.chagok.persistence;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -81,6 +82,16 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 		mylog.debug(cno+"번 챌린지 참가자 수(절약형) : "+MPeopleList.size());
 		return MPeopleList;
 	}
+
+	@Override
+	public Date getChallengeEndDate(Integer cno) {
+		mylog.debug("getChallengeEndDate(cno) 호출");
+		Date end = sqlSession.selectOne(NAMESPACE+".getChallengeEndDate", cno);
+		mylog.debug(cno+"번 챌린지 종료일자 : "+end);
+		
+		return end;
+	}
 	 
+	
 	
 }

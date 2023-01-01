@@ -19,9 +19,10 @@
         folder instead of downloading all of them to reduce the load. -->
    <link href="${pageContext.request.contextPath }/resources/dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
 	<!-- 채팅 js -->
-    <script src="${pageContext.request.contextPath }/resources/plugins/chat/feed.js"></script>
+    <%-- <script src="${pageContext.request.contextPath }/resources/plugins/chat/feed.js"></script> --%>
     <!-- 채팅 css  -->
     <link href="${pageContext.request.contextPath }/resources/plugins/chat/feed.css" rel="stylesheet" type="text/css" />
+    <link href="${pageContext.request.contextPath }/resources/plugins/modal/minusModal.css" rel="stylesheet" type="text/css" />
    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
    <!--[if lt IE 9]>

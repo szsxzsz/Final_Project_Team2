@@ -1,5 +1,6 @@
 package com.chagok.service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -66,6 +67,12 @@ public class ChallengeServiceImpl implements ChallengeService{
 		mylog.debug("getMinusPeople("+cno+") 호출");
 		return dao.getMinusPeople(cno);
 	}
+
+	@Override
+	public Date getChallengeEndDate(Integer cno) {
+		return dao.getChallengeEndDate(cno);
+	}
+	
 	
 
 	

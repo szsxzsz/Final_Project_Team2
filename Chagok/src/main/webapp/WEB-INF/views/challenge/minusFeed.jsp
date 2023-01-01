@@ -76,7 +76,7 @@
 					<h4 class="modal-title">나의 가계부 연동</h4>
 				</div>
 				<div class="modal-body">
-					<p>~ 가계부 내용 ~</p>
+					<p>~가계부 내용~</p>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default pull-left"

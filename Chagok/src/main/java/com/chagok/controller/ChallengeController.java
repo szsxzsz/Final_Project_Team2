@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.chagok.domain.ChallengeVO;
 import com.chagok.domain.MinusVO;
 import com.chagok.domain.PlusVO;
+import com.chagok.domain.SysLogVO;
 import com.chagok.domain.UserVO;
 import com.chagok.service.ChallengeService;
 
@@ -36,12 +38,16 @@ public class ChallengeController {
 	public String plusfeedGET(Model model, int cno, HttpSession session) throws Exception {
 		mylog.debug("plusfeedGET() 호출");
 
-		ChallengeVO chVO = service.getChallengeInfo(cno);
 		List<Map<String, Object>> plusPeoList = service.getPlusPeople(cno);
-
-		model.addAttribute("vo", chVO);
+		mylog.debug("plusFeedGET()에서 id : "+session.getId());
+		SysLogVO sysLogVO = new SysLogVO();
+		sysLogVO.getUserId();
+//		model.addAttribute("sessionId", session.getId());
+		model.addAttribute("sessionId", sysLogVO.getUserId());
+		model.addAttribute("vo", service.getChallengeInfo(cno));
 		model.addAttribute("plusPeoList", plusPeoList);
-
+		model.addAttribute("c_end", service.getChallengeEndDate(cno));
+		
 		return "/challenge/plusFeed";
 	}
 	
@@ -133,11 +139,10 @@ public class ChallengeController {
 		return "/challenge/echo";
 	}
 	
-	@PostMapping(value = "/echo")
-	public String echoPOST() throws Exception {
-		
-		return "/challenge/echo";
-	}
+//	@MessageMapping("/greeting")
+//	public String handle(String greeting) {
+//	      return "[" + getTimestamp() + ": " + greeting;
+//	  }
 
 	// http://localhost:8080/challenge/chat
 	@GetMapping(value = "/chat")
