@@ -67,25 +67,21 @@ public class ChallengeServiceImpl implements ChallengeService{
 		mylog.debug("getMinusPeople("+cno+") 호출");
 		return dao.getMinusPeople(cno);
 	}
-	
+
 	@Override
-	public List<Map<String, Object>> getMinusCheck(int cno) {
-		mylog.debug("getMinusPeople("+cno+") 호출");
-		return dao.getMinusCheck(cno);
-	}
-	
-	@Override
-	public List<Map<String, Object>> getPlusCheck(int cno) {
-		mylog.debug("getMinusPeople("+cno+") 호출");
-		return dao.getPlusCheck(cno);
+	public List<BoardVO> getBoardList(Integer b_sort) {
+		
+		return dao.getBoard(b_sort);
 	}
 
 	@Override
-	public List<BoardVO> getReviewBoard() {
+	public BoardVO getBoardContent(Integer bno) {
 		
-		return dao.getReviewBoard();
-		
+		return dao.getBoardContent(bno);
 	}
+
+	
+	
 	
 
 	

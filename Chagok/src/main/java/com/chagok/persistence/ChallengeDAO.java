@@ -30,17 +30,14 @@ public interface ChallengeDAO {
 	
 	// [절약형]챌린지 참가자 조회 
 	public List<MinusVO> getMinusPeople(Integer cno);
-
-	// [절약형]챌린지 참가자 조회 
-	public List<Map<String, Object>> getMinusCheck(Integer cno);
-
-	// [저축형]챌린지 참가자 조회 
-	public List<Map<String, Object>> getPlusCheck(Integer cno);
 	
-	// 후기글 리스트 조회
-	public List<BoardVO> getReviewBoard();
+	// 게시판 리스트 조회
+	public List<BoardVO> getBoard(Integer b_sort);
 	
 	// 중복 챌린지 체크
 	public int samechallenge(int ctno);
+	
+	// 게시판 조회
+	public BoardVO getBoardContent(Integer bno);
 	
 }
