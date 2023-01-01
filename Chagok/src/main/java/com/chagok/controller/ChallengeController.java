@@ -108,10 +108,12 @@ public class ChallengeController {
 		
 		ChallengeVO vo = service.getChallengeInfo(cno);
 		List<MinusVO> minusPeoList = service.getMinusPeople(cno);
+		ChallengeVO vo2 = service.getCt_top(cno);
 		
 	   // 연결된 뷰페이지로 정보 전달(model)
 	   model.addAttribute("vo", vo);
 	   model.addAttribute("minusPeoList", minusPeoList);
+	   model.addAttribute("vo2", vo2);
 	   
 	   return "/challenge/minusFeed";
 	}
