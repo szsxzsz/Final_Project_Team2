@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.chagok.domain.BoardVO;
@@ -107,9 +108,16 @@ public class ChallengeController {
 	}
 
 	@PostMapping(value = "/plusdetailPOST")
-	public String plusdetailPOST() throws Exception {
-
-		return "/challenge/plusdetail";
+	@ResponseBody // ajax 값을 바로 jsp에 보내기 위해 사용
+	public String plusdetailPOST(@RequestParam("ctno") int ctno) throws Exception {
+		String result="N";
+		
+//		int gctno = ajaxService.samechallenge(ctno);
+		
+//		if(gctno == 1) result = "Y";
+		
+		return result;
+//		return "/challenge/plusdetail";
 	}
 
 	// http://localhost:8080/challenge/minusdetail?cno=2
@@ -268,13 +276,19 @@ public class ChallengeController {
 		return "/challenge/noticecontent";
 	}
 	
-	// http://localhost:8080/challenge/mychallenge?nick=회원
+	// http://localhost:8080/challenge/mychallenge
 	@GetMapping("/mychallenge")
-	public String mychallengeGET(Model model, @RequestParam("nick") String nick) throws Exception {
+	public String mychallengeGET(Model model, HttpSession session) throws Exception {
+		
+		String nick = (String)session.getAttribute("nick");
 		mylog.debug(nick);
 		
 		List<ChallengeVO> mychallengeList = service.getmyChallenge(nick);
 		
+		if(nick == null) {
+			return "/chagok/login";
+		}
+		// else일 때
 		model.addAttribute("nick", nick);
 		model.addAttribute("mychallengeList", mychallengeList);
 		

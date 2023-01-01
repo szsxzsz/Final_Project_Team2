@@ -6,6 +6,16 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
+<!-- jquery 최신버전 추가 -->
+<script src ="http://code.jquery.com/jquery-lastest.min.js"></script>
+<!-- 카카오톡 공유하기 -->
+<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
+<<script type="text/javascript">
+Kakao.init('5c7fadc901b4e26f9995aa27ef5cf82b');
+Kakao.isInitialized();
+</script>
+
+
 <h1 style="padding-left: 50px;">저축형 차곡 챌린지</h1>
 
 <%-- ${vo } --%>
@@ -73,9 +83,105 @@
       <li><a href="#" class="link-black text-sm"><i class="fa fa-share margin-r-5" style="font-size:1.2em;"><b>Share</b></i></a></li>
     </ul>
         </div>
+        
+        <script>
+        $(function()){
+        	$("#samechallenge").click(function(){
+        		
+        		let ctno = $("ctno").val();
+        		
+        		$.ajax({
+        			type:'post',
+        			url:"/challenge/plusdetailPOST",
+        			data: {"ctno":ctno},
+        			success: function(data){
+        				if(data == "N"){ // 중복된 카테고리num이 아닐 때
+        					result = "참여 가능한 챌린지 입니다!";
+        					$("#result_samechallenge").html(result).css("color","green");
+        				}else{ // 중복된 챌린지 or 중복된 상세카테고리 챌린지
+        					result="해당 카테고리로 참여 중인 챌린지가 있습니다.";
+        					$("result_samechallenge").html(result).css("color","red");
+        				}
+        			},
+        				error : function(error){alert(error);}
+        			});
+        		});
+        	});
+        
+        	
+        	Kakao.Share.sendDefault({
+        		  objectType: 'feed',
+        		  content: {
+        		    title: '차곡 챌린지',
+        		    description: '함께 도전해보아요!',
+        		    imageUrl:
+        		      '../webapp/resources/dist/img/chagok_pig.png',
+        		    link: {
+        		      mobileWebUrl: 'http://localhost:8080/challenge/plusdetail',
+        		      webUrl: 'http://localhost:8080/challenge/plusdetail',
+        		    },
+        		  },
+//         		  itemContent: {
+//         		    profileText: 'Kakao',
+//         		    profileImageUrl: 'https://mud-kage.kakao.com/dn/Q2iNx/btqgeRgV54P/VLdBs9cvyn8BJXB3o7N8UK/kakaolink40_original.png',
+//         		    titleImageUrl: 'https://mud-kage.kakao.com/dn/Q2iNx/btqgeRgV54P/VLdBs9cvyn8BJXB3o7N8UK/kakaolink40_original.png',
+//         		    titleImageText: 'Cheese cake',
+//         		    titleImageCategory: 'Cake',
+//         		    items: [
+//         		      {
+//         		        item: 'Cake1',
+//         		        itemOp: '1000원',
+//         		      },
+//         		      {
+//         		        item: 'Cake2',
+//         		        itemOp: '2000원',
+//         		      },
+//         		      {
+//         		        item: 'Cake3',
+//         		        itemOp: '3000원',
+//         		      },
+//         		      {
+//         		        item: 'Cake4',
+//         		        itemOp: '4000원',
+//         		      },
+//         		      {
+//         		        item: 'Cake5',
+//         		        itemOp: '5000원',
+//         		      },
+//         		    ],
+//         		    sum: '총 결제금액',
+//         		    sumOp: '15000원',
+//         		  },
+//         		  social: {
+//         		    likeCount: 10,
+//         		    commentCount: 20,
+//         		    sharedCount: 30,
+//         		  },
+        		  buttons: [
+        		    {
+        		      title: '웹으로 이동',
+        		      link: {
+        		        mobileWebUrl: 'https://developers.kakao.com',
+        		        webUrl: 'https://developers.kakao.com',
+//         		      },
+//         		    },
+//         		    {
+//         		      title: '앱으로 이동',
+//         		      link: {
+//         		        mobileWebUrl: 'https://developers.kakao.com',
+//         		        webUrl: 'https://developers.kakao.com',
+        		      },
+        		    },
+        		  ],
+        		});
+        	
+        </script>
+        
         <div>
-       	 <form action="" method="post">
-        <input class="btn btn-block btn-success btn-lg" type="button" value="참여하기" onclick="location.href='plusFeed.jsp'" style="width:218px; margin-left: 950px;">
+       	 <form name="participateForm" action="/challenge/plusdetail" method="post">
+        <input class="btn btn-block btn-success btn-lg" type="button" value="참여가능한지 확인하기" id="samechallenge" style="width:218px; margin-left: 950px;">
+        <div><span id="result_samechallenge" style="font-size:12px;"></span></div>
+        <input class="btn btn-block btn-success btn-lg" type="submit" value="참여하기" style="width:218px; margin-left: 950px;">
 		 </form>
 		</div>
 

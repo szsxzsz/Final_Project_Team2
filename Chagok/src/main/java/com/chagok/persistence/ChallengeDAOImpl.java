@@ -109,6 +109,11 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 		
 		return boardList;
 	}
+
+	@Override
+	public int samechallenge(int ctno) {
+		return sqlSession.selectOne(NAMESPACE+".samechallenge", ctno);
+	}
 	
 	
 	 
