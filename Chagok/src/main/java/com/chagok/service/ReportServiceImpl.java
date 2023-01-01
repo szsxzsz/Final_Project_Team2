@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.chagok.domain.AbookVO;
+import com.chagok.domain.ChallengeVO;
 import com.chagok.domain.ReportVO;
 import com.chagok.persistence.ReportDAO;
 
@@ -27,9 +28,21 @@ public class ReportServiceImpl implements ReportService {
 	}
 	
 	@Override
-	public List<ReportVO> getCateCnt(Integer mno) throws Exception {
-		mylog.debug("getCateCnt() 호출");
-		return rptdao.getCateCnt(mno);
+	public List<ReportVO> cateCnt(Integer mno) throws Exception {
+		mylog.debug("cateCnt() 호출");
+		return rptdao.cateCnt(mno);
+	}
+
+	@Override
+	public List<ReportVO> cateSum(Integer mno) throws Exception {
+		mylog.debug("cateSum() 호출");
+		return rptdao.cateSum(mno);
+	}
+
+	@Override
+	public List<ChallengeVO> randCh(Integer mno) throws Exception {
+		mylog.debug("randCh() 호출");
+		return rptdao.randCh(mno);
 	}
 
 	
