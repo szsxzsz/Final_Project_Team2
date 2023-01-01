@@ -379,6 +379,7 @@ public class ChallengeController {
 		// 3. 페이지로 이동(모집중 챌린지)
 //		rttr.addFlashAttribute("result", "plusRegistOK");
 		return "redirect:/commumain";
+		
 	}
 		
 }
