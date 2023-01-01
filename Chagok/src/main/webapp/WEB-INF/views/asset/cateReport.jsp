@@ -15,9 +15,7 @@
 	<div class="content-wrapper" style="min-height: 986.281px;">
 	<section class="content-header">
 		<c:set var="today" value="<%=new java.util.Date() %>"/><br><br>
-		<h1>
-<%-- 		${map.catejson }<hr> --%>
-<%-- 		${map.cateSumList } --%>
+		<h1>${nick }님의
 			<fmt:formatDate value="${today }" pattern="MM"/>월 카테고리별 리포트
 		</h1>
 	</section>
