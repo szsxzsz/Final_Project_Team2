@@ -296,6 +296,7 @@ public class ChallengeController {
 	   return "/challenge/webSocket";
 	}
 	
+	
 	// 챌린지 등록 (저축형) - GET
 	// http://localhost:8080/challenge/plusregist
 	@GetMapping(value="/plusregist")

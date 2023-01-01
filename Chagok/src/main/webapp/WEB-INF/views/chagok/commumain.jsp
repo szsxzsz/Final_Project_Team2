@@ -45,7 +45,7 @@
             <div class="rate">
              	<p class="card-item-rating">
                 <img src="https://png.pngtree.com/png-clipart/20190705/original/pngtree-vector-business-men-icon-png-image_4186858.jpg" alt=""> </p> 
-              	<p class="card-item-rating"> <b></b> / ${vo.c_pcnt } 명</p>
+              	<p class="card-item-rating"> <b>${vo.c_cnt }</b> / ${vo.c_pcnt } 명</p>
             </div>
           </div>
           <h3 class="card-title" id="title_1">${vo.c_title }</h3>

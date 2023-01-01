@@ -161,7 +161,7 @@ function getAgreeType() {
 </script>
 
 <h1>차곡 챌린지 등록 (절약형)</h1>
-<form action="/challenge/plusregist"  method="post" enctype="multipart/form-data">
+<form action=""  method="post" enctype="multipart/form-data">
   <div class="main-content">
   
   <div class="container-fluid">
@@ -301,7 +301,7 @@ function getAgreeType() {
                		<div class="col-lg-7">
                       <div class="form-group focused">
                         <label class="form-control-label" for="input-first-name">총 금액</label>
-                        <input type="text" id="input-first-name" class="form-control form-control-alternative" placeholder="금액을 자유롭게 입력해주세요." >
+                        <input type="text" name="c_amount" id="input-first-name" class="form-control form-control-alternative" placeholder="금액을 자유롭게 입력해주세요." >
                       </div>
                     </div>
 					

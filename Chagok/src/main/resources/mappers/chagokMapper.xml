@@ -129,10 +129,7 @@
 		where ch.ctno = c.ctno;
   	</select>
   	
-  	<!-- 챌린지 목록(참여인원 명수 구하기) -->
-  	<select id="getPersonCnt" resultType="map">
-     	select c_person from challenge
-  	</select>
+
   	
   	
   	

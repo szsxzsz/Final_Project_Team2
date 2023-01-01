@@ -72,13 +72,11 @@ public class ChagokController {
 		
 		// 서비스 -> DAO 게시판 리스트 가져오기
 		List<ChallengeVO> challengeList = service2.getChallengeList();
-		List<Map<String, Object>> pesonCnt = service2.getPersonCnt();
 		
 		// 참여명수 구하기		
 		
 		// 연결되어 있는 뷰페이지로 정보 전달 (Model 객체)
 		model.addAttribute("challengeList", challengeList);
-		model.addAttribute("pesonCnt", pesonCnt);
 		
 		return "/chagok/commumain";
 	}
