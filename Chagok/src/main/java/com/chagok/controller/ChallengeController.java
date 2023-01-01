@@ -173,7 +173,7 @@ public class ChallengeController {
 	}
 
 	
-	// http://localhost:8080/challenge/checkfeed?cno=1
+	// http://localhost:8080/challenge/checkfeed?cno=2
 	@GetMapping(value = "/checkfeed")
 	public String checkfeedGET(HttpSession session,@RequestParam("cno")int cno, Model model) throws Exception {
 		
