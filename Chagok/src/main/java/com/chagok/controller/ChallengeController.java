@@ -108,10 +108,12 @@ public class ChallengeController {
 		
 		ChallengeVO vo = service.getChallengeInfo(cno);
 		List<MinusVO> minusPeoList = service.getMinusPeople(cno);
+		ChallengeVO vo2 = service.getCt_top(cno);
 		
 	   // 연결된 뷰페이지로 정보 전달(model)
 	   model.addAttribute("vo", vo);
 	   model.addAttribute("minusPeoList", minusPeoList);
+	   model.addAttribute("vo2", vo2);
 	   
 	   return "/challenge/minusFeed";
 	}
@@ -173,7 +175,7 @@ public class ChallengeController {
 	}
 
 	
-	// http://localhost:8080/challenge/checkfeed?cno=1
+	// http://localhost:8080/challenge/checkfeed?cno=2
 	@GetMapping(value = "/checkfeed")
 	public String checkfeedGET(HttpSession session,@RequestParam("cno")int cno, Model model) throws Exception {
 		
@@ -185,6 +187,8 @@ public class ChallengeController {
 		
 		List<ChallengeVO> challengeList = service.getChallengeList(cno);
 //		List<Map<String, Object>> pluscheck = service.getPlusCheck(cno);
+		
+		
 		
 		model.addAttribute("vo", vo);
 		model.addAttribute("challengeList", challengeList);
@@ -377,6 +381,7 @@ public class ChallengeController {
 		// 3. 페이지로 이동(모집중 챌린지)
 //		rttr.addFlashAttribute("result", "plusRegistOK");
 		return "redirect:/commumain";
+		
 	}
 		
 }
