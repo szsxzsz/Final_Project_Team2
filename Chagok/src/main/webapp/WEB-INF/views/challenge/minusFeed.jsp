@@ -5,21 +5,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-<script>
-	$(document).ready(function(){
-		 var endDate = new Date(${vo.c_start.time} + (60*60*24*1000*7 * ${vo.c_period}));
-		 
-		 month = ''+(endDate.getMonth() +1),
-		 day = ''+ endDate.getDate(),
-		 year = endDate.getFullYear();
-		 
-		 if(month.length < 2) month = '0' + month;
-		 if(day.length < 2) day = '0' + day;
-		 
-	 	 $('#endDate').append([year,month,day].join('-'));
-		
-	});
-</script>
 
 <div id="message"></div>
 <script type="text/javascript">
@@ -107,7 +92,7 @@
 	        <img class="img-responsive" src="${pageContext.request.contextPath }/resources/dist/img/photo1.png" alt="Photo" style="width:500px; height:400px;">
 		</div>
 		<div class="col-lg-6 pt-4 pt-lg-0 content aos-init aos-animate" data-aos="fade-left" >
-			 <h3><span style="color: #66BB7A; font-weight: bold;">[${vo.ct_top }]</span> ${vo.c_title }</h3>
+			 <h3><span style="color: #66BB7A; font-weight: bold;">[${vo2.ct_top }]</span> ${vo.c_title }</h3>
 			 <jsp:useBean id="now" class="java.util.Date" />
 			 <fmt:parseNumber value="${now.time / (1000*60*60*24)}" integerOnly="true" var="nowfmtTime" scope="request"/>
 			 <fmt:parseDate value="${vo.c_start}" var="startDate" pattern="yyyy-MM-dd"/>
