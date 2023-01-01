@@ -380,5 +380,14 @@ public class ChallengeController {
 //		rttr.addFlashAttribute("result", "plusRegistOK");
 		return "redirect:/commumain";
 	}
+	
+	// 챌린지 결과
+	// http://localhost:8080/challenge/cresult
+	@GetMapping(value="/cresult")
+	public String cresultGET() throws Exception{
+		mylog.debug(" / cresultGET() 호출 ->  ");
+			
+		return "/challenge/cresult";
+	}
 		
 }
