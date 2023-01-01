@@ -71,10 +71,10 @@ public class ChagokController {
 		// 실패 - login페이지
 		String resultURI="";
 		if(loginStatus) {
-			resultURI = "redirect:/chagok/main";
+			resultURI = "redirect:/main";
 			session.setAttribute("id", vo.getId());
 		}else {
-			resultURI = "redirect:/chagok/login";
+			resultURI = "redirect:/login";
 		}
 		
 		return resultURI;
@@ -95,7 +95,7 @@ public class ChagokController {
 		 mylog.info(vo.toString());
 		 service.userJoin(vo);
 		
-		 return "redirect:/chagok/login";
+		 return "redirect:/login";
 	 }
 		
 	 @PostMapping("/checkId")

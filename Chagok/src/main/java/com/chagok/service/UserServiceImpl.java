@@ -52,7 +52,17 @@ public class UserServiceImpl implements UserService {
 		return dao.getUser(id);
 	}
 
+	@Override
+	public UserVO getUser(int mno) {
+		return dao.getUser(mno);
+	}
 
+	@Override
+	public void updateIsCheck(String id) {
+		dao.updateIsCheck(id);
+	}
+
+	
 
 	
 }

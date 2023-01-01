@@ -66,5 +66,20 @@ public class UserDAOImpl implements UserDAO {
 		return sqlSession.selectOne(NAMESPACE+".loginUser",vo);
 	}
 
+	@Override
+	public UserVO getUser(int mno) {
+		UserVO vo = sqlSession.selectOne(NAMESPACE+".getUserMno",mno);
+		
+		System.out.println(" DAO : " +vo);
+		return vo;
+	}
+
+	@Override
+	public void updateIsCheck(String id) {
+		sqlSession.update(NAMESPACE+".updateIsCheck", id);
+	}
+	
+	
+	
 	
 }

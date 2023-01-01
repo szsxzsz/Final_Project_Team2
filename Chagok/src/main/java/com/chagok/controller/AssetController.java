@@ -3,10 +3,8 @@ package com.chagok.controller;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
@@ -31,10 +29,12 @@ import com.chagok.apiDomain.UserInfoResponseVO;
 import com.chagok.domain.AbookVO;
 import com.chagok.domain.CategoryVO;
 import com.chagok.domain.ReportVO;
+import com.chagok.domain.UserVO;
 import com.chagok.service.AbookService;
 import com.chagok.service.AccountService;
 import com.chagok.service.OpenBankingService;
 import com.chagok.service.ReportService;
+import com.chagok.service.UserService;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -54,14 +54,22 @@ public class AssetController {
 	@Inject
 	private AccountService accountService; 
 	
+	@Inject
+	private UserService userService;
+	
 	@GetMapping("/myAsset")
-	public String myAssetGET() {
+	public String myAssetGET(HttpSession session, Model model) {
+		String id = (String)session.getAttribute("id");
+		
+		UserVO userVO = userService.getUser(id);
+		model.addAttribute("userVO", userVO);
 		
 		return "/asset/myAsset";
 	}
 	
 	@RequestMapping(value = "/callback", method = RequestMethod.GET)
-	public String getToken(RequestTokenVO requestTokenVO, Model model, CardInfoRequestVO cardInfoRequestVO) throws Exception {
+	public String getToken(RequestTokenVO requestTokenVO, Model model, CardInfoRequestVO cardInfoRequestVO, 
+			HttpSession session) throws Exception {
 		//////////////// 사용자인증 API (3-legged) ////////////////
 		
 		// 현재 시간정보
@@ -74,8 +82,11 @@ public class AssetController {
 		
 		// 정보를 들고 jsp 이동 (model 객체)
 		model.addAttribute("responseTokenVO", responseTokenVO);
-		
+			
 		if (responseTokenVO != null) {
+			
+			userService.updateIsCheck((String)session.getAttribute("id"));
+			
 			//////////////// 사용자 정보, 계좌정보 조회 => DB(user, account 테이블)에 저장 ////////////////
 			UserInfoResponseVO userInfoResponseVO = openBankingService.getUserInfo(responseTokenVO);
 			// 사용자 정보

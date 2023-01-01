@@ -37,6 +37,11 @@
 		select * from user where id=#{id} 
 	</select>
 	
+	<!-- 특정회원정보 조회 (mno) -->
+	<select id="getUserMno" resultType="com.chagok.domain.UserVO">
+		select * from user where mno=#{mno} 
+	</select>
+	
 	<!-- 로그인 처리 -->
 	<select id="loginUser" resultType="com.chagok.domain.UserVO">
 		select * from user
@@ -48,4 +53,11 @@
 		select * from challenge 
 		where cno = #{cno}
 	</select>  
+	
+	<update id="updateIsCheck">
+		update user set isCheck = "Y" where id = #{id}
+	</update>
+	
+	
+	
   </mapper>
