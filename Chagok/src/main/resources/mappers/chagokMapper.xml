@@ -55,7 +55,7 @@
 	</select>  
 	
 	<update id="updateIsCheck">
-		update user set isCheck = "Y" where id = #{id}
+		update user set isCheck = "Y" where mno = #{mno}
 	</update>
 	
 	

@@ -26,6 +26,6 @@ public interface UserDAO {
 	public UserVO getUser(int mno);
 	
 	// 인증성공 isCheck N => Y
-	public void updateIsCheck(String id);
+	public void updateIsCheck(int mno);
 
 }

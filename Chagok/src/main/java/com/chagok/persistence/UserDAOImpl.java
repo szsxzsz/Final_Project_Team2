@@ -75,8 +75,8 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public void updateIsCheck(String id) {
-		sqlSession.update(NAMESPACE+".updateIsCheck", id);
+	public void updateIsCheck(int mno) {
+		sqlSession.update(NAMESPACE+".updateIsCheck", mno);
 	}
 	
 	

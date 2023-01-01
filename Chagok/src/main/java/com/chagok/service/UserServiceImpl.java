@@ -58,8 +58,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void updateIsCheck(String id) {
-		dao.updateIsCheck(id);
+	public void updateIsCheck(int mno) {
+		dao.updateIsCheck(mno);
 	}
 
 	

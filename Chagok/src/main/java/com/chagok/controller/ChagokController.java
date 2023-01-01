@@ -72,7 +72,8 @@ public class ChagokController {
 		String resultURI="";
 		if(loginStatus) {
 			resultURI = "redirect:/main";
-			session.setAttribute("id", vo.getId());
+			session.setAttribute("mno", vo.getMno());
+			session.setAttribute("nick", vo.getNick());
 		}else {
 			resultURI = "redirect:/login";
 		}

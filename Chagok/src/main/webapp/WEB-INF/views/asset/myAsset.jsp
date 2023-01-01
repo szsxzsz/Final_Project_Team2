@@ -15,6 +15,12 @@
 		
 	}
 </script>
+
+	<div style="margin: 50px 0 0 100px;">
+		<h1>내 자산</h1>
+		<h2>${userVO.nick } 님의 순자산은 : 10,000,000,000 원 입니다!</h2>
+	</div>
+		
 	
 	<c:if test="${userVO.isCheck.equals('N') }">
 		<section class="content">
@@ -49,10 +55,102 @@
 	</c:if>
 	
 	<c:if test="${userVO.isCheck.equals('Y') }">
-		카드 / 계좌 정보 불러와서 출력
+		<div style="margin: 50px 100px 0 80px;">
+		
+			<div class="info-box bg-yellow" style="margin-bottom: 1px;">
+				<span class="info-box-icon">
+					<i class="fa fa-bank"></i>
+				</span>
+				<div class="info-box-content" style="padding-top: 15px">
+					<span class="info-box-text" style="font-size: 3em; margin-left: 20px; display: inline;">계 좌</span> 
+					<span class="info-box-text" style="font-size: 3em; margin-left: 200px; display: inline;">총 300,000,000 원</span> 
+				</div>
+			</div>
+			
+				<div class="info-box" style="margin: 0 0 1px 30px; width: 95%">
+					<span class="info-box-icon">
+						<i class="fa fa-bank"></i>
+					</span>
+					<div class="info-box-content" style="padding-top: 15px;">
+						<span class="info-box-text" style="font-size: 3em; margin-left: 20px; display: inline;">계 좌</span> 
+						<span class="info-box-text" style="font-size: 3em; margin-left: 200px; display: inline;">총 300,000,000 원</span> 
+					</div>
+				</div>
+				<div class="info-box" style="margin: 0 0 1px 30px; width: 95%">
+					<span class="info-box-icon">
+						<i class="fa fa-bank"></i>
+					</span>
+					<div class="info-box-content" style="padding-top: 15px">
+						<span class="info-box-text" style="font-size: 3em; margin-left: 20px; display: inline;">계 좌</span> 
+						<span class="info-box-text" style="font-size: 3em; margin-left: 200px; display: inline;">총 300,000,000 원</span> 
+					</div>
+				</div>
+
+
+			<div class="info-box bg-yellow" style="margin-top: 50px; margin-bottom: 1px;">
+				<span class="info-box-icon">
+					<i class="fa fa-credit-card"></i>
+				</span>
+				<div class="info-box-content" style="padding-top: 15px">
+					<span class="info-box-text" style="font-size: 3em; margin-left: 20px; display: inline;">카 드</span> 
+					<span class="info-box-text" style="font-size: 3em; margin-left: 200px; display: inline;">총 100,000,000 원</span> 
+				</div>
+			</div>
+
+				<div class="info-box" style="margin: 0 0 1px 30px; width: 95%">
+					<span class="info-box-icon">
+						<i class="fa fa-credit-card"></i>
+					</span>
+					<div class="info-box-content" style="padding-top: 15px;">
+						<span class="info-box-text" style="font-size: 3em; margin-left: 20px; display: inline;">카 드</span> 
+						<span class="info-box-text" style="font-size: 3em; margin-left: 200px; display: inline;">총 300,000,000 원</span> 
+					</div>
+				</div>
+				<div class="info-box" style="margin: 0 0 1px 30px; width: 95%">
+					<span class="info-box-icon">
+						<i class="fa fa-credit-card"></i>
+					</span>
+					<div class="info-box-content" style="padding-top: 15px">
+						<span class="info-box-text" style="font-size: 3em; margin-left: 20px; display: inline;">카 드</span> 
+						<span class="info-box-text" style="font-size: 3em; margin-left: 200px; display: inline;">총 300,000,000 원</span> 
+					</div>
+				</div>
+			
+			<div class="info-box bg-yellow" style="margin-top: 50px; margin-bottom: 1px;">
+				<span class="info-box-icon">
+					<i class="fa fa-database"></i>
+				</span>
+				<div class="info-box-content" style="padding-top: 15px">
+					<span class="info-box-text" style="font-size: 3em; margin-left: 20px; display: inline;">현 금</span> 
+					<span class="info-box-text" style="font-size: 3em; margin-left: 200px; display: inline;">총 700,000,000 원</span> 
+				</div>
+			</div>
+
+				<div class="info-box" style="margin: 0 0 1px 30px; width: 95%">
+					<span class="info-box-icon">
+						<i class="fa fa-database"></i>
+					</span>
+					<div class="info-box-content" style="padding-top: 15px;">
+						<span class="info-box-text" style="font-size: 3em; margin-left: 20px; display: inline;">현 금</span> 
+						<span class="info-box-text" style="font-size: 3em; margin-left: 200px; display: inline;">총 300,000,000 원</span> 
+					</div>
+				</div>
+				<div class="info-box" style="margin: 0 0 1px 30px; width: 95%">
+					<span class="info-box-icon">
+						<i class="fa fa-database"></i>
+					</span>
+					<div class="info-box-content" style="padding-top: 15px">
+						<span class="info-box-text" style="font-size: 3em; margin-left: 20px; display: inline;">현 금</span> 
+						<span class="info-box-text" style="font-size: 3em; margin-left: 200px; display: inline;">총 300,000,000 원</span> 
+					</div>
+				</div>		
+		</div>
 	</c:if>
 
 
+
+<hr>
+<hr>
 <h1 style="margin: 100px 20px 0 0"> 여기는 임시 </h1>
 	
 	<form action="https://testapi.openbanking.or.kr/oauth/2.0/authorize" method="get" onsubmit="return userCheck();">

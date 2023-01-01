@@ -59,10 +59,12 @@ public class AssetController {
 	
 	@GetMapping("/myAsset")
 	public String myAssetGET(HttpSession session, Model model) {
-		String id = (String)session.getAttribute("id");
+		int mno = (int)session.getAttribute("mno");
 		
-		UserVO userVO = userService.getUser(id);
+		UserVO userVO = userService.getUser(mno);
 		model.addAttribute("userVO", userVO);
+		
+//		accountService.getaccount
 		
 		return "/asset/myAsset";
 	}
@@ -85,7 +87,7 @@ public class AssetController {
 			
 		if (responseTokenVO != null) {
 			
-			userService.updateIsCheck((String)session.getAttribute("id"));
+			userService.updateIsCheck((int)session.getAttribute("mno"));
 			
 			//////////////// 사용자 정보, 계좌정보 조회 => DB(user, account 테이블)에 저장 ////////////////
 			UserInfoResponseVO userInfoResponseVO = openBankingService.getUserInfo(responseTokenVO);
@@ -94,7 +96,7 @@ public class AssetController {
 			// 계좌 정보
 			List<AccountVO> accountList = userInfoResponseVO.getRes_list();
 			model.addAttribute("accountList", accountList);
-//			accountService.insertAccountInfo(userInfoResponseVO.getRes_list()); // 디비 저장
+			accountService.insertAccountInfo(userInfoResponseVO.getRes_list()); // 디비 저장
 			
 			mylog.debug("계좌 리스트 : " + accountList);
 			
@@ -104,7 +106,7 @@ public class AssetController {
 				AccountHistoryRequestVO accountHistoryRequestVO = new AccountHistoryRequestVO();
 				
 				accountHistoryRequestVO.setAccess_token(responseTokenVO.getAccess_token());
-				accountHistoryRequestVO.setBank_tran_id("M202202513U2TEAMA12"+i);
+				accountHistoryRequestVO.setBank_tran_id("M202202513U2TEAMA00"+i);
 				accountHistoryRequestVO.setFintech_use_num(accountList.get(i).getFintech_use_num());
 				accountHistoryRequestVO.setInquiry_type("A");
 				accountHistoryRequestVO.setInquiry_base("D");
@@ -120,12 +122,12 @@ public class AssetController {
 			List<AccountHistoryResponseVO> accountHistoryResponseList = openBankingService.getAccountHistory(accountHistoryRequestList);
 			model.addAttribute("accountHistoryResponseList", accountHistoryResponseList);
 			
-//			accountService.insertAccountHistory(accountHistoryResponseList); // 디비 저장
+			accountService.insertAccountHistory(accountHistoryResponseList); // 디비 저장
 			
 			//////////////// 카드목록 조회 => DB(card 테이블)에 저장 ////////////////
 			
 			cardInfoRequestVO.setAccess_token(responseTokenVO.getAccess_token());
-			cardInfoRequestVO.setBank_tran_id("M202202513U2TEAMC012");
+			cardInfoRequestVO.setBank_tran_id("M202202513U2TEAMC001");
 			cardInfoRequestVO.setUser_seq_no(responseTokenVO.getUser_seq_no());
 			cardInfoRequestVO.setBank_code_std("399"); // fix, 오픈뱅킹만 사용가능
 			cardInfoRequestVO.setMember_bank_code("399"); // fix, 오픈뱅킹만 사용가능
@@ -144,7 +146,8 @@ public class AssetController {
 //			card_id 
 			
 		}
-		return "/asset/apiTest";
+//		return "/asset/apiTest"; // 출력 테스트
+		return "/asset/myAsset";
 	}
 	
 	@GetMapping("/callbackCard")
