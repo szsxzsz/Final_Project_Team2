@@ -51,12 +51,15 @@
              <div class="progress-group" style="width: 280px;">
                <span class="progress-text">챌린지 인원</span>
                <span class="progress-number"><b>${vo.c_person }</b>/ ${vo.c_pcnt }</span>
+               </div>
              <div class="progress-group" style="width: 280px;">
                <span class="progress-text">예치금</span>
                <span class="progress-number"><b>${vo.c_deposit }</b>꿀</span>
+               </div>
           	 <div class="progress-group" style="width: 280px;">
                <span class="progress-text">챌린지 기간</span>
                <span class="progress-number"><b>${vo.c_period }</b></span>
+              </div> 
              <div class="progress-group" style="width: 280px;">
                <span class="progress-text">챌린지 시작일</span>
                <span class="progress-number">
@@ -69,13 +72,11 @@
 	               	<b><fmt:formatDate value="${c_end }" pattern="YYYY-MM-dd"/></b>
 	               </span>
 	           </div>
-         	</div>
        </div>
 			</div>
 		</div>
 	</div>
-</div>
-</div>
+
     <div class="row" style="width: 1200px; padding-left: 50px; padding-right: 20px; padding-top: 50px;">
 	    <div class="d-flex justify-content-center">
 		    <div class="box">
