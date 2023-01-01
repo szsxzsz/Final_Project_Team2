@@ -96,6 +96,19 @@
 		where b_sort like concat('review','%')
 	</select>
 	
+	<!-- 중복된 챌린지(카테고리) 확인 -->	
+	<select id="samechallenge" resultType="com.chagok.domain.ChallengeVO">
+		select count(*) from challenge where ctno=#{ctno}
+	</select>
+	
+	
+	
+	
+<!-- 	<insert id="joinplus" parameterType="com.chagok.domain.PlusVO"> -->
+<!-- 		insert into plus(plcno,mno,cno,pl_finish,pl_cnt,pl_sum)  -->
+<!-- 		values(#{plcno},#{mno},#{cno},#{pl_finish},#{pl_cnt},#{pl_sum})  -->
+<!-- 	</insert> -->
+	
 	
 	<!-- 챌린지 등록하기 --> 
   	<insert id="challengeRegist">
@@ -113,6 +126,9 @@
   	<select id="getPersonCnt" resultType="map">
      	select c_person from challenge
   	</select>
+  	
+  	
+  	
   	
 
   </mapper>

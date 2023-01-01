@@ -1,5 +1,6 @@
 package com.chagok.controller;
 
+import java.util.ArrayList;
 import java.io.File;
 import java.util.List;
 import java.util.Map;
@@ -13,16 +14,19 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.chagok.domain.BoardVO;
 import com.chagok.domain.ChallengeVO;
 import com.chagok.domain.MinusVO;
+import com.chagok.domain.PlusVO;
 import com.chagok.domain.UserVO;
 import com.chagok.service.ChallengeService;
 import com.chagok.utils.UploadFileUtils;
@@ -113,9 +117,16 @@ public class ChallengeController {
 	}
 
 	@PostMapping(value = "/plusdetailPOST")
-	public String plusdetailPOST() throws Exception {
-
-		return "/challenge/plusdetail";
+	@ResponseBody // ajax 값을 바로 jsp에 보내기 위해 사용
+	public String plusdetailPOST(@RequestParam("ctno") int ctno) throws Exception {
+		String result="N";
+		
+//		int gctno = ajaxService.samechallenge(ctno);
+		
+//		if(gctno == 1) result = "Y";
+		
+		return result;
+//		return "/challenge/plusdetail";
 	}
 
 	// http://localhost:8080/challenge/minusdetail?cno=2
@@ -274,17 +285,34 @@ public class ChallengeController {
 		return "/challenge/noticecontent";
 	}
 	
-	// http://localhost:8080/challenge/mychallenge?nick=회원
-	@GetMapping("/mychallenge")
-	public String mychallengeGET(Model model, @RequestParam("nick") String nick) throws Exception {
-		mylog.debug(nick);
+	// http://localhost:8080/challenge/mychallenge
+		@GetMapping("/mychallenge")
+		public String mychallengeGET(Model model, HttpSession session) throws Exception {
+			
+			String nick = (String)session.getAttribute("nick");
+			mylog.debug(nick);
+			
+			List<ChallengeVO> mychallengeList = service.getmyChallenge(nick);
+			
+			if(nick == null) {
+				return "/chagok/login";
+			}
+			// else일 때
+			model.addAttribute("nick", nick);
+			model.addAttribute("mychallengeList", mychallengeList);
+			
+			return "/challenge/mychallenge";
+		}
 		
-		List<ChallengeVO> mychallengeList = service.getmyChallenge(nick);
 		
-		model.addAttribute("nick", nick);
-		model.addAttribute("mychallengeList", mychallengeList);
+	// http://localhost:8080/challenge/webSocket
+	// 웹소캣 채팅 !!
+	@GetMapping(value="/webSocket")
+	public String webSocket(Model model,HttpSession session) throws Exception {
 		
-		return "/challenge/mychallenge";
+	   // 연결된 뷰페이지로 정보 전달(model)
+	   
+	   return "/challenge/webSocket";
 	}
 	
 	// 챌린지 등록 (저축형) - GET
@@ -339,6 +367,8 @@ public class ChallengeController {
 		
 		return "/challenge/minusRegist";
 	}
+	
+	
 	
 	
 	// 챌린지 등록 (절약형) - POST

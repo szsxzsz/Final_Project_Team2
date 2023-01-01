@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -172,6 +173,14 @@ public class ChagokController {
 		 }
 	 }
 	
+	 
+	 // 가계부 가져오기 (연동) - 수지 
+	 @RequestMapping(value="/abookList")
+		public String getAbookList() throws Exception{
+			mylog.debug(" /abookList -> 연결된 뷰 abookList.jsp -> 데이터 생성 -> ChallengeController ");
+			
+			return "/asset/abookList";
+		}
 	
 	
 	

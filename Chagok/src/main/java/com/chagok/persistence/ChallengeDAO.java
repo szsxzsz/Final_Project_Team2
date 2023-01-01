@@ -40,6 +40,9 @@ public interface ChallengeDAO {
 	// 후기글 리스트 조회
 	public List<BoardVO> getReviewBoard();
 	
+	// 중복 챌린지 체크
+	public int samechallenge(int ctno);
+	
 	// 챌린지 등록
 	public void challengeRegist(ChallengeVO vo) throws Exception;
 		
