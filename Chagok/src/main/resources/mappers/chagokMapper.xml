@@ -101,6 +101,10 @@
 		where cno = #{cno} and c.cno = u.mmo
 	</select>
 	
+	<!-- 성공/실패 -->
+	<select id="">
+		select * from challenge 
+	</select>
 <!-- 	<insert id="joinplus" parameterType="com.chagok.domain.PlusVO"> -->
 <!-- 		insert into plus(plcno,mno,cno,pl_finish,pl_cnt,pl_sum)  -->
 <!-- 		values(#{plcno},#{mno},#{cno},#{pl_finish},#{pl_cnt},#{pl_sum})  -->
