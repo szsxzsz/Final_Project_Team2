@@ -1,65 +1,65 @@
-package com.chagok.websocket;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpSession;
-
+//package com.chagok.websocket;
+//
+//import java.util.ArrayList;
+//import java.util.HashMap;
+//import java.util.List;
+//import java.util.Map;
+//
+//import javax.servlet.http.HttpSession;
+//
 //import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
-import org.springframework.web.socket.CloseStatus;
-import org.springframework.web.socket.TextMessage;
-import org.springframework.web.socket.WebSocketSession;
-import org.springframework.web.socket.handler.TextWebSocketHandler;
-
-import com.chagok.domain.SysLogVO;
-
-@Component
-public class EchoHandler extends TextWebSocketHandler {
-    private List<WebSocketSession> sessionList = new ArrayList<WebSocketSession>();
-    // userId의 webSession을 저장
-    Map<String, WebSocketSession> userSessions = new HashMap<String, WebSocketSession>();
-    
-    // cno마다 연결되어있는 userId list를 저장
-    Map<String, List<String>> roomUsers = new HashMap<>();
-    String id;
-	private static final Logger mylog = LoggerFactory.getLogger(EchoHandler.class);
-
-      // 클라이언트와 연결 이후에 실행되는 메서드
-      @Override
-      public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-        sessionList.add(session);
-        System.out.println(" EchoHandler : "+session.getId().toString()+ " 연결됨");
-        //System.out.println("afterConnectionEstablished:" + session);
-        mylog.debug("{} 연결됨 ", session.getId());
-        
-        Map<String,Object> sessionVal = session.getAttributes();
-        //System.out.println("session의 요소들 :" +sessionVal.keySet());
-        id = (String) sessionVal.get("HTTP.SESSION.ID"); // 저장해줄것!
-		SysLogVO sysLogVO = new SysLogVO();
-		sysLogVO.setUserId(session.getId());
-        System.out.println(" HTTP.SESSION.ID : "+id);
-
-        if(userSessions.get(id) != null) {
-        	userSessions.replace(id, session);
-        	
-        	System.out.println(id);
-        	System.out.println(session);
-        	System.out.println(userSessions.entrySet());
-        } else {
-        	userSessions.put(id, session);
-        	
-        	System.out.println(id);
-        	System.out.println(session);
-        	System.out.println(userSessions.entrySet());
-        }
-        
-      }
-     
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
+//import org.springframework.stereotype.Component;
+//import org.springframework.web.socket.CloseStatus;
+//import org.springframework.web.socket.TextMessage;
+//import org.springframework.web.socket.WebSocketSession;
+//import org.springframework.web.socket.handler.TextWebSocketHandler;
+//
+//import com.chagok.domain.SysLogVO;
+//
+//@Component
+//public class EchoHandler extends TextWebSocketHandler {
+//    private List<WebSocketSession> sessionList = new ArrayList<WebSocketSession>();
+//    // userId의 webSession을 저장
+//    Map<String, WebSocketSession> userSessions = new HashMap<String, WebSocketSession>();
+//    
+//    // cno마다 연결되어있는 userId list를 저장
+//    Map<String, List<String>> roomUsers = new HashMap<>();
+//    String id;
+//	private static final Logger mylog = LoggerFactory.getLogger(EchoHandler.class);
+//
+//      // 클라이언트와 연결 이후에 실행되는 메서드
+//      @Override
+//      public void afterConnectionEstablished(WebSocketSession session) throws Exception {
+//        sessionList.add(session);
+//        System.out.println(" EchoHandler : "+session.getId().toString()+ " 연결됨");
+//        //System.out.println("afterConnectionEstablished:" + session);
+//        mylog.debug("{} 연결됨 ", session.getId());
+//        
+//        Map<String,Object> sessionVal = session.getAttributes();
+//        //System.out.println("session의 요소들 :" +sessionVal.keySet());
+//        id = (String) sessionVal.get("HTTP.SESSION.ID"); // 저장해줄것!
+//		SysLogVO sysLogVO = new SysLogVO();
+//		sysLogVO.setUserId(session.getId());
+//        System.out.println(" HTTP.SESSION.ID : "+id);
+//
+//        if(userSessions.get(id) != null) {
+//        	userSessions.replace(id, session);
+//        	
+//        	System.out.println(id);
+//        	System.out.println(session);
+//        	System.out.println(userSessions.entrySet());
+//        } else {
+//        	userSessions.put(id, session);
+//        	
+//        	System.out.println(id);
+//        	System.out.println(session);
+//        	System.out.println(userSessions.entrySet());
+//        }
+//        
+//      }
+//     
 //      // 클라이언트가 서버로 메시지를 전송했을 때 실행되는 메서드
 //      @Override
 //      protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
@@ -116,24 +116,24 @@ public class EchoHandler extends TextWebSocketHandler {
 //    					userSessions.get(roomUserList.get(i)).sendMessage(new TextMessage(sendId + "," + content));
 //    				}
 //    				
-////    				if(receiveUserId.equals("")) {
-////    					System.out.println("test2");
-////    					for (WebSocketSession sess: sessionList) {
-////    						System.out.println("test3");
-////    						//message를 TextMessage형태로 받음 (22번째줄, string x)
-////    						sess.sendMessage(new TextMessage(receiveUserId + ":" + message.getPayload()));
-////    						System.out.println(receiveUserId + ":" + message.getPayload());
-////    					}
-////    				} else {
-////    					System.out.println("test4");
-////    					WebSocketSession responseIdSession = userSessions.get(receiveUserId);
-////    					if (responseIdSession != null) {
-////    						System.out.println("test5");
-////    						TextMessage tmpMsg = new TextMessage(sendId + "," + receiveUserId + "," + content);
-////    						System.out.println(tmpMsg);
-////    						responseIdSession.sendMessage(tmpMsg);
-////						}
-////    				}
+//    				if(receiveUserId.equals("")) {
+//    					System.out.println("test2");
+//    					for (WebSocketSession sess: sessionList) {
+//    						System.out.println("test3");
+//    						//message를 TextMessage형태로 받음 (22번째줄, string x)
+//    						sess.sendMessage(new TextMessage(receiveUserId + ":" + message.getPayload()));
+//    						System.out.println(receiveUserId + ":" + message.getPayload());
+//    					}
+//    				} else {
+//    					System.out.println("test4");
+//    					WebSocketSession responseIdSession = userSessions.get(receiveUserId);
+//    					if (responseIdSession != null) {
+//    						System.out.println("test5");
+//    						TextMessage tmpMsg = new TextMessage(sendId + "," + receiveUserId + "," + content);
+//    						System.out.println(tmpMsg);
+//    						responseIdSession.sendMessage(tmpMsg);
+//						}
+//    				}
 //    			}
 //    	}
 //     }
@@ -146,4 +146,4 @@ public class EchoHandler extends TextWebSocketHandler {
 //    	System.out.println(("{} 연결 끊김"+ session.getId()));
 //        mylog.debug("{} 연결 끊김", session.getId());
 //      }
-}
+//}

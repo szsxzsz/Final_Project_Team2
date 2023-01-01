@@ -1,164 +1,115 @@
 /**
  * 회원가입 - register.jsp 적용파일
  */
-$(document).ready(function(){
-   
-   $('#sbtn').click(function(){
-   
-    var id = $('#id').val();   
-    var pw = $('#pw').val();
-
-    var check_id = /^[A-Za-z0-9_]+[A-Za-z0-9]*[@]{1}[A-Za-z0-9]+[A-Za-z0-9]*[.]{1}[A-Za-z]{1,3}$/; // 이메일 양식 검사    
-    var check_pw = /^[a-zA-Z0-9]{4,16}$/; // 비밀번호 유효성 검사 (영문/숫자 4-16)
-
-    //  이메일 공백 확인
-    if (id == "" || id == null) {
-       Swal.fire({
-            title: '이메일을 입력해주세요.', 
-            icon: 'warning'
-          });
-         $('#id').focus();
-         return false;
-     } 
-    if(!check_id.test(id)){
-       Swal.fire({
-		  	title: '이메일 형식으로 입력해주세요.', 
-            icon: 'warning'
-          });
-       	 $('#id').focus();
-       	return false;
-     }   
-
-    // 비밀번호 공백 확인
-    if (pw == "" || pw == null) {
-       Swal.fire({
-            title: '비밀번호를 입력해주세요.',
-            icon: 'warning'
-          });
-        $('#pw').focus();
-        return false;
-    }   
-    
-    // 비밀번호 재입력 공백 확인
-    if (rpw == "" || rpw == null) {
-       Swal.fire({
-            title: '비밀번호를 다시 입력해주세요.',
-            icon: 'warning'
-          });
-         $('#rpw').focus();
-         return false;
-     } 
-    
-    // 비밀번호 일치 체크
-    if($("#pw").val() != $("#rpw").val()){
-       $('.pwReCheck').html('비밀번호가 일치하지 않습니다.');
-        $("#rpw").val("");
-        $("#pw").focus();
-        return false;
-    } else {
-        $('.pwReCheck').html('');
-    }   
-    
-   });
-   
-});
-
-// 유효성 체크
-$(function(){
-
-	////////이메일 ///////////////////
-	$("#id").on("blur", function(){
-		if($("#id").val().trim() == "" ){
-			$('.idCheck').html("이메일을 입력하세요.");
-		} 
-	});
-
-	// 이메일 중복 체크
-	$("#id").keyup(function() {
-		var id = $("#id").val();
-		
-		if(/^[A-Za-z0-9_]+[A-Za-z0-9]*[@]{1}[A-Za-z0-9]+[A-Za-z0-9]*[.]{1}[A-Za-z]{1,3}$/.test($('#id').val())){
-			$.ajax({
-	    		 type :'post', // 서버에 전송하는 http방식
-	    		 url :'/checkId', // 서버 요청 url
-	    		 headers : {'Content-Type' : 'application/json'},
-	    		 dataType : 'text', //서버로 부터 응답받을 데이터의 형태 
-		   		 data : id, // 서버로 전송할 데이터 // 위에서 지정한 const id 
-		   		 success : function(result) { // 매개변수에 통신성공시 데이터가 저장된다.
-						//서버와 통신성공시 실행할 내용 작성.
-						console.log('통신 성공! ' + result);
-						console.log(result === 'available');
-		   		 
-			   		 	if(result === 'available'){
-			   		 		 $('.idCheck').html('<b id="textstyle">다시 확인하세요</b>');
-			   		 	}else{
-			   		 		 $('.idCheck').html('<b id="textstyle2">유효한 이메일 주소입니다.</b>');
-			   		 	}
-					},
-					error : function(request, status, error)  { //통신에 실패했을때
-						console.log('통신실패');
-				        console.log("code: " + request.status)
-				        console.log("message: " + request.responseText)
-				        console.log("error: " + error);
-					}
-	     	}); // end ajax(아이디 중복 확인)
-		}
-	  });
-
-	//////// 이메일 ///////////////////
+function f_loginCheck(){
+	var id = $('input[name=id]').val();
+	var pw = $('input[name=pw]').val();
+	var saveIdCheck = $('#save_id:checked').val();
 	
-	///// 비밀번호  ///////////
-	$("#pw").on("blur", function(){
-		if($("#pw").val().trim() == "" ){
-			$('.pwCheck').html("비밀번호를 입력하세요.");
-		}
-		
-		if($("#pw").val().length > 0 && $("#pw").val().length < 4){
-			$('.pwCheck').html("4자 이상 입력하세요.");
-		}
-		
-		if($("#pw").val().length > 4){
-			if(!$("#pw").val()=="" && !/^(?=.*[a-zA-Z])(?=.*[0-9]).{0,}$/.test($('#pw').val())){ 
-				$('.pwCheck').html("영문자,숫자를 포함하여 4~16자로 입력하세요.");
+	if(saveIdCheck == 'on'){
+		localStorage.setItem("saveId", id);
+	}else{
+		localStorage.setItem("saveId", "N");
+	}
+	
+	var loginData = {"id":id, "pw":pw};
+	
+	$.ajax({
+		type : "post",
+		url : "/login",
+		contentType : "application/json",
+		data : JSON.stringify(loginData),
+		success : function(result){
+			if(result == 0){
+				Swal.fire({
+		            title: '아이디와 비밀번호를 다시 확인 후 시도해 주세요.', 
+		            icon: 'warning'
+		          });
+		         return false;
+			} else {
+				// 로그인 성공 시
+				Swal.fire({
+					  title: '환영합니다!',
+					  icon: 'success',
+					  showConfirmButton: false,
+					  timer: 1000
+					})
+				setTimeout('url()',1000);
 			}
-		}
-		
-	});
-	
-	$('#pw').keyup(function() {
-		if($("#pw").val() == $("#id").val()) {
-			$('.pwCheck').html("아이디와 비밀번호는 일치할 수 없습니다.");
-		} else {			
-			$('.pwCheck').html("");
-		}
-	});
-	///////// 비밀번호 ///////////
-	
-	/////// 비밀번호 확인 ///////////
-	$("#rpw").on("blur", function(){
-		if($("#rpw").val().trim() == "" ){
-			$('.pwReCheck').html("비밀번호 확인을 입력하세요.");
-		} else if($("#rpw").val() != $("#pw").val()){
-				$('.pwReCheck').html("비밀번호가 일치하지 않습니다.");
+		},
+		error : function(jqXHR, status, error){
+			console.log("알 수 없는 에러 [" + error + "]");
 		}
 	});
 	
-	$('#rpw').keyup(function() {
-		if($("#rpw").val() != $("#pw").val()){
-			$('.pwReCheck').html("");
-		} else if($("#rpw").val() == $("#pw").val()){
-			$('.pwReCheck').html('<b id="textstyle2">확인 완료!</b>');
+}
+
+function url(){
+	window.location.href="/main";
+}
+
+$(document).ready(function(){
+	var key = getCookie("key");
+	$("#id").val(key);
+	
+	// 이전에 ID를 저장해서 처음 페이지 로딩 시, 입력 칸에 저장된 ID가 표시된 상태라면,
+	if($('#id').val() != ""){
+		$("#save_id").attr("checked",true);
+	}
+	
+	$("#save_id").change(function(){ // 체크박스에 변화가 있다면,
+        if($("#save_id").is(":checked")){ // ID 저장하기 체크했을 때,
+            setCookie("key", $("#id").val(), 7); // 7일 동안 쿠키 보관
+        }else{ // ID 저장하기 체크 해제 시,
+            deleteCookie("key");
+        }
+    });
+	
+	// ID 저장하기를 체크한 상태에서 ID를 입력하는 경우, 이럴 때도 쿠키 저장.
+	$("#id").keyup(function(){ // ID 입력 칸에 ID를 입력할 때,
+        if($("#save_id").is(":checked")){ // ID 저장하기를 체크한 상태라면,
+            setCookie("key", $("#id").val(), 7); // 7일 동안 쿠키 보관
+        }
+    });
+	
+	// 쿠키 저장하기 
+	// setCookie => saveid함수에서 넘겨준 시간이 현재시간과 비교해서 쿠키를 생성하고 지워주는 역할
+	function setCookie(cookieName, value, exdays) {
+		var exdate = new Date();
+		exdate.setDate(exdate.getDate() + exdays);
+		var cookieValue = escape(value)
+				+ ((exdays == null) ? "" : "; expires=" + exdate.toGMTString());
+		document.cookie = cookieName + "=" + cookieValue;
+	}
+	// 쿠키 삭제
+	function deleteCookie(cookieName) {
+		var expireDate = new Date();
+		expireDate.setDate(expireDate.getDate() - 1);
+		document.cookie = cookieName + "= " + "; expires="
+				+ expireDate.toGMTString();
+	}
+	
+	// 쿠키 가져오기
+	function getCookie(cookieName) {
+		cookieName = cookieName + '=';
+		var cookieData = document.cookie;
+		var start = cookieData.indexOf(cookieName);
+		var cookieValue = '';
+		if (start != -1) { // 쿠키가 존재하면
+			start += cookieName.length;
+			var end = cookieData.indexOf(';', start);
+			if (end == -1) // 쿠키 값의 마지막 위치 인덱스 번호 설정 
+				end = cookieData.length;
+                console.log("end위치  : " + end);
+			cookieValue = cookieData.substring(start, end);
 		}
-	});
-	/////////////// 비밀번호 확인 //////////////////////
+		return unescape(cookieValue);
+	}
 
-});  // jQeury 끝
-
-
-$(function () {
     $('input').iCheck({
       checkboxClass: 'icheckbox_square-blue',
       radioClass: 'iradio_square-blue',
       increaseArea: '20%' /* optional */
     });
-  });
+    
+ });

@@ -46,8 +46,8 @@ public class ChallengeController {
 
 	private static final Logger mylog = LoggerFactory.getLogger(ChallengeController.class);
 
-	// http://localhost:8080/challenge/plusfeed?cno=2
-	@GetMapping(value = "/plusfeed")
+	// http://localhost:8080/challenge/plusFeed?cno=2
+	@GetMapping(value = "/plusFeed")
 	public String plusfeedGET(Model model, int cno, HttpSession session) throws Exception {
 		mylog.debug("plusfeedGET() 호출");
 
@@ -64,7 +64,6 @@ public class ChallengeController {
 		return "/challenge/plusFeed";
 	}
 	
-	// http://localhost:8080/challenge/plusfeed?cno=2
 	@PostMapping(value = "/plusfeed")
 	public String plusfeedPOST(Model model, int cno, HttpSession session) throws Exception {
 		mylog.debug("plusfeedGET() 호출");

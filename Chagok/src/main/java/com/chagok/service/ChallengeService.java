@@ -34,7 +34,6 @@ public interface ChallengeService {
 	
 	// 챌린지 종료일자 정보 가져오기
 	public Date getChallengeEndDate(Integer cno);
-	
 
 	// 게시판 리스트
 	public List<BoardVO> getBoardList(Integer b_sort);

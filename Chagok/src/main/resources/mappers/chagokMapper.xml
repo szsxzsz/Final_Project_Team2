@@ -32,17 +32,22 @@
 		]]>
 	</select>
 	
-	<!-- 특정회원정보 조회 -->
+	<!-- 특정회원정보 조회(id 사용) -->
 	<select id="getUser" resultType="com.chagok.domain.UserVO">
 		select * from user where id=#{id} 
 	</select>
 	
+	<!-- 특정회원정보 조회(mno 사용) -->
+	<select id="getUserM" resultType="com.chagok.domain.UserVO">
+		select * from user where mno=#{mno} 
+	</select>
+	
 	<!-- 로그인 처리 -->
-	<select id="loginUser" resultType="com.chagok.domain.UserVO">
+	<select id="loginUserCheck" resultType="com.chagok.domain.UserVO">
 		select * from user
 		where id=#{id} and pw=#{pw}
 	</select>
-  	
+	
   	<!--  챌린지 정보 가져오기  -->
 	<select id="getChallengeInfo" resultType="com.chagok.domain.ChallengeVO">
 	select * from challenge where cno = #{cno}

@@ -21,7 +21,7 @@
   <!-- jQuery 3 -->
   <script src="${pageContext.request.contextPath }/resources/plugins/jQuery/jquery.min.js"></script> 
   <!-- login 유효성 검사 -->
-  <script src="${pageContext.request.contextPath }/resources/plugins/duplicate/register.js"></script>
+  <script src="${pageContext.request.contextPath }/resources/plugins/duplicate/login.js"></script>
   <!-- textstyle.css -->
   <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/plugins/duplicate/textstyle.css">
   
@@ -40,7 +40,7 @@
 <body class="hold-transition login-page">
 <div class="login-box">
   <div class="login-logo">
-  	<a href="#" style="font-family: 'Hi Melody', cursive;"><b>차곡</b></a>
+  	<a href="#" style="font-family: 'Hi Melody', cursive;"><img src="${pageContext.request.contextPath }/resources/plugins/img/chagok_pig-removebg.png"><b>차곡</b></a>
   </div>
   <!-- /.login-logo -->
   <div class="login-box-body">
@@ -55,26 +55,23 @@
       <div class="form-group has-feedback">
         <input type="password" class="form-control" id="pw" name="pw" placeholder="비밀번호">
         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-<!--         <div class="pwCheck" id="textstyle"> </div> -->
       </div>
       <div class="row">
         <div class="col-xs-8">
           <div class="checkbox icheck">
-            <label>
-              <input type="checkbox"> Remember Me
-            </label>
+              <div class="save_id"><input type="checkbox" id="save_id"><label for="save_id">아이디 저장 </label></div>
           </div>
         </div>
         <!-- /.col -->
         <div class="col-xs-12">
           <div class="checkbox icheck">
-         	<div id="textstyle">${message }</div> 
-        	<div class="idCheck" id="textstyle"> </div>
-        	<div class="pwCheck" id="textstyle"> </div>
+<%--          	<div id="textstyle">${message }</div>  --%>
+<!--         	<div class="idCheck" id="textstyle"> </div> -->
+<!--         	<div class="pwCheck" id="textstyle"> </div> -->
           </div>
         </div>
         <div class="col-xs-12 pull-right">
-          <button type="submit" class="btn btn-primary btn-block btn-flat" id="signbtn">로그인</button>
+          <button type="button" class="btn btn-primary btn-block btn-flat" onclick="f_loginCheck();">로그인</button>
         </div>
         <!-- /.col -->
       </div>
@@ -89,8 +86,8 @@
     </div>
     <!-- /.social-auth-links -->
 
-    <a href="#">I forgot my password</a><br>
-    <a href="register.html" class="text-center">Register a new membership</a>
+    <a href="#">비밀번호 찾기</a><br>
+    <a href="/register" class="text-center">회원 가입</a>
 
   </div>
   <!-- /.login-box-body -->
