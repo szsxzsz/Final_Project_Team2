@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+//import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,6 +28,7 @@ import com.chagok.domain.BoardVO;
 import com.chagok.domain.ChallengeVO;
 import com.chagok.domain.MinusVO;
 import com.chagok.domain.PlusVO;
+import com.chagok.domain.SysLogVO;
 import com.chagok.domain.UserVO;
 import com.chagok.service.ChallengeService;
 import com.chagok.utils.UploadFileUtils;
@@ -49,12 +51,16 @@ public class ChallengeController {
 	public String plusfeedGET(Model model, int cno, HttpSession session) throws Exception {
 		mylog.debug("plusfeedGET() 호출");
 
-		ChallengeVO chVO = service.getChallengeInfo(cno);
 		List<Map<String, Object>> plusPeoList = service.getPlusPeople(cno);
-
-		model.addAttribute("vo", chVO);
+		mylog.debug("plusFeedGET()에서 id : "+session.getId());
+		SysLogVO sysLogVO = new SysLogVO();
+		sysLogVO.getUserId();
+//		model.addAttribute("sessionId", session.getId());
+		model.addAttribute("sessionId", sysLogVO.getUserId());
+		model.addAttribute("vo", service.getChallengeInfo(cno));
 		model.addAttribute("plusPeoList", plusPeoList);
-
+		model.addAttribute("c_end", service.getChallengeEndDate(cno));
+		
 		return "/challenge/plusFeed";
 	}
 	
@@ -153,11 +159,6 @@ public class ChallengeController {
 		return "/challenge/echo";
 	}
 	
-	@PostMapping(value = "/echo")
-	public String echoPOST() throws Exception {
-		
-		return "/challenge/echo";
-	}
 
 	// http://localhost:8080/challenge/chat
 	@GetMapping(value = "/chat")
@@ -171,46 +172,6 @@ public class ChallengeController {
 		return "/challenge/chat";
 	}
 
-	// http://localhost:8080/challenge/personfeed?cno=1
-	@GetMapping(value = "/personfeed")
-	public String feedgoGET(@RequestParam("cno") int cno, Model model) throws Exception {
-
-		mylog.debug(cno + "");
-
-		model.addAttribute("feed", service.getChallengeInfo(cno));
-
-		return "/challenge/personfeed";
-	}
-	
-	// http://localhost:8080/challenge/mcheckfeed?cno=1
-	@GetMapping(value="/minuscheck")
-	public String MinusCheck(Model model,@RequestParam("cno") int cno,HttpSession session) throws Exception {
-		mylog.debug(" minuscheck Get 호출 ");
-		
-		ChallengeVO vo = service.getChallengeInfo(cno);
-		List<Map<String, Object>> minuscheck = service.getMinusCheck(cno);
-		
-		// 연결된 뷰페이지로 정보 전달(model)
-		model.addAttribute("vo", vo);
-		model.addAttribute("minuscheck", minuscheck);
-		
-		return "/challenge/mcheckfeed";
-	}
-	
-	// http://localhost:8080/challenge/pcheckfeed?cno=1
-	@GetMapping(value="/pluscheck")
-	public String PlusCheck(Model model,@RequestParam("cno") int cno,HttpSession session) throws Exception {
-		mylog.debug(" pluscheck Get 호출 ");
-		
-		ChallengeVO vo = service.getChallengeInfo(cno);
-		List<Map<String, Object>> pluscheck = service.getPlusCheck(cno);
-		
-		// 연결된 뷰페이지로 정보 전달(model)
-		model.addAttribute("vo", vo);
-		model.addAttribute("pluscheck", pluscheck);
-		
-		return "/challenge/pcheckfeed";
-	}
 	
 	// http://localhost:8080/challenge/checkfeed?cno=1
 	@GetMapping(value = "/checkfeed")
@@ -223,6 +184,7 @@ public class ChallengeController {
 		ChallengeVO vo = service.getChallengeInfo(cno);
 		
 		List<ChallengeVO> challengeList = service.getChallengeList(cno);
+//		List<Map<String, Object>> pluscheck = service.getPlusCheck(cno);
 		
 		model.addAttribute("vo", vo);
 		model.addAttribute("challengeList", challengeList);
@@ -231,9 +193,17 @@ public class ChallengeController {
 		return "/challenge/checkfeed";
 	}
 
-	// http://localhost:8080/challenge/notice
+	// http://localhost:8080/challenge/notice?b_sort=2
 	@GetMapping(value = "/notice")
-	public String noticeGET() throws Exception {
+	public String noticeGET(Model model,HttpSession session,@RequestParam("b_sort") int b_sort) throws Exception {
+		
+		List<BoardVO> boardList = service.getBoardList(b_sort);
+		
+		mylog.debug(boardList+"");
+		
+		// 연결되어 있는 뷰페이지로 정보를 전달 (Model 객체 생성)
+		model.addAttribute("boardList", boardList);
+		
 		return "/challenge/notice";
 	}
 
@@ -241,6 +211,8 @@ public class ChallengeController {
 	@GetMapping(value = "/review")
 	public String reviewGET(@RequestParam("cno") int cno, Model model, HttpSession session) throws Exception {
 
+		
+		
 		mylog.debug(cno + "");
 
 		model.addAttribute("review", service.getChallengeInfo(cno));
@@ -263,13 +235,13 @@ public class ChallengeController {
 		return "redirect:/challenge/reviewboard";
 	}
 
-	// http://localhost:8080/challenge/reviewboard
+	// http://localhost:8080/challenge/reviewboard?b_sort=1
 	@GetMapping(value = "/reviewboard")
-	public String reviewboardGET(HttpSession session,Model model/*@ModelAttribute("result") String result*/) throws Exception {
+	public String reviewboardGET(HttpSession session,Model model,@RequestParam("b_sort") int b_sort) throws Exception {
 		mylog.debug(" /reviewboard 호출");
 		
 		// 서비스 -> DAO 게시판 리스트 가져오기
-		List<BoardVO> boardList = service.getReviewBoard();
+		List<BoardVO> boardList = service.getBoardList(b_sort);
 		
 		mylog.debug(boardList+"");
 		
@@ -279,9 +251,14 @@ public class ChallengeController {
 		return "/challenge/reviewboard";
 	}
 
-	// http://localhost:8080/challenge/noticecontent
+	// http://localhost:8080/challenge/noticecontent?bno=4
 	@GetMapping(value = "/noticecontent")
-	public String noticecontentGET() throws Exception {
+	public String noticecontentGET(HttpSession session,Model model,@RequestParam("bno") int bno) throws Exception {
+		
+		BoardVO vo = service.getBoardContent(bno);
+		
+		model.addAttribute("vo",vo);
+		
 		return "/challenge/noticecontent";
 	}
 	

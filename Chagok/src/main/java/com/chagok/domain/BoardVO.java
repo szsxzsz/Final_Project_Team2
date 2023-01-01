@@ -17,5 +17,5 @@ public class BoardVO {
 	private int b_dlike;
 	private int b_cnt;
 	private String b_file;
-	private String b_sort;
+	private int b_sort;
 }

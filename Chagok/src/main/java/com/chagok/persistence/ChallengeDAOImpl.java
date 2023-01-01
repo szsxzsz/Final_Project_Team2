@@ -1,5 +1,6 @@
 package com.chagok.persistence;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -83,27 +84,23 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 		mylog.debug(cno+"번 챌린지 참가자 수(절약형) : "+MPeopleList.size());
 		return MPeopleList;
 	}
-	@Override
-	public List<Map<String, Object>> getMinusCheck(Integer cno) {
-		mylog.debug(cno+"번 챌린지 참가자 정보 호출(절약형)");
-		List<Map<String, Object>> MCheckList = sqlSession.selectList(NAMESPACE+".getMinus",cno);
-		mylog.debug(cno+"번 챌린지 참가자 수(절약형) : "+MCheckList.size());
-		return MCheckList;
-	}
 
 	@Override
-	public List<Map<String, Object>> getPlusCheck(Integer cno) {
-		mylog.debug(cno+"번 챌린지 참가자 정보 호출(절약형)");
-		List<Map<String, Object>> PCheckList = sqlSession.selectList(NAMESPACE+".getPlus",cno);
-		mylog.debug(cno+"번 챌린지 참가자 수(절약형) : "+PCheckList.size());
-		return PCheckList;
+	public Date getChallengeEndDate(Integer cno) {
+		mylog.debug("getChallengeEndDate(cno) 호출");
+		Date end = sqlSession.selectOne(NAMESPACE+".getChallengeEndDate", cno);
+		mylog.debug(cno+"번 챌린지 종료일자 : "+end);
+		
+		return end;
 	}
-
+	 
+	
+	
 	@Override
-	public List<BoardVO> getReviewBoard() {
+	public List<BoardVO> getBoard(Integer b_sort) {
 		mylog.debug(" getReviewBoard() 호출");
 		
-		List<BoardVO> boardList = sqlSession.selectList(NAMESPACE+".reviewboard");
+		List<BoardVO> boardList = sqlSession.selectList(NAMESPACE+".boardList",b_sort);
 		
 		mylog.debug("게시판 글 개수 : "+boardList.size()+"");
 		
@@ -113,6 +110,15 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 	@Override
 	public int samechallenge(int ctno) {
 		return sqlSession.selectOne(NAMESPACE+".samechallenge", ctno);
+	}
+
+	@Override
+	public BoardVO getBoardContent(Integer bno) {
+		
+		BoardVO vo = sqlSession.selectOne(NAMESPACE+".Board", bno);
+		
+		return vo;
+		
 	}
 	
 	

@@ -72,28 +72,22 @@
    where c_person like concat('%',#{nick},'%')
    </select>
 	
-	<!-- [절약형]챌린지 참가자 조회  -->
+	<!-- [절약형]챌린지 참가자 조회-->
 	<select id="getMinusPeople" resultType="com.chagok.domain.MinusVO">
 		select * from minus m inner join user u
 		where cno = #{cno} and m.mno = u.mno
 	</select>
 
-	<!-- [저축형]챌린지 참가자 조회(피드용) -->
-	<select id="getPlus" resultType="map">
-		select * from plus p inner join user u
-		where cno = #{cno} and p.mno = u.mno
+	<!-- 게시글 리스트 -->
+	<select id="boardList" resultType="com.chagok.domain.BoardVO">
+		select * from board
+		where b_sort like concat('%')
 	</select>
-	
-	<!-- [절약형]챌린지 참가자 조회(피드용)  -->
-	<select id="getMinus" resultType="map">
-		select * from minus m inner join user u
-		where cno = #{cno} and m.mno = u.mno
-	</select>
-	
-	<!-- 후기글 게시글 확인 -->
-	<select id="reviewboard" resultType="com.chagok.domain.BoardVO">
+
+	<!-- 게시글 확인 -->
+	<select id="board" resultType="com.chagok.domain.BoardVO">
 		select * from board 
-		where b_sort like concat('review','%')
+		where bno = #{bno}
 	</select>
 	
 	<!-- 중복된 챌린지(카테고리) 확인 -->	
@@ -101,14 +95,27 @@
 		select count(*) from challenge where ctno=#{ctno}
 	</select>
 	
+	<!-- 챌린지 리스트 -->
+	<select id="clist" resultType="map">
+		select * from challenge c inner join user u
+		where cno = #{cno} and c.cno = u.mmo
+	</select>
 	
-	
-	
+	<!-- 성공/실패 -->
+	<select id="">
+		select * from challenge 
+	</select>
 <!-- 	<insert id="joinplus" parameterType="com.chagok.domain.PlusVO"> -->
 <!-- 		insert into plus(plcno,mno,cno,pl_finish,pl_cnt,pl_sum)  -->
 <!-- 		values(#{plcno},#{mno},#{cno},#{pl_finish},#{pl_cnt},#{pl_sum})  -->
 <!-- 	</insert> -->
 	
+	<!-- 챌린지 종료일자 정보 가져오기  -->
+	<select id="getChallengeEndDate" resultType="date">
+		select distinct(date_add(c_start, interval c_period week)) c_end 
+		from plus p inner join challenge c
+		where p.cno = c.cno and c.cno = #{cno}
+	</select>
 	
 	<!-- 챌린지 등록하기 --> 
   	<insert id="challengeRegist">

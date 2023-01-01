@@ -1,5 +1,6 @@
 package com.chagok.service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -67,25 +68,26 @@ public class ChallengeServiceImpl implements ChallengeService{
 		mylog.debug("getMinusPeople("+cno+") 호출");
 		return dao.getMinusPeople(cno);
 	}
-	
+
 	@Override
-	public List<Map<String, Object>> getMinusCheck(int cno) {
-		mylog.debug("getMinusPeople("+cno+") 호출");
-		return dao.getMinusCheck(cno);
+	public Date getChallengeEndDate(Integer cno) {
+		return dao.getChallengeEndDate(cno);
 	}
 	
+
 	@Override
-	public List<Map<String, Object>> getPlusCheck(int cno) {
-		mylog.debug("getMinusPeople("+cno+") 호출");
-		return dao.getPlusCheck(cno);
+	public List<BoardVO> getBoardList(Integer b_sort) {
+		
+		return dao.getBoard(b_sort);
 	}
 
 	@Override
-	public List<BoardVO> getReviewBoard() {
+	public BoardVO getBoardContent(Integer bno) {
 		
-		return dao.getReviewBoard();
-		
+		return dao.getBoardContent(bno);
 	}
+
+	
 	
 	
 	// 챌린지 등록
@@ -114,6 +116,12 @@ public class ChallengeServiceImpl implements ChallengeService{
 		mylog.debug(" getPersonCnt() 호출 ");
 		
 		return dao.getPersonCnt();
+	}
+
+	@Override
+	public List<BoardVO> getReviewBoard() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 

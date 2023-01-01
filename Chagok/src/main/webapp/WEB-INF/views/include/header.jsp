@@ -26,8 +26,7 @@
 	href="${pageContext.request.contextPath }/resources/mainpagecss/css/vendor/slick-theme.css">
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath }/resources/mainpagecss/css/reset.css">
-<link rel="stylesheet" type="text/css" href="$../resources/mainpagecss/css/font.css">
-<link rel="stylesheet" type="text/css" href="$../resources/mainpagecss/css/style.css">
+
 <link rel="stylesheet" type="text/css" href="../resources/mainpagecss/css/font.css">
 <link rel="stylesheet" type="text/css" href="../resources/mainpagecss/css/style.css">
 
@@ -192,11 +191,11 @@ border: 3px solid rgb(255 191 131 / 40%);
 			</div>
 		</div>
 		<div class="user_menu">
-		<c:if test="${nick == '' || nick == null}">
+		<c:if test="${nick == null}">
 			<div class="login"><a href="/login"><p style="font-family: 'GmarketSans'">로그인</p></a></div>
 			<div class="join"><a href="/register"><p style="font-family: 'GmarketSans'">회원가입</p></a></div>
 		</c:if>
-		<c:if test="${nick != '' || nick != null}">
+		<c:if test="${ nick != null}">
 			<div class="login"><a href="#"><p style="font-family: 'GmarketSans'">${nick }님 환영합니다.</p></a></div>
 		</c:if>
 		</div>

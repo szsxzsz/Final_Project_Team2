@@ -1,5 +1,6 @@
 package com.chagok.persistence;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -30,19 +31,19 @@ public interface ChallengeDAO {
 	
 	// [절약형]챌린지 참가자 조회 
 	public List<MinusVO> getMinusPeople(Integer cno);
-
-	// [절약형]챌린지 참가자 조회 
-	public List<Map<String, Object>> getMinusCheck(Integer cno);
-
-	// [저축형]챌린지 참가자 조회 
-	public List<Map<String, Object>> getPlusCheck(Integer cno);
 	
-	// 후기글 리스트 조회
-	public List<BoardVO> getReviewBoard();
+	// 챌린지 종료일자 정보 가져오기
+	public Date getChallengeEndDate(Integer cno);
+	
+	// 게시판 리스트 조회
+	public List<BoardVO> getBoard(Integer b_sort);
 	
 	// 중복 챌린지 체크
 	public int samechallenge(int ctno);
 	
+	// 게시판 조회
+	public BoardVO getBoardContent(Integer bno);
+
 	// 챌린지 등록
 	public void challengeRegist(ChallengeVO vo) throws Exception;
 		
@@ -51,5 +52,4 @@ public interface ChallengeDAO {
 	
 	// 챌린지 목록(참여명수 구하기)
 	public List<Map<String, Object>> getPersonCnt() throws Exception;
-	
 }
