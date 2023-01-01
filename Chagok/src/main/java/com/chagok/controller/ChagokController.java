@@ -83,6 +83,21 @@ public class ChagokController {
 		return "/chagok/commumain";
 	}
 	
+	// http://localhost:8080/challenge/detail?cno=1
+	@GetMapping(value = "/challenge/detail")
+	public String getChoseChallenge(Integer cno) {
+		ChallengeVO vo = service2.getChallengeInfo(cno);
+		int sort = vo.getC_sort();
+		
+		if(sort == 0) {
+			mylog.debug("저축형 챌린지로 이동");
+			return "redirect:/challenge/plusdetail?cno="+cno;
+		}else {
+			mylog.debug("절약형 챌린지로 이동");
+			return "redirect:/challenge/minusdetail?cno="+cno;
+		}
+	}
+	
 
 	// http://localhost:8080/login
 	@GetMapping(value = "/login")
@@ -92,25 +107,25 @@ public class ChagokController {
 	}
 
 	@PostMapping(value = "/login")
-	public String loginPOST(UserVO vo,HttpSession session, RedirectAttributes rttr) throws Exception {
+	public String loginPOST(UserVO vo, Model model, HttpSession session, RedirectAttributes rttr) throws Exception {
 		mylog.debug(" loginPOST() 호출");
 		
 		// 전달정보 저장(userid, userpw)
 		mylog.debug(" 로그인 정보 : " +vo);
-		
+
 		// 서비스 - DAO(로그인체크)
 		boolean loginStatus = service.userLogin(vo);
-		vo = service.getUser(vo.getId());
+		model.addAttribute("nick", vo.getNick());
 		
 		mylog.debug(" 로그인 상태 : " + loginStatus);
-		// 로그인 여부에 따라서 페이지 이동
-		// 성공 - main 페이지
-		// 실패 - login페이지
 		String resultURI="";
+		
 		if(loginStatus) {
-			session.setAttribute("nick", vo.getNick());
+			// 성공 - main 페이지
+			session.setAttribute("mno", vo.getMno());
 			resultURI = "redirect:/main";
 		}else {
+			// 실패 - login페이지
 			rttr.addFlashAttribute("message", "아이디 또는 비밀번호를 잘못 입력했습니다. 입력하신 내용을 다시 확인해주세요.");
 			resultURI = "redirect:/login";
 		}

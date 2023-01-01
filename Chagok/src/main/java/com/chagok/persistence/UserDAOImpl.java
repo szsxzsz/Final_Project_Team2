@@ -52,12 +52,20 @@ public class UserDAOImpl implements UserDAO {
 		return result;
 	}
 
+	//특정 회원정보 조회(id)
 	@Override
 	public UserVO getUser(String id) {
 		UserVO vo = sqlSession.selectOne(NAMESPACE+".getUser",id);
 				
 		System.out.println(" DAO : " +vo);
 		return vo;
+	}
+	
+	//특정 회원정보 조회(mno)
+	@Override
+	public UserVO getUser(int mno) {
+
+		return sqlSession.selectOne(NAMESPACE+".getUserM",mno);
 	}
 
 	@Override

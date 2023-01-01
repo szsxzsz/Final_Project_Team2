@@ -390,10 +390,6 @@
       </div>
     </section>
     <!-- /.content -->
-    
-	<div>
-		메시지 : <input id="messageinput" type="text">
-	</div>
 	<div>
 		<!-- <button onclick="connect();">채팅하기</button>
 		<button onclick="closeSocket();">끝내기</button>
@@ -437,7 +433,7 @@
 	              <div class="chat_people">
 	                <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
 	                <div class="chat_ib">
-	                  <h5>${nick} <span class="chat_date">Dec 25</span></h5>
+	                  <h5>보낸 사람 <span class="chat_date">날 짜</span></h5>
 	                  <p>Test, which is a new approach to have all solutions 
 	                    astrology under one roof.</p>
 	                </div>

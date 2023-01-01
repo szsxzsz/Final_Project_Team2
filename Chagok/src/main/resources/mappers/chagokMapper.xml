@@ -32,9 +32,14 @@
 		]]>
 	</select>
 	
-	<!-- 특정회원정보 조회 -->
+	<!-- 특정회원정보 조회(id 사용) -->
 	<select id="getUser" resultType="com.chagok.domain.UserVO">
 		select * from user where id=#{id} 
+	</select>
+	
+	<!-- 특정회원정보 조회(mno 사용) -->
+	<select id="getUserM" resultType="com.chagok.domain.UserVO">
+		select * from user where mno=#{mno} 
 	</select>
 	
 	<!-- 로그인 처리 -->

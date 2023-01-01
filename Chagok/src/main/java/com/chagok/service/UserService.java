@@ -16,8 +16,11 @@ public interface UserService {
 	// 로그인 체크
 	public boolean userLogin(UserVO vo);
 	
-	// 특정 회원정보 조회
+	// 특정 회원정보 조회(id)
 	public UserVO getUser(String id);
+
+	// 특정 회원정보 조회(mno)		
+	public UserVO getUser(int mno);
 	
 	
 }

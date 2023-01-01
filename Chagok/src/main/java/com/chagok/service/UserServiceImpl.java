@@ -47,9 +47,16 @@ public class UserServiceImpl implements UserService {
 		return resultVO != null ? true:false;
 	}
 
+	// 특정 회원정보 조회(id)
 	@Override
 	public UserVO getUser(String id) {
 		return dao.getUser(id);
+	}
+
+	// 특정 회원정보 조회(mno)
+	@Override
+	public UserVO getUser(int mno) {
+		return dao.getUser(mno);
 	}
 
 
