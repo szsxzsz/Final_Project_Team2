@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import com.chagok.domain.BoardVO;
 import com.chagok.domain.ChallengeVO;
 import com.chagok.domain.MinusVO;
 import com.chagok.domain.PlusVO;
@@ -45,7 +46,7 @@ public class ChallengeServiceImpl implements ChallengeService{
 	}
 
 	@Override
-	public void createReview(ChallengeVO vo){
+	public void createReview(BoardVO vo){
 		dao.createReview(vo);
 		
 	}
@@ -73,7 +74,56 @@ public class ChallengeServiceImpl implements ChallengeService{
 		return dao.getChallengeEndDate(cno);
 	}
 	
+
+	@Override
+	public List<BoardVO> getBoardList(Integer b_sort) {
+		
+		return dao.getBoard(b_sort);
+	}
+
+	@Override
+	public BoardVO getBoardContent(Integer bno) {
+		
+		return dao.getBoardContent(bno);
+	}
+
 	
+	
+	
+	// 챌린지 등록
+	@Override
+	public void challengeRegist(ChallengeVO vo) throws Exception {
+		mylog.debug(" challengeRegist(ChallengeVO vo) 호출 ");
+				
+		dao.challengeRegist(vo);
+		mylog.debug(" 챌린지 등록 완료 ");
+		
+	}
+	
+	
+	// 챌린지 목록
+	@Override
+	public List<ChallengeVO> getChallengeList() throws Exception {
+		mylog.debug(" getChallengeList() 호출");
+		
+		return dao.getChallengeList();
+	}
+
+	
+	// 챌린지 목록(참여명수 구하기)
+	@Override
+	public List<Map<String, Object>> getPersonCnt() throws Exception {
+		mylog.debug(" getPersonCnt() 호출 ");
+		
+		return dao.getPersonCnt();
+	}
+
+	@Override
+	public List<BoardVO> getReviewBoard() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 	
 

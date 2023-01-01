@@ -20,7 +20,7 @@ public interface ChallengeDAO {
 	public List<Map<String, Object>> getPlusPeople(Integer cno);
 	
 	// 후기글 쓰기
-	public void createReview(ChallengeVO vo);
+	public void createReview(BoardVO vo);
 	
 	// 챌린지정보 리스트(참여인원리스트)
 	public List<ChallengeVO> getChallengeList(Integer cno); 
@@ -34,4 +34,21 @@ public interface ChallengeDAO {
 	// 챌린지 종료일자 정보 가져오기
 	public Date getChallengeEndDate(Integer cno);
 	
+	// 게시판 리스트 조회
+	public List<BoardVO> getBoard(Integer b_sort);
+	
+	// 중복 챌린지 체크
+	public int samechallenge(int ctno);
+	
+	// 게시판 조회
+	public BoardVO getBoardContent(Integer bno);
+
+	// 챌린지 등록
+	public void challengeRegist(ChallengeVO vo) throws Exception;
+		
+	// 챌린지 목록
+	public List<ChallengeVO> getChallengeList() throws Exception;
+	
+	// 챌린지 목록(참여명수 구하기)
+	public List<Map<String, Object>> getPersonCnt() throws Exception;
 }

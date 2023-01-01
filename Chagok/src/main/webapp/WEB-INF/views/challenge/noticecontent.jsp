@@ -1,80 +1,32 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <%@ include file="../include/header.jsp" %>
 <%@ include file="../include/sidebar.jsp" %>
 
 <h1> 공지사항 상세 </h1>
-	<div class="col-md-6">
-
-		<div class="box box-widget">
-			<div class="box-header with-border">
-				<div class="user-block">
-					<img class="img-circle" src="../dist/img/user1-128x128.jpg"
-						alt="User Image"> <span class="username"><a href="#">Jonathan
-							Burke Jr.</a></span> <span class="description">Shared publicly - 7:30
-						PM Today</span>
-				</div>
-
-				<div class="box-tools">
-					<button type="button" class="btn btn-box-tool"
-						data-toggle="tooltip" title="" data-original-title="Mark as read">
-						<i class="fa fa-circle-o"></i>
-					</button>
-					<button type="button" class="btn btn-box-tool"
-						data-widget="collapse">
-						<i class="fa fa-minus"></i>
-					</button>
-					<button type="button" class="btn btn-box-tool" data-widget="remove">
-						<i class="fa fa-times"></i>
-					</button>
-				</div>
-
-			</div>
-
-			
-			<div class="box-footer box-comments">
-				<div class="box-comment">
-
-					<img class="img-circle img-sm" src="../dist/img/user3-128x128.jpg"
-						alt="User Image">
-					<div class="comment-text">
-						<span class="username"> Maria Gonzales <span
-							class="text-muted pull-right">8:03 PM Today</span>
-						</span> It is a long established fact that a reader will be distracted by
-						the readable content of a page when looking at its layout.
-					</div>
-
-				</div>
-
-				<div class="box-comment">
-
-					<img class="img-circle img-sm" src="../dist/img/user4-128x128.jpg"
-						alt="User Image">
-					<div class="comment-text">
-						<span class="username"> Luna Stark <span
-							class="text-muted pull-right">8:03 PM Today</span>
-						</span> It is a long established fact that a reader will be distracted by
-						the readable content of a page when looking at its layout.
-					</div>
-
-				</div>
-
-			</div>
-
-			<div class="box-footer">
-				<form action="#" method="post">
-					<img class="img-responsive img-circle img-sm"
-						src="../dist/img/user4-128x128.jpg" alt="Alt Text">
-
-					<div class="img-push">
-						<input type="text" class="form-control input-sm"
-							placeholder="Press enter to post comment">
-					</div>
-				</form>
-			</div>
-
+${vo }
+	 <div class="row" style="width: 1200px; padding-left: 50px; padding-right: 20px; padding-top: 50px;">
+	    <div class="d-flex justify-content-center">
+		    <div class="box">
+		        <div class="col-md-12 text-center" style="background: #FAF8F1; height: 50px;">
+				    	<h4 style="marfin-top: 14px;">
+						<span style="color: #10A19D;" text-align:left>제목 | ${vo.b_title }</span>
+						&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+				    	<span style="color: #10A19D;">글쓴이 | ${vo.b_writer }</span>
+				    	<span style="color: #10A19D;">작성일 | ${vo.b_date }</span>
+				    	</h4>
+		    	</div>
+        <div class="form-group" style="padding-top: 50px; padding-left: 36px; width: 1166px; margin-bottom: 30px;">
+           	<span style = "font-size: 16px; font-family: 'Pretendard','Source Sans Pro', sans-serif;"><strong></strong></span>
+				 <textarea class="form-control" rows="3" style="margin-top:15px;" readonly>${vo.b_content }</textarea>
+                          
+   
+        </div>
+		    </div>
 		</div>
+    </div>
 
-	</div>
+        <input class="btn btn-block btn-success btn-lg" type="button" value="참여하기" onclick="location.href=''" style="width:218px; margin-left: 950px;">
 <%@ include file="../include/footer.jsp"%>

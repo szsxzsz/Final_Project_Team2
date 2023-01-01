@@ -4,6 +4,20 @@
 <%@ include file="../include/sidebar.jsp" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<%-- <% --%>
+<!-- // 로그인 세션제어 -->
+<!-- String nick = (String) session.getAttribute("nick"); -->
+<!-- if(nick == null){ -->
+<!-- 	response.sendRedirect("chagok/login"); -->
+<!-- } -->
+<%-- %> --%>
+
+<!-- <script type="text/javascript"> -->
+<!-- function page_move(){ -->
+	
+<!--  } -->
+<!-- </script> -->
+
 	<h1>내 챌린지</h1>
 	
 	${mychallengeList }
@@ -30,7 +44,13 @@
 				<td>${vo.ct_top }</td>
 				
 				
-				<td><a href>${vo.c_title }</a></td><!-- 아.. 이거 주소이동 어떻게하지 ㅠ 저축형이랑 절약형이랑 if 써야하나..? -->
+				
+				<c:if test="${vo.c_sort eq 0 }">
+				<td><a href = "/challenge/plusdetail?cno=${vo.cno }">${vo.c_title }</a></td>
+				</c:if>
+				<c:if test="${vo.c_sort eq 1 }">
+				<td><a href = "/challenge/minusdetail?cno=${vo.cno }">${vo.c_title }</a></td>
+				</c:if>
 				<td>${vo.c_period }주</td>
 				<c:if test="${vo.c_status eq 0 }">
 				<td><span style="color: #000000; font-weight: bold;">승인 대기</span></td>

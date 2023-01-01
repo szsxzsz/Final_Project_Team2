@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
+import com.chagok.domain.BoardVO;
 import com.chagok.domain.ChallengeVO;
 import com.chagok.domain.MinusVO;
 import com.chagok.domain.PlusVO;
@@ -50,7 +51,7 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 	}
 
 	@Override
-	public void createReview(ChallengeVO vo) {
+	public void createReview(BoardVO vo) {
 		
 		sqlSession.insert(NAMESPACE + ".create", vo);
 		
@@ -60,7 +61,8 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 	public List<ChallengeVO> getChallengeList(Integer cno) {
 		mylog.debug(" getChallengeList(Integer cno) 호출");
 		
-		List<ChallengeVO> challengeList = sqlSession.selectList(NAMESPACE+".getChallengeInfo");
+		List<ChallengeVO> challengeList = sqlSession.selectList(NAMESPACE+".getChallengeInfo",cno);
+		mylog.debug(cno+"번 챌린지 참가자 수 : "+challengeList.size());
 		
 		return challengeList;
 		
@@ -92,6 +94,67 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 		return end;
 	}
 	 
+	
+	
+	@Override
+	public List<BoardVO> getBoard(Integer b_sort) {
+		mylog.debug(" getReviewBoard() 호출");
+		
+		List<BoardVO> boardList = sqlSession.selectList(NAMESPACE+".boardList",b_sort);
+		
+		mylog.debug("게시판 글 개수 : "+boardList.size()+"");
+		
+		return boardList;
+	}
+
+	@Override
+	public int samechallenge(int ctno) {
+		return sqlSession.selectOne(NAMESPACE+".samechallenge", ctno);
+	}
+
+	@Override
+	public BoardVO getBoardContent(Integer bno) {
+		
+		BoardVO vo = sqlSession.selectOne(NAMESPACE+".Board", bno);
+		
+		return vo;
+		
+	}
+	
+	
+	
+	// 챌린지 등록
+	@Override
+	public void challengeRegist(ChallengeVO vo) throws Exception {
+		mylog.debug(" challengeRegist(ChallengeVO vo) 호출 ");
+		
+		sqlSession.insert(NAMESPACE + ".challengeRegist", vo);
+		mylog.debug(" 챌린지 등록(저축형) 완료! ");
+		
+	}
+	
+	
+	// 챌린지 목록
+	@Override
+	public List<ChallengeVO> getChallengeList() throws Exception {
+		mylog.debug(" getChallengeList() 호출 ");
+		
+		List<ChallengeVO> challengeList = sqlSession.selectList(NAMESPACE +".getChallengeList");
+		
+		return challengeList;
+	}
+
+	
+	// 챌린지 목록(참여명수 구하기)
+	@Override
+	public List<Map<String, Object>> getPersonCnt() {
+		mylog.debug(" 정보 호출 ");
+		
+		List<Map<String, Object>> pesonCnt = sqlSession.selectList(NAMESPACE+".getPersonCnt");
+		
+		return pesonCnt;
+	}
+	
 	
 	
 }

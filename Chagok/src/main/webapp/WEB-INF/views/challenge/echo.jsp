@@ -109,7 +109,7 @@
         } 
         
         //웹소켓 객체 만드는 코드
-        sockJs = new SockJS('http://localhost:8080/echo');
+        sockJs = new SockJS('ws://localhost:9090/challenge/echo');
         
         sockJs.onopen=function(event){
             if(event.data===undefined) return;

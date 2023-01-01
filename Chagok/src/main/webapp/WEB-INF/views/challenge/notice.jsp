@@ -5,31 +5,26 @@
 <%@ include file="../include/sidebar.jsp" %>
 
 <h1>공지게시판</h1>
+${boardList}
 <div class="col-xs-12 table-responsive">
 	<table class="table table-striped">
 		<thead>
 			<tr>
 				<th>글번호</th>
-				<th>카테고리</th>
 				<th>공지사항 제목</th>
 				<th>작성일자</th>
 			</tr>
 		</thead>
 		<tbody>
+			<c:forEach items="#{boardList }" var="boardList">
 			<tr>
-				<td>1</td>
-				<td>Call of Duty</td>
-				<td>El snort testosterone trophy driving gloves handsome</td>
-				<td>$64.50</td>
+				<td></td>
+				<td>
+					<a href="http://localhost:8080/challenge/noticecontent?bno=${vo.bno }">${boardList.b_title }</a>
+				</td>
+				<td>${boardList.b_date }</td>
 			</tr>
-			<tr>
-				<td>1</td>
-				<td>Need for Speed IV</td>
-				<td>Wes Anderson umami biodiesel</td>
-				<td>$50.00</td>
-			</tr>
-			
-			
+			</c:forEach>
 		</tbody>
 	</table>
 </div>

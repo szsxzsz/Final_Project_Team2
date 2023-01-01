@@ -26,6 +26,7 @@
 	href="${pageContext.request.contextPath }/resources/mainpagecss/css/vendor/slick-theme.css">
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath }/resources/mainpagecss/css/reset.css">
+
 <link rel="stylesheet" type="text/css" href="../resources/mainpagecss/css/font.css">
 <link rel="stylesheet" type="text/css" href="../resources/mainpagecss/css/style.css">
 

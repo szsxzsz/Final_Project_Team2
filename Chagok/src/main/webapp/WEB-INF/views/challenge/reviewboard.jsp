@@ -1,10 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <%@ include file="../include/header.jsp" %>
 <%@ include file="../include/sidebar.jsp" %>
 
 <h1>후기글 게시판</h1>
+${boardList}
 <div class="col-xs-12 table-responsive">
 	<table class="table table-striped">
 		<thead>
@@ -18,38 +21,19 @@
 			</tr>
 		</thead>
 		<tbody>
+			<c:forEach items="#{boardList }" var="boardList">
 			<tr>
-				<td>1</td>
-				<td>Call of Duty</td>
-				<td>455-981-221</td>
-				<td>El snort testosterone trophy driving gloves handsome</td>
-				<td>El snort testosterone trophy driving gloves handsome</td>
-				<td>$64.50</td>
+				<td>${boardList.b_title }</td>
+				<td>21</td>
+				<td>
+					<a href="${boardList.b_title }">${boardList.b_title } </a>
+				</td>
+				<td>${boardList.b_content }</td>
+				<td>11</td>
+				<td>${boardList.b_writer }</td>
 			</tr>
-			<tr>
-				<td>1</td>
-				<td>Need for Speed IV</td>
-				<td>247-925-726</td>
-				<td>Wes Anderson umami biodiesel</td>
-				<td>Wes Anderson umami biodiesel</td>
-				<td>$50.00</td>
-			</tr>
-			<tr>
-				<td>1</td>
-				<td>Monsters DVD</td>
-				<td>735-845-642</td>
-				<td>Terry Richardson helvetica tousled street art master</td>
-				<td>Terry Richardson helvetica tousled street art master</td>
-				<td>$10.70</td>
-			</tr>
-			<tr>
-				<td>1</td>
-				<td>Grown Ups Blue Ray</td>
-				<td>422-568-642</td>
-				<td>Tousled lomo letterpress</td>
-				<td>Tousled lomo letterpress</td>
-				<td>$25.99</td>
-			</tr>
+			</c:forEach>
+			
 		</tbody>
 	</table>
 </div>
