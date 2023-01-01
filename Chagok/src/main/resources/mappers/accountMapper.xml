@@ -25,4 +25,8 @@
   		values (#{card_id}, #{bank_tran_id}, #{user_seq_no}, #{card_num_masked}, #{card_name})
   	</insert>
   	
+  	<select id="getAccountInfo" resultType="com.chagok.apiDomain.AccountVO">
+  		select * from account where mno = #{mno}
+  	</select>
+  	
   </mapper>

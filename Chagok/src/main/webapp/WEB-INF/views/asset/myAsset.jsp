@@ -16,8 +16,10 @@
 	}
 </script>
 
-
-		
+	<c:if test="${userVO == null }">
+		<h1>로그인이 필요합니다!</h1>
+	</c:if>
+	<c:if test="${userVO != null}">	
 	
 	<c:if test="${userVO.isCheck.equals('N') }">
 		<section class="content">
@@ -73,24 +75,18 @@
 				</div>
 			</div>
 			
+			<c:forEach var="vo" items="${accountList }">
 				<div class="info-box" style="margin: 0 0 1px 30px; width: 95%">
 					<span class="info-box-icon">
 						<i class="fa fa-bank"></i>
 					</span>
 					<div class="info-box-content" style="padding-top: 15px;">
-						<span class="info-box-text" style="font-size: 3em; margin-left: 20px; display: inline;">계 좌</span> 
-						<span class="info-box-text" style="font-size: 3em; margin-left: 200px; display: inline;">총 300,000,000 원</span> 
+						<span class="info-box-text" style="font-size: 3em; margin-left: 20px; display: inline;">${vo.account_alias }</span> 
+						<span class="info-box-text" style="font-size: 3em; margin-left: 200px; display: inline;">총 ${vo.balance_amt } 원</span> 
+						<span class="info-box-text" style="font-size: 3em; margin-left: 200px; display: inline;">${vo.account_num_masked }</span> 
 					</div>
 				</div>
-				<div class="info-box" style="margin: 0 0 1px 30px; width: 95%">
-					<span class="info-box-icon">
-						<i class="fa fa-bank"></i>
-					</span>
-					<div class="info-box-content" style="padding-top: 15px">
-						<span class="info-box-text" style="font-size: 3em; margin-left: 20px; display: inline;">계 좌</span> 
-						<span class="info-box-text" style="font-size: 3em; margin-left: 200px; display: inline;">총 300,000,000 원</span> 
-					</div>
-				</div>
+			</c:forEach>
 
 
 			<div class="info-box bg-yellow" style="margin-top: 50px; margin-bottom: 1px;">
@@ -152,7 +148,8 @@
 				</div>		
 		</div>
 	</c:if>
-
+	
+	</c:if>
 
 
 <hr>

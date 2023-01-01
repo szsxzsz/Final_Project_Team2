@@ -60,13 +60,16 @@ public class AssetController {
 	private UserService userService;
 	
 	@GetMapping("/myAsset")
-	public String myAssetGET(HttpSession session, Model model) {
-		int mno = (int)session.getAttribute("mno");
+	public String myAssetGET(HttpSession session, Model model) throws Exception{
+		if (session.getAttribute("mno") != null) {
+			int mno = (int)session.getAttribute("mno");
 		
 		UserVO userVO = userService.getUser(mno);
 		model.addAttribute("userVO", userVO);
 		
-//		accountService.getaccount
+		List<AccountVO> accountList = accountService.getAccountInfo(mno);
+		model.addAttribute("accountList", accountList);
+		}
 		
 		return "/asset/myAsset";
 	}
@@ -113,7 +116,7 @@ public class AssetController {
 				AccountHistoryRequestVO accountHistoryRequestVO = new AccountHistoryRequestVO();
 				
 				accountHistoryRequestVO.setAccess_token(responseTokenVO.getAccess_token());
-				accountHistoryRequestVO.setBank_tran_id("M202202513U2TEAMA03"+i);
+				accountHistoryRequestVO.setBank_tran_id("M202202513U"+(int)(Math.random()*100000000)+i);
 				accountHistoryRequestVO.setFintech_use_num(accountList.get(i).getFintech_use_num());
 				accountHistoryRequestVO.setInquiry_type("A");
 				accountHistoryRequestVO.setInquiry_base("D");
@@ -134,7 +137,7 @@ public class AssetController {
 			//////////////// 카드목록 조회 => DB(card 테이블)에 저장 ////////////////
 			
 			cardInfoRequestVO.setAccess_token(responseTokenVO.getAccess_token());
-			cardInfoRequestVO.setBank_tran_id("M202202513U2TEAMC003");
+			cardInfoRequestVO.setBank_tran_id("M202202513U"+(int)(Math.random()*1000000000));
 			cardInfoRequestVO.setUser_seq_no(responseTokenVO.getUser_seq_no());
 			cardInfoRequestVO.setBank_code_std("399"); // fix, 오픈뱅킹만 사용가능
 			cardInfoRequestVO.setMember_bank_code("399"); // fix, 오픈뱅킹만 사용가능
@@ -154,7 +157,7 @@ public class AssetController {
 			
 		}
 //		return "/asset/apiTest"; // 출력 테스트
-		return "/asset/myAsset";
+		return "redirect:/asset/myAsset";
 	}
 	
 	@GetMapping("/callbackCard")
