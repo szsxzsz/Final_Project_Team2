@@ -9,32 +9,22 @@
 <h1>피드 가기</h1>
 
 ${challengeList }
-<!-- <div class="box box-primary"> -->
-<!-- 	<div class="box-header with-border"> -->
-<%-- 		<h3 class="box-title">${vo.c_title }</h3> --%>
-<!-- 	</div> -->
 
-<!-- 	<div class="box-body"> -->
-<!-- 		<strong><i class="fa fa-book margin-r-5"></i> 주최자 </strong> -->
-<%-- 		<p class="text-muted"> ${vo.c_host }</p> --%>
-<!-- 		<hr> -->
-<!-- 		<strong><i class="fa fa-map-marker margin-r-5"></i> 챌린지 인원</strong> -->
-<%-- 		<p class="text-muted">${challengeList.size() } / ${vo.c_pcnt }</p> --%>
-<!-- 		<hr> -->
-<!-- 		<strong><i class="fa fa-table"></i> 챌린지 기간</strong> -->
-<!-- 		<p> -->
-<%-- 			<span class="label label-danger">${vo.c_period }</span> --%>
-<!-- 		</p> -->
-<!-- 		<hr> -->
-<!-- 		<strong><i class="fa fa-file-text-o margin-r-5"></i> 챌린지 시작일</strong> -->
-<%-- 		<p> ${vo.c_start }</p> --%>
-<!-- 		<hr> -->
-<!-- 		<strong><i class="fa fa-file-text-o margin-r-5"></i> 예치금 </strong> -->
-<%-- 		<p> ${vo.c_deposit }</p> --%>
-<!-- 	</div> -->
+<script type="text/javascript">
+	function move() {
+// 		var move = document.getElementByid('#move');
+		
+		if(${vo.c_sort} == 0){
+			location.href = "/challenge/plusfeed?cno="+${vo.cno};
+			return false;
+		}else if (${vo.c_sort} == 1){
+ 			location.href = "/challenge/minusFeed?cno="+${vo.cno};
+ 			return;
+		}
+		
+	} 
 
-<!-- </div> -->
-
+</script>
 
 <section class="content">
 	<div class="row">
@@ -42,20 +32,22 @@ ${challengeList }
 	        <img class="img-responsive" src="${pageContext.request.contextPath }/resources/dist/img/photo1.png" alt="Photo" style="width:500px; height:400px;">
 		</div>
 		<div class="col-lg-6 pt-4 pt-lg-0 content aos-init aos-animate" data-aos="fade-left" >
-			<c:forEach var="vo" items="challengeList">
+<%-- 			<c:forEach var="vo" items="challengeList"> --%>
 			
-				<c:if test="${vo.c_sort eq 0 }">
-					<c:set var="sort" value="저축형"/>
-				</c:if>
-				<c:if test="${vo.c_sort eq 1 }">
-					<c:set var="sort" value="절약형"/>
-				</c:if>
+<%-- 				<c:if test="${vo.c_sort eq 0 }"> --%>
+<%-- 					<c:set var="sort" value="저축형"/> --%>
+<%-- 				</c:if> --%>
+<%-- 				<c:if test="${vo.c_sort eq 1 }"> --%>
+<%-- 					<c:set var="sort" value="절약형"/> --%>
+<%-- 				</c:if> --%>
+				
 			<h3><span style="color: #66BB7A; font-weight: bold;">[${sort }]</span> ${vo.c_title }</h3>
-			</c:forEach>
+<%-- 			</c:forEach> --%>
 			 <jsp:useBean id="now" class="java.util.Date" />
 			 <fmt:parseNumber value="${now.time / (1000*60*60*24)}" integerOnly="true" var="nowfmtTime" scope="request"/>
-			 <fmt:parseNumber value="${vo.c_start.time / (1000*60*60*24)}" integerOnly="true" var="startTime" scope="request"/>
-			 <fmt:parseNumber value="${(vo.c_start.time + vo.c_period*7*1000*60*60*24) / (1000*60*60*24)}" integerOnly="true" var="endTime" scope="request"/>
+			 <fmt:parseDate value="${vo.c_start}" var="startDate" pattern="yyyy-MM-dd"/>
+			 <fmt:parseNumber value="${startDate.time / (1000*60*60*24)}" integerOnly="true" var="startTime" scope="request"/>
+			 <fmt:parseNumber value="${c_end.time / (1000*60*60*24)}" integerOnly="true" var="endTime" scope="request" />
 			<c:if test="${startTime - nowfmtTime <= 0 && nowfmtTime - endTime <= 0}">
 				<p class="fst-italic">챌린지가 <b>시작</b>되었습니다!</p>
 			</c:if>
@@ -87,15 +79,16 @@ ${challengeList }
 	             <div class="progress-group" style="width: 280px;">
 	               <span class="progress-text">챌린지 시작일</span>
 	               <span class="progress-number">
-	               	<b><fmt:formatDate value="${vo.c_start }" pattern="YYYY-MM-dd"/></b>
+	               	<b><fmt:formatDate value="${startDate }" pattern="YYYY-MM-dd"/></b>
 	               </span>
 	              </div>
 	             <div class="progress-group" style="width: 280px;">
 	               <span class="progress-text">챌린지 종료일</span>
 	               <span class="progress-number">
-	               	<b><span id="endDate"></span></b>
+	               	<b><fmt:formatDate value="${c_end }" pattern="YYYY-MM-dd"/></b>
 	               </span>
 	              </div>
+	             
 	         	</div>
 	       </div>
 		</div>
@@ -130,30 +123,10 @@ ${challengeList }
 		</div>
 
 	</div>
-
+<input type="button" value="피드가기" id="move" onclick="move();">
 </div>
+</section>
 
-	<script>
-	$(document).ready(function(){
-	if(${vo.c_freq} > "1"){
-	          circle.css('background-color','gray')
-	          turn=!turn;
-	          break;
-	        }
-	
-	var endDate = new Date(${vo.c_start.time}+(60*60*24*1000*7*${vo.c_period}));
-	 
-	 month = ''+(endDate.getMonth() +1),
-	 day = ''+ endDate.getDate(),
-	 year = endDate.getFullYear();
-	 
-	 if(month.length < 2) month = '0' + month;
-	 if(day.length < 2) day = '0' + day;
-	 
-	 $('#endDate').append([year,month,day].join('-'));
-	
-	});
-	</script>
 ${challengeList }
 <!-- <br> -->
 <%@ include file="../include/footer.jsp"%>

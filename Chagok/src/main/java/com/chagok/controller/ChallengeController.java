@@ -186,6 +186,8 @@ public class ChallengeController {
 		List<ChallengeVO> challengeList = service.getChallengeList(cno);
 //		List<Map<String, Object>> pluscheck = service.getPlusCheck(cno);
 		
+		
+		
 		model.addAttribute("vo", vo);
 		model.addAttribute("challengeList", challengeList);
 		
