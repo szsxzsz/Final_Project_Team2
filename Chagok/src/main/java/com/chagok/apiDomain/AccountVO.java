@@ -19,6 +19,14 @@ public class AccountVO {
     private String transfer_agree_yn;
     private String transfer_agree_dtime;
     private String account_state;
+    private int mno;
+    
+	public int getMno() {
+		return mno;
+	}
+	public void setMno(int mno) {
+		this.mno = mno;
+	}
 	public String getFintech_use_num() {
 		return fintech_use_num;
 	}

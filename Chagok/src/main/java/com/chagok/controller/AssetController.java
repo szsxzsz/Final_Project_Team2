@@ -88,17 +88,22 @@ public class AssetController {
 		model.addAttribute("responseTokenVO", responseTokenVO);
 			
 		if (responseTokenVO != null) {
+			int mno = (int)session.getAttribute("mno");
 			
-			userService.updateIsCheck((int)session.getAttribute("mno"));
+			userService.updateIsCheck(mno);
 			
 			//////////////// 사용자 정보, 계좌정보 조회 => DB(user, account 테이블)에 저장 ////////////////
 			UserInfoResponseVO userInfoResponseVO = openBankingService.getUserInfo(responseTokenVO);
+			for (int k = 0; k < userInfoResponseVO.getRes_list().size(); k++) {
+				userInfoResponseVO.getRes_list().get(k).setMno(mno);
+			}
 			// 사용자 정보
 			model.addAttribute("userInfoResponseVO", userInfoResponseVO);
 			// 계좌 정보
 			List<AccountVO> accountList = userInfoResponseVO.getRes_list();
 			model.addAttribute("accountList", accountList);
 			accountService.insertAccountInfo(userInfoResponseVO.getRes_list()); // 디비 저장
+			
 			
 			mylog.debug("계좌 리스트 : " + accountList);
 			
@@ -108,7 +113,7 @@ public class AssetController {
 				AccountHistoryRequestVO accountHistoryRequestVO = new AccountHistoryRequestVO();
 				
 				accountHistoryRequestVO.setAccess_token(responseTokenVO.getAccess_token());
-				accountHistoryRequestVO.setBank_tran_id("M202202513U2TEAMA00"+i);
+				accountHistoryRequestVO.setBank_tran_id("M202202513U2TEAMA03"+i);
 				accountHistoryRequestVO.setFintech_use_num(accountList.get(i).getFintech_use_num());
 				accountHistoryRequestVO.setInquiry_type("A");
 				accountHistoryRequestVO.setInquiry_base("D");
@@ -129,7 +134,7 @@ public class AssetController {
 			//////////////// 카드목록 조회 => DB(card 테이블)에 저장 ////////////////
 			
 			cardInfoRequestVO.setAccess_token(responseTokenVO.getAccess_token());
-			cardInfoRequestVO.setBank_tran_id("M202202513U2TEAMC001");
+			cardInfoRequestVO.setBank_tran_id("M202202513U2TEAMC003");
 			cardInfoRequestVO.setUser_seq_no(responseTokenVO.getUser_seq_no());
 			cardInfoRequestVO.setBank_code_std("399"); // fix, 오픈뱅킹만 사용가능
 			cardInfoRequestVO.setMember_bank_code("399"); // fix, 오픈뱅킹만 사용가능

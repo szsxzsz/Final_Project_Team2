@@ -16,10 +16,7 @@
 	}
 </script>
 
-	<div style="margin: 50px 0 0 100px;">
-		<h1>내 자산</h1>
-		<h2>${userVO.nick } 님의 순자산은 : 10,000,000,000 원 입니다!</h2>
-	</div>
+
 		
 	
 	<c:if test="${userVO.isCheck.equals('N') }">
@@ -55,6 +52,15 @@
 	</c:if>
 	
 	<c:if test="${userVO.isCheck.equals('Y') }">
+	
+		<div style="margin: 50px 0 0 100px;">
+			<h1>내 자산</h1>
+			<h2>${userVO.nick } 님의 순자산은 : 10,000,000,000 원 입니다!</h2>
+		</div>
+	
+	
+	
+	
 		<div style="margin: 50px 100px 0 80px;">
 		
 			<div class="info-box bg-yellow" style="margin-bottom: 1px;">

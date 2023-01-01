@@ -7,11 +7,11 @@
   
   	<!-- 계좌 정보 저장 -->
   	<insert id="insertAccountInfo" parameterType="java.util.List">
-  		insert into account(fintech_use_num, account_alias, bank_code_std, bank_name, account_num_masked, account_holder_name, account_type) 
+  		insert into account(fintech_use_num, account_alias, bank_code_std, bank_name, account_num_masked, account_holder_name, account_type, mno) 
   		values 
   		<foreach collection="list" item="li" separator=",">
   			(#{li.fintech_use_num}, #{li.account_alias}, #{li.bank_code_std}, #{li.bank_name}, #{li.account_num_masked}, 
-  			#{li.account_holder_name}, #{li.account_type})
+  			#{li.account_holder_name}, #{li.account_type}, #{li.mno})
   		</foreach>
   	</insert>
   	
