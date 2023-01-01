@@ -160,68 +160,55 @@ function getAgreeType() {
 }
 </script>
 
-
 <h1>차곡 챌린지 등록 (절약형)</h1>
-
+<form action="/challenge/plusregist"  method="post" enctype="multipart/form-data">
   <div class="main-content">
-      
-		<!-- Form -->
-        <form role="form" method="post" class="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
-          <div class="form-group mb-0">
-            <div class="input-group input-group-alternative">
-              <div class="input-group-prepend">
-                <span class="input-group-text"><i class="fas fa-search"></i></span>
-              </div>
-              <input class="form-control" placeholder="Search" type="text">
-            </div>
-          </div>
-        </form>
-  	</div>
-    <!-- Page content -->
-    <div class="container-fluid mt--7">
+  
+  <div class="container-fluid">
+
+    
       <div class="row">
-        <div class="col-xl-4 order-xl-2 mb-5 mb-xl-0">
+        <div class="col-xl-4 order-xl-1 mb-5 mb-xl-0">
           <div class="card card-profile shadow">
-            <div class="row justify-content-center">
-              <div class="col-lg-3 order-lg-2">
-              
-                    <!-- Upload profile -->
-					<div class="col-xxl-4">
-						<div class="bg-secondary-soft px-4 py-5 rounded">
-							<div class="row g-3">
-								<h4 class="mb-4 mt-0">챌린지사진 등록하기</h4>
-								<div class="text-center">
-									<!-- Image upload -->
-									<div class="square position-relative display-2 mb-3">
-										<i class="fas fa-fw fa-user position-absolute top-50 start-50 translate-middle text-secondary"></i>
-									</div>
-									<!-- Button -->
-									<input type="file" name="c_file" id="customFile" hidden="">
-									<label class="btn btn-success-soft btn-block" for="customFile">Upload</label>
-									<button type="button" class="btn btn-danger-soft">Remove</button>
-									<!-- Content -->
-									<p class="text-muted mt-3 mb-0"><span class="me-1">Note:</span>Minimum size 300px x 300px</p>
+					<!-- Upload profile -->
+					<div class="bg-secondary-soft px-4 py-5 rounded">
+						<div class="row1">
+							
+							<div class="text-center">
+								<div class="square position-relative display-2 mb-3">
+								<h4 class="mb-4 mt-0">챌린지 사진 등록</h4>
+									<div class="select_img"><img src="" /></div>
 								</div>
+								<button type="button" class="btn btn-danger-soft">취소</button>
+								<input type="file" id="customFile" name="file" hidden="">
+								<label class="btn btn-success-soft btn-block" for="customFile">업로드</label>
+								<p class="text-muted mt-3 mb-0">
+									<span class="me-1">주의:</span>최소사이즈 300px x 300px
+								</p>
+								
+								 	<script>
+									  $("#customFile").change(function(){
+									   if(this.files && this.files[0]) {
+									    var reader = new FileReader;
+									    reader.onload = function(data) {
+									     $(".select_img img").attr("src", data.target.result).width(500);        
+									    }
+									    reader.readAsDataURL(this.files[0]);
+									   }
+									  });
+									 </script>
+									 
+<%-- 								<%=request.getRealPath("/") %> --%>
+								
 							</div>
+							
 						</div>
 					</div>
-				</div> <!-- Row END -->
-              
-              </div>
-            </div>
-            <div class="card-body pt-0 pt-md-4">
-              <div class="row">
-                <div class="col">
-                </div>
-              </div>
-            </div>
-          </div>
+				</div>
         </div>
         
         
-        
-        
-        <div class="col-xl-8 order-xl-1">
+        <div class="col-xl-8 order-xl-2">
           <div class="card bg-secondary shadow">
             <div class="card-header bg-white border-0">
               <div class="row align-items-center">
@@ -229,12 +216,11 @@ function getAgreeType() {
                   <h3 class="mb-0">챌린지 등록</h3>
                 </div>
                 <div class="col-4 text-right">
-                  <a href="#!" class="btn btn-sm btn-primary">절약형</a>
+                  <a href="#" class="btn btn-sm btn-primary">절약형</a>
                 </div>
               </div>
             </div>
             <div class="card-body">
-              <form role="form" method="post">
               
                 <!-- 챌린지 등록 -->
                 <div class="pl-lg-4">
@@ -248,7 +234,7 @@ function getAgreeType() {
                       </div>
                     </div>
                     
-                    <div class="col-lg-6">
+                   <div class="col-lg-6">
                       <div class="form-group focused">
                         <label class="form-control-label" for="input-username" >카테고리</label>
                         <select name="b_ctno" id="input-address" class="form-control form-control-alternative" >
@@ -277,19 +263,19 @@ function getAgreeType() {
                       </div>
                     </div>
                   </div>
-                  
                   <div class="row">
                     <div class="col-lg-4">
                       <div class="form-group focused">
                         <label class="form-control-label" for="input-city">챌린지 기간</label>
                         <select name="c_period" id="input-city" class="form-control form-control-alternative">
-                           <option value="1">2주</option>
-        				   <option value="2">4주</option>
-          				   <option value="3">2달</option>
-          				   <option value="4">3달</option>
+                           <option value="2">2주</option>
+        				   <option value="4">4주</option>
+          				   <option value="8">2달</option>
+          				   <option value="12">3달</option>
                         </select>
                       </div>
                     </div>
+                    
                     <div class="col-lg-4">
                       <div class="form-group focused">
                         <label class="form-control-label" for="input-country">챌린지 시작일</label>
@@ -303,6 +289,7 @@ function getAgreeType() {
                       </div>
                     </div>
                     
+                    
                    <div class="col-md-12">
                       <div class="form-group focused">
                         <label class="form-control-label" for="input-address">예치금 설정</label>
@@ -311,7 +298,7 @@ function getAgreeType() {
                     </div>
                     
                     
-					<div class="col-lg-7">
+               		<div class="col-lg-7">
                       <div class="form-group focused">
                         <label class="form-control-label" for="input-first-name">총 금액</label>
                         <input type="text" id="input-first-name" class="form-control form-control-alternative" placeholder="금액을 자유롭게 입력해주세요." >
@@ -319,18 +306,18 @@ function getAgreeType() {
                     </div>
 					
 					<div class="textstyle"> 을(를) 저축합니다. </div>
-                    
-                  </div>
                   
-                  
-                </div>
+                   </div>
+               
+                
+                 </div>
                
                 
                 <hr class="my-4">
-                <!-- Description -->
+				<!-- Description -->
                 <div class="pl-lg-4">
                   <div class="form-group focused">
-                    <label>챌린지 설명</label>
+                    <label class="form-control-label" for="input-city">챌린지 설명</label>
                     <textarea rows="4" name="c_content" class="form-control form-control-alternative" placeholder="해당 챌린지에 대한 설명을 간략히 작성해주세요."></textarea>
                   </div>
                 </div>
@@ -338,7 +325,7 @@ function getAgreeType() {
                 <!-- button -->
 				<div class="gap-3 d-md-flex justify-content-md-end text-center">
 					<button type="reset" class="btn btn-danger btn-lg">취소하기</button>
-					<button type="submit" class="btn btn-primary btn-lg">등록하기</button>
+					<input type="submit" class="btn btn-primary btn-lg" value="등록">
 				</div>
                 
                 
@@ -347,11 +334,14 @@ function getAgreeType() {
                 <input type="hidden" name="c_min" value="2">
                 
                 
-              </form>
             </div>
           </div>
         </div>
       </div>
+	</div>
+</div>
+</form>
+
 
 
 
@@ -369,8 +359,8 @@ color: #9b9ca1;
     border-radius: 5px !important;
 }
 .py-5 {
-    padding-top: 3rem !important;
-    padding-bottom: 3rem !important;
+    padding-top: 5rem !important;
+    padding-bottom: 5rem !important;
 }
 .px-4 {
     padding-right: 1.5rem !important;
@@ -392,10 +382,16 @@ color: #9b9ca1;
 .btn-success-soft {
     color: #28a745;
     background-color: rgba(40, 167, 69, 0.1);
+    width: 30%
 }
 .btn-danger-soft {
     color: #dc3545;
     background-color: rgba(220, 53, 69, 0.1);
+    width: 30%
+}
+
+.select_img img{
+	margin-bottom: 20px;
 }
 .form-control {
     display: block;
@@ -712,35 +708,35 @@ h6,
   color: #32325d;
 }
 
-h1,
-.h1 {
-  font-size: 1.625rem;
-}
+/* h1, */
+/* .h1 { */
+/*   font-size: 1.625rem; */
+/* } */
 
-h3,
-.h3 {
-  font-size: 1.0625rem;
-}
+/* h3, */
+/* .h3 { */
+/*   font-size: 1.0625rem; */
+/* } */
 
-h4,
-.h4 {
-  font-size: .9375rem;
-}
+/* h4, */
+/* .h4 { */
+/*   font-size: .9375rem; */
+/* } */
 
-h5,
-.h5 {
-  font-size: .8125rem;
-}
+/* h5, */
+/* .h5 { */
+/*   font-size: .8125rem; */
+/* } */
 
-h6,
-.h6 {
-  font-size: .625rem;
-}
+/* h6, */
+/* .h6 { */
+/*   font-size: .625rem; */
+/* } */
 
 .display-2 {
-  font-size: 2.75rem;
+  font-size: 5rem;
   font-weight: 600;
-  line-height: 1.5;
+  line-height: 2;
 }
 
 hr {
@@ -800,12 +796,22 @@ a>code {
   padding-left: 15px;
 }
 
+.row1{
+/*   display: flex; */
+/*   margin-right: -15px; */
+/*   margin-left: -15px; */
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
 .row {
   display: flex;
   margin-right: -15px;
   margin-left: -15px;
   flex-wrap: wrap;
 }
+
+
 
 .col-4,
 .col-8,
@@ -1743,6 +1749,7 @@ a.text-white:focus {
 
 .text-muted {
   color: #8898aa !important;
+  margin-top: 10px;
 }
 
 @media print {
