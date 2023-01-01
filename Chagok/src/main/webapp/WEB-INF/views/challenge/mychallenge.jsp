@@ -46,10 +46,10 @@
 				
 				
 				<c:if test="${vo.c_sort eq 0 }">
-				<td><a href = "/challenge/plusdetail?cno=${vo.cno }">${vo.c_title }</a></td>
+				<td><a href = "/challenge/checkfeed?cno=${vo.cno }">${vo.c_title }</a></td>
 				</c:if>
 				<c:if test="${vo.c_sort eq 1 }">
-				<td><a href = "/challenge/minusdetail?cno=${vo.cno }">${vo.c_title }</a></td>
+				<td><a href = "/challenge/checkfeed?cno=${vo.cno }">${vo.c_title }</a></td>
 				</c:if>
 				<td>${vo.c_period }주</td>
 				<c:if test="${vo.c_status eq 0 }">

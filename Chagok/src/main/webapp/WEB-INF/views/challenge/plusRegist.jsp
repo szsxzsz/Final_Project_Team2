@@ -46,7 +46,7 @@
 									  });
 									 </script>
 									 
-								<%=request.getRealPath("/") %>
+<%-- 								<%=request.getRealPath("/") %> --%>
 								
 							</div>
 							
@@ -108,10 +108,10 @@
                       <div class="form-group focused">
                         <label class="form-control-label" for="input-city">챌린지 기간</label>
                         <select name="c_period" id="input-city" class="form-control form-control-alternative">
-                           <option value="1">2주</option>
-        				   <option value="2">4주</option>
-          				   <option value="3">2달</option>
-          				   <option value="4">3달</option>
+                           <option value="2">2주</option>
+        				   <option value="4">4주</option>
+          				   <option value="8">2달</option>
+          				   <option value="12">3달</option>
                         </select>
                       </div>
                     </div>

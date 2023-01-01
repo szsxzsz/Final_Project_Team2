@@ -5,21 +5,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-<script>
-	$(document).ready(function(){
-		 var endDate = new Date(${vo.c_start.time} + (60*60*24*1000*7 * ${vo.c_period}));
-		 
-		 month = ''+(endDate.getMonth() +1),
-		 day = ''+ endDate.getDate(),
-		 year = endDate.getFullYear();
-		 
-		 if(month.length < 2) month = '0' + month;
-		 if(day.length < 2) day = '0' + day;
-		 
-	 	 $('#endDate').append([year,month,day].join('-'));
-		
-	});
-</script>
 
 <div id="message"></div>
 <script type="text/javascript">
@@ -107,11 +92,12 @@
 	        <img class="img-responsive" src="${pageContext.request.contextPath }/resources/dist/img/photo1.png" alt="Photo" style="width:500px; height:400px;">
 		</div>
 		<div class="col-lg-6 pt-4 pt-lg-0 content aos-init aos-animate" data-aos="fade-left" >
-			 <h3><span style="color: #66BB7A; font-weight: bold;">[${vo.ct_top }]</span> ${vo.c_title }</h3>
+			 <h3><span style="color: #66BB7A; font-weight: bold;">[${vo2.ct_top }]</span> ${vo.c_title }</h3>
 			 <jsp:useBean id="now" class="java.util.Date" />
 			 <fmt:parseNumber value="${now.time / (1000*60*60*24)}" integerOnly="true" var="nowfmtTime" scope="request"/>
-			 <fmt:parseNumber value="${vo.c_start.time / (1000*60*60*24)}" integerOnly="true" var="startTime" scope="request"/>
-			 <fmt:parseNumber value="${(vo.c_start.time + vo.c_period*7*1000*60*60*24) / (1000*60*60*24)}" integerOnly="true" var="endTime" scope="request"/>
+			 <fmt:parseDate value="${vo.c_start}" var="startDate" pattern="yyyy-MM-dd"/>
+			 <fmt:parseNumber value="${startDate.time / (1000*60*60*24)}" integerOnly="true" var="startTime" scope="request"/>
+			 <fmt:parseNumber value="${c_end.time / (1000*60*60*24)}" integerOnly="true" var="endTime" scope="request" />
 			<c:if test="${startTime - nowfmtTime <= 0 && nowfmtTime - endTime <= 0}">
 				<p class="fst-italic">챌린지가 <b>시작</b>되었습니다!</p>
 			</c:if>
@@ -136,22 +122,22 @@
 	               <span class="progress-text">예치금</span>
 	               <span class="progress-number"><b>${vo.c_deposit }</b>꿀</span>
 	             </div>  
-	          	 <div class="progress-group" style="width: 280px;">
-	               <span class="progress-text">챌린지 기간</span>
-	               <span class="progress-number"><b>${vo.c_period }</b>주</span>
-	             </div>  
-	             <div class="progress-group" style="width: 280px;">
-	               <span class="progress-text">챌린지 시작일</span>
-	               <span class="progress-number">
-	               	<b><fmt:formatDate value="${vo.c_start }" pattern="YYYY-MM-dd"/></b>
-	               </span>
-	              </div>
-	             <div class="progress-group" style="width: 280px;">
+          	 <div class="progress-group" style="width: 280px;">
+               <span class="progress-text">챌린지 기간</span>
+               <span class="progress-number"><b>${vo.c_period }</b></span>
+              </div> 
+             <div class="progress-group" style="width: 280px;">
+               <span class="progress-text">챌린지 시작일</span>
+               <span class="progress-number">
+	              <b><fmt:formatDate value="${startDate }" pattern="YYYY-MM-dd"/></b>
+               </span>
+              </div>
+               <div class="progress-group" style="width: 280px;">
 	               <span class="progress-text">챌린지 종료일</span>
 	               <span class="progress-number">
-	               	<b><span id="endDate"></span></b>
+	               	<b><fmt:formatDate value="${c_end }" pattern="YYYY-MM-dd"/></b>
 	               </span>
-	              </div>
+	           </div>
 	         	</div>
 	       </div>
 		</div>
