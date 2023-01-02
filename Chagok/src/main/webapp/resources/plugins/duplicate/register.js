@@ -11,7 +11,7 @@ $(document).ready(function(){
     var nick = $('#nick').val();
 
     var check_id = /^[A-Za-z0-9_]+[A-Za-z0-9]*[@]{1}[A-Za-z0-9]+[A-Za-z0-9]*[.]{1}[A-Za-z]{1,3}$/; // 이메일 양식 검사    
-    var check_pw = /^[a-zA-Z0-9]{4,16}$/; // 비밀번호 유효성 검사 (영문/숫자 4-16)
+    var check_pw = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{4,16}$/; // 비밀번호 유효성 검사 (영문/숫자 4-16)
     var check_nick = /^[a-zA-Z0-9ㄱ-ㅎ|ㅏ-ㅣ|가-힣]{2,10}$/; // 닉네임 유효성 검사 (한글/영어/숫자 2-10)
 
     //  이메일 공백 확인
@@ -91,7 +91,7 @@ $(function(){
 	$("#id").on("blur", function(){
 		if($("#id").val().trim() == "" ){
 			$('.idCheck').html("이메일을 입력하세요.");
-		} 
+		}
 	});
 
 	// 이메일 중복 체크
@@ -101,15 +101,14 @@ $(function(){
 		if(/^[A-Za-z0-9_]+[A-Za-z0-9]*[@]{1}[A-Za-z0-9]+[A-Za-z0-9]*[.]{1}[A-Za-z]{1,3}$/.test($('#id').val())){
 			$.ajax({
 	    		 type :'post', // 서버에 전송하는 http방식
-	    		 url :'/chagok/checkId', // 서버 요청 url
+	    		 url :'/checkId', // 서버 요청 url
 	    		 headers : {'Content-Type' : 'application/json'},
 	    		 dataType : 'text', //서버로 부터 응답받을 데이터의 형태 
-		   		 data : id, // 서버로 전송할 데이터 // 위에서 지정한 const id 
+		   		 data : id, // 서버로 전송할 데이터 // 위에서 지정한 var id 
 		   		 success : function(result) { // 매개변수에 통신성공시 데이터가 저장된다.
 						//서버와 통신성공시 실행할 내용 작성.
 						console.log('통신 성공! ' + result);
-						console.log(result === 'available');
-		   		 
+						//console.log(result === 'available');
 			   		 	if(result === 'available'){
 			   		 		 $('.idCheck').html('<b id="textstyle2">사용가능</b>');
 			   		 	}else{
@@ -138,9 +137,11 @@ $(function(){
 			$('.pwCheck').html("4자 이상 입력하세요.");
 		}
 		
-		if($("#pw").val().length > 5){
-			if(!$("#pw").val()=="" && !/^(?=.*[a-zA-Z])(?=.*[0-9]).{0,}$/.test($('#pw').val())){ 
+		if($("#pw").val().length >= 4){
+			if(!$("#pw").val()=="" && !/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{4,16}$/.test($('#pw').val())){ 
 				$('.pwCheck').html("영문자,숫자를 포함하여 4~16자로 입력하세요.");
+			}else{
+				$('.pwCheck').html("<br>  ");
 			}
 		}
 		
@@ -167,7 +168,7 @@ $(function(){
 	$('#rpw').keyup(function() {
 		if($("#rpw").val() != $("#pw").val()){
 			$('.pwReCheck').html("");
-		} else if($("#rpw").val() == $("#pw").val()){
+		} else if($("#rpw").val() == $("#pw").val() && /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{4,16}$/.test($('#rpw').val()) && $("#rpw").val().trim() != ""){
 			$('.pwReCheck').html('<b id="textstyle2">확인 완료!</b>');
 		}
 	});
@@ -191,13 +192,13 @@ $(function(){
 		if(nick.length > 1){
 			$.ajax({
 				type :'post', // 서버에 전송하는 http방식
-		   		 url :'/chagok/checkNick', // 서버 요청 url
+		   		 url :'/checkNick', // 서버 요청 url
 		   		 headers : {'Content-Type' : 'application/json'},
 		   		 dataType : 'text', //서버로 부터 응답받을 데이터의 형태 
 		   		 data : nick, // 서버로 전송할 데이터 // 위에서 지정한 const id 
 		   		 success : function(result) { // 매개변수에 통신성공시 데이터가 저장된다.
 		   			console.log('통신 성공! ' + result);
-					console.log(result === 'available');
+					//console.log(result === 'available');
 					
 					if(result === 'available'){
 						$('.nickNameCheck').html('<b id="textstyle2">사용 가능한 닉네임입니다.</b>');
@@ -209,7 +210,12 @@ $(function(){
 					}
 				},
 					error : function(){
-					alert("실패");
+						Swal.fire({
+				 		  	title: '실패', 
+				             icon: 'warning'
+				           });
+				         $('#nick').focus();
+				         return false;
 				}
 			});
 		}
