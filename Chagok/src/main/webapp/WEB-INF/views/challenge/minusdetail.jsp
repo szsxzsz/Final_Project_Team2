@@ -19,9 +19,16 @@
 		<jsp:useBean id="now" class="java.util.Date" />
 		<fmt:parseNumber value="${now.time / (1000*60*60*24)}" integerOnly="true" var="nowfmtTime" scope="request"/>
 		<fmt:parseNumber value="${vo.c_start.time / (1000*60*60*24)}" integerOnly="true" var="startTime" scope="request"/>
-		<c:if test="${startTime - nowfmtTime > 0 }">
-		<p class="fst-italic">챌린지가 <span style="color: #66BB7A; font-weight: bold; font-size: 20px;"> ${startTime - nowfmtTime }</span> 일 후에 시작됩니다!</p>
-		</c:if>
+		
+			<c:if test="${startTime - nowfmtTime <= 0 && nowfmtTime - endTime <= 0}">
+				<p class="fst-italic">챌린지가 <b>시작</b>되었습니다!</p>
+			</c:if>
+			<c:if test="${startTime - nowfmtTime > 0}">
+				<p class="fst-italic">챌린지가 &nbsp;&nbsp;  <span style="color: #66BB7A; font-weight: bold; font-size: 20px;"> ${startTime - nowfmtTime }</span> 일 후에 시작됩니다!</p>
+			</c:if>
+			<c:if test="${nowfmtTime - endTime > 0}">
+				<p class="fst-italic">챌린지가 <b>종료</b>되었습니다!</p>
+			</c:if>
 		<div class="row">
 			<div class="col-lg-6">
              <div class="progress-group" style="width: 280px;">
