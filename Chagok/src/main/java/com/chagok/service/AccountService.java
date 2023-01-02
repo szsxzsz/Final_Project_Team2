@@ -17,4 +17,7 @@ public interface AccountService {
 	// 카드 정보 저장
 	public void insertCardInfo(CardInfoResponseVO cardInfoResponseVO) throws Exception;
 	
+	// 계좌 정보 불러오기
+	public List<AccountVO> getAccountInfo(int mno) throws Exception;
+	
 }

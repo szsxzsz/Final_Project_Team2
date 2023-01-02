@@ -16,7 +16,30 @@ public class UserInfoResponseVO {
 	private String user_cell_no;
 	private String user_email;
 	private String res_cnt;
+	private int mno;
 	private List<AccountVO> res_list;
+	
+	public int getMno() {
+		return mno;
+	}
+	public void setMno(int mno) {
+		this.mno = mno;
+	}
+	@Override
+	protected Object clone() throws CloneNotSupportedException {
+		// TODO Auto-generated method stub
+		return super.clone();
+	}
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return super.toString();
+	}
+	@Override
+	protected void finalize() throws Throwable {
+		// TODO Auto-generated method stub
+		super.finalize();
+	}
 	public String getApi_tran_id() {
 		return api_tran_id;
 	}
