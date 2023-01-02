@@ -153,7 +153,7 @@ $("#jqGrid").jqGrid({
 //                 dataEvents: [{
 //                     type : 'change',
 //                     fn : function(e) {
-//                     }]
+//                     }] 
 //                 }
 	        hidden:false,
 	        editable:true
