@@ -32,6 +32,7 @@ import com.chagok.domain.PlusVO;
 import com.chagok.domain.SysLogVO;
 import com.chagok.domain.UserVO;
 import com.chagok.service.ChallengeService;
+import com.chagok.service.UserService;
 import com.chagok.utils.UploadFileUtils;
 
 @Controller
@@ -40,6 +41,9 @@ public class ChallengeController {
 
 	@Inject
 	private ChallengeService service;
+	
+	@Inject
+	private UserService uservice;
 	
 	@Resource(name="uploadPath")
 	private String uploadPath;
@@ -267,16 +271,19 @@ public class ChallengeController {
 		@GetMapping("/mychallenge")
 		public String mychallengeGET(Model model, HttpSession session) throws Exception {
 			
-			String nick = (String)session.getAttribute("nick");
-			mylog.debug(nick);
+			int mno = (int)session.getAttribute("mno");
+			mylog.debug(mno+"");
 			
-			List<ChallengeVO> mychallengeList = service.getmyChallenge(nick);
+//			uservice.getUser(mno);
+			UserVO vo = uservice.getUser(mno);
 			
-			if(nick == null) {
-				return "/chagok/login";
+			List<ChallengeVO> mychallengeList = service.getmyChallenge(vo.getNick());
+		
+			if(vo == null) {
+				return "redirect:/login";
 			}
 			// else일 때
-			model.addAttribute("nick", nick);
+			model.addAttribute("nick", mno);
 			model.addAttribute("mychallengeList", mychallengeList);
 			
 			return "/challenge/mychallenge";
