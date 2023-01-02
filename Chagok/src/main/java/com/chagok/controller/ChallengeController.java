@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -46,8 +47,8 @@ public class ChallengeController {
 
 	private static final Logger mylog = LoggerFactory.getLogger(ChallengeController.class);
 
-	// http://localhost:8080/challenge/plusfeed?cno=2
-	@GetMapping(value = "/plusfeed")
+	// http://localhost:8080/challenge/plusFeed?cno=2
+	@GetMapping(value = "/plusFeed")
 	public String plusfeedGET(Model model, int cno, HttpSession session) throws Exception {
 		mylog.debug("plusfeedGET() 호출");
 
@@ -64,7 +65,6 @@ public class ChallengeController {
 		return "/challenge/plusFeed";
 	}
 	
-	// http://localhost:8080/challenge/plusfeed?cno=2
 	@PostMapping(value = "/plusfeed")
 	public String plusfeedPOST(Model model, int cno, HttpSession session) throws Exception {
 		mylog.debug("plusfeedGET() 호출");
@@ -188,8 +188,6 @@ public class ChallengeController {
 		List<ChallengeVO> challengeList = service.getChallengeList(cno);
 //		List<Map<String, Object>> pluscheck = service.getPlusCheck(cno);
 		
-		
-		
 		model.addAttribute("vo", vo);
 		model.addAttribute("challengeList", challengeList);
 		
@@ -244,12 +242,10 @@ public class ChallengeController {
 	public String reviewboardGET(HttpSession session,Model model,@RequestParam("b_sort") int b_sort) throws Exception {
 		mylog.debug(" /reviewboard 호출");
 		
-		// 서비스 -> DAO 게시판 리스트 가져오기
 		List<BoardVO> boardList = service.getBoardList(b_sort);
 		
 		mylog.debug(boardList+"");
 		
-		// 연결되어 있는 뷰페이지로 정보를 전달 (Model 객체 생성)
 		model.addAttribute("boardList", boardList);
 		
 		return "/challenge/reviewboard";
@@ -295,6 +291,7 @@ public class ChallengeController {
 	   
 	   return "/challenge/webSocket";
 	}
+	
 	
 	// 챌린지 등록 (저축형) - GET
 	// http://localhost:8080/challenge/plusregist
@@ -382,6 +379,23 @@ public class ChallengeController {
 //		rttr.addFlashAttribute("result", "plusRegistOK");
 		return "redirect:/commumain";
 		
+	}
+	
+	// 챌린지 결과
+	// http://localhost:8080/challenge/victory?cno=1
+	@GetMapping(value="/victory")
+	public String cresultGET(Model model, @RequestParam("cno") int cno, HttpSession session) throws Exception{
+		ChallengeVO vo = service.getChallengeInfo(cno);
+
+		ChallengeVO vo2 = service.getCt_top(cno);
+
+
+		model.addAttribute("vo", vo);
+
+		model.addAttribute("vo2", vo2);
+		
+		
+		return "/challenge/victory";
 	}
 		
 }

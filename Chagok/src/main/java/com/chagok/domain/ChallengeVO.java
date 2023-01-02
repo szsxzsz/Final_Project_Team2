@@ -25,5 +25,6 @@ public class ChallengeVO {
 	private int ctno;
 	private String ct_top;
 	private String c_thumbFile;
+	private int c_cnt;
 
 }

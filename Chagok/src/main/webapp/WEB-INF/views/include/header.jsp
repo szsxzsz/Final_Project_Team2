@@ -191,13 +191,15 @@ border: 3px solid rgb(255 191 131 / 40%);
 			</div>
 		</div>
 		<div class="user_menu">
-		<c:if test="${nick == null}">
-			<div class="login"><a href="/login"><p style="font-family: 'GmarketSans'">로그인</p></a></div>
-			<div class="join"><a href="/register"><p style="font-family: 'GmarketSans'">회원가입</p></a></div>
+		<c:if test="${user.nick == null}">
+			<a href="/login"><div class="login"><p style="font-family: 'GmarketSans'">로그인</p></div></a>
+			<a href="/register"><div class="join"><p style="font-family: 'GmarketSans'">회원가입</p></div></a>
 		</c:if>
-		<c:if test="${ nick != null}">
-			<div class="login"><a href="#"><p style="font-family: 'GmarketSans'">${nick }님 환영합니다.</p></a></div>
+		<c:if test="${user.nick != null}">
+			<a href="#"><div class="login"><p style="font-family: 'GmarketSans'"><small>${user.nick } 님 환영합니다.</small></p></div></a>
+			<a href="/logout"><div class="join"><p style="font-family: 'GmarketSans'">로그아웃</p></div></a>
 		</c:if>
 		</div>
+		<br><br><br><br><br><br>
 	</div>
 </body>

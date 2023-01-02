@@ -52,4 +52,6 @@ public interface ChallengeDAO {
 	
 	// 챌린지 목록(참여명수 구하기)
 	public List<Map<String, Object>> getPersonCnt() throws Exception;
+	
+	
 }
