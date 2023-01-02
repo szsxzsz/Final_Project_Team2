@@ -397,5 +397,16 @@ public class ChallengeController {
 		
 		return "/challenge/victory";
 	}
+	
+	
+	// 결제하기
+	// http://localhost:8080/challenge/pay
+	@GetMapping(value="/pay")
+	public String payGET() {
+		
+		return "/challenge/pay";
+	}
+	
+	
 		
 }
