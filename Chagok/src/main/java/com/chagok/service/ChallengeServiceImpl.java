@@ -131,7 +131,14 @@ public class ChallengeServiceImpl implements ChallengeService{
 		return dao.samechallenge(ctno);
 	}
 
+	@Override
+	public void joinPlus(ChallengeVO vo) throws Exception {
+		mylog.debug("joinplus 호출");
+		dao.joinPlus(vo);
+		mylog.debug("저축형 챌린지 참여완료");
+	}
 
+	
 	
 
 	

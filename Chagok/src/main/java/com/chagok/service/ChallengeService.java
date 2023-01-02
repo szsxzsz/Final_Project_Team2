@@ -56,4 +56,7 @@ public interface ChallengeService {
 	// 중복 챌린지 체크
 	public int samechallenge(int ctno);
 	
+	// 저축형 챌린지 참여하기
+	public void joinPlus(ChallengeVO vo) throws Exception;
+	
 }

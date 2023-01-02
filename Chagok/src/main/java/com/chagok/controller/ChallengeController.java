@@ -131,6 +131,7 @@ public class ChallengeController {
 		
 //		int gctno = ajaxService.samechallenge(ctno);
 		service.samechallenge(ctno);
+
 		int gctno = service.samechallenge(ctno);
 		if(gctno == 1) result = "Y";
 		return result;
