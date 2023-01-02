@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.chagok.domain.UserVO;
 import com.chagok.service.UserService;
@@ -56,7 +57,7 @@ public class ChagokController {
 	}
 
 	@PostMapping(value = "/login")
-	public String loginPOST(UserVO vo,HttpSession session) throws Exception {
+	public String loginPOST(UserVO vo,HttpSession session, RedirectAttributes rttr) throws Exception {
 		mylog.debug(" loginPOST() 호출");
 		
 		// 전달정보 저장(userid, userpw)
@@ -64,6 +65,7 @@ public class ChagokController {
 		
 		// 서비스 - DAO(로그인체크)
 		boolean loginStatus = service.userLogin(vo);
+		vo = service.getUser(vo.getId());
 		
 		mylog.debug(" 로그인 상태 : " + loginStatus);
 		// 로그인 여부에 따라서 페이지 이동
@@ -71,14 +73,18 @@ public class ChagokController {
 		// 실패 - login페이지
 		String resultURI="";
 		if(loginStatus) {
-			resultURI = "redirect:/chagok/main";
-			session.setAttribute("id", vo.getId());
+			session.setAttribute("mno", vo.getMno());
+			session.setAttribute("nick", vo.getNick());
+			resultURI = "redirect:/main";
 		}else {
-			resultURI = "redirect:/chagok/login";
+			rttr.addFlashAttribute("message", "아이디 또는 비밀번호를 잘못 입력했습니다. 입력하신 내용을 다시 확인해주세요.");
+			resultURI = "redirect:/login";
 		}
 		
 		return resultURI;
-	 }
+	 }	
+	
+
 
 	 // http://localhost:8080/chagok/register
 	 @GetMapping(value = "/register")
@@ -95,7 +101,7 @@ public class ChagokController {
 		 mylog.info(vo.toString());
 		 service.userJoin(vo);
 		
-		 return "redirect:/chagok/login";
+		 return "redirect:/login";
 	 }
 		
 	 @PostMapping("/checkId")

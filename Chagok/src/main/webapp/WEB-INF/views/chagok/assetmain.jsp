@@ -13,4 +13,5 @@
 
 <h1> 자산 메인 </h1>
 
+</div>
 <%@ include file="../include/footer.jsp" %>

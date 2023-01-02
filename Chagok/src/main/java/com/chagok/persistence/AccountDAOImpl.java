@@ -2,10 +2,8 @@ package com.chagok.persistence;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.inject.Inject;
 
@@ -13,7 +11,6 @@ import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
 
 import com.chagok.apiDomain.AccountHistoryResponseVO;
 import com.chagok.apiDomain.AccountVO;
@@ -62,7 +59,6 @@ public class AccountDAOImpl implements AccountDAO{
 	// 카드 정보 저장
 	@Override
 	public void insertCardInfo(CardInfoResponseVO cardInfoResponseVO) throws Exception {
-		mylog.debug("@@@@@@@@@@@ : " + cardInfoResponseVO.getCard_list());
 		
 		List<CardInfoVO> list = new ArrayList<CardInfoVO>();
 		
@@ -73,7 +69,6 @@ public class AccountDAOImpl implements AccountDAO{
 			
 		}
 		
-		mylog.debug("중복제거 리스트 : " + list);
 		
 		
 		Map<String, String> map = new HashMap<String, String>();
@@ -87,6 +82,14 @@ public class AccountDAOImpl implements AccountDAO{
 			
 			sqlSession.insert(NAMESPACE+".insertCardInfo", map);
 		}
+	}
+
+	@Override
+	public List<AccountVO> getAccountInfo(int mno) throws Exception {
+		
+		List<AccountVO> list = sqlSession.selectList(NAMESPACE+".getAccountInfo", mno);
+		
+		return list;
 	}
 	
 	

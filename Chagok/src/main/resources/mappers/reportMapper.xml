@@ -11,18 +11,186 @@
   		where mno=#{mno}
   	</select>
 
-  	<!-- //////////////////////// dateReport //////////////////////// -->
-  
-  
-  	<!-- //////////////////////// cateReport //////////////////////// -->
-  	<!-- [1] 최다, 최대 지출 카테고리 -->
-	<select id="getCateCnt" resultType="ReportVO">
-<!-- 		select count(ab.abno) cateCnt, ct.ct_bottom cateName -->
-		select count(ab.abno) cateCnt, sum(ab.ab_amount) cateSum, ct.ct_bottom cateName
+	<!-- 회원번호, inout=1, 이번달 -->
+	<sql id="wh1out">
+		where ab.mno=#{mno} and ab.ab_inout=1 and
+		ab.ab_date between last_day(now() - interval 1 month) + interval 1 day 
+		and last_day(now())
+	</sql>
+	
+	<!-- 회원번호, inout=2, 이번달 -->
+	<sql id="wh1in">
+		where ab.mno=#{mno} and ab.ab_inout=2 and
+		ab.ab_date between last_day(now() - interval 1 month) + interval 1 day 
+		and last_day(now())
+	</sql>
+	
+
+	<!-- 회원번호, inout=1, 저번달 -->
+	<sql id="wh2out">
+		where ab.mno=#{mno} and ab.ab_inout=1 and
+		ab.ab_date between last_day(now() - interval 2 month) + interval 1 day 
+		and last_day(now() - interval 1 month) + interval 1 day
+	</sql>
+	
+	<!-- 총 지출 -->
+	<sql id="absum">
+		select sum(ab.ab_amount) dtSum
+		from account_book ab
+	</sql>
+	
+	<!-- 평균 지출 -->
+	<sql id="abavg">
+		select round(avg(ab.ab_amount), 0) dtSum
+		from account_book ab
+	</sql>
+	
+	<!-- 주간 통계 -->
+	<sql id="week">
+		select
+		  concat(
+		    date_format(
+		      date_add(ab.ab_date, interval (weekday(ab.ab_date)) * -1 day),
+		      '%Y-%m-%d'
+		    ),
+		    ' ~ ',
+		    date_format(
+		      date_add(ab.ab_date, interval (6 - weekday(ab.ab_date)) * +1 day),
+		      '%Y-%m-%d'
+		    )
+		  ) as `record_date`,
+		  sum(ab.ab_amount) as weekamount
+		from account_book ab
+	</sql>
+	
+	<!-- 가계부 상위 4개 상위 카테고리 -->
+	<sql id="ctno_view">
+		create view ctno_view as
+		select ct.ct_top
 		from account_book ab inner join category ct on ab.ctno=ct.ctno 
 		where ab.mno=#{mno} and ab_inout=1 and
-		ab.ab_date between LAST_DAY(NOW() - interval 1 month) + interval 1 DAY and LAST_DAY(NOW()) 
-		group by cateName
-<!-- 		order by cateCnt desc; -->
+		ab.ab_date between last_day(now() - interval 1 month) + interval 1 DAY and last_day(now()) 
+		group by ct.ct_top
+		order by sum(ab.ab_amount) desc limit 4;	
+	</sql>
+	
+	<!-- 챌린지+상위 카테고리 -->
+	<sql id="ch_view">
+		create view ch_view as
+		select ct.ct_top, c.c_title, c.cno, c.c_content, c.c_period, c.c_pcnt 
+		from category ct inner join challenge c on c.ctno=ct.ctno;
+	</sql>
+	
+	
+	
+  	<!-- //////////////////////// dateReport //////////////////////// -->
+  	<!-- 1. 이번달 총 지출  -->
+  	<select id="dtSum1" resultType="Integer">
+  		<include refid="absum"></include>
+  		<include refid="wh1out"></include>
+  	</select>
+  	
+  	<!-- 2. 지난달 총 지출  -->
+  	<select id="dtSum2" resultType="Integer">
+		<include refid="absum"></include>
+		<include refid="wh2out"></include>
 	</select>
+  		
+  	<!-- 3. 이번달 평균 지출  -->
+  	<select id="dtAvg1" resultType="Integer">
+  		<include refid="abavg"></include>
+  		<include refid="wh1out"></include>
+  	</select>
+  	
+  	<!-- 4. 지난달 평균 지출  -->
+  	<select id="dtAvg2" resultType="Integer">
+		<include refid="abavg"></include>
+		<include refid="wh2out"></include>
+	</select>
+  
+  	<!-- 5. 이번달 예상 지출 -->
+   	<select id="expSum" resultType="Integer">
+		select round(avg(ab.ab_amount), 0) * (
+		datediff(last_day(now()), date_format(now(), '%Y-%m-%d'))
+		) expSum
+		from account_book ab
+		<include refid="wh1out"></include>
+	</select> 	
+	
+	<!-- 6. 이번달 총 수입 -->
+	<select id="dtSumIn" resultType="Integer">
+  		<include refid="absum"></include>
+  		<include refid="wh1in"></include>
+	</select>
+  			
+	<!-- 7. 이번달 무지출 일수 -->
+	<select id="noOut" resultType="Integer">
+		select 
+		(select datediff(LAST_DAY(NOW()), last_day(now() - interval 1 month) + interval 1 day)+1) 
+		- (select count(c.date) as cnt 
+		from (
+			select date_format(ab.ab_date, '%Y-%m-%d') date
+			from account_book ab
+			<include refid="wh1out"></include>
+			group by date)
+		as c);
+	</select>
+	
+	<!-- 8. 이번달 결제 건수(지출 횟수) -->
+	<select id="outCnt" resultType="Integer">
+		select count(ab.abno)
+		from account_book ab
+		<include refid="wh1out"></include>
+	</select>
+	
+	<!-- 9. 이번달 누적 지출 -->
+	<select id="outCum" resultType="Integer">
+	
+	</select>
+	
+	<!-- 10. 주간 지출 -->
+	<select id="outWeek" resultType="map">
+		<include refid="week"></include>
+		where ab.mno=#{mno} and ab.ab_inout=1
+		group by ab.ab_date
+		order by ab.ab_date desc limit 4;
+	</select>
+	
+	<!-- 11. 주간 수입 -->
+	<select id="inWeek" resultType="map">
+		<include refid="week"></include>
+		where ab.mno=#{mno} and ab.ab_inout=2
+		group by ab.ab_date
+		order by ab.ab_date desc limit 4;	
+	</select>
+
+	
+  	<!-- //////////////////////// cateReport //////////////////////// -->
+  	<!-- 1.최다 지출 카테고리 -->
+	<select id="cateCnt" resultType="ReportVO">
+		select count(ab.abno) cateCnt, ct.ct_top cateName
+		from account_book ab inner join category ct on ab.ctno=ct.ctno 
+		<include refid="wh1out"></include>
+		group by cateName
+		order by cateCnt desc;
+	</select>	
+	
+  	<!-- 2.최대 지출 카테고리 -->
+	<select id="cateSum" resultType="ReportVO">
+		select sum(ab.ab_amount) cateSum, ct.ct_top cateName
+		from account_book ab inner join category ct on ab.ctno=ct.ctno 
+		<include refid="wh1out"></include>
+		group by cateName
+		order by cateSum desc;
+	</select>
+	
+	<!-- 3.챌린지 추천 -->
+	<select id="chRand" resultType="ReportVO">
+		<include refid="ctno_view"></include>
+		<include refid="ch_view"></include>
+		select * from ctno_view ctv inner join ch_view chv on ctv.ct_top=chv.ct_top;
+	</select>
+	
+	<!-- 4.카드 추천 -->
+	
   </mapper>
