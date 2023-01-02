@@ -22,6 +22,14 @@
 <h1>
 	Hello world!  
 </h1>
+
+<input class="datepicker">
+<script>
+  $(function(){
+    $('.datepicker').datepicker();
+  })
+</script>
+
 <P>  The time on the server is ${serverTime}. </P>
 <button type="button" id="btn">버튼</button>
 

@@ -174,35 +174,27 @@
 		    <artifactId>log4jdbc-log4j2-jdbc4</artifactId>
 		    <version>1.16</version>
 		</dependency>
+		
 		<!-- https://mvnrepository.com/artifact/org.springframework/spring-websocket -->
 		<dependency>
 		    <groupId>org.springframework</groupId>
 		    <artifactId>spring-websocket</artifactId>
 		    <version>${org.springframework-version}</version>
 		</dependency>
+		
 		<!-- https://mvnrepository.com/artifact/javax.websocket/javax.websocket-api -->
 		<dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-websocket</artifactId>
-            <version>${org.springframework-version}</version>
-        </dependency>
-        <dependency>
             <groupId>javax.websocket</groupId>
             <artifactId>javax.websocket-api</artifactId>
             <version>1.1</version>
             <scope>provided</scope>
         </dependency>
-        <dependency>
-            <groupId>com.googlecode.json-simple</groupId>
-            <artifactId>json-simple</artifactId>
-            <version>1.1.1</version>
-        </dependency>
 
-		<!-- https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple -->
+		<!-- https://mvnrepository.com/artifact/org.webjars.npm/webstomp-client -->
 		<dependency>
-		    <groupId>com.googlecode.json-simple</groupId>
-		    <artifactId>json-simple</artifactId>
-		    <version>1.1.1</version>
+		    <groupId>org.webjars.npm</groupId>
+		    <artifactId>webstomp-client</artifactId>
+		    <version>1.2.6</version>
 		</dependency>
 		
 		<!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
@@ -212,7 +204,52 @@
 		    <version>2.9.0</version>
 		</dependency>
 		
+		<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
+		<dependency>
+		    <groupId>org.apache.commons</groupId>
+		    <artifactId>commons-lang3</artifactId>
+		    <version>3.12.0</version>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/org.springframework/spring-messaging -->
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-messaging</artifactId>
+		    <version>${org.springframework-version}</version>
+		</dependency>
+
+		
+		<!-- 사진 업로드 api-->
+		<!-- https://mvnrepository.com/artifact/commons-fileupload/commons-fileupload -->
+		<dependency>
+		    <groupId>commons-fileupload</groupId>
+		    <artifactId>commons-fileupload</artifactId>
+		    <version>1.3.3</version>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/net.coobird/thumbnailator -->
+		<dependency>
+		    <groupId>net.coobird</groupId>
+		    <artifactId>thumbnailator</artifactId>
+		    <version>0.4.8</version>
+		</dependency>
+		
+		<!-- resource -->
+		<dependency>
+			 <groupId>javax.annotation</groupId>
+			 <artifactId>javax.annotation-api</artifactId>
+			 <version>1.3.2</version>
+		</dependency>
+		    
+		<!-- json 파싱(네이버 뉴스) -->
+		<dependency>
+  			 <groupId>com.googlecode.json-simple</groupId>
+   			 <artifactId>json-simple</artifactId>
+  			 <version>1.1</version>
+		</dependency>
+		
 		<!-- 외부 라이브러리 추가 -->
+		
 		
 		
 		       

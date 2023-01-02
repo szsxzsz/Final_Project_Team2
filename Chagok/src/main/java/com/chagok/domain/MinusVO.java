@@ -4,7 +4,6 @@ import lombok.Data;
 
 @Data
 public class MinusVO {
-
 	private int mccno;
 	private int mno;
 	private boolean m_finish;

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 
@@ -25,6 +26,7 @@
 	href="${pageContext.request.contextPath }/resources/mainpagecss/css/vendor/slick-theme.css">
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath }/resources/mainpagecss/css/reset.css">
+
 <link rel="stylesheet" type="text/css" href="../resources/mainpagecss/css/font.css">
 <link rel="stylesheet" type="text/css" href="../resources/mainpagecss/css/style.css">
 
@@ -42,6 +44,9 @@
 <script type="text/javascript" src="../resources/plugins/jqGrid_4.4.3/js/i18n/grid.locale-kr.js" ></script>
 <script type="text/javascript" src="../resources/plugins/jqGrid_4.4.3/js/jquery.jqGrid.min.js" ></script>
 <!-- jQuery -->
+
+<!-- 결제 : iamport.payment.js -->
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
 
 <style id="__web-inspector-hide-shortcut-style__">
 .__web-inspector-hide-shortcut__, .__web-inspector-hide-shortcut__ *,
@@ -186,10 +191,15 @@ border: 3px solid rgb(255 191 131 / 40%);
 			</div>
 		</div>
 		<div class="user_menu">
-			<div class="login"><a href="/login"><p style="font-family: 'GmarketSans'">로그인</p></a></div>
-			<div class="join"><a href="/register"><p style="font-family: 'GmarketSans'">회원가입</p></a></div>
+		<c:if test="${user.nick == null}">
+			<a href="/login"><div class="login"><p style="font-family: 'GmarketSans'">로그인</p></div></a>
+			<a href="/register"><div class="join"><p style="font-family: 'GmarketSans'">회원가입</p></div></a>
+		</c:if>
+		<c:if test="${user.nick != null}">
+			<a href="#"><div class="login"><p style="font-family: 'GmarketSans'"><small>${user.nick } 님 환영합니다.</small></p></div></a>
+			<a href="/logout"><div class="join"><p style="font-family: 'GmarketSans'">로그아웃</p></div></a>
+		</c:if>
 		</div>
+		<br><br><br><br><br><br>
 	</div>
-
-
 </body>
