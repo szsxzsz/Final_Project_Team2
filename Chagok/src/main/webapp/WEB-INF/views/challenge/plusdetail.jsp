@@ -114,7 +114,7 @@
 //         				if(data == "N"){ // 중복된 카테고리num이 아닐 때
 //         					result = "참여 가능한 챌린지 입니다!";
 //         					$("#result_samechallenge").html(result).css("color","green");
-//         				}else{ // 중복된 챌린지 or 중복된 상세카테고리 챌린지
+//         				}else{ // 중복된 챌린지 or 중복된 상세카테고리 챌린지 
 //         					result="해당 카테고리로 참여 중인 챌린지가 있습니다.";
 //         					$("result_samechallenge").html(result).css("color","red");
 //         				}
@@ -125,18 +125,18 @@
 //         	});
         
         	
-        	Kakao.Share.sendDefault({
-        		  objectType: 'feed',
-        		  content: {
-        		    title: '차곡 챌린지',
-        		    description: '함께 도전해보아요!',
-        		    imageUrl:
-        		      '../webapp/resources/dist/img/chagok_pig.png',
-        		    link: {
-        		      mobileWebUrl: 'http://localhost:8080/challenge/plusdetail',
-        		      webUrl: 'http://localhost:8080/challenge/plusdetail',
-        		    },
-        		  },
+//         	Kakao.Share.sendDefault({
+//         		  objectType: 'feed',
+//         		  content: {
+//         		    title: '차곡 챌린지',
+//         		    description: '함께 도전해보아요!',
+//         		    imageUrl:
+//         		      '../webapp/resources/dist/img/chagok_pig.png',
+//         		    link: {
+//         		      mobileWebUrl: 'http://localhost:8080/challenge/plusdetail',
+//         		      webUrl: 'http://localhost:8080/challenge/plusdetail',
+//         		    },
+//         		  },
 //         		  itemContent: {
 //         		    profileText: 'Kakao',
 //         		    profileImageUrl: 'https://mud-kage.kakao.com/dn/Q2iNx/btqgeRgV54P/VLdBs9cvyn8BJXB3o7N8UK/kakaolink40_original.png',
@@ -173,12 +173,12 @@
 //         		    commentCount: 20,
 //         		    sharedCount: 30,
 //         		  },
-        		  buttons: [
-        		    {
-        		      title: '웹으로 이동',
-        		      link: {
-        		        mobileWebUrl: 'https://developers.kakao.com',
-        		        webUrl: 'https://developers.kakao.com',
+//         		  buttons: [
+//         		    {
+//         		      title: '웹으로 이동',
+//         		      link: {
+//         		        mobileWebUrl: 'https://developers.kakao.com',
+//         		        webUrl: 'https://developers.kakao.com',
 //         		      },
 //         		    },
 //         		    {
@@ -186,19 +186,19 @@
 //         		      link: {
 //         		        mobileWebUrl: 'https://developers.kakao.com',
 //         		        webUrl: 'https://developers.kakao.com',
-        		      },
-        		    },
-        		  ],
-        		});
+//         		      },
+//         		    },
+//         		  ],
+//         		});
         	
         </script>
         
         <div>
-       	 <form name="participateForm">
-        <input class="btn btn-block btn-success btn-lg" type="button" value="참여가능한지 확인하기" id="samechallenge" style="width:218px; margin-left: 950px;">
-        <div><span style="font-size:12px;"></span></div>
-        <input class="btn btn-block btn-success btn-lg" type="submit" value="참여하기" onclick="location.href='${pageContext.request.contextPath }/chagok/commumain';" style="width:218px; margin-left: 950px;">
-		 </form>
+<!--        	 <form name="participateForm"> -->
+<!--         <input class="btn btn-block btn-success btn-lg" type="button" value="참여가능한지 확인하기" id="samechallenge" style="width:218px; margin-left: 950px;"> -->
+<!--         <div><span style="font-size:12px;"></span></div> -->
+        <input class="btn btn-block btn-success btn-lg" type="submit" value="참여하기" onclick="location.href='${pageContext.request.contextPath }/commumain';" style="width:218px; margin-left: 950px;">
+<!-- 		 </form> -->
 		</div>
 
 	</div>

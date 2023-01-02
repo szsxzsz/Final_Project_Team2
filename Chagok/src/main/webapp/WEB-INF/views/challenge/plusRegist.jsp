@@ -9,7 +9,7 @@
 
 
 <h2>차곡 챌린지 등록 (저축형)</h2>
-<form action="/challenge/plusregist"  method="post" enctype="multipart/form-data">
+<form action=""  method="post" enctype="multipart/form-data">
   <div class="main-content">
   
   <div class="container-fluid">
@@ -70,7 +70,7 @@
             </div>
             <div class="card-body">
               
-                <!-- 챌린지 등록 -->
+<!--                 챌린지 등록 -->
                 <div class="pl-lg-4">
                   <div class="row">
                   
@@ -171,7 +171,7 @@
                
                 
                 <hr class="my-4">
-				<!-- Description -->
+<!-- 				Description -->
                 <div class="pl-lg-4">
                   <div class="form-group focused">
                     <label class="form-control-label" for="input-city">챌린지 설명</label>
@@ -179,7 +179,7 @@
                   </div>
                 </div>
                 
-                <!-- button -->
+<!--                 button -->
 				<div class="gap-3 d-md-flex justify-content-md-end text-center">
 					<button type="reset" class="btn btn-danger btn-lg">취소하기</button>
 					<input type="submit" class="btn btn-primary btn-lg" value="등록">
