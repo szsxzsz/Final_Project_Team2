@@ -107,7 +107,7 @@ public class ChallengeController {
 		mylog.debug(" 수 지 : minusFeed Get 호출 ");
 		
 		ChallengeVO vo = service.getChallengeInfo(cno);
-		List<MinusVO> minusPeoList = service.getMinusPeople(cno);
+		List<Map<String, Object>> minusPeoList = service.getMinusPeople(cno);
 		ChallengeVO vo2 = service.getCt_top(cno);
 		
 	   // 연결된 뷰페이지로 정보 전달(model)

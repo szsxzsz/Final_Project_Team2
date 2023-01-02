@@ -64,7 +64,7 @@ public class ChallengeServiceImpl implements ChallengeService{
 	}
 
 	@Override
-	public List<MinusVO> getMinusPeople(int cno) {
+	public List<Map<String, Object>> getMinusPeople(Integer cno) {
 		mylog.debug("getMinusPeople("+cno+") 호출");
 		return dao.getMinusPeople(cno);
 	}

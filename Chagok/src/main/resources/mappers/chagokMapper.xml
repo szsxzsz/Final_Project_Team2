@@ -73,7 +73,7 @@
    </select>
 	
 	<!-- [절약형]챌린지 참가자 조회-->
-	<select id="getMinusPeople" resultType="com.chagok.domain.MinusVO">
+	<select id="getMinusPeople" resultType="map">
 		select * from minus m inner join user u
 		where cno = #{cno} and m.mno = u.mno
 	</select>
