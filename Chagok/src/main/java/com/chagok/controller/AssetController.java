@@ -37,6 +37,7 @@ import com.chagok.service.AccountService;
 import com.chagok.service.OpenBankingService;
 import com.chagok.service.ReportService;
 import com.chagok.service.UserService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -126,8 +127,6 @@ public class AssetController {
 				
 				accountHistoryRequestList.add(accountHistoryRequestVO);
 			}
-			
-			mylog.debug("요청 리스트 : " + accountHistoryRequestList);
 			
 			List<AccountHistoryResponseVO> accountHistoryResponseList = openBankingService.getAccountHistory(accountHistoryRequestList);
 			model.addAttribute("accountHistoryResponseList", accountHistoryResponseList);
