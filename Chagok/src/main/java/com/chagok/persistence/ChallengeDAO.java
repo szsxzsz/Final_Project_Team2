@@ -39,7 +39,7 @@ public interface ChallengeDAO {
 	public List<BoardVO> getBoard(Integer b_sort);
 	
 	// 중복 챌린지 체크
-	public int samechallenge(int ctno);
+	public int samechallenge(Map<String, Integer> map);
 	
 	// 게시판 조회
 	public BoardVO getBoardContent(Integer bno);

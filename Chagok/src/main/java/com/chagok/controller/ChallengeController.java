@@ -1,6 +1,7 @@
 package com.chagok.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.io.File;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -129,14 +131,22 @@ public class ChallengeController {
 	}
 
 	@PostMapping(value = "/plusdetailPOST")
-	@ResponseBody // ajax 값을 바로 jsp에 보내기 위해 사용
-	public String plusdetailPOST(@RequestParam("ctno") int ctno) throws Exception {
+	@ResponseBody // ajax 값을 바로 jsp에 보내기 위해 사용@RequestParam("ctno") int ctno, 
+	public String plusdetailPOST(@RequestBody Map<String, Integer> map, UserVO vo) throws Exception {
+		mylog.debug("plusdetailPOST 호출");
+		mylog.debug(vo+"");
+		
+//		 Map<String, Integer>  map = new HashMap<String, Integer>();
+//		map.put("mno", mno);
+//		map.put("ctno", ctno);
+		
 		String result="N";
 		
 //		int gctno = ajaxService.samechallenge(ctno);
-		service.samechallenge(ctno);
-		int gctno = service.samechallenge(ctno);
-		if(gctno == 1) result = "Y";
+		service.samechallenge(map);
+		int gctno = service.samechallenge(map);	
+		mylog.debug(gctno+"");
+		if(gctno == 11) result = "Y";
 		return result;
 //		return "/challenge/plusdetail";
 	}

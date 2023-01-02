@@ -54,6 +54,6 @@ public interface ChallengeService {
 	public List<Map<String, Object>> getPersonCnt() throws Exception;	
 	
 	// 중복 챌린지 체크
-	public int samechallenge(int ctno);
+	public int samechallenge(Map<String, Integer> map);
 	
 }

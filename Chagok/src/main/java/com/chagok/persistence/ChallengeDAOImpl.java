@@ -108,8 +108,8 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 	}
 
 	@Override
-	public int samechallenge(int ctno) {
-		return sqlSession.selectOne(NAMESPACE+".samechallenge", ctno);
+	public int samechallenge(Map<String, Integer> map) {
+		return sqlSession.selectOne(NAMESPACE+".samechallenge", map);
 	}
 
 	@Override

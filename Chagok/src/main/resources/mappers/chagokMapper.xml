@@ -97,7 +97,9 @@
 	
 	<!-- 중복된 챌린지(카테고리) 확인 -->	
 	<select id="samechallenge" resultType="int">
-		select count(*) from challenge where ctno=#{ctno}
+<!-- 		select count(*) from challenge where ctno=#{ctno} -->
+    select ctno from challenge A inner join plus B 
+    where A.cno = B.cno and mno = #{mno} and ctno = #{ctno};
 	</select>
 	
 	<!-- 챌린지 리스트 -->

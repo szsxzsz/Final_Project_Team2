@@ -126,10 +126,12 @@ public class ChallengeServiceImpl implements ChallengeService{
 
 	// 중복챌린지 체크
 	@Override
-	public int samechallenge(int ctno) {
-		mylog.debug(""+ctno);
-		return dao.samechallenge(ctno);
+	public int samechallenge(Map<String, Integer> map) {
+		
+		return dao.samechallenge(map);
 	}
+
+	
 
 
 	

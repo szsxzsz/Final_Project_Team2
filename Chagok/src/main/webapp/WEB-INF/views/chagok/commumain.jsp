@@ -36,7 +36,7 @@
       	</c:if>
       
        	
-        <a class="card-item-link" href="">
+        <a class="card-item-link" href="/challenge/detail?cno=${vo.cno }">
           <img class="card-img-top img-fluid" src="${vo.c_thumbFile }" alt="" aria-labelledby="title_1" id="c_img">
         </a>
         <div class="card-body">
