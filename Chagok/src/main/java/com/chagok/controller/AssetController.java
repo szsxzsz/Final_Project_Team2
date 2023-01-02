@@ -11,18 +11,14 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
-import org.json.simple.JSONArray;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.chagok.apiDomain.AccountHistoryRequestVO;
 import com.chagok.apiDomain.AccountHistoryResponseVO;
@@ -35,17 +31,15 @@ import com.chagok.apiDomain.UserInfoResponseVO;
 import com.chagok.domain.AbookVO;
 import com.chagok.domain.CategoryVO;
 import com.chagok.domain.ReportVO;
+import com.chagok.domain.UserVO;
 import com.chagok.service.AbookService;
 import com.chagok.service.AccountService;
 import com.chagok.service.OpenBankingService;
 import com.chagok.service.ReportService;
+import com.chagok.service.UserService;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.chagok.service.UserService;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-
 
 @Controller
 @RequestMapping("/asset/*")
@@ -62,14 +56,27 @@ public class AssetController {
 	@Inject
 	private AccountService accountService; 
 	
+	@Inject
+	private UserService userService;
+	
 	@GetMapping("/myAsset")
-	public String myAssetGET() {
+	public String myAssetGET(HttpSession session, Model model) throws Exception{
+		if (session.getAttribute("mno") != null) {
+			int mno = (int)session.getAttribute("mno");
+		
+		UserVO userVO = userService.getUser(mno);
+		model.addAttribute("userVO", userVO);
+		
+		List<AccountVO> accountList = accountService.getAccountInfo(mno);
+		model.addAttribute("accountList", accountList);
+		}
 		
 		return "/asset/myAsset";
 	}
 	
 	@RequestMapping(value = "/callback", method = RequestMethod.GET)
-	public String getToken(RequestTokenVO requestTokenVO, Model model, CardInfoRequestVO cardInfoRequestVO) throws Exception {
+	public String getToken(RequestTokenVO requestTokenVO, Model model, CardInfoRequestVO cardInfoRequestVO, 
+			HttpSession session) throws Exception {
 		//////////////// 사용자인증 API (3-legged) ////////////////
 		
 		// 현재 시간정보
@@ -82,16 +89,24 @@ public class AssetController {
 		
 		// 정보를 들고 jsp 이동 (model 객체)
 		model.addAttribute("responseTokenVO", responseTokenVO);
-		
+			
 		if (responseTokenVO != null) {
+			int mno = (int)session.getAttribute("mno");
+			
+			userService.updateIsCheck(mno);
+			
 			//////////////// 사용자 정보, 계좌정보 조회 => DB(user, account 테이블)에 저장 ////////////////
 			UserInfoResponseVO userInfoResponseVO = openBankingService.getUserInfo(responseTokenVO);
+			for (int k = 0; k < userInfoResponseVO.getRes_list().size(); k++) {
+				userInfoResponseVO.getRes_list().get(k).setMno(mno);
+			}
 			// 사용자 정보
 			model.addAttribute("userInfoResponseVO", userInfoResponseVO);
 			// 계좌 정보
 			List<AccountVO> accountList = userInfoResponseVO.getRes_list();
 			model.addAttribute("accountList", accountList);
-//			accountService.insertAccountInfo(userInfoResponseVO.getRes_list()); // 디비 저장
+			accountService.insertAccountInfo(userInfoResponseVO.getRes_list()); // 디비 저장
+			
 			
 			mylog.debug("계좌 리스트 : " + accountList);
 			
@@ -101,7 +116,7 @@ public class AssetController {
 				AccountHistoryRequestVO accountHistoryRequestVO = new AccountHistoryRequestVO();
 				
 				accountHistoryRequestVO.setAccess_token(responseTokenVO.getAccess_token());
-				accountHistoryRequestVO.setBank_tran_id("M202202513U2TEAMA12"+i);
+				accountHistoryRequestVO.setBank_tran_id("M202202513U"+(int)(Math.random()*100000000)+i);
 				accountHistoryRequestVO.setFintech_use_num(accountList.get(i).getFintech_use_num());
 				accountHistoryRequestVO.setInquiry_type("A");
 				accountHistoryRequestVO.setInquiry_base("D");
@@ -117,12 +132,12 @@ public class AssetController {
 			List<AccountHistoryResponseVO> accountHistoryResponseList = openBankingService.getAccountHistory(accountHistoryRequestList);
 			model.addAttribute("accountHistoryResponseList", accountHistoryResponseList);
 			
-//			accountService.insertAccountHistory(accountHistoryResponseList); // 디비 저장
+			accountService.insertAccountHistory(accountHistoryResponseList); // 디비 저장
 			
 			//////////////// 카드목록 조회 => DB(card 테이블)에 저장 ////////////////
 			
 			cardInfoRequestVO.setAccess_token(responseTokenVO.getAccess_token());
-			cardInfoRequestVO.setBank_tran_id("M202202513U2TEAMC012");
+			cardInfoRequestVO.setBank_tran_id("M202202513U"+(int)(Math.random()*1000000000));
 			cardInfoRequestVO.setUser_seq_no(responseTokenVO.getUser_seq_no());
 			cardInfoRequestVO.setBank_code_std("399"); // fix, 오픈뱅킹만 사용가능
 			cardInfoRequestVO.setMember_bank_code("399"); // fix, 오픈뱅킹만 사용가능
@@ -141,7 +156,8 @@ public class AssetController {
 //			card_id 
 			
 		}
-		return "/asset/apiTest";
+//		return "/asset/apiTest"; // 출력 테스트
+		return "redirect:/asset/myAsset";
 	}
 	
 	@GetMapping("/callbackCard")
@@ -221,92 +237,156 @@ public class AssetController {
 	
 	
 	
+	
 	///////////////////MJ////////////////////
 	
 	@Inject
 	private ReportService rptService;
-	// mno 세션으로 받아오기
-	
-//	http://localhost:8080/asset/rptTest?mno=1
-	/*
-	@GetMapping("/rptTest")
-	public String rptTest(@RequestParam("mno") int mno, Model model) throws Exception {
+
+//	http://localhost:8080/asset/dtRpt
+	@GetMapping(value = "/dtRpt")
+	public String dateReport(HttpSession session, Model model) throws Exception {
+		// 로그인 확인
+		int mno = (int)session.getAttribute("mno");
+		UserVO userVO = userService.getUser(mno);
+		String nick = userVO.getNick();
+		if(mno==0) {
+			return "/chagok/login";
+		}
 		mylog.debug("mno : "+mno);
-		// service에서 DB 가져오기
-		List<AbookVO> abList = rptService.rptTest(mno);
-		// model로 전달
-		model.addAttribute("abList", abList);
 		
-		return "/asset/cateReport";
-	}*/
+		/////////////// 1. service에서 DB 가져오기 ///////////////
+		// 1. 이번달 총 지출
+		Integer dtSum1 = rptService.dtSum1(mno);
+		mylog.debug("dtSum1 : "+dtSum1);
+		
+		// 2. 지난달 총 지출
+		Integer dtSum2 = rptService.dtSum2(mno);
+		mylog.debug("dtSum2 : "+dtSum2);
+		
+		// 3. 이번달 평균 지출
+		Integer dtAvg1 = rptService.dtAvg1(mno);
+		mylog.debug("dtAvg1 : "+dtAvg1);
+		
+		// 4. 지난달 평균 지출
+		Integer dtAvg2 = rptService.dtAvg2(mno);
+		mylog.debug("dtAvg2 : "+dtAvg2);
+		
+		// 5. 이번달 예상 지출
+		Integer expSum = rptService.expSum(mno);
+		mylog.debug("expSum : "+expSum);
+		
+		// 6. 이번달 총 수입
+		Integer dtSumIn = rptService.dtSumIn(mno);
+		mylog.debug("dtSumIn : "+dtSumIn);
+		
+		// 7. 이번달 무지출 일수
+		Integer noOut = rptService.noOut(mno);
+		mylog.debug("noOut : "+noOut);
+		
+		// 8. 이번달 결제 건수(지출 횟수)
+		Integer outCnt = rptService.outCnt(mno);
+		mylog.debug("outCnt : "+outCnt);
+		
+		// 9. 이번달 누적 지출
+		// 10. 주간 지출
+		// 11. 주간 수입
+		
+		
+		
+		
+		/////////////// 2. List -> JSON으로 가공하기 ///////////////
+		// List(VO) -> 변수에 임시 저장 -> JSONArr에 저장
+		
+		
+		/////////////// 3. model로 전달 ///////////////
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("dtSum1", dtSum1);
+		map.put("dtSum2", dtSum2);
+		map.put("dtAvg1", dtAvg1);
+		map.put("dtAvg2", dtAvg2);
+		map.put("expSum", expSum);
+		map.put("dtSumIn", dtSumIn);
+		map.put("noOut", noOut);
+		map.put("outCnt", outCnt);
+		model.addAttribute("map", map);
+		model.addAttribute("nick", nick);
+		
+		return "/asset/dateReport";
+	}	
+	
 	
 //	http://localhost:8080/asset/ctRpt
-//	http://localhost:8080/asset/ctRpt?mno=1
-//	@ResponseBody
-	@RequestMapping(value = "/ctRpt", method = RequestMethod.GET)
-	public String cateReport(@RequestParam("mno") int mno, Model model) throws Exception {
-//	public String cateReport() throws Exception {
+	@GetMapping(value = "/ctRpt")
+	public String cateReport(HttpSession session, Model model) throws Exception {
+		// 로그인 확인
+		int mno = (int)session.getAttribute("mno");
+		UserVO userVO = userService.getUser(mno);
+		String nick = userVO.getNick();
+		if(mno==0) {
+			return "/chagok/login";
+		}
 		mylog.debug("mno : "+mno);
-		// 1. service에서 DB 가져오기
-		/////////////// [1]  최다 지출 카테고리 ///////////////
-		List<ReportVO> cateCntList = rptService.getCateCnt(mno);
+		
+		/////////////// 1. service에서 DB 가져오기 ///////////////
+		// 1.최다 지출 카테고리
+		List<ReportVO> cateCntList = rptService.cateCnt(mno);
 		mylog.debug("cateCntList : "+cateCntList.size());
 //		
-		/////////////// [2]  최대 지출 카테고리 ///////////////
-//		List<ReportVO> cateSumList = rptService.getCateSum(mno);
-//		mylog.debug("cateSumList : "+cateSumList.toString());
+		// 2.최대 지출 카테고리
+		List<ReportVO> cateSumList = rptService.cateSum(mno);
+		mylog.debug("cateSumList : "+cateSumList.size());
 		
-		// 2. List -> JSON으로 가공하기
-		// VO의 catecnt, catename 추출 -> 변수에 임시 저장 -> JSONArr에 저장
+		// 3.챌린지 추천
+//		List<ChallengeVO> chRandList = rptService.chRand(mno);
+//		mylog.debug("chRandList : "+chRandList.toString());
+		
+		/////////////// 2. List -> JSON으로 가공하기 ///////////////
+		// List(VO) -> 변수에 임시 저장 -> JSONArr에 저장
 		Gson gson = new Gson();
 		JsonArray jArr = new JsonArray();
-		
+//		
 		Iterator<ReportVO> it1 = cateCntList.iterator();
 		while(it1.hasNext()) {
 			ReportVO cateCntVO = it1.next();
 			int cateCnt = cateCntVO.getCateCnt();
-			int cateSum = cateCntVO.getCateSum();
 			String cateName = cateCntVO.getCateName();
 			
 			JsonObject obj1 = new JsonObject();
 			obj1.addProperty("cateCnt", cateCnt);
-			obj1.addProperty("cateSum", cateSum);
 			obj1.addProperty("cateName", cateName);
 			jArr.add(obj1);
 		}
 		
-//		Gson gson2 = new Gson();
-//		JsonArray jArr2 = new JsonArray();
-//		Iterator<ReportVO> it2 = cateSumList.iterator();
-//		while(it2.hasNext()) {
-//			ReportVO cateSumVO = it2.next();
-//			int cateSum = cateSumVO.getCateSum();
-//			String cateName = cateSumVO.getCateName();
-//			
-//			JsonObject obj2 = new JsonObject();
-//			obj2.addProperty("cateSum", cateSum);
-//			obj2.addProperty("cateName", cateName);
-//			jArr2.add(obj2);
-//		}
+		Gson gson2 = new Gson();
+		JsonArray jArr2 = new JsonArray();
+		Iterator<ReportVO> it2 = cateSumList.iterator();
+		while(it2.hasNext()) {
+			ReportVO cateSumVO = it2.next();
+			int cateSum = cateSumVO.getCateSum();
+			String cateName = cateSumVO.getCateName();
+			
+			JsonObject obj2 = new JsonObject();
+			obj2.addProperty("cateSum", cateSum);
+			obj2.addProperty("cateName", cateName);
+			jArr2.add(obj2);
+		}
 		
-		// 2. vo->map에 담기
-//		Map<String, Object> map = new HashMap<String, Object>();
-//		map.put("catecnt", catecnt);
-//		map.put("catename", catename);
-		
-//		// 3. model로 전달
+		/////////////// 3. model로 전달 ///////////////
 		String catejson = gson.toJson(jArr);
-//		String catejson2 = gson2.toJson(jArr2);
-		mylog.debug("json : "+catejson);
-//		mylog.debug("json2 : "+catejson2);
-		model.addAttribute("catejson", catejson);
-//		model.addAttribute("catejson2", catejson2);
-//		model.addAttribute("cateCntList", cateCntList);
-//		model.addAttribute("map", map);
-		return "/asset/cateReport";
+		String catejson2 = gson2.toJson(jArr2);
 		
-//		return map;
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("catejson", catejson);
+		map.put("catejson2", catejson2);
+		map.put("cateSumList", cateSumList);
+//		map.put("chRandList", chRandList);
+		model.addAttribute("map", map);
+		model.addAttribute("nick", nick);
+		return "/asset/cateReport";
 	}
+	
+	
 	
 	///////////////////MJ////////////////////
 }
