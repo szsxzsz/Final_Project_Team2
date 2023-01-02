@@ -88,7 +88,6 @@ th {
 </style>
 
 
-</style>
 
 <!-- contenteditable  -->
 <style type="text/css">
@@ -127,7 +126,10 @@ th {
 	
 <table id="jqGrid"></table>
 <div id="gridpager"></div>
-    
+<span><a href="#" onclick="javascript:gridFunc.addRow();">행추가</a></span>
+<span><a href="#" onclick="javascript:gridFunc.updateRow();">수정</a></span>
+<input type="BUTTON" id="bedata" value="Edit Selected" />
+
  <script type="text/javascript">
  
  var dataAbook = ${jsonAbook}
@@ -137,30 +139,40 @@ $("#jqGrid").jqGrid({
     datatype: "local",
     data: dataAbook,
     height: 500, 
-    width: 1500,
+    width: 1450,
     colNames : ['분류','날짜','내용','금액','거래수단','카테고리','소분류','메모'], 
 
     colModel:[
         {name:"ab_inout",
 	        index:"ab_inout",
-	        width:35,
+	        width:40,
 	        align:'center',
-	        hidden:false
+	        edittype: "select", 
+	        formatter: "select",
+	        editoptions:{value:"1:지출;2:수입;3:이체;"},
+//                 dataEvents: [{
+//                     type : 'change',
+//                     fn : function(e) {
+//                     }] 
+//                 }
+	        hidden:false,
+	        editable:true
 	        },
 
         {name : 'ab_date',
 	        index : 'ab_date',
 	        width : 70, 
 	        align : 'left',
-	        editable:true,
 	        hidden:false,
+	        editable:true
 	        },
 
         {name : 'ab_content',
 	        index : 'ab_content',
 	        width : 70, 
 	        align : 'center',
-	        hidden:false
+	        hidden:false,
+	        editable:true
 	        },
 
         {name : 'ab_amount',
@@ -168,48 +180,58 @@ $("#jqGrid").jqGrid({
 	        width : 70, 
 	        resizable : true,
 	        align : 'right',
-	        editable:true,
 	        editrules:{number:true},
-	        hidden:false
+	        hidden:false,
+	        editable:true
 	        },
         
        {name : 'ab_method',
            index : 'ab_method',
            width : 70, 
            align : 'center',
-           hidden:false
+           hidden:false,
+           editable:true
            },	
            
-       {name : 'ctno',
-           index : 'ctno',
+       {name : 'ct_top',
+           index : 'ct_top',
            width : 70, 
+           edittype:"select",
+           editoptions:{value:"13:식사;14:간식;19:의류;26:문화/여가"},
            align : 'center',
-           hidden:false
+           hidden:false,
+           editable:true
            },           
            
-       {name : 'mno',
-           index : 'mno',
+       {name : 'ct_bottom',
+           index : 'ct_bottom',
            width : 70, 
            align : 'center',
-           hidden:false
+           hidden:false,
+           editable:true
            },              
 
       {name : 'ab_memo',
           index : 'ab_memo',
           width : 70, 
+//           formatter: function (cellValue, option) {
+//         	    return '<input type="radio" name="cust_id_key_yn"  />'};,
           align : 'center',
-          hidden:false
+          hidden:false,
+          editable:true
           }
       ],
 
     loadtext: "로딩중일때 표시되는 텍스트!",
     caption: "가계부 내역 조회",
-
+	
     pager:"#gridpager",
     rowNum:20,
     height: 'auto',
-    autowidth: true,
+//     autowidth: true,
     cellEdit: true,
+    cellsubmit:"clientArray",
+
     //rownumbers:true,
     //viewrecords:true,
     //pgbuttons:true,
@@ -230,182 +252,33 @@ $("#jqGrid").jqGrid({
 		     search : false  //조회 아이콘
 		    }
 		);
- 
+  </script>
+  
+  <script type="text/javascript">
+	var gridFunc = {
+	        addRow : function() {
+	            
+	            var totCnt = $("#jqGrid").getGridParam("records");
+	            
+	            var addData = {"ab_inout": "", "ab_date": "", "ab_content" : "", 
+				 "ab_amount" : "", "ct_top" : "", "ct_bottom" : "", "ab_memo" : ""};
+	            
+	            $("#jqGrid").addRowData(totCnt+1, addData);
+	            $("#jqGrid").setColProp("name", {editable: true});
+	        
+	        }
+	}
+
+
  </script>   
  
-	  
-		<div style="width:95%; height: 400px; margin: auto;"> 
-		<table class="table table-hover" id="mytable">
-			<thead>
-				<tr id="th-bg">
-					<th style="width: 50px"><b>분류</b></th>
-					<th style="width: 150px">날짜</th>
-					<th style="width: 200px">내용</th>
-					<th style="width: 120px">금액</th>
-					<th style="width: 100px">거래수단</th>
-					<th style="width: 100px">카테고리</th>
-					<th style="width: 100px">소분류</th>
-					<th style="width: 100px">메모</th>
-				</tr>
-			</thead>	
-			<tbody id="my-tbody">
-				<c:forEach var="vo" items="${abookList}">
-					<c:forEach var="vo2" items="${cateList}">
-
-						<tr>
-							<!--             <td style="text-align:center;">1</td> -->
-							<td>
-								<div class="rowColumn" contenteditable="false"
-									data-default="
-				                	<c:if test="${vo.ab_inout eq '1'}">지출</c:if>
-				                	<c:if test="${vo.ab_inout eq '2'}">수입</c:if>
-				                	<c:if test="${vo.ab_inout eq '3'}">이체</c:if>">
-				                	
-									<c:if test="${vo.ab_inout eq '1'}">지출</c:if>
-									<c:if test="${vo.ab_inout eq '2'}">수입</c:if>
-									<c:if test="${vo.ab_inout eq '3'}">이체</c:if>
-								</div>
-							</td>
-							<td>
-								<div>
-<%-- 									<input type="text" id="datepicker" value="${vo.ab_date }"> --%>
-								<input name="publeYear" autocomplete="off" readonly="readonly" value="${vo.ab_date }">	
-								</div>
-							</td>
-							<td>
-								<div class="rowColumn" contenteditable="false"
-									data-default="${vo.ab_content }">${vo.ab_content }</div>
-							</td>
-							<td>
-								<div class="rowColumn" contenteditable="false"
-									data-default="${vo.ab_amount }">${vo.ab_amount }</div>
-							</td>
-							<td>
-								<div class="rowColumn" contenteditable="false"
-									data-default="${null }">${null }</div>
-							</td>
-							<td>
-								<div class="rowColumn" contenteditable="false"
-									data-default="${vo2.ct_top }">${vo2.ct_top }</div>
-							</td>
-							<td>
-								<div class="rowColumn" contenteditable="false"
-									data-default="${vo2.ct_bottom }">${vo2.ct_bottom }</div>
-							</td>
-							<td>
-								<div class="rowColumn" contenteditable="false"
-									data-default="${vo.ab_memo }">${vo.ab_memo }</div>
-							</td>
-						</tr>
-					</c:forEach>
-					</c:forEach>
-			</tbody>
-		</table>
-		</div>
-	</div>
-	
-	<script type="text/javascript">
-    // @brief contenteditable 속성을 가진경우
-    contents = document.getElementsByClassName("rowColumn");
-
-    document.addEventListener("DOMContentLoaded", function() {
-
-
-        // @brief rowColumn 클래스의 갯수 만큼 반복문을 실행한다.
-        Array.from(contents).forEach(function(content) {
-
-
-            // @brief 마우스로 해당영역을 더블클릭 한경우
-            content.addEventListener("dblclick", function(event) {
-
-
-                // @brief 전체 테이블 컬럼( td > p )에서 현재 사용중인 값의 존재여부를 확인한다.
-                Array.from(contents).forEach(function(defaultVal) {
-
-
-                    /*
-                    // @details 빈값( null )이 존재하는지 체크한다.
-                    if(
-                           defaultVal.textContent == ""
-                        || defaultVal.textContent == null
-                        || defaultVal.textContent == undefined
-                        || (defaultVal.textContent != null
-                        && typeof defaultVal.textContent == "object"
-                        && !Object.keys(defaultVal.textContent).length == ""))
-                    {
-
-                        // @details 내용이 존재하지 않다면 data 태그의 기본값으로 되돌린다.
-                        defaultVal.textContent = defaultVal.dataset.default;
-                    }
-                    */
-
-                    // @details 저장하지 않은 내용이라고 판단하여 data 태그의 기본값으로 되돌린다.
-                    defaultVal.textContent = defaultVal.dataset.default;
-
-                    // @brief 수정 불가 상태로 되돌린다.
-                    defaultVal.contentEditable = false;
-                    defaultVal.style.border = "0px";
-                });
-
-
-                if(content.isContentEditable == false) {
-
-
-                    // @details 편집 가능 상태로 변경
-                    content.contentEditable = true;
-
-
-                    // @details 텍스트 문구 변경
-                    // content.textContent = "";
-
-
-                    // @details CSS 효과 추가
-                    content.style.border = "1px solid #FFDB83";
-
-
-                    // @details 포커스 지정
-                    content.focus();
-                }
-            });
-
-
-            // @brief 키보드 입력이 방생한 경우 실행
-            content.addEventListener("keypress", function(event) {
-
-
-                // @brief Enter키 입력시 실행
-                if(event.key === "Enter") {
-
-
-                    // @details 입력된 값이 빈값( null )인지 체크한다.
-                    if(
-                           content.textContent == ""
-                        || content.textContent == null
-                        || content.textContent == undefined
-                        || (content.textContent != null
-                        && typeof content.textContent == "object"
-                        && !Object.keys(content.textContent).length == ""))
-                    {
-
-
-                        // @details 내용이 존재하지 않다면 data 태그의 기본값으로 되돌린다.
-                        content.textContent = content.dataset.default;
-                    } else {
-
-
-                        // @details 내용의 수정이 완료되었다면 data 태그의 기본값도 바꿔준다.
-                        content.dataset.default = content.textContent;
-                    }
-
-
-                    // @brief 수정 불가 상태로 되돌린다.
-                    content.contentEditable = false;
-                    content.style.border = "0px";
-                }
-            });
-        });
-    });
-</script>
+ <script type="text/javascript">
+ $("#bedata").click(function(){ 
+     var gr = jQuery("#editgrid").jqGrid('getGridParam','selrow'); 
+     if( gr != null ) jQuery("#editgrid").jqGrid('editGridRow',gr {height:280,reloadAfterSubmit:false}); 
+     else alert("Please Select Row"); 
+});
+ </script>
 
 <script type="text/javascript">
 	/* 설정 */
@@ -460,5 +333,5 @@ $("#jqGrid").jqGrid({
 
 
 
-
+</div>
 <%@ include file="../include/footer.jsp"%>

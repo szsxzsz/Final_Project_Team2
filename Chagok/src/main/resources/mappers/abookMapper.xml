@@ -7,7 +7,7 @@
   
   <!-- 가계부 목록 -->
   <select id="abookList" resultType="AbookVO">
-  	select * from account_book where mno=#{mno};
+	select * from account_book as ab inner join category as c on ab.ctno=c.ctno where mno=#{mno};
   </select>
   
   <!-- 카테고리 목록 -->
