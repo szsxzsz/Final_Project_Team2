@@ -91,7 +91,7 @@
 	</select>
 	
 	<!-- 중복된 챌린지(카테고리) 확인 -->	
-	<select id="samechallenge" resultType="com.chagok.domain.ChallengeVO">
+	<select id="samechallenge" resultType="int">
 		select count(*) from challenge where ctno=#{ctno}
 	</select>
 	
