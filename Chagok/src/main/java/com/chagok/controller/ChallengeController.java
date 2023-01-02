@@ -107,7 +107,7 @@ public class ChallengeController {
 		mylog.debug(" 수 지 : minusFeed Get 호출 ");
 		
 		ChallengeVO vo = service.getChallengeInfo(cno);
-		List<MinusVO> minusPeoList = service.getMinusPeople(cno);
+		List<Map<String, Object>> minusPeoList = service.getMinusPeople(cno);
 		ChallengeVO vo2 = service.getCt_top(cno);
 		
 	   // 연결된 뷰페이지로 정보 전달(model)
@@ -130,9 +130,9 @@ public class ChallengeController {
 		String result="N";
 		
 //		int gctno = ajaxService.samechallenge(ctno);
-		
-//		if(gctno == 1) result = "Y";
-		
+		service.samechallenge(ctno);
+		int gctno = service.samechallenge(ctno);
+		if(gctno == 1) result = "Y";
 		return result;
 //		return "/challenge/plusdetail";
 	}
@@ -398,6 +398,7 @@ public class ChallengeController {
 		
 		return "/challenge/victory";
 	}
+
 	// 챌린지 결과
 	// http://localhost:8080/challenge/defeat?cno=1
 	@GetMapping(value="/defeat")
@@ -414,5 +415,14 @@ public class ChallengeController {
 		
 		return "/challenge/victory";
 	}
+	
+	// 결제하기
+	// http://localhost:8080/challenge/pay
+	@GetMapping(value="/pay")
+	public String payGET() {
 		
+		return "/challenge/pay";
+	}
+	
+
 }

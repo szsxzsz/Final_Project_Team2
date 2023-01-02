@@ -64,7 +64,7 @@ public class ChallengeServiceImpl implements ChallengeService{
 	}
 
 	@Override
-	public List<MinusVO> getMinusPeople(int cno) {
+	public List<Map<String, Object>> getMinusPeople(Integer cno) {
 		mylog.debug("getMinusPeople("+cno+") 호출");
 		return dao.getMinusPeople(cno);
 	}
@@ -122,6 +122,13 @@ public class ChallengeServiceImpl implements ChallengeService{
 	public List<BoardVO> getReviewBoard() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	// 중복챌린지 체크
+	@Override
+	public int samechallenge(int ctno) {
+		mylog.debug(""+ctno);
+		return dao.samechallenge(ctno);
 	}
 
 
