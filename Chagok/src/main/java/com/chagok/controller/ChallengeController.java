@@ -190,6 +190,7 @@ public class ChallengeController {
 		
 		model.addAttribute("vo", vo);
 		model.addAttribute("challengeList", challengeList);
+		model.addAttribute("c_end", service.getChallengeEndDate(cno));
 		
 		
 		return "/challenge/checkfeed";
@@ -384,7 +385,7 @@ public class ChallengeController {
 	// 챌린지 결과
 	// http://localhost:8080/challenge/victory?cno=1
 	@GetMapping(value="/victory")
-	public String cresultGET(Model model, @RequestParam("cno") int cno, HttpSession session) throws Exception{
+	public String victoryGET(Model model, @RequestParam("cno") int cno, HttpSession session) throws Exception{
 		ChallengeVO vo = service.getChallengeInfo(cno);
 
 		ChallengeVO vo2 = service.getCt_top(cno);
@@ -392,6 +393,22 @@ public class ChallengeController {
 
 		model.addAttribute("vo", vo);
 
+		model.addAttribute("vo2", vo2);
+		
+		
+		return "/challenge/victory";
+	}
+	// 챌린지 결과
+	// http://localhost:8080/challenge/defeat?cno=1
+	@GetMapping(value="/defeat")
+	public String defeatGET(Model model, @RequestParam("cno") int cno, HttpSession session) throws Exception{
+		ChallengeVO vo = service.getChallengeInfo(cno);
+		
+		ChallengeVO vo2 = service.getCt_top(cno);
+		
+		
+		model.addAttribute("vo", vo);
+		
 		model.addAttribute("vo2", vo2);
 		
 		
