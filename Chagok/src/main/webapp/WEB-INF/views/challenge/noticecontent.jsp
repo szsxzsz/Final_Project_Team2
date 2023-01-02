@@ -19,14 +19,16 @@ ${vo }
 				    	</h4>
 		    	</div>
         <div class="form-group" style="padding-top: 50px; padding-left: 36px; width: 1166px; margin-bottom: 30px;">
-           	<span style = "font-size: 16px; font-family: 'Pretendard','Source Sans Pro', sans-serif;"><strong></strong></span>
+           	<span style = "font-size: 16px; font-family: 'Pretendard','Source Sans Pro', sans-serif;">
+           		<strong>
+           		
+           		</strong>
+           	</span>
 				 <textarea class="form-control" rows="3" style="margin-top:15px;" readonly>${vo.b_content }</textarea>
-                          
-   
-        </div>
+        		 </div>
 		    </div>
 		</div>
     </div>
 
-        <input class="btn btn-block btn-success btn-lg" type="button" value="참여하기" onclick="location.href=''" style="width:218px; margin-left: 950px;">
+        <input class="btn btn-block btn-success btn-lg" type="button" value="돌아가기" onclick="location.href=''" style="width:218px; margin-left: 950px;">
 <%@ include file="../include/footer.jsp"%>

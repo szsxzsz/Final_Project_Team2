@@ -16,10 +16,11 @@
 
 
 
-				<div class="gap-3 d-md-flex justify-content-md-end text-right">
-					<button type="button" class="btn btn-danger btn-lg">저축형</button>
-					<button type="button" class="btn btn-primary btn-lg">절약형</button>
-				</div>
+<div class="gap-3 d-md-flex justify-content-md-end text-right">
+	<button type="button" class="btn btn-danger btn-lg">저축형</button>
+	<button type="button" class="btn btn-primary btn-lg">절약형</button>
+</div>
+
   <h2 class="visually-hidden"></h2>
   <div class="row row-cols-lg-4 g-2">
   <c:forEach var="vo" items="${challengeList }">
@@ -35,7 +36,7 @@
       	</c:if>
       
        	
-        <a class="card-item-link" href="#">
+        <a class="card-item-link" href="">
           <img class="card-img-top img-fluid" src="${vo.c_thumbFile }" alt="" aria-labelledby="title_1" id="c_img">
         </a>
         <div class="card-body">
@@ -44,7 +45,7 @@
             <div class="rate">
              	<p class="card-item-rating">
                 <img src="https://png.pngtree.com/png-clipart/20190705/original/pngtree-vector-business-men-icon-png-image_4186858.jpg" alt=""> </p> 
-              	<p class="card-item-rating"> <b></b> / ${vo.c_pcnt } 명</p>
+              	<p class="card-item-rating"> <b>${vo.c_cnt }</b> / ${vo.c_pcnt } 명</p>
             </div>
           </div>
           <h3 class="card-title" id="title_1">${vo.c_title }</h3>

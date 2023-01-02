@@ -104,8 +104,8 @@
                 <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
-                <li><a href="../challenge/notice"><i class="fa fa-circle-o"></i> 공지 게시판</a></li>
-                <li><a href="../community/report"><i class="fa fa-circle-o"></i> 신고 게시판</a></li>
+                <li><a href="/challenge/notice"><i class="fa fa-circle-o"></i> 공지 게시판</a></li>
+                <li><a href="/community/report"><i class="fa fa-circle-o"></i> 신고 게시판</a></li>
 <!--                 <li><a href="../charts/flot.html"><i class="fa fa-circle-o"></i> Flot</a></li> -->
 <!--                 <li><a href="../charts/inline.html"><i class="fa fa-circle-o"></i> Inline charts</a></li> -->
               </ul>
@@ -211,8 +211,7 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
           <h1>
-            General Form Elements
-            <small>Preview</small>
+           	<a href="/commumain"><img src="${pageContext.request.contextPath }/resources/plugins/img/double-arrow.png"><small> 메인</small></a>
           </h1>
           <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
