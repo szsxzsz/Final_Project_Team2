@@ -124,6 +124,13 @@ public class ChallengeServiceImpl implements ChallengeService{
 		return null;
 	}
 
+	// 중복챌린지 체크
+	@Override
+	public int samechallenge(int ctno) {
+		mylog.debug(""+ctno);
+		return dao.samechallenge(ctno);
+	}
+
 
 	
 

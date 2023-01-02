@@ -130,9 +130,9 @@ public class ChallengeController {
 		String result="N";
 		
 //		int gctno = ajaxService.samechallenge(ctno);
-		
-//		if(gctno == 1) result = "Y";
-		
+		service.samechallenge(ctno);
+		int gctno = service.samechallenge(ctno);
+		if(gctno == 1) result = "Y";
 		return result;
 //		return "/challenge/plusdetail";
 	}

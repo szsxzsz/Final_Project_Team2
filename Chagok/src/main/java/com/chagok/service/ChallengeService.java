@@ -52,5 +52,8 @@ public interface ChallengeService {
 	
 	// 챌린지 목록(참여명수 구하기)
 	public List<Map<String, Object>> getPersonCnt() throws Exception;	
-
+	
+	// 중복 챌린지 체크
+	public int samechallenge(int ctno);
+	
 }

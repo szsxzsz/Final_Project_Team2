@@ -101,28 +101,32 @@
         </div>
         
         <script>
-//         $(function()){
-//         	$("#samechallenge").click(function(){
+        $(function(){
+        	$("#samechallenge").click(function(){
         		
-//         		let ctno = $("ctno").val();
+        		var ctno = ${vo.ctno};
         		
-//         		$.ajax({
-//         			type:'post',
-//         			url:"/challenge/plusdetailPOST",
-//         			data: {"ctno":ctno},
-//         			success: function(data){
-//         				if(data == "N"){ // 중복된 카테고리num이 아닐 때
-//         					result = "참여 가능한 챌린지 입니다!";
-//         					$("#result_samechallenge").html(result).css("color","green");
-//         				}else{ // 중복된 챌린지 or 중복된 상세카테고리 챌린지 
-//         					result="해당 카테고리로 참여 중인 챌린지가 있습니다.";
-//         					$("result_samechallenge").html(result).css("color","red");
-//         				}
-//         			},
-//         				error : function(error){alert(error);}
-//         			});
-//         		});
-//         	});
+        		$.ajax({
+        			type:'post',
+        			url:"/challenge/plusdetailPOST",
+        			dataType:'text',
+        			data: {"ctno":ctno},
+        			success: function(data){
+						console.log('통신 성공! ' + result);
+        				if(data == "N"){ // 중복된 카테고리num이 아닐 때
+        					result = "참여 가능한 챌린지 입니다!";
+        					$("#result_samechallenge").html(result).css("color","green");
+        					location.href="/commumain";
+        				}else{ // 중복된 챌린지 or 중복된 상세카테고리 챌린지 
+        					result="해당 카테고리로 참여 중인 챌린지가 있습니다.";
+        					$("result_samechallenge").html(result).css("color","red");
+        					return;
+        				}
+        			},
+        				error : function(error){console.log(error);}
+        			});
+        		});
+        	});
         
         	
 //         	Kakao.Share.sendDefault({
@@ -197,9 +201,10 @@
 <!--        	 <form name="participateForm"> -->
 <!--         <input class="btn btn-block btn-success btn-lg" type="button" value="참여가능한지 확인하기" id="samechallenge" style="width:218px; margin-left: 950px;"> -->
 <!--         <div><span style="font-size:12px;"></span></div> -->
-        <input class="btn btn-block btn-success btn-lg" type="submit" value="참여하기" onclick="location.href='${pageContext.request.contextPath }/commumain';" style="width:218px; margin-left: 950px;">
-<!-- 		 </form> -->
+        <button class="btn btn-block btn-success btn-lg" type="button" id="samechallenge" style="width:218px; margin-left: 950px;">참여하기</button>
+		<div id="result_samechallenge"></div>
 		</div>
-
+<!-- 		 </form> -->
+<!-- onclick="location.href='${pageContext.request.contextPath }/commumain';" -->
 	</div>
 <%@ include file="../include/footer.jsp" %>
