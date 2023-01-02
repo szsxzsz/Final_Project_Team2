@@ -8,22 +8,10 @@
 <br>
 
 <head>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
-	integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
-	crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"
-	integrity="sha512-uto9mlQzrs59VwILcLiRYeLKPPbS/bT71da/OEBYEwcdNUk8jYIy+D176RYoop1Da+f9mvkYrmj5MCLZWEtQuA=="
-	crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css"
-	integrity="sha512-aOG0c6nPNzGk+5zjwyJaoRUgCdOrfSDhmMID2u4+OIslr0GjpLKo7Xm0Ao3xmpM4T8AmIouRkqwj1nrdVsLKEQ=="
-	crossorigin="anonymous" referrerpolicy="no-referrer" />
-	
-<link rel="stylesheet" href="//code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" />
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-<script src="//code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
+
+
+<!-- <link rel="stylesheet" href="//code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" /> -->
+<!-- <script src="//code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script> -->
 	
 <style>
 #th-bg {
@@ -71,14 +59,43 @@ th {
 	overflow-x: hidden;	
 }
 
+
+
+<style>
+
+  .ui-jqgrid .ui-jqgrid-htable{
+
+        	overflow: hidden; 
+
+        	position:relative; 
+
+        	height:17px;
+
+        	font-family:inherit,'NanumGothicB','나눔고딕', "돋움", dotum;
+
+        	font-size:15px;
+
+        }
+
+        .ui-jqgrid-btable, .ui-pg-table  {
+
+        	font-family:inherit,'NanumGothicB','나눔고딕', "돋움", dotum;
+
+        	font-size:13px;
+
+        }
+
+</style>
+
+
 </style>
 
 <!-- contenteditable  -->
 <style type="text/css">
-table {
-	border-collapse: collapse;
-	border: 1px gray solid;
-}
+/* table { */
+/* 	border-collapse: collapse; */
+/* 	border: 1px gray solid; */
+/* } */
 
 .rowColumn {
 	border-radius: 5px;
@@ -86,62 +103,11 @@ table {
 }
 </style>
 
-<script type="text/javascript">
-
-function insertTr(){
-
-	var insertTr = "";
-	  
-	  insertTr += "<tr>";
-	  insertTr += "<td>lee20</td>";
-	  insertTr += "<td>이순신</td>";
-	  insertTr += "<td>부산</td>";
-	  insertTr += "</tr>";
-	    
-	  $("#memDiv").prepend(insertTr);
-
-	}
-	
-</script>
-
-<script>
-  function add_row() {
-    var my_tbody = document.getElementById('my-tbody');
-    var row = my_tbody.insertRow(0); // 상단에 추가
-//     var row = my_tbody.insertRow( my_tbody.rows.length ); // 하단에 추가
-    var cell1 = row.insertCell(0);
-    var cell2 = row.insertCell(1);
-    var cell3 = row.insertCell(2);
-    var cell4 = row.insertCell(3);
-    var cell5 = row.insertCell(4);
-    var cell6 = row.insertCell(5);
-    var cell7 = row.insertCell(6);
-    var cell8 = row.insertCell(7);
-    
-    cell1.innerHTML = '지출';
-    cell2.innerHTML = '	<input type="date" style="width:150px;"  height:25px;> ';
-    cell3.innerHTML = ' <input type="text" name="ab_content" style="width:150px; "> ';
-    cell4.innerHTML = ' <input type="text" name="ab_amount" style="width:120px;"> ';
-    cell5.innerHTML = ' <input type="text" name="ab_method" style="width:100px;"> ';
-    cell6.innerHTML = ' <select name="ctno"> <option value="13"> 기타 </select> ';
-    cell7.innerHTML = ' <select name="ctno"> <option value="13"> 기타 </select> ';
-    cell8.innerHTML = ' <input type="text" name="ab_memo" style="width:100px;"> ';
-    
-    
-  }
-
-  function delete_row() {
-    var my_tbody = document.getElementById('my-tbody');
-    if (my_tbody.rows.length < 1) return;
-    my_tbody.deleteRow(0); // 상단부터 삭제
-//     my_tbody.deleteRow( my_tbody.rows.length-1 ); // 하단부터 삭제
-  }
-  
-</script>
 </head>
 
 <div class="box-body2 table-responsive">
 	<%-- 	${cateList }+@ --%>
+<%-- 	${jsonStr } --%>
 	<div class="box">
 		<!-- 날짜 -->
 		<div class="Header_root__23iUa">
@@ -159,62 +125,115 @@ function insertTr(){
 		</div>	
 	</div>
 	
-	
-		<button class="btn btn-warning btn-xs" onclick="add_row()">행 추가하기</button>
-		<button class="btn btn-warning btn-xs" onclick="delete_row()">행 삭제하기</button>
-		
-		<select id="s1" onchange="optionChange();">
-	        <option selected="selected">대분류</option>
-	        <option value="a">식비</option>
-	        <option value="b">의복/미용</option>
-	    </select>
-	      <select id="s2">
-	        <option selected="selected">소분류</option>
-	    </select>
-	    <br> <br>
-	    
-<table>
-<colgroup>
-<col width="110">
-<col width="110">
-<col width="130">
-</colgroup>
-  <thead>
-  <tr>
-    <th>회원아이디</th>
-    <th>회원명</th>
-    <th>회원주소</th>
-  </tr>
-  </thead>
-</table>
-<table>
-<colgroup>
-<col width="110">
-<col width="110">
-<col width="130">
-</colgroup>
-<tbody id="memDiv">
-  <tr>
-    <td>hong99</td>
-    <td>홍길동</td>
-    <td>서울</td>
-  </tr>
-  <tr>
-    <td>sejong80</td>
-    <td>세종대왕</td>
-    <td>대전</td>
-  </tr>
-</tbody>
-</table>
-<button onclick="insertTr()">테이블 행추가</button>
+<table id="jqGrid"></table>
+<div id="gridpager"></div>
+    
+ <script type="text/javascript">
+ 
+ var dataAbook = ${jsonAbook}
+ var dataCate = ${jsonCate}
+ 
+$("#jqGrid").jqGrid({
+    datatype: "local",
+    data: dataAbook,
+    height: 500, 
+    width: 1500,
+    colNames : ['분류','날짜','내용','금액','거래수단','카테고리','소분류','메모'], 
 
+    colModel:[
+        {name:"ab_inout",
+	        index:"ab_inout",
+	        width:35,
+	        align:'center',
+	        hidden:false
+	        },
 
+        {name : 'ab_date',
+	        index : 'ab_date',
+	        width : 70, 
+	        align : 'left',
+	        editable:true,
+	        hidden:false,
+	        },
 
+        {name : 'ab_content',
+	        index : 'ab_content',
+	        width : 70, 
+	        align : 'center',
+	        hidden:false
+	        },
 
-<!-- 				<div> -->
-<!-- 					<button id='btn-add-row'>행 추가하기</button> -->
-<!-- 					<button id='btn-delete-row'>행 삭제하기</button> -->
-<!-- 				</div> -->
+        {name : 'ab_amount',
+	        index : 'ab_amount',
+	        width : 70, 
+	        resizable : true,
+	        align : 'right',
+	        editable:true,
+	        editrules:{number:true},
+	        hidden:false
+	        },
+        
+       {name : 'ab_method',
+           index : 'ab_method',
+           width : 70, 
+           align : 'center',
+           hidden:false
+           },	
+           
+       {name : 'ctno',
+           index : 'ctno',
+           width : 70, 
+           align : 'center',
+           hidden:false
+           },           
+           
+       {name : 'mno',
+           index : 'mno',
+           width : 70, 
+           align : 'center',
+           hidden:false
+           },              
+
+      {name : 'ab_memo',
+          index : 'ab_memo',
+          width : 70, 
+          align : 'center',
+          hidden:false
+          }
+      ],
+
+    loadtext: "로딩중일때 표시되는 텍스트!",
+    caption: "가계부 내역 조회",
+
+    pager:"#gridpager",
+    rowNum:20,
+    height: 'auto',
+    autowidth: true,
+    cellEdit: true,
+    //rownumbers:true,
+    //viewrecords:true,
+    //pgbuttons:true,
+    //pginput:true,
+    //shrinkToFit:true,
+    //sortable: false,
+    //loadComplete:function(data){},
+    //scroll:true,
+    //loadonce:false,
+    //hidegrid:true
+    }); 
+ 
+	$('#jqGrid').jqGrid('navGrid', '#gridpager',
+		    {
+		     edit : true,  // 수정 아이콘
+		     add : true,  // 추가 아이콘
+		     del : true,  // 삭제 아이콘
+		     search : false  //조회 아이콘
+		    }
+		);
+ 
+ </script>   
+ 
+	  
 		<div style="width:95%; height: 400px; margin: auto;"> 
 		<table class="table table-hover" id="mytable">
 			<thead>

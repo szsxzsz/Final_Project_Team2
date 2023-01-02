@@ -11,14 +11,18 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONArray;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.chagok.apiDomain.AccountHistoryRequestVO;
 import com.chagok.apiDomain.AccountHistoryResponseVO;
@@ -35,6 +39,7 @@ import com.chagok.service.AbookService;
 import com.chagok.service.AccountService;
 import com.chagok.service.OpenBankingService;
 import com.chagok.service.ReportService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -180,7 +185,7 @@ public class AssetController {
 	private AbookService service;
 //	http://localhost:8080/asset/abookList?mno=1
 	@GetMapping("/abookList")
-	public String abookList(@RequestParam("mno") int mno, HttpSession session,Model model) throws Exception {
+	public List<AbookVO> abookList(@RequestParam("mno") int mno, HttpSession session,Model model) throws Exception {
 		mylog.debug(" /abooklist 호출 -> DB 출력 ");
 		
 		// 전달받은 정보 x
@@ -189,13 +194,22 @@ public class AssetController {
 		// 서비스 -> DAO 게시판 리스트 가져오기
 		List<AbookVO> abookList = service.getAbookList(mno);
 		List<CategoryVO> cateList = service.CateList();
-		mylog.debug("Controller+@@@@@@@@@@@@@@@@@@@2"+cateList);		
+//		mylog.debug("Controller+@@@@@@@@@@@@@@@@@@@2"+cateList);		
 		
 		// 연결되어 있는 뷰 페이지로 정보 전달 (Model 객체)
+		
+		ObjectMapper mapper = new ObjectMapper();
+
+		String jsonAbook = mapper.writeValueAsString(abookList);
+		String jsonCate = mapper.writeValueAsString(cateList);
+		
+		System.out.println("##############"+jsonAbook);
 		model.addAttribute("abookList", abookList);
 		model.addAttribute("cateList", cateList);
+		model.addAttribute("jsonAbook",jsonAbook);
+		model.addAttribute("jsonCate",jsonCate);
 		
-		return "/asset/abookList"; 
+		return abookList; 
 	}
 	
 	
