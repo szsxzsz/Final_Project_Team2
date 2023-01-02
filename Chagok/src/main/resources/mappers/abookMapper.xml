@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.chagok.mapper.abookMapper">
+  
+  <!-- 가계부 목록 -->
+  <select id="abookList" resultType="AbookVO">
+	select * from account_book as ab inner join category as c on ab.ctno=c.ctno where mno=#{mno};
+  </select>
+  
+  <!-- 카테고리 목록 -->
+  <select id="cateList" resultType="CategoryVO">
+  	select * from account_book as ab inner join category as ct on ab.ctno=ct.ctno;
+  </select>
+  
+  </mapper>

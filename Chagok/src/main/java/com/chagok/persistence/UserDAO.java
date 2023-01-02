@@ -1,5 +1,7 @@
 package com.chagok.persistence;
 
+import java.util.Map;
+
 import com.chagok.domain.UserVO;
 
 public interface UserDAO {
@@ -16,10 +18,16 @@ public interface UserDAO {
 	// 닉네임 체크
 	public int checkNick(String nick);
 		
-	// 특정 회원정보 조회
+	// 특정 회원정보 조회(id)
 	public UserVO getUser(String id);
+
+	// 특정 회원정보 조회(mno)
+	public UserVO getUser(int mno);
 	
 	// 로그인 처리
-	public UserVO loginUser(UserVO vo);
+	public UserVO loginUserCheck(Map<String, String> loginMap);
+	
+	// 인증성공 isCheck N => Y
+	public void updateIsCheck(int mno);
 
 }

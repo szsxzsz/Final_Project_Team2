@@ -1,5 +1,11 @@
 package com.chagok.controller;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+
 import javax.inject.Inject;
 
 import org.junit.Test;
@@ -37,22 +43,25 @@ public class UserTest {
 	}
 		
 		// 특정 회원의 모든정보를 조회
-		@Test
+		//@Test
 		public void getUserInfo() {
 			
-			UserVO vo = dao.getUser("user2@user.com");
+			UserVO vo = dao.getUser("user@user.com");
 			
 			System.out.println(" Test : " +vo);
 		}
 		
 		// 로그인 처리
-		//@Test
+		@Test
 		public void loginMember() {
 			
-			UserVO insertVO = new UserVO();
-			insertVO.setId("user2@user.com");
-			insertVO.setPw("1234222");
-			UserVO vo2 = dao.loginUser(insertVO);
+//			UserVO insertVO = new UserVO();
+//			insertVO.setId("user2@user.com");
+//			insertVO.setPw("1234222");
+			Map<String, String> loginMap = new HashMap<String, String>();
+			loginMap.put("id", "user@user.com");
+			loginMap.put("pw", "12341234");
+			UserVO vo2 = dao.loginUserCheck(loginMap);
 			
 			if(vo2 != null) {
 				System.out.println(" 로그인 성공! ");
@@ -61,10 +70,4 @@ public class UserTest {
 			}
 		}
 		
-		@Test
-		public void idCheck() {
-			 
-			UserVO vo = new UserVO();
-			
-		}
 }

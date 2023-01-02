@@ -19,6 +19,21 @@ public class AccountVO {
     private String transfer_agree_yn;
     private String transfer_agree_dtime;
     private String account_state;
+    private String balance_amt;
+    private int mno;
+    
+	public String getBalance_amt() {
+		return balance_amt;
+	}
+	public void setBalance_amt(String balance_amt) {
+		this.balance_amt = balance_amt;
+	}
+	public int getMno() {
+		return mno;
+	}
+	public void setMno(int mno) {
+		this.mno = mno;
+	}
 	public String getFintech_use_num() {
 		return fintech_use_num;
 	}
@@ -121,5 +136,18 @@ public class AccountVO {
 	public void setAccount_state(String account_state) {
 		this.account_state = account_state;
 	}
+	@Override
+	public String toString() {
+		return "AccountVO [fintech_use_num=" + fintech_use_num + ", account_alias=" + account_alias + ", bank_code_std="
+				+ bank_code_std + ", bank_code_sub=" + bank_code_sub + ", bank_name=" + bank_name
+				+ ", savings_bank_name=" + savings_bank_name + ", account_num=" + account_num + ", account_num_masked="
+				+ account_num_masked + ", account_seq=" + account_seq + ", account_holder_name=" + account_holder_name
+				+ ", account_holder_type=" + account_holder_type + ", account_type=" + account_type
+				+ ", inquiry_agree_yn=" + inquiry_agree_yn + ", inquiry_agree_dtime=" + inquiry_agree_dtime
+				+ ", transfer_agree_yn=" + transfer_agree_yn + ", transfer_agree_dtime=" + transfer_agree_dtime
+				+ ", account_state=" + account_state + "]";
+	}
     
+	
+	
 }

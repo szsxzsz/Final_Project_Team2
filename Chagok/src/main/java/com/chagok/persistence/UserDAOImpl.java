@@ -1,5 +1,7 @@
 package com.chagok.persistence;
 
+import java.util.Map;
+
 import javax.inject.Inject;
 
 import org.apache.ibatis.session.SqlSession;
@@ -52,6 +54,7 @@ public class UserDAOImpl implements UserDAO {
 		return result;
 	}
 
+	//특정 회원정보 조회(id)
 	@Override
 	public UserVO getUser(String id) {
 		UserVO vo = sqlSession.selectOne(NAMESPACE+".getUser",id);
@@ -59,12 +62,36 @@ public class UserDAOImpl implements UserDAO {
 		System.out.println(" DAO : " +vo);
 		return vo;
 	}
-
+	
+	//특정 회원정보 조회(mno)
 	@Override
-	public UserVO loginUser(UserVO vo) {
-		// 일회용일 경우 
-		return sqlSession.selectOne(NAMESPACE+".loginUser",vo);
+	public UserVO getUser(int mno) {
+
+		return sqlSession.selectOne(NAMESPACE+".getUserM",mno);
 	}
 
+	@Override
+	public UserVO loginUserCheck(Map<String, String> loginMap) {
+		
+		return sqlSession.selectOne(NAMESPACE+".loginUserCheck",loginMap);
+	}
+	
+	
+
+	@Override
+	public UserVO getUser(int mno) {
+		UserVO vo = sqlSession.selectOne(NAMESPACE+".getUserMno",mno);
+		
+		System.out.println(" DAO : " +vo);
+		return vo;
+	}
+
+	@Override
+	public void updateIsCheck(int mno) {
+		sqlSession.update(NAMESPACE+".updateIsCheck", mno);
+	}
+	
+	
+	
 	
 }

@@ -1,10 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 
 <head class="">
-<title>SAMQ - 스마트한 자산관리 솔루션</title>
+<title>차곡</title>
 <meta charset="utf-8">
 <meta name="viewport"
 	content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=yes,viewport-fit=cover">
@@ -25,8 +26,28 @@
 	href="${pageContext.request.contextPath }/resources/mainpagecss/css/vendor/slick-theme.css">
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath }/resources/mainpagecss/css/reset.css">
+
 <link rel="stylesheet" type="text/css" href="../resources/mainpagecss/css/font.css">
 <link rel="stylesheet" type="text/css" href="../resources/mainpagecss/css/style.css">
+
+<!-- jQuery -->
+   <script src="../resources/plugins/jQuery/jQuery-2.1.4.min.js"></script>
+<!-- jQgrid -->
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/ui-lightness/jquery-ui.css">
+<link rel="stylesheet" type="text/css" media="screen" href="../resources/plugins/jQueryUI/jquery-ui.css" />
+<script src="//code.jquery.com/jquery.min.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+<link rel="stylesheet" type="text/css" media="screen" href="../resources/plugins/jqGrid_4.4.3/css/ui.jqgrid.css" />
+
+<script type="text/javascript" src="../resources/plugins/jqGrid_4.4.3/js/jquery-1.7.2.min.js"></script>
+<!--<script type="text/javascript" src="./jqGrid_4.4.3/js/jquery.jqGrid.src.js" ></script> -->
+<script type="text/javascript" src="../resources/plugins/jqGrid_4.4.3/js/i18n/grid.locale-kr.js" ></script>
+<script type="text/javascript" src="../resources/plugins/jqGrid_4.4.3/js/jquery.jqGrid.min.js" ></script>
+<!-- jQuery -->
+
+<!-- 결제 : iamport.payment.js -->
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
+
 <style id="__web-inspector-hide-shortcut-style__">
 .__web-inspector-hide-shortcut__, .__web-inspector-hide-shortcut__ *,
 	.__web-inspector-hidebefore-shortcut__::before,
@@ -42,7 +63,9 @@
 /* } */
 
 </style>
-<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+<!-- <script  src="http://code.jquery.com/jquery-latest.min.js"></script> -->
+
+
 
 
 <style type="text/css">
@@ -168,10 +191,15 @@ border: 3px solid rgb(255 191 131 / 40%);
 			</div>
 		</div>
 		<div class="user_menu">
-			<div class="login"><a href="/login"><p style="font-family: 'GmarketSans'">로그인</p></a></div>
-			<div class="join"><a href="/register"><p style="font-family: 'GmarketSans'">회원가입</p></a></div>
+		<c:if test="${user.nick == null}">
+			<a href="/login"><div class="login"><p style="font-family: 'GmarketSans'">로그인</p></div></a>
+			<a href="/register"><div class="join"><p style="font-family: 'GmarketSans'">회원가입</p></div></a>
+		</c:if>
+		<c:if test="${user.nick != null}">
+			<a href="#"><div class="login"><p style="font-family: 'GmarketSans'"><small>${user.nick } 님 환영합니다.</small></p></div></a>
+			<a href="/logout"><div class="join"><p style="font-family: 'GmarketSans'">로그아웃</p></div></a>
+		</c:if>
 		</div>
+		<br><br><br><br><br><br>
 	</div>
-
-
 </body>

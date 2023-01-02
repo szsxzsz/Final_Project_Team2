@@ -32,20 +32,123 @@
 		]]>
 	</select>
 	
-	<!-- 특정회원정보 조회 -->
+	<!-- 특정회원정보 조회(id 사용) -->
 	<select id="getUser" resultType="com.chagok.domain.UserVO">
 		select * from user where id=#{id} 
 	</select>
 	
+	<!-- 특정회원정보 조회(mno 사용) -->
+	<select id="getUserM" resultType="com.chagok.domain.UserVO">
+		select * from user where mno=#{mno} 
+	</select>
+	
 	<!-- 로그인 처리 -->
-	<select id="loginUser" resultType="com.chagok.domain.UserVO">
+	<select id="loginUserCheck" resultType="com.chagok.domain.UserVO">
 		select * from user
 		where id=#{id} and pw=#{pw}
 	</select>
-  
-  
+	
+  	<!--  챌린지 정보 가져오기  -->
 	<select id="getChallengeInfo" resultType="com.chagok.domain.ChallengeVO">
+	select * from challenge where cno = #{cno}
+	</select>
+	
+	<!-- ct_top만 가져오기 -->
+	<select id="getCt_top" resultType="com.chagok.domain.ChallengeVO">
+	select ct_top from category where ctno=(select ctno from challenge where cno = #{cno})
+	</select>
+	
+	<!-- [저축형]챌린지 참가자 조회-->
+	<select id="getPlusPeople" resultType="map">
+		select * from plus p inner join user u
+		where cno = #{cno} and p.mno = u.mno
+	</select>
+
+	<!-- 후기글 작성 -->
+	<insert id="create">
+		insert into board (cno,b_title,b_content,b_writer,b_sort)
+		values (#{cno},#{b_title},#{b_content},#{b_writer},#{b_sort})
+	</insert>
+	
+   <!-- 내 챌린지 정보 가져오기 -->
+   <select id="getmyChallenge" resultType="com.chagok.domain.ChallengeVO">
+   select * from challenge A join category B
+   on A.ctno = B.ctno
+   where c_person like concat('%',#{nick},'%')
+   </select>
+	
+	<!-- [절약형]챌린지 참가자 조회-->
+	<select id="getMinusPeople" resultType="map">
+		select * from minus m inner join user u
+		where cno = #{cno} and m.mno = u.mno
+	</select>
+
+	<!-- 게시글 리스트 -->
+	<select id="boardList" resultType="com.chagok.domain.BoardVO">
+		select * from board
+		where b_sort = #{b_sort}
+	</select>
+
+	<!-- 게시글 확인 -->
+	<select id="board" resultType="com.chagok.domain.BoardVO">
+		select * from board 
+		where bno = #{bno}
+	</select>
+	
+	<!-- 중복된 챌린지(카테고리) 확인 -->	
+	<select id="samechallenge" resultType="int">
+<!-- 		select count(*) from challenge where ctno=#{ctno} -->
+    select ctno from challenge A inner join plus B 
+    where A.cno = B.cno and mno = #{mno} and ctno = #{ctno};
+	</select>
+	
+	<!-- 챌린지 리스트 -->
+	<select id="clist" resultType="map">
+		select * from challenge c inner join user u
+		where cno = #{cno} and c.cno = u.mmo
+	</select>
+	
+	<!-- 성공/실패 -->
+	<select id="">
 		select * from challenge 
+	</select>
+<!-- 	<insert id="joinplus" parameterType="com.chagok.domain.PlusVO"> -->
+<!-- 		insert into plus(plcno,mno,cno,pl_finish,pl_cnt,pl_sum)  -->
+<!-- 		values(#{plcno},#{mno},#{cno},#{pl_finish},#{pl_cnt},#{pl_sum})  -->
+<!-- 	</insert> -->
+	
+	<!-- 챌린지 종료일자 정보 가져오기  -->
+	<select id="getChallengeEndDate" resultType="date">
+		select distinct(date_add(c_start, interval c_period week)) c_end 
+		from plus p inner join challenge c
+		where p.cno = c.cno and c.cno = #{cno}
+	</select>
+	
+	<!-- 챌린지 등록하기 --> 
+  	<insert id="challengeRegist">
+     	insert into challenge (c_title,ctno,c_period,c_start,c_pcnt,c_deposit,c_freq,c_amount,c_content,c_status,c_sort,c_min,c_file,c_thumbFile) 
+     	values (#{c_title},#{ctno},#{c_period},#{c_start},#{c_pcnt},#{c_deposit},#{c_freq},#{c_amount},#{c_content},#{c_status},#{c_sort},#{c_min},#{c_file},#{c_thumbFile})  
+  	</insert>
+  	
+  	<!-- 챌린지 목록 -->
+  	<select id="getChallengeList" resultType="com.chagok.domain.ChallengeVO">
+     	select * from challenge ch join category c
+		where ch.ctno = c.ctno;
+  	</select>
+  	
+
+  	
+  	
+  	
+  	
+
 		where cno = #{cno}
 	</select>  
+	
+	<update id="updateIsCheck">
+		update user set isCheck = "Y" where mno = #{mno}
+	</update>
+	
+	
+	
   </mapper>

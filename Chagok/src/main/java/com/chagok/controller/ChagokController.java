@@ -1,17 +1,28 @@
 package com.chagok.controller;
 
+import java.util.List;
+import java.util.Map;
+import java.util.Spliterator;
+
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.chagok.domain.ChallengeVO;
 import com.chagok.domain.UserVO;
+import com.chagok.service.ChallengeService;
 import com.chagok.service.UserService;
 
 @Controller
@@ -22,9 +33,11 @@ public class ChagokController {
 	@Inject
 	private UserService service;
 	
+	@Inject
+	private ChallengeService service2;
+	
 	// 차곡 메인사이트 
 	// http://localhost:8080/main
-
 	@GetMapping(value = "/main")
 	public String mainGET() {
 
@@ -40,15 +53,35 @@ public class ChagokController {
 		return "/chagok/assetmain";
 	}
 
-	// 커뮤니티 파트 메인
+//	// 커뮤니티 파트 메인
+//	// http://localhost:8080/commumain
+//	@GetMapping(value = "/commumain")
+//	public String commumainGET() throws Exception {
+//
+//		return "/chagok/commumain";
+//	}
+	
+	// 챌린지 목록 불러오기 (커뮤메인)
 	// http://localhost:8080/commumain
-	@GetMapping(value = "/commumain")
-	public String commumainGET() throws Exception {
-
+	@GetMapping(value="/commumain")
+	public String getChallengeList(Model model, @ModelAttribute("result") String result) throws Exception {
+		mylog.debug(" /chagok/commumain 호출 ");
+		
+		// 전달받은 정보 x
+		mylog.debug(" 전달정보 : "+result);
+		
+		// 서비스 -> DAO 게시판 리스트 가져오기
+		List<ChallengeVO> challengeList = service2.getChallengeList();
+		
+		// 참여명수 구하기		
+		
+		// 연결되어 있는 뷰페이지로 정보 전달 (Model 객체)
+		model.addAttribute("challengeList", challengeList);
+		
 		return "/chagok/commumain";
 	}
-
-	// http://localhost:8080/chagok/login
+	
+	// http://localhost:8080/login
 	@GetMapping(value = "/login")
 	public String loginGET() throws Exception {
 
@@ -56,31 +89,32 @@ public class ChagokController {
 	}
 
 	@PostMapping(value = "/login")
-	public String loginPOST(UserVO vo,HttpSession session) throws Exception {
+	public @ResponseBody Object loginPOST(@RequestBody Map<String, String> loginMap, HttpServletRequest request, UserVO vo, Model model) throws Exception {
 		mylog.debug(" loginPOST() 호출");
+		HttpSession session = request.getSession();
 		
-		// 전달정보 저장(userid, userpw)
-		mylog.debug(" 로그인 정보 : " +vo);
+		// 전달정보 저장(id, pw)
+		mylog.debug(" 로그인 정보 : " +loginMap);
+		mylog.debug(" 세션 정보 : " +session);
 		
-		// 서비스 - DAO(로그인체크)
-		boolean loginStatus = service.userLogin(vo);
-		
-		mylog.debug(" 로그인 상태 : " + loginStatus);
-		// 로그인 여부에 따라서 페이지 이동
-		// 성공 - main 페이지
-		// 실패 - login페이지
-		String resultURI="";
-		if(loginStatus) {
-			resultURI = "redirect:/chagok/main";
-			session.setAttribute("id", vo.getId());
-		}else {
-			resultURI = "redirect:/chagok/login";
+		if(session.getAttribute("mno") != null) {
+			session.invalidate();;
 		}
 		
-		return resultURI;
-	 }
+		UserVO userVO = service.loginUserCheck(loginMap);
+		
+		if(userVO != null) {
+			session.setAttribute("mno", userVO.getMno());
+			session.setAttribute("nick", userVO.getNick());
+			
+			return userVO;
+		} else {
+			
+			return 0;
+		}
+	}
 
-	 // http://localhost:8080/chagok/register
+	 // http://localhost:8080/register
 	 @GetMapping(value = "/register")
 	 public String registerGET() throws Exception {
 		 mylog.info("/chagok/registerForm -> 정보입력창(view) 이동");
@@ -95,7 +129,7 @@ public class ChagokController {
 		 mylog.info(vo.toString());
 		 service.userJoin(vo);
 		
-		 return "redirect:/chagok/login";
+		 return "redirect:/login";
 	 }
 		
 	 @PostMapping("/checkId")
@@ -107,7 +141,7 @@ public class ChagokController {
 		 int checkNum = service.checkId(id);
 		 System.out.println("checkNum : " + checkNum );
 		 if(checkNum != 0) {
-		 	 System.out.println("아이디가 중복되었다.");
+		 	 System.out.println("아이디 중복");
 			 return "duplicated";
 			
 		 }else {
@@ -134,9 +168,41 @@ public class ChagokController {
 			 return "available";
 		 }
 	 }
+	 
+	 @GetMapping(value = "/logout")
+	 public String logoutMain(HttpServletRequest request) throws Exception{
+		 
+		 mylog.debug("logout(HttpServletRequest)");
+		 HttpSession session = request.getSession();
+		 
+		 session.invalidate();
+		 
+		 return "redirect:/main";
+	 }
+	 
+	 // 가계부 가져오기 (연동) - 수지 
+	 @RequestMapping(value="/abookList")
+		public String getAbookList() throws Exception{
+			mylog.debug(" /abookList -> 연결된 뷰 abookList.jsp -> 데이터 생성 -> ChallengeController ");
+			
+			return "/asset/abookList";
+		}
 	
-	
-	
+	 
+	// http://localhost:8080/challenge/detail?cno=1
+   @GetMapping(value = "/challenge/detail")
+   public String getChoseChallenge(Integer cno) {
+      ChallengeVO vo = service2.getChallengeInfo(cno);
+      int sort = vo.getC_sort();
+      
+      if(sort == 0) {
+         mylog.debug("저축형 챌린지로 이동");
+         return "redirect:/challenge/plusdetail?cno="+cno;
+      }else {
+         mylog.debug("절약형 챌린지로 이동");
+         return "redirect:/challenge/minusdetail?cno="+cno;
+      }
+   }
 	
 	
 }

@@ -1,5 +1,7 @@
 package com.chagok.service;
 
+import java.util.Map;
+
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
@@ -36,23 +38,46 @@ public class UserServiceImpl implements UserService {
 		return result;
 	}
 
+//	@Override
+//	public boolean userLogin(UserVO vo) {
+//		mylog.info(" userLogin(vo) 호출 ");
+//		
+//		UserVO resultVO = dao.loginUser(vo);
+//		
+//		mylog.debug(" DAO 처리 결과 : " + resultVO);
+//		
+//		return resultVO != null ? true:false;
+//	}
+	
 	@Override
-	public boolean userLogin(UserVO vo) {
+	public UserVO loginUserCheck(Map<String, String> loginMap) {
 		mylog.info(" userLogin(vo) 호출 ");
 		
-		UserVO resultVO = dao.loginUser(vo);
+		UserVO resultVO = dao.loginUserCheck(loginMap);
 		
 		mylog.debug(" DAO 처리 결과 : " + resultVO);
 		
-		return resultVO != null ? true:false;
+		return resultVO;
 	}
 
+	// 특정 회원정보 조회(id)
 	@Override
 	public UserVO getUser(String id) {
 		return dao.getUser(id);
 	}
 
+	// 특정 회원정보 조회(mno)
+	@Override
+	public UserVO getUser(int mno) {
+		return dao.getUser(mno);
+	}
 
+	@Override
+	public void updateIsCheck(int mno) {
+		dao.updateIsCheck(mno);
+	}
+
+	
 
 	
 }
