@@ -111,15 +111,18 @@
         			url:"/challenge/plusdetailPOST",
         			dataType:'text',
         			data: {"ctno":ctno},
+        			timeout: 3000,
         			success: function(data){
-						console.log('통신 성공! ' + result);
+						console.log('통신 성공! ' + data);
         				if(data == "N"){ // 중복된 카테고리num이 아닐 때
-        					result = "참여 가능한 챌린지 입니다!";
-        					$("#result_samechallenge").html(result).css("color","green");
+//         					result = "참여 가능한 챌린지 입니다!";
+//         					$("#result_samechallenge").html(result).css("color","green");
+        					alert("참여 가능한 챌린지 입니다!");
         					location.href="/commumain";
         				}else{ // 중복된 챌린지 or 중복된 상세카테고리 챌린지 
-        					result="해당 카테고리로 참여 중인 챌린지가 있습니다.";
-        					$("result_samechallenge").html(result).css("color","red");
+//         					result="해당 카테고리로 참여 중인 챌린지가 있습니다.";
+//         					$("result_samechallenge").html(result).css("color","red");
+        					alert("해당 카테고리로 참여 중인 챌린지가 있습니다.");
         					return;
         				}
         			},
