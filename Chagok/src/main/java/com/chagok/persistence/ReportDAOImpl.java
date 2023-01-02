@@ -83,17 +83,37 @@ public class ReportDAOImpl implements ReportDAO {
 	}
 
 	@Override
-	public Map<String, Integer> outWeek(Integer mno) throws Exception {
-		mylog.debug("outWeek() 호출");
-		return sqlSession.selectOne(NAMESPACE+".outWeek", mno);
+	public Map<String, Integer> outCum(Integer mno) throws Exception {
+		mylog.debug("outCum() 호출");
+		return sqlSession.selectOne(NAMESPACE+".outCum", mno);
 	}
 
 	@Override
-	public Map<String, Integer> inWeek(Integer mno) throws Exception {
-		mylog.debug("inWeek() 호출");
-		return sqlSession.selectOne(NAMESPACE+".inWeek", mno);
+	public List<Map<String, Integer>> outWeek(Integer mno) throws Exception {
+		mylog.debug("outWeek() 호출");
+		return sqlSession.selectList(NAMESPACE+".outWeek", mno);
 	}
 	
+	@Override
+	public List<Map<String, Integer>> inWeek(Integer mno) throws Exception {
+		mylog.debug("inWeek() 호출");
+		return sqlSession.selectList(NAMESPACE+".inWeek", mno);
+	}
+
+	@Override
+	public List<Map<String, Integer>> outMonth(Integer mno) throws Exception {
+		mylog.debug("outMonth() 호출");
+		return sqlSession.selectList(NAMESPACE+".outMonth", mno);
+
+	}
+	
+	@Override
+	public List<Map<String, Integer>> inMonth(Integer mno) throws Exception {
+		mylog.debug("inMonth() 호출");
+		return sqlSession.selectList(NAMESPACE+".inMonth", mno);
+
+	}
+
 	
 	
 	

@@ -5,6 +5,8 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -13,6 +15,7 @@ import com.chagok.domain.AbookVO;
 import com.chagok.domain.ChallengeVO;
 import com.chagok.domain.ReportVO;
 import com.chagok.persistence.ReportDAO;
+import com.google.gson.Gson;
 
 @Service
 public class ReportServiceImpl implements ReportService {
@@ -26,6 +29,26 @@ public class ReportServiceImpl implements ReportService {
 	public List<AbookVO> rptTest(Integer mno) {
 		mylog.debug("rptTest(mno) 호출");
 		return rptdao.rptTest(mno);
+	}
+	
+	@Override
+	public String listMapToJson(List<Map<String, Integer>> listMap) throws Exception {
+		mylog.debug("toJsonArray(listMap) 호출");
+		JSONArray jArr = new JSONArray();
+		for(Map<String, Integer> map : listMap) {
+			JSONObject jsonobj = new JSONObject();
+			for(Map.Entry<String, Integer> entry : map.entrySet()) {
+				String key = entry.getKey();
+				Object value = entry.getValue();
+				jsonobj.put(key, value);
+			}
+			jArr.add(jsonobj);
+		}
+		Gson gson = new Gson();
+		String jsonStr = gson.toJson(jArr);
+		mylog.debug("jArr : "+jArr);
+		
+		return jsonStr;
 	}
 	
 	////////////////////////dateReport ////////////////////////
@@ -79,15 +102,33 @@ public class ReportServiceImpl implements ReportService {
 	}
 
 	@Override
-	public Map<String, Integer> outWeek(Integer mno) throws Exception {
-		mylog.debug("outWeek() 호출");
-		return rptdao.outWeek(mno);
+	public Map<String, Integer> outCum(Integer mno) throws Exception {
+		mylog.debug("outCum() 호출");
+		return rptdao.outCum(mno);
 	}
 
 	@Override
-	public Map<String, Integer> inWeek(Integer mno) throws Exception {
+	public List<Map<String, Integer>> outWeek(Integer mno) throws Exception {
+		mylog.debug("outWeek() 호출");
+		return rptdao.outWeek(mno);
+	}
+	
+	@Override
+	public List<Map<String, Integer>> inWeek(Integer mno) throws Exception {
 		mylog.debug("inWeek() 호출");
 		return rptdao.inWeek(mno);
+	}
+	
+	@Override
+	public List<Map<String, Integer>> outMonth(Integer mno) throws Exception {
+		mylog.debug("outMonth() 호출");
+		return rptdao.outMonth(mno);
+	}
+	
+	@Override
+	public List<Map<String, Integer>> inMonth(Integer mno) throws Exception {
+		mylog.debug("inMonth() 호출");
+		return rptdao.inMonth(mno);
 	}
 
 	

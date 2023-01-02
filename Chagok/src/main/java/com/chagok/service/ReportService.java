@@ -12,6 +12,12 @@ public interface ReportService {
 	// Test
 	public List<AbookVO> rptTest(Integer mno);
 	
+	// List<Map> -> JsonArray
+	public String listMapToJson(List<Map<String, Integer>> listMap) throws Exception;
+	
+	//	// List -> JsonArray
+	//	public String listToJson(List list) throws Exception;
+	
 	////////////////////////dateReport ////////////////////////
 	
 	// 1. 이번달 총 지출
@@ -39,12 +45,19 @@ public interface ReportService {
 	public Integer outCnt(Integer mno) throws Exception;
 	
 	// 9. 이번달 누적 지출
+	public Map<String, Integer> outCum(Integer mno) throws Exception;
 	
 	// 10. 주간 지출
-	public Map<String, Integer> outWeek(Integer mno) throws Exception;
+	public List<Map<String, Integer>> outWeek(Integer mno) throws Exception;
 	
 	// 11. 주간 수입
-	public Map<String, Integer> inWeek(Integer mno) throws Exception;
+	public List<Map<String, Integer>> inWeek(Integer mno) throws Exception;
+	
+	// 12. 월간 지출
+	public List<Map<String, Integer>> outMonth(Integer mno) throws Exception;
+	
+	// 13. 월간 수입
+	public List<Map<String, Integer>> inMonth(Integer mno) throws Exception;
 	
 	
 	
