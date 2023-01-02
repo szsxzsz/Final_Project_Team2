@@ -51,31 +51,31 @@
     
     
     // 가계부 연동위한 에이잭스 
-	$(document).ready(function(){
+// 	$(document).ready(function(){
 		
-		$("#saveABook").click(function(){
-			// alert(" 클릭! ");
-			var aBook = {"abno":$("#abno").val(),"mno":$("#mno").val(),"ctno":$("#ctno").val(),
-					"ab_amount":$("#ab_amount").val(),"ab_date":$("#ab_date").val(),"ab_content":$("#ab_content").val(),
-					"ab_method":$("#ab_method").val(),"ab_memo":$("#ab_memo").val()};
+// 		$("#saveABook").click(function(){
+// 			// alert(" 클릭! ");
+// 			var aBook = {"abno":$("#abno").val(),"mno":$("#mno").val(),"ctno":$("#ctno").val(),
+// 					"ab_amount":$("#ab_amount").val(),"ab_date":$("#ab_date").val(),"ab_content":$("#ab_content").val(),
+// 					"ab_method":$("#ab_method").val(),"ab_memo":$("#ab_memo").val()};
 			
-			// JSON.stringify(객체) : 객체정보를 JSON 형태로 변경 및 전달
+// 			// JSON.stringify(객체) : 객체정보를 JSON 형태로 변경 및 전달
 			
-			$.ajax({
-				url:"/minusFeedPost",
-				type:"post",
-				contentType:"application/json",
-				data: JSON.stringify(aBook),
-// 				data: member,
-				success:function(){
-					alert(" 성공 ! ")
-				}
-			});
+// 			$.ajax({
+// 				url:"/minusFeedPost",
+// 				type:"post",
+// 				contentType:"application/json",
+// 				data: JSON.stringify(aBook),
+// // 				data: member,
+// 				success:function(){
+// 					alert(" 성공 ! ")
+// 				}
+// 			});
 			
 			
-		});
+// 		});
 		
-	});
+// 	});
 </script>
 
 <section id="about" class="about">
