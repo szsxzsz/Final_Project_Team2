@@ -5,6 +5,21 @@ public class CardInfoVO {
 	private String card_num_masked;
 	private String card_name;
 	private String card_member_type;
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof CardInfoVO) {
+            CardInfoVO temp = (CardInfoVO) obj;
+            return temp.card_id.equals(this.card_id);
+        }
+        return false;
+	}
+
+	@Override
+	public int hashCode() {
+		return String.valueOf(this.card_id).hashCode();
+	}
+	
 	public String getCard_id() {
 		return card_id;
 	}
@@ -29,11 +44,6 @@ public class CardInfoVO {
 	public void setCard_member_type(String card_member_type) {
 		this.card_member_type = card_member_type;
 	}
-	@Override
-	public String toString() {
-		return "CardInfoVO [card_id=" + card_id + ", card_num_masked=" + card_num_masked + ", card_name=" + card_name
-				+ ", card_member_type=" + card_member_type + "]";
-	}
-	
+
 	
 }

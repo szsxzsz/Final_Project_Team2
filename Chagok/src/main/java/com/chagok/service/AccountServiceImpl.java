@@ -32,6 +32,11 @@ public class AccountServiceImpl implements AccountService{
 		accountDAO.insertCardInfo(cardInfoResponseVO);
 	}
 
+	@Override
+	public List<AccountVO> getAccountInfo(int mno) throws Exception {
+		return accountDAO.getAccountInfo(mno);
+	}
+
 	
 	
 	

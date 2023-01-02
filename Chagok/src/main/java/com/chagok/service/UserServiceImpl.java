@@ -72,7 +72,12 @@ public class UserServiceImpl implements UserService {
 		return dao.getUser(mno);
 	}
 
+	@Override
+	public void updateIsCheck(int mno) {
+		dao.updateIsCheck(mno);
+	}
 
+	
 
 	
 }
