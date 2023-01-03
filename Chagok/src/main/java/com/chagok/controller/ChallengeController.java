@@ -62,7 +62,6 @@ public class ChallengeController {
 		mylog.debug("plusFeedGET()에서 id : "+session.getId());
 		SysLogVO sysLogVO = new SysLogVO();
 
-		//		model.addAttribute("sessionId", session.getId());
 		model.addAttribute("sessionId", sysLogVO.getUserId());
 		model.addAttribute("vo", service.getChallengeInfo(cno));
 		model.addAttribute("plusPeoList", plusPeoList);
@@ -132,21 +131,23 @@ public class ChallengeController {
 
 	@PostMapping(value = "/plusdetailPOST")
 	@ResponseBody // ajax 값을 바로 jsp에 보내기 위해 사용@RequestParam("ctno") int ctno, 
-	public String plusdetailPOST(@RequestBody Map<String, Integer> map, UserVO vo) throws Exception {
+	public String plusdetailPOST(@RequestBody Map<String, Integer> map) throws Exception {
 		mylog.debug("plusdetailPOST 호출");
-		mylog.debug(vo+"");
-		
-//		 Map<String, Integer>  map = new HashMap<String, Integer>();
-//		map.put("mno", mno);
-//		map.put("ctno", ctno);
+		mylog.debug(map+"");
 		
 		String result="N";
 		
 //		int gctno = ajaxService.samechallenge(ctno);
+//		service.samechallenge(ctno);
+
+//		int gctno = service.samechallenge(ctno);
+//		if(gctno == 1) result = "Y";
 		service.samechallenge(map);
-		int gctno = service.samechallenge(map);	
+//		mylog.debug(service.samechallenge(map)+"");
+//		
+		Integer gctno = service.samechallenge(map);	
 		mylog.debug(gctno+"");
-		if(gctno == 11) result = "Y";
+		if(gctno != null) result = "Y";
 		return result;
 //		return "/challenge/plusdetail";
 	}
@@ -166,6 +167,23 @@ public class ChallengeController {
 		model.addAttribute("vo2", vo2);
 
 		return "/challenge/minusdetail";
+	}
+	
+	@PostMapping(value = "/minusdetailPOST")
+	@ResponseBody // ajax 값을 바로 jsp에 보내기 위해 사용@RequestParam("ctno") int ctno, 
+	public String minusdetailPOST(@RequestBody Map<String, Integer> map) throws Exception {
+		mylog.debug("minusdetailPOST 호출");
+		mylog.debug(map+"");
+		
+		String result="N";
+		
+		service.samechallenge(map);
+
+		Integer gctno = service.samechallenge(map);	
+		mylog.debug(gctno+"");
+		if(gctno != null) result = "Y";
+		return result;
+//		return "/challenge/minusdetail";
 	}
 
 	// http://localhost:8080/challenge/echo
@@ -280,7 +298,7 @@ public class ChallengeController {
 		@GetMapping("/mychallenge")
 		public String mychallengeGET(Model model, HttpSession session) throws Exception {
 			
-			int mno = (int)session.getAttribute("mno");
+			Integer mno = (Integer)session.getAttribute("mno");
 			mylog.debug(mno+"");
 			
 //			uservice.getUser(mno);
@@ -288,11 +306,11 @@ public class ChallengeController {
 			
 			List<ChallengeVO> mychallengeList = service.getmyChallenge(vo.getNick());
 		
-			if(vo == null) {
+			if(mno == null) {
 				return "redirect:/login";
 			}
 			// else일 때
-			model.addAttribute("nick", mno);
+//			model.addAttribute("nick", nick);
 			model.addAttribute("mychallengeList", mychallengeList);
 			
 			return "/challenge/mychallenge";

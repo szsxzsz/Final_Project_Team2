@@ -6,26 +6,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<!-- jquery 최신버전 추가 -->
-<!-- <script src ="http://code.jquery.com/jquery-lastest.min.js"></script> -->
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.min.js"></script>
-<!-- 카카오톡 공유하기 -->
-<!-- <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script> -->
-<!-- <script type="text/javascript"> -->
-<!-- Kakao.init('5c7fadc901b4e26f9995aa27ef5cf82b'); -->
-<!-- Kakao.isInitialized(); -->
-<!-- </script> -->
-
 
 <h1 style="padding-left: 50px;">저축형 차곡 챌린지</h1>
 
-${user.mno }
+${mno }
 <%-- ${vo } --%>
-
 <div class="row" style="margin-left:30px; margin-top:30px;">
 	<div class="col-lg-4 aos-init aos-animate" data-aos="fade-right">
 <!--        아래 이미지 주소는 디비에서 꺼내오는걸로 바꿔야해요 -->
-        <img class="img-responsive" src="${pageContext.request.contextPath }/resources/dist/img/photo1.png" alt="Photo" style="width:500px; height:250px;">
+     <img class="card-img-top img-fluid" src="${vo.c_thumbFile }" alt="" aria-labelledby="title_1" id="c_img">
 	</div>
 	<div class="col-lg-8 pt-4 pt-lg-0 content aos-init aos-animate" data-aos="fade-left" style="padding-left: 50px; width: 600;">
 		<h3><span style="color: #66BB7A; font-weight: bold;">[${vo2.ct_top}]</span> ${vo.c_title }</h3>
@@ -97,17 +86,40 @@ ${user.mno }
            	<span style = "font-size: 16px; font-family: 'Pretendard','Source Sans Pro', sans-serif;"><strong>챌린지 설명</strong></span>
 				 <textarea class="form-control" rows="3" style="margin-top:15px;" readonly>${vo.c_content }</textarea>
                           
-    <ul class="list-inline pull-right" style="margin-top: 10px;">
-      <li><a href="#" class="link-black text-sm"><i class="fa fa-share margin-r-5" style="font-size:1.2em;"><b>Share</b></i></a></li>
-    </ul>
+<!--     <ul class="list-inline pull-right" style="margin-top: 10px;"> -->
+      <a href="#" id="kakaotalk-sharing-btn"><i class="fa fa-share margin-r-5" style="font-size:1.2em;"><b>Share</b></i></a>
+<!-- 			<a href="#" id="kakaotalk-sharing-btn">공유하기</a> -->
+<!--     </ul> -->
         </div>
         
+        
+        <div>
+<!--        	 <form name="participateForm"> -->
+<!--         <input class="btn btn-block btn-success btn-lg" type="button" value="참여가능한지 확인하기" id="samechallenge" style="width:218px; margin-left: 950px;"> -->
+<!--         <div><span style="font-size:12px;"></span></div> -->
+        <button class="btn btn-block btn-success btn-lg" type="button" id="samechallenge" style="width:218px; margin-left: 950px;">참여하기</button>
+		<div id="result_samechallenge"></div>
+		</div>
+<!-- 		 </form> -->
+<!-- onclick="location.href='${pageContext.request.contextPath }/commumain';" -->
+	</div>
+	
+<!-- 	<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script> -->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.min.js"></script>
+<!-- 카카오톡 공유하기 -->
+<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
+<script type="text/javascript">
+	Kakao.init('5c7fadc901b4e26f9995aa27ef5cf82b');
+	Kakao.isInitialized();
+</script>
+	
+	
         <script>
         $(function(){
         	$("#samechallenge").click(function(){
         		
         		var ctno = ${vo.ctno};
-        		var mno = ${user.mno};
+        		var mno = ${mno};
         		var test = {"ctno":ctno,"mno":mno};
         		
 				$.ajax({
@@ -138,84 +150,21 @@ ${user.mno }
         			});
         		});
         	});
-        
-        	
-//         	Kakao.Share.sendDefault({
-//         		  objectType: 'feed',
-//         		  content: {
-//         		    title: '차곡 챌린지',
-//         		    description: '함께 도전해보아요!',
-//         		    imageUrl:
-//         		      '../webapp/resources/dist/img/chagok_pig.png',
-//         		    link: {
-//         		      mobileWebUrl: 'http://localhost:8080/challenge/plusdetail',
-//         		      webUrl: 'http://localhost:8080/challenge/plusdetail',
-//         		    },
-//         		  },
-//         		  itemContent: {
-//         		    profileText: 'Kakao',
-//         		    profileImageUrl: 'https://mud-kage.kakao.com/dn/Q2iNx/btqgeRgV54P/VLdBs9cvyn8BJXB3o7N8UK/kakaolink40_original.png',
-//         		    titleImageUrl: 'https://mud-kage.kakao.com/dn/Q2iNx/btqgeRgV54P/VLdBs9cvyn8BJXB3o7N8UK/kakaolink40_original.png',
-//         		    titleImageText: 'Cheese cake',
-//         		    titleImageCategory: 'Cake',
-//         		    items: [
-//         		      {
-//         		        item: 'Cake1',
-//         		        itemOp: '1000원',
-//         		      },
-//         		      {
-//         		        item: 'Cake2',
-//         		        itemOp: '2000원',
-//         		      },
-//         		      {
-//         		        item: 'Cake3',
-//         		        itemOp: '3000원',
-//         		      },
-//         		      {
-//         		        item: 'Cake4',
-//         		        itemOp: '4000원',
-//         		      },
-//         		      {
-//         		        item: 'Cake5',
-//         		        itemOp: '5000원',
-//         		      },
-//         		    ],
-//         		    sum: '총 결제금액',
-//         		    sumOp: '15000원',
-//         		  },
-//         		  social: {
-//         		    likeCount: 10,
-//         		    commentCount: 20,
-//         		    sharedCount: 30,
-//         		  },
-//         		  buttons: [
-//         		    {
-//         		      title: '웹으로 이동',
-//         		      link: {
-//         		        mobileWebUrl: 'https://developers.kakao.com',
-//         		        webUrl: 'https://developers.kakao.com',
-//         		      },
-//         		    },
-//         		    {
-//         		      title: '앱으로 이동',
-//         		      link: {
-//         		        mobileWebUrl: 'https://developers.kakao.com',
-//         		        webUrl: 'https://developers.kakao.com',
-//         		      },
-//         		    },
-//         		  ],
-//         		});
-        	
         </script>
-        
-        <div>
-<!--        	 <form name="participateForm"> -->
-<!--         <input class="btn btn-block btn-success btn-lg" type="button" value="참여가능한지 확인하기" id="samechallenge" style="width:218px; margin-left: 950px;"> -->
-<!--         <div><span style="font-size:12px;"></span></div> -->
-        <button class="btn btn-block btn-success btn-lg" type="button" id="samechallenge" style="width:218px; margin-left: 950px;">참여하기</button>
-		<div id="result_samechallenge"></div>
-		</div>
-<!-- 		 </form> -->
-<!-- onclick="location.href='${pageContext.request.contextPath }/commumain';" -->
-	</div>
+
+<script type="text/javascript">   
+	$(document).ready(function(){
+		$('#kakaotalk-sharing-btn').click(function () {
+			Kakao.Share.createCustomButton({
+			  container: '#kakaotalk-sharing-btn',
+			  templateId: ${87844},
+			  templateArgs: {
+			  title: '${vo.c_title}',
+			  description: '지금 친구와 함께 챌린지에 도전해보세요! ( ´͈ ᵕ `͈ )◞♡ '
+			  
+			  }
+		});
+	});
+});
+</script>
 <%@ include file="../include/footer.jsp" %>

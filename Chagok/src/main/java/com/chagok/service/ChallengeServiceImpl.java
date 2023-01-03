@@ -117,11 +117,10 @@ public class ChallengeServiceImpl implements ChallengeService{
 
 	// 중복챌린지 체크
 	@Override
-	public int samechallenge(Map<String, Integer> map) {
-		
+	public Integer samechallenge(Map<String, Integer> map) {
+		mylog.debug("service : samechallenge 호출");
 		return dao.samechallenge(map);
 	}
-
 
 	// 챌린지 피드 인원 조회
 //	@Override
@@ -138,9 +137,17 @@ public class ChallengeServiceImpl implements ChallengeService{
 		
 	}
 
+	// 저축형 챌린지 참여
+	@Override
+	public void joinPlus(ChallengeVO vo) throws Exception {
+		mylog.debug("joinplus 호출");
+		dao.joinPlus(vo);
+		mylog.debug("저축형 챌린지 참여완료");
+	}
+
 	
 
-
+	
 	
 
 	

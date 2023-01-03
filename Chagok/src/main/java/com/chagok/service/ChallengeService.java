@@ -51,7 +51,11 @@ public interface ChallengeService {
 	public List<Map<String, Object>> getPersonCnt() throws Exception;	
 	
 	// 중복 챌린지 체크
-	public int samechallenge(Map<String, Integer> map);
+	public Integer samechallenge(Map<String, Integer> map);
+	
+	// 저축형 챌린지 참여하기
+	public void joinPlus(ChallengeVO vo) throws Exception;
+	
 	
 	// 챌린지 피드 인원 조회
 //	public List<Map<String, Object>> getCList(Integer cno);
