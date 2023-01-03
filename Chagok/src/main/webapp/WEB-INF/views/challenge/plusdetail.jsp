@@ -7,7 +7,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!-- jquery 최신버전 추가 -->
-<script src ="http://code.jquery.com/jquery-lastest.min.js"></script>
+<!-- <script src ="http://code.jquery.com/jquery-lastest.min.js"></script> -->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.min.js"></script>
 <!-- 카카오톡 공유하기 -->
 <!-- <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script> -->
 <!-- <script type="text/javascript"> -->
@@ -18,6 +19,7 @@
 
 <h1 style="padding-left: 50px;">저축형 차곡 챌린지</h1>
 
+${user.mno }
 <%-- ${vo } --%>
 
 <div class="row" style="margin-left:30px; margin-top:30px;">
@@ -105,25 +107,34 @@
         	$("#samechallenge").click(function(){
         		
         		var ctno = ${vo.ctno};
+        		var mno = ${user.mno};
+        		var test = {"ctno":ctno,"mno":mno};
         		
-        		$.ajax({
-        			type:'post',
-        			url:"/challenge/plusdetailPOST",
-        			dataType:'text',
-        			data: {"ctno":ctno},
-        			success: function(data){
-						console.log('통신 성공! ' + result);
+				$.ajax({
+        			type : "post",
+        			url : "/challenge/plusdetailPOST",
+        			contentType : "application/json",
+        			dataType :'text',
+        			data : JSON.stringify(test),
+        			timeout : 3000,
+        			success : function(data){
+						console.log('통신 성공! ' + data);
         				if(data == "N"){ // 중복된 카테고리num이 아닐 때
-        					result = "참여 가능한 챌린지 입니다!";
-        					$("#result_samechallenge").html(result).css("color","green");
+//         					result = "참여 가능한 챌린지 입니다!";
+//         					$("#result_samechallenge").html(result).css("color","green");
+        					alert("참여 가능한 챌린지 입니다!");
         					location.href="/commumain";
         				}else{ // 중복된 챌린지 or 중복된 상세카테고리 챌린지 
-        					result="해당 카테고리로 참여 중인 챌린지가 있습니다.";
-        					$("result_samechallenge").html(result).css("color","red");
-        					return;
+//         					result="해당 카테고리로 참여 중인 챌린지가 있습니다.";
+//         					$("result_samechallenge").html(result).css("color","red");
+        					alert("해당 카테고리로 참여 중인 챌린지가 있습니다.");
+//         					return;
         				}
         			},
-        				error : function(error){console.log(error);}
+        				error : function(error, data){
+        					console.log(error);
+        					console.log(data);
+        					}
         			});
         		});
         	});

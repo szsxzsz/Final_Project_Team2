@@ -24,5 +24,6 @@ public interface UserService {
 	// 특정 회원정보 조회(mno)		
 	public UserVO getUser(int mno);
 	
-	
+	// 인증성공 isCheck N => Y
+	public void updateIsCheck(int mno);
 }

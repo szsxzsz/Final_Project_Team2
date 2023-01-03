@@ -50,42 +50,42 @@
     
     
     
-    // 가계부 연동위한 제이슨 
-	$(document).ready(function(){
+    // 가계부 연동위한 에이잭스 
+// 	$(document).ready(function(){
 		
-		$("#saveABook").click(function(){
-			// alert(" 클릭! ");
-			var aBook = {"abno":$("#abno").val(),"mno":$("#mno").val(),"ctno":$("#ctno").val(),
-					"ab_amount":$("#ab_amount").val(),"ab_date":$("#ab_date").val(),"ab_content":$("#ab_content").val(),
-					"ab_method":$("#ab_method").val(),"ab_memo":$("#ab_memo").val()};
+// 		$("#saveABook").click(function(){
+// 			// alert(" 클릭! ");
+// 			var aBook = {"abno":$("#abno").val(),"mno":$("#mno").val(),"ctno":$("#ctno").val(),
+// 					"ab_amount":$("#ab_amount").val(),"ab_date":$("#ab_date").val(),"ab_content":$("#ab_content").val(),
+// 					"ab_method":$("#ab_method").val(),"ab_memo":$("#ab_memo").val()};
 			
-			// JSON.stringify(객체) : 객체정보를 JSON 형태로 변경 및 전달
+// 			// JSON.stringify(객체) : 객체정보를 JSON 형태로 변경 및 전달
 			
-			$.ajax({
-				url:"/minusFeedPost",
-				type:"post",
-				contentType:"application/json",
-				data: JSON.stringify(aBook),
-// 				data: member,
-				success:function(){
-					alert(" 성공 ! ")
-				}
-			});
+// 			$.ajax({
+// 				url:"/minusFeedPost",
+// 				type:"post",
+// 				contentType:"application/json",
+// 				data: JSON.stringify(aBook),
+// // 				data: member,
+// 				success:function(){
+// 					alert(" 성공 ! ")
+// 				}
+// 			});
 			
 			
-		});
+// 		});
 		
-	});
+// 	});
 </script>
 
 <section id="about" class="about">
    <div class="container">
       <div class="section-title">
          <h2>절약형 차곡 챌린지</h2>
-      </div>
-      
+      </div> 
      ${vo }
       / http://localhost:8080/challenge/minusFeed?cno=1
+      <button type="button" class="btn btn-default" onclick="location.href='${pageContext.request.contextPath }/commumain';">메인으로 가기</button>
      
      <div class="row">
 		<div class="col-lg-5 mx-6 aos-init aos-animate" data-aos="fade-right" >
@@ -148,7 +148,7 @@
    <div class="box box-default">
       <div class="box-header with-border">
       	<div class="text-center">
-         <h3 class="box-title">${vo.ct_top }을(를) ${vo.c_amount }원 절약하는 조건이 있습니다.</h3>
+         <h3 class="box-title">${vo2.ct_top }을(를) ${vo.c_amount }원 절약하는 조건이 있습니다.</h3>
       </div>
       </div>
       <!--          <div class="box-body">The great content goes here</div> -->
@@ -209,20 +209,33 @@ ${minusPeoList }
                      <th class="col-md-1">달성 여부</th>
                   </tr>
                   
-                 <%
-                  String[] colorArr = {"progress-bar-danger","progress-bar-yellow","progress-bar-primary", "progress-bar-success"};
-                  %>
+<%--                  <% --%>
+<!--                    String[] colorArr = {"progress-bar-danger","progress-bar-yellow","progress-bar-primary", "progress-bar-success"}; -->
+<%--                   %> --%>
 <%--                  <%=colorArr[1] %> --%>
 <%--                  <c:set var="ca" value="${colorArr }" /> --%>
-                <c:forEach var="minusPeople" begin="0" end="${minusPeoList.size()-1}" items="${minusPeoList}" varStatus="status">
+                <c:forEach var="minusPeople" begin="0" end="${minusPeoList.size()-1}" items="${minusPeoList}">
 <%--                 <c:forEach var="colorArr" begin="0" end="arr.size()-1" items="colorArr"> --%>
                 <c:set var="i" value="${i+1 }"/>
                   <tr>
                      <td>${i }.</td>
-                     <td>${minusPeople.mno }</td>
+                     <td>${minusPeople.nick }</td>
                      <td>
                         <div class="progress progress-xs progress-striped active">
-                           <div class="progress-bar ${colorArr[status.index] }"
+                           <div class="progress-bar 
+                           <c:if test="${minusPeople.m_sum/vo.c_amount *100 == 100}">
+                           		progress-bar-success
+                           </c:if>
+                           <c:if test="${minusPeople.m_sum/vo.c_amount *100 >= 60 && minusPeople.m_sum/vo.c_amount *100 < 100}">
+                           		progress-bar-primary
+                           </c:if>
+                           <c:if test="${minusPeople.m_sum/vo.c_amount *100 >= 30 && minusPeople.m_sum/vo.c_amount *100 < 60}">
+                           		progress-bar-yellow
+                           </c:if>
+                           <c:if test="${minusPeople.m_sum/vo.c_amount *100 < 30}">
+                           		progress-bar-danger
+                           </c:if>
+                           "
                               style="width: ${minusPeople.m_sum/vo.c_amount *100}%"></div>
                         </div>
                      </td>
@@ -241,39 +254,39 @@ ${minusPeoList }
                   
                   
                   
-                  <tr>
-                     <td>2.</td>
-                     <td> </td>
-                     <td>
-                        <div class="progress progress-xs progress-striped active">
-                           <div class="progress-bar progress-bar-yellow"
-                              style="width: 70%"></div>
-                        </div>
-                     </td>
-                     <td><span class="badge bg-yellow">70%</span></td>
-                  </tr>
-                  <tr>
-                     <td>3.</td>
-                     <td>Cron job running</td>
-                     <td>
-                        <div class="progress progress-xs progress-striped active">
-                           <div class="progress-bar progress-bar-primary"
-                              style="width: 30%"></div>
-                        </div>
-                     </td>
-                     <td><span class="badge bg-light-blue">30%</span></td>
-                  </tr>
-                  <tr>
-                     <td>4.</td>
-                     <td>Fix and squish bugs</td>
-                     <td>
-                        <div class="progress progress-xs progress-striped active">
-                           <div class="progress-bar progress-bar-success"
-                              style="width: 90%"></div>
-                        </div>
-                     </td>
-                     <td><span class="badge bg-green">90%</span></td>
-                  </tr>
+<!--                   <tr> -->
+<!--                      <td>2.</td> -->
+<!--                      <td> </td> -->
+<!--                      <td> -->
+<!--                         <div class="progress progress-xs progress-striped active"> -->
+<!--                            <div class="progress-bar progress-bar-yellow" -->
+<!--                               style="width: 70%"></div> -->
+<!--                         </div> -->
+<!--                      </td> -->
+<!--                      <td><span class="badge bg-yellow">70%</span></td> -->
+<!--                   </tr> -->
+<!--                   <tr> -->
+<!--                      <td>3.</td> -->
+<!--                      <td>Cron job running</td> -->
+<!--                      <td> -->
+<!--                         <div class="progress progress-xs progress-striped active"> -->
+<!--                            <div class="progress-bar progress-bar-primary" -->
+<!--                               style="width: 30%"></div> -->
+<!--                         </div> -->
+<!--                      </td> -->
+<!--                      <td><span class="badge bg-light-blue">30%</span></td> -->
+<!--                   </tr> -->
+<!--                   <tr> -->
+<!--                      <td>4.</td> -->
+<!--                      <td>Fix and squish bugs</td> -->
+<!--                      <td> -->
+<!--                         <div class="progress progress-xs progress-striped active"> -->
+<!--                            <div class="progress-bar progress-bar-success" -->
+<!--                               style="width: 90%"></div> -->
+<!--                         </div> -->
+<!--                      </td> -->
+<!--                      <td><span class="badge bg-green">90%</span></td> -->
+<!--                   </tr> -->
                </table>
             </div>
             <!-- /.box-body -->

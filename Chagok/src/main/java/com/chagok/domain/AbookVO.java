@@ -13,5 +13,8 @@ public class AbookVO {
 	private String ab_content;
 	private String ab_memo;
 	
+	private String ct_top;
+	private String ct_bottom;
+	
 	
 }

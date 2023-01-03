@@ -30,7 +30,7 @@ public interface ChallengeService {
 	public List<ChallengeVO> getmyChallenge(String nick);
 
 	// [절약형]챌린지 참가자 조회 
-	public List<MinusVO> getMinusPeople(int cno);
+	public List<Map<String, Object>> getMinusPeople(Integer cno);
 	
 	// 챌린지 종료일자 정보 가져오기
 	public Date getChallengeEndDate(Integer cno);
@@ -54,7 +54,7 @@ public interface ChallengeService {
 	public List<Map<String, Object>> getPersonCnt() throws Exception;	
 	
 	// 중복 챌린지 체크
-	public int samechallenge(int ctno);
+	public int samechallenge(Map<String, Integer> map);
 	
 	// 저축형 챌린지 참여하기
 	public void joinPlus(ChallengeVO vo) throws Exception;

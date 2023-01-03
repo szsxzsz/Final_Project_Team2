@@ -26,5 +26,8 @@ public interface UserDAO {
 	
 	// 로그인 처리
 	public UserVO loginUserCheck(Map<String, String> loginMap);
+	
+	// 인증성공 isCheck N => Y
+	public void updateIsCheck(int mno);
 
 }

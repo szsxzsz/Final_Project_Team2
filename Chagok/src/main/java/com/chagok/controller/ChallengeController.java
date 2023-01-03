@@ -1,6 +1,7 @@
 package com.chagok.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.io.File;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,6 +34,7 @@ import com.chagok.domain.PlusVO;
 import com.chagok.domain.SysLogVO;
 import com.chagok.domain.UserVO;
 import com.chagok.service.ChallengeService;
+import com.chagok.service.UserService;
 import com.chagok.utils.UploadFileUtils;
 
 @Controller
@@ -40,6 +43,9 @@ public class ChallengeController {
 
 	@Inject
 	private ChallengeService service;
+	
+	@Inject
+	private UserService uservice;
 	
 	@Resource(name="uploadPath")
 	private String uploadPath;
@@ -55,8 +61,8 @@ public class ChallengeController {
 		List<Map<String, Object>> plusPeoList = service.getPlusPeople(cno);
 		mylog.debug("plusFeedGET()에서 id : "+session.getId());
 		SysLogVO sysLogVO = new SysLogVO();
-		sysLogVO.getUserId();
-//		model.addAttribute("sessionId", session.getId());
+
+		//		model.addAttribute("sessionId", session.getId());
 		model.addAttribute("sessionId", sysLogVO.getUserId());
 		model.addAttribute("vo", service.getChallengeInfo(cno));
 		model.addAttribute("plusPeoList", plusPeoList);
@@ -107,7 +113,7 @@ public class ChallengeController {
 		mylog.debug(" 수 지 : minusFeed Get 호출 ");
 		
 		ChallengeVO vo = service.getChallengeInfo(cno);
-		List<MinusVO> minusPeoList = service.getMinusPeople(cno);
+		List<Map<String, Object>> minusPeoList = service.getMinusPeople(cno);
 		ChallengeVO vo2 = service.getCt_top(cno);
 		
 	   // 연결된 뷰페이지로 정보 전달(model)
@@ -125,15 +131,26 @@ public class ChallengeController {
 	}
 
 	@PostMapping(value = "/plusdetailPOST")
-	@ResponseBody // ajax 값을 바로 jsp에 보내기 위해 사용
-	public String plusdetailPOST(@RequestParam("ctno") int ctno) throws Exception {
+	@ResponseBody // ajax 값을 바로 jsp에 보내기 위해 사용@RequestParam("ctno") int ctno, 
+	public String plusdetailPOST(@RequestBody Map<String, Integer> map, UserVO vo) throws Exception {
+		mylog.debug("plusdetailPOST 호출");
+		mylog.debug(vo+"");
+		
+//		 Map<String, Integer>  map = new HashMap<String, Integer>();
+//		map.put("mno", mno);
+//		map.put("ctno", ctno);
+		
 		String result="N";
 		
 //		int gctno = ajaxService.samechallenge(ctno);
-		service.samechallenge(ctno);
+//		service.samechallenge(ctno);
 
-		int gctno = service.samechallenge(ctno);
-		if(gctno == 1) result = "Y";
+//		int gctno = service.samechallenge(ctno);
+//		if(gctno == 1) result = "Y";
+		service.samechallenge(map);
+		int gctno = service.samechallenge(map);	
+		mylog.debug(gctno+"");
+		if(gctno == 11) result = "Y";
 		return result;
 //		return "/challenge/plusdetail";
 	}
@@ -191,6 +208,7 @@ public class ChallengeController {
 		
 		model.addAttribute("vo", vo);
 		model.addAttribute("challengeList", challengeList);
+		model.addAttribute("c_end", service.getChallengeEndDate(cno));
 		
 		
 		return "/challenge/checkfeed";
@@ -267,16 +285,19 @@ public class ChallengeController {
 		@GetMapping("/mychallenge")
 		public String mychallengeGET(Model model, HttpSession session) throws Exception {
 			
-			String nick = (String)session.getAttribute("nick");
-			mylog.debug(nick);
+			Integer mno = (Integer)session.getAttribute("mno");
+			mylog.debug(mno+"");
 			
-			List<ChallengeVO> mychallengeList = service.getmyChallenge(nick);
+//			uservice.getUser(mno);
+			UserVO vo = uservice.getUser(mno);
 			
-			if(nick == null) {
-				return "/chagok/login";
+			List<ChallengeVO> mychallengeList = service.getmyChallenge(vo.getNick());
+		
+			if(mno == null) {
+				return "redirect:/login";
 			}
 			// else일 때
-			model.addAttribute("nick", nick);
+			model.addAttribute("nick", mno);
 			model.addAttribute("mychallengeList", mychallengeList);
 			
 			return "/challenge/mychallenge";
@@ -385,7 +406,7 @@ public class ChallengeController {
 	// 챌린지 결과
 	// http://localhost:8080/challenge/victory?cno=1
 	@GetMapping(value="/victory")
-	public String cresultGET(Model model, @RequestParam("cno") int cno, HttpSession session) throws Exception{
+	public String victoryGET(Model model, @RequestParam("cno") int cno, HttpSession session) throws Exception{
 		ChallengeVO vo = service.getChallengeInfo(cno);
 
 		ChallengeVO vo2 = service.getCt_top(cno);
@@ -398,5 +419,31 @@ public class ChallengeController {
 		
 		return "/challenge/victory";
 	}
+
+	// 챌린지 결과
+	// http://localhost:8080/challenge/defeat?cno=1
+	@GetMapping(value="/defeat")
+	public String defeatGET(Model model, @RequestParam("cno") int cno, HttpSession session) throws Exception{
+		ChallengeVO vo = service.getChallengeInfo(cno);
 		
+		ChallengeVO vo2 = service.getCt_top(cno);
+		
+		
+		model.addAttribute("vo", vo);
+		
+		model.addAttribute("vo2", vo2);
+		
+		
+		return "/challenge/victory";
+	}
+	
+	// 결제하기
+	// http://localhost:8080/challenge/pay
+	@GetMapping(value="/pay")
+	public String payGET() {
+		
+		return "/challenge/pay";
+	}
+	
+
 }

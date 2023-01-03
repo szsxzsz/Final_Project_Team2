@@ -30,7 +30,7 @@ public interface ChallengeDAO {
 	public List<ChallengeVO> getmyChallenge(String nick);
 	
 	// [절약형]챌린지 참가자 조회 
-	public List<MinusVO> getMinusPeople(Integer cno);
+	public List<Map<String, Object>> getMinusPeople(Integer cno);
 	
 	// 챌린지 종료일자 정보 가져오기
 	public Date getChallengeEndDate(Integer cno);
@@ -39,7 +39,7 @@ public interface ChallengeDAO {
 	public List<BoardVO> getBoard(Integer b_sort);
 	
 	// 중복 챌린지 체크
-	public int samechallenge(int ctno);
+	public int samechallenge(Map<String, Integer> map);
 	
 	// 게시판 조회
 	public BoardVO getBoardContent(Integer bno);

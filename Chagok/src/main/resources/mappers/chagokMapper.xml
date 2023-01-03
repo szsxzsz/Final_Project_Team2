@@ -78,7 +78,7 @@
    </select>
 	
 	<!-- [절약형]챌린지 참가자 조회-->
-	<select id="getMinusPeople" resultType="com.chagok.domain.MinusVO">
+	<select id="getMinusPeople" resultType="map">
 		select * from minus m inner join user u
 		where cno = #{cno} and m.mno = u.mno
 	</select>
@@ -97,7 +97,9 @@
 	
 	<!-- 중복된 챌린지(카테고리) 확인 -->	
 	<select id="samechallenge" resultType="int">
-		select count(*) from challenge where ctno=#{ctno}
+<!-- 		select count(*) from challenge where ctno=#{ctno} -->
+    select ctno from challenge A inner join plus B 
+    where A.cno = B.cno and mno = #{mno} and ctno = #{ctno};
 	</select>
 	
 	<!-- 챌린지 리스트 -->
@@ -118,8 +120,8 @@
 	<!-- 챌린지 종료일자 정보 가져오기  -->
 	<select id="getChallengeEndDate" resultType="date">
 		select distinct(date_add(c_start, interval c_period week)) c_end 
-		from plus p inner join challenge c
-		where p.cno = c.cno and c.cno = #{cno}
+		from challenge c
+		where c.cno = #{cno}
 	</select>
 	
 	<!-- 챌린지 등록하기 --> 
@@ -134,10 +136,10 @@
 		where ch.ctno = c.ctno;
   	</select>
   	
-
-  	
-  	
-  	
-  	
-
+	<update id="updateIsCheck">
+		update user set isCheck = "Y" where mno = #{mno}
+	</update>
+	
+	
+	
   </mapper>

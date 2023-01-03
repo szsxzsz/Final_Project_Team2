@@ -94,17 +94,18 @@ public class ChagokController {
 		HttpSession session = request.getSession();
 		
 		// 전달정보 저장(id, pw)
-		mylog.debug(" 로그인 정보 : " +vo);
+		mylog.debug(" 로그인 정보 : " +loginMap);
 		mylog.debug(" 세션 정보 : " +session);
 		
-		if(session.getAttribute("user") != null) {
-			session.removeAttribute("user");
+		if(session.getAttribute("mno") != null) {
+			session.invalidate();;
 		}
 		
 		UserVO userVO = service.loginUserCheck(loginMap);
 		
 		if(userVO != null) {
-			session.setAttribute("user", userVO);
+			session.setAttribute("mno", userVO.getMno());
+			session.setAttribute("nick", userVO.getNick());
 			
 			return userVO;
 		} else {

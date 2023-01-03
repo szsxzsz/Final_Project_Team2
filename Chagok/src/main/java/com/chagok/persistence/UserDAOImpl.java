@@ -75,8 +75,14 @@ public class UserDAOImpl implements UserDAO {
 		
 		return sqlSession.selectOne(NAMESPACE+".loginUserCheck",loginMap);
 	}
-	
-	
 
+
+	@Override
+	public void updateIsCheck(int mno) {
+		sqlSession.update(NAMESPACE+".updateIsCheck", mno);
+	}
+	
+	
+	
 	
 }

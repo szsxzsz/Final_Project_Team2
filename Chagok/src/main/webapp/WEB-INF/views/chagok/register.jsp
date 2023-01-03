@@ -48,7 +48,7 @@
   <div class="register-box-body">
     <p class="login-box-msg" style="font-family: 'Gowun Dodum', sans-serif; font-size: 18px;"><b>회원가입</b></p>
     <!-- <p class="login-box-msg">Register a new membership</p> -->
-    <form action="" method="post">
+    <form action="/register" method="post">
       <div class="form-group has-feedback">
         <input type="email" class="form-control" id="id" name="id" placeholder="이메일을 입력해주세요.">
         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
