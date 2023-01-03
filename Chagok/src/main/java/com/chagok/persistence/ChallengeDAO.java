@@ -53,5 +53,8 @@ public interface ChallengeDAO {
 	// 챌린지 목록(참여명수 구하기)
 	public List<Map<String, Object>> getPersonCnt() throws Exception;
 	
+	// 저축형 챌린지 참여하기
+	public void joinPlus(ChallengeVO vo) throws Exception;
+	
 	
 }

@@ -61,8 +61,8 @@ public class ChallengeController {
 		List<Map<String, Object>> plusPeoList = service.getPlusPeople(cno);
 		mylog.debug("plusFeedGET()에서 id : "+session.getId());
 		SysLogVO sysLogVO = new SysLogVO();
-		sysLogVO.getUserId();
-//		model.addAttribute("sessionId", session.getId());
+
+		//		model.addAttribute("sessionId", session.getId());
 		model.addAttribute("sessionId", sysLogVO.getUserId());
 		model.addAttribute("vo", service.getChallengeInfo(cno));
 		model.addAttribute("plusPeoList", plusPeoList);
@@ -139,6 +139,10 @@ public class ChallengeController {
 		String result="N";
 		
 //		int gctno = ajaxService.samechallenge(ctno);
+//		service.samechallenge(ctno);
+
+//		int gctno = service.samechallenge(ctno);
+//		if(gctno == 1) result = "Y";
 		service.samechallenge(map);
 //		mylog.debug(service.samechallenge(map)+"");
 //		

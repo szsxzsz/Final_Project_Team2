@@ -14,10 +14,10 @@ ${challengeList }
 	function move() {
 // 		var move = document.getElementByid('#move');
 		
-		if(${vo.c_sort} == 0){
+		if(${vo.c_sort == 0}){
 			location.href = "/challenge/plusfeed?cno="+${vo.cno};
 			return false;
-		}else if (${vo.c_sort} == 1){
+		}else {
  			location.href = "/challenge/minusFeed?cno="+${vo.cno};
  			return;
 		}
@@ -25,7 +25,6 @@ ${challengeList }
 	} 
 
 </script>
-
 <section class="content">
 	<div class="row">
 		<div class="col-lg-5 mx-6 aos-init aos-animate" data-aos="fade-right" >
@@ -41,7 +40,7 @@ ${challengeList }
 <%-- 					<c:set var="sort" value="절약형"/> --%>
 <%-- 				</c:if> --%>
 				
-			<h3><span style="color: #66BB7A; font-weight: bold;">[${sort }]</span> ${vo.c_title }</h3>
+			<h3><span style="color: #66BB7A; font-weight: bold;">[${vo2.ct_top}]</span> ${vo.c_title }</h3>
 <%-- 			</c:forEach> --%>
 			 <jsp:useBean id="now" class="java.util.Date" />
 			 <fmt:parseNumber value="${now.time / (1000*60*60*24)}" integerOnly="true" var="nowfmtTime" scope="request"/>
@@ -94,39 +93,40 @@ ${challengeList }
 		</div>
 	</div>
 	<br>
-
-<div class="col-md-6">
-
-	<div class="box box-danger">
-		<div class="box-header with-border">
-			<h3 class="box-title">현재 참여중인 멤버</h3>
-			<div class="box-tools pull-right">
-				<span class="label label-danger">${challengeList.size() }</span>
+<div class="row">
+	<div class="col-md-12">
+	
+		<div class="box box-danger">
+			<div class="box-header with-border">
+				<h3 class="box-title">현재 참여중인 멤버</h3>
+				<div class="box-tools pull-right">
+					<span class="label label-danger">${challengeList.size() }</span>
+				</div>
 			</div>
+	
+			<div class="box-body no-padding">
+	<%-- 			<c:forEach var="vo" item="${challengeList }"> --%>
+					<ul class="users-list clearfix">
+						<li>
+							<img src="" alt="User Image"> 
+							<br>
+								${vo.c_person } 
+	 					</li>
+					</ul>
+	<%-- 			</c:forEach> --%>
+	
+			</div>
+	
+			<div class="box-footer text-center">
+				<a href="javascript:void(0)" class="uppercase">View All Users</a>
+			</div>
+	
 		</div>
-
-		<div class="box-body no-padding">
-<%-- 			<c:forEach var="vo" item="${challengeList }"> --%>
-				<ul class="users-list clearfix">
-					<li>
-						<img src="" alt="User Image"> 
-						<br>
-							${vo.c_person } 
- 					</li>
-				</ul>
-<%-- 			</c:forEach> --%>
-
-		</div>
-
-		<div class="box-footer text-center">
-			<a href="javascript:void(0)" class="uppercase">View All Users</a>
-		</div>
-
 	</div>
-<input type="button" value="피드가기" id="move" onclick="move();">
 </div>
+	<input type="button" value="피드가기" id="move" onclick="move();">
 </section>
 
-${challengeList }
 <!-- <br> -->
+</div>
 <%@ include file="../include/footer.jsp"%>
