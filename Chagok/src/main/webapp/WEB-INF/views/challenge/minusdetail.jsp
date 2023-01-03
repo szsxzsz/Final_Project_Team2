@@ -111,12 +111,12 @@
         	$("#samechallenge").click(function(){
         		
         		var ctno = ${vo.ctno};
-        		var mno = ${user.mno};
+        		var mno = ${mno};
         		var test = {"ctno":ctno,"mno":mno};
         		
 				$.ajax({
         			type : "post",
-        			url : "/challenge/plusdetailPOST",
+        			url : "/challenge/minusdetailPOST",
         			contentType : "application/json",
         			dataType :'text',
         			data : JSON.stringify(test),

@@ -96,10 +96,13 @@
 	</select>
 	
 	<!-- 중복된 챌린지(카테고리) 확인 -->	
-	<select id="samechallenge" resultType="int">
+	<select id="samechallenge" resultType="Integer">
 <!-- 		select count(*) from challenge where ctno=#{ctno} -->
-    select ctno from challenge A inner join plus B 
-    where A.cno = B.cno and mno = #{mno} and ctno = #{ctno};
+<!--     select ctno from challenge A inner join plus B  -->
+<!--     where A.cno = B.cno and mno = #{mno} and ctno = #{ctno}; -->
+    select ctno from plus p right join challenge c 
+	on c.cno = p.cno left join minus m on m.cno = c.cno
+    where  (c.cno = m.cno or c.cno = p.cno) and ( p.mno = #{mno} OR m.mno = #{mno} )and ctno = #{ctno};
 	</select>
 	
 	<!-- 챌린지 리스트 -->

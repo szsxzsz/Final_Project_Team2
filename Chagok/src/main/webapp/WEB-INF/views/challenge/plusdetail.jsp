@@ -9,9 +9,8 @@
 
 <h1 style="padding-left: 50px;">저축형 차곡 챌린지</h1>
 
-<%-- ${user.mno } --%>
-${vo }
-
+${mno }
+<%-- ${vo } --%>
 <div class="row" style="margin-left:30px; margin-top:30px;">
 	<div class="col-lg-4 aos-init aos-animate" data-aos="fade-right">
 <!--        아래 이미지 주소는 디비에서 꺼내오는걸로 바꿔야해요 -->
@@ -120,7 +119,7 @@ ${vo }
         	$("#samechallenge").click(function(){
         		
         		var ctno = ${vo.ctno};
-        		var mno = ${user.mno};
+        		var mno = ${mno};
         		var test = {"ctno":ctno,"mno":mno};
         		
 				$.ajax({
