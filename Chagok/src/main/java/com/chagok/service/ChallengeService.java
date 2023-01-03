@@ -41,9 +41,6 @@ public interface ChallengeService {
 	// 게시판 글 확인
 	public BoardVO getBoardContent(Integer bno);
 
-	// 후기글 게시판 리스트
-	public List<BoardVO> getReviewBoard();
-	
 	// 챌린지 등록
 	public void challengeRegist(ChallengeVO vo) throws Exception;
 	
@@ -56,4 +53,7 @@ public interface ChallengeService {
 	// 중복 챌린지 체크
 	public int samechallenge(Map<String, Integer> map);
 	
+	// 챌린지 피드 인원 조회
+//	public List<Map<String, Object>> getCList(Integer cno);
+	public Map<String, Object> getCList(Integer cno) throws Exception;
 }

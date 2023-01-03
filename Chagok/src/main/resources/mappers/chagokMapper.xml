@@ -102,10 +102,11 @@
     where A.cno = B.cno and mno = #{mno} and ctno = #{ctno};
 	</select>
 	
-	<!-- 챌린지 리스트 -->
-	<select id="clist" resultType="map">
-		select * from challenge c inner join user u
-		where cno = #{cno} and c.cno = u.mmo
+	<!-- 챌린지 리스트(인원수 조회) -->
+	<select id="CList" resultType="map">
+		select count(*) 
+		from plus p right join challenge c on c.cno = p.cno left join minus m on m.cno = c.cno
+		where c.cno = #{cno};
 	</select>
 	
 	<!-- 성공/실패 -->

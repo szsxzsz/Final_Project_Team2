@@ -8,8 +8,8 @@
 
 <h1>피드 가기</h1>
 
-${challengeList }
-
+<%-- ${challengeList } --%>
+${CList }
 <script type="text/javascript">
 	function move() {
 // 		var move = document.getElementByid('#move');
@@ -65,7 +65,7 @@ ${challengeList }
 	             </div>
 	             <div class="progress-group" style="width: 280px;">
 	               <span class="progress-text">챌린지 인원</span>
-	               <span class="progress-number"><b>${challengeList.size() } </b>/ ${vo.c_pcnt }</span>
+	               <span class="progress-number"><b>${CList} </b>/ ${vo.c_pcnt }</span>
 	             </div>
 	             <div class="progress-group" style="width: 280px;">
 	               <span class="progress-text">예치금</span>
@@ -100,7 +100,7 @@ ${challengeList }
 			<div class="box-header with-border">
 				<h3 class="box-title">현재 참여중인 멤버</h3>
 				<div class="box-tools pull-right">
-					<span class="label label-danger">${challengeList.size() }</span>
+					<span class="label label-danger">${CList }</span>
 				</div>
 			</div>
 	
@@ -124,7 +124,11 @@ ${challengeList }
 		</div>
 	</div>
 </div>
-	<input type="button" value="피드가기" id="move" onclick="move();">
+<div>
+	<button class="btn btn-block btn-success btn-lg" type="button" id="samechallenge" style="width:218px; margin-left: 950px;" onclick="move();">피드가기</button>
+		<div id="result_samechallenge"></div>
+</div>
+<!-- 	<input type="button" value="피드가기" id="move" onclick="move();"> -->
 </section>
 
 <!-- <br> -->

@@ -87,9 +87,6 @@ public class ChallengeServiceImpl implements ChallengeService{
 		return dao.getBoardContent(bno);
 	}
 
-	
-	
-	
 	// 챌린지 등록
 	@Override
 	public void challengeRegist(ChallengeVO vo) throws Exception {
@@ -118,17 +115,27 @@ public class ChallengeServiceImpl implements ChallengeService{
 		return dao.getPersonCnt();
 	}
 
-	@Override
-	public List<BoardVO> getReviewBoard() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	// 중복챌린지 체크
 	@Override
 	public int samechallenge(Map<String, Integer> map) {
 		
 		return dao.samechallenge(map);
+	}
+
+
+	// 챌린지 피드 인원 조회
+//	@Override
+//	public List<Map<String, Object>> getCList(Integer cno) {
+//		mylog.debug("getCList("+cno+") 호출");
+//		return dao.getCList(cno);
+//	}
+	
+	@Override
+	public Map<String, Object> getCList(Integer cno) throws Exception {
+		mylog.debug("getCList("+cno+") 호출");
+		
+		return  dao.getCList(cno);
+		
 	}
 
 	

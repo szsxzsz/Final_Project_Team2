@@ -192,21 +192,20 @@ public class ChallengeController {
 	// http://localhost:8080/challenge/checkfeed?cno=2
 	@GetMapping(value = "/checkfeed")
 	public String checkfeedGET(HttpSession session,@RequestParam("cno")int cno, Model model) throws Exception {
-		
-//		mylog.debug(cno + "");
-//		
-//		model.addAttribute("cfeed", service.getChallengeInfo(cno));
-		
+			
 		ChallengeVO vo = service.getChallengeInfo(cno);
 		
-		List<ChallengeVO> challengeList = service.getChallengeList(cno);
-//		List<Map<String, Object>> pluscheck = service.getPlusCheck(cno);
+//		List<ChallengeVO> challengeList = service.getChallengeList(cno);
+		Map<String, Object> CList = service.getCList(cno);
+		
+		
 		
 		model.addAttribute("vo", vo);
-		model.addAttribute("challengeList", challengeList);
+//		model.addAttribute("challengeList", challengeList);
 		model.addAttribute("c_end", service.getChallengeEndDate(cno));
-		
-		
+//		model.addAttribute("CList",CList);
+		model.addAttribute("CList",CList);
+
 		return "/challenge/checkfeed";
 	}
 
@@ -399,7 +398,7 @@ public class ChallengeController {
 		
 	}
 	
-	// 챌린지 결과
+	// 챌린지 결과(성공)
 	// http://localhost:8080/challenge/victory?cno=1
 	@GetMapping(value="/victory")
 	public String victoryGET(Model model, @RequestParam("cno") int cno, HttpSession session) throws Exception{
@@ -413,10 +412,10 @@ public class ChallengeController {
 		model.addAttribute("vo2", vo2);
 		
 		
-		return "/challenge/victory";
+		return "/challenge/resultvictory";
 	}
 
-	// 챌린지 결과
+	// 챌린지 결과(실패)
 	// http://localhost:8080/challenge/defeat?cno=1
 	@GetMapping(value="/defeat")
 	public String defeatGET(Model model, @RequestParam("cno") int cno, HttpSession session) throws Exception{
@@ -428,9 +427,9 @@ public class ChallengeController {
 		model.addAttribute("vo", vo);
 		
 		model.addAttribute("vo2", vo2);
+		model.addAttribute("c_end", service.getChallengeEndDate(cno));
 		
-		
-		return "/challenge/victory";
+		return "/challenge/resultdefeat";
 	}
 	
 	// 결제하기
@@ -441,5 +440,47 @@ public class ChallengeController {
 		return "/challenge/pay";
 	}
 	
+	// 자유게시판
+	//  http://localhost:8080/challenge/freeboard?b_sort=3
+	@GetMapping(value = "/freeboard")
+	public String FreeBoardGET(HttpSession session,Model model,@RequestParam("b_sort") int b_sort) throws Exception {
+		mylog.debug(" /freeboard 호출");
+		
+		List<BoardVO> boardList = service.getBoardList(b_sort);
+		
+		mylog.debug(boardList+"");
+		
+		model.addAttribute("boardList", boardList);
+		
+		return "/challenge/freeboard";
+	}
+	
+	// 자유게시판 글 작성
+	// http://localhost:8080/challenge/free?b_sort=3
+	@GetMapping(value = "/free")
+	public String freeGET(@RequestParam("b_sort") int b_sort, Model model, HttpSession session) throws Exception {
 
+		mylog.debug(b_sort + "");
+
+		model.addAttribute("free", service.getChallengeInfo(b_sort));
+
+		return "/challenge/freeboardwrite";
+	}
+
+	@PostMapping(value = "/free")
+	public String freePOST(BoardVO vo, RedirectAttributes rttr) throws Exception {
+		mylog.debug(" freePOST 호출");
+
+		mylog.debug(vo + "");
+
+		service.createReview(vo);
+
+		mylog.debug("자유게시판 글쓰기 완료");
+
+		rttr.addFlashAttribute("result", "createOK");
+
+		return "redirect:/challenge/freeboardwrite";
+	}
+	
+	
 }

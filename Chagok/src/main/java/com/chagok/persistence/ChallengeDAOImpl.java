@@ -62,7 +62,7 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 		mylog.debug(" getChallengeList(Integer cno) 호출");
 		
 		List<ChallengeVO> challengeList = sqlSession.selectList(NAMESPACE+".getChallengeInfo",cno);
-		mylog.debug(cno+"번 챌린지 참가자 수 : "+challengeList.size());
+		
 		
 		return challengeList;
 		
@@ -150,9 +150,33 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 	public List<Map<String, Object>> getPersonCnt() {
 		mylog.debug(" 정보 호출 ");
 		
-		List<Map<String, Object>> pesonCnt = sqlSession.selectList(NAMESPACE+".getPersonCnt");
+		List<Map<String, Object>> pesonCnt = sqlSession.selectOne(NAMESPACE+".getPersonCnt");
 		
 		return pesonCnt;
+	}
+
+
+	// 챌린지 피드 인원 조회
+//	@Override
+//	public List<Map<String, Object> getCList(Integer cno) {
+//		mylog.debug(" getCList(Integer cno) 호출 ");
+//		
+//		List<Map<String, Object>> CList = sqlSession.selectList(NAMESPACE+".CList");
+//		return CList;
+//	}
+//	@Override
+//	public void getCList(Integer cno) {
+//		mylog.debug(" getCList(Integer cno) 호출 ");
+//		
+//		sqlSession.selectOne(NAMESPACE+".CList");
+//		
+//	}
+	
+	@Override
+	public Map<String, Object> getCList(Integer cno) throws Exception {
+		mylog.debug("getCList(Integer cno) 호출");
+		Map<String, Object> CList = sqlSession.selectOne(NAMESPACE+".CList");
+		return CList;
 	}
 	
 	
