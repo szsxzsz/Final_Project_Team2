@@ -6,6 +6,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.min.js"></script>
+
 <script type="text/javascript">
 	$(document).ready(function() {
 		$('#btnSend').on('click', function(evt) {
@@ -233,18 +234,23 @@
 <!-- 모달 css 파일 : resources -> plugins -> modal -> minusModal.css  -->
 	<div class="modal fade" id="modal-default" style="margin-top: 10%;">
 		<div class="modal-dialog" style=" height: 800px;">
-			<div class="modal-content" style=" height: 500px;">
+			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal"
 						aria-label="Close">
-						<span aria-hidden="true">&times;</span>
+						<span aria-hidden="true"><b>&times;</b></span>
 					</button>
 					<h4 class="modal-title">입금</h4>
 				</div>
 				<div class="modal-body" >
-				<div class="frame">
-  					<div class="calculator">
-						<div class="result" id="result"></div>
+				<div class="frame2">
+  					<div class="calculator2">
+						<div class="whitespace" id="whitespace">
+						<h5>차곡은행 (차곡 챌린지 계좌)</h5>
+  						<h3>1234-1231-12345</h3>
+  					</div>
+						<div class="result2" id="result" align="right"></div><span style="text-align: right;">원</span>
+						<div class="accountInfo2" id="accountInfo2"></div>
 					    <div class="content2">
 					      <div class="key-wrap" id="key-wrap"></div>
 					      <div class="calc-wrap" id="calc-wrap"></div>
@@ -253,9 +259,9 @@
 			    </div>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-default pull-left"
-						data-dismiss="modal">닫기</button>
-					<button type="button" class="btn btn-primary">저장하기</button>
+					<!-- <button type="button" class="btn btn-default pull-left"
+						data-dismiss="modal">닫기</button> -->
+					<button type="button" class="btn btn-block btn-success btn-sm">입금하기</button>
 				</div>
 			</div>
     	</div>
@@ -508,17 +514,17 @@
 	//get element
 	var numWrap = document.querySelector('.key-wrap');
 	var calcWrap = document.querySelector('.calc-wrap');
-	var result = document.querySelector('.result');
+	var result = document.querySelector('.result2');
 	
 	//init data
-	const keyboard = [1, 2, 3, 4, 5, 6, 7, 8, 9, '00', 0, '='];
+	const keyboard = [1, 2, 3, 4, 5, 6, 7, 8, 9, '00', 0, '<'];
 	const calc = ['<', '+', '-'];
 	let formula = [];
 	
 	//append dom, event
 	for (const i in keyboard) {
 	  const btn = document.createElement('button');
-	  btn.classList.add('num');
+	  btn.classList.add('num2');
 	  btn.classList.add('label-' + i);
 	  btn.value = keyboard[i];
 	  btn.innerText = keyboard[i];
@@ -527,7 +533,7 @@
 	}
 	for(const i in calc) {
 	  const btn = document.createElement('button');
-	  btn.classList.add('calc');
+	  btn.classList.add('calc2');
 	  btn.value = calc[i];
 	  btn.innerText = calc[i];
 	  btn.addEventListener('click', calculate);
