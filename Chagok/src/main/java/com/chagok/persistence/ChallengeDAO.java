@@ -39,7 +39,7 @@ public interface ChallengeDAO {
 	public List<BoardVO> getBoard(Integer b_sort);
 	
 	// 중복 챌린지 체크
-	public int samechallenge(Map<String, Integer> map);
+	public Integer samechallenge(Map<String, Integer> map);
 	
 	// 게시판 조회
 	public BoardVO getBoardContent(Integer bno);
@@ -52,6 +52,9 @@ public interface ChallengeDAO {
 	
 	// 챌린지 목록(참여명수 구하기)
 	public List<Map<String, Object>> getPersonCnt() throws Exception;
+	
+	// 저축형 챌린지 참여하기
+	public void joinPlus(ChallengeVO vo) throws Exception;
 	
 	
 }

@@ -108,7 +108,8 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 	}
 
 	@Override
-	public int samechallenge(Map<String, Integer> map) {
+	public Integer samechallenge(Map<String, Integer> map) {
+		mylog.debug("dao : samechallenge 호출");
 		return sqlSession.selectOne(NAMESPACE+".samechallenge", map);
 	}
 
@@ -153,6 +154,16 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 		List<Map<String, Object>> pesonCnt = sqlSession.selectList(NAMESPACE+".getPersonCnt");
 		
 		return pesonCnt;
+	}
+
+	// 저축형챌린지 참여
+	@Override
+	public void joinPlus(ChallengeVO vo) throws Exception {
+		mylog.debug(" joinPlus(ChallengeVO) 호출 ");
+		
+		sqlSession.insert(NAMESPACE);
+		
+		mylog.debug(" 저축형 챌린지 참여완료 ");
 	}
 	
 	
