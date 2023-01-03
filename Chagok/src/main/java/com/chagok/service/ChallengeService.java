@@ -59,4 +59,5 @@ public interface ChallengeService {
 	// 저축형 챌린지 참여하기
 	public void joinPlus(ChallengeVO vo) throws Exception;
 	
+	
 }
