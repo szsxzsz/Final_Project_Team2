@@ -95,7 +95,7 @@
 	<sql id="monthout">
 		select date_format(ab.ab_date, '%Y년 %m월') month2, sum(ab.ab_amount) as 'monthout'
 		from account_book ab
-		where ab.mno=1
+		where ab.mno=#{mno}
 		group by month2, ab.ab_inout 
 		having ab.ab_inout=1
 		) A 	
@@ -104,7 +104,7 @@
 	<sql id="monthin">
 		select date_format(ab.ab_date, '%Y년 %m월') month2, sum(ab.ab_amount) as 'monthin'
 		from account_book ab
-		where ab.mno=1
+		where ab.mno=#{mno}
 		group by month2, ab.ab_inout
 		having ab.ab_inout=2
 		) B

@@ -38,8 +38,11 @@
 				<div class="col-sm-4 border-right">
 					<div class="description-block">
 						<h4>이번달 총 소비금액은</h4>
-						<h3><fmt:formatNumber value="${map.dtSum1 }"/>원</h3>
-						<h4>지난달은 <fmt:formatNumber value="${map.dtSum2 }"/>원</h4>
+						<c:set var="a" value="${map.dtSum1 }"/>
+						<c:set var="b" value="${map.dtSum2 }"/>
+						<c:set var="c" value="${map.dtSumIn }"/><!-- 이번달 총 수입 -->
+						<h3><fmt:formatNumber value="${a }"/>원</h3>
+						<h4>지난달은 <fmt:formatNumber value="${b }"/>원</h4>
 					</div>
 		
 				</div>
@@ -47,8 +50,39 @@
 				<div class="col-sm-4">
 					<div class="description-block">
 						<h4>이번달 예상 지출금액은</h4>
-						<h3><fmt:formatNumber value="${map.expSum }"/>원 입니다.</h3>
+						<h3><fmt:formatNumber value="${map.expSum }"/>원</h3>
 					</div>
+				</div>
+			</div>
+		</section>
+		
+		<section>
+			<div class="row">
+				<div class="col-md-6">
+					<c:set var="d" value="${a div b }"/>
+					<c:choose>
+					    <c:when test="${d>2 }">
+							<h3>허거덩... 이러다 거지가 될지도 모릅니다...</h3>
+							<h4>지난달보다 <fmt:formatNumber value="${d }" type="percent"/> 많이 쓰고 있습니다.</h4>
+					    </c:when>
+					    <c:when test="${0<d && d<=2 }">
+							<h3>소비를 줄여보는 건 어떨까요?</h3>
+							<h4>지난달보다 <fmt:formatNumber value="${d }" type="percent"/> 많이 쓰고 있습니다.</h4>
+					    </c:when>
+					    <c:when test="${d==0 }">
+							<h3>이대로만 유지해도 좋아요</h3>
+							<h4>지난달과 동일하게 쓰고있습니다.</h4>
+					    </c:when>
+					    <c:otherwise>
+							<h3>잘 하고 있어요!</h3>
+							<h4>지난달보다 <fmt:formatNumber value="${d }" type="percent"/> 적게 쓰고 있습니다.</h4>
+					    </c:otherwise>
+					</c:choose>
+				</div>
+				<div class="col-md-6">
+					<h3>이번달 남은 금액은 <fmt:formatNumber value="${c-a }"/>원 입니다.</h3>
+					<h4><fmt:formatDate value="${today }" pattern="MM"/>월 총수입 +<fmt:formatNumber value="${c }"/>원</h4>
+					<h4><fmt:formatDate value="${today }" pattern="MM"/>월 총지출 -<fmt:formatNumber value="${a }"/>원</h4>
 				</div>
 			</div>
 		</section>
@@ -95,15 +129,10 @@
 		</section>
 	
 		<section>
-		<h3>지난 달보다 87.1% 적게 쓰고 있습니다.</h3>
-		<h3>지난 달 3일까지 5.9만원 썼고, 이번 달은 0.8만원 썼습니다.</h3>
-		<h3>지난 달 71.9만원 지출했습니다.</h3>
-		<h3>주로 지출한 항목은 1위 식사 (44.0%), 2위 온라인쇼핑 (24.0%), 3위 뷰티/미용 (14.0%) 입니다.</h3>
-		
 			<div class="col-md-6">
 				<div class="box box-primary">
 					<div class="box-header with-border">
-						<h3 class="box-title">ㅇㅇ 지출 추이</h3>
+						<h3 class="box-title">일간 지출 추이</h3>
 					</div>
 					<div class="box-body">
 						<div class="chart">
@@ -126,42 +155,34 @@
 			</div>
 		
 		<h3>이번달은 ${map.noOut }일 동안 무지출을 실천했어요</h3>
-		<h4><fmt:formatDate value="${today }" pattern="MM"/>월 총지출 : <fmt:formatNumber value="${map.dtSum1 }"/>원</h4>
-		<h4><fmt:formatDate value="${today }" pattern="MM"/>월 총수입 : <fmt:formatNumber value="${map.dtSumIn }"/>원</h4>
-		<h4>소비 횟수 : ${map.outCnt }회</h4>
+		<h4>이번달 소비 횟수 : ${map.outCnt }회</h4>
 		</section>
 	
 		<section>
 		<div class="row">	
 			<div class="col-md-6">
+				<div id="amptop"></div>
 				<div class="box-header">
-					<h3 class="box-title">TOP 3</h3>
+					<h3 class="box-title">이번달 지출금액 TOP 4</h3>
 				</div>
 	
 				<div class="box-body no-padding">
 					<table class="table">
 						<tbody id="tbody3"></tbody>
 					</table>
-					${map.amtTopjson }
-					<h3>마라탕</h3>
-					<h4>에 가장 많은 금액을 지출했어요</h4>
-					<h4>1회 지출액 : 134,433원</h4>
 				</div>
 			</div>
 			
 			<div class="col-md-6">
+				<div id="cnttop"></div>
 				<div class="box-header">
-					<h3 class="box-title">TOP 3</h3>
+					<h3 class="box-title">이번달 지출횟수 TOP 4</h3>
 				</div>
 	
 				<div class="box-body no-padding">
 					<table class="table">
 						<tbody id="tbody4"></tbody>
 					</table>
-					
-					<h3>카페</h3>
-					<h4>에 가장 많이 지출했어요</h4>
-					<h4>한 달 간 총 24회 소비</h4>
 				</div>
 			</div>
 		</div>	
@@ -227,6 +248,21 @@ for(var i=0; i<day.length; i++){
 	value1.push(d.dayout);
 }
 
+for(var i=0; i<amptop.length; i++){
+	var d = amptop[i];
+	top1.push(d.top1);
+	bottom1.push(d.bottom1);
+	amt.push(d.amt);
+	content.push(d.content);
+}
+
+for(var i=0; i<cntTop.length; i++){
+	var d = cntTop[i];
+	top2.push(d.top2);
+	bottom2.push(d.bottom2);
+	cnt.push(d.cnt);
+}
+
 for(var i=0; i<outCum.length; i++) {
 	var d = outCum[i];
 	label2.push(d.t2date);
@@ -270,6 +306,26 @@ $(document).ready(function(){
 		$('#tbody2').append("/<tr>");
 	});
 	
+	$('#amptop').append("<h3>"+content[0]+"에 가장 많은 금액을 지출했어요</h3>");
+	$('#amptop').append("<h3>1회 지출액 : "+amt[0]+"원</h3>");
+	$.each (top1, function (i, el) {
+		$('#tbody3').append("<tr>");
+		$('#tbody3').append("<td>"+(i+1)+"</td>");
+		$('#tbody3').append("<td>"+top1[i]+" > "+bottom1[i]+"</td>");
+		$('#tbody3').append("<td>"+content[i]+"</td>");
+		$('#tbody3').append("<td>"+amt[i]+"원</td>");
+		$('#tbody3').append("/<tr>");
+	});
+
+	$('#cnttop').append("<h3>"+bottom2[0]+"을 자주 소비했어요</h3>");
+	$('#cnttop').append("<h3>한 달 간 "+cnt[0]+"회 소비</h3>");
+	$.each (top2, function (i, el) {
+		$('#tbody4').append("<tr>");
+		$('#tbody4').append("<td>"+(i+1)+"</td>");
+		$('#tbody4').append("<td>"+top2[i]+" > "+bottom2[i]+"</td>");
+		$('#tbody4').append("<td>"+cnt[i]+"회</td>");
+		$('#tbody4').append("/<tr>");
+	});
 });
 
 </script>
