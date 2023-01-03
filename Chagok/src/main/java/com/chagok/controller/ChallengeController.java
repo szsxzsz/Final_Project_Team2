@@ -3,7 +3,9 @@ package com.chagok.controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -36,6 +38,10 @@ import com.chagok.domain.UserVO;
 import com.chagok.service.ChallengeService;
 import com.chagok.service.UserService;
 import com.chagok.utils.UploadFileUtils;
+import com.siot.IamportRestClient.IamportClient;
+import com.siot.IamportRestClient.exception.IamportResponseException;
+import com.siot.IamportRestClient.response.IamportResponse;
+import com.siot.IamportRestClient.response.Payment;
 
 @Controller
 @RequestMapping("/challenge/*")
@@ -450,14 +456,6 @@ public class ChallengeController {
 		return "/challenge/resultdefeat";
 	}
 	
-	// 결제하기
-	// http://localhost:8080/challenge/pay
-	@GetMapping(value="/pay")
-	public String payGET() {
-		
-		return "/challenge/pay";
-	}
-	
 	// 자유게시판
 	//  http://localhost:8080/challenge/freeboard?b_sort=3
 	@GetMapping(value = "/freeboard")
@@ -500,5 +498,35 @@ public class ChallengeController {
 		return "redirect:/challenge/freeboardwrite";
 	}
 	
-	
+	// 결제하기
+		// http://localhost:8080/challenge/pay
+		@GetMapping(value="/pay")
+		public String payGET() {
+			
+			return "/challenge/pay";
+		}
+		
+		
+		private IamportClient api;
+		// 결제정보 확인(검증)
+		
+		@ResponseBody
+		@RequestMapping(value="/verifyIamport/{imp_uid}")
+		public IamportResponse<Payment> paymentByImpUid(
+				Model model
+				, Locale locale
+				, HttpSession session
+				, @PathVariable(value= "imp_uid") String imp_uid) throws IamportResponseException, IOException
+		{	
+				return api.paymentByImpUid(imp_uid);
+		}
+		
+
+
+
+
 }
+		
+
+	
+	
