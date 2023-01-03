@@ -102,48 +102,36 @@ public class ReportServiceImpl implements ReportService {
 	}
 
 	@Override
-	public Map<String, Integer> outCum(Integer mno) throws Exception {
+	public List<Map<String, Integer>> outCum(Integer mno) throws Exception {
 		mylog.debug("outCum() 호출");
 		return rptdao.outCum(mno);
 	}
 
 	@Override
-	public List<Map<String, Integer>> outWeek(Integer mno) throws Exception {
-		mylog.debug("outWeek() 호출");
-		return rptdao.outWeek(mno);
+	public List<Map<String, Integer>> week(Integer mno) throws Exception {
+		mylog.debug("week() 호출");
+		return rptdao.week(mno);
 	}
 	
 	@Override
-	public List<Map<String, Integer>> inWeek(Integer mno) throws Exception {
-		mylog.debug("inWeek() 호출");
-		return rptdao.inWeek(mno);
-	}
-	
-	@Override
-	public List<Map<String, Integer>> outMonth(Integer mno) throws Exception {
-		mylog.debug("outMonth() 호출");
-		return rptdao.outMonth(mno);
-	}
-	
-	@Override
-	public List<Map<String, Integer>> inMonth(Integer mno) throws Exception {
-		mylog.debug("inMonth() 호출");
-		return rptdao.inMonth(mno);
+	public List<Map<String, Integer>> month(Integer mno) throws Exception {
+		mylog.debug("month() 호출");
+		return rptdao.month(mno);
 	}
 
 	
 
 	
 	////////////////////////cateReport ////////////////////////
-	
+
 	@Override
-	public List<ReportVO> cateCnt(Integer mno) throws Exception {
+	public List<Map<String, Integer>> cateCnt(Integer mno) throws Exception {
 		mylog.debug("cateCnt() 호출");
 		return rptdao.cateCnt(mno);
 	}
 
 	@Override
-	public List<ReportVO> cateSum(Integer mno) throws Exception {
+	public List<Map<String, Integer>> cateSum(Integer mno) throws Exception {
 		mylog.debug("cateSum() 호출");
 		return rptdao.cateSum(mno);
 	}

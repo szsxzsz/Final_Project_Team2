@@ -16,8 +16,10 @@
 		<section class="content-header">
 			<c:set var="today" value="<%=new java.util.Date() %>"/><br><br>
 <%-- 			${map.outWeekjson }<hr> --%>
-<%-- 			${map.inWeekjson} --%>
-			<h1>${nick }님의
+<%-- 			${map.outCum} --%>
+<%-- 				${map.weekjson } --%>
+			<h1>
+			${userVO.nick }님의
 				<fmt:formatDate value="${today }" pattern="MM"/>월 날짜별 리포트
 			</h1>
 		</section>
@@ -63,7 +65,6 @@
 							<tr>
 								<th>기간</th>
 								<th>지출</th>
-								<th>수입기간</th>
 								<th>수입</th>
 							</tr>
 						</thead>
@@ -105,7 +106,7 @@
 					</div>
 					<div class="box-body">
 						<div class="chart">
-							<canvas id="donutchart" style="height: 330px; width: 661px;"></canvas>
+							<canvas id="linechart1" style="height: 330px; width: 661px;"></canvas>
 						</div>
 					</div>
 				</div>
@@ -117,7 +118,7 @@
 					</div>
 					<div class="box-body">
 						<div class="chart">
-							<canvas id="donutchart" style="height: 330px; width: 661px;"></canvas>
+							<canvas id="linechart2" style="height: 330px; width: 661px;"></canvas>
 						</div>
 					</div>
 				</div>
@@ -176,69 +177,107 @@
 
 <script type="text/javascript">
 
-var outWeek = ${map.outWeekjson};
-var inWeek = ${map.inWeekjson}
-var outMonth = ${map.outMonthjson}
-var inMonth = ${map.inMonthjson}
-var week1 = new Array();
+var week = ${map.weekjson}
 var week2 = new Array();
-var weeksum1 = new Array();
-var weeksum2 = new Array();
-var month1 = new Array();
+var weekin = new Array();
+var weekout = new Array();
+
+var month = ${map.monthjson}
 var month2 = new Array();
-var monthsum1 = new Array();
-var monthsum2 = new Array();
+var monthin = new Array();
+var monthout = new Array();
+	
+var outCum = ${map.outCumjson}
+var label2 = new Array();
+var value2 = new Array();
 
-for(var i=0; i<outWeek.length; i++) {
-	var d = outWeek[i];
-	week1.push(d.record_date);
-	weeksum1.push(d.weekamt);
+
+for(var i=0; i<week.length; i++){
+	var d = week[i];
+	week2.push(d.week2);
+	weekin.push(d.weekin);
+	weekout.push(d.weekout);
 }
 
-for(var i=0; i<inWeek.length; i++) {
-	var d = inWeek[i];
-	week2.push(d.record_date2);
-	weeksum2.push(d.weekamt2);
-}
-
-for(var i=0; i<outMonth.length; i++) {
-	var d = outMonth[i];
-	month1.push(d.month1);
-	monthsum1.push(d.monthsum1);
-}
-
-for(var i=0; i<inMonth.length; i++) {
-	var d = inMonth[i];
+for(var i=0; i<month.length; i++){
+	var d = month[i];
 	month2.push(d.month2);
-	monthsum2.push(d.monthsum2);
+	monthin.push(d.monthin);
+	monthout.push(d.monthout);
 }
 
+for(var i=0; i<outCum.length; i++) {
+	var d = outCum[i];
+	label2.push(d.t2date);
+	value2.push(d.cumSum);
+}
 
 </script>
 
 <script type="text/javascript">
 $(document).ready(function(){
-	   
-	$.each (week1, function (i, el) {
+
+	$.each (week2, function (i, el) {
 		$('#tbody1').append("<tr>");
-		$('#tbody1').append("<td>"+week1[i]+"</td>");
-		$('#tbody1').append("<td>- "+weeksum1[i]+"</td>");
-		if(week1[i]==week2[i]){
-			$('#tbody1').append("<td>+ "+week2[i]+"</td>");
-			$('#tbody1').append("<td>+ "+weeksum2[i]+"</td>");
+		$('#tbody1').append("<td>"+week2[i]+"</td>");
+		if(weekout[i]==null){
+			$('#tbody1').append("<td>지출 내역 없음</td>");
 		} else {
-			$('#tbody1').append("<td>-</td>");
-			$('#tbody1').append("<td>-</td>");
+			$('#tbody1').append("<td>"+weekout[i]+"</td>");
+		}
+		if(weekin[i]==null){
+			$('#tbody1').append("<td>수입 내역 없음</td>");
+		} else {
+			$('#tbody1').append("<td>"+weekin[i]+"</td>");
 		}
 		$('#tbody1').append("/<tr>");
 	});
-	$.each (month1, function (i, el) {
+
+	$.each (month2, function (i, el) {
 		$('#tbody2').append("<tr>");
-		$('#tbody2').append("<td>"+month1[i].substr(0,2)+"년 "+month1[i].substr(3)+"월</td>");
-		$('#tbody2').append("<td>- "+monthsum1[i]+"</td>");
-		$('#tbody2').append("<td>+ "+monthsum2[i]+"</td>");
+		$('#tbody2').append("<td>"+month2[i]+"</td>");
+		if(monthout[i]==null){
+			$('#tbody2').append("<td>지출 내역 없음</td>");
+		} else {
+			$('#tbody2').append("<td>"+monthout[i]+"</td>");
+		}
+		if(monthin[i]==null){
+			$('#tbody2').append("<td>수입 내역 없음</td>");
+		} else {
+			$('#tbody2').append("<td>"+monthin[i]+"</td>");
+		}
 		$('#tbody2').append("/<tr>");
 	});
+	
+});
+
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){
+	$('#linechart2').append("테스트");
+});
+var dataline2 = {
+	labels: label2,
+	datasets: [{
+		data: value2,
+	    fill: true,
+	    borderColor: 'rgb(75, 192, 192)',
+	    tension: 0.1
+	}]
+};
+
+var optionline2 = {
+		legend: {
+			display: false
+		}
+	}
+
+var ctx2 = document.getElementById('linechart2').getContext('2d');
+var linechart = new Chart(ctx2, {
+	type: 'line',
+	data: dataline2,
+	options: optionline2
 });
 
 </script>

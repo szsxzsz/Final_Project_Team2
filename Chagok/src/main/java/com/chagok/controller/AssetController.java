@@ -252,7 +252,6 @@ public class AssetController {
 		}
 		int mno = (int)session.getAttribute("mno");
 		UserVO userVO = userService.getUser(mno);
-		String nick = userVO.getNick();
 		
 		mylog.debug("mno : "+mno);
 //		int mno = (int)session.getAttribute("mno");
@@ -291,28 +290,23 @@ public class AssetController {
 		mylog.debug("outCnt : "+outCnt);
 		
 		// 9. 이번달 누적 지출
+		List<Map<String, Integer>> outCum = rptService.outCum(mno);
+		mylog.debug("outCum : "+outCum.size());
 		
-		// 10. 주간 지출
-		List<Map<String, Integer>> outWeek = rptService.outWeek(mno);
-		mylog.debug("outWeek : "+outWeek.size());
+		// 10. 일간 통계
 		
-		// 11. 주간 수입
-		List<Map<String, Integer>> inWeek = rptService.inWeek(mno);
-		mylog.debug("inWeek : "+inWeek.size());		
+		// 11. 주간 통계
+		List<Map<String, Integer>> week = rptService.week(mno);
+		mylog.debug("week : "+week.size());
 		
-		// 12. 월간 지출
-		List<Map<String, Integer>> outMonth = rptService.outMonth(mno);
-		mylog.debug("outMonth : "+outMonth.size());	
-		
-		// 13. 월간 수입
-		List<Map<String, Integer>> inMonth = rptService.inMonth(mno);
-		mylog.debug("inMonth : "+inMonth.size());
+		// 12. 월간 통계
+		List<Map<String, Integer>> month = rptService.month(mno);
+		mylog.debug("month : "+month.size());
 		
 		/////////////// 2. List<Map> -> JsonArray ///////////////
-		String outWeekjson = rptService.listMapToJson(outWeek);
-		String inWeekjson = rptService.listMapToJson(inWeek);
-		String outMonthjson = rptService.listMapToJson(outMonth);
-		String inMonthjson = rptService.listMapToJson(inMonth);
+		String weekjson = rptService.listMapToJson(week);
+		String monthjson = rptService.listMapToJson(month);
+		String outCumjson = rptService.listMapToJson(outCum);
 		
 		/////////////// 3. model로 전달 ///////////////
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -324,12 +318,11 @@ public class AssetController {
 		map.put("dtSumIn", dtSumIn);
 		map.put("noOut", noOut);
 		map.put("outCnt", outCnt);
-		map.put("outWeekjson", outWeekjson);
-		map.put("inWeekjson", inWeekjson);
-		map.put("outMonthjson", outMonthjson);
-		map.put("inMonthjson", inMonthjson);
+		map.put("weekjson", weekjson);
+		map.put("monthjson", monthjson);
+		map.put("outCumjson", outCumjson);
 		model.addAttribute("map", map);
-		model.addAttribute("nick", nick);
+		model.addAttribute("userVO", userVO);
 		
 		return "/asset/dateReport";
 	}	
@@ -341,7 +334,6 @@ public class AssetController {
 		// 로그인 확인
 		int mno = (int)session.getAttribute("mno");
 		UserVO userVO = userService.getUser(mno);
-		String nick = userVO.getNick();
 		if(mno==0) {
 			return "/chagok/login";
 		}
@@ -349,58 +341,28 @@ public class AssetController {
 		
 		/////////////// 1. service에서 DB 가져오기 ///////////////
 		// 1.최다 지출 카테고리
-		List<ReportVO> cateCntList = rptService.cateCnt(mno);
+		List<Map<String, Integer>> cateCntList = rptService.cateCnt(mno);
 		mylog.debug("cateCntList : "+cateCntList.size());
 //		
 		// 2.최대 지출 카테고리
-		List<ReportVO> cateSumList = rptService.cateSum(mno);
+		List<Map<String, Integer>> cateSumList = rptService.cateSum(mno);
 		mylog.debug("cateSumList : "+cateSumList.size());
 		
 		// 3.챌린지 추천
 		List<ChallengeVO> chRandList = rptService.chRand(mno);
 		mylog.debug("chRandList : "+chRandList.toString());
 		
-		/////////////// 2. List -> JsonArray ///////////////
-		// List(VO) -> 변수에 임시 저장 -> JSONArr에 저장
-		Gson gson = new Gson();
-		JsonArray jArr = new JsonArray();
-		Iterator<ReportVO> it1 = cateCntList.iterator();
-		while(it1.hasNext()) {
-			ReportVO cateCntVO = it1.next();
-			int cateCnt = cateCntVO.getCateCnt();
-			String cateName = cateCntVO.getCateName();
-			
-			JsonObject obj1 = new JsonObject();
-			obj1.addProperty("cateCnt", cateCnt);
-			obj1.addProperty("cateName", cateName);
-			jArr.add(obj1);
-		}
-		
-		Gson gson2 = new Gson();
-		JsonArray jArr2 = new JsonArray();
-		Iterator<ReportVO> it2 = cateSumList.iterator();
-		while(it2.hasNext()) {
-			ReportVO cateSumVO = it2.next();
-			int cateSum = cateSumVO.getCateSum();
-			String cateName = cateSumVO.getCateName();
-			
-			JsonObject obj2 = new JsonObject();
-			obj2.addProperty("cateSum", cateSum);
-			obj2.addProperty("cateName", cateName);
-			jArr2.add(obj2);
-		}
+		/////////////// 2. List<Map> -> JsonArray ///////////////
+		String cateCntjson = rptService.listMapToJson(cateCntList);
+		String cateSumjson = rptService.listMapToJson(cateSumList);
 		
 		/////////////// 3. model로 전달 ///////////////
-		String catejson = gson.toJson(jArr);
-		String catejson2 = gson2.toJson(jArr2);
-		
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("catejson", catejson);
-		map.put("catejson2", catejson2);
-		map.put("cateSumList", cateSumList);
+		map.put("cateCntjson", cateCntjson);
+		map.put("cateSumjson", cateSumjson);
 		map.put("chRandList", chRandList);
 		model.addAttribute("map", map);
-		model.addAttribute("nick", nick);
+		model.addAttribute("userVO", userVO);
 		return "/asset/cateReport";
 	}
 	

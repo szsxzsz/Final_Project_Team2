@@ -16,8 +16,8 @@
 	<section class="content-header">
 		<c:set var="today" value="<%=new java.util.Date() %>"/><br><br>
 <%-- 		${map.chRandList }<hr> --%>
-<%-- 		${map.catejson} --%>
-		<h1>${nick }님의
+<%-- 		${map.cateCntjson} --%>
+		<h1>${userVO.nick }님의
 			<fmt:formatDate value="${today }" pattern="MM"/>월 카테고리별 리포트
 		</h1>
 	</section>
@@ -204,8 +204,8 @@
 
 <script type="text/javascript">
 
-var jData = ${map.catejson};
-var jData2 = ${map.catejson2};
+var jData = ${map.cateCntjson};
+var jData2 = ${map.cateSumjson};
 var label1 = new Array();
 var value1 = new Array();
 var label2 = new Array();
@@ -223,13 +223,13 @@ colorList = [
 
 for(var i=0; i<jData.length; i++) {
 	var d = jData[i];
-	label1.push(d.cateName);
+	label1.push(d.cateName1);
 	value1.push(d.cateCnt);
 }
 
 for(var i=0; i<jData2.length; i++) {
 	var d = jData2[i];
-	label2.push(d.cateName);
+	label2.push(d.cateName2);
 	value2.push(d.cateSum);
 }
 
