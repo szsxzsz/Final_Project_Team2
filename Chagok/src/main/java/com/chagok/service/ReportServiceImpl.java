@@ -108,6 +108,12 @@ public class ReportServiceImpl implements ReportService {
 	}
 
 	@Override
+	public List<Map<String, Integer>> day(Integer mno) throws Exception {
+		mylog.debug("day() 호출");
+		return rptdao.day(mno);
+	}
+
+	@Override
 	public List<Map<String, Integer>> week(Integer mno) throws Exception {
 		mylog.debug("week() 호출");
 		return rptdao.week(mno);
@@ -118,8 +124,18 @@ public class ReportServiceImpl implements ReportService {
 		mylog.debug("month() 호출");
 		return rptdao.month(mno);
 	}
-
 	
+	@Override
+	public List<Map<String, Integer>> amtTop(Integer mno) throws Exception {
+		mylog.debug("amtTop() 호출");
+		return rptdao.amtTop(mno);
+	}
+	
+	@Override
+	public List<Map<String, Integer>> cntTop(Integer mno) throws Exception {
+		mylog.debug("cntTop() 호출");
+		return rptdao.cntTop(mno);
+	}
 
 	
 	////////////////////////cateReport ////////////////////////

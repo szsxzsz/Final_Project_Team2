@@ -89,6 +89,12 @@ public class ReportDAOImpl implements ReportDAO {
 	}
 	
 	@Override
+	public List<Map<String, Integer>> day(Integer mno) throws Exception {
+		mylog.debug("day() 호출");
+		return sqlSession.selectList(NAMESPACE+".day", mno);
+	}
+
+	@Override
 	public List<Map<String, Integer>> week(Integer mno) throws Exception {
 		mylog.debug("week() 호출");
 		return sqlSession.selectList(NAMESPACE+".week", mno);
@@ -100,9 +106,18 @@ public class ReportDAOImpl implements ReportDAO {
 		return sqlSession.selectList(NAMESPACE+".month", mno);
 	}
 	
-	
-	
-	
+	@Override
+	public List<Map<String, Integer>> amtTop(Integer mno) throws Exception {
+		mylog.debug("amtTop() 호출");
+		return sqlSession.selectList(NAMESPACE+".amtTop", mno);
+	}
+
+	@Override
+	public List<Map<String, Integer>> cntTop(Integer mno) throws Exception {
+		mylog.debug("cntTop() 호출");
+		return sqlSession.selectList(NAMESPACE+".cntTop", mno);
+	}
+
 	////////////////////////cateReport ////////////////////////
 	@Override
 	public List<Map<String, Integer>> cateCnt(Integer mno) throws Exception {

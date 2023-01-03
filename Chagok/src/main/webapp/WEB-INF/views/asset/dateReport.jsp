@@ -17,6 +17,7 @@
 			<c:set var="today" value="<%=new java.util.Date() %>"/><br><br>
 <%-- 			${map.outWeekjson }<hr> --%>
 <%-- 			${map.outCum} --%>
+<%-- 			${map.weekjson } --%>
 <%-- 				${map.weekjson } --%>
 			<h1>
 			${userVO.nick }님의
@@ -141,7 +142,7 @@
 					<table class="table">
 						<tbody id="tbody3"></tbody>
 					</table>
-					
+					${map.amtTopjson }
 					<h3>마라탕</h3>
 					<h4>에 가장 많은 금액을 지출했어요</h4>
 					<h4>1회 지출액 : 134,433원</h4>
@@ -177,6 +178,14 @@
 
 <script type="text/javascript">
 
+var outCum = ${map.outCumjson}
+var label2 = new Array();
+var value2 = new Array();
+
+var day = ${map.dayjson}
+var label1 = new Array();
+var value1 = new Array();
+
 var week = ${map.weekjson}
 var week2 = new Array();
 var weekin = new Array();
@@ -186,11 +195,17 @@ var month = ${map.monthjson}
 var month2 = new Array();
 var monthin = new Array();
 var monthout = new Array();
-	
-var outCum = ${map.outCumjson}
-var label2 = new Array();
-var value2 = new Array();
 
+var amptop = ${map.amtTopjson}
+var top1 = new Array();
+var bottom1 = new Array();
+var amt = new Array();
+var content = new Array();
+
+var cntTop = ${map.cntTopjson}
+var top2 = new Array();
+var bottom2 = new Array(); 
+var cnt = new Array();
 
 for(var i=0; i<week.length; i++){
 	var d = week[i];
@@ -204,6 +219,12 @@ for(var i=0; i<month.length; i++){
 	month2.push(d.month2);
 	monthin.push(d.monthin);
 	monthout.push(d.monthout);
+}
+
+for(var i=0; i<day.length; i++){
+	var d = day[i];
+	label1.push(d.day2);
+	value1.push(d.dayout);
 }
 
 for(var i=0; i<outCum.length; i++) {
@@ -254,9 +275,16 @@ $(document).ready(function(){
 </script>
 
 <script type="text/javascript">
-$(document).ready(function(){
-	$('#linechart2').append("테스트");
-});
+var dataline1 = {
+	labels: label1,
+	datasets: [{
+		data: value1,
+	    fill: false,
+	    borderColor: 'rgb(75, 192, 192)',
+	    tension: 0.1
+	}]
+};
+
 var dataline2 = {
 	labels: label2,
 	datasets: [{
@@ -267,17 +295,23 @@ var dataline2 = {
 	}]
 };
 
-var optionline2 = {
+var optionline = {
 		legend: {
 			display: false
 		}
 	}
 
+var ctx1 = document.getElementById('linechart1').getContext('2d');
 var ctx2 = document.getElementById('linechart2').getContext('2d');
+var linechart = new Chart(ctx1, {
+	type: 'line',
+	data: dataline1,
+	options: optionline
+});
 var linechart = new Chart(ctx2, {
 	type: 'line',
 	data: dataline2,
-	options: optionline2
+	options: optionline
 });
 
 </script>

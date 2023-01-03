@@ -110,6 +110,12 @@
 		) B
 	</sql>
 	
+	<!-- ct_top, ct_bottom -->
+	<sql id="joinct">
+		from account_book ab 
+		inner join category ct
+		on ct.ctno=ab.ctno
+	</sql>
 	
   	<!-- //////////////////////// dateReport //////////////////////// -->
   	<!-- 1. 이번달 총 지출  -->
@@ -182,7 +188,10 @@
 	
 	<!-- 10. 일간 통계 (지출) -->
 	<select id="day" resultType="map">
-		
+		select date_format(ab.ab_date, '%Y-%m-%d') day2, sum(ab.ab_amount) dayout
+		from account_book ab
+		<include refid="wh1out"/>
+		group by day2;
 	</select>
 	
 	<!-- 11. 주간 통계 (지출, 수입) -->
@@ -223,6 +232,23 @@
 						<include refid="monthin"/> 
 					on A.month2 = B.month2
 			order by month2 desc limit 4;	
+	</select>
+	
+	<!-- 지출액 TOP 4 -->
+	<select id="amtTop" resultType="map">
+		select ct.ct_top top1, ct.ct_bottom bottom1, ab.ab_amount amt, ab_content content
+		<include refid="joinct"/>
+		<include refid="wh1out"/>
+		order by amt desc limit 4;
+	</select>
+	
+	<!-- 지출횟수 TOP 4 -->
+	<select id="cntTop" resultType="map">
+		select ct.ct_top top2, ct.ct_bottom bottom2, count(ab.ctno) cnt
+		<include refid="joinct"/>
+		<include refid="wh1out"/>
+		group by ab.ctno
+		order by cnt desc limit 4;
 	</select>
 	
   	<!-- //////////////////////// cateReport //////////////////////// -->

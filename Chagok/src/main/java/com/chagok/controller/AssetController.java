@@ -294,6 +294,8 @@ public class AssetController {
 		mylog.debug("outCum : "+outCum.size());
 		
 		// 10. 일간 통계
+		List<Map<String, Integer>> day = rptService.day(mno);
+		mylog.debug("day : "+day.size());
 		
 		// 11. 주간 통계
 		List<Map<String, Integer>> week = rptService.week(mno);
@@ -303,10 +305,21 @@ public class AssetController {
 		List<Map<String, Integer>> month = rptService.month(mno);
 		mylog.debug("month : "+month.size());
 		
+		// 13. 지출액 TOP 4
+		List<Map<String, Integer>> amtTop = rptService.amtTop(mno);
+		mylog.debug("amtTop : "+amtTop.size());
+		
+		// 14. 지출횟수 TOP 4
+		List<Map<String, Integer>> cntTop = rptService.cntTop(mno);
+		mylog.debug("cntTop : "+cntTop.size());		
+		
 		/////////////// 2. List<Map> -> JsonArray ///////////////
+		String outCumjson = rptService.listMapToJson(outCum);
+		String dayjson = rptService.listMapToJson(day);
 		String weekjson = rptService.listMapToJson(week);
 		String monthjson = rptService.listMapToJson(month);
-		String outCumjson = rptService.listMapToJson(outCum);
+		String amtTopjson = rptService.listMapToJson(amtTop);
+		String cntTopjson = rptService.listMapToJson(cntTop);
 		
 		/////////////// 3. model로 전달 ///////////////
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -318,9 +331,12 @@ public class AssetController {
 		map.put("dtSumIn", dtSumIn);
 		map.put("noOut", noOut);
 		map.put("outCnt", outCnt);
+		map.put("outCumjson", outCumjson);
+		map.put("dayjson", dayjson);
 		map.put("weekjson", weekjson);
 		map.put("monthjson", monthjson);
-		map.put("outCumjson", outCumjson);
+		map.put("amtTopjson", amtTopjson);
+		map.put("cntTopjson", cntTopjson);
 		model.addAttribute("map", map);
 		model.addAttribute("userVO", userVO);
 		

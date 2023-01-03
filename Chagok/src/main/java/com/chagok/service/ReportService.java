@@ -46,6 +46,7 @@ public interface ReportService {
 	public List<Map<String, Integer>> outCum(Integer mno) throws Exception;
 	
 	// 10. 일간 통계
+	public List<Map<String, Integer>> day(Integer mno) throws Exception;
 	
 	// 11. 주간 통계
 	public List<Map<String, Integer>> week(Integer mno) throws Exception;
@@ -53,8 +54,12 @@ public interface ReportService {
 	// 12. 월간 통계
 	public List<Map<String, Integer>> month(Integer mno) throws Exception;
 	
+	// 13. 지출액 TOP 4
+	public List<Map<String, Integer>> amtTop(Integer mno) throws Exception;
 	
-	
+	// 14. 지출횟수 TOP 4
+	public List<Map<String, Integer>> cntTop(Integer mno) throws Exception;	
+
 	
 	////////////////////////cateReport ////////////////////////
 	
