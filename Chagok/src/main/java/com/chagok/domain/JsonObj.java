@@ -10,7 +10,7 @@ public class JsonObj {
 	private int page;
     private int records;
     private int total;
-    private List<Map<String, Object>> rows = new ArrayList<Map<String, Object>>();
+    private List<?> rows = new ArrayList<Map<String, Object>>();
     
 	public int getPage() {
 		return page;
@@ -31,10 +31,10 @@ public class JsonObj {
 		this.total = total;
 	}
 	public List<Map<String, Object>> getRows() {
-		return rows;
+		return (List<Map<String, Object>>) rows;
 	}
-	public void setRows(List<Map<String, Object>> rows) {
-		this.rows = rows;
+	public void setRows(List<?> list2) {
+		this.rows = list2;
 	}
 	@Override
 	public String toString() {

@@ -22,6 +22,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -218,50 +219,54 @@ public class AssetController {
 			@RequestParam(value = "page", required=false) String page,//page : 몇번째 페이지를 요청했는지
 			@RequestParam(value = "rows", required=false) String rows,//rows : 페이지 당 몇개의 행이 보여질건지
 			@RequestParam(value = "sidx", required=false) String sidx,//sidx : 소팅하는 기준이 되는 인덱스
-			@RequestParam(value = "sord", required=false) String sord
-			/*@PathVariable int mno*/) throws Exception {//sord : 내림차순 또는 오름차순
+			@RequestParam(value = "sord", required=false) String sord,
+			@PathVariable int mno) throws Exception {//sord : 내림차순 또는 오름차순
 	    	
 		mylog.debug("json controller 실행 시작");
-		// 그리드에 뿌려주려는 데이터를 DB에서나 어디에서 가져온다.
+		mylog.debug("mno@@@@@@@@:"+mno);
 		JsonObj obj = new JsonObj();
 		
-		// 하나의 맵에 쫘라락 컬럼에 해당하는 값들 다 넣어주고, 그거를 리스트에 한번 넣고,
-		// 또 맵에 쫘라락 넣어주고 리스트에 넣고 
-		List<Map<String,Object>> list = new ArrayList<Map<String,Object>>();
+//		List<Map<String,Object>> list = new ArrayList<Map<String,Object>>();
 //local] List<AbookVO> abookList = service.getAbookList(mno);
-//Json]	 List<Map<String, AbookVO>> list2 = service.AbookList(mno);
-//		mylog.debug("list2 출력해보기"+list2);
-
+		List<?> list2 = service.AbookList(mno);
+		mylog.debug("list2 출력해보기"+list2);
+		
+// list 저장해서 size만큼 반복문 돌리기 >> json object 형태로 바꾸고 >> json array 담아서 >> 1안- array로 해보고 안 되면 2안- json object로 보내기 
+		
+//		for(int i=0; i<list2.size();i++) {
+//			
+//		}
 		int int_page = Integer.parseInt(page);// 1 2 3
 		int perPageNum = (int)Double.parseDouble(rows);
 		
-		// db에서 가져온 데이터의 갯수가 10개라고 가정하고 임의로 수행한다. 그럼 이 키값들을 멤버로 하는 클래스를 가지고 있어야 할 것같다..
-		for(int i= (int_page-1)*perPageNum+1 ; i<(int_page*perPageNum) ; i++){
-			Map<String, Object> map = new HashMap<String, Object>();
-			
-			map.put("id", new String(""+i));
-			map.put("invdate", new String("날짜"+i));
-			map.put("name", new String("이름"+i));
-			map.put("amount", new String("양"+i));
-			map.put("txt", new String("텍스트"+i));
-			
-			list.add(map);
-		}
+		// db에서 가져온 데이터의 갯수가 10개라고 가정하고 임의로 수행한다. 	그럼 이 키값들을 멤버로 하는 클래스를 가지고 있어야 할 것같다..
+//		for(int i= (int_page-1)*perPageNum+1 ; i<(int_page*perPageNum) ; i++){
+//			Map<String, Object> map = new HashMap<String, Object>();
+//			
+//			map.put("id", new String(""+i));
+//			map.put("invdate", new String("날짜"+i));
+//			map.put("name", new String("이름"+i));
+//			map.put("amount", new String("양"+i));
+//			map.put("txt", new String("텍스트"+i));
+////			map.put("txt", list2.get[3]);
+//			
+//			list.add(map);
+//		}
 		
 		// 그리고 이 JsonObj를 리턴해주면 @ResponseBody 애노테이션 그리고 Jackson라이브러리에 의해
 		// json타입으로 페이지에 데이터가 뿌려지게 된다.
 	       
-	    obj.setRows(list);  // list<map>형태의 받아온 데이터를 가공해서 셋( 그리드에 뿌려줄 행 데이터들 )
+	    obj.setRows(list2);  // list<map>형태의 받아온 데이터를 가공해서 셋( 그리드에 뿌려줄 행 데이터들 )
 	    	    
 	    //page : 현재 페이지
 	    obj.setPage(int_page);// 현재 페이지를 매개변수로 넘어온 page로 지정해준다. 
 		
 	    //records : 보여지는 데이터 개수
-	    obj.setRecords(list.size());//?
+	    obj.setRecords(list2.size());//?
 		
 	    //total : rows에 의한 총 페이지수
 		// 총 페이지 갯수는 데이터 갯수 / 한페이지에 보여줄 갯수 이런 식
-		int totalPage = (int)Math.ceil(list.size()/Double.parseDouble(rows));
+		int totalPage = (int)Math.ceil(list2.size()/Double.parseDouble(rows));
 		obj.setTotal( totalPage ); // 총 페이지 수 (마지막 페이지 번호)
 		mylog.debug("실험 중"+obj);
 	    return obj;
@@ -498,6 +503,7 @@ public class AssetController {
 		List<ChallengeVO> chRandList = rptService.chRand(mno);
 		mylog.debug("chRandList : "+chRandList.size());
 		
+		// 4. 
 		
 		/////////////// 2. List<Map> -> JsonArray ///////////////
 		String cateCntjson = rptService.listMapToJson(cateCntList);

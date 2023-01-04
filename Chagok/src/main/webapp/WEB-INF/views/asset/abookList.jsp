@@ -79,7 +79,7 @@ ${map }
 	$(function(){
 		$('#pagination').html('<p>안녕<p>');
 		
-		
+		alert("실험");
 		$("#list2").jqGrid({
 		    url : '/asset/gtest',
 		    datatype : "json",
@@ -100,6 +100,7 @@ ${map }
 		    caption:"JSON Example",
 		    jsonReader: {
 		         repeatitems:false
+		         
 		    }
 		});
 		
@@ -107,7 +108,7 @@ ${map }
 		
 		
 		
-		
+		alert("끝");
 	});//function()
 	
 	
