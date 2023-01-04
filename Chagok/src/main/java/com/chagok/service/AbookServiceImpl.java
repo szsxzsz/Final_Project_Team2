@@ -1,5 +1,7 @@
 package com.chagok.service;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
@@ -49,5 +51,37 @@ public class AbookServiceImpl implements AbookService{
 
 
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	///////////////////MJ/////////////////////
+	
+	@Override
+	public String getPMonth(int mon) throws Exception {
+		mylog.debug("mon : "+mon);
+		SimpleDateFormat fmt = new SimpleDateFormat("yyyyMM");
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.MONTH, -mon);
+        String yyyy = fmt.format(cal.getTime()).substring(0,4);
+        String MM = fmt.format(cal.getTime()).substring(4,6);
+        String pMonth = yyyy+MM;
+        return pMonth;
+	}
+
+	@Override
+	public List<String> getctTop() throws Exception {
+		return dao.getctTop();
+	}
+
+	@Override
+	public int chkBud(int mno, String pMonth) throws Exception {
+		return dao.chkBud(mno, pMonth);
+	}
 	
 }

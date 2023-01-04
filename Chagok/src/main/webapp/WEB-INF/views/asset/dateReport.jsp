@@ -191,9 +191,10 @@
 	
 	</div>	
 
-<!-- 제이쿼리 -->
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous" type="text/javascript"></script> -->
+<!-- jQuery -->
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.min.js"></script>
+<!-- jQuery.number -->
+<script src="/resources/js/jquery.number.min.js"></script>
 <!-- chart.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
 
@@ -280,12 +281,12 @@ $(document).ready(function(){
 		if(weekout[i]==null){
 			$('#tbody1').append("<td>지출 내역 없음</td>");
 		} else {
-			$('#tbody1').append("<td>"+weekout[i]+"</td>");
+			$('#tbody1').append("<td>"+$.number(weekout[i])+"원</td>");
 		}
 		if(weekin[i]==null){
 			$('#tbody1').append("<td>수입 내역 없음</td>");
 		} else {
-			$('#tbody1').append("<td>"+weekin[i]+"</td>");
+			$('#tbody1').append("<td>"+$.number(weekin[i])+"원</td>");
 		}
 		$('#tbody1').append("/<tr>");
 	});
@@ -296,24 +297,24 @@ $(document).ready(function(){
 		if(monthout[i]==null){
 			$('#tbody2').append("<td>지출 내역 없음</td>");
 		} else {
-			$('#tbody2').append("<td>"+monthout[i]+"</td>");
+			$('#tbody2').append("<td>"+$.number(monthout[i])+"원</td>");
 		}
 		if(monthin[i]==null){
 			$('#tbody2').append("<td>수입 내역 없음</td>");
 		} else {
-			$('#tbody2').append("<td>"+monthin[i]+"</td>");
+			$('#tbody2').append("<td>"+$.number(monthin[i])+"원</td>");
 		}
 		$('#tbody2').append("/<tr>");
 	});
 	
 	$('#amptop').append("<h3>"+content[0]+"에 가장 많은 금액을 지출했어요</h3>");
-	$('#amptop').append("<h3>1회 지출액 : "+amt[0]+"원</h3>");
+	$('#amptop').append("<h3>1회 지출액 : "+$.number(amt[0])+"원</h3>");
 	$.each (top1, function (i, el) {
 		$('#tbody3').append("<tr>");
 		$('#tbody3').append("<td>"+(i+1)+"</td>");
 		$('#tbody3').append("<td>"+top1[i]+" > "+bottom1[i]+"</td>");
 		$('#tbody3').append("<td>"+content[i]+"</td>");
-		$('#tbody3').append("<td>"+amt[i]+"원</td>");
+		$('#tbody3').append("<td>"+$.number(amt[i])+"원</td>");
 		$('#tbody3').append("/<tr>");
 	});
 

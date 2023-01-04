@@ -116,6 +116,17 @@
 		inner join category ct
 		on ct.ctno=ab.ctno
 	</sql>
+
+	<!-- top 4 cate -->
+	<sql id="top4cate">
+		(select ct.ct_top
+		from account_book ab inner join category ct on ab.ctno=ct.ctno
+		<include refid="wh1out"/>
+		group by ct.ct_top
+		order by sum(ab.ab_amount) desc limit 4
+		) as tmp
+	</sql>
+	
 	
   	<!-- //////////////////////// dateReport //////////////////////// -->
   	<!-- 1. 이번달 총 지출  -->
@@ -279,18 +290,27 @@
 		where ch.ctno in (
 			select ct.ctno from category ct
 			where ct.ct_top in (
-				select * from (
-					select ct.ct_top
-					from account_book ab inner join category ct on ab.ctno=ct.ctno
-					<include refid="wh1out"/>
-					group by ct.ct_top
-					order by sum(ab.ab_amount) desc limit 4
-				) as tmp
+				select * from 
+				<include refid="top4cate"/>
 			)
 		)
 		order by rand() limit 4;
 	</select>
 	
 	<!-- 4.카드 추천 -->
+	<select id="cardRand" resultType="PropCardVO">
+		select * from prop_card pc where prop_cate regexp (
+			select * from (
+				select group_concat(tmp.ct_top separator '|')
+				from 
+				<include refid="top4cate"/>
+			) as tmp2
+		)
+		order by rand() limit 4;	
+	</select>
+	
+	
+	
+	
 	
   </mapper>

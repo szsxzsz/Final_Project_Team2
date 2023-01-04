@@ -19,6 +19,23 @@ public interface AbookDAO {
 	public Integer updateAbook(AbookVO vo) throws Exception;
 	
     public List<Map<String, AbookVO>> AbookList(int mno) throws Exception;
-
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	///////////////////MJ/////////////////////
+	// ct_top
+	public List<String> getctTop() throws Exception;
+	
+	// 1. 예산 유무
+	public int chkBud(int mno, String pMonth) throws Exception;
 	
 }

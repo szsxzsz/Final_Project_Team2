@@ -1,22 +1,17 @@
 package com.chagok.controller;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -41,6 +36,7 @@ import com.chagok.domain.AbookVO;
 import com.chagok.domain.CategoryVO;
 import com.chagok.domain.ChallengeVO;
 import com.chagok.domain.JsonObj;
+import com.chagok.domain.PropCardVO;
 import com.chagok.domain.UserVO;
 import com.chagok.service.AbookService;
 import com.chagok.service.AccountService;
@@ -48,7 +44,6 @@ import com.chagok.service.OpenBankingService;
 import com.chagok.service.ReportService;
 import com.chagok.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
 
 @Controller
 @RequestMapping("/asset/*")
@@ -503,7 +498,9 @@ public class AssetController {
 		List<ChallengeVO> chRandList = rptService.chRand(mno);
 		mylog.debug("chRandList : "+chRandList.size());
 		
-		// 4. 
+		// 4. 카드 추천
+		List<PropCardVO> cardRandList = rptService.cardRand(mno);
+		mylog.debug("cardRandList : "+cardRandList.size());
 		
 		/////////////// 2. List<Map> -> JsonArray ///////////////
 		String cateCntjson = rptService.listMapToJson(cateCntList);
@@ -514,11 +511,46 @@ public class AssetController {
 		map.put("cateCntjson", cateCntjson);
 		map.put("cateSumjson", cateSumjson);
 		map.put("chRandList", chRandList);
+		map.put("cardRandList", cardRandList);
 		model.addAttribute("map", map);
 		model.addAttribute("userVO", userVO);
 		return "/asset/cateReport";
 	}
 	
-
+	
+//	http://localhost:8080/asset/budget
+//	http://localhost:8080/asset/budget?mm=1
+	@GetMapping(value = "/budget")
+	public String budget(@RequestParam("mm") int mon, HttpSession session, Model model) throws Exception {	
+		int mno = (int)session.getAttribute("mno");
+		mylog.debug("mno : "+mno);
+		
+		// getctTop
+		List<String> ctTopList = abService.getctTop();
+		mylog.debug("ctTopList : "+ctTopList.size());
+		model.addAttribute("ctTopList", ctTopList);
+		
+		// chkBud
+		mylog.debug("mon : "+mon);
+		String pMonth = abService.getPMonth(mon);
+		mylog.debug(mon+"달 전(pMonth): "+pMonth);
+		
+		int chkBud = abService.chkBud(mno, pMonth);
+		mylog.debug("chkBud : "+chkBud);
+		
+		if(chkBud==0) {
+			return "/asset/nbudget";
+		} else {
+			return "/asset/ybudget";
+		}
+	}
+	
+//	@GetMapping(value = "/budcopy")
+//	public String budcopy() {
+//		Map<String, Object> map = new HashMap<String, Object>();
+//		map.put("kor", "Korea");
+//        map.put("us", "United States");
+//        return null;
+//	}
 	///////////////////MJ////////////////////
 }

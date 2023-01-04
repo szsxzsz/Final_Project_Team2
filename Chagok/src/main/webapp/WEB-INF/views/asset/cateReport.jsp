@@ -17,6 +17,7 @@
 		<c:set var="today" value="<%=new java.util.Date() %>"/><br><br>
 <%-- 		${map.chRandList }<hr> --%>
 <%-- 		${map.cateCntjson} --%>
+<%-- 		${map.cardRandList} --%>
 		<h1>${userVO.nick }님의
 			<fmt:formatDate value="${today }" pattern="MM"/>월 카테고리별 리포트
 		</h1>
@@ -105,7 +106,8 @@
 
 		<div class="box box-danger">
 			<div class="box-header with-border">
-				<h3 class="box-title">nick님께 추천하는 챌린지</h3>
+				<c:set var="nick" value="${userVO.nick }"/>
+				<h3 class="box-title">${nick }님, 함께 절약하는 습관을 길러요</h3>
 			</div>
 
 			<div class="box-body no-padding">
@@ -142,7 +144,7 @@
 							</div>
 						</div>
 					</li>
-					</c:forEach>
+				</c:forEach>
 				</ul>
 
 			</div>
@@ -155,39 +157,30 @@
 
 		<div class="box box-warning">
 			<div class="box-header with-border">
-				<h3 class="box-title">nick님께 추천하는 카드</h3>
+				<h3 class="box-title">${nick }님, 이런 카드는 어떠세요?</h3>
 			</div>
 
 			<div class="box-body no-padding">
 				<ul class="users-list clearfix">
+				<c:forEach var="card" items="${map.cardRandList }">
 					<li>
 						<img src="" alt="User Image">
-						<h5 class="description-header"><a href="#">카드명</a></h5>
-						<h5 class="description-header"><a href="#">카드설명</a></h5>
+						<h5 class="description-header">${card.prop_name }</h5>
+						<h5 class="description-header">${card.prop_info }</h5>
 						<div class="box-footer">
 							<div class="row">
-								<div class="col-sm-4 border-right">
-									<div class="description-block">
-										<span class="description-text">카드혜택1</span>
+								<c:forEach var="cardInfo" items="${card.prop_content }">
+									<div class="col-sm-4 border-right">
+										<div class="description-block">
+											<span class="description-text">${cardInfo }</span>
+										</div>
 									</div>
-		
-								</div>
-		
-								<div class="col-sm-4 border-right">
-									<div class="description-block">
-										<span class="description-text">카드혜택2</span>
-									</div>
-		
-								</div>
-		
-								<div class="col-sm-4">
-									<div class="description-block">
-										<span class="description-text">카드혜택3</span>
-									</div>
-								</div>
+								</c:forEach>		
 							</div>
 						</div>
 					</li>
+				
+				</c:forEach>
 				</ul>
 
 			</div>
@@ -196,9 +189,10 @@
 
 	</div>	
 
-<!-- 제이쿼리 -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous" type="text/javascript"></script>
+<!-- jQuery -->
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.min.js"></script>
+<!-- jQuery.number -->
+<script src="/resources/js/jquery.number.min.js"></script>
 <!-- chart.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
 
@@ -292,15 +286,14 @@ var linechart = new Chart(ctx2, {
 	data: databar,
 	options: optionbar
 });
-
 $(document).ready(function(){
 // 	console.log(label1);
 	$('#tbody1').empty();
 	$.each (label1, function (i, el) {
-		$('#tbody1').append("<tr>");
+		$('#tbody1').append("<tr");
 		$('#tbody1').append("<td>"+i+"</td>");
 		$('#tbody1').append("<td>"+label1[i]+"</td>");
-		$('#tbody1').append("<td>"+value1[i]+"</td>");
+		$('#tbody1').append("<td>"+$.number(value1[i])+"원</td>");
 		$('#tbody1').append("/<tr>");
 	});
 	
@@ -309,7 +302,7 @@ $(document).ready(function(){
 		$('#tbody2').append("<tr>");
 		$('#tbody2').append("<td>"+i+"</td>");
 		$('#tbody2').append("<td>"+label2[i]+"</td>");
-		$('#tbody2').append("<td>"+value2[i]+"</td>");
+		$('#tbody2').append("<td>"+$.number(value2[i])+"원</td>");
 		$('#tbody2').append("/<tr>");
 	});
 	

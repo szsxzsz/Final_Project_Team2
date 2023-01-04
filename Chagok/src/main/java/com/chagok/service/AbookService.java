@@ -17,5 +17,24 @@ public interface AbookService {
 	public Integer updateAbook(AbookVO vo) throws Exception;
 
 	public List<Map<String, AbookVO>> AbookList(int mno) throws Exception;
-
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	///////////////////MJ/////////////////////
+	//  n달 전
+	public String getPMonth(int mon) throws Exception;
+	
+	// ct_top
+	public List<String> getctTop() throws Exception;
+	
+	// 1. 예산 유무
+	public int chkBud(int mno, String pMonth) throws Exception;
 }

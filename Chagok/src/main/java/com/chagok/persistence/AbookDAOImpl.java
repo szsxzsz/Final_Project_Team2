@@ -1,5 +1,6 @@
 package com.chagok.persistence;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -55,12 +56,33 @@ public class AbookDAOImpl implements AbookDAO{
 		List<Map<String, AbookVO>> AbookList2 = sqlSession.selectList(NAMESPACE+".abookList", mno); 
 		
 		return AbookList2;
+}
+
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	///////////////////MJ/////////////////////
+
+	@Override
+	public List<String> getctTop() throws Exception {
+		return sqlSession.selectList(NAMESPACE+".getctTop");
+	}	
+	
+	@Override
+	public int chkBud(int mno, String pMonth) throws Exception {
+		Map map = new HashMap();
+		map.put("mno", mno);
+		map.put("pMonth", pMonth);
+		
+		int chkBud = sqlSession.selectOne(NAMESPACE+".chkbud", map);
+		return chkBud;
 	}
-	
-	
-	
-	
-	
-	
-	
 }

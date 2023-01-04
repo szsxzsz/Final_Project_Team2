@@ -5,7 +5,7 @@ import java.util.Map;
 
 import com.chagok.domain.AbookVO;
 import com.chagok.domain.ChallengeVO;
-import com.chagok.domain.ReportVO;
+import com.chagok.domain.PropCardVO;
 
 public interface ReportDAO {
 
@@ -54,18 +54,21 @@ public interface ReportDAO {
 	public List<Map<String, Integer>> amtTop(Integer mno) throws Exception;
 	
 	// 14. 지출횟수 TOP 4
-	public List<Map<String, Integer>> cntTop(Integer mno) throws Exception;
-	
+	public List<Map<String, Integer>> cntTop(Integer mno) throws Exception;	
+
 	
 	////////////////////////cateReport ////////////////////////
 	
-	// 1.최다 지출 카테고리
+	// 1. 최다 지출 카테고리
 	public List<Map<String, Integer>> cateCnt(Integer mno) throws Exception;
 	
-	// 2.최대 지출 카테고리
+	// 2. 최대 지출 카테고리
 	public List<Map<String, Integer>> cateSum(Integer mno) throws Exception;
 	
-	// 3.챌린지 추천
+	// 3. 챌린지 추천
 	public List<ChallengeVO> chRand(Integer mno) throws Exception;
+	
+	// 4. 카드 추천
+	public List<PropCardVO> cardRand(Integer mno) throws Exception;
 
 }
