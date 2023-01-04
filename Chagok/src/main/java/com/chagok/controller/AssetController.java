@@ -239,7 +239,7 @@ public class AssetController {
 		for(int i= (int_page-1)*perPageNum+1 ; i<(int_page*perPageNum) ; i++){
 			AbookVO vo = (AbookVO) list2.get(i);
 			// mno 돌아가게 하기 
-			// json 
+			// json  
 			
 			
 			Map<String, Object> map = new HashMap<String, Object>();
