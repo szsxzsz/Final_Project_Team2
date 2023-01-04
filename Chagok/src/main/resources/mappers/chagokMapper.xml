@@ -144,6 +144,22 @@
 		update user set isCheck = "Y" where mno = #{mno}
 	</update>
 	
+	<!-- 게시판 글 수정 -->
+	<update id="updateBoard">
+		update board set b_title=#{b_title}, b_content=#{b_content}
+		where bno = #{bno}
+	</update>
 	
+	<!-- 게시판 글 삭제 -->
+	<delete id="deleteBoard">
+		delete from board
+		where bno = #{bno}
+	</delete>
+	
+	<!-- 게시글 작성 (cno X) -->
+	<insert id = "insertBoard">
+		insert into board (b_title,b_content,b_writer,b_sort,b_file)
+		values (#{b_title},#{b_content},#{b_writer},#{b_sort},#{b_file})	
+	</insert>
 	
   </mapper>

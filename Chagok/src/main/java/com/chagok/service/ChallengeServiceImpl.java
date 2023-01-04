@@ -145,6 +145,32 @@ public class ChallengeServiceImpl implements ChallengeService{
 		mylog.debug("저축형 챌린지 참여완료");
 	}
 
+	// 게시판 글 수정
+	@Override
+	public Integer updateBoard(BoardVO vo) throws Exception {
+		mylog.debug("updateBoard() 호출 ");
+		
+		return dao.updateBoard(vo);
+	}
+
+	// 게시판 글 삭제
+	@Override
+	public void deleteBoard(Integer bno) throws Exception {
+		mylog.debug(" deleteBoard() 호출 ");
+		
+		dao.deleteBoard(bno);
+			
+		
+	}
+
+	@Override
+	public void insertBoard(BoardVO vo) throws Exception {
+		mylog.debug(" insertBoard 호출 ");
+		
+		dao.insertBoard(vo);
+		
+	}
+
 	
 
 	

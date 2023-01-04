@@ -14,7 +14,7 @@ ${boardList }
 			<ul class="timeline">
 
 				<li class="time-label">
-					<span class="bg-red" value="${boardList.b_date }"> 
+					<span class="bg-red" > 
 						
 					</span>
 				</li>
@@ -24,7 +24,7 @@ ${boardList }
 					<div class="timeline-item">
 						
 						<h3 class="timeline-header">
-							
+							${boardList.b_title }
 						</h3>
 						<div class="timeline-body">
 							

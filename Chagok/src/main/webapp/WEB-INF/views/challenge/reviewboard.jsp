@@ -26,7 +26,7 @@ ${boardList}
 				<td>${boardList.b_title }</td>
 				<td>21</td>
 				<td>
-					<a href="${boardList.b_title }">${boardList.b_title } </a>
+					<a href="">${boardList.b_title } </a>
 				</td>
 				<td>${boardList.b_content }</td>
 				<td>11</td>

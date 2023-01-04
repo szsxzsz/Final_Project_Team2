@@ -65,7 +65,7 @@ ${review }
 	<textarea rows="15" cols="100" name="b_content"></textarea>
 	
 	 <div class="box-footer">
-          <button type="submit" class="btn btn-primary">글쓰기</button>
+          <button type="submit" class="btn btn-primary" onclick="location.href='/challenge/reviewboard';">글쓰기</button>
      </div>
      <input type="hidden" name="b_sort" value="review">
 	</form>
@@ -75,3 +75,35 @@ ${review }
 
 
 <%@ include file="../include/footer.jsp"%>
+<script>
+			$(document).ready(function(){
+				var formObj = $("form[role='form']");
+				//console.log(formObj);
+				
+				
+				// 수정버튼 클릭시 (bno를 가지고 submit -> /board/modify 로 이동)
+				$(".btn-danger").click(function(){
+					// attr => 태그자체의 속성이나 설정 변경
+					formObj.attr("action","/board/modify"); // action 을 /board/modify 로변경
+					formObj.attr("method","get"); // method를 get방식으로 변경
+					formObj.submit();
+					
+				});
+				
+				// 삭제버튼 (bno 가지고 submit -> /board/remove 로 이동)
+				$(".btn-warning").click(function(){
+					// 바로 삭제하는 동작 수행 -> POST 방식으로 전달
+					formObj.attr("action","/board/remove");
+					formObj.submit();
+				});
+				
+				
+				
+				$(".bg-purple").click(function(){
+					// 목록으로 이동
+					location.href = "/board/list";
+				});
+				
+				
+			});
+</script>

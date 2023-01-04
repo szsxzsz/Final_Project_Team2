@@ -53,7 +53,7 @@ ${review }
 			<span class="input-group-addon"> 
 				챌린지 종료일	
 			</span> 
-			<input type="text" class="form-control" name="b_"  readonly>
+			<input type="text" class="form-control" name="${c_end }"  readonly>
 		</div>
 
 	</div>
@@ -62,10 +62,11 @@ ${review }
 	<hr>
 	<h5> 후기 </h5>
 	
-	<textarea rows="15" cols="100" name="b_content"></textarea>
+	<textarea rows="15" cols="100" name="b_content" value="${review.b_content }"></textarea>
 	
 	 <div class="box-footer">
-          <button type="submit" class="btn btn-primary">글쓰기</button>
+          <button type="submit" class="btn btn-primary" >수정하기</button>
+          <button type="button" class="btn btn-primary" >돌아가기</button>
      </div>
      <input type="hidden" name="b_sort" value="review">
 	</form>

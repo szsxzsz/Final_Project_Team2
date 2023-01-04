@@ -174,6 +174,7 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 //		
 //	}
 	
+	// 챌린지 참여 인원 조회(checkfeed 용)
 	@Override
 	public Map<String, Object> getCList(Integer cno) throws Exception {
 		mylog.debug("getCList(Integer cno) 호출");
@@ -191,6 +192,34 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 		mylog.debug(" 저축형 챌린지 참여완료 ");
 
 	}
+
+	@Override
+	public Integer updateBoard(BoardVO vo) throws Exception {
+		
+		mylog.debug("updateBoard() 호출 ");
+		
+		return sqlSession.update(NAMESPACE+".updateBoard", vo);
+	}
+
+	@Override
+	public void deleteBoard(Integer bno) throws Exception {
+		
+		mylog.debug(" deleteBoard() 호출 ");
+		
+		sqlSession.delete(NAMESPACE+".deleteBoard",bno);
+		
+	}
+
+	@Override
+	public void insertBoard(BoardVO vo) throws Exception {
+		
+		mylog.debug(" inserBoard 호출 ");
+		
+		sqlSession.insert(NAMESPACE+".insertBoard", vo);
+		
+	}
+	
+	
 	
 	
 	

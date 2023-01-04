@@ -60,6 +60,13 @@ public interface ChallengeDAO {
 	// 저축형 챌린지 참여하기
 	public void joinPlus(ChallengeVO vo) throws Exception;
 	
+	// 게시판 글 수정
+	public Integer updateBoard(BoardVO vo) throws Exception;
 
+	// 게시판 글 삭제
+	public void deleteBoard(Integer bno) throws Exception;
+	
+	// 게시판 글 작성
+	public void insertBoard(BoardVO vo) throws Exception;
 	
 }
