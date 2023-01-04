@@ -58,7 +58,7 @@ public interface ChallengeService {
 		
 	// 챌린지 피드 인원 조회
 //	public List<Map<String, Object>> getCList(Integer cno);
-	public Map<String, Object> getCList(Integer cno) throws Exception;
+	public int getCList(Integer cno) throws Exception;
 	
 	// 게시판 글 수정
 	public Integer updateBoard(BoardVO vo) throws Exception;

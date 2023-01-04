@@ -41,7 +41,7 @@ ${vo }
 				// 수정
 				$(".btn-block btn-success btn-lg").click(function(){
 					
-					formObj.attr("action","/challenge/noticeupdate"); 
+					formObj.attr("action","/challenge/reviewupdate"); 
 					formObj.attr("method","get"); 
 					formObj.submit();
 					
@@ -49,13 +49,13 @@ ${vo }
 			
 				// 삭제
 				$(".btn-warning").click(function(){
-					formObj.attr("action","/challenge/noticedelete");
+					formObj.attr("action","/challenge/reviewdelete");
 					formObj.submit();
 				});
 				
 				// 목록가기
 				$(".bg-purple").click(function(){
-					location.href = "/board/list";
+					location.href = "/challenge/reviewboard";
 				});
 				
 				

@@ -130,7 +130,7 @@ public class ChallengeServiceImpl implements ChallengeService{
 //	}
 	
 	@Override
-	public Map<String, Object> getCList(Integer cno) throws Exception {
+	public int getCList(Integer cno) throws Exception {
 		mylog.debug("getCList("+cno+") 호출");
 		
 		return  dao.getCList(cno);

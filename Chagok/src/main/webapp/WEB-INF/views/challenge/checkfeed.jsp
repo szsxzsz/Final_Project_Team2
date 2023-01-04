@@ -8,11 +8,9 @@
 
 <h1>피드 가기</h1>
 
-<%-- ${challengeList } --%>
-${CList }
+
 <script type="text/javascript">
 	function move() {
-// 		var move = document.getElementByid('#move');
 		
 		if(${vo.c_sort == 0}){
 			location.href = "/challenge/plusfeed?cno="+${vo.cno};
@@ -31,17 +29,17 @@ ${CList }
 	        <img class="img-responsive" src="${pageContext.request.contextPath }/resources/dist/img/photo1.png" alt="Photo" style="width:500px; height:400px;">
 		</div>
 		<div class="col-lg-6 pt-4 pt-lg-0 content aos-init aos-animate" data-aos="fade-left" >
-<%-- 			<c:forEach var="vo" items="challengeList"> --%>
+			<c:forEach var="vo" items="${challengeList }">
 			
-<%-- 				<c:if test="${vo.c_sort eq 0 }"> --%>
-<%-- 					<c:set var="sort" value="저축형"/> --%>
-<%-- 				</c:if> --%>
-<%-- 				<c:if test="${vo.c_sort eq 1 }"> --%>
-<%-- 					<c:set var="sort" value="절약형"/> --%>
-<%-- 				</c:if> --%>
+				<c:if test="${vo.c_sort eq 0 }">
+					<c:set var="sort" value="저축형"/>
+				</c:if>
+				<c:if test="${vo.c_sort eq 1 }">
+					<c:set var="sort" value="절약형"/>
+				</c:if>
 				
-			<h3><span style="color: #66BB7A; font-weight: bold;">[${vo2.ct_top}]</span> ${vo.c_title }</h3>
-<%-- 			</c:forEach> --%>
+			</c:forEach>
+			<h3><span style="color: #66BB7A; font-weight: bold;">[${sort } : ${vo2.ct_top}]</span> <br>${vo.c_title }</h3>
 			 <jsp:useBean id="now" class="java.util.Date" />
 			 <fmt:parseNumber value="${now.time / (1000*60*60*24)}" integerOnly="true" var="nowfmtTime" scope="request"/>
 			 <fmt:parseDate value="${vo.c_start}" var="startDate" pattern="yyyy-MM-dd"/>
@@ -105,22 +103,15 @@ ${CList }
 			</div>
 	
 			<div class="box-body no-padding">
-	<%-- 			<c:forEach var="vo" item="${challengeList }"> --%>
+				<c:forEach var="vo" items="${vo.c_person.split(',')}">
 					<ul class="users-list clearfix">
 						<li>
-							<img src="" alt="User Image"> 
-							<br>
-								${vo.c_person } 
+							<a href="">${vo}</a> 
 	 					</li>
 					</ul>
-	<%-- 			</c:forEach> --%>
+				</c:forEach>
 	
 			</div>
-	
-			<div class="box-footer text-center">
-				<a href="javascript:void(0)" class="uppercase">View All Users</a>
-			</div>
-	
 		</div>
 	</div>
 </div>
@@ -131,6 +122,5 @@ ${CList }
 <!-- 	<input type="button" value="피드가기" id="move" onclick="move();"> -->
 </section>
 
-<!-- <br> -->
 </div>
 <%@ include file="../include/footer.jsp"%>

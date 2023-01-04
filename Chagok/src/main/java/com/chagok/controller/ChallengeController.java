@@ -219,17 +219,18 @@ public class ChallengeController {
 			
 		ChallengeVO vo = service.getChallengeInfo(cno);
 		
-//		List<ChallengeVO> challengeList = service.getChallengeList(cno);
-		Map<String, Object> CList = service.getCList(cno);
-		
+		List<ChallengeVO> challengeList = service.getChallengeList(cno);
+		int CList = service.getCList(cno);
+		ChallengeVO vo2 = service.getCt_top(cno);
 		
 		
 		model.addAttribute("vo", vo);
-//		model.addAttribute("challengeList", challengeList);
+		model.addAttribute("challengeList", challengeList);
 		model.addAttribute("c_end", service.getChallengeEndDate(cno));
-//		model.addAttribute("CList",CList);
-		model.addAttribute("CList",CList);
 
+		model.addAttribute("CList",CList);
+		model.addAttribute("vo2", vo2);
+		
 		return "/challenge/checkfeed";
 	}
 
@@ -585,7 +586,6 @@ public class ChallengeController {
 		
 		mylog.debug(vo+"");
 		
-		service.insertBoard(vo);
 		
 		rttr.addFlashAttribute("result", "createOK");
 		

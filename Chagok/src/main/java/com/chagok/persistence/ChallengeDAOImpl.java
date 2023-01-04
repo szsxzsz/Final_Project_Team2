@@ -176,9 +176,10 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 	
 	// 챌린지 참여 인원 조회(checkfeed 용)
 	@Override
-	public Map<String, Object> getCList(Integer cno) throws Exception {
+	public int getCList(Integer cno) throws Exception {
 		mylog.debug("getCList(Integer cno) 호출");
-		Map<String, Object> CList = sqlSession.selectOne(NAMESPACE+".CList");
+		int CList = sqlSession.selectOne(NAMESPACE+".CList",cno);
+		mylog.debug(CList+"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 		return CList;
 	}
 
