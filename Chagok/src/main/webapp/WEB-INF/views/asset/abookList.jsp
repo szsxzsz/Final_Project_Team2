@@ -383,13 +383,7 @@ $("#jqGrid").jqGrid({
 
  </script>   
  
- <script type="text/javascript">
- $("#bedata").click(function(){ 
-     var gr = jQuery("#editgrid").jqGrid('getGridParam','selrow'); 
-     if( gr != null ) jQuery("#editgrid").jqGrid('editGridRow',gr {height:280,reloadAfterSubmit:false}); 
-     else alert("Please Select Row"); 
-});
- </script>
+
 
 <!-- Datepicker -->
 

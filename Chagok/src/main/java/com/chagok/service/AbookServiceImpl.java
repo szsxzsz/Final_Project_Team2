@@ -43,18 +43,11 @@ public class AbookServiceImpl implements AbookService{
 	}
 
 	@Override
-	public List<Map<String, AbookVO>> AbookList(int mno) throws Exception {
+	public List<Map<String, AbookVO>> AbookList() throws Exception {
 		mylog.debug("♡♡♡♡ Service -> DAO 호출");
-		return dao.AbookList(mno);
+		return dao.AbookList();
 	}
 
-
-
-	
-	
-	
-	
-	
 	
 	
 	

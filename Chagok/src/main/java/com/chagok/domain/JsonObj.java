@@ -1,4 +1,4 @@
- 
+
 package com.chagok.domain;
 
 import java.util.ArrayList;
@@ -41,8 +41,5 @@ public class JsonObj {
 		return "JsonObj [page=" + page + ", records=" + records + ", total=" + total + ", rows=" + rows + "]";
 	}
     
-    
-    
-    
-} 
-
+          
+}

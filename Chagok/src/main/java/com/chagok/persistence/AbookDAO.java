@@ -18,7 +18,7 @@ public interface AbookDAO {
 	// 그리드 수정
 	public Integer updateAbook(AbookVO vo) throws Exception;
 	
-    public List<Map<String, AbookVO>> AbookList(int mno) throws Exception;
+    public List<Map<String, AbookVO>> AbookList() throws Exception;
 	
 	
 	

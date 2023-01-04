@@ -1,3 +1,4 @@
+
 package com.chagok.persistence;
 
 import java.util.HashMap;
@@ -50,10 +51,10 @@ public class AbookDAOImpl implements AbookDAO{
 	}
 
 	@Override
-	public List<Map<String, AbookVO>> AbookList(int mno) throws Exception {
+	public List<Map<String, AbookVO>> AbookList() throws Exception {
 		mylog.debug("Mapper♡♡♡♡♡♡♡♡♡♡♡♡♡AbookList");
 		
-		List<Map<String, AbookVO>> AbookList2 = sqlSession.selectList(NAMESPACE+".abookList", mno); 
+		List<Map<String, AbookVO>> AbookList2 = sqlSession.selectList(NAMESPACE+".abookList"); 
 		
 		return AbookList2;
 }
