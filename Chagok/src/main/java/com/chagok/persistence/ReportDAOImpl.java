@@ -75,43 +75,43 @@ public class ReportDAOImpl implements ReportDAO {
 	}
 
 	@Override
-	public List<Map<String, Integer>> outCum(Integer mno) throws Exception {
+	public List<Map<String, Object>> outCum(Integer mno) throws Exception {
 		return sqlSession.selectList(NAMESPACE+".outCum", mno);
 	}
 	
 	@Override
-	public List<Map<String, Integer>> day(Integer mno) throws Exception {
+	public List<Map<String, Object>> day(Integer mno) throws Exception {
 		return sqlSession.selectList(NAMESPACE+".day", mno);
 	}
 
 	@Override
-	public List<Map<String, Integer>> week(Integer mno) throws Exception {
+	public List<Map<String, Object>> week(Integer mno) throws Exception {
 		return sqlSession.selectList(NAMESPACE+".week", mno);
 	}
 	
 	@Override
-	public List<Map<String, Integer>> month(Integer mno) throws Exception {
+	public List<Map<String, Object>> month(Integer mno) throws Exception {
 		return sqlSession.selectList(NAMESPACE+".month", mno);
 	}
 	
 	@Override
-	public List<Map<String, Integer>> amtTop(Integer mno) throws Exception {
+	public List<Map<String, Object>> amtTop(Integer mno) throws Exception {
 		return sqlSession.selectList(NAMESPACE+".amtTop", mno);
 	}
 
 	@Override
-	public List<Map<String, Integer>> cntTop(Integer mno) throws Exception {
+	public List<Map<String, Object>> cntTop(Integer mno) throws Exception {
 		return sqlSession.selectList(NAMESPACE+".cntTop", mno);
 	}
 
 	////////////////////////cateReport ////////////////////////
 	@Override
-	public List<Map<String, Integer>> cateCnt(Integer mno) throws Exception {
+	public List<Map<String, Object>> cateCnt(Integer mno) throws Exception {
 		return sqlSession.selectList(NAMESPACE+".cateCnt", mno);
 	}
 
 	@Override
-	public List<Map<String, Integer>> cateSum(Integer mno) throws Exception {
+	public List<Map<String, Object>> cateSum(Integer mno) throws Exception {
 		return sqlSession.selectList(NAMESPACE+".cateSum", mno);
 	}
 

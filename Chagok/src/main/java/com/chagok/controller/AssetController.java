@@ -18,6 +18,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -420,27 +422,27 @@ public class AssetController {
 		mylog.debug("outCnt : "+outCnt);
 		
 		// 9. 이번달 누적 지출
-		List<Map<String, Integer>> outCum = rptService.outCum(mno);
+		List<Map<String, Object>> outCum = rptService.outCum(mno);
 		mylog.debug("outCum : "+outCum.size());
 		
 		// 10. 일간 통계
-		List<Map<String, Integer>> day = rptService.day(mno);
+		List<Map<String, Object>> day = rptService.day(mno);
 		mylog.debug("day : "+day.size());
 		
 		// 11. 주간 통계
-		List<Map<String, Integer>> week = rptService.week(mno);
+		List<Map<String, Object>> week = rptService.week(mno);
 		mylog.debug("week : "+week.size());
 		
 		// 12. 월간 통계
-		List<Map<String, Integer>> month = rptService.month(mno);
+		List<Map<String, Object>> month = rptService.month(mno);
 		mylog.debug("month : "+month.size());
 		
 		// 13. 지출액 TOP 4
-		List<Map<String, Integer>> amtTop = rptService.amtTop(mno);
+		List<Map<String, Object>> amtTop = rptService.amtTop(mno);
 		mylog.debug("amtTop : "+amtTop.size());
 		
 		// 14. 지출횟수 TOP 4
-		List<Map<String, Integer>> cntTop = rptService.cntTop(mno);
+		List<Map<String, Object>> cntTop = rptService.cntTop(mno);
 		mylog.debug("cntTop : "+cntTop.size());		
 		
 		/////////////// 2. List<Map> -> JsonArray ///////////////
@@ -487,11 +489,11 @@ public class AssetController {
 		
 		/////////////// 1. service에서 DB 가져오기 ///////////////
 		// 1. 최다 지출 카테고리
-		List<Map<String, Integer>> cateCntList = rptService.cateCnt(mno);
+		List<Map<String, Object>> cateCntList = rptService.cateCnt(mno);
 		mylog.debug("cateCntList : "+cateCntList.size());
 //		
 		// 2. 최대 지출 카테고리
-		List<Map<String, Integer>> cateSumList = rptService.cateSum(mno);
+		List<Map<String, Object>> cateSumList = rptService.cateSum(mno);
 		mylog.debug("cateSumList : "+cateSumList.size());
 		
 		// 3. 챌린지 추천
@@ -521,7 +523,7 @@ public class AssetController {
 //	http://localhost:8080/asset/budget
 //	http://localhost:8080/asset/budget?mm=1
 	@GetMapping(value = "/budget")
-	public String budget(@RequestParam("mm") int mon, HttpSession session, Model model) throws Exception {	
+	public String budget(@RequestParam("mm") int mm, HttpSession session, Model model) throws Exception {	
 		int mno = (int)session.getAttribute("mno");
 		mylog.debug("mno : "+mno);
 		
@@ -531,9 +533,9 @@ public class AssetController {
 		model.addAttribute("ctTopList", ctTopList);
 		
 		// chkBud
-		mylog.debug("mon : "+mon);
-		String pMonth = abService.getPMonth(mon);
-		mylog.debug(mon+"달 전(pMonth): "+pMonth);
+		String pMonth = abService.getPMonth(mm);
+		mylog.debug("조회시점(pMonth) : "+pMonth);
+		model.addAttribute("pMonth", pMonth);
 		
 		int chkBud = abService.chkBud(mno, pMonth);
 		mylog.debug("chkBud : "+chkBud);
@@ -545,12 +547,25 @@ public class AssetController {
 		}
 	}
 	
-//	@GetMapping(value = "/budcopy")
-//	public String budcopy() {
-//		Map<String, Object> map = new HashMap<String, Object>();
-//		map.put("kor", "Korea");
-//        map.put("us", "United States");
-//        return null;
-//	}
+	// 예산 조회 (조회시점으로부터 한 달 전)
+	@ResponseBody
+	@PostMapping(value = "/budcopy")
+	public List<Map<String, Object>> budcopy(@RequestParam("mm") int mm, HttpSession session) throws Exception {
+		int mno = (int)session.getAttribute("mno");
+		mylog.debug("mno : "+mno);
+		
+		// pMonth
+		int mm2 = mm+1;
+		String pMonth = abService.getPMonth(mm2);
+		mylog.debug("조회시점 한 달 전(pMonth) : "+pMonth);
+		
+		// 예산 조회
+		List<Map<String, Object>> budList = abService.getBud(mno, pMonth);
+		if(budList.isEmpty()) {
+			mylog.debug("예산 없음");
+		}
+		return budList;
+		
+	}
 	///////////////////MJ////////////////////
 }

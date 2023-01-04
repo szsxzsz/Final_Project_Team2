@@ -21,8 +21,8 @@
 
 <div id="div2">
 	<form action="">
-
-		<h3>12월 예산</h3>
+		<c:set var="mm" value="${param.mm }"/>
+		<h3>${pMonth }월 예산</h3>
 		<input type="text" name="totalbud">
 		<h4>최근 3개월 간 평균 지출 1,000,000</h4>
 		<h4>지난달 예산 500,000</h4>
@@ -76,31 +76,36 @@ $(document).ready(function(){
 	});
 	
 	$('#copy').click(function(){
-// 		alert('확인');
-		function test() {
-			$.ajax({
-				type : "GET",
-				url : "/budcopy",
-				data : {
-					kor : "${kor}",
-					us : "${us}"
-				},
-				error : function(error) {
-					console.log("error");
-				},
-				success : function(data) {
-					console.log("success");
-		
-				}
-			});
-		}
+		console.log('ajax 시작');
+		var mm = ${mm};
+		$.ajax({
+			type : "post",
+			url : "/asset/budcopy",
+			data : {"mm":mm},
+			dataType : "json",
+			success : function(data) {
+				console.log('ajax 성공');
+				console.log(data);
+// 				if(data.length==0){
+// 					console.log('예산 없음');
+// 				} else {
+// 					for(var i=0;i<data.length;i++){
+// 						var budList = data[i];
+// 						for(var key in budList){
+// 							$(budList[key]).each(function(){
+// 								console.log(this.ct_top);
+// 								console.log(this.ct_amount);
+// 							})
+// 						}
+// 					}
+// 				}
+			}, error : function(data){
+				console.log('ajax 오류');
+			}
+		});	//ajax
 	});
-	
-	
+
 });
-
-
-
 
 </script>
 

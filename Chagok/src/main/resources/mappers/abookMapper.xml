@@ -29,7 +29,7 @@
 	
 	<sql id="wh1">
 		where mno=#{mno} 
-		and p_month=#{pMonth};
+		and p_month=#{pMonth}
 	</sql>
 	
 	<!-- 상위 카테고리 -->
@@ -40,20 +40,19 @@
 	</select>
 	
 	<!-- 1. 예산 유무 -->
-	<select id="chkbud" resultType="int">
+	<select id="chkBud" resultType="int">
 		select count(pno) from plan 
-		<include refid="wh1"/>
+		<include refid="wh1"/>;
 	</select>
 	 
 	<!-- 2. 예산 조회 -->
-	<select id="getbud" resultType="map">
-		select ct.ct_top, p_amount
+	<select id="getBud" resultType="map">
+		select ct.ct_top ct_top, p_amount
 		from plan p 
 		inner join category ct 
 		on p.ctno=ct.ctno
 		<include refid="wh1"/>
-		group by ct.ct_top, ct.ct_inout
-		having ct.ct_inout=1;
+		group by ct.ct_top;
 	</select> 
   
   </mapper>

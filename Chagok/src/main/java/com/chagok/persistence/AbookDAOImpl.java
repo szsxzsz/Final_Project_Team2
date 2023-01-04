@@ -81,8 +81,19 @@ public class AbookDAOImpl implements AbookDAO{
 		Map map = new HashMap();
 		map.put("mno", mno);
 		map.put("pMonth", pMonth);
-		
-		int chkBud = sqlSession.selectOne(NAMESPACE+".chkbud", map);
+		int chkBud = sqlSession.selectOne(NAMESPACE+".chkBud", map);
 		return chkBud;
 	}
+
+	@Override
+	public List<Map<String, Object>> getBud(int mno, String pMonth) throws Exception {
+		Map map = new HashMap();
+		map.put("mno", mno);
+		map.put("pMonth", pMonth);
+		return sqlSession.selectList(NAMESPACE+".getBud", map);
+	}
+	
+	
+	
+	
 }

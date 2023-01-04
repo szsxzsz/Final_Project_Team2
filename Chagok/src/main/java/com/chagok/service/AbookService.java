@@ -30,11 +30,17 @@ public interface AbookService {
 	
 	///////////////////MJ/////////////////////
 	//  n달 전
-	public String getPMonth(int mon) throws Exception;
+	public String getPMonth(int mm) throws Exception;
 	
 	// ct_top
 	public List<String> getctTop() throws Exception;
 	
 	// 1. 예산 유무
 	public int chkBud(int mno, String pMonth) throws Exception;
+
+	// 2. 예산 조회
+	public List<Map<String, Object>> getBud(int mno, String pMonth) throws Exception;
+	
+	
+	
 }

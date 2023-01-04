@@ -63,11 +63,11 @@ public class AbookServiceImpl implements AbookService{
 	///////////////////MJ/////////////////////
 	
 	@Override
-	public String getPMonth(int mon) throws Exception {
-		mylog.debug("mon : "+mon);
+	public String getPMonth(int mm) throws Exception {
+		mylog.debug("mm : "+mm);
 		SimpleDateFormat fmt = new SimpleDateFormat("yyyyMM");
         Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.MONTH, -mon);
+        cal.add(Calendar.MONTH, -mm);
         String yyyy = fmt.format(cal.getTime()).substring(0,4);
         String MM = fmt.format(cal.getTime()).substring(4,6);
         String pMonth = yyyy+MM;
@@ -83,5 +83,11 @@ public class AbookServiceImpl implements AbookService{
 	public int chkBud(int mno, String pMonth) throws Exception {
 		return dao.chkBud(mno, pMonth);
 	}
+
+	@Override
+	public List<Map<String, Object>> getBud(int mno, String pMonth) throws Exception {
+		return dao.getBud(mno, pMonth);
+	}
+	
 	
 }

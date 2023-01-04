@@ -38,4 +38,9 @@ public interface AbookDAO {
 	// 1. 예산 유무
 	public int chkBud(int mno, String pMonth) throws Exception;
 	
+	// 2. 예산 조회
+	public List<Map<String, Object>> getBud(int mno, String pMonth) throws Exception;
+	
+	
+	
 }

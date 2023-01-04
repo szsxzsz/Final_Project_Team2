@@ -32,11 +32,11 @@ public class ReportServiceImpl implements ReportService {
 	}
 	
 	@Override
-	public String listMapToJson(List<Map<String, Integer>> listMap) throws Exception {
+	public String listMapToJson(List<Map<String, Object>> listMap) throws Exception {
 		JSONArray jArr = new JSONArray();
-		for(Map<String, Integer> map : listMap) {
+		for(Map<String, Object> map : listMap) {
 			JSONObject jsonobj = new JSONObject();
-			for(Map.Entry<String, Integer> entry : map.entrySet()) {
+			for(Map.Entry<String, Object> entry : map.entrySet()) {
 				String key = entry.getKey();
 				Object value = entry.getValue();
 				jsonobj.put(key, value);
@@ -49,6 +49,7 @@ public class ReportServiceImpl implements ReportService {
 		
 		return jsonStr;
 	}
+	
 	
 	////////////////////////dateReport ////////////////////////
 	
@@ -93,32 +94,32 @@ public class ReportServiceImpl implements ReportService {
 	}
 
 	@Override
-	public List<Map<String, Integer>> outCum(Integer mno) throws Exception {
+	public List<Map<String, Object>> outCum(Integer mno) throws Exception {
 		return rptdao.outCum(mno);
 	}
 
 	@Override
-	public List<Map<String, Integer>> day(Integer mno) throws Exception {
+	public List<Map<String, Object>> day(Integer mno) throws Exception {
 		return rptdao.day(mno);
 	}
 
 	@Override
-	public List<Map<String, Integer>> week(Integer mno) throws Exception {
+	public List<Map<String, Object>> week(Integer mno) throws Exception {
 		return rptdao.week(mno);
 	}
 	
 	@Override
-	public List<Map<String, Integer>> month(Integer mno) throws Exception {
+	public List<Map<String, Object>> month(Integer mno) throws Exception {
 		return rptdao.month(mno);
 	}
 	
 	@Override
-	public List<Map<String, Integer>> amtTop(Integer mno) throws Exception {
+	public List<Map<String, Object>> amtTop(Integer mno) throws Exception {
 		return rptdao.amtTop(mno);
 	}
 	
 	@Override
-	public List<Map<String, Integer>> cntTop(Integer mno) throws Exception {
+	public List<Map<String, Object>> cntTop(Integer mno) throws Exception {
 		return rptdao.cntTop(mno);
 	}
 
@@ -126,12 +127,12 @@ public class ReportServiceImpl implements ReportService {
 	////////////////////////cateReport ////////////////////////
 
 	@Override
-	public List<Map<String, Integer>> cateCnt(Integer mno) throws Exception {
+	public List<Map<String, Object>> cateCnt(Integer mno) throws Exception {
 		return rptdao.cateCnt(mno);
 	}
 
 	@Override
-	public List<Map<String, Integer>> cateSum(Integer mno) throws Exception {
+	public List<Map<String, Object>> cateSum(Integer mno) throws Exception {
 		return rptdao.cateSum(mno);
 	}
 
