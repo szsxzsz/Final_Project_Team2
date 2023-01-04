@@ -595,7 +595,7 @@ public class ChallengeController {
 	
 	// 공지 글 수정하기
 	@GetMapping(value = "/noticeupdate")
-	public void noticeupdateGET() throws Exception{
+	public void noticeupdateGET(BoardVO vo, Model model, HttpSession session) throws Exception{
 		
 		
 	}
