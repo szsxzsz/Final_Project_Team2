@@ -1,6 +1,7 @@
 package com.chagok.persistence;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -39,6 +40,26 @@ public class AbookDAOImpl implements AbookDAO{
 		
 		return CateList;
 	}
+
+	@Override
+	public Integer updateAbook(AbookVO vo) throws Exception {
+		mylog.debug("Mapper♡♡♡♡♡♡♡♡♡♡♡♡♡"+vo);
+		
+		return sqlSession.update(NAMESPACE+".abookUpdate", vo);
+	}
+
+	@Override
+	public List<Map<String, AbookVO>> AbookList(int mno) throws Exception {
+		mylog.debug("Mapper♡♡♡♡♡♡♡♡♡♡♡♡♡AbookList");
+		
+		List<Map<String, AbookVO>> AbookList2 = sqlSession.selectList(NAMESPACE+".abookList", mno); 
+		
+		return AbookList2;
+	}
+	
+	
+	
+	
 	
 	
 	

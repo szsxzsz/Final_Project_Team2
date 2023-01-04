@@ -1,6 +1,7 @@
 package com.chagok.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,6 +32,21 @@ public class AbookServiceImpl implements AbookService{
 		
 		return dao.CateList();
 	}
+
+	@Override
+	public Integer updateAbook(AbookVO vo) throws Exception {
+		mylog.debug("♡♡♡♡ Service -> DAO 호출 ");
+		
+		return dao.updateAbook(vo);
+	}
+
+	@Override
+	public List<Map<String, AbookVO>> AbookList(int mno) throws Exception {
+		mylog.debug("♡♡♡♡ Service -> DAO 호출");
+		return dao.AbookList(mno);
+	}
+
+
 
 	
 	
