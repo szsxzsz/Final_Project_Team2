@@ -83,36 +83,52 @@ public class ReportDAOImpl implements ReportDAO {
 	}
 
 	@Override
-	public Map<String, Integer> outWeek(Integer mno) throws Exception {
-		mylog.debug("outWeek() 호출");
-		return sqlSession.selectOne(NAMESPACE+".outWeek", mno);
+	public List<Map<String, Integer>> outCum(Integer mno) throws Exception {
+		mylog.debug("outCum() 호출");
+		return sqlSession.selectList(NAMESPACE+".outCum", mno);
+	}
+	
+	@Override
+	public List<Map<String, Integer>> day(Integer mno) throws Exception {
+		mylog.debug("day() 호출");
+		return sqlSession.selectList(NAMESPACE+".day", mno);
 	}
 
 	@Override
-	public Map<String, Integer> inWeek(Integer mno) throws Exception {
-		mylog.debug("inWeek() 호출");
-		return sqlSession.selectOne(NAMESPACE+".inWeek", mno);
+	public List<Map<String, Integer>> week(Integer mno) throws Exception {
+		mylog.debug("week() 호출");
+		return sqlSession.selectList(NAMESPACE+".week", mno);
 	}
 	
+	@Override
+	public List<Map<String, Integer>> month(Integer mno) throws Exception {
+		mylog.debug("month() 호출");
+		return sqlSession.selectList(NAMESPACE+".month", mno);
+	}
 	
-	
-	
+	@Override
+	public List<Map<String, Integer>> amtTop(Integer mno) throws Exception {
+		mylog.debug("amtTop() 호출");
+		return sqlSession.selectList(NAMESPACE+".amtTop", mno);
+	}
+
+	@Override
+	public List<Map<String, Integer>> cntTop(Integer mno) throws Exception {
+		mylog.debug("cntTop() 호출");
+		return sqlSession.selectList(NAMESPACE+".cntTop", mno);
+	}
+
 	////////////////////////cateReport ////////////////////////
-
 	@Override
-	public List<ReportVO> cateCnt(Integer mno) throws Exception {
+	public List<Map<String, Integer>> cateCnt(Integer mno) throws Exception {
 		mylog.debug("cateCnt() 호출");
-		List<ReportVO> cateCntList = sqlSession.selectList(NAMESPACE+".cateCnt", mno);
-		mylog.debug("cateCntList : "+cateCntList.size());
-		return cateCntList;
+		return sqlSession.selectList(NAMESPACE+".cateCnt", mno);
 	}
 
 	@Override
-	public List<ReportVO> cateSum(Integer mno) throws Exception {
+	public List<Map<String, Integer>> cateSum(Integer mno) throws Exception {
 		mylog.debug("cateSum() 호출");
-		List<ReportVO> cateSumList = sqlSession.selectList(NAMESPACE+".cateSum", mno);
-		mylog.debug("cateSumList : "+cateSumList.size());
-		return cateSumList;
+		return sqlSession.selectList(NAMESPACE+".cateSum", mno);
 	}
 
 	@Override

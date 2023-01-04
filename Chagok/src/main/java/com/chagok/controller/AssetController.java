@@ -1,13 +1,14 @@
 package com.chagok.controller;
 
-import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -20,16 +21,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.chagok.apiDomain.AccountHistoryRequestVO;
@@ -42,8 +38,8 @@ import com.chagok.apiDomain.ResponseTokenVO;
 import com.chagok.apiDomain.UserInfoResponseVO;
 import com.chagok.domain.AbookVO;
 import com.chagok.domain.CategoryVO;
+import com.chagok.domain.ChallengeVO;
 import com.chagok.domain.JsonObj;
-import com.chagok.domain.ReportVO;
 import com.chagok.domain.UserVO;
 import com.chagok.service.AbookService;
 import com.chagok.service.AccountService;
@@ -52,8 +48,6 @@ import com.chagok.service.ReportService;
 import com.chagok.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 
 @Controller
 @RequestMapping("/asset/*")
@@ -208,6 +202,9 @@ public class AssetController {
 	
 	
 	///////////////////영민////////////////////
+
+	
+	///////////////////세영////////////////////
 	
 	///////////////////세영//////////////////////
 	//서비스 객체 주입
@@ -367,24 +364,27 @@ public class AssetController {
 	
 	
 	
+	
+	
 	///////////////////MJ////////////////////
 	
 	@Inject
 	private ReportService rptService;
-
+	@Inject
+	private AbookService abService;
+//	http://localhost:8080/assetmain
 //	http://localhost:8080/asset/dtRpt
 	@GetMapping(value = "/dtRpt")
 	public String dateReport(HttpSession session, Model model) throws Exception {
 		// 로그인 확인
-		int mno = (int)session.getAttribute("mno");
-		UserVO userVO = userService.getUser(mno);
-		String nick = userVO.getNick();
-		if(mno==0) {
+		if(session.getAttribute("mno")==null) {
 			return "/chagok/login";
 		}
-		
+		int mno = (int)session.getAttribute("mno");
+		UserVO userVO = userService.getUser(mno);
 		
 		mylog.debug("mno : "+mno);
+//		int mno = (int)session.getAttribute("mno");
 		
 		/////////////// 1. service에서 DB 가져오기 ///////////////
 		// 1. 이번달 총 지출
@@ -420,15 +420,36 @@ public class AssetController {
 		mylog.debug("outCnt : "+outCnt);
 		
 		// 9. 이번달 누적 지출
-		// 10. 주간 지출
-		// 11. 주간 수입
+		List<Map<String, Integer>> outCum = rptService.outCum(mno);
+		mylog.debug("outCum : "+outCum.size());
 		
+		// 10. 일간 통계
+		List<Map<String, Integer>> day = rptService.day(mno);
+		mylog.debug("day : "+day.size());
 		
+		// 11. 주간 통계
+		List<Map<String, Integer>> week = rptService.week(mno);
+		mylog.debug("week : "+week.size());
 		
+		// 12. 월간 통계
+		List<Map<String, Integer>> month = rptService.month(mno);
+		mylog.debug("month : "+month.size());
 		
-		/////////////// 2. List -> JSON으로 가공하기 ///////////////
-		// List(VO) -> 변수에 임시 저장 -> JSONArr에 저장
+		// 13. 지출액 TOP 4
+		List<Map<String, Integer>> amtTop = rptService.amtTop(mno);
+		mylog.debug("amtTop : "+amtTop.size());
 		
+		// 14. 지출횟수 TOP 4
+		List<Map<String, Integer>> cntTop = rptService.cntTop(mno);
+		mylog.debug("cntTop : "+cntTop.size());		
+		
+		/////////////// 2. List<Map> -> JsonArray ///////////////
+		String outCumjson = rptService.listMapToJson(outCum);
+		String dayjson = rptService.listMapToJson(day);
+		String weekjson = rptService.listMapToJson(week);
+		String monthjson = rptService.listMapToJson(month);
+		String amtTopjson = rptService.listMapToJson(amtTop);
+		String cntTopjson = rptService.listMapToJson(cntTop);
 		
 		/////////////// 3. model로 전달 ///////////////
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -440,8 +461,14 @@ public class AssetController {
 		map.put("dtSumIn", dtSumIn);
 		map.put("noOut", noOut);
 		map.put("outCnt", outCnt);
+		map.put("outCumjson", outCumjson);
+		map.put("dayjson", dayjson);
+		map.put("weekjson", weekjson);
+		map.put("monthjson", monthjson);
+		map.put("amtTopjson", amtTopjson);
+		map.put("cntTopjson", cntTopjson);
 		model.addAttribute("map", map);
-		model.addAttribute("nick", nick);
+		model.addAttribute("userVO", userVO);
 		
 		return "/asset/dateReport";
 	}	
@@ -453,71 +480,39 @@ public class AssetController {
 		// 로그인 확인
 		int mno = (int)session.getAttribute("mno");
 		UserVO userVO = userService.getUser(mno);
-		String nick = userVO.getNick();
 		if(mno==0) {
 			return "/chagok/login";
 		}
 		mylog.debug("mno : "+mno);
 		
 		/////////////// 1. service에서 DB 가져오기 ///////////////
-		// 1.최다 지출 카테고리
-		List<ReportVO> cateCntList = rptService.cateCnt(mno);
+		// 1. 최다 지출 카테고리
+		List<Map<String, Integer>> cateCntList = rptService.cateCnt(mno);
 		mylog.debug("cateCntList : "+cateCntList.size());
 //		
-		// 2.최대 지출 카테고리
-		List<ReportVO> cateSumList = rptService.cateSum(mno);
+		// 2. 최대 지출 카테고리
+		List<Map<String, Integer>> cateSumList = rptService.cateSum(mno);
 		mylog.debug("cateSumList : "+cateSumList.size());
 		
-		// 3.챌린지 추천
-//		List<ChallengeVO> chRandList = rptService.chRand(mno);
-//		mylog.debug("chRandList : "+chRandList.toString());
+		// 3. 챌린지 추천
+		List<ChallengeVO> chRandList = rptService.chRand(mno);
+		mylog.debug("chRandList : "+chRandList.size());
 		
-		/////////////// 2. List -> JSON으로 가공하기 ///////////////
-		// List(VO) -> 변수에 임시 저장 -> JSONArr에 저장
-		Gson gson = new Gson();
-		JsonArray jArr = new JsonArray();
-//		
-		Iterator<ReportVO> it1 = cateCntList.iterator();
-		while(it1.hasNext()) {
-			ReportVO cateCntVO = it1.next();
-			int cateCnt = cateCntVO.getCateCnt();
-			String cateName = cateCntVO.getCateName();
-			
-			JsonObject obj1 = new JsonObject();
-			obj1.addProperty("cateCnt", cateCnt);
-			obj1.addProperty("cateName", cateName);
-			jArr.add(obj1);
-		}
 		
-		Gson gson2 = new Gson();
-		JsonArray jArr2 = new JsonArray();
-		Iterator<ReportVO> it2 = cateSumList.iterator();
-		while(it2.hasNext()) {
-			ReportVO cateSumVO = it2.next();
-			int cateSum = cateSumVO.getCateSum();
-			String cateName = cateSumVO.getCateName();
-			
-			JsonObject obj2 = new JsonObject();
-			obj2.addProperty("cateSum", cateSum);
-			obj2.addProperty("cateName", cateName);
-			jArr2.add(obj2);
-		}
+		/////////////// 2. List<Map> -> JsonArray ///////////////
+		String cateCntjson = rptService.listMapToJson(cateCntList);
+		String cateSumjson = rptService.listMapToJson(cateSumList);
 		
 		/////////////// 3. model로 전달 ///////////////
-		String catejson = gson.toJson(jArr);
-		String catejson2 = gson2.toJson(jArr2);
-		
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("catejson", catejson);
-		map.put("catejson2", catejson2);
-		map.put("cateSumList", cateSumList);
-//		map.put("chRandList", chRandList);
+		map.put("cateCntjson", cateCntjson);
+		map.put("cateSumjson", cateSumjson);
+		map.put("chRandList", chRandList);
 		model.addAttribute("map", map);
-		model.addAttribute("nick", nick);
+		model.addAttribute("userVO", userVO);
 		return "/asset/cateReport";
 	}
 	
-	
-	
+
 	///////////////////MJ////////////////////
 }

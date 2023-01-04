@@ -39,23 +39,31 @@ public interface ReportDAO {
 	public Integer outCnt(Integer mno) throws Exception;
 	
 	// 9. 이번달 누적 지출
+	public List<Map<String, Integer>> outCum(Integer mno) throws Exception;
 	
-	// 10. 주간 지출
-	public Map<String, Integer> outWeek(Integer mno) throws Exception;
+	// 10. 일간 통계
+	public List<Map<String, Integer>> day(Integer mno) throws Exception;
 	
-	// 11. 주간 수입
-	public Map<String, Integer> inWeek(Integer mno) throws Exception;
+	// 11. 주간 통계
+	public List<Map<String, Integer>> week(Integer mno) throws Exception;
 	
+	// 12. 월간 통계
+	public List<Map<String, Integer>> month(Integer mno) throws Exception;
 	
+	// 13. 지출액 TOP 4
+	public List<Map<String, Integer>> amtTop(Integer mno) throws Exception;
+	
+	// 14. 지출횟수 TOP 4
+	public List<Map<String, Integer>> cntTop(Integer mno) throws Exception;
 	
 	
 	////////////////////////cateReport ////////////////////////
 	
 	// 1.최다 지출 카테고리
-	public List<ReportVO> cateCnt(Integer mno) throws Exception;
+	public List<Map<String, Integer>> cateCnt(Integer mno) throws Exception;
 	
 	// 2.최대 지출 카테고리
-	public List<ReportVO> cateSum(Integer mno) throws Exception;
+	public List<Map<String, Integer>> cateSum(Integer mno) throws Exception;
 	
 	// 3.챌린지 추천
 	public List<ChallengeVO> chRand(Integer mno) throws Exception;

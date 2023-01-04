@@ -15,7 +15,9 @@
 	<div class="content-wrapper" style="min-height: 986.281px;">
 	<section class="content-header">
 		<c:set var="today" value="<%=new java.util.Date() %>"/><br><br>
-		<h1>${nick }님의
+<%-- 		${map.chRandList }<hr> --%>
+<%-- 		${map.cateCntjson} --%>
+		<h1>${userVO.nick }님의
 			<fmt:formatDate value="${today }" pattern="MM"/>월 카테고리별 리포트
 		</h1>
 	</section>
@@ -107,37 +109,40 @@
 			</div>
 
 			<div class="box-body no-padding">
+			
 				<ul class="users-list clearfix">
+				<c:forEach var="ch" items="${map.chRandList }">
 					<li>
 						<img src="" alt="User Image">
-						<h5 class="description-header"><a href="#">챌린지명</a></h5>
+						<h5 class="description-header"><a href="#">${ch.c_title }</a></h5>
 						<div class="box-footer">
 							<div class="row">
 								<div class="col-sm-4 border-right">
 									<div class="description-block">
 										<h5 class="description-header">진행기간</h5>
-										<span class="description-text">4주</span>
+										<span class="description-text">${ch.c_period }</span>
 									</div>
 		
 								</div>
 		
 								<div class="col-sm-4 border-right">
 									<div class="description-block">
-										<h5 class="description-header">모집인원</h5>
-										<span class="description-text">4명</span>
+										<h5 class="description-header">시작일</h5>
+										<span class="description-text">${ch.c_start }</span>
 									</div>
 		
 								</div>
 		
 								<div class="col-sm-4">
 									<div class="description-block">
-										<h5 class="description-header">카테고리</h5>
-										<span class="description-text">식비</span>
+										<h5 class="description-header">모집인원</h5>
+										<span class="description-text">${ch.c_pcnt }명</span>
 									</div>
 								</div>
 							</div>
 						</div>
 					</li>
+					</c:forEach>
 				</ul>
 
 			</div>
@@ -191,10 +196,6 @@
 
 	</div>	
 
-<%-- <c:forEach var="vo" items="${catecntjson}"> --%>
-<%-- 	<br>${vo.cateName }<br>${vo.cateCnt } --%>
-<%-- </c:forEach> --%>
-
 <!-- 제이쿼리 -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous" type="text/javascript"></script>
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.min.js"></script>
@@ -203,8 +204,8 @@
 
 <script type="text/javascript">
 
-var jData = ${map.catejson};
-var jData2 = ${map.catejson2};
+var jData = ${map.cateCntjson};
+var jData2 = ${map.cateSumjson};
 var label1 = new Array();
 var value1 = new Array();
 var label2 = new Array();
@@ -222,13 +223,13 @@ colorList = [
 
 for(var i=0; i<jData.length; i++) {
 	var d = jData[i];
-	label1.push(d.cateName);
+	label1.push(d.cateName1);
 	value1.push(d.cateCnt);
 }
 
 for(var i=0; i<jData2.length; i++) {
 	var d = jData2[i];
-	label2.push(d.cateName);
+	label2.push(d.cateName2);
 	value2.push(d.cateSum);
 }
 
