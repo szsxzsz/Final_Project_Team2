@@ -9,7 +9,7 @@
 
 <h1 style="padding-left: 50px;">저축형 차곡 챌린지</h1>
 
-${mno }
+<%-- ${mno } --%>
 <%-- ${vo } --%>
 <div class="row" style="margin-left:30px; margin-top:30px;">
 	<div class="col-lg-4 aos-init aos-animate" data-aos="fade-right">
@@ -134,7 +134,7 @@ ${mno }
         				if(data == "N"){ // 중복된 카테고리num이 아닐 때
 //         					result = "참여 가능한 챌린지 입니다!";
 //         					$("#result_samechallenge").html(result).css("color","green");
-        					alert("참여 가능한 챌린지 입니다!");
+        					alert("참여 가능한 챌린지 입니다! \n 단, 저축형 챌린지는 하나만 참여 가능합니다. \n 참여하시겠습니까?");
         					location.href="/commumain";
         				}else{ // 중복된 챌린지 or 중복된 상세카테고리 챌린지 
 //         					result="해당 카테고리로 참여 중인 챌린지가 있습니다.";

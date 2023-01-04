@@ -112,10 +112,25 @@
 		where c.cno = #{cno};
 	</select>
 	
-<!-- 	<insert id="joinplus" parameterType="com.chagok.domain.PlusVO"> -->
-<!-- 		insert into plus(plcno,mno,cno,pl_finish,pl_cnt,pl_sum)  -->
-<!-- 		values(#{plcno},#{mno},#{cno},#{pl_finish},#{pl_cnt},#{pl_sum})  -->
+	<!-- 저축형 챌린지 참여하기 @@@@@@@@@@@@@@@@@@@ 이거 쿼리문 어케짜.. update로 짜야할거같은데.. -->
+	<!-- challenge는 update고 plus는 insert임.. 근데 동시에 데이터를 넣어야돼 -->
+<!-- 	<insert id="joinplus"> -->
+<!-- 		insert all  -->
+<!-- 		into challenge(c_person,c_cnt) values(#{c_person},#{c_cnt})  -->
+<!-- 		into plus(mno,cno) values(#{mno},#{cno})  -->
+<!-- 		select c_person c_person,c_cnt c_cnt,mno mno,cno cno -->
+<!-- 		from dual; -->
 <!-- 	</insert> -->
+
+<!-- <update id="joinplus"> -->
+<!-- 	update challenge A inner join plus B -->
+<!-- 	on A.challenge = B.plus -->
+<!-- </update> -->
+
+<!-- UPDATE 테이블 A INNER JOIN 테이블 B -->
+<!-- ON A.조인할 컬럼명 = B.조인할 컬럼명 -->
+<!-- SET A.변경할 컬럼명 = 변경할값 -->
+<!-- ( WHERE 조건절 ) -->
 	
 	<!-- 챌린지 종료일자 정보 가져오기  -->
 	<select id="getChallengeEndDate" resultType="date">

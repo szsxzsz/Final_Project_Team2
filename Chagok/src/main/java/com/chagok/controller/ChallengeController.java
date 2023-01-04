@@ -158,7 +158,7 @@ public class ChallengeController {
 //		return "/challenge/plusdetail";
 	}
 
-	// http://localhost:8080/challenge/minusdetail?cno=2
+	// http://localhost:8080/challenge/minusdetail?cno=1
 	@GetMapping(value = "/minusdetail")
 	public String minusdetailGET(Model model,@RequestParam("cno") int cno, HttpSession session) throws Exception {
 		mylog.debug("minusdetailGET 호출");
