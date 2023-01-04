@@ -511,7 +511,7 @@ public class ChallengeController {
 		// 결제정보 확인(검증)
 		
 		@ResponseBody
-		@RequestMapping(value="/verifyIamport/{imp_uid}")
+		@RequestMapping(value="/payCallback/{imp_uid}")
 		public IamportResponse<Payment> paymentByImpUid(
 				Model model
 				, Locale locale
