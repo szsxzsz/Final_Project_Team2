@@ -29,16 +29,16 @@
 	<!-- 웹 소켓핸들러 -->
     <websocket:message-broker application-destination-prefix="/">
     <websocket:transport send-timeout="15000" send-buffer-size="524288" message-size="131072" />
-        <websocket:stomp-endpoint path="/plusFeed" allowed-origins="*">
-            <websocket:sockjs/>
+        <websocket:stomp-endpoint path="/*Feed" allowed-origins="*">
+            <websocket:sockjs websocket-enabled="true"/>
         </websocket:stomp-endpoint>
-        <websocket:simple-broker prefix="/topic, /sub"/>
+        <websocket:simple-broker prefix="/topic, /queue"/>
     </websocket:message-broker>
 	
     
     <!-- 사진 업로드 기능 업로드 패스 설정 --> 
 	<beans:bean class="java.lang.String" id="uploadPath">
-	 <beans:constructor-arg value="D:\workspace_chagok\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\Chagok\resources" />
+	 <beans:constructor-arg value="D:\workspace_chagok\Final_Project_Team2\Chagok\src\main\webapp\resources\" />
 	</beans:bean>
 	
 	<!-- 일반 파일 업로드 경로 -->
@@ -57,6 +57,7 @@
 	   <interceptor>
 	       <mapping path="/commumain" />
 	       <beans:ref bean="sampleInterceptor" />
+	       
 	   </interceptor>
 	</interceptors>
 	

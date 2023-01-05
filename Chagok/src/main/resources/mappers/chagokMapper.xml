@@ -112,8 +112,22 @@
 		where c.cno = #{cno};
 	</select>
 	
-	<!-- 저축형 챌린지 참여하기 @@@@@@@@@@@@@@@@@@@ 이거 쿼리문 어케짜.. update로 짜야할거같은데.. -->
-	<!-- challenge는 update고 plus는 insert임.. 근데 동시에 데이터를 넣어야돼 -->
+	<!-- 저축형 챌린지 참여하기 -->
+	
+	<insert id="joinplusInsert">
+		insert into plus(mno,cno) values(#{mno},#{cno});
+	</insert>
+	
+	<update id="joinplusUpdate1">
+		update challenge set c_person = concat(#{c_person},',',#{nick}) 
+		where cno =#{cno};
+	</update>
+	
+	<update id="joinplusUpdate2">
+		update challenge set(c_cnt) values(#{c_cnt}+1) 
+		where cno =#{cno};
+	</update>
+	
 <!-- 	<insert id="joinplus"> -->
 <!-- 		insert all  -->
 <!-- 		into challenge(c_person,c_cnt) values(#{c_person},#{c_cnt})  -->

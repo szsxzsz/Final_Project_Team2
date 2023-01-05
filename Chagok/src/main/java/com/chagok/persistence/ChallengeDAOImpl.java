@@ -222,6 +222,13 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 	public Integer getSuccess(Integer cno) throws Exception {
 		Integer success = sqlSession.selectOne(NAMESPACE+".success", cno);
 		return success;
+	
+	}
+
+	@Override
+	public void joinplusInsert(PlusVO vo) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	

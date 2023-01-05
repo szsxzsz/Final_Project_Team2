@@ -511,29 +511,6 @@ public class ChallengeController {
 	}
 	
 	
-	// 결제하기
-		// http://localhost:8080/challenge/pay
-		@GetMapping(value="/pay")
-		public String payGET() {
-			
-			return "/challenge/pay";
-		}
-		
-		
-		private IamportClient api;
-		// 결제정보 확인(검증)
-		
-		@ResponseBody
-		@RequestMapping(value="/payCallback/{imp_uid}")
-		public IamportResponse<Payment> paymentByImpUid(
-				Model model
-				, Locale locale
-				, HttpSession session
-				, @PathVariable(value= "imp_uid") String imp_uid) throws IamportResponseException, IOException
-		{	
-				return api.paymentByImpUid(imp_uid);
-		}
-		
 	// 후기 게시판 수정 GET
 	// http://localhost:8080/challenge/reviewupdate?bno=4
 	@GetMapping(value= "/reviewupdate")
@@ -657,6 +634,9 @@ public class ChallengeController {
 				
 		return "/challnege/notice";
 	}
+	
+	
+	
 	
 }
 		
