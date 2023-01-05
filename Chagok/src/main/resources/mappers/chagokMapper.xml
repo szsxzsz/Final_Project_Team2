@@ -157,7 +157,7 @@
 	
 	<!-- 게시판 글 수정 -->
 	<update id="updateBoard">
-		update board set b_title=#{b_title}, b_content=#{b_content}
+		update board set b_title=#{b_title}, b_content=#{b_content}, b_file=#{b_file}
 		where bno = #{bno}
 	</update>
 	
@@ -172,5 +172,26 @@
 		insert into board (b_title,b_content,b_writer,b_sort,b_file)
 		values (#{b_title},#{b_content},#{b_writer},#{b_sort},#{b_file})	
 	</insert>
+	
+	<!-- 챌린지 모인 꿀머니 -->
+	<select id="challengemoney" resultType="int">
+		select c_deposit * c_cnt 
+		from challenge
+		where cno = #{cno}
+	</select>
+		
+	<!-- 챌린지 실패/성공조건 데이터 조회 -->
+	<select id="result" resultType="map">
+		select *
+		from plus p right join challenge c on c.cno = p.cno left join minus m on m.cno = c.cno
+		where c.cno = #{cno}
+	</select>
+	
+	<!-- 챌린지 성공 인원 -->
+	<select id="success" resultType="Integer">
+		select count(m_finish) + count(pl_finish)
+		from plus p right join challenge c on c.cno = p.cno left join minus m on m.cno=c.cno
+		where c.cno = 2 and (pl_finish = 'Y' or m_finish = 'Y')
+	</select>
 	
   </mapper>

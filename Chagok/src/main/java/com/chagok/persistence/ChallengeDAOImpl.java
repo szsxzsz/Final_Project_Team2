@@ -156,30 +156,12 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 		return pesonCnt;
 	}
 
-
-
-	// 챌린지 피드 인원 조회
-//	@Override
-//	public List<Map<String, Object> getCList(Integer cno) {
-//		mylog.debug(" getCList(Integer cno) 호출 ");
-//		
-//		List<Map<String, Object>> CList = sqlSession.selectList(NAMESPACE+".CList");
-//		return CList;
-//	}
-//	@Override
-//	public void getCList(Integer cno) {
-//		mylog.debug(" getCList(Integer cno) 호출 ");
-//		
-//		sqlSession.selectOne(NAMESPACE+".CList");
-//		
-//	}
-	
 	// 챌린지 참여 인원 조회(checkfeed 용)
 	@Override
 	public int getCList(Integer cno) throws Exception {
 		mylog.debug("getCList(Integer cno) 호출");
 		int CList = sqlSession.selectOne(NAMESPACE+".CList",cno);
-		mylog.debug(CList+"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+		mylog.debug(CList+"");
 		return CList;
 	}
 
@@ -218,6 +200,28 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 		
 		sqlSession.insert(NAMESPACE+".insertBoard", vo);
 		
+	}
+
+	// 챌린지 예치금 합산
+	@Override
+	public int getChallengeMoney(Integer cno) throws Exception {
+		int ChallengeMoney = sqlSession.selectOne(NAMESPACE+".challengemoney",cno);
+		
+		return ChallengeMoney;
+	}
+
+	// 챌린지 성공/실패 조건 조회
+	@Override
+	public List<Map<String, Object>> getResult(Integer cno) throws Exception {
+		List<Map<String, Object>> result = sqlSession.selectList(NAMESPACE+".result");
+		return result;
+	}
+
+	// 챌린지 성공 인원 조회
+	@Override
+	public Integer getSuccess(Integer cno) throws Exception {
+		Integer success = sqlSession.selectOne(NAMESPACE+".success", cno);
+		return success;
 	}
 	
 	

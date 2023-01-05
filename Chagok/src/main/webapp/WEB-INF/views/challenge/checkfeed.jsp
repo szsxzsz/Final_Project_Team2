@@ -8,7 +8,7 @@
 
 <h1>피드 가기</h1>
 
-
+${result }
 <script type="text/javascript">
 	function move() {
 		
@@ -119,7 +119,34 @@
 	<button class="btn btn-block btn-success btn-lg" type="button" id="samechallenge" style="width:218px; margin-left: 950px;" onclick="move();">피드가기</button>
 		<div id="result_samechallenge"></div>
 </div>
-<!-- 	<input type="button" value="피드가기" id="move" onclick="move();"> -->
+
+
+	<div class="modal fade" id="modal-default" style="margin-top: 10%;">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title">챌린지에 성공하셨습니다!</h4>
+				</div>
+				<div class="modal-body">
+					<p>
+					
+					<iframe src="/asset/abookList?mno=1" width="300" height="300">
+					</iframe>
+					
+					</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default pull-left"	data-dismiss="modal">결과창으로 가기</button>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+
 </section>
 
 </div>

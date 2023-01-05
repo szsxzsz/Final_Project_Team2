@@ -171,6 +171,27 @@ public class ChallengeServiceImpl implements ChallengeService{
 		
 	}
 
+	// 챌린지 예치금 합산
+	@Override
+	public int getChallengeMoney(Integer cno) throws Exception {
+		
+		return  dao.getChallengeMoney(cno);
+	}
+
+	// 챌린지 성공/실패 조건 조회
+	@Override
+	public List<Map<String, Object>> getResult(Integer cno) throws Exception {
+		
+		return dao.getResult(cno);
+	}
+
+	// 챌린지 성공 인원 조회
+	@Override
+	public Integer getSuccess(Integer cno) throws Exception {
+		
+		return dao.getSuccess(cno);
+	}
+
 	
 
 	

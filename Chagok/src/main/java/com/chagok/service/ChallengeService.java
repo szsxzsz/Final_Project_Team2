@@ -68,5 +68,14 @@ public interface ChallengeService {
 	
 	// 게시판 글 작성
 	public void insertBoard(BoardVO vo) throws Exception;
+	
+	// 챌린지 예치금 합산
+	public int getChallengeMoney(Integer cno) throws Exception;
+	
+	// 챌린지 실패/성공 조건 조회
+	public List<Map<String, Object>> getResult(Integer cno) throws Exception;
+	
+	// 챌린지 성공 인원 조회
+	public Integer getSuccess(Integer cno) throws Exception;
 }
 

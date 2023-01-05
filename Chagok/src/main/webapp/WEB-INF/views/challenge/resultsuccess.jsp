@@ -5,16 +5,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-${vo }
 
 <link href='https://fonts.googleapis.com/css?family=Raleway:600,400'
 	rel='stylesheet' type='text/css'>
 
 <div class="receipt">
 
-	<header class="header">
-		<div class="header__top">
-			<div class="header__logo">
+	<header class="receipt.header">
+		<div class="receipt.header__top">
+			<div class="receipt.header__logo">
 				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25.58 30.18">
 					<defs>
 					<style>
@@ -39,35 +38,74 @@ ${vo }
 					<path class="a"
 						d="M9.61,7.7a1.17,1.17,0,0,1,1.16-1h7.35a15.28,15.28,0,0,1,2.43.18L21.17,7l0.58,0.15L22,7.24a6.69,6.69,0,0,1,1,.43c0.37-2.35,0-3.94-1.27-5.39S17.85,0,14.62,0H5.24A1.34,1.34,0,0,0,3.92,1.13L0,25.9a0.81,0.81,0,0,0,.8.93H6.6L8,17.6Z" /></svg>
 			</div>
-			<div class="header__meta">
-				<span class="header__date">25.04.2016</span> <span
-					class="header__serial">0f-113</span> <span class="header__number">25042016</span>
+			<c:forEach var="vo" items="${challengeList }">
+			
+				<c:if test="${vo.c_sort eq 0 }">
+					<c:set var="sort" value="저축형"/>
+				</c:if>
+				<c:if test="${vo.c_sort eq 1 }">
+					<c:set var="sort" value="절약형"/>
+				</c:if>
+				
+			</c:forEach>
+			<div class="receipt.header__meta">
+				<span class="receipt.header__date">[${sort} : ${vo2.ct_top}]</span> 
+				<span class="receipt.header__serial">${vo.c_title }</span> 
+				<span class="receipt.header__number"> <b>
+				<fmt:formatDate value="${startDate }" pattern="YYYY-MM-dd" />
+					</b> / <b>
+				<fmt:formatDate value="${c_end }" pattern="YYYY-MM-dd" />
+					</b>
+				</span>
 			</div>
 		</div>
-		<div class="header__greeting">
-			<span class="header__name">Hi, Carlin</span> <span
-				class="header__count">You've purchased three (3) items in our
-				store.</span> <span class="header__border"></span>
+		<div class="receipt.header__greeting">
+			<span class="receipt.header__name">${vo.c_title }</span> <span
+				class="receipt.header__count">🎉축하합니다! 성공적으로 챌린지를 마치셨습니다!</span> <span
+				class="receipt.header__border"></span>
 		</div>
-		<div class="header__spacing"></div>
+		<div class="receipt.header__spacing"></div>
 	</header>
 
 	<section class="cart">
-		<h2 class="cart__header">Cart:</h2>
+		<h2 class="cart__header">챌린지 결과</h2>
 		<ol class="list">
-			<li class="list__item"><span class="list__name">Lacoste
-					t-shirt</span> <span class="list__price">$48.00</span></li>
-			<li class="list__item"><span class="list__name">Nike
-					sweatpants</span> <span class="list__price">$125.00</span></li>
-			<li class="list__item"><span class="list__name">Converse
-					All-Stars</span> <span class="list__price">$95.00</span></li>
+			<li class="list__item">
+				<span class="list__name"> 
+					참여 인원 
+				</span> 
+				<span class="list__price">
+					${CList }	
+				</span>
+			</li>
+			<li class="list__item">
+				<span class="list__name"> 
+					성공 인원 
+				</span> 
+				<span class="list__price">
+					${Success }
+				</span>
+			</li>
+			<li class="list__item">
+				<span class="list__name"> 
+					모인 꿀머니 
+				</span>
+				<span class="list__price">
+					${ChallengeMoney }꿀
+				</span>
+			</li>
 		</ol>
 		<hr class="cart__hr" />
 		<footer class="cart__total">
-			<h3 class="cart__total-label">Total</h3>
-			<span class="cart__total-price">$268.00</span>
+			<h3 class="cart__total-label">챌린지 환급 꿀 머니</h3>
+			<span class="cart__total-price"> 
+				${ChallengeMoney / Success}꿀 
+			</span>
 		</footer>
 	</section>
+
+
+</div>
 
 	<footer class="bar-code">
 		<div class="bar-code__code">
@@ -283,259 +321,4 @@ ${vo }
 
 
 <%@ include file="../include/footer.jsp"%>
-
-<style>
-$
-padding: 15px ; // Universal styling
-body {
-	background: #ff84a1;
-	color: #3a3e59;
-	font-family: 'Raleway', Arial, sans-serif;
-}
-
-p {
-	text-align: center;
-	opacity: .3;
-	transition: .3s;
-	position: absolute;
-	bottom: 2vh;
-	left: 0;
-	right: 0;
-	margin: 0 auto;
-	&:
-	hover
-	{
-	opacity
-	:
-	1;
-}
-
-}
-.receipt {
-	max-width: 400px;
-	margin: 5vh auto 0 auto; & _hoverable { transition : .3s;
-	box-shadow: 0 3px 10px rgba(0, 0, 0, .2);
-	&:
-	hover
-	{
-	box-shadow
-	:
-	0
-	5px
-	20px
-	rgba(
-	0
-	,
-	0
-	,
-	0
-	,
-	.3
-	);
-}
-
-}
-}
-//
-Header styles
-.header {
-	width: 100%;
-}
-
-.header__top {
-	display: flex;
-	align-items: center;
-	background: white;
-	width: 100%;
-	border-radius: 4px 4px 0 0;
-}
-
-.header__logo {
-	width: 10%;
-	padding: $padding* 2;
-}
-
-.header__meta {
-	position: relative;
-	width: 90%;
-	height: 100%;
-	margin-left: $padding;
-	line-height: 1.7rem;
-	opacity: .3;
-}
-
-.header__serial {
-	display: block;
-}
-
-.header__number {
-	position: absolute;
-	top: $padding/2;
-	right: 0;
-	transform: rotate(270deg);
-	opacity: .2;
-}
-
-.header__greeting {
-	clear: both;
-}
-
-//
-Greeting styles
-.header__greeting {
-	position: relative;
-	background: white;
-	padding: 0$padding;
-	padding-left: $padding* 2;
-}
-
-.header__name {
-	display: block;
-	font-weight: bold;
-	font-size: 1.3rem;
-	margin-bottom: $padding/2;
-}
-
-.header__count {
-	opacity: .4;
-	font-size: 90%;
-}
-
-.header__border {
-	position: absolute;
-	left: 0;
-	top: 0;
-	height: 100%;
-	width: 3px;
-	background-color: #429fff;
-}
-
-.header__spacing {
-	display: block;
-	background: white;
-	width: 100%;
-	height: $padding* 1.5;
-}
-
-//
-Cart styles
-.cart {
-	background: white;
-	padding: $padding* 2;
-	padding-top: $padding;
-	border-bottom: 2px dashed #ff84a1;
-	border-radius: 0 0 5px 5px;
-}
-
-.cart__header {
-	margin-top: 0;
-	text-align: center;
-}
-
-.cart__hr {
-	border: none;
-	padding: 0;
-	margin: 0;
-	margin-bottom: $padding* 1.5;
-	border-bottom: 3px solid #fee469;
-}
-
-.list {
-	margin: 0;
-	padding: 0;
-	counter-reset: item-counter;
-}
-
-.list__item {
-	display: flex;
-	width: 100%;
-	padding-top: $padding* 1.5;
-	padding-bottom: $padding* 1.5;
-	border-bottom: 1px dashed rgba(0, 0, 0, .1);
-	&:
-	last-child
-	{
-	border-bottom
-	:
-	none;
-}
-
-&
-:before {
-	content: counter(item-counter);
-	counter-increment: item-counter;
-	margin-right: $padding;
-}
-
-}
-.list__name {
-	flex: 1;
-	align-self: flex-start;
-}
-
-.list__price {
-	align-self: flex-end;
-	text-align: right;
-	font-weight: bold;
-}
-
-.cart__total {
-	display: flex;
-	width: 100%;
-}
-
-.cart__total-label {
-	margin: 0;
-	flex: 1;
-	text-transform: uppercase;
-}
-
-.cart__total-price {
-	align-self: flex-end;
-	font-weight: bold;
-	text-align: right;
-}
-
-//
-Bar code styles
-.bar-code {
-	background: white;
-	padding: $padding* 2;
-	border-radius: 6px 6px 4px 4px;
-}
-
-//
-Reset button
-.button {
-	position: fixed;
-	bottom: 15px;
-	right: 15px;
-	background: darken(#ff84a1, 10%);
-	border: none;
-	border-radius: 3px;
-	color: white;
-	padding: $padding;
-	transition: .3s;
-	&:
-	hover
-	{
-	box-shadow
-	:
-	0
-	2px
-	10px
-	darken(
-	#ff517a
-	,
-	30%
-	);
-}
-
-}
-.link {
-	display: block;
-	margin: 25px auto 15px auto;
-	text-align: center;
-}
-</style>
 
