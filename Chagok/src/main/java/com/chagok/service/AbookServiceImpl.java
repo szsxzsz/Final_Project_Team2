@@ -1,6 +1,9 @@
 package com.chagok.service;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,6 +35,52 @@ public class AbookServiceImpl implements AbookService{
 		return dao.CateList();
 	}
 
+	@Override
+	public Integer updateAbook(AbookVO vo) throws Exception {
+		mylog.debug("♡♡♡♡ Service -> DAO 호출 ");
+		
+		return dao.updateAbook(vo);
+	}
+
+	@Override
+	public List<Map<String, AbookVO>> AbookList() throws Exception {
+		mylog.debug("♡♡♡♡ Service -> DAO 호출");
+		return dao.AbookList();
+	}
+
+	
+	
+	
+	
+	
+	///////////////////MJ/////////////////////
+	
+	@Override
+	public String getPMonth(int mm) throws Exception {
+		mylog.debug("mm : "+mm);
+		SimpleDateFormat fmt = new SimpleDateFormat("yyyyMM");
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.MONTH, -mm);
+        String yyyy = fmt.format(cal.getTime()).substring(0,4);
+        String MM = fmt.format(cal.getTime()).substring(4,6);
+        String pMonth = yyyy+MM;
+        return pMonth;
+	}
+
+	@Override
+	public List<String> getctTop() throws Exception {
+		return dao.getctTop();
+	}
+
+	@Override
+	public int chkBud(int mno, String pMonth) throws Exception {
+		return dao.chkBud(mno, pMonth);
+	}
+
+	@Override
+	public List<Map<String, Object>> getBud(int mno, String pMonth) throws Exception {
+		return dao.getBud(mno, pMonth);
+	}
 	
 	
 }

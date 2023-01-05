@@ -1,6 +1,9 @@
+
 package com.chagok.persistence;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -39,6 +42,58 @@ public class AbookDAOImpl implements AbookDAO{
 		
 		return CateList;
 	}
+
+	@Override
+	public Integer updateAbook(AbookVO vo) throws Exception {
+		mylog.debug("Mapper♡♡♡♡♡♡♡♡♡♡♡♡♡"+vo);
+		
+		return sqlSession.update(NAMESPACE+".abookUpdate", vo);
+	}
+
+	@Override
+	public List<Map<String, AbookVO>> AbookList() throws Exception {
+		mylog.debug("Mapper♡♡♡♡♡♡♡♡♡♡♡♡♡AbookList");
+		
+		List<Map<String, AbookVO>> AbookList2 = sqlSession.selectList(NAMESPACE+".abookList"); 
+		
+		return AbookList2;
+}
+
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	///////////////////MJ/////////////////////
+
+	@Override
+	public List<String> getctTop() throws Exception {
+		return sqlSession.selectList(NAMESPACE+".getctTop");
+	}	
+	
+	@Override
+	public int chkBud(int mno, String pMonth) throws Exception {
+		Map map = new HashMap();
+		map.put("mno", mno);
+		map.put("pMonth", pMonth);
+		int chkBud = sqlSession.selectOne(NAMESPACE+".chkBud", map);
+		return chkBud;
+	}
+
+	@Override
+	public List<Map<String, Object>> getBud(int mno, String pMonth) throws Exception {
+		Map map = new HashMap();
+		map.put("mno", mno);
+		map.put("pMonth", pMonth);
+		return sqlSession.selectList(NAMESPACE+".getBud", map);
+	}
+	
 	
 	
 	

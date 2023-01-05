@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import com.chagok.domain.AbookVO;
 import com.chagok.domain.ChallengeVO;
-import com.chagok.domain.ReportVO;
+import com.chagok.domain.PropCardVO;
 
 @Repository
 public class ReportDAOImpl implements ReportDAO {
@@ -36,94 +36,98 @@ public class ReportDAOImpl implements ReportDAO {
 	
 	@Override
 	public Integer dtSum1(Integer mno) throws Exception {
-		mylog.debug("dtSum1() 호출");
 		return sqlSession.selectOne(NAMESPACE+".dtSum1", mno);
 	}
 	
 	@Override
 	public Integer dtSum2(Integer mno) throws Exception {
-		mylog.debug("dtSum2() 호출");
 		return sqlSession.selectOne(NAMESPACE+".dtSum2", mno);
 	}
 
 	@Override
 	public Integer dtAvg1(Integer mno) throws Exception {
-		mylog.debug("dtAvg1() 호출");
 		return sqlSession.selectOne(NAMESPACE+".dtAvg1", mno);
 	}
 
 	@Override
 	public Integer dtAvg2(Integer mno) throws Exception {
-		mylog.debug("dtAvg2() 호출");
 		return sqlSession.selectOne(NAMESPACE+".dtAvg2", mno);
 	}
 
 	@Override
 	public Integer expSum(Integer mno) throws Exception {
-		mylog.debug("expSum() 호출");
 		return sqlSession.selectOne(NAMESPACE+".expSum", mno);
 	}
 
 	@Override
 	public Integer dtSumIn(Integer mno) throws Exception {
-		mylog.debug("dtSumIn() 호출");
 		return sqlSession.selectOne(NAMESPACE+".dtSumIn", mno);
 	}
 
 	@Override
 	public Integer noOut(Integer mno) throws Exception {
-		mylog.debug("noOut() 호출");
 		return sqlSession.selectOne(NAMESPACE+".noOut", mno);
 	}
 
 	@Override
 	public Integer outCnt(Integer mno) throws Exception {
-		mylog.debug("outCnt() 호출");
 		return sqlSession.selectOne(NAMESPACE+".outCnt", mno);
 	}
 
 	@Override
-	public Map<String, Integer> outWeek(Integer mno) throws Exception {
-		mylog.debug("outWeek() 호출");
-		return sqlSession.selectOne(NAMESPACE+".outWeek", mno);
+	public List<Map<String, Object>> outCum(Integer mno) throws Exception {
+		return sqlSession.selectList(NAMESPACE+".outCum", mno);
+	}
+	
+	@Override
+	public List<Map<String, Object>> day(Integer mno) throws Exception {
+		return sqlSession.selectList(NAMESPACE+".day", mno);
 	}
 
 	@Override
-	public Map<String, Integer> inWeek(Integer mno) throws Exception {
-		mylog.debug("inWeek() 호출");
-		return sqlSession.selectOne(NAMESPACE+".inWeek", mno);
+	public List<Map<String, Object>> week(Integer mno) throws Exception {
+		return sqlSession.selectList(NAMESPACE+".week", mno);
 	}
 	
+	@Override
+	public List<Map<String, Object>> month(Integer mno) throws Exception {
+		return sqlSession.selectList(NAMESPACE+".month", mno);
+	}
 	
-	
-	
+	@Override
+	public List<Map<String, Object>> amtTop(Integer mno) throws Exception {
+		return sqlSession.selectList(NAMESPACE+".amtTop", mno);
+	}
+
+	@Override
+	public List<Map<String, Object>> cntTop(Integer mno) throws Exception {
+		return sqlSession.selectList(NAMESPACE+".cntTop", mno);
+	}
+
 	////////////////////////cateReport ////////////////////////
-
 	@Override
-	public List<ReportVO> cateCnt(Integer mno) throws Exception {
-		mylog.debug("cateCnt() 호출");
-		List<ReportVO> cateCntList = sqlSession.selectList(NAMESPACE+".cateCnt", mno);
-		mylog.debug("cateCntList : "+cateCntList.size());
-		return cateCntList;
+	public List<Map<String, Object>> cateCnt(Integer mno) throws Exception {
+		return sqlSession.selectList(NAMESPACE+".cateCnt", mno);
 	}
 
 	@Override
-	public List<ReportVO> cateSum(Integer mno) throws Exception {
-		mylog.debug("cateSum() 호출");
-		List<ReportVO> cateSumList = sqlSession.selectList(NAMESPACE+".cateSum", mno);
-		mylog.debug("cateSumList : "+cateSumList.size());
-		return cateSumList;
+	public List<Map<String, Object>> cateSum(Integer mno) throws Exception {
+		return sqlSession.selectList(NAMESPACE+".cateSum", mno);
 	}
 
 	@Override
 	public List<ChallengeVO> chRand(Integer mno) throws Exception {
-		mylog.debug("chRand() 호출");
 		List<ChallengeVO> chRandList = sqlSession.selectList(NAMESPACE+".chRand", mno);
 		return chRandList;
 	}
 
+	@Override
+	public List<PropCardVO> cardRand(Integer mno) throws Exception {
+		List<PropCardVO> cardRandList = sqlSession.selectList(NAMESPACE+".cardRand", mno);
+		return cardRandList;
+	}
 
 	
-	
+
 	
 }

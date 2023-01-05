@@ -5,7 +5,7 @@ import java.util.Map;
 
 import com.chagok.domain.AbookVO;
 import com.chagok.domain.ChallengeVO;
-import com.chagok.domain.ReportVO;
+import com.chagok.domain.PropCardVO;
 
 public interface ReportDAO {
 
@@ -39,25 +39,36 @@ public interface ReportDAO {
 	public Integer outCnt(Integer mno) throws Exception;
 	
 	// 9. 이번달 누적 지출
+	public List<Map<String, Object>> outCum(Integer mno) throws Exception;
 	
-	// 10. 주간 지출
-	public Map<String, Integer> outWeek(Integer mno) throws Exception;
+	// 10. 일간 통계
+	public List<Map<String, Object>> day(Integer mno) throws Exception;
 	
-	// 11. 주간 수입
-	public Map<String, Integer> inWeek(Integer mno) throws Exception;
+	// 11. 주간 통계
+	public List<Map<String, Object>> week(Integer mno) throws Exception;
 	
+	// 12. 월간 통계
+	public List<Map<String, Object>> month(Integer mno) throws Exception;
 	
+	// 13. 지출액 TOP 4
+	public List<Map<String, Object>> amtTop(Integer mno) throws Exception;
 	
+	// 14. 지출횟수 TOP 4
+	public List<Map<String, Object>> cntTop(Integer mno) throws Exception;	
+
 	
 	////////////////////////cateReport ////////////////////////
 	
-	// 1.최다 지출 카테고리
-	public List<ReportVO> cateCnt(Integer mno) throws Exception;
+	// 1. 최다 지출 카테고리
+	public List<Map<String, Object>> cateCnt(Integer mno) throws Exception;
 	
-	// 2.최대 지출 카테고리
-	public List<ReportVO> cateSum(Integer mno) throws Exception;
+	// 2. 최대 지출 카테고리
+	public List<Map<String, Object>> cateSum(Integer mno) throws Exception;
 	
-	// 3.챌린지 추천
+	// 3. 챌린지 추천
 	public List<ChallengeVO> chRand(Integer mno) throws Exception;
+	
+	// 4. 카드 추천
+	public List<PropCardVO> cardRand(Integer mno) throws Exception;
 
 }
