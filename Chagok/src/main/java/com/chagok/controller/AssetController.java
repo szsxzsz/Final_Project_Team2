@@ -611,5 +611,11 @@ public class AssetController {
 		return budList;
 		
 	}
+	
+	@PostMapping(value = "/budget")
+	public String budget() {
+		mylog.debug("폼 등록");
+		return "";
+	}
 	///////////////////MJ////////////////////
 }
