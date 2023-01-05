@@ -5,7 +5,9 @@ import java.util.Map;
 import java.util.Spliterator;
 
 import javax.inject.Inject;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -19,9 +21,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.util.WebUtils;
 
 import com.chagok.domain.ChallengeVO;
 import com.chagok.domain.UserVO;
+import com.chagok.interceptor.SessionNames;
 import com.chagok.service.ChallengeService;
 import com.chagok.service.UserService;
 
@@ -53,14 +57,6 @@ public class ChagokController {
 		return "/chagok/assetmain";
 	}
 
-//	// 커뮤니티 파트 메인
-//	// http://localhost:8080/commumain
-//	@GetMapping(value = "/commumain")
-//	public String commumainGET() throws Exception {
-//
-//		return "/chagok/commumain";
-//	}
-	
 	// 챌린지 목록 불러오기 (커뮤메인)
 	// http://localhost:8080/commumain
 	@GetMapping(value="/commumain")
@@ -83,35 +79,51 @@ public class ChagokController {
 	
 	// http://localhost:8080/login
 	@GetMapping(value = "/login")
-	public String loginGET() throws Exception {
-
+	public String loginGET(HttpServletRequest request) throws Exception {
+		mylog.debug("login GET 호출 ");
+		
 		return "/chagok/login";
 	}
 
 	@PostMapping(value = "/login")
-	public @ResponseBody Object loginPOST(@RequestBody Map<String, String> loginMap, HttpServletRequest request, UserVO vo, Model model) throws Exception {
+	public String loginPOST(@RequestBody Map<String, String> loginMap, HttpServletRequest request, HttpServletResponse response, UserVO UserVO, Model model) throws Exception {
 		mylog.debug(" loginPOST() 호출");
 		HttpSession session = request.getSession();
-		
-		// 전달정보 저장(id, pw)
+
 		mylog.debug(" 로그인 정보 : " +loginMap);
-		mylog.debug(" 세션 정보 : " +session);
 		
-		if(session.getAttribute("mno") != null) {
-			session.invalidate();;
-		}
-		
-		UserVO userVO = service.loginUserCheck(loginMap);
-		
-		if(userVO != null) {
-			session.setAttribute("mno", userVO.getMno());
-			session.setAttribute("nick", userVO.getNick());
+		try {
+			UserVO =  service.loginUserCheck(loginMap);
+			mylog.debug("controller : "+UserVO);
 			
-			return userVO;
-		} else {
-			
-			return 0;
+			if (UserVO != null) { // 로그인 성공
+				model.addAttribute("UserVO", UserVO);
+				mylog.debug("Controller_model : "+model);
+				mylog.debug("Controller_model : "+UserVO);
+				
+				session.setAttribute("mno", UserVO.getMno());
+				session.setAttribute("nick", UserVO.getNick());
+				
+			}else {
+				model.addAttribute("loginResult", "Login Fail!");
+				
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
+		return "chagok/main";
+//		// 세션 유지시간 30분
+//		session.setMaxInactiveInterval(60*30);
+//
+//		if(UserVO != null) {
+//			session.setAttribute("mno", UserVO.getMno());
+//			session.setAttribute("nick", UserVO.getNick());
+//			
+//			return UserVO;
+//		} else {
+//			
+//			return 0;
+//		}
 	}
 
 	 // http://localhost:8080/register
@@ -134,49 +146,55 @@ public class ChagokController {
 		
 	 @PostMapping("/checkId")
 	 @ResponseBody
-	 public String checkId(@RequestBody String id) {	// 받을 데이터타입이 텍스트라 스트링으로함 반드시 리퀘스트바디를 붙힐것! ajax 통신시
-		 System.out.println("/user/checkId : post");
-		 System.out.println("param : " + id );
+	 public String checkId(@RequestBody String id) throws Exception {	// 받을 데이터타입이 텍스트라 스트링으로함 반드시 리퀘스트바디를 붙힐것! ajax 통신시
+		 mylog.debug("/user/checkId : post");
+		 mylog.debug("param : " + id );
 		
 		 int checkNum = service.checkId(id);
 		 System.out.println("checkNum : " + checkNum );
 		 if(checkNum != 0) {
-		 	 System.out.println("아이디 중복");
+		 	 mylog.debug("아이디 중복");
 			 return "duplicated";
 			
 		 }else {
-			 System.out.println("아이디 사용 가능");
+			 mylog.debug("아이디 사용 가능");
 			 return "available";
 		 }
 	 }
 	
 	 @PostMapping("/checkNick")
 	 @ResponseBody
-	 public String checkNick(@RequestBody String nick) {	// 받을 데이터타입이 텍스트라 스트링으로함 반드시 리퀘스트바디를 붙힐것! ajax 통신시
-		 System.out.println("/user/checkNick : post");
-		 System.out.println("param : " + nick );
+	 public String checkNick(@RequestBody String nick) throws Exception {	// 받을 데이터타입이 텍스트라 스트링으로함 반드시 리퀘스트바디를 붙힐것! ajax 통신시
+		 mylog.debug("/user/checkNick : post");
+		 mylog.debug("param : " + nick );
 		
 		 int checkNum = service.checkNick(nick);
-		 System.out.println("checkNum : " + checkNum );
+		 mylog.debug("checkNum : " + checkNum );
 		
 		 if(checkNum != 0) {
-		 	 System.out.println("닉네임 중복");
+			 mylog.debug("닉네임 중복");
 			 return "duplicated";
 			
 		 }else {
-			 System.out.println("닉네임 사용 가능");
+			 mylog.debug("닉네임 사용 가능");
 			 return "available";
 		 }
 	 }
 	 
 	 @GetMapping(value = "/logout")
-	 public String logoutMain(HttpServletRequest request) throws Exception{
+	 public String logoutMain(HttpSession session, HttpServletRequest request, HttpServletResponse response) throws Exception{
 		 
-		 mylog.debug("logout(HttpServletRequest)");
-		 HttpSession session = request.getSession();
-		 
+		 mylog.debug("logout(session)");
+		 session.removeAttribute(SessionNames.LOGIN);
 		 session.invalidate();
 		 
+		 // Spring에 담기 쿠키를 가져옴(WebUtils)
+		 Cookie loginCookie = WebUtils.getCookie(request, SessionNames.LOGIN);
+		 if(loginCookie != null) {
+			 loginCookie.setMaxAge(0); // 만료시킴
+			 
+			 response.addCookie(loginCookie);
+		 }
 		 return "redirect:/main";
 	 }
 	 
@@ -203,6 +221,27 @@ public class ChagokController {
          return "redirect:/challenge/minusdetail?cno="+cno;
       }
    }
+   
+   // http://localhost:8080/refund
+   @GetMapping(value = "/refund")
+   public String refundPointGET() {
+	   mylog.debug("refundPointGET() 호출"); 
+	   
+	   return "/payment/refund";
+   }
+   
+   @PostMapping(value = "/refund")
+   public String refundPointPOST(Integer payno) {
+	   
+	   return null;
+   }
+   
+   	// http://localhost:8080/reply
+	@GetMapping(value = "/reply")
+	public String echoGET() throws Exception {
+
+		return "/chat/reply";
+	}
 	
 	
 }

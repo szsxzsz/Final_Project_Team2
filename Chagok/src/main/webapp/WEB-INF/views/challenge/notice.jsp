@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <%@ include file="../include/header.jsp" %>
 <%@ include file="../include/sidebar.jsp" %>
@@ -18,7 +20,7 @@ ${boardList}
 		<tbody>
 			<c:forEach items="#{boardList }" var="boardList">
 			<tr>
-				<td></td>
+				<td>${boardList.bno }</td>
 				<td>
 					<a href="http://localhost:8080/challenge/noticecontent?bno=${vo.bno }">${boardList.b_title }</a>
 				</td>

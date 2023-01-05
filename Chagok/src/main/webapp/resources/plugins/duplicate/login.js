@@ -16,7 +16,7 @@ function f_loginCheck(){
 	
 	$.ajax({
 		type : "post",
-		url : "/login",
+		url : "/login", /* QQQ 테스트후 변경할 것*/
 		contentType : "application/json",
 		data : JSON.stringify(loginData),
 		success : function(result){
