@@ -614,6 +614,25 @@ public class ChallengeController {
 		return null;
 	}
 	
+	
+	// 결제페이지 - GET
+	// http://localhost:8080/challenge/payment
+	@GetMapping(value="/payment")
+	public String paymentGET() throws Exception{
+		mylog.debug(" /challenge/payment 호출 -> 페이지 이동 ");
+		
+		return "/challenge/payment";
+	}
+	
+	// 환불페이지 - GET
+	// http://localhost:8080/challenge/refund
+	@GetMapping(value="/refund")
+	public String refundGET() throws Exception{
+		mylog.debug(" /challenge/refund 호출 -> 페이지 이동 ");
+		
+		return "/challenge/refund";
+	}
+	
 }
 		
 
