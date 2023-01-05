@@ -6,17 +6,29 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js" integrity="sha512-iKDtgDyTHjAitUDdLljGhenhPwrbBfqTKWO1mkhSFH3A7blITC9MhYon6SjnMhp4o0rADGw9yAC6EW4t5a4K3g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 <script type="text/javascript">
 	$(document).ready(function() {
+		var socket;
+// 		listPage(1, '${board.bno}'); 
+// 		gBno = '${board.bno}';
+// 		gBoardWriter = '${board.writer}';
+		
 		$('#btnSend').on('click', function(evt) {
 			var currT = new Date().getHours() + ":" + new Date().getMinutes() + "  |  " + "Today";
 			var msg = $('#msg').val();
 			evt.preventDefault();
+			
 			var html = $("#nextMsg").html();
-			if (sock.readyState !== 1 ) return;
+			alert(socket.readyState);
+			if (!isStomp && socket.readyState!== 1 ) return;
+				if(isStomp)			
+					socket.send('/TTT',{}, msg);
+				else
+					socket.send(msg);
 			//protocol: RoomNum, 보내는id, 내용 
-			sock.send(${vo.cno} + "," + '${sessionId}' + "," + msg); 
+			socket.send(${vo.cno} + "," + '${sessionId}' + "," + msg); 
 			html += '<div class="outgoing_msg">'
 						+ '<div class="sent_msg">'
 			            + '<p>'+msg+'</p>'
@@ -33,9 +45,51 @@
 		
 	});
 </script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js">
+<!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"> -->
+<script type="text/javascript">
 	var sock;
-	connect();
+	    alert("tetst");
+	    console.log("tetst");
+	//connect();
+	//connectSockJS();
+	connectStomp();
+	
+	function connectStomp(){
+		var sock = new SockJS('/challenge/plusFeed');// endpoint
+		var client = Stomp.over(sock);
+		isStomp = true;
+		socket = client;
+		
+	}
+		
+	function connectSockJS(){
+		//STOMP Client
+		var sock = new SockJS('/plusFeed?cno=2'); // endpoint
+	    socket = sock;
+		var client = Stomp.over(sock);
+		
+		client.connect({}, function(){
+			console.log("Connected stomp!")
+			client.send('/TTT', {}, "msg: Haha~~!!"); // 컨트롤러(MessageMapping), 
+			
+			// 해당 토픽을 구독한다!
+			client.subscribe('/topic/message', function(event){ // 컨트롤러(sendTo)
+				console.log('!!!!!!!!!!!!!!!!!!!!!!event>>'.event);
+			});
+		});
+		sock.onopen = function () {
+	        console.log('Info: connection opened.');
+	        sock.send("hi~");
+	        socket = sock;
+	        sock.onmessage = function (event) {
+		console.log("ReceiveMessage : ",event.data+'\n');
+	        };
+	        sock.onclose = function (event) {
+	            console.log('Info: connection closed.');
+	        };
+	    };
+
+	}
 	
 	function connect(){
 		if(sock!==undefined && sock.readyState!==WebSocket.CLOSED)
@@ -43,37 +97,37 @@
 	        writeResponse("WebSocket is already opend.");
 	        return;
 	    } 
-	    
 	    //웹소켓 객체 만드는 코드
 // 	     sock = new SockJS('http://localhost:8080/challenge/plusfeed');
-	   	 sock = new SockJS("http://localhost:8080/challenge/app");
+	   	 sock = new SockJS("http://localhost:8080/challenge/plusFeed");
+   		console.log(sock);
 	     stompClient = Stomp.over(sock);
 		 stompClient.connect({}, function(frame){
 	 	    	console.log('conneted : ' +frame);
-	 	    	stompClient.subscribe('/queue/chat/room/portfolio', function(response){
+	 	    	stompClient.subscribe('/queue/chat/room/plusFeed', function(response){
 	 	    		console.log(response);
 	 	    		console.log(JSON.parse(response.body));
 	 	    	});
 	 	    });
-	 	    socket.onopen=function(event){
+		 	sock.onopen=function(event){
 	 	        if(event.data===undefined) return;
 	 	        writeResponse(event.data);
 	 	    };
-	 	    socket.onmessage=function(event){
+	 	   	sock.onmessage=function(event){
 	 	        writeResponse(event.data);
 	 	    };
-	 	    sockJs.onclose=function(event){
+	 	   	sock.onclose=function(event){
 	 	        writeResponse("Connection closed");
 	 	    }
-		 
 		 
 	     sock.onopen = function() {
 		     console.log('open');
 		     console.log('${nick}' );
-		     sock.send(${vo.cno} + "," + '${sessionId}' + ",ENTER"); 
-		     console.log(${vo.cno} + "," + '${sessionId}' + ",ENTER");
+		     sock.send( ${vo.cno} + "," + ${loginUser.nick} + ",ENTER"); 
+		     console.log( ${vo.cno} + "," + ${loginUser.nick} + ",ENTER");
 		 };
 		 
+		 // 메시지 작성 부분
 		 sock.onmessage = function(e){
 			var sm = e.data;
 			var sl = sm.split(',');
@@ -86,9 +140,6 @@
 				html += "<div class='enter'>" + sendId + "님이 나가셨습니다.</div>"; 
 			} else if(sendId != '${sessionId}'){
 				var currT = new Date().getHours() + ":" + new Date().getMinutes(); 
-// 				html += '<div class="chat__message chat__message-to-me"><div class="chat__message-center"><h3 class="chat__message-username">' + sendId 
-// 							+ '</h3><span class="chat__message-body">' + content + '</span></div><span class="chat__message-time">' 
-// 							+ currT + '</span></div>';
 							
 				html += '<div class="incoming_msg">'
 						+ ' <div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>'
@@ -114,7 +165,6 @@
 		     console.log('message', e.data);
 		     sock.close();
 		 };
-	   // message.innerHTML+="<br/>"+text;
 	}
 	
 	function closeSocket(){
@@ -122,6 +172,38 @@
 		     console.log('close');
 		 };
 	}
+	
+	function save(){
+		var jsonData = getValiData( $('#'),$(''));
+		if(!jsonData) return;
+		
+		var url = gIsEdit ? "/replies/"+gRno : "/replies",
+				method = gIsEdit ? 'PATCH' : 'POST';
+		
+		console.debug("QQQ >>>", gIsEdit, gBno);
+		if(!gIsEdit)
+			jsonData.bno = gBno;
+		
+		sendAjax(url, (isSuccess, res) => {
+			if(isSucess){
+				var resultMsg = gIsEdit ? gRn + "번 댓글이 수정되었습니다." : "댓글이 등록되었습니다.";
+				alert(resultMsg);
+				listPage(gIsEdit ? gPage : 1);
+				closeMod();
+				
+				console.debug("reply.js::socket>>",sock)
+				if(sock){
+					// websocket에 보내기!! (reply,댓글작성자, 게시글작성자, 글번호)
+					var socketMsg = "challenge,"+jsonData.replyer+","+gBoardWriter+","+gBno;
+					console.debug("msg>>>", socketMsg);
+					sock.send(socketMsg);
+				}
+			} else {
+				console.debug("Error on editReply>>", res);
+			}
+		}, method,jsonData);
+	}
+
 	
 // 	    stompClient = Stomp.over(socket);
 // 	    stompClient.connect({}, function(frame){
@@ -248,6 +330,7 @@
 						<div class="whitespace" id="whitespace">
 						<h5>차곡은행 (차곡 챌린지 계좌)</h5>
   						<h3>1234-1231-12345</h3>
+  						<h4>보내는 사람 : ${loginUser.id}</h4>
   					</div>
 						<div class="result2" id="result" align="right"></div><span style="text-align: right;">원</span>
 						<div class="accountInfo2" id="accountInfo2"></div>
@@ -396,33 +479,7 @@
       </div>
     </section>
     <!-- /.content -->
-	<div>
-		<!-- <button onclick="connect();">채팅하기</button>
-		<button onclick="closeSocket();">끝내기</button>
-		<button onclick="message">Send</button>
-	</div>
-	<div id="message"></div>
-	
-	<div id="messagePop"  style="border: 1px solid black;">
-	<div class="type-message">
-    	<div class="type-message__input">
-			<label>작성자 :</label><input type="text" id="writerId" value="" class="form-control" /> 
-			<input type="text" id="receiveId" class="form-control" /> 
-		</div>
-	</div>
-		<div class="row" style="margin-left: 20px;">
-			<p id="writer" class="pContent"></p>
-			<p id="receiver" class="pContent"></p>
-			<p id="content" class="pContent"></p>
-		</div>
-	</div>
-	
-
-<!--임시 채팅  -->
-<!-- <iframe src="/challenge/echo" id="inlineFrame" title="inline Frame" width="600" height="600">
-</iframe> -->
-<!--임시 채팅  -->
-<!-- <!-- 칭찬하기/주시하기  @@@@@@@@@@@@@@@@@@@@@@@@@ -->
+ <!-- 칭찬하기/주시하기  @@@@@@@@@@@@@@@@@@@@@@@@@ -->
     <div class="col-xs-12" style="margin-left: 10px; ">
 	 <div class="row">
 	  <h3 class=" text-center">${vo.c_title }</h3>

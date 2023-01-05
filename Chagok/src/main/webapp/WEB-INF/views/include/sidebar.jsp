@@ -5,7 +5,7 @@
 <html>
  <head>
    <meta charset="UTF-8">
-   <title>AdminLTE 2 | Dashboard</title>
+   <title>Chagok | Dashboard</title>
    <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
    <!-- Bootstrap 3.3.4 -->
    <link href="${pageContext.request.contextPath }/resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
@@ -49,13 +49,24 @@
         <section class="sidebar">
           <!-- Sidebar user panel -->
           <div class="user-panel">
+          <% if (session.getAttribute("loginUser") == null){ %>
+            <div class="pull-left image">
+              <img src="${pageContext.request.contextPath }/resources/plugins/img/chagok_pig-removebg.png" class="img-circle" alt="User Image" />
+            </div>
+            <% }else { %>
             <div class="pull-left image">
               <img src="/resources/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image" />
             </div>
+            <% } %>
             <div class="pull-left info">
-              <p>Alexander Pierce</p>
-
-              <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+              <p>
+              <% if (session.getAttribute("loginUser") == null){ %>
+             	 Please Sign In
+              <% }else { %>
+              	${loginUser.nick }
+              	<a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+              <% } %>
+              </p>
             </div>
           </div>
           <!-- search form -->
@@ -67,7 +78,7 @@
 <!--               </span> -->
 <!--             </div> -->
 <!--           </form> -->
-          <!-- /.search form -->
+          <!-- /.search form -->          
           <!-- sidebar menu: : style can be found in sidebar.less -->
           <ul class="sidebar-menu">
             <li class="header">마이페이지</li>
