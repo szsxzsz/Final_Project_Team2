@@ -219,6 +219,12 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 		sqlSession.insert(NAMESPACE+".insertBoard", vo);
 		
 	}
+
+	@Override
+	public void joinplusInsert(PlusVO vo) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	
 	
