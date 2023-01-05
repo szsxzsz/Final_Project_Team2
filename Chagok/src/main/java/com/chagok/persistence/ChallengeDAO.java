@@ -41,7 +41,7 @@ public interface ChallengeDAO {
 	// 중복 챌린지 체크
 	public Integer samechallenge(Map<String, Integer> map);
 	
-	// 게시판 조회
+	// 게시판 글 조회
 	public BoardVO getBoardContent(Integer bno);
 
 	// 챌린지 등록
@@ -55,11 +55,18 @@ public interface ChallengeDAO {
 	
 	// 챌린지 피드 인원 조회
 //	public void getCList(Integer cno) throws Exception;
-	public Map<String, Object> getCList(Integer cno) throws Exception;
+	public int getCList(Integer cno) throws Exception;
 
 	// 저축형 챌린지 참여하기
 	public void joinPlus(ChallengeVO vo) throws Exception;
 	
+	// 게시판 글 수정
+	public Integer updateBoard(BoardVO vo) throws Exception;
 
+	// 게시판 글 삭제
+	public void deleteBoard(Integer bno) throws Exception;
+	
+	// 게시판 글 작성
+	public void insertBoard(BoardVO vo) throws Exception;
 	
 }

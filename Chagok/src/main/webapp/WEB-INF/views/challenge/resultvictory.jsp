@@ -284,5 +284,258 @@ ${vo }
 
 <%@ include file="../include/footer.jsp"%>
 
+<style>
+$
+padding: 15px ; // Universal styling
+body {
+	background: #ff84a1;
+	color: #3a3e59;
+	font-family: 'Raleway', Arial, sans-serif;
+}
 
+p {
+	text-align: center;
+	opacity: .3;
+	transition: .3s;
+	position: absolute;
+	bottom: 2vh;
+	left: 0;
+	right: 0;
+	margin: 0 auto;
+	&:
+	hover
+	{
+	opacity
+	:
+	1;
+}
+
+}
+.receipt {
+	max-width: 400px;
+	margin: 5vh auto 0 auto; & _hoverable { transition : .3s;
+	box-shadow: 0 3px 10px rgba(0, 0, 0, .2);
+	&:
+	hover
+	{
+	box-shadow
+	:
+	0
+	5px
+	20px
+	rgba(
+	0
+	,
+	0
+	,
+	0
+	,
+	.3
+	);
+}
+
+}
+}
+//
+Header styles
+.header {
+	width: 100%;
+}
+
+.header__top {
+	display: flex;
+	align-items: center;
+	background: white;
+	width: 100%;
+	border-radius: 4px 4px 0 0;
+}
+
+.header__logo {
+	width: 10%;
+	padding: $padding* 2;
+}
+
+.header__meta {
+	position: relative;
+	width: 90%;
+	height: 100%;
+	margin-left: $padding;
+	line-height: 1.7rem;
+	opacity: .3;
+}
+
+.header__serial {
+	display: block;
+}
+
+.header__number {
+	position: absolute;
+	top: $padding/2;
+	right: 0;
+	transform: rotate(270deg);
+	opacity: .2;
+}
+
+.header__greeting {
+	clear: both;
+}
+
+//
+Greeting styles
+.header__greeting {
+	position: relative;
+	background: white;
+	padding: 0$padding;
+	padding-left: $padding* 2;
+}
+
+.header__name {
+	display: block;
+	font-weight: bold;
+	font-size: 1.3rem;
+	margin-bottom: $padding/2;
+}
+
+.header__count {
+	opacity: .4;
+	font-size: 90%;
+}
+
+.header__border {
+	position: absolute;
+	left: 0;
+	top: 0;
+	height: 100%;
+	width: 3px;
+	background-color: #429fff;
+}
+
+.header__spacing {
+	display: block;
+	background: white;
+	width: 100%;
+	height: $padding* 1.5;
+}
+
+//
+Cart styles
+.cart {
+	background: white;
+	padding: $padding* 2;
+	padding-top: $padding;
+	border-bottom: 2px dashed #ff84a1;
+	border-radius: 0 0 5px 5px;
+}
+
+.cart__header {
+	margin-top: 0;
+	text-align: center;
+}
+
+.cart__hr {
+	border: none;
+	padding: 0;
+	margin: 0;
+	margin-bottom: $padding* 1.5;
+	border-bottom: 3px solid #fee469;
+}
+
+.list {
+	margin: 0;
+	padding: 0;
+	counter-reset: item-counter;
+}
+
+.list__item {
+	display: flex;
+	width: 100%;
+	padding-top: $padding* 1.5;
+	padding-bottom: $padding* 1.5;
+	border-bottom: 1px dashed rgba(0, 0, 0, .1);
+	&:
+	last-child
+	{
+	border-bottom
+	:
+	none;
+}
+
+&
+:before {
+	content: counter(item-counter);
+	counter-increment: item-counter;
+	margin-right: $padding;
+}
+
+}
+.list__name {
+	flex: 1;
+	align-self: flex-start;
+}
+
+.list__price {
+	align-self: flex-end;
+	text-align: right;
+	font-weight: bold;
+}
+
+.cart__total {
+	display: flex;
+	width: 100%;
+}
+
+.cart__total-label {
+	margin: 0;
+	flex: 1;
+	text-transform: uppercase;
+}
+
+.cart__total-price {
+	align-self: flex-end;
+	font-weight: bold;
+	text-align: right;
+}
+
+//
+Bar code styles
+.bar-code {
+	background: white;
+	padding: $padding* 2;
+	border-radius: 6px 6px 4px 4px;
+}
+
+//
+Reset button
+.button {
+	position: fixed;
+	bottom: 15px;
+	right: 15px;
+	background: darken(#ff84a1, 10%);
+	border: none;
+	border-radius: 3px;
+	color: white;
+	padding: $padding;
+	transition: .3s;
+	&:
+	hover
+	{
+	box-shadow
+	:
+	0
+	2px
+	10px
+	darken(
+	#ff517a
+	,
+	30%
+	);
+}
+
+}
+.link {
+	display: block;
+	margin: 25px auto 15px auto;
+	text-align: center;
+}
+</style>
 

@@ -14,7 +14,7 @@ ${boardList }
 			<ul class="timeline">
 
 				<li class="time-label">
-					<span class="bg-red" value="${boardList.b_date }"> 
+					<span class="bg-red" > 
 						
 					</span>
 				</li>
@@ -24,13 +24,13 @@ ${boardList }
 					<div class="timeline-item">
 						
 						<h3 class="timeline-header">
-							
+							${boardList.b_title }
 						</h3>
 						<div class="timeline-body">
 							
 						</div>
 						<div class="timeline-footer">
-							<a class="btn btn-primary btn-xs">Read more</a> <a
+							<a class="btn btn-primary btn-xs">수정하기</a> <a
 								class="btn btn-danger btn-xs">Delete</a>
 						</div>
 					</div></li>
@@ -100,22 +100,30 @@ ${boardList }
 
 	
 </section>
-	<script type="text/javascript">
-		
-		var result = '${result}';
-		if(result == 'createOK'){
-			alert(" 글쓰기 완료! ");
-		}
-		
-		if(result == 'modOK'){
-			alert(' 글 수정 완료!');
-		}
-		
-		if(result == 'delOK'){
-			alert(' 글 삭제 완료!');
-		}
-		
-	</script>
+	<script>
+			$(document).ready(function(){
+				var formObj = $("form[role='form']");
+				
+				// 수정
+				$(".btn-primary btn-xs").click(function(){
+					
+					formObj.attr("action","/challenge/freeboardupdate"); 
+					formObj.attr("method","get"); 
+					formObj.submit();
+					
+				});
+				
+				// 삭제
+				$(".btn-danger btn-xs").click(function(){
+					
+					formObj.attr("action","/challenge/freedelete");
+					formObj.submit();
+				});
+				
+				
+				
+			});
+</script>
 
 
 
