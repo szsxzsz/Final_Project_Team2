@@ -28,7 +28,8 @@
 			<div class="form-group">
 				<label for="sumpamt" class="col-sm-2 control-label">${pMonth }월 예산</label>
 				<div class="col-sm-10">
-					<input type="text" class="form-control" id="sumpamt" placeholder="예산을 입력하세요" maxlength="10" onkeyup="inputNumFmt(this);">
+					<input type="hidden" name="pMonth" value="${pMonth }">
+					<input type="text" class="form-control" id="sumpamt" name="sumpamt" placeholder="예산을 입력하세요" maxlength="10" onkeyup="inputNumFmt(this);">
 				</div>
 				<div class="col-sm-10">
 					<span>지난달 예산 : </span><span id="prevsum"></span><br>
@@ -36,24 +37,28 @@
 				</div>
 			</div>
 		</div>
-		      
+		
+		<div id="textdiv"></div>
+		
+		<div class="box-footer">
+			<input type="submit" class="btn btn-info pull-right" value="등록하기"/>
+			<button type="button" id="copy" class="btn btn-info pull-right">지난달 예산 복사하기</button>
+		</div>	
+			      
 		<c:forEach var="top" items="${ctTopList }" varStatus="status">
 			<c:set var="i" value="${status.index}"/>
 			<div class="box-body">
 				<div class="form-group">
-					<label for="pamt${status.index}" id="label${status.index }" class="col-sm-2 control-label">${top }</label>
+					<label for="p_amount${status.index}" id="label${status.index }" class="col-sm-2 control-label">${top }</label>
 					<div class="col-sm-10">
-						<input type="text" class="form-control" id="pamt${status.index}" placeholder="예산을 입력하세요" maxlength="10" onkeyup="inputNumberFormat(this);">
+						<input type="hidden" name="ctno" value="${index }+1">
+						<input type="text" class="form-control" id="pamt${status.index}" name="p_amount" placeholder="예산을 입력하세요" maxlength="10" onkeyup="inputNumFmt(this);">
 					</div>
 					<p class="col-sm-2 control-label">지난달 예산 <span id="prevamt${status.index}"></span> 원</p>
 				</div>
 			</div>
 		</c:forEach>
 		
-		<div class="box-footer">
-			<input type="submit" class="btn btn-info pull-right" value="등록하기"/>
-			<button type="button" id="copy" class="btn btn-info pull-right">지난달 예산 복사하기</button>
-		</div>
 	</form>
 </div>
 </div>
@@ -153,17 +158,20 @@ $(document).ready(function(){
 			}
 		}
 		console.log('sum2 : '+sum2);
-		if(sum2==a){
-			alert('일치');
-			return false;
-		} else if(sum2>a){
-			alert('카테고리별 예산의 합이 총 예산을 초과했습니다. 초과한 금액으로 등록하시겠습니까?');
-			return false;
-		} else if(sum2<a){
-			alert('append - 카테고리별 예산의 합이 총 예산보다 적어용');
+		if(sum2==a) {
+// 			alert('일치');
+			return true;
+		} else if(sum2>a) {
+			 $('#textdiv').empty();
+			 if (confirm("카테고리별 예산의 합이 총 예산을 초과했습니다. 초과한 금액으로 등록하시겠습니까?") == true) {
+				 return true;
+			 } else {
+			     return false;
+			 }
+		} else if(sum2<a) {
+			$('#textdiv').html("카테고리별 예산의 합이 총 예산보다 적어요. 모든 금액을 분배해주세요.");
 			return false;
 		}
-		return false;
 	});
 });
 

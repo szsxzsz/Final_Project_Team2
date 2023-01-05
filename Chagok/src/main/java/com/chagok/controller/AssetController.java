@@ -42,6 +42,7 @@ import com.chagok.domain.ChallengeVO;
 import com.chagok.domain.JsonObj;
 import com.chagok.domain.PropCardVO;
 import com.chagok.domain.UserVO;
+import com.chagok.persistence.PlanVO;
 import com.chagok.service.AbookService;
 import com.chagok.service.AccountService;
 import com.chagok.service.OpenBankingService;
@@ -569,7 +570,6 @@ public class AssetController {
 	@GetMapping(value = "/budget")
 	public String budget(@RequestParam("mm") int mm, HttpSession session, Model model) throws Exception {	
 		int mno = (int)session.getAttribute("mno");
-		mylog.debug("mno : "+mno);
 		
 		// getctTop
 		List<String> ctTopList = abService.getctTop();
@@ -596,7 +596,6 @@ public class AssetController {
 	@PostMapping(value = "/budcopy")
 	public List<Map<String, Object>> budcopy(@RequestParam("mm") int mm, HttpSession session) throws Exception {
 		int mno = (int)session.getAttribute("mno");
-		mylog.debug("mno : "+mno);
 		
 		// pMonth
 		int mm2 = mm+1;
@@ -613,7 +612,11 @@ public class AssetController {
 	}
 	
 	@PostMapping(value = "/budget")
-	public String budget() {
+	public String budget(PlanVO pvo, HttpSession session) {
+		// vo : mno, pMonth, p_amount, ctno
+		int mno = (int)session.getAttribute("mno");
+		pvo.setMno(mno);
+		
 		mylog.debug("폼 등록");
 		return "";
 	}
