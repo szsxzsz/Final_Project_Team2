@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.css"/>
 
 </head>
-<body>
+<!-- <body> -->
 	<div class="content-wrapper" style="min-height: 986.281px;">
 		<section class="content-header">
 			<c:set var="today" value="<%=new java.util.Date() %>"/><br><br>
@@ -19,7 +19,7 @@
 <%-- 			${map.outCum} --%>
 <%-- 			${map.weekjson } --%>
 <%-- 				${map.weekjson } --%>
-			<h1>
+			<h1>${map.amtTopjson}
 			${userVO.nick }님의
 				<fmt:formatDate value="${today }" pattern="MM"/>월 날짜별 리포트
 			</h1>
@@ -191,8 +191,6 @@
 	
 	</div>	
 
-<!-- jQuery -->
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.min.js"></script>
 <!-- jQuery.number -->
 <script src="/resources/js/jquery.number.min.js"></script>
 <!-- chart.js -->
@@ -273,8 +271,12 @@ for(var i=0; i<outCum.length; i++) {
 </script>
 
 <script type="text/javascript">
-$(document).ready(function(){
+var a = $.number(5000000);
+console.log(a);
 
+
+$(document).ready(function(){
+	var arr = ${map.amtTopjson};
 	$.each (week2, function (i, el) {
 		$('#tbody1').append("<tr>");
 		$('#tbody1').append("<td>"+week2[i]+"</td>");
