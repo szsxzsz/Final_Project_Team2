@@ -5,7 +5,7 @@
 <html>
  <head>
    <meta charset="UTF-8">
-   <title>Chagok | Dashboard</title>
+   <title>AdminLTE 2 | Dashboard</title>
    <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
    <!-- Bootstrap 3.3.4 -->
    <link href="${pageContext.request.contextPath }/resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
@@ -49,24 +49,13 @@
         <section class="sidebar">
           <!-- Sidebar user panel -->
           <div class="user-panel">
-          <% if (session.getAttribute("loginUser") == null){ %>
-            <div class="pull-left image">
-              <img src="${pageContext.request.contextPath }/resources/plugins/img/chagok_pig-removebg.png" class="img-circle" alt="User Image" />
-            </div>
-            <% }else { %>
             <div class="pull-left image">
               <img src="/resources/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image" />
             </div>
-            <% } %>
             <div class="pull-left info">
-              <p>
-              <% if (session.getAttribute("loginUser") == null){ %>
-             	 Please Sign In
-              <% }else { %>
-              	${loginUser.nick }
-              	<a href="#"><i class="fa fa-circle text-success"></i> Online</a>
-              <% } %>
-              </p>
+              <p>Alexander Pierce</p>
+
+              <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
             </div>
           </div>
           <!-- search form -->
@@ -78,27 +67,27 @@
 <!--               </span> -->
 <!--             </div> -->
 <!--           </form> -->
-          <!-- /.search form -->          
+          <!-- /.search form -->
           <!-- sidebar menu: : style can be found in sidebar.less -->
           <ul class="sidebar-menu">
             <li class="header">마이페이지</li>
-            <li class="treeview">
+            <li class="treeview active">
               <a href="#">
                 <i class="fa fa-trophy"></i> <span>챌린지</span> <i class="fa fa-angle-left pull-right"></i>
               </a>
-              <ul class="treeview-menu">
+              <ul class="treeview-menu ">
                 <li><a href="/chagok/challengemain"><i class="fa fa-circle-o"></i> 모집 중 챌린지</a></li>
                 <li><a href="/challenge/mychallenge"><i class="fa fa-circle-o"></i> 내 챌린지</a></li>
                 <li><a href="/challenge/review"><i class="fa fa-circle-o"></i> 후기 게시판</a></li>
               </ul>
             </li>
-            <li class="treeview">
+            <li class="treeview active">
               <a href="#">
                 <i class="fa fa-group"></i>
                 <span>커뮤니티</span>
                 <span class="label label-primary pull-right">4</span>
               </a>
-              <ul class="treeview-menu">
+              <ul class="treeview-menu active">
                 <li><a href="../community/canibuy"><i class="fa fa-circle-o"></i> 사도 돼?</a></li>
                 <li><a href="../community/news"><i class="fa fa-circle-o"></i> 뉴스 / 재테크</a></li>
                 <li><a href="../community/balancing"><i class="fa fa-circle-o"></i> 월말 결산</a></li>
@@ -110,13 +99,13 @@
 <!--                 <i class="fa fa-th"></i> <span>고객센터</span> <small class="label pull-right bg-green">new</small> -->
 <!--               </a> -->
 <!--             </li> -->
-            <li class="treeview">
+            <li class="treeview active">
               <a href="#">
                 <i class="fa fa-asterisk"></i>
                 <span>고객센터</span>
                 <i class="fa fa-angle-left pull-right"></i>
               </a>
-              <ul class="treeview-menu">
+              <ul class="treeview-menu active">
                 <li><a href="/challenge/notice"><i class="fa fa-circle-o"></i> 공지 게시판</a></li>
                 <li><a href="/community/report"><i class="fa fa-circle-o"></i> 신고 게시판</a></li>
 <!--                 <li><a href="../charts/flot.html"><i class="fa fa-circle-o"></i> Flot</a></li> -->
