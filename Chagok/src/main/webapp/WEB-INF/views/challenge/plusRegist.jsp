@@ -46,7 +46,7 @@
 									  });
 									 </script>
 									 
-<%-- 								<%=request.getRealPath("/") %> --%>
+								<%=request.getRealPath("/") %>
 								
 							</div>
 							
