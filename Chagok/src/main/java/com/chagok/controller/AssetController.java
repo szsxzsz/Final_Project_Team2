@@ -28,9 +28,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.chagok.apiDomain.AccountHistoryRequestVO;
 import com.chagok.apiDomain.AccountHistoryResponseVO;
+import com.chagok.apiDomain.AccountHistoryVO;
 import com.chagok.apiDomain.AccountVO;
 import com.chagok.apiDomain.CardInfoRequestVO;
 import com.chagok.apiDomain.CardInfoResponseVO;
+import com.chagok.apiDomain.CardInfoVO;
 import com.chagok.apiDomain.RequestTokenVO;
 import com.chagok.apiDomain.ResponseTokenVO;
 import com.chagok.apiDomain.UserInfoResponseVO;
@@ -69,13 +71,19 @@ public class AssetController {
 	public String myAssetGET(HttpSession session, Model model) throws Exception{
 		if (session.getAttribute("mno") != null) {
 			int mno = (int)session.getAttribute("mno");
-		
-		UserVO userVO = userService.getUser(mno);
-		model.addAttribute("userVO", userVO);
-		
-		List<AccountVO> accountList = accountService.getAccountInfo(mno);
-		model.addAttribute("accountList", accountList);
+			
+			UserVO userVO = userService.getUser(mno);
+			model.addAttribute("userVO", userVO);
+			
+			// 계좌 리스트 조회
+			List<AccountVO> accountList = accountService.getAccountInfo(mno);
+			model.addAttribute("accountList", accountList);
+			
+			// 카드 리스트 조회
+			List<CardInfoVO> cardList = accountService.getCardInfo(userVO.getUser_seq_no());
+			model.addAttribute("cardList", cardList);
 		}
+		
 		
 		return "/asset/myAsset";
 	}
@@ -99,7 +107,14 @@ public class AssetController {
 		if (responseTokenVO != null) {
 			int mno = (int)session.getAttribute("mno");
 			
+			// isChecked N => Y update
 			userService.updateIsCheck(mno);
+			
+			// user_seq_no 저장
+			Map<String, Object> userMap = new HashMap<String, Object>();
+			userMap.put("mno", mno);
+			userMap.put("user_seq_no", responseTokenVO.getUser_seq_no());
+			userService.updateSeqNo(userMap);
 			
 			//////////////// 사용자 정보, 계좌정보 조회 => DB(user, account 테이블)에 저장 ////////////////
 			UserInfoResponseVO userInfoResponseVO = openBankingService.getUserInfo(responseTokenVO);
@@ -111,8 +126,10 @@ public class AssetController {
 			// 계좌 정보
 			List<AccountVO> accountList = userInfoResponseVO.getRes_list();
 			model.addAttribute("accountList", accountList);
-			accountService.insertAccountInfo(userInfoResponseVO.getRes_list()); // 디비 저장
 			
+			if (userInfoResponseVO.getRes_list() != null) {
+				accountService.insertAccountInfo(userInfoResponseVO.getRes_list()); // 디비 저장
+			}
 			
 			mylog.debug("계좌 리스트 : " + accountList);
 			
@@ -122,7 +139,8 @@ public class AssetController {
 				AccountHistoryRequestVO accountHistoryRequestVO = new AccountHistoryRequestVO();
 				
 				accountHistoryRequestVO.setAccess_token(responseTokenVO.getAccess_token());
-				accountHistoryRequestVO.setBank_tran_id("M202202513U"+(int)(Math.random()*100000000)+i);
+				accountHistoryRequestVO.setBank_tran_id("M202202513U"+(int)((Math.random()+1)*100000000));
+				mylog.debug("@@@@@@@@@@@@@@"+i+accountHistoryRequestVO.getBank_tran_id());
 				accountHistoryRequestVO.setFintech_use_num(accountList.get(i).getFintech_use_num());
 				accountHistoryRequestVO.setInquiry_type("A");
 				accountHistoryRequestVO.setInquiry_base("D");
@@ -136,19 +154,44 @@ public class AssetController {
 			List<AccountHistoryResponseVO> accountHistoryResponseList = openBankingService.getAccountHistory(accountHistoryRequestList);
 			model.addAttribute("accountHistoryResponseList", accountHistoryResponseList);
 			
-			accountService.insertAccountHistory(accountHistoryResponseList); // 디비 저장
+			if (accountHistoryRequestList != null) {
+				accountService.insertAccountHistory(accountHistoryResponseList); // 디비 저장
+			}
 			
 			//////////////// 카드목록 조회 => DB(card 테이블)에 저장 ////////////////
 			
 			cardInfoRequestVO.setAccess_token(responseTokenVO.getAccess_token());
-			cardInfoRequestVO.setBank_tran_id("M202202513U"+(int)(Math.random()*1000000000));
+			cardInfoRequestVO.setBank_tran_id("M202202513U"+(int)((Math.random()+1)*100000000));
 			cardInfoRequestVO.setUser_seq_no(responseTokenVO.getUser_seq_no());
 			cardInfoRequestVO.setBank_code_std("399"); // fix, 오픈뱅킹만 사용가능
 			cardInfoRequestVO.setMember_bank_code("399"); // fix, 오픈뱅킹만 사용가능
 			CardInfoResponseVO cardInfoResponseVO = openBankingService.getCardInfo(cardInfoRequestVO);
 			
 			model.addAttribute("cardInfoResponseVO", cardInfoResponseVO);
-			accountService.insertCardInfo(cardInfoResponseVO);
+			if (cardInfoResponseVO != null) {
+				accountService.insertCardInfo(cardInfoResponseVO);
+			}
+			
+			// 계좌 금액 조회
+			if (userInfoResponseVO.getRes_list() != null) {
+				// mno에 해당하는 계좌들의 가장최근 거래내역 조회
+				List<AccountHistoryVO> accountHistoryList = accountService.getBalanceAmt(mno);
+				model.addAttribute("accountHistoryList", accountHistoryList);
+				
+				// 최근 거래금액을 각각 계좌에 업데이트
+				List<AccountVO> updateBalanceList = new ArrayList<AccountVO>();
+				for (int i = 0; i < accountHistoryList.size(); i++) {
+					if (accountHistoryList.get(i) != null) {
+						AccountVO accountVO = new AccountVO();
+						accountVO.setFintech_use_num(accountHistoryList.get(i).getFintech_use_num());
+						accountVO.setBalance_amt(accountHistoryList.get(i).getAfter_balance_amt());
+						updateBalanceList.add(accountVO);
+					}
+				}
+				accountService.updateBalanceAmt(updateBalanceList);
+			}
+			
+			
 			
 			////////////////카드청구기본정보 조회 => DB(card_history 테이블)에 저장 ////////////////
 			

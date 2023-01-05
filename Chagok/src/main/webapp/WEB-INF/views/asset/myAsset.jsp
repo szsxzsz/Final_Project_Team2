@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="../include/header.jsp" %>
 <%@ include file="../include/sidebarAsset.jsp" %>
 	
@@ -12,10 +13,28 @@
 		} else {
 			return false;
 		}
-		
 	}
 </script>
 
+<script type="text/javascript">
+	$(document).ready(function(){
+		alert("제 이 쿼 리 ! ! ! ");
+		$('#account_pa').click(function(){
+// 			alert("account 클릭!!");
+// 			alert($('#account_ch').css('display'));
+			if ($('#account_ch').css("display") == "block") {
+				$('#account_ch').css("display", "none");
+			} else {
+				$('#account_ch').css("display", "block");
+			}
+		});
+	});
+
+</script>
+	
+	${cardList }
+	
+	
 	<c:if test="${userVO == null }">
 		<h1>로그인이 필요합니다!</h1>
 	</c:if>
@@ -55,38 +74,43 @@
 	
 	<c:if test="${userVO.isCheck.equals('Y') }">
 	
+		<c:set var="accountSum" value="${0 }" ></c:set>
+		<c:forEach var="sumVO1" items="${accountList }">
+				<c:set var="accountSum" value="${accountSum +  sumVO1.balance_amt}"></c:set>
+		</c:forEach>
+	
 		<div style="margin: 50px 0 0 100px;">
 			<h1>내 자산</h1>
-			<h2>${userVO.nick } 님의 순자산은 : 10,000,000,000 원 입니다!</h2>
+			<h2>${userVO.nick } 님의 순자산은 : <fmt:formatNumber value="${accountSum }"/> 원 입니다!</h2>
 		</div>
-	
-	
 	
 	
 		<div style="margin: 50px 100px 0 80px;">
 		
-			<div class="info-box bg-yellow" style="margin-bottom: 1px;">
+			<div class="info-box bg-yellow" style="margin-bottom: 1px;" id="account_pa" >
 				<span class="info-box-icon">
 					<i class="fa fa-bank"></i>
 				</span>
 				<div class="info-box-content" style="padding-top: 15px">
 					<span class="info-box-text" style="font-size: 3em; margin-left: 20px; display: inline;">계 좌</span> 
-					<span class="info-box-text" style="font-size: 3em; margin-left: 200px; display: inline;">총 300,000,000 원</span> 
+					<span class="info-box-text" style="font-size: 3em; margin-left: 200px; display: inline;">총 <fmt:formatNumber value="${accountSum }"/>  원</span> 
 				</div>
 			</div>
 			
+			<div id="account_ch" style="display: none;">
 			<c:forEach var="vo" items="${accountList }">
-				<div class="info-box" style="margin: 0 0 1px 30px; width: 95%">
+				<div class="info-box" style="margin: 0 0 1px 30px; width: 95%;">
 					<span class="info-box-icon">
 						<i class="fa fa-bank"></i>
 					</span>
 					<div class="info-box-content" style="padding-top: 15px;">
 						<span class="info-box-text" style="font-size: 3em; margin-left: 20px; display: inline;">${vo.account_alias }</span> 
-						<span class="info-box-text" style="font-size: 3em; margin-left: 200px; display: inline;">총 ${vo.balance_amt } 원</span> 
+						<span class="info-box-text" style="font-size: 3em; margin-left: 200px; display: inline;">총 <fmt:formatNumber value="${vo.balance_amt }"/> 원</span> 
 						<span class="info-box-text" style="font-size: 3em; margin-left: 200px; display: inline;">${vo.account_num_masked }</span> 
 					</div>
 				</div>
 			</c:forEach>
+			</div>
 
 
 			<div class="info-box bg-yellow" style="margin-top: 50px; margin-bottom: 1px;">

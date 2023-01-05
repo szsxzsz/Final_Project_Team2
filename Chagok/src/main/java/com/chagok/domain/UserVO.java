@@ -24,4 +24,5 @@ public class UserVO {
 	private String isCheck;
 	private String sub;
 	private String isBen;
+	private String user_seq_no;
 }

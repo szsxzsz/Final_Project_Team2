@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import com.chagok.apiDomain.AccountHistoryResponseVO;
+import com.chagok.apiDomain.AccountHistoryVO;
 import com.chagok.apiDomain.AccountVO;
 import com.chagok.apiDomain.CardInfoResponseVO;
 import com.chagok.apiDomain.CardInfoVO;
@@ -91,6 +92,44 @@ public class AccountDAOImpl implements AccountDAO{
 		
 		return list;
 	}
+
+	@Override
+	public List<AccountHistoryVO> getBalanceAmt(int mno) throws Exception {
+		
+		List<AccountVO> accountList = sqlSession.selectList(NAMESPACE+".getAccountInfo", mno);
+		
+		
+		
+		List<AccountHistoryVO> resultList = new ArrayList<AccountHistoryVO>();
+		
+		Map<String, String> tmpMap = new HashMap<String, String>();
+		for (int i = 0; i < accountList.size(); i++) {
+			tmpMap.put("fintech_use_num", accountList.get(i).getFintech_use_num());
+			
+			resultList.add(sqlSession.selectOne(NAMESPACE+".getBalanceAmt", tmpMap));
+		}
+		
+		mylog.debug("@@@@@@@@@@@@@@결 과 값 : " + resultList);
+		
+		return resultList;
+	}
+
+	@Override
+	public void updateBalanceAmt(List<AccountVO> list) throws Exception {
+//		sqlSession.update(NAMESPACE+".updateBalanceAmt", list);
+		
+		for (int i = 0; i < list.size(); i++) {
+			sqlSession.update(NAMESPACE+".updateBalanceAmt", list.get(i));
+		}
+	}
+
+	@Override
+	public List<CardInfoVO> getCardInfo(String user_seq_no) throws Exception {
+		List<CardInfoVO> list = sqlSession.selectList(NAMESPACE+".getCardInfo", user_seq_no);
+		
+		return list;
+	}
+
 	
 	
 	

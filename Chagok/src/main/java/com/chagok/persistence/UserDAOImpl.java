@@ -81,6 +81,11 @@ public class UserDAOImpl implements UserDAO {
 	public void updateIsCheck(int mno) {
 		sqlSession.update(NAMESPACE+".updateIsCheck", mno);
 	}
+
+	@Override
+	public void updateSeqNo(Map<String, Object> map) {
+		sqlSession.update(NAMESPACE+".updateSeqNo", map);
+	}
 	
 	
 	
