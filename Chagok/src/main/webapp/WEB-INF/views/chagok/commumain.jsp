@@ -13,9 +13,6 @@
 <h1 class="visually-hidden"></h1>
 <main>
 
-
-
-
 <div class="gap-3 d-md-flex justify-content-md-end text-right">
 	<button type="button" class="btn btn-danger btn-lg">저축형</button>
 	<button type="button" class="btn btn-primary btn-lg">절약형</button>

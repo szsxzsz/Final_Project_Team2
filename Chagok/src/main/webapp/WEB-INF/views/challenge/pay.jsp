@@ -29,13 +29,23 @@ IMP.init("imp44431277"); // 예: imp00000000a (가맹점 식별코드)
 	        msg += '상점 거래ID : ' + rsp.merchant_uid;
 	        msg += '결제 금액 : ' + rsp.paid_amount;
 	        msg += '카드 승인번호 : ' + rsp.apply_num;
+	        console.log(msg);
+	        $.ajax({
+	        	type : 'POST',
+	        	url : "/challenge/payCallback", 
+	        	dataType: 'json',
+	        	data: {
+	        		imp_uid : rsp.imp_uid,
+	        		msg : msg
+	        	}
+	        });
 	    } else {
 	    	 var msg = '결제에 개같이 실패하였습니다.';
 	         msg += '에러내용 : ' + rsp.error_msg;
 	    }
 	    alert(msg);
-	});
-}
+	}); // function(rsp)
+} // function requestPay()
 </script>
 
 <button onclick="requestPay()">결제하기</button> <!-- 결제하기 버튼 생성 -->

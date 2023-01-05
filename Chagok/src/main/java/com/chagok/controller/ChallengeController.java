@@ -76,9 +76,9 @@ public class ChallengeController {
 		return "/challenge/plusFeed";
 	}
 	
-	@PostMapping(value = "/plusfeed")
+	@PostMapping(value = "/plusFeed")
 	public String plusfeedPOST(Model model, int cno, HttpSession session) throws Exception {
-		mylog.debug("plusfeedGET() 호출");
+		mylog.debug("plusFeedGET() 호출");
 		
 		ChallengeVO chVO = service.getChallengeInfo(cno);
 		List<Map<String, Object>> plusPeoList = service.getPlusPeople(cno);
@@ -305,20 +305,12 @@ public class ChallengeController {
 		@GetMapping("/mychallenge")
 		public String mychallengeGET(Model model, HttpSession session) throws Exception {
 			
-			Integer mno = (Integer)session.getAttribute("mno");
-			mylog.debug(mno+"");
+			String nick = (String)session.getAttribute("nick");
 			
-//			uservice.getUser(mno);
-			UserVO vo = uservice.getUser(mno);
-			
-			List<ChallengeVO> mychallengeList = service.getmyChallenge(vo.getNick());
-		
-			if(mno == null) {
-				return "redirect:/login";
+			if(nick == null) {
+				List<ChallengeVO> mychallengeList = service.getmyChallenge(nick);
+				model.addAttribute("mychallengeList", mychallengeList);
 			}
-			// else일 때
-//			model.addAttribute("nick", nick);
-			model.addAttribute("mychallengeList", mychallengeList);
 			
 			return "/challenge/mychallenge";
 		}
@@ -519,7 +511,7 @@ public class ChallengeController {
 		// 결제정보 확인(검증)
 		
 		@ResponseBody
-		@RequestMapping(value="/payCallback/{imp_uid}")
+		@RequestMapping(value="/payCallback", method=RequestMethod.POST)
 		public IamportResponse<Payment> paymentByImpUid(
 				Model model
 				, Locale locale
