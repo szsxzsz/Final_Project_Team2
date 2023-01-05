@@ -17,9 +17,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -30,6 +28,7 @@ import com.chagok.apiDomain.AccountHistoryRequestVO;
 import com.chagok.apiDomain.AccountHistoryResponseVO;
 import com.chagok.apiDomain.AccountHistoryVO;
 import com.chagok.apiDomain.AccountVO;
+import com.chagok.apiDomain.CardHistoryVO;
 import com.chagok.apiDomain.CardInfoRequestVO;
 import com.chagok.apiDomain.CardInfoResponseVO;
 import com.chagok.apiDomain.CardInfoVO;
@@ -75,6 +74,11 @@ public class AssetController {
 			UserVO userVO = userService.getUser(mno);
 			model.addAttribute("userVO", userVO);
 			
+			// 현재 년월
+			LocalDate now = LocalDate.now();
+			String now_date = now.format(DateTimeFormatter.ofPattern("yyyyMM"));
+			model.addAttribute("now_date", now_date);
+			
 			// 계좌 리스트 조회
 			List<AccountVO> accountList = accountService.getAccountInfo(mno);
 			model.addAttribute("accountList", accountList);
@@ -82,6 +86,10 @@ public class AssetController {
 			// 카드 리스트 조회
 			List<CardInfoVO> cardList = accountService.getCardInfo(userVO.getUser_seq_no());
 			model.addAttribute("cardList", cardList);
+			
+			// 카드 내역/금액 조회
+			List<List<CardHistoryVO>> cardHistoryList = accountService.getCardHistory(cardList);
+			model.addAttribute("cardHistoryList", cardHistoryList);
 		}
 		
 		

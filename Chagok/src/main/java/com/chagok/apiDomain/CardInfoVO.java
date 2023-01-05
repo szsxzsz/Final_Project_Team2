@@ -7,6 +7,7 @@ public class CardInfoVO {
 	private String card_member_type;
 	private String card_company;
 	private String user_seq_no;
+	private String card_balance;
 	
 	@Override
 	public boolean equals(Object obj) {
@@ -22,7 +23,14 @@ public class CardInfoVO {
 		return String.valueOf(this.card_id).hashCode();
 	}
 	
-	
+	public String getCard_balance() {
+		return card_balance;
+	}
+
+	public void setCard_balance(String card_balance) {
+		this.card_balance = card_balance;
+	}
+
 	public String getCard_company() {
 		return card_company;
 	}

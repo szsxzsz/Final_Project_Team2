@@ -15,6 +15,7 @@ import org.springframework.stereotype.Repository;
 import com.chagok.apiDomain.AccountHistoryResponseVO;
 import com.chagok.apiDomain.AccountHistoryVO;
 import com.chagok.apiDomain.AccountVO;
+import com.chagok.apiDomain.CardHistoryVO;
 import com.chagok.apiDomain.CardInfoResponseVO;
 import com.chagok.apiDomain.CardInfoVO;
 
@@ -128,6 +129,19 @@ public class AccountDAOImpl implements AccountDAO{
 		List<CardInfoVO> list = sqlSession.selectList(NAMESPACE+".getCardInfo", user_seq_no);
 		
 		return list;
+	}
+
+	@Override
+	public List<List<CardHistoryVO>>  getCardHistory(List<CardInfoVO> list) throws Exception {
+		List<List<CardHistoryVO>> resultList = new ArrayList<List<CardHistoryVO>>();
+		
+		for (int i = 0; i < list.size(); i++) {
+			List<CardHistoryVO> cardHistoryList = 
+					sqlSession.selectList(NAMESPACE+".getCardHistory", list.get(i).getCard_id());
+			resultList.add(cardHistoryList);
+		}
+		
+		return resultList;
 	}
 
 	

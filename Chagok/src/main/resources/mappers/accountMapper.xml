@@ -43,4 +43,8 @@
 		select * from card where user_seq_no = #{user_seq_no}
 	</select>
 	  	
+	<select id="getCardHistory" resultType="com.chagok.apiDomain.CardHistoryVO">
+		select * from card_history where card_id = #{card_id}
+	</select>
+	
   </mapper>

@@ -6,6 +6,7 @@ import java.util.Map;
 import com.chagok.apiDomain.AccountHistoryResponseVO;
 import com.chagok.apiDomain.AccountHistoryVO;
 import com.chagok.apiDomain.AccountVO;
+import com.chagok.apiDomain.CardHistoryVO;
 import com.chagok.apiDomain.CardInfoResponseVO;
 import com.chagok.apiDomain.CardInfoVO;
 
@@ -32,4 +33,6 @@ public interface AccountDAO {
 	// 카드 정보 조회
 	public List<CardInfoVO> getCardInfo(String user_seq_no) throws Exception;
 	
+	// 카드 내역/금액 조회
+	public List<List<CardHistoryVO>> getCardHistory(List<CardInfoVO> list) throws Exception;
 }
