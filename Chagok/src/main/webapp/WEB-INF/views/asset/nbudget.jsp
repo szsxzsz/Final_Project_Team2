@@ -34,22 +34,23 @@
 			
 				
 			<form class="form-horizontal">
-			<c:forEach var="top" items="${ctTopList }">
+			<c:forEach var="top" items="${ctTopList }" varStatus="status">
+			<c:set var="i" value="${status.index}"/>
 				<div class="box-body">
 					<div class="form-group">
-<!-- 						<label for="inputEmail3" class="col-sm-2 control-label">Email</label> -->
-						<label class="col-sm-2 control-label">${top }</label>
+						<label for="pamt${status.index}" id="label${status.index }" class="col-sm-2 control-label">${top }</label>
 						<div class="col-sm-10">
-							<input type="text" class="form-control" id="inputEmail3" placeholder="예산을 입력하세요">
+							<input type="text" class="form-control" id="pamt${status.index}" placeholder="예산을 입력하세요">
 						</div>
-						<p class="help-block">지난달 예산 100,000</p>
+						<p class="help-block">지난달 예산 <span id="prevamt${status.index}"></span> 원</p>
 					</div>
 				</div>
 			</c:forEach>
 
 				<div class="box-footer">
-					<button type="submit" class="btn btn-info pull-right">Sign</button>
+					<button type="submit" class="btn btn-info pull-right">등록하기</button>
 					<button type="button" id="copy" class="btn btn-info pull-right">지난달 예산 복사하기</button>
+					<button type="button" id="copy2" class="btn btn-info pull-right">ajax 한달전 예산 들고오기</button>
 				</div>
 			</form>
 		</div>
@@ -58,25 +59,21 @@
 </div>
 
 
-<!-- jQuery -->
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.min.js"></script>
-<!-- ajax -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css" >
-<script src="//ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-
+<!-- jQuery.number -->
+<script src="/resources/js/jquery.number.min.js"></script>
 
 <script type="text/javascript">
+
 $(document).ready(function(){
-	
 	$('#div2').hide();
 	
 	$('#setbud').click(function(){
 		$('#div1').hide();
 		$('#div2').show();
-	});
+// 	});
 	
-	$('#copy').click(function(){
-		console.log('ajax 시작');
+// 	$('#setbud').click(function(){
+// 		console.log('ajax 시작');
 		var mm = ${mm};
 		$.ajax({
 			type : "post",
@@ -86,23 +83,31 @@ $(document).ready(function(){
 			success : function(data) {
 				console.log('ajax 성공');
 				console.log(data);
-// 				if(data.length==0){
-// 					console.log('예산 없음');
-// 				} else {
-// 					for(var i=0;i<data.length;i++){
-// 						var budList = data[i];
-// 						for(var key in budList){
-// 							$(budList[key]).each(function(){
-// 								console.log(this.ct_top);
-// 								console.log(this.ct_amount);
-// 							})
-// 						}
-// 					}
-// 				}
+					$(data).each(function(index, item){
+						for(i=0; i<11; i++){
+							var b = $('#label'+i+'').text();
+							var top = item.ct_top;
+							var amp = item.p_amount;
+							if(b==top){
+								$('#prevamt'+i+'').text(''+$.number(amp)+'');
+							}
+						}
+					});
+					for(i=0; i<11; i++){
+						if($('#prevamt'+i+'').text()==''){
+							$('#prevamt'+i+'').text(''+0+'');
+						}
+					}
 			}, error : function(data){
 				console.log('ajax 오류');
 			}
 		});	//ajax
+	});	//click
+	
+	$('#copy').click(function(){
+		for(i=0; i<11; i++){
+			$('#pamt'+i+'').val($('#prevamt'+i+'').text());
+		}
 	});
 
 });

@@ -36,7 +36,7 @@
 	<select id="getctTop" resultType="String">
 		select ct_top
 		from category
-		where ct_inout=1 and ct_lev=0;
+		where ct_inout=1 and ct_lev=0 and ctno != 12;
 	</select>
 	
 	<!-- 1. 예산 유무 -->
