@@ -159,7 +159,6 @@ public class ChallengeServiceImpl implements ChallengeService{
 		mylog.debug(" deleteBoard() 호출 ");
 		
 		dao.deleteBoard(bno);
-			
 		
 	}
 
