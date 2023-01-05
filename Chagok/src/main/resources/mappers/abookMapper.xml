@@ -53,6 +53,12 @@
 		on p.ctno=ct.ctno
 		<include refid="wh1"/>
 		group by ct.ct_top;
-	</select> 
+	</select>
+	
+	<!-- 3. 예산 설정 -->
+	<insert id="setBud">
+		insert into plan 
+		values (#{pno}, #{mno}, #{p_month}, #{p_amount}, #{ctno});
+	</insert>
   
   </mapper>
