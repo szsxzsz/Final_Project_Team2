@@ -10,11 +10,10 @@
 //import org.springframework.web.bind.annotation.RequestParam;
 //import org.springframework.web.bind.annotation.RestController;
 //
-<<<<<<< HEAD
+
 //import com.chagok.domain.MessageDTO;
-=======
-//import com.chagok.domain.Message;
->>>>>>> branch 'develop_community' of https://github.com/Ju-Yeongmin/Final_Project_Team2.git
+
+
 //
 //
 //@RestController
@@ -65,11 +64,7 @@
 //	
 //   // @MessageMapping(value = "/TTT")
 //    @SendTo("/topic/message")
-<<<<<<< HEAD
 //    public MessageDTO ttt(MessageDTO message) throws Exception{
-=======
-//    public Message ttt(Message message) throws Exception{
->>>>>>> branch 'develop_community' of https://github.com/Ju-Yeongmin/Final_Project_Team2.git
 //    	System.out.println("stomp message>>"+ message);
 //    	System.out.println("ID =" + message.getMno()); // 클라이언트의 id
 //    	return message;
@@ -84,11 +79,7 @@
 //    
 //    @MessageMapping("/user/{cno}")
 //    @SendTo("/topic/feed/{cno}")
-<<<<<<< HEAD
 //    public MessageDTO ttte(MessageDTO message, @RequestParam int cno) throws Exception{
-=======
-//    public Message ttte(Message message, @RequestParam int cno) throws Exception{
->>>>>>> branch 'develop_community' of https://github.com/Ju-Yeongmin/Final_Project_Team2.git
 //    	
 //    	
 //    	
