@@ -121,13 +121,13 @@
 	<update id="joinplusUpdate1">
 		update challenge A inner join user B
 		on A.mno = B.mno
-		set c_person = concat(#{c_person},',',#{nick}) 
+		set c_person = concat(c_person,',',#{nick}) 
 		where cno =#{cno};
 	</update>
 	
 	<!-- 저축형 챌린지 참여 - challenge테이블 c_cnt에 +1하기 -->
 	<update id="joinplusUpdate2">
-		update challenge set(c_cnt) values(#{c_cnt}+1) 
+		update challenge set(c_cnt) values(c_cnt+1) 
 		where cno =#{cno};
 	</update>
 	
