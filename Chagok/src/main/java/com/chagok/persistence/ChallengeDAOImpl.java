@@ -50,6 +50,7 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 		return PPeopleList;
 	}
 
+	// 후기글 작성
 	@Override
 	public void createReview(BoardVO vo) {
 		
@@ -57,6 +58,7 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 		
 	}
 
+	// 챌린지 리스트
 	@Override
 	public List<ChallengeVO> getChallengeList(Integer cno) {
 		mylog.debug(" getChallengeList(Integer cno) 호출");
@@ -94,11 +96,10 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 		return end;
 	}
 	 
-	
-	
+	// 게시판 글 목록	
 	@Override
 	public List<BoardVO> getBoard(Integer b_sort) {
-		mylog.debug(" getReviewBoard() 호출");
+		mylog.debug(" getBoard() 호출");
 		
 		List<BoardVO> boardList = sqlSession.selectList(NAMESPACE+".boardList",b_sort);
 		
@@ -113,6 +114,7 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 		return sqlSession.selectOne(NAMESPACE+".samechallenge", map);
 	}
 
+	// 게시글 내용
 	@Override
 	public BoardVO getBoardContent(Integer bno) {
 		
@@ -176,6 +178,7 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 
 	}
 
+	// 게시글 수정
 	@Override
 	public Integer updateBoard(BoardVO vo) throws Exception {
 		
@@ -184,6 +187,7 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 		return sqlSession.update(NAMESPACE+".updateBoard", vo);
 	}
 
+	// 게시글 삭제
 	@Override
 	public void deleteBoard(Integer bno) throws Exception {
 		
@@ -193,6 +197,7 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 		
 	}
 
+	// 게시글 등록 (후기 제외)
 	@Override
 	public void insertBoard(BoardVO vo) throws Exception {
 		
