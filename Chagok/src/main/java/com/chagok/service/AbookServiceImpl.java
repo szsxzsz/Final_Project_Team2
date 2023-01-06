@@ -49,9 +49,9 @@ public class AbookServiceImpl implements AbookService{
 	}
 
 	@Override
-	public List<AbookVO> setAbookList(AbookVO vo) throws Exception {
+	public void setAbookList(AbookVO vo) throws Exception {
 		// TODO Auto-generated method stub
-		return dao.setAbookList(vo);
+		dao.setAbookList(vo);
 	}
 	
 	

@@ -18,7 +18,7 @@ public interface AbookService {
 
 	public List<Map<String, AbookVO>> AbookList() throws Exception;
 	
-	public List<AbookVO> setAbookList(AbookVO vo) throws Exception;
+	public void setAbookList(AbookVO vo) throws Exception;
 	
 	
 	

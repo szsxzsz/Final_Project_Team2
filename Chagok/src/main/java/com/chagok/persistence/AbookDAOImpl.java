@@ -63,12 +63,11 @@ public class AbookDAOImpl implements AbookDAO{
 	}
 
 	@Override
-	public List<AbookVO> setAbookList(AbookVO vo) throws Exception {
+	public void setAbookList(AbookVO vo) throws Exception {
 		mylog.debug("Mapper♡♡♡♡♡♡♡♡♡♡♡♡♡"+vo);
 		
-	List<AbookVO> setAbookList = sqlSession.selectList(NAMESPACE+".setAbookList", vo);
+	sqlSession.update(NAMESPACE+".setAbookList", vo);
 	
-	return setAbookList;
 	}
 
 

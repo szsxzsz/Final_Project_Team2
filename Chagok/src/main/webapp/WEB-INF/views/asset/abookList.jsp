@@ -7,25 +7,7 @@
 <%@ include file="../include/sidebarAsset.jsp"%>
 <br>
 
-<head>
 
-<!-- <link rel="stylesheet" href="//code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" /> -->
-<!-- <script src="//code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script> -->
-
-<!-- contenteditable  -->
-<style type="text/css">
-/* table { */
-/* 	border-collapse: collapse; */
-/* 	border: 1px gray solid; */
-/* } */
-
-.rowColumn {
-	border-radius: 5px;
-	margin: 5px;
-}
-</style>
-
-</head>
 
 <div class="box-body2 table-responsive">
 	<%-- 	${cateList }+@ --%>
@@ -52,6 +34,7 @@
 <table id="jqGrid"></table>
 <div id="gridpager"></div>
  <span><a href="#" onclick="javascript:save();">저장</a></span>
+<span><a href="#" onclick="javascript:gridFunc.addRow();">행 추가</a></span>
 <span><a href="#" onclick="javascript:gridFunc.clearGrid();">초기화</a></span>
 <span><a href="#" onclick="javascript:jqgridTable.deleteData();">삭제</a></span>
 
@@ -80,7 +63,6 @@ $("#jqGrid").jqGrid({
     colNames : ['num','분류','날짜','내용','금액','거래수단','카테고리','소분류','메모'], 
     colModel:[
         {name : 'abno', index : 'abno',width : 0, align : 'left',hidden:true,key:true},    	
-    	
         {name:"ab_inout",index:"ab_inout",width:30,align:'center',edittype: "select", formatter: "select",editoptions:{value:"1:지출;2:수입;3:이체;"},
 //                 dataEvents: [{
 //                     type : 'change',
@@ -103,8 +85,8 @@ $("#jqGrid").jqGrid({
     pager:"#gridpager",
     rowNum:20,
     rownumbers : true, 
-    cellEdit: true,
     
+    cellEdit: true,
     cellsubmit:'clientArray',
     cellurl:'/asset/updateGrid',
     onCellSelect: function(rowId, colId, val, e) { // e의 의미는 무엇인가요?
@@ -120,13 +102,11 @@ $("#jqGrid").jqGrid({
         
     },
     
-    
     /* 수정 후 cell 다시 editable flase 로 변경 */
     afterEditCell : function(rowid, cellname, value, iRow, iCol){
         $("#"+rowid+"_"+cellname).blur(function(){ //input focus out시 변경된 데이터 저장 
         	$("#jqGrid").jqGrid("editCell", 0, 0, false);
-        	
-          $("#jqGrid").jqGrid("saveCell", iRow, iCol);
+       	    $("#jqGrid").jqGrid("saveCell", iRow, iCol);
         });
 //         $('#jqGrid').trigger('reloadGrid');
 //         $(this).setColProp(cellname, {editable : false}); //수정 후 cell 다시 editable flase 로 변경
@@ -222,7 +202,7 @@ $("#jqGrid").jqGrid({
 	 //nav
 	 jQuery("#list1").jqGrid('navGrid','#gridpager',{
 		 //nav 설정						
-		 edit : true,
+		edit : true,
 		add : true,
 		del : true,
 		search : false,
@@ -313,6 +293,7 @@ $("#jqGrid").jqGrid({
 		
 	});
 	 
+	// 저장하고 컨트롤러로 보내는 코드 
 	function save(){
 // 		alert("");
 		var data =  $("#jqGrid").getRowData();
@@ -330,17 +311,7 @@ $("#jqGrid").jqGrid({
 			alert("입력 성공!");
 			}
 			})
-			
-// 	    $.ajax({
-// 	        url : '/asset/getGrid',
-// 	       data : JSON.stringify($('#jqGrid').getGridData()),
-// 	       method : "POST",
-// 	      contentType : "application/json; charset=UTF-8",
-// 	      dataType : "json",
-// 	      success : function(data){
-// 	       alert(data.msg);
-// 	       }
-// 	  });
+	jQuery("#jqGrid").trigger('reloadGrid');	
 
 	}
 	 
@@ -353,7 +324,6 @@ $("#jqGrid").jqGrid({
 	        addRow : function() {
 	            
 	            var totCnt = $("#jqGrid").getGridParam("records");
-	            
 	            var addData = {"ab_inout": "", "ab_date": "", "ab_content" : "", 
 				 "ab_amount" : "", "ct_top" : "", "ct_bottom" : "", "ab_memo" : ""};
 	            
@@ -363,7 +333,7 @@ $("#jqGrid").jqGrid({
 	        }
 	}
  </script>   
- 
+   <!-- 빈 행 추가 -->
 
 
 <!-- Datepicker -->
@@ -391,6 +361,7 @@ $("#jqGrid").jqGrid({
 
 	
 <style>
+
 #th-bg {
 	background-color: #FDEDBF;
 	font-style: inherit;
@@ -452,6 +423,11 @@ th {
         	font-size:13px;
 
         }
+        
+/*     .rowColumn { */
+/* 	border-radius: 5px; */
+/* 	margin: 5px; */
+/* }     */
 </style>
 
 
