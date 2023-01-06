@@ -7,7 +7,7 @@
 <%@ include file="../include/sidebar.jsp" %>
 
 <h1>공지게시판</h1>
-${boardList}
+
 <div class="col-xs-12 table-responsive">
 	<table class="table table-striped">
 		<thead>

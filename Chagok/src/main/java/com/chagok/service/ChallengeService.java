@@ -53,8 +53,14 @@ public interface ChallengeService {
 	// 중복 챌린지 체크
 	public Integer samechallenge(Map<String, Integer> map);
 	
-	// 저축형 챌린지 참여하기
-	public void joinPlus(ChallengeVO vo) throws Exception;
+	// 저축형 챌린지 참여 - plus테이블에 mno랑 cno insert
+	public void joinplusInsert(PlusVO vo);
+	
+	// 저축형 챌린지 참여 - challenge테이블 c_person에 ",닉네임" 업데이트하기
+	public void joinplusUpdate1(String nick, Integer cno);
+	
+	// 저축형 챌린지 참여 - challenge테이블 c_cnt에 +1하기
+	public void joinplusUpdate2(Integer cno);
 		
 	// 챌린지 피드 인원 조회
 //	public List<Map<String, Object>> getCList(Integer cno);
@@ -68,5 +74,14 @@ public interface ChallengeService {
 	
 	// 게시판 글 작성
 	public void insertBoard(BoardVO vo) throws Exception;
+	
+	// 챌린지 예치금 합산
+	public int getChallengeMoney(Integer cno) throws Exception;
+	
+	// 챌린지 실패/성공 조건 조회
+	public List<Map<String, Object>> getResult(Integer cno) throws Exception;
+	
+	// 챌린지 성공 인원 조회
+	public Integer getSuccess(Integer cno) throws Exception;
 }
 

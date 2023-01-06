@@ -222,7 +222,7 @@ public class ChallengeController {
 		List<ChallengeVO> challengeList = service.getChallengeList(cno);
 		int CList = service.getCList(cno);
 		ChallengeVO vo2 = service.getCt_top(cno);
-		
+		List<Map<String, Object>> result = service.getResult(cno);
 		
 		model.addAttribute("vo", vo);
 		model.addAttribute("challengeList", challengeList);
@@ -230,6 +230,7 @@ public class ChallengeController {
 
 		model.addAttribute("CList",CList);
 		model.addAttribute("vo2", vo2);
+		model.addAttribute("result", result);
 		
 		return "/challenge/checkfeed";
 	}
@@ -416,20 +417,26 @@ public class ChallengeController {
 	}
 	
 	// 챌린지 결과(성공)
-	// http://localhost:8080/challenge/victory?cno=1
-	@GetMapping(value="/victory")
+	// http://localhost:8080/challenge/success?cno=1
+	@GetMapping(value="/success")
 	public String victoryGET(Model model, @RequestParam("cno") int cno, HttpSession session) throws Exception{
 		ChallengeVO vo = service.getChallengeInfo(cno);
-
+		List<ChallengeVO> challengeList = service.getChallengeList(cno);
+		
 		ChallengeVO vo2 = service.getCt_top(cno);
-
-
+		int CList = service.getCList(cno);
+		int ChallengeMoney = service.getChallengeMoney(cno);
+		Integer Success = service.getSuccess(cno);
+		
 		model.addAttribute("vo", vo);
-
+		model.addAttribute("CList", CList);
+		model.addAttribute("challengeList", challengeList);
 		model.addAttribute("vo2", vo2);
+		model.addAttribute("c_end", service.getChallengeEndDate(cno));
+		model.addAttribute("ChallengeMoney", ChallengeMoney);
+		model.addAttribute("Success", Success);
 		
-		
-		return "/challenge/resultvictory";
+		return "/challenge/resultsuccess";
 	}
 
 	// 챌린지 결과(실패)
@@ -437,15 +444,21 @@ public class ChallengeController {
 	@GetMapping(value="/defeat")
 	public String defeatGET(Model model, @RequestParam("cno") int cno, HttpSession session) throws Exception{
 		ChallengeVO vo = service.getChallengeInfo(cno);
-		
+		List<ChallengeVO> challengeList = service.getChallengeList(cno);
+				
 		ChallengeVO vo2 = service.getCt_top(cno);
-		
+		int CList = service.getCList(cno);
+		int ChallengeMoney = service.getChallengeMoney(cno);
+		Integer Success = service.getSuccess(cno);
 		
 		model.addAttribute("vo", vo);
-		
+		model.addAttribute("CList", CList);
+		model.addAttribute("challengeList", challengeList);
 		model.addAttribute("vo2", vo2);
 		model.addAttribute("c_end", service.getChallengeEndDate(cno));
-		
+		model.addAttribute("ChallengeMoney", ChallengeMoney);
+		model.addAttribute("Success", Success);
+				
 		return "/challenge/resultdefeat";
 	}
 	
@@ -464,21 +477,18 @@ public class ChallengeController {
 		return "/challenge/freeboard";
 	}
 	
-	// 자유게시판 글 작성
-	// http://localhost:8080/challenge/free?b_sort=3
-	@GetMapping(value = "/free")
-	public String freeGET(@RequestParam("b_sort") int b_sort, Model model, HttpSession session) throws Exception {
+	// 자유게시판 글 작성 GET
+	// http://localhost:8080/challenge/freeboardwrite
+	@GetMapping(value = "/freeboardwrite")
+	public void freeboardwriteGET() throws Exception {
+		mylog.debug(" freeboardwriteGET 호출");
+		
 
-		mylog.debug(b_sort + "");
-
-		model.addAttribute("free", service.getChallengeInfo(b_sort));
-
-		return "/challenge/freeboardwrite";
 	}
-
-	@PostMapping(value = "/free")
-	public String freePOST(BoardVO vo, RedirectAttributes rttr) throws Exception {
-		mylog.debug(" freePOST 호출");
+	// 자유게시판 글 작성 POST
+	@PostMapping(value = "/freeboardwrite")
+	public String freeboardwritePOST(BoardVO vo, RedirectAttributes rttr) throws Exception {
+		mylog.debug(" freeboardwritePOST 호출");
 
 		mylog.debug(vo + "");
 
@@ -488,7 +498,7 @@ public class ChallengeController {
 
 		rttr.addFlashAttribute("result", "createOK");
 
-		return "redirect:/challenge/freeboardwrite";
+		return "redirect:/challenge/freeboard";
 	}
 	
 	// 자유 게시판 삭제
@@ -499,7 +509,7 @@ public class ChallengeController {
 	
 	
 	// 후기 게시판 수정 GET
-	// Http://localhost:8080/challenge/reviewupdate?bno=4
+	// http://localhost:8080/challenge/reviewupdate?bno=4
 	@GetMapping(value= "/reviewupdate")
 	public void reviewupdateGET(@RequestParam("bno") int bno, Model model, HttpSession session) throws Exception{
 				
@@ -535,6 +545,7 @@ public class ChallengeController {
 	}
 			
 	// 후기 글 삭제하기
+	// http://localhost:8080/challenge/reviewremove?bno=4
 	@PostMapping(value = "/reviewremove")
 	public String reviewremovePOST(int bno,RedirectAttributes rttr) throws Exception{
 		mylog.debug(bno+"");
@@ -548,39 +559,75 @@ public class ChallengeController {
 	}
 	
 	// 공지 글 작성하기
+	// http://localhost:8080/challenge/noticewrite
 	@GetMapping(value = "/noticewrite")
-	public String noticewriteGET(BoardVO vo, Model model, HttpSession session,RedirectAttributes rttr) throws Exception {
+	public void noticewriteGET() throws Exception {
 		
 		mylog.debug(" noticewriteGET 호출");
 		
+	}
+	
+	// 공지글 작성하기 (post)
+	@PostMapping(value = "/noticewrite")
+	public String registPOST(BoardVO vo, RedirectAttributes rttr) throws Exception {
+		
+		mylog.debug(" noticewriteGET -> noticewritePOST 호출 ");
+		
 		mylog.debug(vo+"");
 		
+		service.insertBoard(vo);
 		
 		rttr.addFlashAttribute("result", "createOK");
 		
-		// return "list";
-		return "redirect:/challenge/notice";
+		return "/challenge/notice";
 	}
 	
 	// 공지 글 수정하기
+	// http://localhost:8080/challenge/noticeupdate?bno=
 	@GetMapping(value = "/noticeupdate")
-	public void noticeupdateGET(BoardVO vo, Model model, HttpSession session) throws Exception{
+	public void noticeupdateGET(@RequestParam("bno") int bno, Model model, HttpSession session) throws Exception{
+		mylog.debug(" reviewupdate 호출");
 		
+		List<BoardVO> boardList = service.getBoardList(bno);
+		
+		mylog.debug(boardList+"");
+		
+		model.addAttribute("boardList", boardList);
+		
+		model.addAttribute("vo",service.getBoardList(bno));
 		
 	}
 	
 	// 공지 글 수정하기 POST
 	@PostMapping(value = "/noticeupdate")
-	public String noticeupdatePOST() throws Exception {
+	public String noticeupdatePOST(BoardVO vo,RedirectAttributes rttr) throws Exception {
+		mylog.debug(vo+"");
 		
-		return null;
+		
+		Integer result = service.updateBoard(vo);
+				
+		if(result > 0) {
+			
+		rttr.addFlashAttribute("result", "modOK");
+					
+		}
+						
+		return "/challenge/notice";
+		
 	}
 	
 	
 	// 공지 글 삭제하기
-	@GetMapping(value = "/noticedelete")
-	public String noticedeleteGET() throws Exception {
-		return null;
+	// http://localhost:8080/challenge/noticedelete?bno=
+	@PostMapping(value = "/noticedelete")
+	public String noticedeleteGET(int bno,RedirectAttributes rttr) throws Exception {
+		mylog.debug(bno+"");
+		
+		service.deleteBoard(bno);
+				
+		rttr.addFlashAttribute("result", "delOK");
+				
+		return "/challnege/notice";
 	}
 	
 	

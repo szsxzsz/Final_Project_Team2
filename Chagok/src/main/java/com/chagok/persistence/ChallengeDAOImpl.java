@@ -1,6 +1,7 @@
 package com.chagok.persistence;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -50,6 +51,7 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 		return PPeopleList;
 	}
 
+	// 후기글 작성
 	@Override
 	public void createReview(BoardVO vo) {
 		
@@ -57,6 +59,7 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 		
 	}
 
+	// 챌린지 리스트
 	@Override
 	public List<ChallengeVO> getChallengeList(Integer cno) {
 		mylog.debug(" getChallengeList(Integer cno) 호출");
@@ -94,11 +97,10 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 		return end;
 	}
 	 
-	
-	
+	// 게시판 글 목록	
 	@Override
 	public List<BoardVO> getBoard(Integer b_sort) {
-		mylog.debug(" getReviewBoard() 호출");
+		mylog.debug(" getBoard() 호출");
 		
 		List<BoardVO> boardList = sqlSession.selectList(NAMESPACE+".boardList",b_sort);
 		
@@ -113,6 +115,7 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 		return sqlSession.selectOne(NAMESPACE+".samechallenge", map);
 	}
 
+	// 게시글 내용
 	@Override
 	public BoardVO getBoardContent(Integer bno) {
 		
@@ -156,44 +159,16 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 		return pesonCnt;
 	}
 
-
-
-	// 챌린지 피드 인원 조회
-//	@Override
-//	public List<Map<String, Object> getCList(Integer cno) {
-//		mylog.debug(" getCList(Integer cno) 호출 ");
-//		
-//		List<Map<String, Object>> CList = sqlSession.selectList(NAMESPACE+".CList");
-//		return CList;
-//	}
-//	@Override
-//	public void getCList(Integer cno) {
-//		mylog.debug(" getCList(Integer cno) 호출 ");
-//		
-//		sqlSession.selectOne(NAMESPACE+".CList");
-//		
-//	}
-	
 	// 챌린지 참여 인원 조회(checkfeed 용)
 	@Override
 	public int getCList(Integer cno) throws Exception {
 		mylog.debug("getCList(Integer cno) 호출");
 		int CList = sqlSession.selectOne(NAMESPACE+".CList",cno);
-		mylog.debug(CList+"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+		mylog.debug(CList+"");
 		return CList;
 	}
 
-	// 저축형챌린지 참여
-	@Override
-	public void joinPlus(ChallengeVO vo) throws Exception {
-		mylog.debug(" joinPlus(ChallengeVO) 호출 ");
-		
-		sqlSession.insert(NAMESPACE);
-		
-		mylog.debug(" 저축형 챌린지 참여완료 ");
-
-	}
-
+	// 게시글 수정
 	@Override
 	public Integer updateBoard(BoardVO vo) throws Exception {
 		
@@ -202,6 +177,7 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 		return sqlSession.update(NAMESPACE+".updateBoard", vo);
 	}
 
+	// 게시글 삭제
 	@Override
 	public void deleteBoard(Integer bno) throws Exception {
 		
@@ -211,6 +187,7 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 		
 	}
 
+	// 게시글 등록 (후기 제외)
 	@Override
 	public void insertBoard(BoardVO vo) throws Exception {
 		
@@ -220,11 +197,50 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 		
 	}
 
+	// 챌린지 예치금 합산
+	@Override
+	public int getChallengeMoney(Integer cno) throws Exception {
+		int ChallengeMoney = sqlSession.selectOne(NAMESPACE+".challengemoney",cno);
+		
+		return ChallengeMoney;
+	}
+
+	// 챌린지 성공/실패 조건 조회
+	@Override
+	public List<Map<String, Object>> getResult(Integer cno) throws Exception {
+		List<Map<String, Object>> result = sqlSession.selectList(NAMESPACE+".result");
+		return result;
+	}
+
+	// 챌린지 성공 인원 조회
+	@Override
+	public Integer getSuccess(Integer cno) throws Exception {
+		Integer success = sqlSession.selectOne(NAMESPACE+".success", cno);
+		return success;
+	}
+	// 저축형 챌린지 참여 - plus테이블에 mno랑 cno insert
 	@Override
 	public void joinplusInsert(PlusVO vo) {
-		// TODO Auto-generated method stub
-		
+		mylog.debug("joinplusInsert(PlusVO) 호출");
+		sqlSession.insert(NAMESPACE+".joinplusInsert", vo);
 	}
+	// 저축형 챌린지 참여 - challenge테이블 c_person에 ",닉네임" 업데이트하기
+	@Override
+	public void joinplusUpdate1(String nick, Integer cno) {
+		mylog.debug("joinplusUpdate1 호출 닉네임 업데이트");
+		Map map = new HashMap();
+		map.put("nick", nick);
+		map.put("cno", cno);
+		sqlSession.update(NAMESPACE+".joinplusUpdate1", map);
+	}
+	
+	// 저축형 챌린지 참여 - challenge테이블 c_cnt에 +1하기
+	@Override
+	public void joinplusUpdate2(Integer cno) {
+		mylog.debug("joinplusUpdate2(cno) 호출");
+		sqlSession.update(NAMESPACE+".joinplusUpdate2", cno);
+	}
+
 	
 	
 	
