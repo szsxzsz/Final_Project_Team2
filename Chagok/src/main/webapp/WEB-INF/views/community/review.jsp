@@ -65,7 +65,8 @@ ${review }
 	<textarea rows="15" cols="100" name="b_content"></textarea>
 	
 	 <div class="box-footer">
-          <button type="submit" class="btn btn-primary" onclick="location.href='/challenge/reviewboard';">글쓰기</button>
+          <button type="submit" class="btn btn-primary" onclick="location.href='/reviewboard';">글쓰기</button>
+          <input class="btn btn-block btn-success btn-lg" type="button" value="메인가기" onclick="location.href='/commumain';" style="width:218px; margin-left: 950px;">
      </div>
      <input type="hidden" name="b_sort" value="review">
 	</form>

@@ -78,7 +78,7 @@
               <ul class="treeview-menu ">
                 <li><a href="/chagok/challengemain"><i class="fa fa-circle-o"></i> 모집 중 챌린지</a></li>
                 <li><a href="/challenge/mychallenge"><i class="fa fa-circle-o"></i> 내 챌린지</a></li>
-                <li><a href="/challenge/reviewboard?b_sort=1"><i class="fa fa-circle-o"></i> 후기 게시판</a></li>
+                <li><a href="/reviewboard"><i class="fa fa-circle-o"></i> 후기 게시판</a></li>
               </ul>
             </li>
             <li class="treeview active">
@@ -91,7 +91,7 @@
                 <li><a href="../community/canibuy"><i class="fa fa-circle-o"></i> 사도 돼?</a></li>
                 <li><a href="../community/news"><i class="fa fa-circle-o"></i> 뉴스 / 재테크</a></li>
                 <li><a href="../community/balancing"><i class="fa fa-circle-o"></i> 월말 결산</a></li>
-                <li><a href="../challenge/freeboard?b_sort=3"><i class="fa fa-circle-o"></i> 자유 게시판</a></li>
+                <li><a href="/freeboard"><i class="fa fa-circle-o"></i> 자유 게시판</a></li>
               </ul>
             </li>
 <!--             <li> -->
@@ -106,7 +106,7 @@
                 <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu active">
-                <li><a href="/challenge/notice?b_sort=2"><i class="fa fa-circle-o"></i> 공지 게시판</a></li>
+                <li><a href="/notice"><i class="fa fa-circle-o"></i> 공지 게시판</a></li>
                 <li><a href="/community/report"><i class="fa fa-circle-o"></i> 신고 게시판</a></li>
 <!--                 <li><a href="../charts/flot.html"><i class="fa fa-circle-o"></i> Flot</a></li> -->
 <!--                 <li><a href="../charts/inline.html"><i class="fa fa-circle-o"></i> Inline charts</a></li> -->
