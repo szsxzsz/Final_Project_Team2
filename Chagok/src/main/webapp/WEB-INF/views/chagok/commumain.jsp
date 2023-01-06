@@ -33,8 +33,8 @@
       </div>
 </c:forEach>
       <div class="ranking-button">
-		<button type="button" class="btn btn-success btn-lg">저축형</button>
-		<button type="button" class="btn btn-warning btn-lg">절약형</button>
+		<button type="button" class="btn btn-success btn-lg" onclick="/challenge/plusRegist">저축형</button>
+		<button type="button" class="btn btn-warning btn-lg" onclick="/challenge/minusRegist">절약형</button>
 	  </div>
 </div>
 <!-- 명예의 전당 -->

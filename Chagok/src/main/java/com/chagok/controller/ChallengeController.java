@@ -308,7 +308,7 @@ public class ChallengeController {
 			
 			String nick = (String)session.getAttribute("nick");
 			
-			if(nick == null) {
+			if(nick != null) {
 				List<ChallengeVO> mychallengeList = service.getmyChallenge(nick);
 				model.addAttribute("mychallengeList", mychallengeList);
 			}
