@@ -10,7 +10,10 @@
 //import org.springframework.web.bind.annotation.RequestParam;
 //import org.springframework.web.bind.annotation.RestController;
 //
-//import com.chagok.domain.Message;
+
+//import com.chagok.domain.MessageDTO;
+
+
 //
 //
 //@RestController
@@ -61,7 +64,7 @@
 //	
 //   // @MessageMapping(value = "/TTT")
 //    @SendTo("/topic/message")
-//    public Message ttt(Message message) throws Exception{
+//    public MessageDTO ttt(MessageDTO message) throws Exception{
 //    	System.out.println("stomp message>>"+ message);
 //    	System.out.println("ID =" + message.getMno()); // 클라이언트의 id
 //    	return message;
@@ -76,7 +79,7 @@
 //    
 //    @MessageMapping("/user/{cno}")
 //    @SendTo("/topic/feed/{cno}")
-//    public Message ttte(Message message, @RequestParam int cno) throws Exception{
+//    public MessageDTO ttte(MessageDTO message, @RequestParam int cno) throws Exception{
 //    	
 //    	
 //    	
