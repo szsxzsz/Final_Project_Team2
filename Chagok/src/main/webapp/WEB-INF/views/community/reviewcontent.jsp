@@ -34,7 +34,7 @@ ${vo }
         <input class="btn btn-block btn-success btn-lg" type="button" value="돌아가기" onclick="location.href='/reviewboard'" style="width:218px; margin-left: 950px;">
         <input class="btn btn-block btn-success btn-lg" type="button" value="삭제하기" onclick="location.href='/revireremove'" style="width:218px; margin-left: 950px;">
 <%@ include file="../include/footer.jsp"%>
-<!-- <script> -->
+<script>
 // 			$(document).ready(function(){
 // 				var formObj = $("form[role='form']");
 				
@@ -60,4 +60,4 @@ ${vo }
 				
 				
 // 			});
-<!-- </script> -->
+</script> 

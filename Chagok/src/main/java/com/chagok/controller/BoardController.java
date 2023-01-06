@@ -127,6 +127,18 @@ public class BoardController {
 		return "/community/reviewboard";
 					
 	}
+	
+	// 후기글 상세
+	// http://localhost:8080/reviewcontent?bno=1
+	@GetMapping(value = "/reivewcontent")
+	public String reviewcontentGET(HttpSession session,Model model,@RequestParam("bno") int bno) throws Exception {
+			
+		BoardVO vo = service.getBoardContent(bno);
+			
+		model.addAttribute("vo",vo);
+			
+		return "/community/reviewcontent";
+	}
 	// =================================================================================
 	
 	// =================================================================================
