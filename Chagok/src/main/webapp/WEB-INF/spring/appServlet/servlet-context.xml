@@ -29,7 +29,7 @@
 	<!-- 웹 소켓핸들러 -->
     <websocket:message-broker application-destination-prefix="/">
     <websocket:transport send-timeout="15000" send-buffer-size="524288" message-size="131072" />
-        <websocket:stomp-endpoint path="/*Feed" allowed-origins="*">
+        <websocket:stomp-endpoint path="/plusFeed" allowed-origins="*">
             <websocket:sockjs websocket-enabled="true"/>
         </websocket:stomp-endpoint>
         <websocket:simple-broker prefix="/topic, /queue"/>
