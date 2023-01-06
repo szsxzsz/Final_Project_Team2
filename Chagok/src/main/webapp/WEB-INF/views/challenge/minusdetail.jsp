@@ -10,7 +10,7 @@
 <h1 style="padding-left: 50px;">절약형 차곡 챌린지</h1>
 
 <%-- ${mno } --%>
-<%-- ${vo } --%>
+${vo }
 <div class="row" style="margin-left:30px; margin-top:30px;">
 	<div class="col-lg-4 aos-init aos-animate" data-aos="fade-right">
 <!--        아래 이미지 주소는 디비에서 꺼내오는걸로 바꿔야해요 -->
@@ -37,16 +37,20 @@
 			<div class="col-lg-6">
              <div class="progress-group" style="width: 280px;">
                <span class="progress-text">챌린지 장 </span>
-               <span class="progress-number"><b>${vo.c_host }</b>님</span>
+               <span class="progress-number"><b>${vo.mno }</b>님</span>
              </div>
              <div class="progress-group" style="width: 280px;">
                <span class="progress-text">챌린지 인원</span>
                <span class="progress-number"><b>${vo.c_person }</b>/ ${vo.c_pcnt }</span>
-               </div>
+             </div>
              <div class="progress-group" style="width: 280px;">
                <span class="progress-text">예치금</span>
                <span class="progress-number"><b>${vo.c_deposit }</b>꿀</span>
-               </div>
+             </div>
+             <div class="progress-group" style="width: 280px;">
+               <span class="progress-text">절약 카테고리</span>
+               <span class="progress-number"><b>${vo2.ct_top }</b></span>
+             </div>
           	 <div class="progress-group" style="width: 280px;">
                <span class="progress-text">챌린지 기간</span>
                <span class="progress-number"><b>${vo.c_period }</b></span>

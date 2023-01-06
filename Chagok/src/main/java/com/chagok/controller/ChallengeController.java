@@ -92,7 +92,7 @@ public class ChallengeController {
 	// http://localhost:8080/challenge/plusdetail?cno=2
 
 	@GetMapping(value = "/plusdetail")
-	public String plusdetailGET(Model model, @RequestParam("cno") int cno, HttpSession session) throws Exception {
+	public String plusdetailGET(Model model, @RequestParam("cno") Integer cno, HttpSession session) throws Exception {
 		mylog.debug("plusdetailGET 호출");
 		mylog.debug(cno + "");
 
@@ -104,8 +104,6 @@ public class ChallengeController {
 		model.addAttribute("vo", vo); // plusdetail로 정보전달
 
 		model.addAttribute("vo2", vo2);
-
-
 
 		return "/challenge/plusdetail";
 	}
@@ -143,17 +141,22 @@ public class ChallengeController {
 		
 		String result="N";
 		
-//		int gctno = ajaxService.samechallenge(ctno);
-//		service.samechallenge(ctno);
+//		Map<String, Object> map2 = new HashMap<String, Object>();
 
-//		int gctno = service.samechallenge(ctno);
-//		if(gctno == 1) result = "Y";
-		service.samechallenge(map);
-//		mylog.debug(service.samechallenge(map)+"");
+		service.samechallenge(map); // ctno랑 mno 담겨있음 ajax
+//		service.joinplusInsert(vo); // mno랑 cno필요
+//		service.joinplusUpdate1(nick, cno); // nick  => map어케 또 받지...;;
+//		service.joinplusUpdate2(cno);
+		mylog.debug(service.samechallenge(map)+"");
 //		
 		Integer gctno = service.samechallenge(map);	
 		mylog.debug(gctno+"");
 		if(gctno != null) result = "Y";
+	
+//		model.addAttribute("pvo", vo);
+//		model.addAttribute(attributeName, attributeValue);
+//		model.addAttribute("cno", cno);
+		
 		return result;
 //		return "/challenge/plusdetail";
 	}
@@ -380,9 +383,6 @@ public class ChallengeController {
 		
 		return "/challenge/minusRegist";
 	}
-	
-	
-	
 	
 	// 챌린지 등록 (절약형) - POST
 	@RequestMapping(value = "/minusregist", method=RequestMethod.POST)
