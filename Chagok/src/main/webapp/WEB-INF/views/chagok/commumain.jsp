@@ -1,29 +1,64 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <%@ include file="../include/header.jsp" %>
 
 <%@ include file="../include/sidebar.jsp" %>
 
-<h1> 커뮤니티 메인 </h1>
+<!-- <h1> 커뮤니티 메인 </h1> -->
 <%-- ${challengeList} --%>
-<%-- ${pesonCnt} --%>
-
+<%-- ${ranking } --%>
 
 <h1 class="visually-hidden"></h1>
 <main>
 
-<div class="gap-3 d-md-flex justify-content-md-end text-right">
-	<button type="button" class="btn btn-danger btn-lg">저축형</button>
-	<button type="button" class="btn btn-primary btn-lg">절약형</button>
-</div>
+	<div class="box-tools pull-right">
+		<div class="has-feedback">
+			<input type="text" class="form-control input-sm" placeholder="검색하기"> 
+			<span class="glyphicon glyphicon-search form-control-feedback"></span>
+		</div>
+	</div>
 
+	<!-- 명예의 전당 -->
+<h1>명예의 전당</h1>
+
+<div class="clprofile-container">
+<c:forEach var="uvo" items="${ranking }" begin="0" end="2">
+      <div class="clprofile-card">
+        <img src="https://i.imgur.com/bZBG9PE.jpg" alt="image1" class="clprofile-icon" />
+        <div class="clprofile-name">${uvo.nick }</div>
+        <div class="clprofile-position"><b>${uvo.success_cnt }</b> 번 도전에 성공하셨습니다.</div>
+      </div>
+</c:forEach>
+      <div class="ranking-button">
+		<button type="button" class="btn btn-success btn-lg">저축형</button>
+		<button type="button" class="btn btn-warning btn-lg">절약형</button>
+	  </div>
+</div>
+<!-- 명예의 전당 -->
+
+
+<!-- 챌린지 리스트 -->
   <h2 class="visually-hidden"></h2>
   <div class="row row-cols-lg-4 g-2">
   <c:forEach var="vo" items="${challengeList }">
+  
+  <!-- 날짜 계산하기 -->
+		<jsp:useBean id="now" class="java.util.Date" />
+			 <fmt:parseNumber value="${now.time / (1000*60*60*24)}" integerOnly="true" var="nowfmtTime" scope="request"/>
+			 <fmt:parseDate value="${vo.c_start}" var="startDate" pattern="yyyy-MM-dd"/>
+			 <fmt:parseNumber value="${startDate.time / (1000*60*60*24)}" integerOnly="true" var="startTime" scope="request"/>
+			 <fmt:parseNumber value="${c_end.time / (1000*60*60*24)}" integerOnly="true" var="endTime" scope="request" />
+  
+<%--   <c:if test="${startTime - nowfmtTime <= 0 && nowfmtTime - endTime <= 0}"> --%>
+<%--   </c:if> --%>
+  <c:if test="${startTime - nowfmtTime >= 0}">
+  <!-- 날짜 계산하기 : 조건에 만족하는 챌린지만 출력 -->
+  
     <div class="col">
       <div class="card">
-      
       
       	<c:if test="${vo.c_sort eq 0 }">
       		<p class="card-item-chevron card-item-chevron--hit" >저축형</p>
@@ -31,8 +66,8 @@
       	<c:if test="${vo.c_sort eq 1 }">
       		<p class="card-item-chevron card-item-chevron--sale">절약형</p>
       	</c:if>
-      
-       	
+      	
+      		<p class="card-item-chevron--new">D - <b>${startTime - nowfmtTime }</b></p>
         <a class="card-item-link" href="/challenge/detail?cno=${vo.cno }">
           <img class="card-img-top img-fluid" src="${vo.c_thumbFile }" alt="" aria-labelledby="title_1" id="c_img">
         </a>
@@ -60,21 +95,38 @@
       			<c:if test="${vo.c_period eq 12 }">
       			3달
       			</c:if>
-      		<s>D-5</s></p>
+      		<s></s></p>
 			
             <p style="text-align:right;" class="card-item-price" ><b>${vo.c_deposit }</b> 원</p>
           </div>
           </div>
         </div>
       </div>
-       </c:forEach>
-    </div>
+      </c:if>
+   </c:forEach>
+ </div>
    
-    
-  
 </main>
 
+            <div class="box-footer clearfix">
+              <ul class="pagination pagination-sm no-margin pull-right">
+                
+                <c:if test="${pageMaker.prev}">
+                	<li><a href="/commumain${pageMaker.makeQuery(pageMaker.startPage - 1)}">«</a></li>
+                </c:if>
+                
+                <c:forEach var="idx" begin="${pageMaker.startPage}" end="${pageMaker.endPage}" step="1">
+               		<li><a href="/commumain${pageMaker.makeQuery(idx)}">${idx}</a></li>
+                </c:forEach>
+                
+                <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
+                	<li><a href="/commumain${pageMaker.makeQuery(pageMaker.endPage + 1)}">»</a></li>
+                </c:if>
+                
+              </ul>
+            </div>
 
+</div>
 <%@ include file="../include/footer.jsp" %>
 
 <style>
@@ -112,7 +164,7 @@ body {
   width: 270px;
   height: 240px;
   object-fit: scale-down;
-
+  background-color: #ffdb8333;
 }
 
 main {
@@ -190,7 +242,7 @@ main .col {
 
 main .g-2 {
   --bs-gutter-x: 2rem;
-  --bs-gutter-y: 5rem;
+  --bs-gutter-y: 2rem;
 }
 
 @media (min-width: 992px) {
@@ -368,7 +420,7 @@ main .card .card-body .card-item-header {
 
 main .card .card-body .card-item-header .card-item-code {
     margin: 0;
-    color: #3c763d;
+    color: #66BB7A;
     font-weight: 600;
     font-size: 14px;
 }
@@ -548,16 +600,112 @@ main .card .card-item-chevron {
 }
 
 main .card .card-item-chevron--sale {
-  background-color: #fd7441;
-}
-
-main .card .card-item-chevron--new {
-  background-color: #1ea5fc;
+  background-color: #ffcb4d;
 }
 
 main .card .card-item-chevron--hit {
-  background-color: #8962f8;
+  background-color: #66BB7A;
 }
+
+main .card .card-item-chevron--new {
+ 	background-color: #ff523d;
+    position: absolute;
+    z-index: 2;
+    top: 180px;
+    right: 15px;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 13px 0px;
+    -webkit-border-radius: 4px;
+    border-radius: 5rem;
+    color: #ffffff;
+    font-family: "Noto Sans", "Arial", sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1.4;
+    width: 5rem;
+    height: 5rem;
+    text-align: center;
+}
+
+
+.btn-success {
+	height: 90px;
+	margin-bottom: 20px;
+}
+
+.btn-warning {
+	height: 90px;
+}
+
+.clprofile-container {
+    display: flex;
+    align-items: center;
+/*     justify-content: center; */
+/*     height: 100vh; */
+    margin: 0 30px;
+}
+
+.clprofile-card {
+    flex: 1 1 30%; 
+    max-width: 300px;
+    background: #fff;
+    padding: 20px 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 4px;
+    box-shadow: 0 0 2px 0 #ccc;
+    transition: .3s;
+}
+
+.clprofile-card:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 25px -5px #ccc;
+}
+
+.clprofile-icon {
+    height: 100px;
+    width: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.clprofile-name {
+    font-size: 20px;
+    font-weight: bold;
+    margin: 25px 0 10px 0;
+}
+
+.clprofile-position {
+    font-size: 14px;
+    color: #777;
+}
+
+.ranking-button{
+    display: flex;
+    flex-direction: column;
+    width: 14%;
+    margin-left: 20px;
+}
+
+@media screen and (max-width: 1000px) {
+    .clprofile-name {
+        font-size: 18px;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .clprofile-card {
+        padding: 20px 15px;
+    }
+
+    .clprofile-name {
+        font-size: 16px;
+    }
+}
+
 
 
 </style>

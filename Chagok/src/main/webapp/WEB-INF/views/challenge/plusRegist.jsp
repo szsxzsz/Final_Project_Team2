@@ -46,7 +46,7 @@
 									  });
 									 </script>
 									 
-								<%=request.getRealPath("/") %>
+<%-- 								<%=request.getRealPath("/") %> --%>
 								
 							</div>
 							
@@ -186,6 +186,7 @@
 				</div>
                 
                 
+                <input type="hidden" name="mno" value="">
                 <input type="hidden" name="c_status" value="0">
                 <input type="hidden" name="c_sort" value="0">
                 <input type="hidden" name="c_min" value="2">

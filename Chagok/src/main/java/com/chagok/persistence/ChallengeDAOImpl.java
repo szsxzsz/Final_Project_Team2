@@ -13,8 +13,10 @@ import org.springframework.stereotype.Repository;
 
 import com.chagok.domain.BoardVO;
 import com.chagok.domain.ChallengeVO;
+import com.chagok.domain.Criteria;
 import com.chagok.domain.MinusVO;
 import com.chagok.domain.PlusVO;
+import com.chagok.domain.UserVO;
 
 @Repository
 public class ChallengeDAOImpl implements ChallengeDAO{
@@ -145,18 +147,6 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 		return challengeList;
 	}
 
-	
-	// 챌린지 목록(참여명수 구하기)
-	@Override
-	public List<Map<String, Object>> getPersonCnt() {
-		mylog.debug(" 정보 호출 ");
-		
-		List<Map<String, Object>> pesonCnt = sqlSession.selectOne(NAMESPACE+".getPersonCnt");
-		
-		return pesonCnt;
-	}
-
-
 
 	// 챌린지 피드 인원 조회
 //	@Override
@@ -225,6 +215,43 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 		// TODO Auto-generated method stub
 		
 	}
+	
+	
+	// 명예의 전당 순위
+	@Override
+	public List<UserVO> ranking() throws Exception {
+		mylog.debug(" ranking() 호출 ");
+		
+		List<UserVO> ranking = sqlSession.selectList(NAMESPACE +".ranking");
+		
+		return ranking;
+	}
+
+	
+	
+	// 챌린지 목록 (페이징)
+	@Override
+	public List<ChallengeVO> cList(Criteria cri) throws Exception {
+		mylog.debug(" cList(Criteria cri) 호출 ");
+		List<ChallengeVO> cList = sqlSession.selectList(NAMESPACE +".cList", cri);
+		
+		return cList;
+	}
+
+	// 챌린지 총 갯수 (페이징)
+	@Override
+	public Integer cListCount() throws Exception {
+		mylog.debug("cListCount() 호출 ");
+		Integer cListCount = sqlSession.selectOne(NAMESPACE + ".cListCount");
+		
+		return cListCount;
+	}
+	
+	
+	
+	
+	
+	
 	
 	
 	
