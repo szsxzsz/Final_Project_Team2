@@ -15,7 +15,7 @@ public interface ChallengeDAO {
 	public ChallengeVO getChallengeInfo(int cno);	
 	
 	// ct_top (카테고리 대분류) 불러오기
-	public ChallengeVO getCt_top(int cno);
+	public ChallengeVO getCt_top(Integer cno);
 	
 	// [저축형]챌린지 참가자 조회 
 	public List<Map<String, Object>> getPlusPeople(Integer cno);
