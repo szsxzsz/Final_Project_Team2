@@ -5,47 +5,39 @@
 <%@ include file="../include/header.jsp" %>
 <%@ include file="../include/sidebarAsset.jsp" %>
 	
-<script>
-	function userCheck() {
-		var cfm = confirm(" 사용자 인증이 필요한 서비스입니다.\n 인증 서비스로 이동 하시겠습니까? ");
-		if (cfm) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-</script>
+
 
 <script type="text/javascript">
 	$(document).ready(function(){
 		$('#account_pa').click(function(){
 			if ($('#account_ch').css("display") == "block") {
-				$('#account_ch').slideUp();
+				$('#account_ch').css("display", "none");
 			} else {
-				$('#account_ch').slideDown();
+				$('#account_ch').css("display", "block");
 			}
 		});
 		
 		$('#card_pa').click(function(){
 			if ($('#card_ch').css("display") == "block") {
-				$('#card_ch').slideUp();
+				$('#card_ch').css("display", "none");
 			} else {
-				$('#card_ch').slideDown();
+				$('#card_ch').css("display", "block");
 			}
 		});
 		
 		$('#cash_pa').click(function(){
 			if ($('#cash_ch').css("display") == "block") {
-				$('#cash_ch').slideUp();
+				$('#cash_ch').css("display", "none");
 			} else {
-				$('#cash_ch').slideDown();
+				$('#cash_ch').css("display", "block");
 			}
 		});
+		
+		
 		
 	});
 
 </script>
-	
 	
 	<c:if test="${userVO == null }">
 		<h1>로그인이 필요합니다 !</h1>
@@ -104,149 +96,17 @@
 		
 		<!-- 현금합 -->
 		
-	
-		<!-- 전체 순자산 (계좌합 - 카드값 + 현금) -->	
-		<div style="margin: 50px 0 0 100px;">
-			<h1>📌 내 자산</h1>
-			<h2> 💎 ${userVO.nick } 님의 순자산은 : <fmt:formatNumber value="${accountSum - cardSum }"/> 원 입니다 💎 </h2>
-		</div>
-	
-		<div style="margin: 50px 100px 0 80px;">
+		<h1>내 카드</h1>
+			
+			
+			<div class="container__tXwE"><ul class="cards_2AMVH"><li><div class="wrap_2lqJo"><div class="rank_JrkfK">1위</div><span class="type_PbbRn">신용</span><h4 class="title_3gORD"><strong>삼성카드</strong>삼성카드 taptap O</h4><section class="details_32db_"><img src="https://cdn.banksalad.com/cards/samsung_2928.png" class="landscapeImage_2tyu8 image_q-O13"><div class="desc_36Dy-">직접 선택하는 혜택, 탭탭오 옵션형!</div><div class="buttons_2Q2OW"><a class="detail_2z1En" href="/cards/2928">상세보기</a><button class="issue_3gKkv">카드신청</button><div class="popular_3re6X">40454명이 선택했습니다</div></div></section></div></li><li><div class="wrap_2lqJo"><div class="rank_JrkfK">2위</div><span class="type_PbbRn">신용</span><h4 class="title_3gORD"><strong>신한카드</strong>신한카드 후불하이패스+(하이패스 전용)</h4><section class="details_32db_"><img src="https://cdn.banksalad.com/cards/shinhan_3144.png" class="landscapeImage_2tyu8 image_q-O13"><div class="desc_36Dy-">부담 없는 연회비로, 교체 없이 10년 동안~</div><div class="buttons_2Q2OW"><a class="detail_2z1En" href="/cards/3144">상세보기</a><button class="issue_3gKkv">카드신청</button><div class="popular_3re6X">37438명이 선택했습니다</div></div></section></div></li><li><div class="wrap_2lqJo"><div class="rank_JrkfK">3위</div><span class="type_PbbRn">신용</span><h4 class="title_3gORD"><strong>신한카드</strong>신한 Hi-Point 카드</h4><section class="details_32db_"><img src="https://cdn.banksalad.com/entities/etc/1561359772723-1572.png" class="landscapeImage_2tyu8 image_q-O13"><div class="desc_36Dy-">포인트! 백화점 상품권으로 돌려받자! 포인트최고5%적립</div><div class="buttons_2Q2OW"><a class="detail_2z1En" href="/cards/1572">상세보기</a><button class="issue_3gKkv">카드신청</button><div class="popular_3re6X">23261명이 선택했습니다</div></div></section></div></li><li><div class="wrap_2lqJo"><div class="rank_JrkfK">4위</div><span class="type_PbbRn">신용</span><h4 class="title_3gORD"><strong>신한카드</strong>신한카드 YOLO ⓘ (미니언즈)</h4><section class="details_32db_"><img src="https://cdn.banksalad.com/entities/etc/1556265601126-3858.png" class="landscapeImage_2tyu8 image_q-O13"><div class="desc_36Dy-">할인율과 디자인을 내 마음대로!! 나의 맞춤카드를 원하신다면, “YOLO”오세요~</div><div class="buttons_2Q2OW"><a class="detail_2z1En" href="/cards/3858">상세보기</a><button class="issue_3gKkv">카드신청</button><div class="popular_3re6X">12073명이 선택했습니다</div></div></section></div></li><li><div class="wrap_2lqJo"><div class="rank_JrkfK">5위</div><span class="type_PbbRn">신용</span><h4 class="title_3gORD"><strong>KB국민카드</strong>청춘대로 톡톡카드</h4><section class="details_32db_"><img src="https://cdn.banksalad.com/cards/kb_3350.png" class="landscapeImage_2tyu8 image_q-O13"><div class="desc_36Dy-">Simple하게 즐기자! 혜택 톡톡!</div><div class="buttons_2Q2OW"><a class="detail_2z1En" href="/cards/3350">상세보기</a><button class="issue_3gKkv">카드신청</button><div class="popular_3re6X">10205명이 선택했습니다</div></div></section></div></li><li><div class="wrap_2lqJo"><div class="rank_JrkfK">6위</div><span class="type_PbbRn">신용</span><h4 class="title_3gORD"><strong>KB국민카드</strong>탄탄대로 올쇼핑 티타늄카드</h4><section class="details_32db_"><img src="https://cdn.banksalad.com/entities/etc/1534743181597-3726.png" class="landscapeImage_2tyu8 image_q-O13"><div class="desc_36Dy-">여기저기, 빈틈없이 챙겨받는 올쇼핑 티타늄 할인!</div><div class="buttons_2Q2OW"><a class="detail_2z1En" href="/cards/3726">상세보기</a><button class="issue_3gKkv">카드신청</button><div class="popular_3re6X">6960명이 선택했습니다</div></div></section></div></li><li><div class="wrap_2lqJo"><div class="rank_JrkfK">7위</div><span class="type_PbbRn">신용</span><h4 class="title_3gORD"><strong>삼성카드</strong>삼성카드 taptap S</h4><section class="details_32db_"><img src="https://cdn.banksalad.com/cards/samsung_2927.png" class="landscapeImage_2tyu8 image_q-O13"><div class="desc_36Dy-">어디서나 받는 혜택, 탭탭 심플형!</div><div class="buttons_2Q2OW"><a class="detail_2z1En" href="/cards/2927">상세보기</a><button class="issue_3gKkv">카드신청</button><div class="popular_3re6X">6754명이 선택했습니다</div></div></section></div></li><li><div class="wrap_2lqJo"><div class="rank_JrkfK">8위</div><span class="type_PbbRn">신용</span><h4 class="title_3gORD"><strong>신한카드</strong>신한카드 B.Big(삑)</h4><section class="details_32db_"><img src="https://cdn.banksalad.com/entities/etc/1560309225803-1897.png" class="landscapeImage_2tyu8 image_q-O13"><div class="desc_36Dy-">매일매일 가는 길마다 신한카드 교통 Big 할인!</div><div class="buttons_2Q2OW"><a class="detail_2z1En" href="/cards/1897">상세보기</a><button class="issue_3gKkv">카드신청</button><div class="popular_3re6X">6723명이 선택했습니다</div></div></section></div></li><li><div class="wrap_2lqJo"><div class="rank_JrkfK">9위</div><span class="type_PbbRn">신용</span><h4 class="title_3gORD"><strong>삼성카드</strong>삼성카드 &amp; MILEAGE PLATINUM(스카이패스)</h4><section class="details_32db_"><img src="https://cdn.banksalad.com/cards/samsung_2804.png" class="landscapeImage_2tyu8 image_q-O13"><div class="desc_36Dy-">더욱 강력한 스카이패스 마일리지 혜택</div><div class="buttons_2Q2OW"><a class="detail_2z1En" href="/cards/2804">상세보기</a><button class="issue_3gKkv">카드신청</button><div class="popular_3re6X">6489명이 선택했습니다</div></div></section></div></li><li><div class="wrap_2lqJo"><div class="rank_JrkfK">10위</div><span class="type_PbbRn">신용</span><h4 class="title_3gORD"><strong>신한카드</strong>신한카드 Deep Dream</h4><section class="details_32db_"><img src="https://cdn.banksalad.com/cards/3578.png" class="landscapeImage_2tyu8 image_q-O13"><div class="desc_36Dy-">전월실적, 한도없이 적립</div><div class="buttons_2Q2OW"><a class="detail_2z1En" href="/cards/3578">상세보기</a><button class="issue_3gKkv">카드신청</button><div class="popular_3re6X">6159명이 선택했습니다</div></div></section></div></li></ul></div>
+			
 		
-		
-			<!-- 계좌 -->
-			<div class="info-box bg-yellow" style="cursor:pointer; margin-bottom: 1px;" id="account_pa">
-				<span class="info-box-icon">
-					<i class="fa fa-bank"></i>
-				</span>
-				<div class="info-box-content" style="padding-top: 15px">
-					<span class="info-box-text" style="font-size: 3em; margin-left: 20px; display: inline;">계 좌</span> 
-					<span class="info-box-text" style="font-size: 3em; margin-left: 200px; display: inline;">총 <fmt:formatNumber value="${accountSum }"/>  원</span> 
-				</div>
-			</div>
-			
-			<!-- 계좌목록 -->
-			<div id="account_ch" style="display: none;">
-			<c:forEach var="vo" items="${accountList }">
-				<div class="info-box" style="margin: 0 0 1px 30px; width: 95%;">
-					<a href="/asset/cardHistory?fintech_use_num=${vo.fintech_use_num }">
-						<span class="info-box-icon">
-							<i class="fa fa-bank"></i>
-						</span>
-						<div class="info-box-content" style="padding-top: 15px; display: flex;">
-							<span class="info-box-text" style="font-size: 3em; margin-left: 20px; display: inline;">${vo.account_alias }</span> 
-							<span class="info-box-text" style="font-size: 3em; margin-left: 200px; display: inline;">총 <fmt:formatNumber value="${vo.balance_amt }"/> 원</span> 
-							<span class="info-box-text" style="font-size: 3em; margin-left: 200px; display: inline;">${vo.account_num_masked }</span> 
-						</div>
-					</a>
-				</div>
-			</c:forEach>
-			</div>
-			
-			<!-- 카드 -->
-			<div class="info-box bg-yellow" style="cursor:pointer; margin-top: 50px; margin-bottom: 1px;" id="card_pa">
-				<span class="info-box-icon">
-					<i class="fa fa-credit-card"></i>
-				</span>
-				<div class="info-box-content" style="padding-top: 15px">
-					<span class="info-box-text" style="font-size: 3em; margin-left: 20px; display: inline;">카 드</span> 
-					<span class="info-box-text" style="font-size: 3em; margin-left: 200px; display: inline;">이번달 카드 값 : <fmt:formatNumber value="${cardSum }"/> 원</span> 
-				</div>
-			</div>
-			
-			<!-- 카드목록 -->
-			<div id="card_ch" style="display: none;">
-			
-			<c:set var="cardIDX" value="${0 }"></c:set>
-			<c:forEach items="${cardList }" var="cardVO" >
-				
-				<!-- 카드별 합계 구하기 -->
-				<c:set var="cardPartSum" value="${0}"/>
-				<c:forEach var="cardHistoryVO" items="${cardHistoryList.get(cardIDX) }">
-					<c:if test="${cardHistoryVO.card_tran_date.substring(0,6).equals(now_date) }">
-						<c:set var="cardPartSum" value="${cardPartSum+cardHistoryVO.card_tran_amt}"/>
-					</c:if>
-				</c:forEach>
-				
-					<div class="info-box" style="margin: 0 0 1px 30px; width: 95%">
-						<span class="info-box-icon">
-							<i class="fa fa-credit-card"></i>
-						</span>
-						<div class="info-box-content" style="padding-top: 15px;">
-							<span class="info-box-text" style="font-size: 3em; margin-left: 20px; display: inline;">${cardVO.card_name }</span> 
-							<span class="info-box-text" style="font-size: 3em; margin-left: 200px; display: inline;">총 ${cardPartSum } 원</span> 
-							<span class="info-box-text" style="font-size: 3em; margin-left: 200px; display: inline;">${cardVO.card_num_masked }</span> 
-						</div>
-					</div>
-				<c:set var="cardIDX" value="${cardIDX+1}"/>
-			</c:forEach>
-			</div>
-			
-			
-			<!-- 현금 -->
-			<div class="info-box bg-yellow" style="cursor:pointer; margin-top: 50px; margin-bottom: 1px;" id="cash_pa">
-				<span class="info-box-icon">
-					<i class="fa fa-database"></i>
-				</span>
-				<div class="info-box-content" style="padding-top: 15px">
-					<span class="info-box-text" style="font-size: 3em; margin-left: 20px; display: inline;">현 금</span> 
-					<span class="info-box-text" style="font-size: 3em; margin-left: 200px; display: inline;">총 0 원</span> 
-				</div>
-			</div>
-			
-			<!-- 현금목록 -->
-			<div id="cash_ch" style="display: none;">
-				<div class="info-box" style="margin: 0 0 1px 30px; width: 95%">
-					<span class="info-box-icon">
-						<i class="fa fa-database"></i>
-					</span>
-					<div class="info-box-content" style="padding-top: 15px;">
-						<span class="info-box-text" style="font-size: 3em; margin-left: 20px; display: inline;">현 금</span> 
-						<span class="info-box-text" style="font-size: 3em; margin-left: 200px; display: inline;">총 0 원</span> 
-					</div>
-				</div>
-			</div>
 					
-		</div>
 	</c:if>
 	
 	</c:if>
-	
-	<iframe src="/main" width="300" height="300">
-					</iframe>
-	
-	<!-- 모달창 -->
-	<div class="modal fade" id="modal-test" style="margin-top: 10%;">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-					<h4 class="modal-title">나의 가계부 연동</h4>
-				</div>
-				<div class="modal-body">
-					<p>
-					
-					<iframe src="/main" width="300" height="300">
-					</iframe>
-					
-					</p>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default pull-left"
-						data-dismiss="modal">닫기</button>
-					<button type="button" class="btn btn-primary" id="saveABook">저장하기</button>
-				</div>
-			</div>
 
-		</div>
-	</div>
-
-	<button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-test" style="margin-left: 90%">
-	가계부 연동하기
-	</button>
-	
 
 <hr>
 <hr>

@@ -19,6 +19,7 @@
    <!-- AdminLTE Skins. Choose a skin from the css/skins 
         folder instead of downloading all of them to reduce the load. -->
    <link href="${pageContext.request.contextPath }/resources/dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
+   <link href="${pageContext.request.contextPath }/resources/plugins/modal/minusModal.css" rel="stylesheet" type="text/css" />
 
    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -26,8 +27,6 @@
        <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
    <![endif]-->
-   
- 
 
  </head>
      <!-- jQuery 2.1.4 -->
@@ -81,9 +80,9 @@
               </a>
               <ul class="treeview-menu">
                 <li class="active"><a href="/asset/myAsset"><i class="fa fa-circle-o"></i> 내 자산</a></li>
-                <li><a href="advanced.html"><i class="fa fa-circle-o"></i> 카드</a></li>
-                <li><a href="editors.html"><i class="fa fa-circle-o"></i> 계좌</a></li>
-                <li><a href="editors.html"><i class="fa fa-circle-o"></i> 현금(보류)</a></li>
+                <li><a href="/asset/myCard"><i class="fa fa-circle-o"></i> 카드</a></li>
+                <li><a href="/asset/myAccount"><i class="fa fa-circle-o"></i> 계좌</a></li>
+                <li><a href="/asset/myCash"><i class="fa fa-circle-o"></i> 현금(보류)</a></li>
               </ul>
             </li>
             

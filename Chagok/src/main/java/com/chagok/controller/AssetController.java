@@ -103,6 +103,21 @@ public class AssetController {
 		return "/asset/myAsset";
 	}
 	
+	
+	
+	@GetMapping("/myCard")
+	public String myCardGET(HttpSession session, Model model) throws Exception{
+		if (session.getAttribute("mno") != null) {
+			int mno = (int)session.getAttribute("mno");
+			
+			UserVO userVO = userService.getUser(mno);
+			model.addAttribute("userVO", userVO);
+		}
+		
+		
+		return "/asset/myCard";
+	}
+	
 	@RequestMapping(value = "/callback", method = RequestMethod.GET)
 	public String getToken(RequestTokenVO requestTokenVO, Model model, CardInfoRequestVO cardInfoRequestVO, 
 			HttpSession session) throws Exception {
@@ -205,18 +220,6 @@ public class AssetController {
 				}
 				accountService.updateBalanceAmt(updateBalanceList);
 			}
-			
-			
-			
-			////////////////카드청구기본정보 조회 => DB(card_history 테이블)에 저장 ////////////////
-			
-			
-//			bank_tran_id Y AN(20) 거래고유번호(참가기관) - 「3.11. 거래고유번호(참가기관) 생성 안내」 참조
-//			user_seq_no Y AN(10) 사용자일련번호
-//			bank_code_std Y AN(3) 카드사 대표코드 (금융기관 공동코드) - 「3.3. 금융기관코드」 의 ‘카드사’ 참조
-//			member_bank_code Y AN(3) 회원 금융회사 코드 (금융기관 공동코드) - 「3.3. 금융기관코드」 의 ‘카드사’ 참조
-//			card_id 
-			
 		}
 //		return "/asset/apiTest"; // 출력 테스트
 		return "redirect:/asset/myAsset";
@@ -255,6 +258,10 @@ public class AssetController {
 		}
 		return "/asset/apiTest";
 	}
+
+	
+	
+	
 	
 	
 	///////////////////영민////////////////////
