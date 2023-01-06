@@ -5,8 +5,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-${vo }
-
 <link href='https://fonts.googleapis.com/css?family=Raleway:600,400'
 	rel='stylesheet' type='text/css'>
 
@@ -41,12 +39,24 @@ ${vo }
 						<path class="a"
 						d="M9.61,7.7a1.17,1.17,0,0,1,1.16-1h7.35a15.28,15.28,0,0,1,2.43.18L21.17,7l0.58,0.15L22,7.24a6.69,6.69,0,0,1,1,.43c0.37-2.35,0-3.94-1.27-5.39S17.85,0,14.62,0H5.24A1.34,1.34,0,0,0,3.92,1.13L0,25.9a0.81,0.81,0,0,0,.8.93H6.6L8,17.6Z" /></svg>
 			</div>
+			<c:forEach var="vo" items="${challengeList }">
+			
+				<c:if test="${vo.c_sort eq 0 }">
+					<c:set var="sort" value="저축형"/>
+				</c:if>
+				<c:if test="${vo.c_sort eq 1 }">
+					<c:set var="sort" value="절약형"/>
+				</c:if>
+				
+			</c:forEach>
 			<div class="receipt.header__meta">
-				<span class="receipt.header__date">[${vo2.ct_top}]</span> ${vo.c_title } <span
-					class="receipt.header__serial">${vo.c_title }</span> <span
-					class="receipt.header__number"> <b><fmt:formatDate
-							value="${startDate }" pattern="YYYY-MM-dd" /></b> / <b><fmt:formatDate
-							value="${c_end }" pattern="YYYY-MM-dd" /></b>
+				<span class="receipt.header__date">[${sort} : ${vo2.ct_top}]</span>
+				<span class="receipt.header__serial">${vo.c_title }</span> 
+				<span class="receipt.header__number"> 
+					<b>
+				<fmt:formatDate value="${startDate }" pattern="YYYY-MM-dd" />
+					</b> / <b>
+				<fmt:formatDate	value="${c_end }" pattern="YYYY-MM-dd" /></b>
 				</span>
 			</div>
 		</div>
@@ -61,16 +71,31 @@ ${vo }
 	<section class="cart">
 		<h2 class="cart__header">챌린지 결과</h2>
 		<ol class="list">
-			<li class="list__item"><span class="list__name"> 참여 인원 </span> <span
-				class="list__price"></span></li>
-			<li class="list__item"><span class="list__name"> 성공 인원 </span> <span
-				class="list__price"></span></li>
-			<li class="list__item"><span class="list__name"> 모인 꿀머니 </span>
-				<span class="list__price"></span></li>
+			<li class="list__item">
+				<span class="list__name"> 
+					참여 인원 
+				</span> 
+				<span class="list__price">
+					${CList }	
+				</span>
+			</li>
+			<li class="list__item"><span class="list__name"> 성공 인원 </span> 
+				<span class="list__price">
+					${Success }
+				</span>
+			</li>
+			<li class="list__item">
+				<span class="list__name"> 
+					모인 꿀머니 
+				</span>
+				<span class="list__price">
+					${ChallengeMoney }꿀
+				</span>
+			</li>
 		</ol>
 		<hr class="cart__hr" />
 		<footer class="cart__total">
-			<h3 class="cart__total-label">환급 꿀 머니</h3>
+			<h3 class="cart__total-label">챌린지 환급 꿀머니</h3>
 			<span class="cart__total-price">0 꿀</span>
 		</footer>
 	</section>

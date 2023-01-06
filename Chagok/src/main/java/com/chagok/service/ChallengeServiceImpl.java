@@ -131,14 +131,26 @@ public class ChallengeServiceImpl implements ChallengeService{
 		
 	}
 
-	// 저축형 챌린지 참여
+	// 저축형 챌린지 참여 - plus테이블에 mno랑 cno insert
 	@Override
-	public void joinPlus(ChallengeVO vo) throws Exception {
-		mylog.debug("joinplus 호출");
-		dao.joinPlus(vo);
-		mylog.debug("저축형 챌린지 참여완료");
+	public void joinplusInsert(PlusVO vo) {
+		mylog.debug("service: joinplusInsert 호출");
+		dao.joinplusInsert(vo);
 	}
-
+	// 저축형 챌린지 참여 - challenge테이블 c_person에 ",닉네임" 업데이트하기
+	@Override
+	public void joinplusUpdate1(String nick, Integer cno) {
+		mylog.debug("service: joinplusUpdate1 호출");
+		dao.joinplusUpdate1(nick, cno);
+		
+	}
+	// 저축형 챌린지 참여 - challenge테이블 c_cnt에 +1하기
+	@Override
+	public void joinplusUpdate2(Integer cno) {
+		mylog.debug("service: joinplusUpdate2 호출");
+		dao.joinplusUpdate2(cno);
+	}
+	
 	// 게시판 글 수정
 	@Override
 	public Integer updateBoard(BoardVO vo) throws Exception {
@@ -147,13 +159,13 @@ public class ChallengeServiceImpl implements ChallengeService{
 		return dao.updateBoard(vo);
 	}
 
+
 	// 게시판 글 삭제
 	@Override
 	public void deleteBoard(Integer bno) throws Exception {
 		mylog.debug(" deleteBoard() 호출 ");
 		
 		dao.deleteBoard(bno);
-			
 		
 	}
 
@@ -163,6 +175,27 @@ public class ChallengeServiceImpl implements ChallengeService{
 		
 		dao.insertBoard(vo);
 		
+	}
+
+	// 챌린지 예치금 합산
+	@Override
+	public int getChallengeMoney(Integer cno) throws Exception {
+		
+		return  dao.getChallengeMoney(cno);
+	}
+
+	// 챌린지 성공/실패 조건 조회
+	@Override
+	public List<Map<String, Object>> getResult(Integer cno) throws Exception {
+		
+		return dao.getResult(cno);
+	}
+
+	// 챌린지 성공 인원 조회
+	@Override
+	public Integer getSuccess(Integer cno) throws Exception {
+		
+		return dao.getSuccess(cno);
 	}
 
 	

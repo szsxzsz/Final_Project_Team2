@@ -16,125 +16,172 @@
    <link href="${pageContext.request.contextPath }/resources/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
    <!-- AdminLTE Skins. Choose a skin from the css/skins 
         folder instead of downloading all of them to reduce the load. -->
+
    <link href="${pageContext.request.contextPath }/resources/dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
+
+<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js" integrity="sha512-iKDtgDyTHjAitUDdLljGhenhPwrbBfqTKWO1mkhSFH3A7blITC9MhYon6SjnMhp4o0rADGw9yAC6EW4t5a4K3g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link href="${pageContext.request.contextPath }/resources/plugins/chat/feed.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
-    <div>
-        <input type="text" id="messageinput">
-    </div>
-    
-    <div>
-        <button onclick="openSocket();">Open</button>
-        <button onclick="send();">Send</button>
-        <button onclick="closeSocket();">close</button>
-    </div>
-    
-    <div id="message"></div>
     <!--임시 채팅  -->
-    
-<div class="col-md-3">
-
-	<div class="box box-primary direct-chat direct-chat-primary">
-		<div class="box-header with-border">
-			<h3 class="box-title">Chat</h3>
-			<div class="box-tools pull-right">
-				<span data-toggle="tooltip" title="" class="badge bg-light-blue"
-					data-original-title="3 New Messages">3</span>
-				<button type="button" class="btn btn-box-tool"
-					data-widget="collapse">
-					<i class="fa fa-minus"></i>
-				</button>
-				<button type="button" class="btn btn-box-tool" data-toggle="tooltip"
-					title="" data-widget="chat-pane-toggle"
-					data-original-title="Contacts">
-					<i class="fa fa-comments"></i>
-				</button>
-				<button type="button" class="btn btn-box-tool" data-widget="remove">
-					<i class="fa fa-times"></i>
-				</button>
-			</div>
-		</div>
-
-		<div class="box-body">
-
-			<div class="direct-chat-messages">
-
-				<div class="direct-chat-msg">
-					<div class="direct-chat-info clearfix">
-						<span class="direct-chat-name pull-left">Alexander Pierce</span> 
-						<span class="direct-chat-timestamp pull-right">23 Jan 2:00 pm</span>
-					</div>
-						<img class="direct-chat-img" src="${pageContext.request.contextPath }/resources/dist/img/user1-128x128.jpg" alt="Message User Image">
-						<div class="direct-chat-text">Is this template really for free? That's unbelievable!</div>
-				</div>
-				
-				<div class="direct-chat-msg right">
-					<div class="direct-chat-info clearfix">
-						<span class="direct-chat-name pull-right" id="msgSender"></span> 
-						<span class="direct-chat-timestamp pull-left" id="msgTime"></span>
-					</div>
-
-					<img class="direct-chat-img" src="${pageContext.request.contextPath }/resources/dist/img/user3-128x128.jpg" alt="Message User Image">
-					<div class="direct-chat-text" id="message"></div>
-				</div>
-
-
-			</div>
-
-		</div>
-
-		<div class="box-footer">
-			<div class="input-group">
-				<input type="text" id="messageinput" name="message" placeholder="Type Message ..." class="form-control"> 
-					<span class="input-group-btn">
-					<button onclick="send();" id="send" class="btn btn-primary btn-flat">Send</button>
-				</span>
-			</div>
-		</div>
-
-	</div>
-
-</div>
 <!--임시 채팅  -->
     
-    
-    
-    <script>
-    var sockJs;
-    function openSocket(){
-        if(sockJs!==undefined && sockJs.readyState!==WebSocket.CLOSED)
-        {
-            writeResponse("WebSocket is already opend.");
-            return;
-        } 
-        
-        //웹소켓 객체 만드는 코드
-        sockJs = new SockJS('ws://localhost:9090/challenge/echo');
-        
-        sockJs.onopen=function(event){
-            if(event.data===undefined) return;
-            writeResponse(event.data);
-        };
-        sockJs.onmessage=function(event){
-            writeResponse(event.data);
-        };
-        sockJs.onclose=function(event){
-            writeResponse("Connection closed");
-        }
-    }
-    function writeResponse(text){
-        message.innerHTML+="<br/>"+text;
-    }
-    </script>
-    <script type="text/javascript">
-	$(document).ready(function(){
-		$('#send').click(function(){
-			//$('#controllmsg').css('visibility','visible ');
-			$('#msgSender').html('ee');
-			$('#msgTime').html('${now}');
-			return;
+<script type="text/javascript">
+	$(document).ready(function() {
+		
+		$('#btnSend').on('click', function(evt) {
+			var currT = new Date().getHours() + ":" + new Date().getMinutes() + "  |  " + "Today";
+			var msg = $('#msg').val();
+			evt.preventDefault();
+			
+			var html = $("#nextMsg").html();
+			console.log("mmmmmmmmmmm>>>>", msg)
+			if (!isStomp && socket.readyState!== 1 ) return;
+				if(isStomp)			
+					socket.send("/TTT", {}, JSON.stringify({msg: msg}));
+				else
+					socket.send(msg);
+				
+			//protocol: RoomNum, 보내는id, 내용 
+			socket.send(${vo.cno} + "," + '${sessionId}' + "," + msg); 
+			html += '<div class="outgoing_msg">'
+						+ '<div class="sent_msg">'
+			            + '<p>'+msg+'</p>'
+			            + '<span class="time_date"> '+ currT +'</span></div></div>';
+			$("#nextMsg").html(html+"\n");
+			$("#msg").val("");
+			
+			console.log("ReceiveMessage:" + event.data+'\n');
 		});
+
 	});
+	
+	var cno = '${vo.cno}';
+	var socket = null;
+	var isStomp = false;
+    console.log("test");
+	connectSockJS();
+	
+	function connectSockJS(){
+		//STOMP Client
+		var sock = new SockJS('/echo'); // endpoint
+		var client = Stomp.over(sock);
+		isStomp = true;
+		socket = client;
+		
+		
+		console.log(client);
+		console.log(sock);
+		console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+		
+		client.connect({}, function(){
+			console.log("Connected stomp!");
+			client.send('/TTT', {}, JSON.stringify({msg: msg, cno:})); // 컨트롤러(MessageMapping), 
+			
+			// 해당 토픽을 구독한다!
+			client.subscribe('/topic/message', function(event){ // 컨트롤러(sendTo)
+				console.log('!!!!!!!!!!!!!!!!!!!!!!event>>', event);
+			});
+		});
+		
+		client.onopen = function () {
+	        console.log('Info: connection opened.');
+	        client.send("hi~");
+	    };
+	        
+	    client.onmessage = function (event) {
+			console.log("ReceiveMessage : ", event.data+'\n');
+        };
+        
+        client.onclose = function (event) {
+	            console.log('Info: connection closed.');
+        };
+
+	}	
+	
+	
 </script>
+
+  <div class="col-xs-12" style="margin-left: 10px; ">
+	 <div class="row">
+	  <h3 class=" text-center">${vo.c_title }</h3>
+	   <div class="messaging">
+	      <div class="inbox_msg">
+	        <div class="inbox_people">
+	          <div class="headind_srch">
+	            <div class="recent_heading">
+	              <h4>Recent</h4>
+	            </div>
+	          </div>
+	          <div class="inbox_chat">
+	            <div class="chat_list active_chat">
+	              <div class="chat_people">
+	                <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
+	                <div class="chat_ib">
+	                  <h5>보낸 사람 <span class="chat_date">날 짜</span></h5>
+	                  <p>Test, which is a new approach to have all solutions 
+	                    astrology under one roof.</p>
+	                </div>
+	              </div>
+	            </div>
+	            <div class="chat_list">
+	              <div class="chat_people">
+	                <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
+	                <div class="chat_ib">
+	                  <h5>Sunil Rajput <span class="chat_date">Dec 25</span></h5>
+	                  <p>Test, which is a new approach to have all solutions 
+	                    astrology under one roof.</p>
+	                </div>
+	              </div>
+	            </div>
+	          </div>
+	        </div>
+	        <div class="mesgs">
+	          <div class="msg_history">
+				<main class="chat">
+	            <div class="incoming_msg">
+	              <div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
+	              <div class="received_msg">
+	                <div class="received_withd_msg">
+	                  <p>Test which is a new approach to have all solutions</p>
+	                  <span class="time_date"> 11:01 AM    |    June 9</span></div>
+	              </div>
+	            </div>
+	            
+	            <div class="outgoing_msg">
+	              <div class="sent_msg">
+	                <p>Test which is a new approach to have all solutions</p>
+	                <span class="time_date"> 11:01 AM    |    June 9</span> </div>
+	            </div>
+	            
+	            <div class="incoming_msg">
+	              <div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
+	              <div class="received_msg">
+	                <div class="received_withd_msg">
+	                  <p>
+	              		ㅇㄹㅇㅇㅇㅇ
+	                  </p>
+	                  <span class="time_date"> 11:01 AM    |    Today</span></div>
+	              </div>
+	            </div>
+            <!-- 받은 메시지 -->
+				<div id="nextMsg"></div>
+			<!-- 받은 메시지 -->
+			</main>
+	          </div>
+	          <div class="type_msg">
+	            <div class="input_msg_write">
+	              <input type="text" class="msg" id="msg" placeholder="Type a message" />
+	              <button class="msg_send_btn" id="btnSend"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
+	            </div>
+	          </div>
+	        </div>
+	      </div>
+	      </div>
+
+
+
 </body>
 </html>

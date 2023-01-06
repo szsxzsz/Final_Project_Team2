@@ -112,17 +112,20 @@
 		where c.cno = #{cno};
 	</select>
 	
-	<!-- 저축형 챌린지 참여하기 -->
-	
+	<!-- 저축형 챌린지 참여 - plus테이블에 mno랑 cno insert -->
 	<insert id="joinplusInsert">
 		insert into plus(mno,cno) values(#{mno},#{cno});
 	</insert>
 	
+	<!-- 저축형 챌린지 참여 - challenge테이블 c_person에 ",닉네임" 업데이트하기 -->
 	<update id="joinplusUpdate1">
-		update challenge set c_person = concat(#{c_person},',',#{nick}) 
+		update challenge A inner join user B
+		on A.mno = B.mno
+		set c_person = concat(#{c_person},',',#{nick}) 
 		where cno =#{cno};
 	</update>
 	
+	<!-- 저축형 챌린지 참여 - challenge테이블 c_cnt에 +1하기 -->
 	<update id="joinplusUpdate2">
 		update challenge set(c_cnt) values(#{c_cnt}+1) 
 		where cno =#{cno};
@@ -135,16 +138,6 @@
 <!-- 		select c_person c_person,c_cnt c_cnt,mno mno,cno cno -->
 <!-- 		from dual; -->
 <!-- 	</insert> -->
-
-<!-- <update id="joinplus"> -->
-<!-- 	update challenge A inner join plus B -->
-<!-- 	on A.challenge = B.plus -->
-<!-- </update> -->
-
-<!-- UPDATE 테이블 A INNER JOIN 테이블 B -->
-<!-- ON A.조인할 컬럼명 = B.조인할 컬럼명 -->
-<!-- SET A.변경할 컬럼명 = 변경할값 -->
-<!-- ( WHERE 조건절 ) -->
 	
 	<!-- 챌린지 종료일자 정보 가져오기  -->
 	<select id="getChallengeEndDate" resultType="date">
@@ -171,7 +164,7 @@
 	
 	<!-- 게시판 글 수정 -->
 	<update id="updateBoard">
-		update board set b_title=#{b_title}, b_content=#{b_content}
+		update board set b_title=#{b_title}, b_content=#{b_content}, b_file=#{b_file}
 		where bno = #{bno}
 	</update>
 	
@@ -186,6 +179,29 @@
 		insert into board (b_title,b_content,b_writer,b_sort,b_file)
 		values (#{b_title},#{b_content},#{b_writer},#{b_sort},#{b_file})	
 	</insert>
+	
+		<!-- 챌린지 모인 꿀머니 -->
+	<select id="challengemoney" resultType="int">
+		select c_deposit * c_cnt 
+		from challenge
+		where cno = #{cno}
+	</select>
+		
+	<!-- 챌린지 실패/성공조건 데이터 조회 -->
+	<select id="result" resultType="map">
+		select *
+		from plus p right join challenge c on c.cno = p.cno left join minus m on m.cno = c.cno
+		where c.cno = #{cno}
+	</select>
+	
+	<!-- 챌린지 성공 인원 -->
+	<select id="success" resultType="Integer">
+		select count(m_finish) + count(pl_finish)
+		from plus p right join challenge c on c.cno = p.cno left join minus m on m.cno=c.cno
+		where c.cno = 2 and (pl_finish = 'Y' or m_finish = 'Y')
+	</select>
+	
+	
 	
 	<!-- 명예의 전당 순위 -->
 	<select id="ranking" resultType="com.chagok.domain.UserVO">

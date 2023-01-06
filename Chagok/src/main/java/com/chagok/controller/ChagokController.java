@@ -234,26 +234,5 @@ public class ChagokController {
       }
    }
    
-   // http://localhost:8080/refund
-   @GetMapping(value = "/refund")
-   public String refundPointGET() {
-	   mylog.debug("refundPointGET() 호출"); 
-	   
-	   return "/payment/refund";
-   }
-   
-   @PostMapping(value = "/refund")
-   public String refundPointPOST(Integer payno) {
-	   
-	   return null;
-   }
-   
-   	// http://localhost:8080/reply
-	@GetMapping(value = "/reply")
-	public String echoGET() throws Exception {
-
-		return "/chat/reply";
-	}
-	
 	
 }
