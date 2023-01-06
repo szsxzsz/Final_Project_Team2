@@ -7,7 +7,8 @@
   
   <!-- 가계부 목록 -->
   <select id="abookList" resultType="AbookVO">
-	select * from account_book as ab inner join category as c on ab.ctno=c.ctno
+	select * from account_book as ab inner join category as c on ab.ctno=c.ctno 
+	
   </select>
   
   <!-- 카테고리 목록 -->
@@ -15,18 +16,13 @@
   	select * from account_book as ab inner join category as ct on ab.ctno=ct.ctno
   </select>
   
-  <!-- 그리드 수정 -->
-  <insert id="abookUpdate">
-  	update into account_book set 
-  </insert>
-  
-  <!-- 가계부 저장 -->
-    <select id="setabookList" resultType="AbookVO">
-	update account_book as ab 
-	inner join category as c 
-	on on ab.ctno=c.ctno 
-	set abno=#{abno},ab_inout=#{ab_inout},ab_date=#{ab_date},ab_content=#{ab_content},ab_method=#{ab_method},ab_memo=#{ab_memo},ct_top=#{ct_top},ct_bottom=#{ct_top} 
-</select>
+
+  <!-- 가계부 저장(수정) -->
+    <update id="setAbookList">
+	update account_book set 
+	ab_inout=#{ab_inout},ab_date=#{ab_date},ab_content=#{ab_content},ab_method=#{ab_method},ab_memo=#{ab_memo},ctno=#{ctno} 
+	where abno=#{abno};
+	</update>
   
   
   
@@ -61,9 +57,12 @@
 	</select>
 	
 	<!-- 3. 예산 설정 -->
-	<insert id="setBud">
-		insert into plan 
-		values (#{pno}, #{mno}, #{p_month}, #{p_amount}, #{ctno});
+	<insert id="setBud" parameterType="map">
+		insert into plan (mno, p_month, p_amount, ctno)
+		values
+		<foreach item="i" collection="planlist" separator=",">
+			(#{i.mno}, #{i.p_month}, #{i.p_amount}, #{i.ctno})
+		</foreach>
 	</insert>
   
   </mapper>

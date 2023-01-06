@@ -29,7 +29,7 @@
 				<label for="sumpamt" class="col-sm-2 control-label">${pMonth }월 예산</label>
 				<div class="col-sm-10">
 					<input type="hidden" name="pMonth" value="${pMonth }">
-					<input type="text" class="form-control" id="sumpamt" name="sumpamt" placeholder="예산을 입력하세요" maxlength="10" onkeyup="inputNumFmt(this);">
+					<input type="text" class="form-control" id="sumpamt" placeholder="예산을 입력하세요" maxlength="10" onkeyup="inputNumFmt(this);">
 				</div>
 				<div class="col-sm-10">
 					<span>지난달 예산 : </span><span id="prevsum"></span><br>
@@ -46,15 +46,15 @@
 		</div>	
 			      
 		<c:forEach var="top" items="${ctTopList }" varStatus="status">
-			<c:set var="i" value="${status.index}"/>
+			<c:set var="i" value="${status.count}"/>
 			<div class="box-body">
 				<div class="form-group">
-					<label for="p_amount${status.index}" id="label${status.index }" class="col-sm-2 control-label">${top }</label>
+					<label for="pamt${i}" id="label${i}" class="col-sm-2 control-label">${top }</label>
 					<div class="col-sm-10">
-						<input type="hidden" name="ctno" value="${index }+1">
-						<input type="text" class="form-control" id="pamt${status.index}" name="p_amount" placeholder="예산을 입력하세요" maxlength="10" onkeyup="inputNumFmt(this);">
+						<input type="hidden" name="ctno${i}" value="${i}">
+						<input type="text" class="form-control" id="pamt${i}" name="p_amount${i}" placeholder="예산을 입력하세요" maxlength="10" onkeyup="inputNumFmt(this);">
 					</div>
-					<p class="col-sm-2 control-label">지난달 예산 <span id="prevamt${status.index}"></span> 원</p>
+					<p class="col-sm-2 control-label">지난달 예산 <span id="prevamt${i}"></span> 원</p>
 				</div>
 			</div>
 		</c:forEach>
@@ -111,7 +111,7 @@ $(document).ready(function(){
 				console.log('ajax 성공');
 				console.log(data);
 				$(data).each(function(index, item){
-					for(i=0; i<11; i++){
+					for(i=1; i<12; i++){
 						var b = $('#label'+i+'').text();
 						var top = item.ct_top;
 						var amp = item.p_amount;
@@ -121,7 +121,7 @@ $(document).ready(function(){
 						}
 					}
 				});
-				for(i=0; i<11; i++){
+				for(i=1; i<12; i++){
 					if($('#prevamt'+i+'').text()==''){
 						$('#prevamt'+i+'').text(''+0+'');
 					}
@@ -134,18 +134,18 @@ $(document).ready(function(){
 	});   //click
    
 	$('#copy').click(function(){
-		for(i=0; i<11; i++){
+		for(i=1; i<12; i++){
 			$('#pamt'+i+'').val($('#prevamt'+i+'').text());
 		}
 		$('#sumpamt').val($('#prevsum').text());
 	});
 	
 	$('#budform').submit(function() {
-
 		var a = 0;
-		var b = 0;	
+// 		var b = 0;	
 		var sum2 = 0;	
-		for(i=0; i<11; i++){
+		for(i=1; i<12; i++){
+			var b = $('#pamt'+i+'').val();
 			// 입력하지 않았을 때
 			if($('#pamt'+i+'').val()==''){
 				alert('예산을 입력하세요');
@@ -153,18 +153,23 @@ $(document).ready(function(){
 			} else {
 				// 총예산<카테고리별 예산의 합
 				a = Number($('#sumpamt').val().replace(/,/g, ""));		// 총예산(숫자)
-				b = Number($('#pamt'+i+'').val().replace(/,/g, ""));	// 카테고리별 예산(숫자)
+				b = Number(b.replace(/,/g, ""));	// 카테고리별 예산(숫자)
 				sum2=sum2+b;	// 카테고리별 예산의 합
 			}
 		}
 		console.log('sum2 : '+sum2);
 		if(sum2==a) {
 // 			alert('일치');
+			// 숫자로 변환 후 컨트롤러로 넘기기
+			for(i=1; i<12; i++){
+				var b = $('#pamt'+i+'').val();
+				$('#pamt'+i+'').val(b.replace(/,/g, ""));
+			}
 			return true;
 		} else if(sum2>a) {
 			 $('#textdiv').empty();
 			 if (confirm("카테고리별 예산의 합이 총 예산을 초과했습니다. 초과한 금액으로 등록하시겠습니까?") == true) {
-				 return true;
+// 				 return true;
 			 } else {
 			     return false;
 			 }

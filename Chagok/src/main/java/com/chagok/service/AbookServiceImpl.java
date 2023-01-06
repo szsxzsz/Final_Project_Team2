@@ -49,9 +49,9 @@ public class AbookServiceImpl implements AbookService{
 	}
 
 	@Override
-	public List<AbookVO> setAbookList(AbookVO vo) throws Exception {
+	public void setAbookList(AbookVO vo) throws Exception {
 		// TODO Auto-generated method stub
-		return dao.setAbookList(vo);
+		dao.setAbookList(vo);
 	}
 	
 	
@@ -86,6 +86,11 @@ public class AbookServiceImpl implements AbookService{
 	@Override
 	public List<Map<String, Object>> getBud(int mno, String pMonth) throws Exception {
 		return dao.getBud(mno, pMonth);
+	}
+
+	@Override
+	public void setBud(Map<String, Object> insertMap) {
+		dao.setBud(insertMap);
 	}
 	
 	

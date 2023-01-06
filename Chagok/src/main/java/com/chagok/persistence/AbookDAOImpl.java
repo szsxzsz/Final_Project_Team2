@@ -63,12 +63,11 @@ public class AbookDAOImpl implements AbookDAO{
 	}
 
 	@Override
-	public List<AbookVO> setAbookList(AbookVO vo) throws Exception {
+	public void setAbookList(AbookVO vo) throws Exception {
 		mylog.debug("Mapper♡♡♡♡♡♡♡♡♡♡♡♡♡"+vo);
 		
-	List<AbookVO> setAbookList = sqlSession.selectList(NAMESPACE+".setAbookList", vo);
+	sqlSession.update(NAMESPACE+".setAbookList", vo);
 	
-	return setAbookList;
 	}
 
 
@@ -105,6 +104,13 @@ public class AbookDAOImpl implements AbookDAO{
 		map.put("pMonth", pMonth);
 		return sqlSession.selectList(NAMESPACE+".getBud", map);
 	}
+	
+	@Override
+	public void setBud(Map<String, Object> insertMap) {
+		mylog.debug("insertMap : "+insertMap.toString());
+		sqlSession.insert(NAMESPACE+".setBud", insertMap);
+	}
+	
 	
 	
 	
