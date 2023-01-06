@@ -1,6 +1,7 @@
 package com.chagok.persistence;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -165,17 +166,6 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 		return CList;
 	}
 
-	// 저축형챌린지 참여
-	@Override
-	public void joinPlus(ChallengeVO vo) throws Exception {
-		mylog.debug(" joinPlus(ChallengeVO) 호출 ");
-		
-		sqlSession.insert(NAMESPACE);
-		
-		mylog.debug(" 저축형 챌린지 참여완료 ");
-
-	}
-
 	@Override
 	public Integer updateBoard(BoardVO vo) throws Exception {
 		
@@ -222,14 +212,30 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 	public Integer getSuccess(Integer cno) throws Exception {
 		Integer success = sqlSession.selectOne(NAMESPACE+".success", cno);
 		return success;
-	
 	}
-
+	// 저축형 챌린지 참여 - plus테이블에 mno랑 cno insert
 	@Override
 	public void joinplusInsert(PlusVO vo) {
-		// TODO Auto-generated method stub
-		
+		mylog.debug("joinplusInsert(PlusVO) 호출");
+		sqlSession.insert(NAMESPACE+".joinplusInsert", vo);
 	}
+	// 저축형 챌린지 참여 - challenge테이블 c_person에 ",닉네임" 업데이트하기
+	@Override
+	public void joinplusUpdate1(String nick, Integer cno) {
+		mylog.debug("joinplusUpdate1 호출 닉네임 업데이트");
+		Map map = new HashMap();
+		map.put("nick", nick);
+		map.put("cno", cno);
+		sqlSession.update(NAMESPACE+".joinplusUpdate1", map);
+	}
+	
+	// 저축형 챌린지 참여 - challenge테이블 c_cnt에 +1하기
+	@Override
+	public void joinplusUpdate2(Integer cno) {
+		mylog.debug("joinplusUpdate2(cno) 호출");
+		sqlSession.update(NAMESPACE+".joinplusUpdate2", cno);
+	}
+
 	
 	
 	

@@ -45,9 +45,10 @@ public interface ChallengeDAO {
 	public void joinplusInsert(PlusVO vo);
 	
 	// 저축형 챌린지 참여 - challenge테이블 c_person에 ",닉네임" 업데이트하기
-//	public void joinplusUpdate1();
+	public void joinplusUpdate1(String nick, Integer cno);
 	
 	// 저축형 챌린지 참여 - challenge테이블 c_cnt에 +1하기
+	public void joinplusUpdate2(Integer cno);
 	
 	// 게시판 글 조회
 	public BoardVO getBoardContent(Integer bno);
@@ -65,9 +66,6 @@ public interface ChallengeDAO {
 //	public void getCList(Integer cno) throws Exception;
 	public int getCList(Integer cno) throws Exception;
 
-	// 저축형 챌린지 참여하기
-	public void joinPlus(ChallengeVO vo) throws Exception;
-	
 	// 게시판 글 수정
 	public Integer updateBoard(BoardVO vo) throws Exception;
 
