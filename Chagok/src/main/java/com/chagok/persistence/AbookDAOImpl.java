@@ -106,6 +106,13 @@ public class AbookDAOImpl implements AbookDAO{
 		return sqlSession.selectList(NAMESPACE+".getBud", map);
 	}
 	
+	@Override
+	public void setBud(Map<String, Object> insertMap) {
+		mylog.debug("insertMap : "+insertMap.toString());
+		sqlSession.insert(NAMESPACE+".setBud", insertMap);
+	}
+	
+	
 	
 	
 	

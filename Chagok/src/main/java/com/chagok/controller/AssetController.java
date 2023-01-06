@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -241,8 +242,7 @@ public class AssetController {
 		ResponseTokenVO responseTokenVO = openBankingService.requestTokenCenter(requestTokenVO);
 		
 		// 정보를 들고 jsp 이동 (model 객체)
-		model.addAttribute("responseTokenVO", responseTokenVO);
-		
+		model.addAttribute("responseTokenVO", responseTokenVO); 
 		if (responseTokenVO != null) {
 			//////////////// 사용자 정보 조회 => DB(member 테이블)에 저장 ////////////////
 			UserInfoResponseVO userInfoResponseVO = openBankingService.getUserInfo(responseTokenVO);
@@ -671,7 +671,7 @@ public class AssetController {
 	
 	
 //	http://localhost:8080/asset/budget
-//	http://localhost:8080/asset/budget?mm=1
+//	http://localhost:8080/asset/budget?mm=0
 	@GetMapping(value = "/budget")
 	public String budget(@RequestParam("mm") int mm, HttpSession session, Model model) throws Exception {	
 		int mno = (int)session.getAttribute("mno");
@@ -717,13 +717,34 @@ public class AssetController {
 	}
 	
 	@PostMapping(value = "/budget")
-	public String budget(PlanVO pvo, HttpSession session) {
-		// vo : mno, pMonth, p_amount, ctno
+	public String budget(@RequestParam Map map, HttpSession session, Model model) {
 		int mno = (int)session.getAttribute("mno");
-		pvo.setMno(mno);
 		
-		mylog.debug("폼 등록");
-		return "";
+		// form data를 저장하는 List<Map>
+		List<Map<String, Object>> planlist = new ArrayList<Map<String,Object>>();
+		for(int i=1;i<12;i++) {
+			Map<String, Object> tmpmap = new HashMap<String, Object>();
+			
+			if(map.get("ctno"+i)!=null){
+				tmpmap.put("mno", mno);
+				tmpmap.put("p_month", map.get("pMonth"));
+				tmpmap.put("ctno", map.get("ctno"+i));
+				tmpmap.put("p_amount", map.get("p_amount"+i));
+				planlist.add(tmpmap);
+			}
+		}
+		mylog.debug(planlist.toString());
+		
+		// insert하기 위한 insertmap
+		Map<String, Object> insertMap = new HashMap<String, Object>();
+		insertMap.put("planlist", planlist);	// key값=collection의 value값
+		abService.setBud(insertMap);
+		
+		return "/asset/ybudget";
 	}
+	
+
+	
+	
 	///////////////////MJ////////////////////
 }

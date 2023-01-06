@@ -41,6 +41,7 @@ public interface AbookService {
 	// 2. 예산 조회
 	public List<Map<String, Object>> getBud(int mno, String pMonth) throws Exception;
 	
-	
+	// 3. 예산 설정
+	public void setBud(Map<String, Object> insertMap);
 	
 }

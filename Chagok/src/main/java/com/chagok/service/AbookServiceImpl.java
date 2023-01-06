@@ -87,6 +87,11 @@ public class AbookServiceImpl implements AbookService{
 	public List<Map<String, Object>> getBud(int mno, String pMonth) throws Exception {
 		return dao.getBud(mno, pMonth);
 	}
+
+	@Override
+	public void setBud(Map<String, Object> insertMap) {
+		dao.setBud(insertMap);
+	}
 	
 	
 }

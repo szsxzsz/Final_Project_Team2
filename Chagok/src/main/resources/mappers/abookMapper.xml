@@ -61,9 +61,12 @@
 	</select>
 	
 	<!-- 3. 예산 설정 -->
-	<insert id="setBud">
-		insert into plan 
-		values (#{pno}, #{mno}, #{p_month}, #{p_amount}, #{ctno});
+	<insert id="setBud" parameterType="map">
+		insert into plan (mno, p_month, p_amount, ctno)
+		values
+		<foreach item="i" collection="planlist" separator=",">
+			(#{i.mno}, #{i.p_month}, #{i.p_amount}, #{i.ctno})
+		</foreach>
 	</insert>
   
   </mapper>
