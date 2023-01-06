@@ -29,4 +29,22 @@
   		select * from account where mno = #{mno}
   	</select>
   	
+  	<select id="getBalanceAmt" resultType="com.chagok.apiDomain.AccountHistoryVO">
+  		select * from account_history where fintech_use_num = #{fintech_use_num} 
+  		order by tran_date DESC limit 1
+  	</select>
+  	
+	<update id="updateBalanceAmt">
+		update account set balance_amt = #{balance_amt}  
+		where fintech_use_num = #{fintech_use_num}
+	</update>
+	
+	<select id="getCardInfo" resultType="com.chagok.apiDomain.CardInfoVO">
+		select * from card where user_seq_no = #{user_seq_no}
+	</select>
+	  	
+	<select id="getCardHistory" resultType="com.chagok.apiDomain.CardHistoryVO">
+		select * from card_history where card_id = #{card_id}
+	</select>
+	
   </mapper>

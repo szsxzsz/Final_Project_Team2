@@ -41,7 +41,7 @@
 	<select id="getctTop" resultType="String">
 		select ct_top
 		from category
-		where ct_inout=1 and ct_lev=0;
+		where ct_inout=1 and ct_lev=0 and ctno != 12;
 	</select>
 	
 	<!-- 1. 예산 유무 -->
@@ -58,6 +58,12 @@
 		on p.ctno=ct.ctno
 		<include refid="wh1"/>
 		group by ct.ct_top;
-	</select> 
+	</select>
+	
+	<!-- 3. 예산 설정 -->
+	<insert id="setBud">
+		insert into plan 
+		values (#{pno}, #{mno}, #{p_month}, #{p_amount}, #{ctno});
+	</insert>
   
   </mapper>

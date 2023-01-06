@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="../include/header.jsp" %>
 <%@ include file="../include/sidebarAsset.jsp" %>
 	
@@ -12,12 +13,43 @@
 		} else {
 			return false;
 		}
-		
 	}
 </script>
 
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('#account_pa').click(function(){
+			if ($('#account_ch').css("display") == "block") {
+				$('#account_ch').css("display", "none");
+			} else {
+				$('#account_ch').css("display", "block");
+			}
+		});
+		
+		$('#card_pa').click(function(){
+			if ($('#card_ch').css("display") == "block") {
+				$('#card_ch').css("display", "none");
+			} else {
+				$('#card_ch').css("display", "block");
+			}
+		});
+		
+		$('#cash_pa').click(function(){
+			if ($('#cash_ch').css("display") == "block") {
+				$('#cash_ch').css("display", "none");
+			} else {
+				$('#cash_ch').css("display", "block");
+			}
+		});
+		
+		
+		
+	});
+
+</script>
+	
 	<c:if test="${userVO == null }">
-		<h1>로그인이 필요합니다!</h1>
+		<h1>로그인이 필요합니다 !</h1>
 	</c:if>
 	<c:if test="${userVO != null}">	
 	
@@ -54,98 +86,124 @@
 	</c:if>
 	
 	<c:if test="${userVO.isCheck.equals('Y') }">
+		
+		<!-- 계좌합 -->
+		<c:set var="accountSum" value="${0 }" />
+		<c:forEach var="sumVO1" items="${accountList }">
+				<c:set var="accountSum" value="${accountSum +  sumVO1.balance_amt}"></c:set>
+		</c:forEach>
 	
+		<!-- 카드합 -->
+		<c:set var="cardSum" value="${0 }"/>
+		<c:forEach items="${cardHistoryList }" var="cardHistoryList2">
+			<c:forEach items="${cardHistoryList2 }" var="cardHistoryVO">
+					<c:if test="${cardHistoryVO.card_tran_date.substring(0,6).equals(now_date) }">
+						<c:set var="cardSum" value="${cardSum + cardHistoryVO.card_tran_amt }"/>
+					</c:if>
+			</c:forEach>
+		</c:forEach>
+		
+		<!-- 현금합 -->
+		
+	
+		<!-- 전체 순자산 (계좌합 - 카드값 + 현금) -->	
 		<div style="margin: 50px 0 0 100px;">
-			<h1>내 자산</h1>
-			<h2>${userVO.nick } 님의 순자산은 : 10,000,000,000 원 입니다!</h2>
+			<h1>📌 내 자산</h1>
+			<h2> 💎 ${userVO.nick } 님의 순자산은 : <fmt:formatNumber value="${accountSum - cardSum }"/> 원 입니다 💎 </h2>
 		</div>
-	
-	
-	
 	
 		<div style="margin: 50px 100px 0 80px;">
 		
-			<div class="info-box bg-yellow" style="margin-bottom: 1px;">
+		
+			<!-- 계좌 출력 -->
+			<div class="info-box bg-yellow" style="margin-bottom: 1px;" id="account_pa" >
 				<span class="info-box-icon">
 					<i class="fa fa-bank"></i>
 				</span>
 				<div class="info-box-content" style="padding-top: 15px">
 					<span class="info-box-text" style="font-size: 3em; margin-left: 20px; display: inline;">계 좌</span> 
-					<span class="info-box-text" style="font-size: 3em; margin-left: 200px; display: inline;">총 300,000,000 원</span> 
+					<span class="info-box-text" style="font-size: 3em; margin-left: 200px; display: inline;">총 <fmt:formatNumber value="${accountSum }"/>  원</span> 
 				</div>
 			</div>
 			
+			<div id="account_ch" style="display: none;">
 			<c:forEach var="vo" items="${accountList }">
-				<div class="info-box" style="margin: 0 0 1px 30px; width: 95%">
+				<div class="info-box" style="margin: 0 0 1px 30px; width: 95%;">
 					<span class="info-box-icon">
 						<i class="fa fa-bank"></i>
 					</span>
 					<div class="info-box-content" style="padding-top: 15px;">
 						<span class="info-box-text" style="font-size: 3em; margin-left: 20px; display: inline;">${vo.account_alias }</span> 
-						<span class="info-box-text" style="font-size: 3em; margin-left: 200px; display: inline;">총 ${vo.balance_amt } 원</span> 
+						<span class="info-box-text" style="font-size: 3em; margin-left: 200px; display: inline;">총 <fmt:formatNumber value="${vo.balance_amt }"/> 원</span> 
 						<span class="info-box-text" style="font-size: 3em; margin-left: 200px; display: inline;">${vo.account_num_masked }</span> 
 					</div>
 				</div>
 			</c:forEach>
-
-
-			<div class="info-box bg-yellow" style="margin-top: 50px; margin-bottom: 1px;">
+			</div>
+			
+			
+			<!-- 카드 출력 -->
+			<div class="info-box bg-yellow" style="margin-top: 50px; margin-bottom: 1px;" id="card_pa">
 				<span class="info-box-icon">
 					<i class="fa fa-credit-card"></i>
 				</span>
 				<div class="info-box-content" style="padding-top: 15px">
 					<span class="info-box-text" style="font-size: 3em; margin-left: 20px; display: inline;">카 드</span> 
-					<span class="info-box-text" style="font-size: 3em; margin-left: 200px; display: inline;">총 100,000,000 원</span> 
+					<span class="info-box-text" style="font-size: 3em; margin-left: 200px; display: inline;">이번달 카드 값 : <fmt:formatNumber value="${cardSum }"/> 원</span> 
 				</div>
 			</div>
-
-				<div class="info-box" style="margin: 0 0 1px 30px; width: 95%">
-					<span class="info-box-icon">
-						<i class="fa fa-credit-card"></i>
-					</span>
-					<div class="info-box-content" style="padding-top: 15px;">
-						<span class="info-box-text" style="font-size: 3em; margin-left: 20px; display: inline;">카 드</span> 
-						<span class="info-box-text" style="font-size: 3em; margin-left: 200px; display: inline;">총 300,000,000 원</span> 
-					</div>
-				</div>
-				<div class="info-box" style="margin: 0 0 1px 30px; width: 95%">
-					<span class="info-box-icon">
-						<i class="fa fa-credit-card"></i>
-					</span>
-					<div class="info-box-content" style="padding-top: 15px">
-						<span class="info-box-text" style="font-size: 3em; margin-left: 20px; display: inline;">카 드</span> 
-						<span class="info-box-text" style="font-size: 3em; margin-left: 200px; display: inline;">총 300,000,000 원</span> 
-					</div>
-				</div>
 			
-			<div class="info-box bg-yellow" style="margin-top: 50px; margin-bottom: 1px;">
+			<div id="card_ch" style="display: none;">
+			
+			<c:set var="cardIDX" value="${0 }"></c:set>
+			<c:forEach items="${cardList }" var="cardVO" >
+				
+				<!-- 카드별 합계 구하기 -->
+				<c:set var="cardPartSum" value="${0}"/>
+				<c:forEach var="cardHistoryVO" items="${cardHistoryList.get(cardIDX) }">
+					<c:if test="${cardHistoryVO.card_tran_date.substring(0,6).equals(now_date) }">
+						<c:set var="cardPartSum" value="${cardPartSum+cardHistoryVO.card_tran_amt}"/>
+					</c:if>
+				</c:forEach>
+				
+					<div class="info-box" style="margin: 0 0 1px 30px; width: 95%">
+						<span class="info-box-icon">
+							<i class="fa fa-credit-card"></i>
+						</span>
+						<div class="info-box-content" style="padding-top: 15px;">
+							<span class="info-box-text" style="font-size: 3em; margin-left: 20px; display: inline;">${cardVO.card_name }</span> 
+							<span class="info-box-text" style="font-size: 3em; margin-left: 200px; display: inline;">총 ${cardPartSum } 원</span> 
+							<span class="info-box-text" style="font-size: 3em; margin-left: 200px; display: inline;">${cardVO.card_num_masked }</span> 
+						</div>
+					</div>
+				<c:set var="cardIDX" value="${cardIDX+1}"/>
+			</c:forEach>
+			</div>
+			
+			
+			<!-- 현금 출력 -->
+			<div class="info-box bg-yellow" style="margin-top: 50px; margin-bottom: 1px;" id="cash_pa">
 				<span class="info-box-icon">
 					<i class="fa fa-database"></i>
 				</span>
 				<div class="info-box-content" style="padding-top: 15px">
 					<span class="info-box-text" style="font-size: 3em; margin-left: 20px; display: inline;">현 금</span> 
-					<span class="info-box-text" style="font-size: 3em; margin-left: 200px; display: inline;">총 700,000,000 원</span> 
+					<span class="info-box-text" style="font-size: 3em; margin-left: 200px; display: inline;">총 0 원</span> 
 				</div>
 			</div>
-
+			
+			<div id="cash_ch" style="display: none;">
 				<div class="info-box" style="margin: 0 0 1px 30px; width: 95%">
 					<span class="info-box-icon">
 						<i class="fa fa-database"></i>
 					</span>
 					<div class="info-box-content" style="padding-top: 15px;">
 						<span class="info-box-text" style="font-size: 3em; margin-left: 20px; display: inline;">현 금</span> 
-						<span class="info-box-text" style="font-size: 3em; margin-left: 200px; display: inline;">총 300,000,000 원</span> 
+						<span class="info-box-text" style="font-size: 3em; margin-left: 200px; display: inline;">총 0 원</span> 
 					</div>
 				</div>
-				<div class="info-box" style="margin: 0 0 1px 30px; width: 95%">
-					<span class="info-box-icon">
-						<i class="fa fa-database"></i>
-					</span>
-					<div class="info-box-content" style="padding-top: 15px">
-						<span class="info-box-text" style="font-size: 3em; margin-left: 20px; display: inline;">현 금</span> 
-						<span class="info-box-text" style="font-size: 3em; margin-left: 200px; display: inline;">총 300,000,000 원</span> 
-					</div>
-				</div>		
+			</div>
+					
 		</div>
 	</c:if>
 	

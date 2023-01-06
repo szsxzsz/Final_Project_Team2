@@ -16,67 +16,91 @@
 <h3>예산은 효율적이고 계획적인 소비 습관 생성에 도움이 됩니다.</h3>
 
 <div id="div1">
-	<input type="button" id="setbud" class="btn btn-block btn-success btn-lg" style="width: 200px; margin: 20px 40px" value="한 달 예산 세우기">	
+	<input type="button" id="setbud" class="btn btn-block btn-success btn-lg" 
+	style="width: 200px; margin: 20px 40px" value="한 달 예산 세우기">   
 </div>
 
 <div id="div2">
-	<form action="">
+	<div class="box box-info">
+	<form class="form-horizontal" id="budform" method="post">
 		<c:set var="mm" value="${param.mm }"/>
-		<h3>${pMonth }월 예산</h3>
-		<input type="text" name="totalbud">
-		<h4>최근 3개월 간 평균 지출 1,000,000</h4>
-		<h4>지난달 예산 500,000</h4>
-
-		<div class="box box-info">
-			<div class="box-header with-border">
-				<h3 class="box-title">Horizontal Form</h3>
+		<div class="box-body">
+			<div class="form-group">
+				<label for="sumpamt" class="col-sm-2 control-label">${pMonth }월 예산</label>
+				<div class="col-sm-10">
+					<input type="hidden" name="pMonth" value="${pMonth }">
+					<input type="text" class="form-control" id="sumpamt" name="sumpamt" placeholder="예산을 입력하세요" maxlength="10" onkeyup="inputNumFmt(this);">
+				</div>
+				<div class="col-sm-10">
+					<span>지난달 예산 : </span><span id="prevsum"></span><br>
+					<span>최근 3개월 간 평균 지출 : </span><span id="prevavg"></span>
+				</div>
 			</div>
-			
-				
-			<form class="form-horizontal">
-			<c:forEach var="top" items="${ctTopList }">
-				<div class="box-body">
-					<div class="form-group">
-<!-- 						<label for="inputEmail3" class="col-sm-2 control-label">Email</label> -->
-						<label class="col-sm-2 control-label">${top }</label>
-						<div class="col-sm-10">
-							<input type="text" class="form-control" id="inputEmail3" placeholder="예산을 입력하세요">
-						</div>
-						<p class="help-block">지난달 예산 100,000</p>
-					</div>
-				</div>
-			</c:forEach>
-
-				<div class="box-footer">
-					<button type="submit" class="btn btn-info pull-right">Sign</button>
-					<button type="button" id="copy" class="btn btn-info pull-right">지난달 예산 복사하기</button>
-				</div>
-			</form>
 		</div>
-
+		
+		<div id="textdiv"></div>
+		
+		<div class="box-footer">
+			<input type="submit" class="btn btn-info pull-right" value="등록하기"/>
+			<button type="button" id="copy" class="btn btn-info pull-right">지난달 예산 복사하기</button>
+		</div>	
+			      
+		<c:forEach var="top" items="${ctTopList }" varStatus="status">
+			<c:set var="i" value="${status.index}"/>
+			<div class="box-body">
+				<div class="form-group">
+					<label for="p_amount${status.index}" id="label${status.index }" class="col-sm-2 control-label">${top }</label>
+					<div class="col-sm-10">
+						<input type="hidden" name="ctno" value="${index }+1">
+						<input type="text" class="form-control" id="pamt${status.index}" name="p_amount" placeholder="예산을 입력하세요" maxlength="10" onkeyup="inputNumFmt(this);">
+					</div>
+					<p class="col-sm-2 control-label">지난달 예산 <span id="prevamt${status.index}"></span> 원</p>
+				</div>
+			</div>
+		</c:forEach>
+		
 	</form>
+</div>
 </div>
 
 
-<!-- jQuery -->
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.min.js"></script>
-<!-- ajax -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css" >
-<script src="//ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-
+<!-- jQuery.number -->
+<script src="/resources/js/jquery.number.min.js"></script>
 
 <script type="text/javascript">
+    function comma(str) {
+        str = String(str);
+        return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
+    }
+
+    function uncomma(str) {
+        str = String(str);
+        return str.replace(/[^\d]+/g, '');
+    } 
+    
+    function inputNumFmt(obj) {
+        obj.value = comma(uncomma(obj.value));
+    }
+    
+    function inputOnlyNumFmt(obj) {
+        obj.value = onlynumber(uncomma(obj.value));
+    }
+    
+    function onlynumber(str) {
+	    str = String(str);
+	    return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g,'$1');
+	}
+</script>
+
+<script type="text/javascript">
+
 $(document).ready(function(){
-	
+	var sum = 0;
 	$('#div2').hide();
 	
 	$('#setbud').click(function(){
 		$('#div1').hide();
 		$('#div2').show();
-	});
-	
-	$('#copy').click(function(){
-		console.log('ajax 시작');
 		var mm = ${mm};
 		$.ajax({
 			type : "post",
@@ -86,25 +110,69 @@ $(document).ready(function(){
 			success : function(data) {
 				console.log('ajax 성공');
 				console.log(data);
-// 				if(data.length==0){
-// 					console.log('예산 없음');
-// 				} else {
-// 					for(var i=0;i<data.length;i++){
-// 						var budList = data[i];
-// 						for(var key in budList){
-// 							$(budList[key]).each(function(){
-// 								console.log(this.ct_top);
-// 								console.log(this.ct_amount);
-// 							})
-// 						}
-// 					}
-// 				}
+				$(data).each(function(index, item){
+					for(i=0; i<11; i++){
+						var b = $('#label'+i+'').text();
+						var top = item.ct_top;
+						var amp = item.p_amount;
+						if(b==top){
+							$('#prevamt'+i+'').text(''+$.number(amp)+'');
+							sum+=amp;
+						}
+					}
+				});
+				for(i=0; i<11; i++){
+					if($('#prevamt'+i+'').text()==''){
+						$('#prevamt'+i+'').text(''+0+'');
+					}
+				}
+				$('#prevsum').text($.number(sum));
 			}, error : function(data){
 				console.log('ajax 오류');
 			}
-		});	//ajax
+		});   //ajax
+	});   //click
+   
+	$('#copy').click(function(){
+		for(i=0; i<11; i++){
+			$('#pamt'+i+'').val($('#prevamt'+i+'').text());
+		}
+		$('#sumpamt').val($('#prevsum').text());
 	});
+	
+	$('#budform').submit(function() {
 
+		var a = 0;
+		var b = 0;	
+		var sum2 = 0;	
+		for(i=0; i<11; i++){
+			// 입력하지 않았을 때
+			if($('#pamt'+i+'').val()==''){
+				alert('예산을 입력하세요');
+				return false;
+			} else {
+				// 총예산<카테고리별 예산의 합
+				a = Number($('#sumpamt').val().replace(/,/g, ""));		// 총예산(숫자)
+				b = Number($('#pamt'+i+'').val().replace(/,/g, ""));	// 카테고리별 예산(숫자)
+				sum2=sum2+b;	// 카테고리별 예산의 합
+			}
+		}
+		console.log('sum2 : '+sum2);
+		if(sum2==a) {
+// 			alert('일치');
+			return true;
+		} else if(sum2>a) {
+			 $('#textdiv').empty();
+			 if (confirm("카테고리별 예산의 합이 총 예산을 초과했습니다. 초과한 금액으로 등록하시겠습니까?") == true) {
+				 return true;
+			 } else {
+			     return false;
+			 }
+		} else if(sum2<a) {
+			$('#textdiv').html("카테고리별 예산의 합이 총 예산보다 적어요. 모든 금액을 분배해주세요.");
+			return false;
+		}
+	});
 });
 
 </script>
