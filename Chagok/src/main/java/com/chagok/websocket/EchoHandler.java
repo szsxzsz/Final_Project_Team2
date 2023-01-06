@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
@@ -20,6 +21,7 @@ import com.chagok.domain.SysLogVO;
 import com.chagok.domain.UserVO;
 import com.chagok.interceptor.SessionNames;
 
+@Profile("!stomp")
 @Component
 public class EchoHandler extends TextWebSocketHandler {
 	// 접속하고 있는 모든 세션

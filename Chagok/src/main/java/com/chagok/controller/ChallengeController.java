@@ -311,7 +311,7 @@ public class ChallengeController {
 			
 			String nick = (String)session.getAttribute("nick");
 			
-			if(nick == null) {
+			if(nick != null) {
 				List<ChallengeVO> mychallengeList = service.getmyChallenge(nick);
 				model.addAttribute("mychallengeList", mychallengeList);
 			}
@@ -477,21 +477,18 @@ public class ChallengeController {
 		return "/challenge/freeboard";
 	}
 	
-	// 자유게시판 글 작성
-	// http://localhost:8080/challenge/free?b_sort=3
-	@GetMapping(value = "/free")
-	public String freeGET(@RequestParam("b_sort") int b_sort, Model model, HttpSession session) throws Exception {
+	// 자유게시판 글 작성 GET
+	// http://localhost:8080/challenge/freeboardwrite
+	@GetMapping(value = "/freeboardwrite")
+	public void freeboardwriteGET() throws Exception {
+		mylog.debug(" freeboardwriteGET 호출");
+		
 
-		mylog.debug(b_sort + "");
-
-		model.addAttribute("free", service.getChallengeInfo(b_sort));
-
-		return "/challenge/freeboardwrite";
 	}
-
-	@PostMapping(value = "/free")
-	public String freePOST(BoardVO vo, RedirectAttributes rttr) throws Exception {
-		mylog.debug(" freePOST 호출");
+	// 자유게시판 글 작성 POST
+	@PostMapping(value = "/freeboardwrite")
+	public String freeboardwritePOST(BoardVO vo, RedirectAttributes rttr) throws Exception {
+		mylog.debug(" freeboardwritePOST 호출");
 
 		mylog.debug(vo + "");
 
@@ -501,7 +498,7 @@ public class ChallengeController {
 
 		rttr.addFlashAttribute("result", "createOK");
 
-		return "redirect:/challenge/freeboardwrite";
+		return "redirect:/challenge/freeboard";
 	}
 	
 	// 자유 게시판 삭제
@@ -548,6 +545,7 @@ public class ChallengeController {
 	}
 			
 	// 후기 글 삭제하기
+	// http://localhost:8080/challenge/reviewremove?bno=4
 	@PostMapping(value = "/reviewremove")
 	public String reviewremovePOST(int bno,RedirectAttributes rttr) throws Exception{
 		mylog.debug(bno+"");
@@ -561,16 +559,11 @@ public class ChallengeController {
 	}
 	
 	// 공지 글 작성하기
+	// http://localhost:8080/challenge/noticewrite
 	@GetMapping(value = "/noticewrite")
-	public void noticewriteGET(BoardVO vo, Model model, HttpSession session,RedirectAttributes rttr) throws Exception {
+	public void noticewriteGET() throws Exception {
 		
 		mylog.debug(" noticewriteGET 호출");
-		
-		mylog.debug(vo+"");
-		
-		
-		rttr.addFlashAttribute("result", "createOK");
-		
 		
 	}
 	
@@ -590,6 +583,7 @@ public class ChallengeController {
 	}
 	
 	// 공지 글 수정하기
+	// http://localhost:8080/challenge/noticeupdate?bno=
 	@GetMapping(value = "/noticeupdate")
 	public void noticeupdateGET(@RequestParam("bno") int bno, Model model, HttpSession session) throws Exception{
 		mylog.debug(" reviewupdate 호출");
@@ -624,6 +618,7 @@ public class ChallengeController {
 	
 	
 	// 공지 글 삭제하기
+	// http://localhost:8080/challenge/noticedelete?bno=
 	@PostMapping(value = "/noticedelete")
 	public String noticedeleteGET(int bno,RedirectAttributes rttr) throws Exception {
 		mylog.debug(bno+"");

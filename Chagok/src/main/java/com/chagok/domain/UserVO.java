@@ -20,7 +20,7 @@ public class UserVO {
 	private String raccount;
 	private int buypoint;
 	private int getpoint;
-	private int success;
+	private int success_cnt;
 	private String isCheck;
 	private String sub;
 	private String isBen;

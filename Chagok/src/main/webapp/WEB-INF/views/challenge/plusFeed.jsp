@@ -10,12 +10,17 @@
 
 <script type="text/javascript">
 	$(document).ready(function() {
+		connectSockJS();
+		var currT = new Date().getHours() + ":" + new Date().getMinutes() + "  |  " + "Today";
 		
-		$('#btnSend').on('click', function(evt) {
+		$('#btnSend').on('click', function(event) {
+			
+			
 			var currT = new Date().getHours() + ":" + new Date().getMinutes() + "  |  " + "Today";
 			var msg = $('#msg').val();
 			
-			evt.preventDefault();
+			//console.log("hjjjhgjhgj",socket);
+			event.preventDefault();
 			
 			
 			var msg2 = $('.received_withd_msg p').text();
@@ -27,33 +32,44 @@
 			
 			var html = $("#nextMsg").html();
 			console.log("mmmmmmmmmmm>>>>", msg);
+			console.log("isStompmmmmm>>>>", isStomp);
 			
 			if (!isStomp && socket.readyState!== 1 ) return;
 				if(isStomp)			
-					socket.send("/TTT", {}, JSON.stringify({msg: msg}));
+					socket.send('/user/'+cno , {}, JSON.stringify({"mno": mno, "msg" : msg}));
 				else
 					socket.send(msg);
 				
 			//protocol: RoomNum, 보내는id, 내용 
-			socket.send(${vo.cno} + "," + '${sessionId}' + "," + msg); 
-			html += '<div class="outgoing_msg">'
-						+ '<div class="sent_msg">'
-			            + '<p>'+msg+'</p>'
-			            + '<span class="time_date"> '+ currT +'</span></div></div>';
+			//socket.send( ${vo.cno} + "," + '${sessionId}' + "," + msg); 
+			if(mno == ${mno} ){
+				html += '<div class="outgoing_msg">'
+							+ '<div class="sent_msg">'
+				            + '<p>'+msg+'</p>'
+				            + '<span class="time_date"> '+ currT +'</span></div></div>';
+				
+			}else {
+				html += '<div class="incoming_msg">'
+						+ '<div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>'
+						+ '<div class="received_msg"> <div class="received_withd_msg">'
+						+ '<p>'+msg+'</p>'
+						+ '<span class="time_date">'+currT+'</span></div></div>'
+			}
+				
 			$("#nextMsg").html(html+"\n");
 			$("#msg").val("");
 			
-		
 			console.log("ReceiveMessage:" + event.data+'\n');
+			console.log("ReceiveMessage:" + event+'\n');
 		});
 
 	});
 	
-	
 	var socket = null;
 	var isStomp = false;
-    console.log("test");
-	connectSockJS();
+	var mno = ${mno};
+	var cno = ${vo.cno};
+	var currT;
 	
 	function connectSockJS(){
 		//STOMP Client
@@ -62,25 +78,30 @@
 		isStomp = true;
 		socket = client;
 		
+// 		console.log(client);
+// 		console.log(sock);
+// 		console.log(socket);
+// 		console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 		
-		console.log(client);
-		console.log(sock);
-		console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-		
-		client.connect({}, function(){
+		client.connect({}, function(frame){
 			console.log("Connected stomp!");
-			client.send('/TTT', {}, JSON.stringify({msg: msg})); // 컨트롤러(MessageMapping), 
+			//client.send('/user', {}, JSON.stringify({"cno": cno})); // 컨트롤러(MessageMapping), 
+			console.log("Connected : " + frame);
+			loadChat(chatList);
+			
 			
 			// 해당 토픽을 구독한다!
-			client.subscribe('/topic/message', function(event){ // 컨트롤러(sendTo)
+			client.subscribe('/topic/feed/'+cno, function(event){ // 컨트롤러(sendTo)
 				console.log('!!!!!!!!!!!!!!!!!!!!!!event>>', event);
+				showChat(JSON.parse(event.body));
 			});
 		});
-		
+
 		client.onopen = function () {
 	        console.log('Info: connection opened.');
 	        client.send("hi~");
 	    };
+			
 	        
 	    client.onmessage = function (event) {
 			console.log("ReceiveMessage : ", event.data+'\n');
@@ -92,254 +113,13 @@
 
 	}	
 	
-	
+	function showChat(chatMessage){
+		//$('#nextMsg').append(chatMessage.);
+	}
 </script>
 
-
-
-
-<!-- <script type="text/javascript"> -->
-// 	$(document).ready(function() {
-// // 		var socket;
-// // 		listPage(1, '${board.bno}'); 
-// // 		gBno = '${board.bno}';
-// // 		gBoardWriter = '${board.writer}';
-		
-// 		$('#btnSend').on('click', function(evt) {
-			
-// 			console.log("3333333333333333333333");
-// 			var currT = new Date().getHours() + ":" + new Date().getMinutes() + "  |  " + "Today";
-// 			var msg = $('#msg').val();
-// 			console.log(msg);			
-// 			evt.preventDefault();
-// 			console.log("444444444444444444444444444");
-			
-// 			var html = $("#nextMsg").html();
-// // 			alert(socket.readyState);
-// 			if (!isStomp && socket.readyState!== 1 ) return;
-// 			console.log("555555555555555555555555555");
-// 				if(isStomp)			
-// // 					socket.send('/TTT',{}, msg);
-// 			console.log("aaaaaaaaaaaaaaaaaaaaa");
-// 					socket.send('/TTT',{}, JSON.stringify({msg: msg}));
-// 				else
-// 			console.log("bbbbbbbbbbbbbbbbbbbbbbb");
-// 					socket.send(msg);
-// 			console.log("66666666666666666666666666666");
-// 			//protocol: RoomNum, 보내는id, 내용 
-// 			socket.send(${vo.cno} + "," + '${sessionId}' + "," + msg); 
-// 			html += '<div class="outgoing_msg">'
-// 						+ '<div class="sent_msg">'
-// 			            + '<p>'+msg+'</p>'
-// 			            + '<span class="time_date"> '+ currT +'</span></div></div>';
-// 			$("#nextMsg").html(html+"\n");
-// 			$("#msg").val("");
-// 			console.log("ReceiveMessage:" + event.data+'\n');
-// 		});
-
-// 		$('#wsClose').on('click', function(e) {
-// 			socket.onclose();
-			
-// 		});
-		
-// 	});
-<!-- </script> -->
-<!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"> -->
-<!-- <script type="text/javascript"> -->
-	
-// 	var socket = null;
-// 	var isStomp = false;
-// 	    alert("tetst");
-// 	    console.log("tetst");
-// 	//connect();
-// 	connectSockJS();
-// // 	connectStomp();
-	
-// 	function connectStomp(){
-// 		var sock = new SockJS('/challenge/plusFeed');// endpoint
-// 		var client = Stomp.over(sock);
-// 		isStomp = true;
-// 		socket = client;
-		
-		
-// 		 console.log(sock);
-// 		 console.log(client);
-// 		 console.log("222222222222222222222222222");
-		
-// 	}
-		
-// 	function connectSockJS(){
-// 		//STOMP Client
-// 		//var sock = new SockJS('/plusFeed?cno=2'); // endpoint
-// 		var sock = new SockJS('/challenge/plusFeed');
-// // 		socket = sock;
-// 		var client = Stomp.over(sock);
-// 		isStomp = true;
-// 		socket = client;
-		
-		
-// 		 console.log(sock);
-// 		 console.log(client);
-		
-// 		client.connect({}, function(){
-// 			console.log("Connected stomp!")
-// 			client.send('/TTT', {}, "msg: Haha~~!!"); // 컨트롤러(MessageMapping), 
-			
-// 			// 해당 토픽을 구독한다!
-// 			client.subscribe('/topic/message', function(event){ // 컨트롤러(sendTo)
-// 				console.log('!!!!!!!!!!!!!!!!!!!!!!event>>', event);
-// 			});
-// 		});
-// 		sock.onopen = function (){
-// 	        console.log('Info: connection opened.');
-// 	        sock.send("hi~");
-// 	        socket = sock;
-// 	        sock.onmessage = function (event) {
-// 		console.log("ReceiveMessage : ",event.data+'\n');
-// 	        };
-	        
-// 	     sock.onclose = function (event) {
-// 	            console.log('Info: connection closed.');
-// 	        };
-// 	    };
-
-// 	}
-	
-// 	function connect(){
-// 		if(sock!==undefined && sock.readyState!==WebSocket.CLOSED)
-// 	    {
-// 	        writeResponse("WebSocket is already opend.");
-// 	        return;
-// 	    } 
-// 	    //웹소켓 객체 만드는 코드
-// // 	     sock = new SockJS('http://localhost:8080/challenge/plusfeed');
-// 	   	 sock = new SockJS("http://localhost:8080/challenge/plusFeed");
-//    		console.log(sock);
-// 	     stompClient = Stomp.over(sock);
-// 		 stompClient.connect({}, function(frame){
-// 	 	    	console.log('conneted : ' +frame);
-// 	 	    	stompClient.subscribe('/queue/chat/room/plusFeed', function(response){
-// 	 	    		console.log(response);
-// 	 	    		console.log(JSON.parse(response.body));
-// 	 	    	});
-// 	 	    });
-// 		 	sock.onopen=function(event){
-// 	 	        if(event.data===undefined) return;
-// 	 	        writeResponse(event.data);
-// 	 	    };
-// 	 	   	sock.onmessage=function(event){
-// 	 	        writeResponse(event.data);
-// 	 	    };
-// 	 	   	sock.onclose=function(event){
-// 	 	        writeResponse("Connection closed");
-// 	 	    }
-		 
-// 	     sock.onopen = function() {
-// 		     console.log('open');
-// 		     console.log('${nick}' );
-// 		     sock.send( ${vo.cno} + "," + ${loginUser.nick} + ",ENTER"); 
-// 		     console.log( ${vo.cno} + "," + ${loginUser.nick} + ",ENTER");
-// 		 };
-		 
-// 		 // 메시지 작성 부분
-// 		 sock.onmessage = function(e){
-// 			var sm = e.data;
-// 			var sl = sm.split(',');
-// 			var sendId = sl[0];
-// 			var content = sl[1];
-// 			var html = $('#nextMsg').html();
-// 			if(content == "ENTER"){
-// 				html += "<div class='enter'>" + sendId + "님이 들어오셨습니다.</div>"; 
-// 			} else if(content == "OUT") {
-// 				html += "<div class='enter'>" + sendId + "님이 나가셨습니다.</div>"; 
-// 			} else if(sendId != '${sessionId}'){
-// 				var currT = new Date().getHours() + ":" + new Date().getMinutes(); 
-							
-// 				html += '<div class="incoming_msg">'
-// 						+ ' <div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>'
-// 			            + '<div class="received_msg"> <div class="received_withd_msg"><p>'+conent+'</p>'
-// 			            + '<span class="time_date"> '+ currT +'</span></div></div></div>';
-// 			}
-// 			$('#nextMsg').html(html);
-
-// 			console.log("ReceiveMessage: " + content+'\n');
-			
-// 		 };
-		 
-// 		 sock.onclose = function(event) {
-// 		     console.log('close');
-// 		 };
-		 
-// 		 sock.onerror = function(err){ console.log('Error : ', err );};
-		 
-// 	}
-	
-// 	function writeResponse(){
-// 		sock.onmessage = function(e) {
-// 		     console.log('message', e.data);
-// 		     sock.close();
-// 		 };
-// 	}
-	
-// 	function closeSocket(){
-// 		sock.onclose = function() {
-// 		     console.log('close');
-// 		 };
-// 	}
-	
-// 	function save(){
-// 		var jsonData = getValiData( $('#'),$(''));
-// 		if(!jsonData) return;
-		
-// 		var url = gIsEdit ? "/replies/"+gRno : "/replies",
-// 				method = gIsEdit ? 'PATCH' : 'POST';
-		
-// 		console.debug("QQQ >>>", gIsEdit, gBno);
-// 		if(!gIsEdit)
-// 			jsonData.bno = gBno;
-		
-// 		sendAjax(url, (isSuccess, res) => {
-// 			if(isSucess){
-// 				var resultMsg = gIsEdit ? gRn + "번 댓글이 수정되었습니다." : "댓글이 등록되었습니다.";
-// 				alert(resultMsg);
-// 				listPage(gIsEdit ? gPage : 1);
-// 				closeMod();
-				
-// 				console.debug("reply.js::socket>>",sock)
-// 				if(sock){
-// 					// websocket에 보내기!! (reply,댓글작성자, 게시글작성자, 글번호)
-// 					var socketMsg = "challenge,"+jsonData.replyer+","+gBoardWriter+","+gBno;
-// 					console.debug("msg>>>", socketMsg);
-// 					sock.send(socketMsg);
-// 				}
-// 			} else {
-// 				console.debug("Error on editReply>>", res);
-// 			}
-// 		}, method,jsonData);
-// 	}
-
-	
-// 	    stompClient = Stomp.over(socket);
-// 	    stompClient.connect({}, function(frame){
-// 	    	console.log('conneted : ' +frame);
-// 	    	stompClient.subscribe('/', function(response){
-// 	    		console.log(response);
-// 	    		console.log(JSON.parse(response.body));
-// 	    	});
-// 	    });
-// 	    socket.onopen=function(event){
-// 	        if(event.data===undefined) return;
-// 	        writeResponse(event.data);
-// 	    };
-// 	    socket.onmessage=function(event){
-// 	        writeResponse(event.data);
-// 	    };
-// 	    sockJs.onclose=function(event){
-// 	        writeResponse("Connection closed");
-// 	    }
-<!-- </script> -->
 <h1 style="padding: 0 15px 0 15px;"> 저축형 차곡 챌린지 </h1>
-
+${mno}
 <%-- ${plusPeoList } --%>
 <%-- ${vo} --%>
  <!-- Main content -->
@@ -444,7 +224,7 @@
 						<div class="whitespace" id="whitespace">
 						<h5>차곡은행 (차곡 챌린지 계좌)</h5>
   						<h3>1234-1231-12345</h3>
-  						<h4>보내는 사람 : ${loginUser.id}</h4>
+  						<h4>보내는 사람 : ${LOGIN.id}</h4>
   					</div>
 						<div class="result2" id="result" align="right"></div><span style="text-align: right;">원</span>
 						<div class="accountInfo2" id="accountInfo2"></div>
@@ -650,9 +430,7 @@
 	              <div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
 	              <div class="received_msg">
 	                <div class="received_withd_msg">
-	                  <p>
-	              		ㅇㄹㅇㅇㅇㅇ
-	                  </p>
+	                  <p>ㅇㄹㅇㅇㅇㅇ</p>
 	                  <span class="time_date"> 11:01 AM    |    Today</span></div>
 	              </div>
 	            </div>

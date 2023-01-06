@@ -14,7 +14,7 @@
           <select id="pcurrency-one">
             <option value="ggul">꿀</option>
           </select>
-          <input type="text" id="pamount-one" placeholder="0" value="1" />
+          <input type="text" id="pamount-one" placeholder="0" />
         </div>
 
 
@@ -27,7 +27,7 @@
         
         <div class="pswap-rate-container">
           
-          환급계좌: <input type="text" id="" name="">
+          환급계좌: <input type="text" id="input_account" name="raccount">
           <button class="pbtn" id="swap">환급</button>
           <div class="prate" id="rate"></div>
         </div>

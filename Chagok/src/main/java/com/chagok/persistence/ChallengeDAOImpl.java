@@ -14,8 +14,10 @@ import org.springframework.stereotype.Repository;
 
 import com.chagok.domain.BoardVO;
 import com.chagok.domain.ChallengeVO;
+import com.chagok.domain.Criteria;
 import com.chagok.domain.MinusVO;
 import com.chagok.domain.PlusVO;
+import com.chagok.domain.UserVO;
 
 @Repository
 public class ChallengeDAOImpl implements ChallengeDAO{
@@ -51,6 +53,8 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 		return PPeopleList;
 	}
 
+	// 후기글 작성
+	// 후기글 작성
 	@Override
 	public void createReview(BoardVO vo) {
 		
@@ -58,6 +62,8 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 		
 	}
 
+	// 챌린지 리스트
+	// 챌린지 리스트
 	@Override
 	public List<ChallengeVO> getChallengeList(Integer cno) {
 		mylog.debug(" getChallengeList(Integer cno) 호출");
@@ -95,11 +101,10 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 		return end;
 	}
 	 
-	
-	
+	// 게시판 글 목록	
 	@Override
 	public List<BoardVO> getBoard(Integer b_sort) {
-		mylog.debug(" getReviewBoard() 호출");
+		mylog.debug(" getBoard() 호출");
 		
 		List<BoardVO> boardList = sqlSession.selectList(NAMESPACE+".boardList",b_sort);
 		
@@ -114,6 +119,7 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 		return sqlSession.selectOne(NAMESPACE+".samechallenge", map);
 	}
 
+	// 게시글 내용
 	@Override
 	public BoardVO getBoardContent(Integer bno) {
 		
@@ -146,17 +152,23 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 		return challengeList;
 	}
 
-	
-	// 챌린지 목록(참여명수 구하기)
-	@Override
-	public List<Map<String, Object>> getPersonCnt() {
-		mylog.debug(" 정보 호출 ");
-		
-		List<Map<String, Object>> pesonCnt = sqlSession.selectOne(NAMESPACE+".getPersonCnt");
-		
-		return pesonCnt;
-	}
 
+	// 챌린지 피드 인원 조회
+//	@Override
+//	public List<Map<String, Object> getCList(Integer cno) {
+//		mylog.debug(" getCList(Integer cno) 호출 ");
+//		
+//		List<Map<String, Object>> CList = sqlSession.selectList(NAMESPACE+".CList");
+//		return CList;
+//	}
+//	@Override
+//	public void getCList(Integer cno) {
+//		mylog.debug(" getCList(Integer cno) 호출 ");
+//		
+//		sqlSession.selectOne(NAMESPACE+".CList");
+//		
+//	}
+	
 	// 챌린지 참여 인원 조회(checkfeed 용)
 	@Override
 	public int getCList(Integer cno) throws Exception {
@@ -166,6 +178,7 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 		return CList;
 	}
 
+	// 게시글 수정
 	@Override
 	public Integer updateBoard(BoardVO vo) throws Exception {
 		
@@ -174,6 +187,7 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 		return sqlSession.update(NAMESPACE+".updateBoard", vo);
 	}
 
+	// 게시글 삭제
 	@Override
 	public void deleteBoard(Integer bno) throws Exception {
 		
@@ -183,6 +197,7 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 		
 	}
 
+	// 게시글 등록 (후기 제외)
 	@Override
 	public void insertBoard(BoardVO vo) throws Exception {
 		
@@ -236,6 +251,43 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 		sqlSession.update(NAMESPACE+".joinplusUpdate2", cno);
 	}
 
+	
+	
+	// 명예의 전당 순위
+	@Override
+	public List<UserVO> ranking() throws Exception {
+		mylog.debug(" ranking() 호출 ");
+		
+		List<UserVO> ranking = sqlSession.selectList(NAMESPACE +".ranking");
+		
+		return ranking;
+	}
+
+	
+	
+	// 챌린지 목록 (페이징)
+	@Override
+	public List<ChallengeVO> cList(Criteria cri) throws Exception {
+		mylog.debug(" cList(Criteria cri) 호출 ");
+		List<ChallengeVO> cList = sqlSession.selectList(NAMESPACE +".cList", cri);
+		
+		return cList;
+	}
+
+	// 챌린지 총 갯수 (페이징)
+	@Override
+	public Integer cListCount() throws Exception {
+		mylog.debug("cListCount() 호출 ");
+		Integer cListCount = sqlSession.selectOne(NAMESPACE + ".cListCount");
+		
+		return cListCount;
+	}
+	
+	
+	
+	
+	
+	
 	
 	
 	

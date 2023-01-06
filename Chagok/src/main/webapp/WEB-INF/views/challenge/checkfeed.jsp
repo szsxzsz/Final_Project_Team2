@@ -13,7 +13,7 @@ ${result }
 	function move() {
 		
 		if(${vo.c_sort == 0}){
-			location.href = "/challenge/plusfeed?cno="+${vo.cno};
+			location.href = "/challenge/plusFeed?cno="+${vo.cno};
 			return false;
 		}else {
  			location.href = "/challenge/minusFeed?cno="+${vo.cno};

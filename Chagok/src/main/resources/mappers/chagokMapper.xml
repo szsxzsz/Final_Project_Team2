@@ -180,7 +180,7 @@
 		values (#{b_title},#{b_content},#{b_writer},#{b_sort},#{b_file})	
 	</insert>
 	
-	<!-- 챌린지 모인 꿀머니 -->
+		<!-- 챌린지 모인 꿀머니 -->
 	<select id="challengemoney" resultType="int">
 		select c_deposit * c_cnt 
 		from challenge
@@ -200,5 +200,54 @@
 		from plus p right join challenge c on c.cno = p.cno left join minus m on m.cno=c.cno
 		where c.cno = 2 and (pl_finish = 'Y' or m_finish = 'Y')
 	</select>
+	
+	
+	
+	<!-- 명예의 전당 순위 -->
+	<select id="ranking" resultType="com.chagok.domain.UserVO">
+		select * from user
+		order by success_cnt desc  
+	</select>
+	
+	<!-- 검색1 -->
+	<select id="cList" resultType="com.chagok.domain.ChallengeVO" parameterType="com.chagok.domain.Criteria">
+		SELECT  *
+		 FROM ( 
+		        SELECT *, 
+		               ROW_NUMBER() OVER(ORDER BY cno DESC) AS RNUM
+		         FROM challenge 
+<!-- 		         WHERE 1=1  -->
+<!-- 		         	<include refid="search"></include> -->
+		                       ) MP
+		WHERE RNUM BETWEEN #{rowStart} AND #{rowEnd}
+		ORDER BY cno DESC
+	</select>
+	
+	<!-- 검색2 --> 
+	<select id="cListCount" resultType="Integer">
+	<![CDATA[
+ 		SELECT COUNT(cno)
+ 		 FROM challenge
+ 		 WHERE cno > 0
+ 	]]> 
+	</select>
+	
+	<!-- 검색2 -->
+<!-- 	<select id="cListCount" resultType="Integer" parameterType="com.chagok.domain.SearchCriteria"> -->
+<!-- 		SELECT COUNT(cno) -->
+<!-- 		   FROM challenge -->
+<!-- 		   WHERE 1=1 -->
+<!-- 		<include refid="search"></include>	 -->
+<!-- 		   AND cno > 0 -->
+<!-- 	</select> -->
+	
+<!-- 	<sql id="search"> -->
+<!-- 		<if test="searchType != null"> -->
+<!-- 			<if test="searchType == 'c_t'.toString()">AND c_title LIKE '%' || #{keyword} || '%'</if> -->
+<!-- 			<if test="searchType == 'c_co'.toString()">AND c_content LIKE '%' || #{keyword} || '%'</if> -->
+<!-- 			<if test="searchType == 'c_h'.toString()">AND c_host LIKE '%' || #{keyword} || '%'</if> -->
+<!-- 			<if test="searchType == 'c_tc_co'.toString()">AND (c_title LIKE '%' || #{keyword} || '%') or (c_content LIKE '%' || #{keyword} || '%')</if> -->
+<!-- 		</if> -->
+<!-- 	</sql> -->
 	
   </mapper>

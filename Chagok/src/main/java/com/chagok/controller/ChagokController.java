@@ -24,6 +24,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.WebUtils;
 
 import com.chagok.domain.ChallengeVO;
+import com.chagok.domain.Criteria;
+import com.chagok.domain.PageMaker;
 import com.chagok.domain.UserVO;
 import com.chagok.interceptor.SessionNames;
 import com.chagok.service.ChallengeService;
@@ -39,6 +41,7 @@ public class ChagokController {
 	
 	@Inject
 	private ChallengeService service2;
+	
 	
 	// 차곡 메인사이트 
 	// http://localhost:8080/main
@@ -60,19 +63,28 @@ public class ChagokController {
 	// 챌린지 목록 불러오기 (커뮤메인)
 	// http://localhost:8080/commumain
 	@GetMapping(value="/commumain")
-	public String getChallengeList(Model model, @ModelAttribute("result") String result) throws Exception {
-		mylog.debug(" /chagok/commumain 호출 ");
+	public String getChallengeList(Model model, Criteria cri, @ModelAttribute("result") String result) throws Exception {
+		mylog.debug(" /commumain 호출 ");
 		
 		// 전달받은 정보 x
 		mylog.debug(" 전달정보 : "+result);
 		
 		// 서비스 -> DAO 게시판 리스트 가져오기
 		List<ChallengeVO> challengeList = service2.getChallengeList();
-		
-		// 참여명수 구하기		
+		List<UserVO> ranking = service2.ranking();
+		List<ChallengeVO> cList = service2.cList(cri);
 		
 		// 연결되어 있는 뷰페이지로 정보 전달 (Model 객체)
 		model.addAttribute("challengeList", challengeList);
+		model.addAttribute("ranking", ranking);
+		model.addAttribute("cList", cList);
+		
+		// 페이징 처리
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCri(cri);
+		pageMaker.setTotalCount(service2.cListCount());
+		
+		model.addAttribute("pageMaker", pageMaker);
 		
 		return "/chagok/commumain";
 	}

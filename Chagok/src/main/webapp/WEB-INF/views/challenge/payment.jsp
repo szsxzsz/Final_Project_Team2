@@ -4,6 +4,8 @@
 <%@ include file="../include/sidebar.jsp"%>
 
     <main>
+    
+    ${paymentInfo }
         <div class="ptop">
             <div class="pimg">
               <a href="https://imgbb.com/"><img src="https://i.ibb.co/tbSR7Ch/hero.png" alt="hero" border="0"></a>
@@ -11,8 +13,8 @@
             <div class="pinfo">
                 <h1>차곡 결제 페이지</h1>
                 <h4>
-                    <strong>닉네임: </strong>Amine <br>
-                    <strong>꿀머니: </strong>25.08.1999 <br>
+                    <strong>닉네임: </strong><br>
+                    <strong>꿀머니: </strong><br>
                 </h4>
             </div>
         </div>

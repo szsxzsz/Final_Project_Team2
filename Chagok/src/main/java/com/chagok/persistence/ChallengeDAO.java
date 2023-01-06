@@ -6,8 +6,10 @@ import java.util.Map;
 
 import com.chagok.domain.BoardVO;
 import com.chagok.domain.ChallengeVO;
+import com.chagok.domain.Criteria;
 import com.chagok.domain.MinusVO;
 import com.chagok.domain.PlusVO;
+import com.chagok.domain.UserVO;
 
 public interface ChallengeDAO {
 	
@@ -59,8 +61,6 @@ public interface ChallengeDAO {
 	// 챌린지 목록
 	public List<ChallengeVO> getChallengeList() throws Exception;
 	
-	// 챌린지 목록(참여명수 구하기)
-	public List<Map<String, Object>> getPersonCnt() throws Exception;
 	
 	// 챌린지 피드 인원 조회
 //	public void getCList(Integer cno) throws Exception;
@@ -74,6 +74,15 @@ public interface ChallengeDAO {
 	
 	// 게시판 글 작성
 	public void insertBoard(BoardVO vo) throws Exception;
+
+	// 명예의 전당 순위
+	public List<UserVO> ranking() throws Exception;
+	
+	// 챌린지 목록 (페이징)
+	public List<ChallengeVO> cList(Criteria cri) throws Exception;
+	
+	// 챌린지 총 갯수 (페이징)
+	public Integer cListCount() throws Exception;
 	
 	// 챌린지 예치금 합산
 	public int getChallengeMoney(Integer cno) throws Exception;
