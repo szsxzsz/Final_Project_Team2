@@ -48,6 +48,11 @@ public class AbookServiceImpl implements AbookService{
 		return dao.AbookList();
 	}
 
+	@Override
+	public List<AbookVO> setAbookList(AbookVO vo) throws Exception {
+		// TODO Auto-generated method stub
+		return dao.setAbookList(vo);
+	}
 	
 	
 	
@@ -55,6 +60,7 @@ public class AbookServiceImpl implements AbookService{
 	
 	///////////////////MJ/////////////////////
 	
+
 	@Override
 	public String getPMonth(int mm) throws Exception {
 		mylog.debug("mm : "+mm);

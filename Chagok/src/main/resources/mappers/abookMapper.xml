@@ -7,12 +7,12 @@
   
   <!-- 가계부 목록 -->
   <select id="abookList" resultType="AbookVO">
-	select * from account_book as ab inner join category as c on ab.ctno=c.ctno;
+	select * from account_book as ab inner join category as c on ab.ctno=c.ctno
   </select>
   
   <!-- 카테고리 목록 -->
   <select id="cateList" resultType="CategoryVO">
-  	select * from account_book as ab inner join category as ct on ab.ctno=ct.ctno;
+  	select * from account_book as ab inner join category as ct on ab.ctno=ct.ctno
   </select>
   
   <!-- 그리드 수정 -->
@@ -20,8 +20,13 @@
   	update into account_book set 
   </insert>
   
-  
-  
+  <!-- 가계부 저장 -->
+    <select id="setabookList" resultType="AbookVO">
+	update account_book as ab 
+	inner join category as c 
+	on on ab.ctno=c.ctno 
+	set abno=#{abno},ab_inout=#{ab_inout},ab_date=#{ab_date},ab_content=#{ab_content},ab_method=#{ab_method},ab_memo=#{ab_memo},ct_top=#{ct_top},ct_bottom=#{ct_top} 
+</select>
   
   
   

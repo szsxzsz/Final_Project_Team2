@@ -20,7 +20,7 @@ public interface AbookDAO {
 	
     public List<Map<String, AbookVO>> AbookList() throws Exception;
 	
-	
+	public List<AbookVO> setAbookList(AbookVO vo) throws Exception;
 	
 	
 	

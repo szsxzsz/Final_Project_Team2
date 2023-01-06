@@ -7,15 +7,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONArray;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -45,6 +49,7 @@ import com.chagok.service.AccountService;
 import com.chagok.service.OpenBankingService;
 import com.chagok.service.ReportService;
 import com.chagok.service.UserService;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Controller
@@ -214,12 +219,13 @@ public class AssetController {
 	public JsonObj test (
 			@RequestParam(value = "page", required=false) String page,//page : 몇번째 페이지를 요청했는지
 			@RequestParam(value = "rows", required=false) String rows,//rows : 페이지 당 몇개의 행이 보여질건지
-			@RequestParam(value = "sidx", required=false) String sidx,//sidx : 소팅하는 기준이 되는 인덱스
+			@RequestParam(value  = "sidx", required=false) String sidx,//sidx : 소팅하는 기준이 되는 인덱스
 			@RequestParam(value = "sord", required=false) String sord
 			) throws Exception {//sord : 내림차순 또는 오름차순
 	    	
 		mylog.debug("json controller 실행 시작");
 //		mylog.debug("mno@@@@@@@@:"+mno);
+		
 		JsonObj obj = new JsonObj();
 		
 		List<Map<String,Object>> list = new ArrayList<Map<String,Object>>();
@@ -227,35 +233,29 @@ public class AssetController {
 		List<?> list2 = service.AbookList();
 		mylog.debug("list2 출력해보기"+list2);
 		
-// list 저장해서 size만큼 반복문 돌리기 >> json object 형태로 바꾸고 >> json array 담아서 >> 1안- array로 해보고 안 되면 2안- json object로 보내기 
-		
-//		for(int i=0; i<list2.size();i++) {
-//			
-//		}
 		int int_page = Integer.parseInt(page);// 1 2 3
 		int perPageNum = (int)Double.parseDouble(rows);
 		
 		// db에서 가져온 데이터의 갯수가 10개라고 가정하고 임의로 수행한다. 	그럼 이 키값들을 멤버로 하는 클래스를 가지고 있어야 할 것같다..
-		for(int i= (int_page-1)*perPageNum+1 ; i<(int_page*perPageNum) ; i++){
+//		for(int i= (int_page-1)*perPageNum+1 ; i<(int_page*perPageNum) ; i++){
+		for(int i=0; i<list2.size(); i++){
 			AbookVO vo = (AbookVO) list2.get(i);
 			// mno 돌아가게 하기 
-			// json  
-			
 			
 			Map<String, Object> map = new HashMap<String, Object>();
 			
-			map.put("id", new String(""+i));
-			map.put("invdate", new String("날짜"+i));
-			map.put("name", vo.getAb_content());
-			map.put("amount", new String("양"+i));
-			map.put("txt", new String("텍스트"+i));
-//			map.put("txt", list2.get[3]);
+			map.put("abno", vo.getAbno());
+			map.put("ab_inout", vo.getAb_inout());
+			map.put("ab_date", vo.getAb_date());
+			map.put("ab_content", vo.getAb_content());
+			map.put("ab_amount", vo.getAb_amount());
+			map.put("ct_top", vo.getCt_top());
+			map.put("ct_bottom", vo.getCt_bottom());
+			map.put("ab_memo", vo.getAb_memo());
 			
 			list.add(map);
-		}
-		
-		// 그리고 이 JsonObj를 리턴해주면 @ResponseBody 애노테이션 그리고 Jackson라이브러리에 의해
-		// json타입으로 페이지에 데이터가 뿌려지게 된다.
+	}
+//		}
 	       
 	    obj.setRows(list);  // list<map>형태의 받아온 데이터를 가공해서 셋( 그리드에 뿌려줄 행 데이터들 )
 	    	    
@@ -270,8 +270,10 @@ public class AssetController {
 		int totalPage = (int)Math.ceil(list.size()/Double.parseDouble(rows));
 		obj.setTotal( totalPage ); // 총 페이지 수 (마지막 페이지 번호)
 		mylog.debug("실험 중"+obj);
+		
 	    return obj;
 	}
+	
 
 
 	/////////////////////////////////////////////////// 실험중
@@ -325,46 +327,140 @@ public class AssetController {
 		
 	}
 	
+//	@RequestMapping(value="saveJqgrid.do")
+//    @ResponseBody
+//    public String saveJqgrid(@RequestParam String param1) throws Exception {
+//        String result = "";
+//        try {
+//            param1 = param1.replaceAll("&quot;", "\"");
+//            
+//            JSONArray jsonArray = new JSONArray(param1);
+//                                            
+//            jqgridService.saveJqGridTx(jsonArray);
+//            
+//            result = "SUCCESS";
+//                    
+//        } catch (Exception e) {
+//            result = "FAIL";
+//        }
+//        
+//        return result;
+//    }
+	
 	@RequestMapping(value="/getGrid", method = RequestMethod.POST, produces="application/json;charset=utf-8")
 	@ResponseBody
-		public String testUrl (@RequestParam Map<String,Object> param, RedirectAttributes rttr) throws Exception {
+		public void getGrid (@RequestParam Map<String,Object> rows, RedirectAttributes rttr) throws Exception {
 			
-			mylog.debug("getGrid@@@@@"+param);	        
+			mylog.debug("getGrid@@@@@"+rows);	        
 		 
 		 ObjectMapper mapper = new ObjectMapper();
 //		 AbookVO vo = mapper.readValue(param, AbookVO.class);
-		 AbookVO vo = mapper.convertValue(param, AbookVO.class);
+		 AbookVO vo = mapper.convertValue(rows, AbookVO.class);
 		 
 		 // 서비스 - DAO : 정보 수정 메서드 호출
-		 Integer result = service.updateAbook(vo);
-		 
-			if(result > 0) {
-				// "수정완료" - 정보 전달 
-					rttr.addFlashAttribute("result", "modOK");
-				}
-				// 페이지 이동(/board/list) 
+//		 Integer result = service.updateAbook(vo);
+//		 
+//			if(result > 0) {
+//				// "수정완료" - 정보 전달 
+//					rttr.addFlashAttribute("result", "modOK");
+//				}
+//				// 페이지 이동(/board/list) 
 				
 			mylog.debug("수정 처리 완료!!");
-			
-				return "redirect:/asset/abookList";
 		 
 	}
 	
-	@RequestMapping("/updateGrid")
-
-	public @ResponseBody String cellEdit(
-	    @RequestParam(value = "id") Integer id,
-	    @RequestParam(value = "cellName") String cellName,
-	    @RequestParam(value = "cellValue") String cellValue) {
+	
+	@RequestMapping("/getGrid2")
+	 @ResponseBody
+	 public Object testList(HttpServletRequest request,@RequestBody List<Map<String, Object>> list) throws Exception {
 		
-	    // Edit 구현하기
-	    return "SUCCESS";
+//		mylog.debug("**map이 되냐?"+param);
+		mylog.debug("*****2지금하는방식"+list);
+		  String result = "ok";
+		  String resultMsg = "";
+		  JSONArray arr = new JSONArray();
+		  
+//			ObjectMapper mapper = new ObjectMapper();
+//			List<Map<String, Object>> list = mapper.readValue(companiesJsonStr, new TypeReference<List<Map<String, Object>>>() {});
+//
+//
+//			for (AbookVO vo :) {
+//				mylog.debug("mapper"+vo.get(index));
+//			}
 
+		  
+//		  mylog.debug("0번째 배열!!!!"+list.get(0));
+		  mylog.debug("0번째 배열!!!!"+list.get(3).get("ab_content").toString());
+		  
+//		  for(i=0;i<list.size();i++) {
+//			  list.get(i).get("abno");
+//		  }
+		  
+		List<AbookVO> list7 = new ArrayList<AbookVO>();
+		
+		for(int i=0;i<list.size();i++) {
+	
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("abno", list.get(0).get("abno"));
+		map.put("ab_inout", list.get(0).get("ab_inout"));
+		map.put("ab_date", list.get(0).get("ab_date"));
+		map.put("ab_content", list.get(0).get("ab_content"));
+		map.put("ab_amount", list.get(0).get("ab_amount"));
+		map.put("ct_top", list.get(0).get("ct_top"));
+		map.put("ct_bottom",list.get(0).get("ct_bottom"));
+		map.put("ab_memo", list.get(0).get("ab_memo"));
+		
+//		list7.add(map);
+		}
+			
+		mylog.debug("maplist 실험 중"+list7);
+		mylog.debug("끝");
+			
+			
+	Object a = new Object();
+	
+	Map<String,Object> map2 = new HashMap<String,Object>();
+	  try {   
+	   for(Map<String, Object> tList : list) {
+	    AbookVO vo = new AbookVO() ;
+	    vo.setAbno(Integer.parseInt(tList.get("abno").toString()));
+//	    vo.setMno(Integer.parseInt(tList.get("mno").toString()));
+	    vo.setAb_inout(Integer.parseInt(tList.get("ab_inout").toString()));
+	    
+	    vo.setAb_date(tList.get("ab_date").toString());
+	    vo.setAb_content(tList.get("ab_content").toString());
+	    vo.setAb_memo(tList.get("ab_memo").toString());
+	    vo.setAb_amount(Integer.parseInt(tList.get("ab_amount").toString()));
+	    vo.setAb_method(tList.get("ab_method").toString());
+	    vo.setCt_top(tList.get("ct_top").toString());
+	    vo.setCt_bottom(tList.get("ct_bottom").toString());
+	    
+	    
+	    mylog.debug("%%%%%%%%%%%%"+vo);
+	    
+	    
+	    
+//	    	    aVO.setMenu_id(tList.get("menu_id").toString());
+//	    aVO.setUse_yn(tList.get("use_yn").toString());
+	 
+//	    authMgmtService.mergeAuthMgmtList(aVO) ;
+	   }
+//	    mylog.debug("d"+vo);
+//	   result = "success";
+//	   resultMsg = "성공" ;
+//	    
+	  } catch (Exception e) {
+//	   result = "failure";
+//	   resultMsg = "실패" ;
+	  }
+//	   
+//	  resultMap.put("result", result);
+//	  resultMap.put("resultMsg", resultMsg);
+	   
+	  return a;
 	}
-	
-	
-	
-	
 	
 	
 	

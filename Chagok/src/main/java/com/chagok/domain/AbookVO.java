@@ -1,5 +1,6 @@
 package com.chagok.domain;
 
+
 import lombok.Data;
 
 @Data

@@ -27,18 +27,6 @@
 
 </head>
 
-
-
-<table id="list2"></table>
-
-<div id="pager2"></div>
-
-<div style="width: 600px;">
-    <input type="hidden" id="param1" name="param1" value="data_1"/>
-    <input type="hidden" id="param2" name="param2" value="data_2"/>
-	<table id="Test_Grid"></table>
-</div>
-
 <div class="box-body2 table-responsive">
 	<%-- 	${cateList }+@ --%>
 	<div class="box">
@@ -63,195 +51,76 @@
 	
 <table id="jqGrid"></table>
 <div id="gridpager"></div>
-<span><a href="#" onclick="javascript:gridFunc.addRow();">행추가</a></span>
+ <span><a href="#" onclick="javascript:save();">저장</a></span>
+<span><a href="#" onclick="javascript:gridFunc.clearGrid();">초기화</a></span>
+<span><a href="#" onclick="javascript:jqgridTable.deleteData();">삭제</a></span>
 
-<span><a href="#" onclick="javascript:gridFunc.updateRow();">수정</a></span>
 <input type="BUTTON" id="btnC" value="Edit Selected" />
-<input type="BUTTON" id="create" value="Edit Selected" />
+<input type="BUTTON" id="btnD" value="Edit Selected" />
 
-
-${jsonAbook}
-obj: ${j_abookList }+@@
-${map }
-
-	<script type="text/javascript">
-		
-	$(function(){
-		$('#pagination').html('<p>안녕<p>');
-		
-		alert("실험");
-		$("#list2").jqGrid({
-		    url : '/asset/gtest',
-		    datatype : "json",
-		    colNames : ['Inv No', 'Date', 'Client', 'Amount', 'Tax'],
-		    colModel:[
-		           {name:'id', index:'id', width:55},
-		           {name:'invdate', index:'invdate', width:90},
-		           {name:'name', index:'name asc, invdate', width:100},
-		           {name:'amount', index:'amount', width:80, align:"right"},
-		           {name:'txt', index:'tax', width:80, align:"right"}
-		    ],
-		    rowNum:20,
-		    rowList:[10,20,30],
-		    pager:'#pager2',
-		    sortname:'id',
-		    viewrecords: true,
-		    sortorder:"desc",
-		    caption:"JSON Example",
-		    jsonReader: {
-		         repeatitems:false
-		         
-		    }
-		});
-		
-		$("#list2").jqGrid('navGrid','#pager2',{edit:false,add:false,del:false});
-		
-		
-		
-		alert("끝");
-	});//function()
-	
-	
-	
-	
-	
-	
-	</script>
-
-
-
-	<table id="list2"></table>
-	<div id="pager2"></div>
-
-
-
+<%-- ${jsonAbook} --%>
+<%-- obj: ${j_abookList }+@@ --%>
+<%-- ${map } --%>
 
  <script type="text/javascript">
  
 var dataAbook = ${jsonAbook}
 var dataCate = ${jsonCate}
- 	
-//  	for (i=0; dataAbook.size ;i++ ) {
-//  	}
-//  		alert(dataAbook[0])
-//  	alert(JSON.stringify(dataAbook[0]));
-//  	alert(JSON.stringify(dataAbook));
- 	
+
 $("#jqGrid").jqGrid({
-// 	url: '/abookList',
-	datatype: 'json',
-// 	datastr: 'dataAbook',
+    url : '/asset/gtest',
+    datatype : "json",
 	mtype: 'get',
-// 	postData: { "param": JSON.stringify(dataAbook) },
-//     data: JSON.stringify(dataAbook),
-//     data: dataAbook,
+		jsonReader: {
+				repeatitems:false,
+				root:"rows"
+			},
     height: 500, 
     width: 1450,
     colNames : ['num','분류','날짜','내용','금액','거래수단','카테고리','소분류','메모'], 
-	jsonReader: {
-			repeatitems:false
-	},
-
     colModel:[
-        {name : 'abno',
-	        index : 'abno',
-	        width : 10, 
-	        align : 'left',
-	        hidden:true,
-	        key:true
-	        },    	
+        {name : 'abno', index : 'abno',width : 0, align : 'left',hidden:true,key:true},    	
     	
-        {name:"ab_inout",
-	        index:"ab_inout",
-	        width:40,
-	        align:'center',
-	        edittype: "select", 
-	        formatter: "select",
-	        editoptions:{value:"1:지출;2:수입;3:이체;"},
+        {name:"ab_inout",index:"ab_inout",width:30,align:'center',edittype: "select", formatter: "select",editoptions:{value:"1:지출;2:수입;3:이체;"},
 //                 dataEvents: [{
 //                     type : 'change',
 //                     fn : function(e) {
 //                     }] 
 //                 }
-	        hidden:false,
-	        editable:true
-	        },
-
-        {name : 'ab_date',
-	        index : 'ab_date',
-	        width : 70, 
-	        align : 'left',
-	        hidden:false,
-	        editable:true
-	        },
-
-        {name : 'ab_content',
-	        index : 'ab_content',
-	        width : 70, 
-	        align : 'center',
-	        hidden:false,
-	        editable:true
-	        },
-
-        {name : 'ab_amount',
-	        index : 'ab_amount',
-	        width : 70, 
-	        resizable : true,
-	        align : 'right',
-	        editrules:{number:true},
-	        hidden:false,
-	        editable:true
-	        },
-        
-       {name : 'ab_method',
-           index : 'ab_method',
-           width : 70, 
-           align : 'center',
-           hidden:false,
-           editable:true
-           },	
-           
-       {name : 'ct_top',
-           index : 'ct_top',
-           width : 70, 
-           edittype:"select",
-           editoptions:{value:"13:식사;14:간식;19:의류;26:문화/여가"},
-           align : 'center',
-           hidden:false,
-           editable:true
-           },           
-           
-       {name : 'ct_bottom',
-           index : 'ct_bottom',
-           width : 70, 
-           align : 'center',
-           hidden:false,
-           editable:true
-           },              
-
-      {name : 'ab_memo',
-          index : 'ab_memo',
-          width : 70, 
-//           formatter: function (cellValue, option) {
-//         	    return '<input type="radio" name="cust_id_key_yn"  />'};,
-          align : 'center',
-          hidden:false,
-          editable:true
-          }
+	        hidden:false,editable:true},
+        {name : 'ab_date',index : 'ab_date',width : 70, align : 'left',formatter: "date",formatoptions: { newformat: "Y-m-d" },hidden:false,editable:true},
+        {name : 'ab_content',index : 'ab_content',width : 100, align : 'center',hidden:false,editable:true},
+        {name : 'ab_amount',index : 'ab_amount',width : 70, resizable : true,align : 'right',editrules:{number:true},hidden:false,editable:true},
+	    {name : 'ab_method',index : 'ab_method',width : 70, align : 'center',hidden:false,editable:true},	
+	    {name : 'ct_top',index : 'ct_top',width : 70, edittype:"select",editoptions:{value:"13:식사;14:간식;19:의류;26:문화/여가"},align : 'center',hidden:false,editable:true},           
+        {name : 'ct_bottom',index : 'ct_bottom',width : 70, align : 'center',hidden:false,editable:true},              
+        {name : 'ab_memo',index : 'ab_memo',width : 50, align : 'center',hidden:false,editable:true}
       ],
-
-    loadtext: "로딩중일때 표시되는 텍스트!",
+    autowidth: true,
+	shrinkToFit: true, 
+    loadtext: "조회 중..",
     caption: "가계부 내역 조회",
-	
     pager:"#gridpager",
     rowNum:20,
-//     autowidth: true,
     rownumbers : true, 
-
-
     cellEdit: true,
-    cellsubmit:'remote',
+    
+    cellsubmit:'clientArray',
     cellurl:'/asset/updateGrid',
+    onCellSelect: function(rowId, colId, val, e) { // e의 의미는 무엇인가요?
+        var seq = $("#jqGrid").getCell(rowId, "seq");
+        
+        if(colId == 2) {
+            if(CommonJsUtil.isEmpty(seq)) {
+                $("#jqGrid").setColProp('name', {editable:true});
+            } else {
+                $("#jqGrid").setColProp('name', {editable:false});
+            }
+        }
+        
+    },
+    
+    
     /* 수정 후 cell 다시 editable flase 로 변경 */
     afterEditCell : function(rowid, cellname, value, iRow, iCol){
         $("#"+rowid+"_"+cellname).blur(function(){ //input focus out시 변경된 데이터 저장 
@@ -264,13 +133,10 @@ $("#jqGrid").jqGrid({
     },   
 	    beforeSubmitCell : function(rowid, cellname, value) {   // submit 전
 	        return {"id":rowid, "cellName":cellname, "cellValue":value}
-	
 	    },
 	
 	   afterSubmitCell : function(res) {    // 변경 후
-	
 	       var aResult = $.parseJSON(res.responseText);
-	
 	       var userMsg = "";
 	
 	       if((aResult.msg == "success")) {
@@ -278,7 +144,6 @@ $("#jqGrid").jqGrid({
 	       }
 	       return [(aResult.msg == "success") ? true : false, userMsg];
 	   }
-    
     //rownumbers:true,
     //viewrecords:true,
     //pgbuttons:true,
@@ -289,69 +154,129 @@ $("#jqGrid").jqGrid({
     //scroll:true,
     //loadonce:false,
     //hidegrid:true
-    }); 
- 
- 
-	$('#jqGrid').jqGrid('navGrid', '#gridpager',
-		    {
-		     edit : true,  // 수정 아이콘
-		     add : true,  // 추가 아이콘
-		     del : true,  // 삭제 아이콘
-		     search : false  //조회 아이콘
-		    }
-		);
+    // =================================================
+
+    }); //jqgrid default
+    
+ 	// 리로딩 처리
+    function reload() {
+    jQuery("#jqGrid").trigger('reloadGrid');
+    
+	$('#jqGrid').jqGrid('setGridParam', { 'datatype' : 'json' });
 	
-	
+    // 파라미터 넘길때..
+    /*
+    jQuery("#grid").setGridParam({ "page": 1 });
+    jQuery("#grid").setGridParam({
+    "postData" : { param1 : "1" , param2  "2" }
+    }).trigger("reloadGrid");
+    */
+    }
+    
+    
+    function search() {
+    	
+        alert("저장");
+        var jsonObj = {};
+        
+        alert(JSON.stringify(jsonObj));
+        
+        $("#jqGrid").setGridParam({
+            datatype : "json",
+            postData : {"param" : JSON.stringify(jsonObj)},
+            loadComplete : function(data) {
+                
+            },
+            
+            gridComplete : function() {
+                
+            }
+        }).trigger("reloadGrid");
+    }
+    
+    function replacer(key, value) {
+    	  if (typeof value === "string") {
+    	    return undefined;
+    	  }
+    	  return value;
+    	}
+
+    	var foo = {foundation: "Mozilla", model: "box", week: 45, transport: "car", month: 7};
+    	var jsonString = JSON.stringify(foo, replacer);
+    
+    
+    
+    $('#jqGrid').getRowData();
+    
+
+    
+    function getGridData() {
+        $('#jqGrid').setGridParam({
+            postData : {system:'system'}
+        });
+        
+        //reload 
+        $('#jqGrid').trigger('reloadGrid');
+    }
+ 
+	 //nav
+	 jQuery("#list1").jqGrid('navGrid','#gridpager',{
+		 //nav 설정						
+		 edit : true,
+		add : true,
+		del : true,
+		search : false,
+	}
+	,{						
+		url : '/jq/jqUpdate.do',
+		afterComplete:function(data) {
+		   jqGridFunc.tableReload(data, '수정');
+		},
+		recreateForm: true,
+		closeAfterEdit: true,
+		errorTextFormat: function (data) {
+		   return 'Error: ' + data.resultMsg;
+		},
+	   },
+		 {
+			url : '/jq/jqInsert.do',
+			beforeShowForm: function ($form) {
+			   $form.find(".FormElement[disabled]").prop("disabled", false); 
+			},
+			afterComplete:function(data) {
+			   jqGridFunc.tableReload(data, '저장');
+			},
+			closeAfterAdd: true,
+		 },
+		 {
+			url : '/jq/jqDelete.do',
+			afterComplete:function(data) {
+			   jqGridFunc.tableReload(data, '삭제');
+			},
+			delData : {
+			   csrId : function(){
+				  var selId = $('#jqGrid').jqGrid('getGridParam', 'selrow');
+				  var csrId = $('#jqGrid').jqGrid('getCell', selId, 'csrId');
+				  return csrId.replace(/-9/,'');
+			   }
+			}
+		 }
+	 );//jqgrid nav 
+	 
 	////////////////////////////////////////////////grid에서 controller
 	
-	//1
-	
-
-
 	
 	/////////////////////////////////////////////////////////////2
-
 	
 	$(function(){
-		// 글쓰기 버튼 클릭 시 - 글쓰기 동작 
-		
-		$("#btnC").click(function(){
-			alert("실행 중");
-
-			// ajax 사용해서 RestController 전달 
-			// POST	/boards+데이터
+		// 저장 
+   		 var jsonObj = {};
+ 		$("#btnC").click(function(){
+			alert("post json");
 			
-			$.ajax({
-				type:"post",
-				url:"/asset/getGrid",
-// 				contentType:"application/json",
-				dataType:"json",
-// 				data: {abno:"555"},
-				data: JSON.stringify(dataAbook),
-				success:function(data){
-					alert("성공");
-					console.log(data);
-				},error:function(){
-					alert("에러");
-					console.log(data);
-				}
-			});
-		});
-	});
-
-  </script>
-  
-  <script type="text/javascript">
-  function create() {
-	    var jsonObj = {};
-	    
-	    alert(JSON.stringify(jsonObj));
-	    
-	    $("#jqGrid").setGridParam({
-	    	url:"/gridpost",
-	    	mtype:"post",
+			$("#jqGrid").setGridParam({
 	        datatype : "json",
-	        postData : {"param" : JSON.stringify(jsonObj)},
+	        postData : {"param" : JSON.stringify(data)},
 	        loadComplete : function(data) {
 	            
 	        },
@@ -359,12 +284,70 @@ $("#jqGrid").jqGrid({
 	        gridComplete : function() {
 	            
 	        }
-	    }).trigger("reloadGrid");
+	   		 }).trigger("reloadGrid");
+ 		});	
+		
+		// json 넘기는 ajax
+		$("#btnCD").click(function(){
+			alert("post json");
+
+			$.ajax({
+				type:"post",
+				url:"/asset/getGrid",
+// 				headers: {'Conten t-Type': 'application/json'},
+				dataType:"json",
+				data : JSON.stringify(obj),
+// 				postdata: {"param":JSON.stringify()},
+				success:function(data){
+					alert("성공");
+					console.log(data);
+				},error:function(){
+					alert("에러");
+					console.log(data);
+				}
+				
+				
+				
+			});
+		});
+		
+	});
+	 
+	function save(){
+// 		alert("");
+		var data =  $("#jqGrid").getRowData();
+		data = JSON.stringify(data);
+		
+		$.ajax({
+			url : "/asset/getGrid2",
+			data : data,
+			traditional: true ,
+			contentType:"application/json",
+			type : 'POST',
+			dataType:'JSON',
+//             postData : {"rows" : JSON.stringify(data)},
+			success:function(data){
+			alert("입력 성공!");
+			}
+			})
+			
+// 	    $.ajax({
+// 	        url : '/asset/getGrid',
+// 	       data : JSON.stringify($('#jqGrid').getGridData()),
+// 	       method : "POST",
+// 	      contentType : "application/json; charset=UTF-8",
+// 	      dataType : "json",
+// 	      success : function(data){
+// 	       alert(data.msg);
+// 	       }
+// 	  });
+
 	}
-  
+	 
   </script>
   
   
+  <!-- 빈 행 추가 -->
   <script type="text/javascript">
 	var gridFunc = {
 	        addRow : function() {
@@ -379,8 +362,6 @@ $("#jqGrid").jqGrid({
 	        
 	        }
 	}
-
-
  </script>   
  
 

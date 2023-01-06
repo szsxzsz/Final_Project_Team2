@@ -25,7 +25,8 @@ public class AbookDAOImpl implements AbookDAO{
 	
 	//NAMESPACE
 	private static final String NAMESPACE = "com.chagok.mapper.abookMapper";
-
+	
+	// 가계부 조회 list
 	@Override
 	public List<AbookVO> getAbookList(int mno) throws Exception {
 		mylog.debug("mno="+mno);
@@ -34,7 +35,17 @@ public class AbookDAOImpl implements AbookDAO{
 		
 		return AbookList;
 	}
-
+	// 가계부 조회 map
+	@Override
+	public List<Map<String, AbookVO>> AbookList() throws Exception {
+		mylog.debug("Mapper♡♡♡♡♡♡♡♡♡♡♡♡♡AbookList");
+		
+		List<Map<String, AbookVO>> AbookList2 = sqlSession.selectList(NAMESPACE+".abookList"); 
+		
+		return AbookList2;
+	}
+	
+	// 카테고리 리스트 
 	@Override
 	public List<CategoryVO> CateList() throws Exception {
 		List<CategoryVO> CateList = sqlSession.selectList(NAMESPACE+".cateList");
@@ -42,7 +53,8 @@ public class AbookDAOImpl implements AbookDAO{
 		
 		return CateList;
 	}
-
+	
+	// 가계부 수정
 	@Override
 	public Integer updateAbook(AbookVO vo) throws Exception {
 		mylog.debug("Mapper♡♡♡♡♡♡♡♡♡♡♡♡♡"+vo);
@@ -51,13 +63,13 @@ public class AbookDAOImpl implements AbookDAO{
 	}
 
 	@Override
-	public List<Map<String, AbookVO>> AbookList() throws Exception {
-		mylog.debug("Mapper♡♡♡♡♡♡♡♡♡♡♡♡♡AbookList");
+	public List<AbookVO> setAbookList(AbookVO vo) throws Exception {
+		mylog.debug("Mapper♡♡♡♡♡♡♡♡♡♡♡♡♡"+vo);
 		
-		List<Map<String, AbookVO>> AbookList2 = sqlSession.selectList(NAMESPACE+".abookList"); 
-		
-		return AbookList2;
-}
+	List<AbookVO> setAbookList = sqlSession.selectList(NAMESPACE+".setAbookList", vo);
+	
+	return setAbookList;
+	}
 
 
 	
