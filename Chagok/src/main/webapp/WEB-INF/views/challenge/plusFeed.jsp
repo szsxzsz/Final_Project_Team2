@@ -12,7 +12,8 @@
 	$(document).ready(function() {
 		connectSockJS();
 		var currT = new Date().getHours() + ":" + new Date().getMinutes() + "  |  " + "Today";
-		
+		var chatBox = $('.chat_box');
+		var nick = '${nick}';
 		$('#btnSend').on('click', function(event) {
 			
 			
@@ -32,32 +33,45 @@
 			
 			var html = $("#nextMsg").html();
 			console.log("mmmmmmmmmmm>>>>", msg);
-			console.log("isStompmmmmm>>>>", isStomp);
 			
 			if (!isStomp && socket.readyState!== 1 ) return;
-				if(isStomp)			
-					socket.send('/user/'+cno , {}, JSON.stringify({"mno": mno, "msg" : msg}));
-				else
+				if(isStomp){
+					
+					socket.send('/user/'+cno , {}, JSON.stringify({"writer": nick, "message" : msg}));
+					
+					socket.subscribe('/topic/feed/'+cno, function(chat){ // 컨트롤러(sendTo)
+						console.log('!!!!!!!!!!!!!!!!!!!!!!chat>>', chat);
+						var content = JSON.parse(chat.body);
+						var writer = content.writer;
+						
+						// 다른사람이 채팅보내는 형태
+						if( writer == nick ){ 
+							html += '<div class="outgoing_msg">'
+										+ '<div class="sent_msg">'
+							            + '<p>'+content.message+'</p>'
+							            + '<span class="time_date"> '+ currT +'</span></div></div>';
+							
+						}else {
+							html += content.writer +'<div class="incoming_msg">'
+									+ '<div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>'
+									+ '<div class="received_msg"> <div class="received_withd_msg">'
+									+ '<p>'+content.message+'</p>'
+									+ '<span class="time_date">'+currT+'</span></div></div>'
+						}
+						
+					});
+				
+				}else
 					socket.send(msg);
 				
 			//protocol: RoomNum, 보내는id, 내용 
 			//socket.send( ${vo.cno} + "," + '${sessionId}' + "," + msg); 
-			if(mno == ${mno} ){
-				html += '<div class="outgoing_msg">'
-							+ '<div class="sent_msg">'
-				            + '<p>'+msg+'</p>'
-				            + '<span class="time_date"> '+ currT +'</span></div></div>';
-				
-			}else {
-				html += '<div class="incoming_msg">'
-						+ '<div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>'
-						+ '<div class="received_msg"> <div class="received_withd_msg">'
-						+ '<p>'+msg+'</p>'
-						+ '<span class="time_date">'+currT+'</span></div></div>'
-			}
+			
 				
 			$("#nextMsg").html(html+"\n");
 			$("#msg").val("");
+			
+			
 			
 			console.log("ReceiveMessage:" + event.data+'\n');
 			console.log("ReceiveMessage:" + event+'\n');
@@ -67,9 +81,12 @@
 	
 	var socket = null;
 	var isStomp = false;
-	var mno = ${mno};
 	var cno = ${vo.cno};
 	var currT;
+	var chatBox = $('#chat_box');
+	var nick = '${nick}';
+	var html = $("#nextMsg").html();
+	var currT = new Date().getHours() + ":" + new Date().getMinutes() + "  |  " + "Today";
 	
 	function connectSockJS(){
 		//STOMP Client
@@ -85,15 +102,38 @@
 		
 		client.connect({}, function(frame){
 			console.log("Connected stomp!");
-			//client.send('/user', {}, JSON.stringify({"cno": cno})); // 컨트롤러(MessageMapping), 
-			console.log("Connected : " + frame);
-			loadChat(chatList);
+			
+			// send(path, header, message)형태
+			client.send('/user/'+cno, {}, JSON.stringify({"writer": nick, "message" : msg})); // 컨트롤러(MessageMapping), 
+			//console.log("Connected : " + frame);
+// 			loadChat(chatList);
 			
 			
-			// 해당 토픽을 구독한다!
-			client.subscribe('/topic/feed/'+cno, function(event){ // 컨트롤러(sendTo)
-				console.log('!!!!!!!!!!!!!!!!!!!!!!event>>', event);
-				showChat(JSON.parse(event.body));
+			// 해당 토픽을 구독한다! subscribe(path, callback)로 메시지를 받을 수 있다.
+			// callback 첫번째 파라미터의 body로 메시지의 내용이 들어온다.
+			client.subscribe('/topic/feed/'+cno, function(chat){ // 컨트롤러(sendTo)
+				console.log('!!!!!!!!!!!!!!!!!!!!!!chat>>', chat);
+				var content = JSON.parse(chat.body);
+				console.log(content.message);
+				
+				// 내가 채팅보내는 형태
+				if( content.writer == nick ){ 
+					html += '<div class="outgoing_msg">'
+								+ '<div class="sent_msg">'
+					            + '<p>'+content.message+'</p>'
+					            + '<span class="time_date"> '+ currT +'</span></div></div>';
+					
+				}else {
+					html += content.writer + '<div class="incoming_msg">'
+							+ '<div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>'
+							+ '<div class="received_msg"> <div class="received_withd_msg">'
+							+ '<p>'+content.message+'</p>'
+							+ '<span class="time_date">'+currT+'</span></div></div>'
+				}
+				
+				$("#nextMsg").html(html+"\n");
+				
+				$("#msg").val("");
 			});
 		});
 
@@ -113,9 +153,12 @@
 
 	}	
 	
-	function showChat(chatMessage){
-		//$('#nextMsg').append(chatMessage.);
+	function moveScroll() {
+	    var el = document.getElementById('nextMsg');
+	    console.log(el);
+	if (el.scrollHeight > 0) el.scrollTop = el.scrollHeight;
 	}
+	
 </script>
 
 <h1 style="padding: 0 15px 0 15px;"> 저축형 차곡 챌린지 </h1>
@@ -126,7 +169,7 @@ ${mno}
 <section class="content">
 	<div class="row">
 		<div class="col-lg-5 mx-6 aos-init aos-animate" data-aos="fade-right" >
-	        <img class="img-responsive" src="${pageContext.request.contextPath }/resources/dist/img/photo1.png" alt="Photo" style="width:500px; height:400px;">
+	        <img class="img-responsive" src="${vo.c_file}" alt="Photo" >
 		</div>
 		<div class="col-lg-6 pt-4 pt-lg-0 content aos-init aos-animate" data-aos="fade-left" >
 			 <h3><span style="color: #66BB7A; font-weight: bold;">[저축형]</span> ${vo.c_title }</h3>
@@ -150,7 +193,7 @@ ${mno}
 				<div class="col-lg-6" style="line-height: 180%">
 	             <div class="progress-group" style="width: 280px;" >
 	               <span class="progress-text">챌린지 장 </span>
-	               <span class="progress-number"><b>${vo.c_host }</b>님</span>
+	               <span class="progress-number"><b>${vo.mno }</b>님</span>
 	             </div>
 	             <div class="progress-group" style="width: 280px;">
 	               <span class="progress-text">챌린지 인원</span>
@@ -373,6 +416,9 @@ ${mno}
       </div>
     </section>
     <!-- /.content -->
+    
+    <div class="chat_box"></div>
+    
  <!-- 칭찬하기/주시하기  @@@@@@@@@@@@@@@@@@@@@@@@@ -->
     <div class="col-xs-12" style="margin-left: 10px; ">
 	 <div class="row">
@@ -436,6 +482,7 @@ ${mno}
 	            </div>
             <!-- 받은 메시지 -->
 				<div id="nextMsg"></div>
+				<div id="chat_box"></div>
 			<!-- 받은 메시지 -->
 			</main>
 	          </div>

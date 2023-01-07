@@ -78,7 +78,7 @@ public class ChallengeController {
 	
 	@PostMapping(value = "/plusFeed")
 	public String plusfeedPOST(Model model, int cno, HttpSession session) throws Exception {
-		mylog.debug("plusFeedGET() 호출");
+		mylog.debug("plusfeedPOST() 호출");
 		
 		ChallengeVO chVO = service.getChallengeInfo(cno);
 		List<Map<String, Object>> plusPeoList = service.getPlusPeople(cno);
