@@ -35,4 +35,9 @@ public interface AccountDAO {
 	
 	// 카드 내역/금액 조회
 	public List<List<CardHistoryVO>> getCardHistory(List<CardInfoVO> list) throws Exception;
+	
+	// 계좌 내역 조회 (fintech_use_num)
+	public List<AccountHistoryVO> getAccountHistory(String fintech_use_num) throws Exception;
+	
+	
 }

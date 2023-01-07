@@ -5,6 +5,8 @@
 <%@ include file="../include/header.jsp" %>
 <%@ include file="../include/sidebarAsset.jsp" %>
 	
+<script src="${pageContext.request.contextPath }/resources/plugins/jQuery/jQuery-2.1.4.min.js"></script>
+	
 <script>
 	function userCheck() {
 		var cfm = confirm(" 사용자 인증이 필요한 서비스입니다.\n 인증 서비스로 이동 하시겠습니까? ");
@@ -18,6 +20,8 @@
 
 <script type="text/javascript">
 	$(document).ready(function(){
+		
+		// 펼치고 접기 관련
 		$('#account_pa').click(function(){
 			if ($('#account_ch').css("display") == "block") {
 				$('#account_ch').slideUp();
@@ -41,10 +45,32 @@
 				$('#cash_ch').slideDown();
 			}
 		});
+		// 펼치고 접기 관련
+		
+		
+		
+		// 모달창 관련
+		$('.test22').click(function(){
+			$('#iframe_account').attr("src", "/asset/accountHistory?fintech_use_num="+$(this).children().val());
+			
+			$('#modal-account').modal();
+		})
+		
+		
+		// 모달창 관련
+		
+		
+		
 		
 	});
+	
+	
+	
+	
 
 </script>
+
+
 	
 	
 	<c:if test="${userVO == null }">
@@ -54,12 +80,12 @@
 	
 	<c:if test="${userVO.isCheck.equals('N') }">
 		<section class="content">
-			<div class="error-page">
+			<div class="error-page" style="margin-left: 10%">
 				<div class="error-content">
 					<h3>
 						<i class="fa fa-warning text-yellow"></i> 등록된 자산정보가 없습니다!
 					</h3>
-					<p style="margin-left: auto; margin-right: auto;">
+					<p style="margin-left: 15%">
 						자산 정보를 불러오시겠습니까?
 					</p>
 					<form action="https://testapi.openbanking.or.kr/oauth/2.0/authorize" method="get" onsubmit="return userCheck();">
@@ -77,7 +103,7 @@
 						<input type="hidden" name="auth_type" value="0">
 						
 						<input type="submit" class="btn btn-block btn-success btn-lg" id="assetCheck" 
-						style="width: 200px; margin: 20px 40px; background-color: #FFDB83; border-color: #1e282c" value="내 자산 불러오기">	
+						style="width: 200px; margin: 20px 10%; background-color: #FFDB83; border-color: #1e282c" value="내 자산 불러오기">	
 					</form>
 				</div>
 			</div>
@@ -129,7 +155,8 @@
 			<div id="account_ch" style="display: none;">
 			<c:forEach var="vo" items="${accountList }">
 				<div class="info-box" style="margin: 0 0 1px 30px; width: 95%;">
-					<a href="/asset/cardHistory?fintech_use_num=${vo.fintech_use_num }">
+					<a href="#" class="test22">
+						<input type="hidden" value="${vo.fintech_use_num }" class="fintech_use_num_account">
 						<span class="info-box-icon">
 							<i class="fa fa-bank"></i>
 						</span>
@@ -212,23 +239,25 @@
 	
 	</c:if>
 	
-	<iframe src="/main" width="300" height="300">
-					</iframe>
 	
-	<!-- 모달창 -->
-	<div class="modal fade" id="modal-test" style="margin-top: 10%;">
-		<div class="modal-dialog">
-			<div class="modal-content">
+	
+	
+	
+	
+	<!-- 계좌 내역 정보 불러오기 모달창 -->
+	<div class="modal fade" id="modal-account" style="margin-top: 5%;">
+		<div class="modal-dialog" style="width:1200px; height: 800px;">
+			<div class="modal-content" style="height: 700px;">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
-					<h4 class="modal-title">나의 가계부 연동</h4>
+					<h4 class="modal-title">계좌내역조회</h4>
 				</div>
-				<div class="modal-body">
+				<div class="modal-body" style="height: 580px;">
 					<p>
 					
-					<iframe src="/main" width="300" height="300">
+					<iframe id="iframe_account" src="" width="300px;" height="570px;">
 					</iframe>
 					
 					</p>
@@ -242,11 +271,9 @@
 
 		</div>
 	</div>
+	<!-- 계좌 내역 정보 불러오기 모달창 -->
+ 
 
-	<button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-test" style="margin-left: 90%">
-	가계부 연동하기
-	</button>
-	
 
 <hr>
 <hr>

@@ -144,6 +144,14 @@ public class AccountDAOImpl implements AccountDAO{
 		return resultList;
 	}
 
+	@Override
+	public List<AccountHistoryVO> getAccountHistory(String fintech_use_num) throws Exception {
+		
+		List<AccountHistoryVO> list = sqlSession.selectList(NAMESPACE+".getAccountHistory", fintech_use_num);
+		
+		return list;
+	}
+
 	
 	
 	

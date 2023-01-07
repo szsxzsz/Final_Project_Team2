@@ -47,4 +47,9 @@
 		select * from card_history where card_id = #{card_id}
 	</select>
 	
+	<select id="getAccountHistory" resultType="com.chagok.apiDomain.AccountHistoryVO">
+		select * from account_history where fintech_use_num = #{fintech_use_num} 
+		order by tran_date desc
+	</select>
+	
   </mapper>
