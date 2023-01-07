@@ -35,6 +35,7 @@ import com.chagok.domain.MinusVO;
 import com.chagok.domain.PlusVO;
 import com.chagok.domain.SysLogVO;
 import com.chagok.domain.UserVO;
+import com.chagok.service.AbookService;
 import com.chagok.service.ChallengeService;
 import com.chagok.service.UserService;
 import com.chagok.utils.UploadFileUtils;
@@ -111,6 +112,8 @@ public class ChallengeController {
 
 	// http://localhost:8080/challenge/minusFeed?cno=1
 	// http://localhost:8080/challenge/minusFeed
+	@Inject
+	private AbookService aService;
 	@GetMapping(value="/minusFeed")
 	public String minusFeed(Model model,@RequestParam("cno") int cno,HttpSession session) throws Exception {
 		mylog.debug(" 수 지 : minusFeed Get 호출 ");
