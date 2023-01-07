@@ -77,9 +77,9 @@ ${vo }
 		    <div class="box">
 		        <div class="col-md-12 text-center" style="background: #FAF8F1; height: 50px;">
 				    	<h4 style="marfin-top: 14px;">
-				    	총<span style="color: #10A19D;">${vo.c_total }</span>번을
-				    	<span style="color: #10A19D;">${vo.c_freq }</span>일 마다 
-				    	<span style="color: #10A19D;">${vo.c_amount }</span>원씩 저축하는 조건이 있습니다.
+				    	<span style="color: #10A19D;">${vo.c_period }</span>주 동안
+				    	<span style="color: #10A19D;">${vo2.ct_top }</span> 해당 비용을
+				    	총 <span style="color: #10A19D;">${vo.c_amount }</span>원 절약합니다.
 				    	</h4>
 		    	</div>
 		    </div>
