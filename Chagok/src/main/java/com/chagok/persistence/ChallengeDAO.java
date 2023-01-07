@@ -9,6 +9,7 @@ import com.chagok.domain.ChallengeVO;
 import com.chagok.domain.Criteria;
 import com.chagok.domain.MinusVO;
 import com.chagok.domain.PlusVO;
+import com.chagok.domain.SearchCriteria;
 import com.chagok.domain.UserVO;
 
 public interface ChallengeDAO {
@@ -79,10 +80,10 @@ public interface ChallengeDAO {
 	public List<UserVO> ranking() throws Exception;
 	
 	// 챌린지 목록 (페이징)
-	public List<ChallengeVO> cList(Criteria cri) throws Exception;
+	public List<ChallengeVO> cList(SearchCriteria scri) throws Exception;
 	
 	// 챌린지 총 갯수 (페이징)
-	public Integer cListCount() throws Exception;
+	public Integer cListCount(SearchCriteria scri) throws Exception;
 	
 	// 챌린지 예치금 합산
 	public int getChallengeMoney(Integer cno) throws Exception;

@@ -17,6 +17,7 @@ import com.chagok.domain.ChallengeVO;
 import com.chagok.domain.Criteria;
 import com.chagok.domain.MinusVO;
 import com.chagok.domain.PlusVO;
+import com.chagok.domain.SearchCriteria;
 import com.chagok.domain.UserVO;
 
 @Repository
@@ -267,18 +268,18 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 	
 	// 챌린지 목록 (페이징)
 	@Override
-	public List<ChallengeVO> cList(Criteria cri) throws Exception {
-		mylog.debug(" cList(Criteria cri) 호출 ");
-		List<ChallengeVO> cList = sqlSession.selectList(NAMESPACE +".cList", cri);
+	public List<ChallengeVO> cList(SearchCriteria scri) throws Exception {
+		mylog.debug(" cList(SearchCriteria scri) 호출 ");
+		List<ChallengeVO> cList = sqlSession.selectList(NAMESPACE +".cList", scri);
 		
 		return cList;
 	}
 
 	// 챌린지 총 갯수 (페이징)
 	@Override
-	public Integer cListCount() throws Exception {
-		mylog.debug("cListCount() 호출 ");
-		Integer cListCount = sqlSession.selectOne(NAMESPACE + ".cListCount");
+	public Integer cListCount(SearchCriteria scri) throws Exception {
+		mylog.debug("cListCount(SearchCriteria scri) 호출 ");
+		Integer cListCount = sqlSession.selectOne(NAMESPACE + ".cListCount", scri);
 		
 		return cListCount;
 	}
