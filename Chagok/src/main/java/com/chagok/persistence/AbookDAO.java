@@ -44,5 +44,7 @@ public interface AbookDAO {
 	// 3. 예산 설정
 	public void setBud(Map<String, Object> insertMap);
 	
+	// 4. 예산 수정
+	public void updBud(Map<String, Object> updateMap);
 	
 }

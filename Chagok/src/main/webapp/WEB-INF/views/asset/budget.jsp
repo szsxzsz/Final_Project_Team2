@@ -115,6 +115,7 @@ $(document).ready(function(){
 						var amp = item.p_amount;
 						if(b==top){
 							$('#prevamt'+i+'').text(''+$.number(amp)+'');
+							$('#prevamt'+i+'').text(''+$.number(amp)+'');
 							sum+=amp;
 						}
 					}
@@ -140,7 +141,6 @@ $(document).ready(function(){
 	
 	$('#budform').submit(function() {
 		var a = 0;
-// 		var b = 0;	
 		var sum2 = 0;	
 		for(i=1; i<12; i++){
 			var b = $('#pamt'+i+'').val();

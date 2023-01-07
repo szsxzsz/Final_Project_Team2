@@ -65,7 +65,6 @@ public class AbookServiceImpl implements AbookService{
 
 	@Override
 	public String getPMonth(int mm) throws Exception {
-		mylog.debug("mm : "+mm);
 		SimpleDateFormat fmt = new SimpleDateFormat("yyyyMM");
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.MONTH, -mm);
@@ -78,26 +77,6 @@ public class AbookServiceImpl implements AbookService{
 	@Override
 	public List<String> getctTop() throws Exception {
 		return dao.getctTop();
-	}
-
-	@Override
-	public List<Map<String, Object>> formData(Map map, int mno) throws Exception {
-		List<Map<String, Object>> dataList = new ArrayList<Map<String,Object>>();
-		for(int i=1;i<map.size();i++) {
-			Map<String, Object> tmpmap = new HashMap<String, Object>();
-			if(map.get("ctno"+i)!=null){
-				int a = Integer.parseInt(map.get("p_amount"+i).toString());
-				if(a!=0) {
-					tmpmap.put("mno", mno);
-					tmpmap.put("p_month", map.get("pMonth"));
-					tmpmap.put("ctno", map.get("ctno"+i));
-					tmpmap.put("p_amount", map.get("p_amount"+i));
-					dataList.add(tmpmap);
-				}
-			}
-		}
-		mylog.debug("@@@@@@@@@@@@@@@@@@@@@"+dataList.toString());
-		return dataList;
 	}
 
 	@Override
@@ -114,6 +93,11 @@ public class AbookServiceImpl implements AbookService{
 	public void setBud(Map<String, Object> insertMap) {
 		dao.setBud(insertMap);
 	}
-	
+
+	@Override
+	public void updBud(Map<String, Object> updateMap) {
+		dao.updBud(updateMap);
+	}
+	 
 	
 }

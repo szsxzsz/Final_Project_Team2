@@ -297,17 +297,17 @@ public class AssetController {
 	
 	//서비스 객체 주입
 	@Inject
-	private AbookService service;
+	private AbookService abservice;
 	
 	// 1. 서버 Data 불러서 그리드에 뿌리기 ==========================================================
 	@ResponseBody
-	@RequestMapping("/gtest")
+	@RequestMapping("/reqGrid")
 	public JsonObj test (
 			@RequestParam(value = "page", required=false) String page,//page : 몇번째 페이지를 요청했는지
 			@RequestParam(value = "rows", required=false) String rows,//rows : 페이지 당 몇개의 행이 보여질건지
 			@RequestParam(value  = "sidx", required=false) String sidx,//sidx : 소팅하는 기준이 되는 인덱스
 			@RequestParam(value = "sord", required=false) String sord
-			/*@RequestParam Integer mno*/) throws Exception {//sord : 내림차순 또는 오름차순
+			/*@Pathvariable Integer mno*/) throws Exception {//sord : 내림차순 또는 오름차순
 	    	
 		mylog.debug("json controller 실행 시작");
 //		mylog.debug("mno@@@@@@@@:"+mno);
@@ -316,7 +316,7 @@ public class AssetController {
 		// list2: 서버 데이터(VO) 리스트
 		JsonObj obj = new JsonObj();
 		List<Map<String,Object>> list = new ArrayList<Map<String,Object>>();
-		List<?> list2 = service.AbookList();
+		List<?> list2 = abservice.AbookList();
 		mylog.debug("list2######"+list2);
 		
 		int int_page = Integer.parseInt(page);// 1 2 3
@@ -360,7 +360,7 @@ public class AssetController {
 	} // ===========================================================================================================
 	
 	// 그리드 -> DB(서버 데이터)로 수정하고 저장하는 코드
-	@RequestMapping("/getGrid2")
+	@RequestMapping("/saveGrid")
 	 @ResponseBody
 	 public Object saveList(HttpServletRequest request,@RequestBody List<Map<String, Object>> list) throws Exception {
 		
@@ -368,24 +368,24 @@ public class AssetController {
 		  
 //		  JSONArray arr = new JSONArray();
 		  
-		  mylog.debug("0번째 배열!!!!"+list.get(0));
-		  mylog.debug("0번째 배열!!!!"+list.get(3).get("ab_content").toString());
+//		  mylog.debug("0번째 배열!!!!"+list.get(0));
+//		  mylog.debug("0번째 배열!!!!"+list.get(3).get("ab_content").toString());
 		  
 //		List<AbookVO> list7 = new ArrayList<AbookVO>();
 //		
 //		for(int i=0;i<list.size();i++) {
 //	
-		Map<String, Object> map = new HashMap<String, Object>();
-		
-		map.put("abno", list.get(0).get("abno"));
-		map.put("ab_inout", list.get(0).get("ab_inout"));
-		map.put("ab_date", list.get(0).get("ab_date"));
-		map.put("ab_content", list.get(0).get("ab_content"));
-		map.put("ab_amount", list.get(0).get("ab_amount"));
-		map.put("ct_top", list.get(0).get("ct_top"));
-		map.put("ct_bottom",list.get(0).get("ct_bottom"));
-		map.put("ab_memo", list.get(0).get("ab_memo"));
-		
+//		Map<String, Object> map = new HashMap<String, Object>();
+//		
+//		map.put("abno", list.get(0).get("abno"));
+//		map.put("ab_inout", list.get(0).get("ab_inout"));
+//		map.put("ab_date", list.get(0).get("ab_date"));
+//		map.put("ab_content", list.get(0).get("ab_content"));
+//		map.put("ab_amount", list.get(0).get("ab_amount"));
+//		map.put("ct_top", list.get(0).get("ct_top"));
+//		map.put("ct_bottom",list.get(0).get("ct_bottom"));
+//		map.put("ab_memo", list.get(0).get("ab_memo"));
+//		
 //		list7.add(map);
 //		}
 			
@@ -402,7 +402,7 @@ public class AssetController {
 		  
 	  try {
 	   for(int i = 0; i < list.size(); i++) {
-		   AbookVO vo = new AbookVO();
+		AbookVO vo = new AbookVO();
 //	    vo.setMno(Integer.parseInt(tList.get("mno").toString( )));
 	    vo.setAbno(Integer.parseInt(list.get(i).get("abno").toString()));
 	    vo.setAb_inout(Integer.parseInt(list.get(i).get("ab_inout").toString()));
@@ -416,8 +416,8 @@ public class AssetController {
 	    vo.setCt_bottom(list.get(i).get("ct_bottom").toString());
 	   
 	    mylog.debug("!!!!!!!!!!!!!!!!!"+vo);
-	    service.setAbookList(vo);
-	    mylog.debug(vo+"%%%%%%%%%%cont");
+	    abservice.setAbookList(vo);
+//	    mylog.debug(vo+"%%%%%%%%%%cont");
 	   }
 	    result = "success";
 	    resultMsg = "성공" ;
@@ -429,7 +429,7 @@ public class AssetController {
 	  
 	  resultMap.put("result", result);
 	  resultMap.put("resultMsg", resultMsg);
-	  mylog.debug("############resultMap"+resultMap);
+	  mylog.debug("#######resultMap"+resultMap);
 	  
 	  return resultMap;
 	}
@@ -441,8 +441,8 @@ public class AssetController {
 	public String abookList(@RequestParam("mno") int mno, HttpSession session,Model model, HttpServletRequest req, HttpServletResponse res) throws Exception {
 		
 		// 1. 서비스에서 가져오기 
-		List<AbookVO> abookList = service.getAbookList(mno);
-		List<CategoryVO> cateList = service.CateList();
+		List<AbookVO> abookList = abservice.getAbookList(mno);
+		List<CategoryVO> cateList = abservice.CateList();
 		
 		// 2.obj로 담아서 string화
 		ObjectMapper mapper = new ObjectMapper();
@@ -661,13 +661,23 @@ public class AssetController {
 	@PostMapping(value = "/budget")
 	public String budgetPOST(@RequestParam Map map, HttpSession session, Model model) throws Exception {
 		int mno = (int)session.getAttribute("mno");
-
-		List<Map<String, Object>> dataList = abService.formData(map, mno);
+		
+		List<Map<String, Object>> dataList = new ArrayList<Map<String,Object>>();
+		for(int i=1;i<map.size();i++) {
+			Map<String, Object> tmpmap = new HashMap<String, Object>();
+			if(map.get("ctno"+i)!=null){
+				tmpmap.put("mno", mno);
+				tmpmap.put("p_month", map.get("pMonth"));
+				tmpmap.put("ctno", map.get("ctno"+i));
+				tmpmap.put("p_amount", map.get("p_amount"+i));
+				dataList.add(tmpmap);
+			}
+		}
 		Map<String, Object> insertMap = new HashMap<String, Object>();
 		insertMap.put("insertList", dataList);	// key값=collection의 value값
 		abService.setBud(insertMap);
 		
-		return "/asset/ybudget";
+		return "/asset/budReport";
 	}
 
 	// 예산 조회
@@ -706,34 +716,24 @@ public class AssetController {
 	
 	
 	@PostMapping(value = "/updBud")
-	public void updBudPOST(@RequestParam Map map, HttpSession session, Model model) throws Exception {
+	public String updBudPOST(@RequestParam Map map, HttpSession session, Model model) throws Exception {
 		int mno = (int)session.getAttribute("mno");
-		
-		// form data를 저장하는 List<Map>
-		List<Map<String, Object>> planlist = new ArrayList<Map<String,Object>>();
-		for(int i=1;i<planlist.size();i++) {
+//		
+		List<Map<String, Object>> dataList = new ArrayList<Map<String,Object>>();
+		for(int i=1;i<map.size();i++) {
 			Map<String, Object> tmpmap = new HashMap<String, Object>();
 			if(map.get("ctno"+i)!=null){
-				int a = Integer.parseInt(map.get("p_amount"+i).toString());
-				if(a!=0) {
-					tmpmap.put("mno", mno);
-					tmpmap.put("p_month", map.get("pMonth"));
-					tmpmap.put("ctno", map.get("ctno"+i));
-					tmpmap.put("p_amount", map.get("p_amount"+i));
-					planlist.add(tmpmap);
-				}
+				tmpmap.put("pno", map.get("pno"+i));
+				tmpmap.put("p_amount", map.get("p_amount"+i));
+				dataList.add(tmpmap);
 			}
 		}
-		mylog.debug(planlist.toString());
+		Map<String, Object> updateMap = new HashMap<String, Object>();
+		updateMap.put("updateList", dataList);	// key값=collection의 value값
+		abService.updBud(updateMap);
 		
-		// insert하기 위한 insertmap
-		Map<String, Object> insertMap = new HashMap<String, Object>();
-		insertMap.put("planlist", planlist);	// key값=collection의 value값
-		abService.setBud(insertMap);
-		
-//		return "/asset/budUpdate";	
-		
-		
+		mylog.debug("수정완");
+		return "/asset/budReport";	
 	}
 	
 	// http://localhost:8080/asset/budRpt
