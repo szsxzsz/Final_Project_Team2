@@ -111,6 +111,12 @@ public class AbookDAOImpl implements AbookDAO{
 		sqlSession.insert(NAMESPACE+".setBud", insertMap);
 	}
 	
+	@Override
+	public void updBud(Map<String, Object> updateMap) {
+		mylog.debug("updateMap : "+updateMap.toString());
+		sqlSession.update(NAMESPACE+".updBud", updateMap);
+	}
+	
 	
 	
 	
