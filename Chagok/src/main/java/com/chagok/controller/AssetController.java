@@ -4,24 +4,18 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Resource;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.json.simple.JSONArray;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -53,7 +47,6 @@ import com.chagok.service.AccountService;
 import com.chagok.service.OpenBankingService;
 import com.chagok.service.ReportService;
 import com.chagok.service.UserService;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Controller
@@ -621,64 +614,91 @@ public class AssetController {
 //	http://localhost:8080/asset/budget
 //	http://localhost:8080/asset/budget?mm=0
 	@GetMapping(value = "/budget")
-	public String budget(@RequestParam("mm") int mm, HttpSession session, Model model) throws Exception {	
+	public String budgetGET(@RequestParam("mm") int mm, HttpSession session, Model model) throws Exception {	
 		int mno = (int)session.getAttribute("mno");
-		
-		// getctTop
+
 		List<String> ctTopList = abService.getctTop();
-		mylog.debug("ctTopList : "+ctTopList.size());
+		String pMonth = abService.getPMonth(mm);
+		
 		model.addAttribute("ctTopList", ctTopList);
+		model.addAttribute("pMonth", pMonth);
+		model.addAttribute("mm", mm);
 		
 		// chkBud
-		String pMonth = abService.getPMonth(mm);
-		mylog.debug("조회시점(pMonth) : "+pMonth);
-		model.addAttribute("pMonth", pMonth);
-		
 		int chkBud = abService.chkBud(mno, pMonth);
-		mylog.debug("chkBud : "+chkBud);
-		
 		if(chkBud==0) {
-			return "/asset/nbudget";
+			mylog.debug(pMonth+"__예산 없음");
+			return "/asset/budget";
 		} else {
-			return "/asset/ybudget";
+			mylog.debug(pMonth+"__예산 있음");
+			return "/asset/budReport";
 		}
 	}
 	
-	// 예산 조회 (조회시점으로부터 한 달 전)
+	@PostMapping(value = "/budget")
+	public String budgetPOST(@RequestParam Map map, HttpSession session, Model model) throws Exception {
+		int mno = (int)session.getAttribute("mno");
+
+		List<Map<String, Object>> dataList = abService.formData(map, mno);
+		Map<String, Object> insertMap = new HashMap<String, Object>();
+		insertMap.put("insertList", dataList);	// key값=collection의 value값
+		abService.setBud(insertMap);
+		
+		return "/asset/ybudget";
+	}
+
+	// 예산 조회
 	@ResponseBody
-	@PostMapping(value = "/budcopy")
-	public List<Map<String, Object>> budcopy(@RequestParam("mm") int mm, HttpSession session) throws Exception {
+	@GetMapping(value = "/getBud")
+	public List<Map<String, Object>> getBud(@RequestParam("mm") int mm, HttpSession session) throws Exception {
 		int mno = (int)session.getAttribute("mno");
 		
 		// pMonth
-		int mm2 = mm+1;
-		String pMonth = abService.getPMonth(mm2);
-		mylog.debug("조회시점 한 달 전(pMonth) : "+pMonth);
+		String pMonth = abService.getPMonth(mm);
 		
 		// 예산 조회
 		List<Map<String, Object>> budList = abService.getBud(mno, pMonth);
 		if(budList.isEmpty()) {
-			mylog.debug("예산 없음");
+			mylog.debug(pMonth+"__예산 없음");
+			return budList;
+		} else {
+			mylog.debug(pMonth+"__budList : "+budList);
+			return budList;
 		}
-		return budList;
-		
 	}
 	
-	@PostMapping(value = "/budget")
-	public String budget(@RequestParam Map map, HttpSession session, Model model) {
+	@GetMapping(value="/updBud")
+	public String updBudGET(@RequestParam("mm") int mm, HttpSession session, Model model) throws Exception {
+		mylog.debug("updBudGET");
+		int mno = (int)session.getAttribute("mno");
+
+		List<String> ctTopList = abService.getctTop();
+		String pMonth = abService.getPMonth(mm);
+		
+		model.addAttribute("ctTopList", ctTopList);
+		model.addAttribute("pMonth", pMonth);
+		model.addAttribute("mm", mm);
+		return "/asset/budUpdate";
+	}
+	
+	
+	@PostMapping(value = "/updBud")
+	public void updBudPOST(@RequestParam Map map, HttpSession session, Model model) throws Exception {
 		int mno = (int)session.getAttribute("mno");
 		
 		// form data를 저장하는 List<Map>
 		List<Map<String, Object>> planlist = new ArrayList<Map<String,Object>>();
-		for(int i=1;i<12;i++) {
+		for(int i=1;i<planlist.size();i++) {
 			Map<String, Object> tmpmap = new HashMap<String, Object>();
-			
 			if(map.get("ctno"+i)!=null){
-				tmpmap.put("mno", mno);
-				tmpmap.put("p_month", map.get("pMonth"));
-				tmpmap.put("ctno", map.get("ctno"+i));
-				tmpmap.put("p_amount", map.get("p_amount"+i));
-				planlist.add(tmpmap);
+				int a = Integer.parseInt(map.get("p_amount"+i).toString());
+				if(a!=0) {
+					tmpmap.put("mno", mno);
+					tmpmap.put("p_month", map.get("pMonth"));
+					tmpmap.put("ctno", map.get("ctno"+i));
+					tmpmap.put("p_amount", map.get("p_amount"+i));
+					planlist.add(tmpmap);
+				}
 			}
 		}
 		mylog.debug(planlist.toString());
@@ -688,11 +708,18 @@ public class AssetController {
 		insertMap.put("planlist", planlist);	// key값=collection의 value값
 		abService.setBud(insertMap);
 		
-		return "/asset/ybudget";
+//		return "/asset/budUpdate";	
+		
+		
 	}
 	
+	// http://localhost:8080/asset/budRpt
+	@GetMapping(value="/budRpt")
+	public String budRpt() throws Exception {
+		
 
-	
+		return "/asset/budReport";
+	}
 	
 	///////////////////MJ////////////////////
 }
