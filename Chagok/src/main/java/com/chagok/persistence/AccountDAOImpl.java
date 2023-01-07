@@ -152,6 +152,14 @@ public class AccountDAOImpl implements AccountDAO{
 		return list;
 	}
 
+	@Override
+	public List<CardHistoryVO> getCardHistory(String card_id) throws Exception {
+		
+		List<CardHistoryVO> list = sqlSession.selectList(NAMESPACE+".getCardHistoryList", card_id);
+				
+		return list;
+	}
+
 	
 	
 	

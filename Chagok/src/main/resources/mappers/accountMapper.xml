@@ -52,4 +52,9 @@
 		order by tran_date desc
 	</select>
 	
+	<select id="getCardHistoryList" resultType="com.chagok.apiDomain.CardHistoryVO">
+		select * from card_history where card_id = #{card_id} 
+		order by card_tran_date desc
+	</select>
+	
   </mapper>
