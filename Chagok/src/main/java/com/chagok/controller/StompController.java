@@ -10,11 +10,8 @@
 //import org.springframework.web.bind.annotation.RequestParam;
 //import org.springframework.web.bind.annotation.RestController;
 //
-
-//import com.chagok.domain.MessageDTO;
-
-
-//
+//import com.chagok.domain.FeedDTO;
+//import com.chagok.domain.MessageVO;
 //
 //@RestController
 //public class StompController {
@@ -54,7 +51,6 @@
 //		
 //	}
 //	
-//	
 //    @MessageMapping(value = "/TTTx")
 //    @SendTo("/topic/message")
 //    public String tttMessage(String message) throws Exception{
@@ -64,9 +60,9 @@
 //	
 //   // @MessageMapping(value = "/TTT")
 //    @SendTo("/topic/message")
-//    public MessageDTO ttt(MessageDTO message) throws Exception{
+//    public MessageVO ttt(MessageVO message) throws Exception{
 //    	System.out.println("stomp message>>"+ message);
-//    	System.out.println("ID =" + message.getMno()); // 클라이언트의 id
+////    	System.out.println("ID =" + message.g); // 클라이언트의 id
 //    	return message;
 //    }
 //    
@@ -76,15 +72,23 @@
 ////    	System.out.println("ID =" + message.getMno()); // 클라이언트의 id
 ////    	return message;
 ////    }
-//    
+////    
 //    @MessageMapping("/user/{cno}")
 //    @SendTo("/topic/feed/{cno}")
-//    public MessageDTO ttte(MessageDTO message, @RequestParam int cno) throws Exception{
-//    	
-//    	
-//    	
+//    public MessageVO ttte(MessageVO message, @RequestParam int cno) throws Exception{
 //    	System.out.println(cno+ "번 message>>"+ message);
-//    	System.out.println("ID =" + message.getMno()); // 클라이언트의 id
+////    	System.out.println("ID =" + message.getMno()); // 클라이언트의 id
 //    	return message;
 //    }
+//    
+//    @MessageMapping("/chat/enter") // 호출함(socket.send)
+//    public void enter(MessageVO message, FeedDTO feed) throws Exception{
+//    	System.out.println(message.getWriter()+"님이 채팅방에 참여했습니다.");
+//    	template.convertAndSend("/queue/chat/room"+feed.getRoomId(),message);
+//    }
+//    
+//    
+//    
+//    
+//    
 //}

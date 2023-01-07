@@ -10,7 +10,7 @@
 <h1 style="padding-left: 50px;">절약형 차곡 챌린지</h1>
 
 <%-- ${mno } --%>
-${vo }
+<%-- ${vo } --%>
 <div class="row" style="margin-left:30px; margin-top:30px;">
 	<div class="col-lg-4 aos-init aos-animate" data-aos="fade-right">
 <!--        아래 이미지 주소는 디비에서 꺼내오는걸로 바꿔야해요 -->
@@ -77,9 +77,9 @@ ${vo }
 		    <div class="box">
 		        <div class="col-md-12 text-center" style="background: #FAF8F1; height: 50px;">
 				    	<h4 style="marfin-top: 14px;">
-				    	총<span style="color: #10A19D;">${vo.c_total }</span>번을
-				    	<span style="color: #10A19D;">${vo.c_freq }</span>일 마다 
-				    	<span style="color: #10A19D;">${vo.c_amount }</span>원씩 저축하는 조건이 있습니다.
+				    	<span style="color: #10A19D;">${vo.c_period }</span>주 동안
+				    	<span style="color: #10A19D;">${vo2.ct_top }</span> 해당 비용을
+				    	총 <span style="color: #10A19D;">${vo.c_amount }</span>원 절약합니다.
 				    	</h4>
 		    	</div>
 		    </div>
@@ -124,11 +124,12 @@ ${vo }
         		
         		var ctno = ${vo.ctno};
         		var mno = ${mno};
-        		var test = {"ctno":ctno,"mno":mno};
+        		var cno = ${vo.cno};
+        		var test = {"ctno":ctno,"mno":mno,"cno":cno};
         		
 				$.ajax({
         			type : "post",
-        			url : "/challenge/plusdetailPOST",
+        			url : "/challenge/minusdetailPOST",
         			contentType : "application/json",
         			dataType :'text',
         			data : JSON.stringify(test),
@@ -136,15 +137,13 @@ ${vo }
         			success : function(data){
 						console.log('통신 성공! ' + data);
         				if(data == "N"){ // 중복된 카테고리num이 아닐 때
-//         					result = "참여 가능한 챌린지 입니다!";
 //         					$("#result_samechallenge").html(result).css("color","green");
-        					alert("참여 가능한 챌린지 입니다!");
+        					alert("참여 가능한 챌린지 입니다! \n 가계부 카테고리 당 하나씩 참여 가능합니다.");
         					location.href="/commumain";
         				}else{ // 중복된 챌린지 or 중복된 상세카테고리 챌린지 
-//         					result="해당 카테고리로 참여 중인 챌린지가 있습니다.";
 //         					$("result_samechallenge").html(result).css("color","red");
         					alert("해당 카테고리로 참여 중인 챌린지가 있습니다.");
-//         					return;
+        					return false;
         				}
         			},
         				error : function(error, data){

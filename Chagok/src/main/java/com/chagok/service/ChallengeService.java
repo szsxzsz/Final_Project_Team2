@@ -51,17 +51,17 @@ public interface ChallengeService {
 	public List<ChallengeVO> getChallengeList() throws Exception;
 	
 	// 중복 챌린지 체크
-	public Integer samechallenge(Map<String, Integer> map);
+	public Integer samechallenge(Map<String, Object> map);
 	
 	// 저축형 챌린지 참여 - plus테이블에 mno랑 cno insert
-	public void joinplusInsert(PlusVO vo);
+	public void joinplusInsert(Map<String, Object> map);
 	
-	// 저축형 챌린지 참여 - challenge테이블 c_person에 ",닉네임" 업데이트하기
-	public void joinplusUpdate1(String nick, Integer cno);
+	// 저축형&절약형 챌린지 참여 - challenge테이블 c_person에 ",닉네임" 업데이트 , c_cnt에 +1하기
+	public void joinplusUpdate(Map<String, Object> map);
 	
-	// 저축형 챌린지 참여 - challenge테이블 c_cnt에 +1하기
-	public void joinplusUpdate2(Integer cno);
-		
+	// 절약형 챌린지 참여 - minus테이블에 mno랑 cno insert
+	public void joinminusInsert(Map<String, Object> map);
+	
 	// 챌린지 피드 인원 조회
 //	public List<Map<String, Object>> getCList(Integer cno);
 	public int getCList(Integer cno) throws Exception;

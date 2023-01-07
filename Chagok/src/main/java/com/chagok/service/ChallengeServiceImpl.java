@@ -112,7 +112,7 @@ public class ChallengeServiceImpl implements ChallengeService{
 
 	// 중복챌린지 체크
 	@Override
-	public Integer samechallenge(Map<String, Integer> map) {
+	public Integer samechallenge(Map<String, Object> map) {
 		mylog.debug("service : samechallenge 호출");
 		return dao.samechallenge(map);
 	}
@@ -131,27 +131,27 @@ public class ChallengeServiceImpl implements ChallengeService{
 		return  dao.getCList(cno);
 		
 	}
-
 	// 저축형 챌린지 참여 - plus테이블에 mno랑 cno insert
 	@Override
-	public void joinplusInsert(PlusVO vo) {
+	public void joinplusInsert(Map<String, Object> map) {
 		mylog.debug("service: joinplusInsert 호출");
-		dao.joinplusInsert(vo);
+		dao.joinplusInsert(map);
 	}
-	// 저축형 챌린지 참여 - challenge테이블 c_person에 ",닉네임" 업데이트하기
+	// 저축형&절약형 챌린지 참여 - challenge테이블 c_person에 ",닉네임" 업데이트하기
 	@Override
-	public void joinplusUpdate1(String nick, Integer cno) {
-		mylog.debug("service: joinplusUpdate1 호출");
-		dao.joinplusUpdate1(nick, cno);
+	public void joinplusUpdate(Map<String, Object> map) {
+		mylog.debug("service: joinplusUpdate 호출");
+		dao.joinplusUpdate(map);
+	}
+
+	// 절약형 챌린지 참여 - minus테이블에 mno랑 cno insert
+	@Override
+	public void joinminusInsert(Map<String, Object> map) {
+		mylog.debug("service: joinminusInsert 호출");
+		dao.joinminusInsert(map);
 		
 	}
-	// 저축형 챌린지 참여 - challenge테이블 c_cnt에 +1하기
-	@Override
-	public void joinplusUpdate2(Integer cno) {
-		mylog.debug("service: joinplusUpdate2 호출");
-		dao.joinplusUpdate2(cno);
-	}
-	
+
 	// 게시판 글 수정
 	@Override
 	public Integer updateBoard(BoardVO vo) throws Exception {
