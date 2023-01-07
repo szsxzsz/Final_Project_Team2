@@ -2,6 +2,7 @@ package com.chagok.domain;
 
 import java.sql.Timestamp;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -20,7 +21,7 @@ public class FeedDTO {
 	
 	private String roomId;
 	private int cno;  // 채팅 방 번호
-	private MessageVO message;
+	private List<MessageVO> message;
     private String name; // 채팅방 이름 (필요없음)
     private Set<WebSocketSession> sessions = new HashSet<WebSocketSession>();
     //WebSocketSession은 Spring에서 Websocket Connection이 맺어진 세션
