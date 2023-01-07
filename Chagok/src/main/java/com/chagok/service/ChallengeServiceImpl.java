@@ -130,27 +130,27 @@ public class ChallengeServiceImpl implements ChallengeService{
 		return  dao.getCList(cno);
 		
 	}
-
 	// 저축형 챌린지 참여 - plus테이블에 mno랑 cno insert
 	@Override
 	public void joinplusInsert(Map<String, Object> map) {
 		mylog.debug("service: joinplusInsert 호출");
 		dao.joinplusInsert(map);
 	}
-	// 저축형 챌린지 참여 - challenge테이블 c_person에 ",닉네임" 업데이트하기
+	// 저축형&절약형 챌린지 참여 - challenge테이블 c_person에 ",닉네임" 업데이트하기
 	@Override
 	public void joinplusUpdate(Map<String, Object> map) {
 		mylog.debug("service: joinplusUpdate 호출");
 		dao.joinplusUpdate(map);
+	}
+
+	// 절약형 챌린지 참여 - minus테이블에 mno랑 cno insert
+	@Override
+	public void joinminusInsert(Map<String, Object> map) {
+		mylog.debug("service: joinminusInsert 호출");
+		dao.joinminusInsert(map);
 		
 	}
-	// 저축형 챌린지 참여 - challenge테이블 c_cnt에 +1하기
-//	@Override
-//	public void joinplusUpdate2(Map<String, Object> map) {
-//		mylog.debug("service: joinplusUpdate2 호출");
-//		dao.joinplusUpdate2(map);
-//	}
-//	
+
 	// 게시판 글 수정
 	@Override
 	public Integer updateBoard(BoardVO vo) throws Exception {

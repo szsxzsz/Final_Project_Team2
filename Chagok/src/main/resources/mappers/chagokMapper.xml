@@ -117,30 +117,17 @@
 		insert into plus(mno,cno) values(#{mno},#{cno});
 	</insert>
 	
-	<!-- 저축형 챌린지 참여 - challenge테이블 c_person에 ",닉네임" 업데이트하기 -->
+	<!-- 저축형&절약형 챌린지 참여 - challenge테이블 c_person에 ",닉네임" 업데이트하기 -->
 	<update id="joinplusUpdate" parameterType="map">
 		update challenge set c_person = concat(c_person, ',', (select nick from user where mno=#{mno})),
 		c_cnt=c_cnt+1
 		where cno=#{cno};
 	</update>
-<!-- 		update challenge A inner join user B -->
-<!-- 		on A.mno = B.mno -->
-<!-- 		set c_person = concat(c_person,',',#{nick})  -->
-<!-- 		where cno =#{cno}; -->
 	
-	<!-- 저축형 챌린지 참여 - challenge테이블 c_cnt에 +1하기 -->
-<!-- 	<update id="joinplusUpdate2" parameterType="map"> -->
-<!-- 		update challenge set(c_cnt) values(c_cnt+1)  -->
-<!-- 		where cno =#{cno}; -->
-<!-- 	</update> -->
-	
-<!-- 	<insert id="joinplus"> -->
-<!-- 		insert all  -->
-<!-- 		into challenge(c_person,c_cnt) values(#{c_person},#{c_cnt})  -->
-<!-- 		into plus(mno,cno) values(#{mno},#{cno})  -->
-<!-- 		select c_person c_person,c_cnt c_cnt,mno mno,cno cno -->
-<!-- 		from dual; -->
-<!-- 	</insert> -->
+	<!-- 절약형 챌린지 참여 - minus 테이블에 mno랑 cno insert -->
+	<insert id="joinminusInsert" parameterType="map">
+		insert into minus(mno,cno) values(#{mno},#{cno});
+	</insert>
 	
 	<!-- 챌린지 종료일자 정보 가져오기  -->
 	<select id="getChallengeEndDate" resultType="date">

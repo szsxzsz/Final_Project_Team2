@@ -143,8 +143,6 @@ public class ChallengeController {
 		
 		String result="";
 		
-//		Map<String, Object> map2 = new HashMap<String, Object>();
-//		
 		Integer gctno = service.samechallenge(map);	
 		mylog.debug(gctno+"");
 		if(gctno != null) {
@@ -155,16 +153,10 @@ public class ChallengeController {
 			mylog.debug(map+"");
 			service.joinplusInsert(map); // mno랑 cno필요
 			service.joinplusUpdate(map); // nick이랑 cno
-////		service.joinplusUpdate2(map);
-//			mylog.debug(service.samechallenge(map)+"");
 		}
 	
-//		model.addAttribute("pvo", vo);
-//		model.addAttribute(attributeName, attributeValue);
-//		model.addAttribute("cno", cno);
 		mylog.debug(result);
 		return result;
-//		return "/challenge/plusdetail";
 	}
 
 	// http://localhost:8080/challenge/minusdetail?cno=1
@@ -178,7 +170,6 @@ public class ChallengeController {
 		ChallengeVO vo2 = service.getCt_top(cno);
 		
 		model.addAttribute("vo", vo); // minusdetail로 정보전달
-		
 		model.addAttribute("vo2", vo2);
 
 		return "/challenge/minusdetail";
@@ -190,20 +181,23 @@ public class ChallengeController {
 		mylog.debug("minusdetailPOST 호출");
 		mylog.debug(map+"");
 		
-		session.getAttribute("nick");
-//		Map<String, Object> map2 = new HashMap<String, Object>();
-		
-		String result="N";
-		
-		service.samechallenge(map);
-		map.put("nick", session.getAttribute("nick"));
+		String result="";
 		
 		Integer gctno = service.samechallenge(map);	
 		mylog.debug(gctno+"");
-		if(gctno != null) result = "Y";
+		if(gctno != null) {
+			result = "Y";
+		}else {
+			result = "N";
+
+			mylog.debug(map+"");
+			service.joinminusInsert(map); // mno랑 cno필요
+			service.joinplusUpdate(map); // nick이랑 cno
+		}
+	
+		mylog.debug(result);
 		return result;
-//		return "/challenge/minusdetail";
-	}
+}
 
 	// http://localhost:8080/challenge/echo
 	@GetMapping(value = "/echo")

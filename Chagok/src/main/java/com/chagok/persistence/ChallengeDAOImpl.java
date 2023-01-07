@@ -231,28 +231,22 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 	// 저축형 챌린지 참여 - plus테이블에 mno랑 cno insert
 	@Override
 	public void joinplusInsert(Map<String, Object> map) {
-		mylog.debug("joinplusInsert(map) 호출");
+		mylog.debug("dao :joinplusInsert(map) 호출");
 		sqlSession.insert(NAMESPACE+".joinplusInsert", map);
 	}
-	// 저축형 챌린지 참여 - challenge테이블 c_person에 ",닉네임" 업데이트하기
+	// 저축형&절약형 챌린지 참여 - challenge테이블 c_person에 ",닉네임" 업데이트하기
 	@Override
 	public void joinplusUpdate(Map<String, Object> map) {
-		mylog.debug("joinplusUpdate 호출 닉네임 업데이트, c_cnt+1");
-//		Map map = new HashMap();
-//		map.put("nick", nick);
-//		map.put("cno", cno);
+		mylog.debug("dao :joinplusUpdate 호출 닉네임 업데이트, c_cnt+1");
 		sqlSession.update(NAMESPACE+".joinplusUpdate", map);
 	}
-	
-	// 저축형 챌린지 참여 - challenge테이블 c_cnt에 +1하기
-//	@Override
-//	public void joinplusUpdate2(Map<String, Object> map) {
-//		mylog.debug("joinplusUpdate2(cno) 호출");
-//		sqlSession.update(NAMESPACE+".joinplusUpdate2", map);
-//	}
+	// 절약형 챌린지 참여 - minus테이블에 mno랑 cno insert
+	@Override
+	public void joinminusInsert(Map<String, Object> map) {
+		mylog.debug("dao :joinminusInsert(map) 호출");
+		sqlSession.insert(NAMESPACE+".joinminusInsert", map);
+	}
 
-	
-	
 	// 명예의 전당 순위
 	@Override
 	public List<UserVO> ranking() throws Exception {

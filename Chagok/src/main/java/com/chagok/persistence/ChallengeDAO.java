@@ -46,11 +46,11 @@ public interface ChallengeDAO {
 	// 저축형 챌린지 참여 - plus테이블에 mno랑 cno insert
 	public void joinplusInsert(Map<String, Object> map);
 	
-	// 저축형 챌린지 참여 - challenge테이블 c_person에 ",닉네임" 업데이트 , c_cnt에 +1하기
+	// 저축형&절약형 챌린지 참여 - challenge테이블 c_person에 ",닉네임" 업데이트 , c_cnt에 +1하기
 	public void joinplusUpdate(Map<String, Object> map);
 	
-	// 저축형 챌린지 참여 - challenge테이블 c_cnt에 +1하기
-//	public void joinplusUpdate2(Map<String, Object> map);
+	// 절약형 챌린지 참여 - minus테이블에 mno랑 cno insert
+	public void joinminusInsert(Map<String, Object> map);
 	
 	// 게시판 글 조회
 	public BoardVO getBoardContent(Integer bno);
