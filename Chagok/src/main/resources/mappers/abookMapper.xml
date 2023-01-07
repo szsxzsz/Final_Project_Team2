@@ -60,7 +60,7 @@
 	<insert id="setBud" parameterType="map">
 		insert into plan (mno, p_month, p_amount, ctno)
 		values
-		<foreach item="i" collection="planlist" separator=",">
+		<foreach item="i" collection="insertList" separator=",">
 			(#{i.mno}, #{i.p_month}, #{i.p_amount}, #{i.ctno})
 		</foreach>
 	</insert>

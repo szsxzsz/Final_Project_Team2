@@ -29,11 +29,15 @@ public interface AbookService {
 	
 	
 	///////////////////MJ/////////////////////
+	
 	//  n달 전
 	public String getPMonth(int mm) throws Exception;
 	
 	// ct_top
 	public List<String> getctTop() throws Exception;
+	
+	// form data 저장하는 list->map
+	public List<Map<String, Object>> formData(Map map, int mno) throws Exception;
 	
 	// 1. 예산 유무
 	public int chkBud(int mno, String pMonth) throws Exception;

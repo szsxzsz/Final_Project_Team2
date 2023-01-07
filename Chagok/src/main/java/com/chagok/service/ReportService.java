@@ -74,5 +74,8 @@ public interface ReportService {
 	
 	// 4. 카드 추천
 	public List<PropCardVO> cardRand(Integer mno) throws Exception;
+
+	
+	//////////////////////// budgetReport ////////////////////////
 	
 }

@@ -48,7 +48,6 @@ import com.chagok.domain.ChallengeVO;
 import com.chagok.domain.JsonObj;
 import com.chagok.domain.PropCardVO;
 import com.chagok.domain.UserVO;
-import com.chagok.persistence.PlanVO;
 import com.chagok.service.AbookService;
 import com.chagok.service.AccountService;
 import com.chagok.service.OpenBankingService;

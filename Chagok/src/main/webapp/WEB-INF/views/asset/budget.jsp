@@ -9,60 +9,58 @@
 	<a href="/asset/budget?mm=1">지난 달</a>
 	<a href="/asset/budget?mm=2">2개월 전</a>
 	<a href="/asset/budget?mm=3">3개월 전</a>
-</div>
-
 <hr>
-<h3>설정된 예산이 없어요 ㅜ^ㅜ</h3>
-<h3>예산은 효율적이고 계획적인 소비 습관 생성에 도움이 됩니다.</h3>
-
-<div id="div1">
-	<input type="button" id="setbud" class="btn btn-block btn-success btn-lg" 
-	style="width: 200px; margin: 20px 40px" value="한 달 예산 세우기">   
 </div>
 
-<div id="div2">
-	<div class="box box-info">
-	<form class="form-horizontal" id="budform" method="post">
-		<c:set var="mm" value="${param.mm }"/>
-		<div class="box-body">
-			<div class="form-group">
-				<label for="sumpamt" class="col-sm-2 control-label">${pMonth }월 예산</label>
-				<div class="col-sm-10">
-					<input type="hidden" name="pMonth" value="${pMonth }">
-					<input type="text" class="form-control" id="sumpamt" placeholder="예산을 입력하세요" maxlength="10" onkeyup="inputNumFmt(this);">
+		<div id="div1">
+			<h3>설정된 예산이 없어요 ㅜ^ㅜ</h3>
+			<h3>예산은 효율적이고 계획적인 소비 습관 생성에 도움이 됩니다.</h3>
+			<input type="button" id="setbud" class="btn btn-block btn-success btn-lg" 
+			style="width: 200px; margin: 20px 40px" value="한 달 예산 세우기">   
+		</div>
+
+		<div id="div2">
+			<div class="box box-info">
+			<form class="form-horizontal" id="budform" method="post">
+				<c:set var="mm" value="${param.mm }"/>
+				<div class="box-body">
+					<div class="form-group">
+						<label for="sumpamt" class="col-sm-2 control-label">${pMonth }월 예산</label>
+						<div class="col-sm-10">
+							<input type="hidden" name="pMonth" value="${pMonth }">
+							<input type="text" class="form-control" id="sumpamt" placeholder="예산을 입력하세요" maxlength="10" onkeyup="inputNumFmt(this);">
+						</div>
+						<div class="col-sm-10">
+							<span>지난달 예산 : </span><span id="prevsum"></span><br>
+							<span>최근 3개월 간 평균 지출 : </span><span id="prevavg"></span>
+						</div>
+					</div>
 				</div>
-				<div class="col-sm-10">
-					<span>지난달 예산 : </span><span id="prevsum"></span><br>
-					<span>최근 3개월 간 평균 지출 : </span><span id="prevavg"></span>
-				</div>
+				
+				<div id="textdiv"></div>
+				
+				<div class="box-footer">
+					<input type="submit" class="btn btn-info pull-right" value="등록하기"/>
+					<button type="button" id="copy" class="btn btn-info pull-right">지난달 예산 복사하기</button>
+				</div>	
+					      
+				<c:forEach var="top" items="${ctTopList }" varStatus="status">
+					<c:set var="i" value="${status.count}"/>
+					<div class="box-body">
+						<div class="form-group">
+							<label for="pamt${i}" id="label${i}" class="col-sm-2 control-label">${top }</label>
+							<div class="col-sm-10">
+								<input type="hidden" name="ctno${i}" value="${i}">
+								<input type="text" class="form-control" id="pamt${i}" name="p_amount${i}" placeholder="예산을 입력하세요" maxlength="10" onkeyup="inputNumFmt(this);">
+							</div>
+							<p class="col-sm-2 control-label">지난달 예산 <span id="prevamt${i}"></span> 원</p>
+						</div>
+					</div>
+				</c:forEach>
+				
+			</form>
 			</div>
 		</div>
-		
-		<div id="textdiv"></div>
-		
-		<div class="box-footer">
-			<input type="submit" class="btn btn-info pull-right" value="등록하기"/>
-			<button type="button" id="copy" class="btn btn-info pull-right">지난달 예산 복사하기</button>
-		</div>	
-			      
-		<c:forEach var="top" items="${ctTopList }" varStatus="status">
-			<c:set var="i" value="${status.count}"/>
-			<div class="box-body">
-				<div class="form-group">
-					<label for="pamt${i}" id="label${i}" class="col-sm-2 control-label">${top }</label>
-					<div class="col-sm-10">
-						<input type="hidden" name="ctno${i}" value="${i}">
-						<input type="text" class="form-control" id="pamt${i}" name="p_amount${i}" placeholder="예산을 입력하세요" maxlength="10" onkeyup="inputNumFmt(this);">
-					</div>
-					<p class="col-sm-2 control-label">지난달 예산 <span id="prevamt${i}"></span> 원</p>
-				</div>
-			</div>
-		</c:forEach>
-		
-	</form>
-</div>
-</div>
-
 
 <!-- jQuery.number -->
 <script src="/resources/js/jquery.number.min.js"></script>
@@ -95,20 +93,20 @@
 <script type="text/javascript">
 
 $(document).ready(function(){
-	var sum = 0;
+
 	$('#div2').hide();
 	
+	var sum = 0;
 	$('#setbud').click(function(){
 		$('#div1').hide();
 		$('#div2').show();
-		var mm = ${mm};
+		// 한 달 이전 예산
 		$.ajax({
-			type : "post",
-			url : "/asset/budcopy",
-			data : {"mm":mm},
+			type : "get",
+			url : "/asset/getBud?mm="+(${mm}+1),
 			dataType : "json",
 			success : function(data) {
-				console.log('ajax 성공');
+				console.log('한 달 이전 예산 가져오기');
 				console.log(data);
 				$(data).each(function(index, item){
 					for(i=1; i<12; i++){
@@ -131,14 +129,14 @@ $(document).ready(function(){
 				console.log('ajax 오류');
 			}
 		});   //ajax
-	});   //click
+	});   //setbud
    
 	$('#copy').click(function(){
 		for(i=1; i<12; i++){
 			$('#pamt'+i+'').val($('#prevamt'+i+'').text());
 		}
 		$('#sumpamt').val($('#prevsum').text());
-	});
+	});	// copy
 	
 	$('#budform').submit(function() {
 		var a = 0;
@@ -177,7 +175,7 @@ $(document).ready(function(){
 			$('#textdiv').html("카테고리별 예산의 합이 총 예산보다 적어요. 모든 금액을 분배해주세요.");
 			return false;
 		}
-	});
+	});	// submit
 });
 
 </script>
