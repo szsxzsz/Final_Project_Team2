@@ -26,6 +26,7 @@ import org.springframework.web.util.WebUtils;
 import com.chagok.domain.ChallengeVO;
 import com.chagok.domain.Criteria;
 import com.chagok.domain.PageMaker;
+import com.chagok.domain.SearchCriteria;
 import com.chagok.domain.UserVO;
 import com.chagok.interceptor.SessionNames;
 import com.chagok.service.ChallengeService;
@@ -63,7 +64,7 @@ public class ChagokController {
 	// 챌린지 목록 불러오기 (커뮤메인)
 	// http://localhost:8080/commumain
 	@GetMapping(value="/commumain")
-	public String getChallengeList(Model model, Criteria cri, @ModelAttribute("result") String result) throws Exception {
+	public String getChallengeList(Model model, Criteria cri, @ModelAttribute("result") String result, SearchCriteria scri) throws Exception {
 		mylog.debug(" /commumain 호출 ");
 		
 		// 전달받은 정보 x
@@ -72,7 +73,7 @@ public class ChagokController {
 		// 서비스 -> DAO 게시판 리스트 가져오기
 		List<ChallengeVO> challengeList = service2.getChallengeList();
 		List<UserVO> ranking = service2.ranking();
-		List<ChallengeVO> cList = service2.cList(cri);
+		List<ChallengeVO> cList = service2.cList(scri);
 		
 		// 연결되어 있는 뷰페이지로 정보 전달 (Model 객체)
 		model.addAttribute("challengeList", challengeList);
@@ -81,8 +82,8 @@ public class ChagokController {
 		
 		// 페이징 처리
 		PageMaker pageMaker = new PageMaker();
-		pageMaker.setCri(cri);
-		pageMaker.setTotalCount(service2.cListCount());
+		pageMaker.setCri(scri);
+		pageMaker.setTotalCount(service2.cListCount(scri));
 		
 		model.addAttribute("pageMaker", pageMaker);
 		

@@ -95,11 +95,13 @@ public class ChallengeController {
 	public String plusdetailGET(Model model, @RequestParam("cno") Integer cno, HttpSession session) throws Exception {
 		mylog.debug("plusdetailGET 호출");
 		mylog.debug(cno + "");
-
+		
+	
 		ChallengeVO vo = service.getChallengeInfo(cno);
-
+		// mno에 해당하는 user의 nick을 받아옴
+		model.addAttribute("user", uservice.getUser(vo.getMno())); 
+		
 		ChallengeVO vo2 = service.getCt_top(cno);
-
 
 		model.addAttribute("vo", vo); // plusdetail로 정보전달
 
@@ -135,30 +137,26 @@ public class ChallengeController {
 
 	@PostMapping(value = "/plusdetailPOST")
 	@ResponseBody // ajax 값을 바로 jsp에 보내기 위해 사용@RequestParam("ctno") int ctno, 
-	public String plusdetailPOST(@RequestBody Map<String, Integer> map) throws Exception {
+	public String plusdetailPOST(@RequestBody Map<String, Object> map,HttpSession session) throws Exception {
 		mylog.debug("plusdetailPOST 호출");
 		mylog.debug(map+"");
 		
-		String result="N";
+		String result="";
 		
-//		Map<String, Object> map2 = new HashMap<String, Object>();
-
-		service.samechallenge(map); // ctno랑 mno 담겨있음 ajax
-//		service.joinplusInsert(vo); // mno랑 cno필요
-//		service.joinplusUpdate1(nick, cno); // nick  => map어케 또 받지...;;
-//		service.joinplusUpdate2(cno);
-		mylog.debug(service.samechallenge(map)+"");
-//		
 		Integer gctno = service.samechallenge(map);	
 		mylog.debug(gctno+"");
-		if(gctno != null) result = "Y";
+		if(gctno != null) {
+			result = "Y";
+		}else {
+			result = "N";
+
+			mylog.debug(map+"");
+			service.joinplusInsert(map); // mno랑 cno필요
+			service.joinplusUpdate(map); // nick이랑 cno
+		}
 	
-//		model.addAttribute("pvo", vo);
-//		model.addAttribute(attributeName, attributeValue);
-//		model.addAttribute("cno", cno);
-		
+		mylog.debug(result);
 		return result;
-//		return "/challenge/plusdetail";
 	}
 
 	// http://localhost:8080/challenge/minusdetail?cno=1
@@ -168,11 +166,10 @@ public class ChallengeController {
 		mylog.debug(cno+"");
 		
 		ChallengeVO vo = service.getChallengeInfo(cno);
-		
+		model.addAttribute("user", uservice.getUser(vo.getMno())); 
 		ChallengeVO vo2 = service.getCt_top(cno);
 		
 		model.addAttribute("vo", vo); // minusdetail로 정보전달
-		
 		model.addAttribute("vo2", vo2);
 
 		return "/challenge/minusdetail";
@@ -180,20 +177,27 @@ public class ChallengeController {
 	
 	@PostMapping(value = "/minusdetailPOST")
 	@ResponseBody // ajax 값을 바로 jsp에 보내기 위해 사용@RequestParam("ctno") int ctno, 
-	public String minusdetailPOST(@RequestBody Map<String, Integer> map) throws Exception {
+	public String minusdetailPOST(@RequestBody Map<String, Object> map,HttpSession session) throws Exception {
 		mylog.debug("minusdetailPOST 호출");
 		mylog.debug(map+"");
 		
-		String result="N";
+		String result="";
 		
-		service.samechallenge(map);
-
 		Integer gctno = service.samechallenge(map);	
 		mylog.debug(gctno+"");
-		if(gctno != null) result = "Y";
+		if(gctno != null) {
+			result = "Y";
+		}else {
+			result = "N";
+
+			mylog.debug(map+"");
+			service.joinminusInsert(map); // mno랑 cno필요
+			service.joinplusUpdate(map); // nick이랑 cno
+		}
+	
+		mylog.debug(result);
 		return result;
-//		return "/challenge/minusdetail";
-	}
+}
 
 	// http://localhost:8080/challenge/echo
 	@GetMapping(value = "/echo")

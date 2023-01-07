@@ -9,6 +9,7 @@ import com.chagok.domain.ChallengeVO;
 import com.chagok.domain.Criteria;
 import com.chagok.domain.MinusVO;
 import com.chagok.domain.PlusVO;
+import com.chagok.domain.SearchCriteria;
 import com.chagok.domain.UserVO;
 
 public interface ChallengeService {
@@ -50,17 +51,17 @@ public interface ChallengeService {
 	public List<ChallengeVO> getChallengeList() throws Exception;
 	
 	// 중복 챌린지 체크
-	public Integer samechallenge(Map<String, Integer> map);
+	public Integer samechallenge(Map<String, Object> map);
 	
 	// 저축형 챌린지 참여 - plus테이블에 mno랑 cno insert
-	public void joinplusInsert(PlusVO vo);
+	public void joinplusInsert(Map<String, Object> map);
 	
-	// 저축형 챌린지 참여 - challenge테이블 c_person에 ",닉네임" 업데이트하기
-	public void joinplusUpdate1(String nick, Integer cno);
+	// 저축형&절약형 챌린지 참여 - challenge테이블 c_person에 ",닉네임" 업데이트 , c_cnt에 +1하기
+	public void joinplusUpdate(Map<String, Object> map);
 	
-	// 저축형 챌린지 참여 - challenge테이블 c_cnt에 +1하기
-	public void joinplusUpdate2(Integer cno);
-		
+	// 절약형 챌린지 참여 - minus테이블에 mno랑 cno insert
+	public void joinminusInsert(Map<String, Object> map);
+	
 	// 챌린지 피드 인원 조회
 //	public List<Map<String, Object>> getCList(Integer cno);
 	public int getCList(Integer cno) throws Exception;
@@ -78,10 +79,10 @@ public interface ChallengeService {
 	public List<UserVO> ranking() throws Exception;
 	
 	// 챌린지 목록 (페이징)
-	public List<ChallengeVO> cList(Criteria cri) throws Exception;
+	public List<ChallengeVO> cList(SearchCriteria scri) throws Exception;
 	
 	// 챌린지 총 갯수 (페이징)
-	public Integer cListCount() throws Exception;
+	public Integer cListCount(SearchCriteria scri) throws Exception;
 	
 	// 챌린지 예치금 합산
 	public int getChallengeMoney(Integer cno) throws Exception;
