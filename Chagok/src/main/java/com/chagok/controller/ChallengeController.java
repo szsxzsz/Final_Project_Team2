@@ -240,7 +240,7 @@ public class ChallengeController {
 		model.addAttribute("vo", vo);
 		model.addAttribute("challengeList", challengeList);
 		model.addAttribute("c_end", service.getChallengeEndDate(cno));
-
+		model.addAttribute("user", uservice.getUser(vo.getMno())); 
 		model.addAttribute("CList",CList);
 		model.addAttribute("vo2", vo2);
 		model.addAttribute("result", result);

@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <%@ include file="../include/header.jsp"%>
 <%@ include file="../include/sidebar.jsp"%>
@@ -11,7 +13,17 @@ ${review }
 	<div class="box-body">
 		<form role="form" action="" method="post">
 		<div class="input-group">
-			<span class="input-group-addon"> ${review.c_sort } </span> 
+		
+			
+				<c:if test="${review.c_sort eq 0 }">
+					<c:set var="sort" value="저축형"/>
+				</c:if>
+				<c:if test="${review.c_sort eq 1 }">
+					<c:set var="sort" value="절약형"/>
+				</c:if>
+				
+			
+			<span class="input-group-addon"> ${sort } </span> 
 			<input type="text" class="form-control" name="b_title" value=${review.c_title } readonly> 
 
 		</div>
@@ -24,7 +36,7 @@ ${review }
 			<span class="input-group-addon"> 
 				챌린지 기간
 			</span> 
-			<input type="text" class="form-control" name="b_" value=${review.c_period } readonly> 
+			<input type="text" class="form-control" name="b_" value="${review.c_period }" readonly> 
 		</div>
 
 	</div>
@@ -34,7 +46,7 @@ ${review }
 			<span class="input-group-addon"> 
 				챌린지 성공인원
 			</span> 
-			<input type="text" class="form-control"  value=${review.c_person }/${review.c_pcnt } readonly> 
+			<input type="text" class="form-control"  value="${CList }명" readonly> 
 		</div>
 
 	</div>
@@ -51,9 +63,10 @@ ${review }
 	<div class="col-lg-6">
 		<div class="input-group">
 			<span class="input-group-addon"> 
-				챌린지 종료일	
+				챌린지 기간	
 			</span> 
-			<input type="text" class="form-control" name="b_"  readonly>
+			<input type="text" class="form-control" value="${c_end }" pattern="YYYY-MM-dd" readonly>
+			<fmt:formatDate value="${c_end }" pattern="YYYY-MM-dd"/></b>
 		</div>
 
 	</div>
