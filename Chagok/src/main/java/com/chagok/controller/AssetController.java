@@ -105,18 +105,27 @@ public class AssetController {
 	}
 	
 	
-	
-	@GetMapping("/myCard")
-	public String myCardGET(HttpSession session, Model model) throws Exception{
+	@GetMapping("/accountHistory")
+	public String accountHistoryGET(HttpSession session, Model model, 
+			@RequestParam("fintech_use_num") String fintech_use_num) throws Exception{
+		
 		if (session.getAttribute("mno") != null) {
 			int mno = (int)session.getAttribute("mno");
 			
 			UserVO userVO = userService.getUser(mno);
 			model.addAttribute("userVO", userVO);
+			
+			mylog.debug("@@@@@@@@@@@@@@@@@@@@@@" + fintech_use_num);
+			
+			List<AccountHistoryVO> accountHistoryList = accountService.getAccountHistory(fintech_use_num);
+			model.addAttribute("accountHistoryList", accountHistoryList);
+			
+			mylog.debug(accountHistoryList+"");
+			
+			
 		}
 		
-		
-		return "/asset/myCard";
+		return "/asset/accountHistory";
 	}
 	
 	@RequestMapping(value = "/callback", method = RequestMethod.GET)
