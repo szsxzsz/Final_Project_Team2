@@ -12,7 +12,7 @@
   
   <!-- 카테고리 목록 -->
   <select id="cateList" resultType="CategoryVO">
-  	select * from account_book as ab inner join category as ct on ab.ctno=ct.ctno
+  	select * from account_book as ab inner join category as ct on ab.ctno=ct.ctno 
   </select>
   
 
