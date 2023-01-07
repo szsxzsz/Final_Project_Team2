@@ -123,7 +123,7 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 	@Override
 	public BoardVO getBoardContent(Integer bno) {
 		
-		BoardVO vo = sqlSession.selectOne(NAMESPACE+".Board", bno);
+		BoardVO vo = sqlSession.selectOne(NAMESPACE+".board", bno);
 		
 		return vo;
 		

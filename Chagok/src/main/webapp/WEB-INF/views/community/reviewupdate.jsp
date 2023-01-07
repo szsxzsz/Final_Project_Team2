@@ -66,7 +66,7 @@ ${review }
 	
 	 <div class="box-footer">
           <button type="submit" class="btn btn-primary" >수정하기</button>
-          <button type="button" class="btn btn-primary" >돌아가기</button>
+          <button type="button" class="btn btn-primary" onclick="location.href='/reviewboard';">돌아가기</button>
      </div>
      <input type="hidden" name="b_sort" value="review">
 	</form>
