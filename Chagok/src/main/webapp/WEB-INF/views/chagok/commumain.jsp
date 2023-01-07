@@ -13,13 +13,27 @@
 
 <h1 class="visually-hidden"></h1>
 <main>
+<form method="get">
+  <div class="search">
+    <select name="searchType">
+      <option value="n"<c:out value="${scri.searchType == null ? 'selected' : ''}"/>>-----</option>
+      <option value="c_t"<c:out value="${scri.searchType eq 'c_t' ? 'selected' : ''}"/>>제목</option>
+      <option value="c_co"<c:out value="${scri.searchType eq 'c_co' ? 'selected' : ''}"/>>내용</option>
+      <option value="c_h"<c:out value="${scri.searchType eq 'c_h' ? 'selected' : ''}"/>>작성자</option>
+      <option value="c_tc_co"<c:out value="${scri.searchType eq 'c_tc_co' ? 'selected' : ''}"/>>제목+내용</option>
+    </select>
 
-	<div class="box-tools pull-right">
-		<div class="has-feedback">
-			<input type="text" class="form-control input-sm" placeholder="검색하기"> 
-			<span class="glyphicon glyphicon-search form-control-feedback"></span>
-		</div>
-	</div>
+    <input type="text" name="keyword" id="keywordInput" value="${scri.keyword}"/>
+
+    <button id="searchBtn" type="button">검색</button>
+    <script>
+      $(function(){
+        $('#searchBtn').click(function() {
+          self.location = "list" + '${pageMaker.makeQuery(1)}' + "&searchType=" + $("select option:selected").val() + "&keyword=" + encodeURIComponent($('#keywordInput').val());
+        });
+      });   
+    </script>
+  </div>
 
 	<!-- 명예의 전당 -->
 <h1>명예의 전당</h1>
@@ -33,8 +47,8 @@
       </div>
 </c:forEach>
       <div class="ranking-button">
-		<button type="button" class="btn btn-success btn-lg" onclick="/challenge/plusRegist">저축형</button>
-		<button type="button" class="btn btn-warning btn-lg" onclick="/challenge/minusRegist">절약형</button>
+		<button type="button" class="btn btn-success btn-lg" onclick="location.href='/challenge/plusregist';">저축형</button>
+		<button type="button" class="btn btn-warning btn-lg" onclick="location.href='/challenge/minusregist';">절약형</button>
 	  </div>
 </div>
 <!-- 명예의 전당 -->
@@ -106,26 +120,27 @@
    </c:forEach>
  </div>
    
-</main>
+
 
             <div class="box-footer clearfix">
               <ul class="pagination pagination-sm no-margin pull-right">
                 
                 <c:if test="${pageMaker.prev}">
-                	<li><a href="/commumain${pageMaker.makeQuery(pageMaker.startPage - 1)}">«</a></li>
+                	<li><a href="/commumain${pageMaker.makeSearch(pageMaker.startPage - 1)}">«</a></li>
                 </c:if>
                 
                 <c:forEach var="idx" begin="${pageMaker.startPage}" end="${pageMaker.endPage}" step="1">
-               		<li><a href="/commumain${pageMaker.makeQuery(idx)}">${idx}</a></li>
+               		<li><a href="/commumain${pageMaker.makeSearch(idx)}">${idx}</a></li>
                 </c:forEach>
                 
                 <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
-                	<li><a href="/commumain${pageMaker.makeQuery(pageMaker.endPage + 1)}">»</a></li>
+                	<li><a href="/commumain${pageMaker.makeSearch(pageMaker.endPage + 1)}">»</a></li>
                 </c:if>
                 
               </ul>
             </div>
-
+</form>
+</main>
 </div>
 <%@ include file="../include/footer.jsp" %>
 
