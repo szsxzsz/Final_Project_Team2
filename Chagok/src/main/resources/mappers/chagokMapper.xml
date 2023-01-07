@@ -76,6 +76,21 @@
    on A.ctno = B.ctno
    where c_person like concat('%',#{nick},'%')
    </select>
+   
+    <!-- 챌린지 신청 취소 닉네임 잘라내기-->
+    <update id="cancelChallenge">
+   		update challenge set c_person = replace(c_person,',#{nick}','') where cno=#{cno};
+    </update>
+    
+    <!-- 저축형 챌린지 신청취소  -->
+    <delete id="cancelPlus">
+    	delete from plus where mno=#{mno} and cno=#{cno};
+    </delete>
+    
+    <!-- 절약형 챌린지 신청 취소 -->
+    <delete id="cancelMinus">
+    	delete from minus where mno=#{mno} and cno=#{cno};
+    </delete>
 	
 	<!-- [절약형]챌린지 참가자 조회-->
 	<select id="getMinusPeople" resultType="map">
@@ -97,12 +112,9 @@
 	
 	<!-- 중복된 챌린지(카테고리) 확인 -->	
 	<select id="samechallenge" resultType="Integer">
-<!-- 		select count(*) from challenge where ctno=#{ctno} -->
-<!--     select ctno from challenge A inner join plus B  -->
-<!--     where A.cno = B.cno and mno = #{mno} and ctno = #{ctno}; -->
-    select distinct ctno from plus p right join challenge c 
-	on c.cno = p.cno left join minus m on m.cno = c.cno
-    where  (c.cno = m.cno or c.cno = p.cno) and ( p.mno = #{mno} OR m.mno = #{mno} )and ctno = #{ctno};
+	    select distinct ctno from plus p right join challenge c 
+		on c.cno = p.cno left join minus m on m.cno = c.cno
+	    where  (c.cno = m.cno or c.cno = p.cno) and ( p.mno = #{mno} OR m.mno = #{mno} )and ctno = #{ctno};
 	</select>
 	
 	<!-- 챌린지 리스트(인원수 조회) -->
