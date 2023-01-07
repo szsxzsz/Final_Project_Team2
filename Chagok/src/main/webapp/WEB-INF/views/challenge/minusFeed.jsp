@@ -107,6 +107,14 @@
 			</c:if>
 			<c:if test="${nowfmtTime - endTime > 0}">
 				<p class="fst-italic">챌린지가 <b>종료</b>되었습니다!</p>
+				<c:choose>
+					<c:when test="${minusPeoList.m_sum == vo.c_amount}">
+						<button type="button" onclick="location.href='/challenge/success?cno=${vo.cno}';">결과보기</button>
+					</c:when>
+					<c:otherwise>
+						<button type="button" onclick="location.href='/challenge/defeat?cno=${vo.cno}';">결과보기</button>
+					</c:otherwise>
+				</c:choose>
 			</c:if>
 			<br><br>
 			<div class="row">
@@ -117,7 +125,7 @@
 	             </div>
 	             <div class="progress-group" style="width: 280px;">
 	               <span class="progress-text">챌린지 인원</span>
-	               <span class="progress-number"><b>${plusPeoList.size() } </b>/ ${vo.c_pcnt }</span>
+	               <span class="progress-number"><b>${minusPeoList.size() } </b>/ ${vo.c_pcnt }</span>
 	             </div>
 	             <div class="progress-group" style="width: 280px;">
 	               <span class="progress-text">예치금</span>
@@ -125,7 +133,7 @@
 	             </div>  
           	 <div class="progress-group" style="width: 280px;">
                <span class="progress-text">챌린지 기간</span>
-               <span class="progress-number"><b>${vo.c_period }</b></span>
+               <span class="progress-number"><b>${vo.c_period }</b>주</span>
               </div> 
              <div class="progress-group" style="width: 280px;">
                <span class="progress-text">챌린지 시작일</span>
