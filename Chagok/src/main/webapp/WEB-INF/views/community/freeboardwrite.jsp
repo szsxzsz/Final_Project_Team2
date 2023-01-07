@@ -4,20 +4,15 @@
 <%@ include file="../include/header.jsp"%>
 <%@ include file="../include/sidebar.jsp"%>
 
-<h1> 자유게시판 수정 </h1>
-
+<h1> 자유게시판 작성 </h1>
 <div class="box box-warning">
 	<div class="box-header with-border">
-		<h3 class="box-title">자유 게시판 수정</h3>
+		<h3 class="box-title">자유 게시판 작성</h3>
 	</div>
 
 	<div class="box-body">
 		<form role="form" enctype="multipart/form-data" method="post">
 
-			<div class="form-group">
-				<label>글 번호</label> 
-					<input type="text" class="form-control" name="bno" readonly>
-			</div>
 			<div class="form-group">
 				<label>글 제목</label> 
 					<input type="text" class="form-control" placeholder="제목을 작성해주세요" name="b_title">
@@ -39,7 +34,7 @@
 	</div>
 
 </div>
-			<input type="submit" value=" 게시하기 " class="btn btn-block btn-success btn-sm" onclick="location.href='/challenge/freeboard';">
+			<input type="submit" value=" 게시하기 " class="btn btn-block btn-success btn-sm" onclick="location.href='/freeboard';">
 			<input type="hidden" value="3" name="b_sort">
 <%@ include file="../include/footer.jsp"%>
 <script type="text/javascript">

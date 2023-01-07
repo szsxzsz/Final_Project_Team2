@@ -1,6 +1,6 @@
 package com.chagok.domain;
 
-import com.google.protobuf.Timestamp;
+import java.sql.Timestamp;
 
 import lombok.Data;
 

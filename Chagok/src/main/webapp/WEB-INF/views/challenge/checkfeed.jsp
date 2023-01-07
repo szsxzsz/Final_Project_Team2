@@ -43,7 +43,7 @@ ${result }
 			 <jsp:useBean id="now" class="java.util.Date" />
 			 <fmt:parseNumber value="${now.time / (1000*60*60*24)}" integerOnly="true" var="nowfmtTime" scope="request"/>
 			 <fmt:parseDate value="${vo.c_start}" var="startDate" pattern="yyyy-MM-dd"/>
-			 <fmt:parseNumber value="${startDate.time / (1000*60*60*24)}" integerOnly="true" var="startTime" scope="request"/>
+			 <fmt:parseNumber value="${(startDate.time + 1000*60*60*24)/ (1000*60*60*24)}" integerOnly="true" var="startTime" scope="request"/>
 			 <fmt:parseNumber value="${c_end.time / (1000*60*60*24)}" integerOnly="true" var="endTime" scope="request" />
 			<c:if test="${startTime - nowfmtTime <= 0 && nowfmtTime - endTime <= 0}">
 				<p class="fst-italic">챌린지가 <b>시작</b>되었습니다!</p>
@@ -121,55 +121,9 @@ ${result }
 </div>
 
 
-	<div class="modal fade" id="modal-default" style="margin-top: 10%;">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-					<h4 class="modal-title">챌린지에 성공하셨습니다!</h4>
-				</div>
-				<div class="modal-body">
-					<p>
-					
-					<iframe src="/asset/abookList?mno=1" width="300" height="300">
-					</iframe>
-					
-					</p>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default pull-left"	data-dismiss="modal">결과창으로 가기</button>
-				</div>
-			</div>
-
-		</div>
-	</div>
 	
-	<div class="modal fade" id="modal-default" style="margin-top: 10%;">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-					<h4 class="modal-title">챌린지에 실패하셨습니다!</h4>
-				</div>
-				<div class="modal-body">
-					<p>
-					
-					<iframe src="/asset/abookList?mno=1" width="300" height="300">
-					</iframe>
-					
-					</p>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default pull-left"	data-dismiss="modal">결과창으로 가기</button>
-				</div>
-			</div>
-
-		</div>
-	</div>
+	
+	
 
 
 </section>

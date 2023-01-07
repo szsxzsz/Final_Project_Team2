@@ -187,7 +187,7 @@ border: 3px solid rgb(255 191 131 / 40%);
 				<a href="/assetmain"><p style="font-family: 'GmarketSans'">자산관리</p></a>
 			</div>
 			<div class="notice">
-				<p style="font-family: 'GmarketSans'">공지사항</p>
+				<a href="/notice"><p style="font-family: 'GmarketSans'">공지사항</p></a>
 			</div>
 		</div>
 		<div class="user_menu">

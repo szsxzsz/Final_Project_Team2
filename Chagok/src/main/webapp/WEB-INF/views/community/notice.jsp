@@ -7,7 +7,7 @@
 <%@ include file="../include/sidebar.jsp" %>
 
 <h1>공지게시판</h1>
-
+${boardList }
 <div class="col-xs-12 table-responsive">
 	<table class="table table-striped">
 		<thead>
@@ -22,7 +22,7 @@
 			<tr>
 				<td>${boardList.bno }</td>
 				<td>
-					<a href="http://localhost:8080/challenge/noticecontent?bno=${vo.bno }">${boardList.b_title }</a>
+					<a href="http://localhost:8080/noticecontent?bno=${boardList.bno }">${boardList.b_title }</a>
 				</td>
 				<td>${boardList.b_date }</td>
 			</tr>
@@ -30,4 +30,5 @@
 		</tbody>
 	</table>
 </div>
+<input class="btn btn-block btn-success btn-lg" type="button" value="메인가기" onclick="location.href='/commumain';" style="width:218px; margin-left: 950px;">
 <%@ include file="../include/footer.jsp"%>
