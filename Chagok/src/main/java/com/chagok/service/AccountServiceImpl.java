@@ -66,6 +66,11 @@ public class AccountServiceImpl implements AccountService{
 		return accountDAO.getAccountHistory(fintech_use_num);
 	}
 
+	@Override
+	public List<CardHistoryVO> getCardHistory(String card_id) throws Exception {
+		return accountDAO.getCardHistory(card_id);
+	}
+
 	
 
 	

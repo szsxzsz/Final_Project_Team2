@@ -47,7 +47,7 @@
 	 
 	<!-- 2. 예산 조회 -->
 	<select id="getBud" resultType="map">
-		select ct.ct_top ct_top, p_amount
+		select ct.ct_top ct_top, p_amount, pno
 		from plan p 
 		inner join category ct 
 		on p.ctno=ct.ctno
@@ -63,5 +63,14 @@
 			(#{i.mno}, #{i.p_month}, #{i.p_amount}, #{i.ctno})
 		</foreach>
 	</insert>
+	
+	<!-- 4. 예산 수정 -->
+	<update id="updBud" parameterType="map">
+		<foreach item="i" collection="updateList" separator=",">
+			update plan set 
+			p_amount=#{i.p_amount} 
+			where pno=#{i.pno}
+		</foreach>
+	</update>
   
   </mapper>

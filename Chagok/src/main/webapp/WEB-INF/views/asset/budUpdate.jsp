@@ -42,6 +42,7 @@
 			<div class="form-group">
 				<label for="pamt${i}" id="label${i}" class="col-sm-2 control-label">${top }</label>
 				<div class="col-sm-10">
+					<input type="text" id="pno${i}" name="pno${i}">
 					<input type="hidden" name="ctno${i}" value="${i}">
 					<input type="text" class="form-control" id="pamt${i}" name="p_amount${i}" placeholder="예산을 입력하세요" maxlength="10" onkeyup="inputNumFmt(this);">
 				</div>
@@ -85,14 +86,14 @@
 
 $(document).ready(function(){
 	
-	var sum = 0;
 	// 한 달 이전 예산
 	$.ajax({
 		type : "get",
 		url : "/asset/getBud?mm="+(${mm}+1),
 		dataType : "json",
 		success : function(data) {
-			console.log('한 달 이전 예산 가져오기');
+			var sum = 0;
+			console.log('한 달 이전 예산');
 			console.log(data);
 			$(data).each(function(index, item){
 				for(i=1; i<12; i++){
@@ -122,14 +123,17 @@ $(document).ready(function(){
 		url : "/asset/getBud?mm="+${mm},
 		dataType : "json",
 		success : function(data) {
-			console.log('해당 월 예산 가져오기');
+			var sum = 0;
+			console.log('해당 월 예산');
 			console.log(data);
 			$(data).each(function(index, item){
 				for(i=1; i<12; i++){
 					var b = $('#label'+i+'').text();
 					var top = item.ct_top;
 					var amp = item.p_amount;
+					var pno = item.pno;
 					if(b==top){
+						$('#pno'+i+'').val(pno);
 						$('#pamt'+i+'').val(''+$.number(amp)+'');
 						sum+=amp;
 					}

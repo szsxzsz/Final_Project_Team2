@@ -20,9 +20,19 @@
 
 <script type="text/javascript">
 	$(document).ready(function(){
+		// 마우스 올리면 색변경
+		$('.info-box.bg-yellow').mouseover(function(){
+			$(this).attr("class", "info-box bg-yellow-active");
+		});
+		$('.info-box.bg-yellow').mouseleave(function(){
+			$(this).attr("class", "info-box bg-yellow");
+		});
 		
 		// 펼치고 접기 관련
 		$('#account_pa').click(function(){
+			
+			$(this).attr("class", "info-box bg-yellow-active");
+			
 			if ($('#account_ch').css("display") == "block") {
 				$('#account_ch').slideUp();
 			} else {
@@ -50,10 +60,24 @@
 		
 		
 		// 모달창 관련
-		$('.test22').click(function(){
+		// 계좌 모달창
+		$('.startModal_account').click(function(){
+			$('#str_account').text($(this).children('.account_alias_account').val());
+			$('#str_accountNum').text($(this).children('.account_num_masked_account').val());
+			
 			$('#iframe_account').attr("src", "/asset/accountHistory?fintech_use_num="+$(this).children().val());
 			
 			$('#modal-account').modal();
+		})
+		
+		// 카드 모달창
+		$('.startModal_card').click(function(){
+			
+			alert("test");
+			
+			$('#iframe_card').attr("src", "/asset/cardHistory?card_id="+$(this).children().val());
+			
+			$('#modal-card').modal();
 		})
 		
 		
@@ -73,7 +97,7 @@
 
 	
 	
-	<c:if test="${userVO == null }">
+	<c:if test="${userVO == null}">
 		<h1>로그인이 필요합니다 !</h1>
 	</c:if>
 	<c:if test="${userVO != null}">	
@@ -155,8 +179,10 @@
 			<div id="account_ch" style="display: none;">
 			<c:forEach var="vo" items="${accountList }">
 				<div class="info-box" style="margin: 0 0 1px 30px; width: 95%;">
-					<a href="#" class="test22">
+					<a href="#" class="startModal_account">
 						<input type="hidden" value="${vo.fintech_use_num }" class="fintech_use_num_account">
+						<input type="hidden" value="${vo.account_alias }" class="account_alias_account">
+						<input type="hidden" value="${vo.bank_name} ${vo.account_num_masked }" class="account_num_masked_account">
 						<span class="info-box-icon">
 							<i class="fa fa-bank"></i>
 						</span>
@@ -196,14 +222,20 @@
 				</c:forEach>
 				
 					<div class="info-box" style="margin: 0 0 1px 30px; width: 95%">
-						<span class="info-box-icon">
-							<i class="fa fa-credit-card"></i>
-						</span>
-						<div class="info-box-content" style="padding-top: 15px;">
-							<span class="info-box-text" style="font-size: 3em; margin-left: 20px; display: inline;">${cardVO.card_name }</span> 
-							<span class="info-box-text" style="font-size: 3em; margin-left: 200px; display: inline;">총 ${cardPartSum } 원</span> 
-							<span class="info-box-text" style="font-size: 3em; margin-left: 200px; display: inline;">${cardVO.card_num_masked }</span> 
-						</div>
+						<a href="#" class="startModal_card">
+							<input type="hidden" value="${cardVO.card_id }" class="card_id_card">
+							<input type="hidden" value="${cardVO.card_name }" class="card_name_card">
+							<input type="hidden" value="${cardVO.card_num_masked }" class="card_num_masked_card">
+							<input type="hidden" value="${cardPartSum}" class="card_part_sum_card">
+							<span class="info-box-icon">
+								<i class="fa fa-credit-card"></i>
+							</span>
+							<div class="info-box-content" style="padding-top: 15px;">
+								<span class="info-box-text" style="font-size: 3em; margin-left: 20px; display: inline;">${cardVO.card_name }</span> 
+								<span class="info-box-text" style="font-size: 3em; margin-left: 200px; display: inline;">총 ${cardPartSum } 원</span> 
+								<span class="info-box-text" style="font-size: 3em; margin-left: 200px; display: inline;">${cardVO.card_num_masked }</span> 
+							</div>
+						</a>
 					</div>
 				<c:set var="cardIDX" value="${cardIDX+1}"/>
 			</c:forEach>
@@ -238,40 +270,68 @@
 	</c:if>
 	
 	</c:if>
-	
-	
-	
-	
-	
-	
-	<!-- 계좌 내역 정보 불러오기 모달창 -->
+
+
+<!-- 계좌 내역 정보 불러오기 모달창 -->
 	<div class="modal fade" id="modal-account" style="margin-top: 5%;">
 		<div class="modal-dialog" style="width:1200px; height: 800px;">
-			<div class="modal-content" style="height: 700px;">
-				<div class="modal-header">
+			<div class="modal-content" style="height: 700px; text">
+				<div class="modal-header" style="height: 100px; background-color: #04c584;">
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
-					<h4 class="modal-title">계좌내역조회</h4>
+					<h4 class="modal-title" style="color: #fff; font-size: 3em; letter-spacing: 3px; margin-top: 5px">
+						<strong id="str_account">월급통장</strong>
+						<strong id="str_accountNum" style="float: right;">123132313123</strong>
+					</h4>
 				</div>
-				<div class="modal-body" style="height: 580px;">
+				<div class="modal-body" style="height: 530px;">
 					<p>
 					
-					<iframe id="iframe_account" src="" width="300px;" height="570px;">
+					<iframe id="iframe_account" src="" width="300px;" height="530px;">
 					</iframe>
 					
 					</p>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-default pull-left"
-						data-dismiss="modal">닫기</button>
-					<button type="button" class="btn btn-primary" id="saveABook">저장하기</button>
+					<button type="button" class="btn btn-primary" id="saveABook" data-dismiss="modal" style="background-color: #363A3C; margin-right: 30px; width: 100px">확 인</button>
 				</div>
 			</div>
 
 		</div>
 	</div>
-	<!-- 계좌 내역 정보 불러오기 모달창 -->
+<!-- 계좌 내역 정보 불러오기 모달창 -->
+
+
+<!-- 카드 내역 정보 불러오기 모달창 -->
+	<div class="modal fade" id="modal-card" style="margin-top: 5%;">
+		<div class="modal-dialog" style="width:1200px; height: 800px;">
+			<div class="modal-content" style="height: 700px; text">
+				<div class="modal-header" style="height: 100px; background-color: #04c584;">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" style="color: #fff; font-size: 3em; letter-spacing: 3px; margin-top: 5px">
+						<strong id="str_account">월급통장</strong>
+						<strong id="str_accountNum" style="float: right;">123132313123</strong>
+					</h4>
+				</div>
+				<div class="modal-body" style="height: 530px;">
+					<p>
+					
+					<iframe id="iframe_card" src="" width="300px;" height="530px;">
+					</iframe>
+					
+					</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" id="saveABook" data-dismiss="modal" style="background-color: #363A3C; margin-right: 30px; width: 100px">확 인</button>
+				</div>
+			</div>
+
+		</div>
+	</div>
+<!-- 카드 내역 정보 불러오기 모달창 -->
  
 
 

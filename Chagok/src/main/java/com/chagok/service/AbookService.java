@@ -33,9 +33,6 @@ public interface AbookService {
 	// ct_top
 	public List<String> getctTop() throws Exception;
 	
-	// form data 저장하는 list->map
-	public List<Map<String, Object>> formData(Map map, int mno) throws Exception;
-	
 	// 1. 예산 유무
 	public int chkBud(int mno, String pMonth) throws Exception;
 
@@ -44,5 +41,8 @@ public interface AbookService {
 	
 	// 3. 예산 설정
 	public void setBud(Map<String, Object> insertMap);
+	
+	// 4. 예산 수정
+	public void updBud(Map<String, Object> updateMap);
 	
 }

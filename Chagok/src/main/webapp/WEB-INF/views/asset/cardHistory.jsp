@@ -16,7 +16,9 @@
 </head>
 
 <body>
-
+	
+	${cardHistoryList }
+	
 	<!-- 
 	<div class="wrap_1y4z9">
 		<div class="container__tXwE right_2TA44">
@@ -43,7 +45,7 @@
 		</div> 
 		-->
 		
-	<c:if test="${accountHistoryList != null }">
+	<%-- <c:if test="${accountHistoryList != null }">
 		
 		<div class="container__tXwE">
 			<ul class="cards_2AMVH">
@@ -99,7 +101,7 @@
 				거래 내역이 없습니다.
 			</h4>
 		</div>
-	</c:if>
+	</c:if> --%>
 		
 		
 </body>

@@ -121,6 +121,29 @@ public class AssetController {
 		return "/asset/accountHistory";
 	}
 	
+	@GetMapping("/cardHistory")
+	public String cardHistoryGET(HttpSession session, Model model, 
+			@RequestParam("card_id") String card_id) throws Exception{
+		
+		if (session.getAttribute("mno") != null) {
+			int mno = (int)session.getAttribute("mno");
+			
+			UserVO userVO = userService.getUser(mno);
+			model.addAttribute("userVO", userVO);
+			
+			mylog.debug("@@@@@@@@@@@@@@@@@@@@@@" + card_id);
+			
+			List<CardHistoryVO> cardHistoryList = accountService.getCardHistory(card_id);
+			model.addAttribute("cardHistoryList", cardHistoryList);
+			
+			mylog.debug(cardHistoryList+"");
+			
+			
+		}
+		
+		return "/asset/cardHistory";
+	}
+	
 	@RequestMapping(value = "/callback", method = RequestMethod.GET)
 	public String getToken(RequestTokenVO requestTokenVO, Model model, CardInfoRequestVO cardInfoRequestVO, 
 			HttpSession session) throws Exception {
@@ -619,13 +642,23 @@ public class AssetController {
 	@PostMapping(value = "/budget")
 	public String budgetPOST(@RequestParam Map map, HttpSession session, Model model) throws Exception {
 		int mno = (int)session.getAttribute("mno");
-
-		List<Map<String, Object>> dataList = abService.formData(map, mno);
+		
+		List<Map<String, Object>> dataList = new ArrayList<Map<String,Object>>();
+		for(int i=1;i<map.size();i++) {
+			Map<String, Object> tmpmap = new HashMap<String, Object>();
+			if(map.get("ctno"+i)!=null){
+				tmpmap.put("mno", mno);
+				tmpmap.put("p_month", map.get("pMonth"));
+				tmpmap.put("ctno", map.get("ctno"+i));
+				tmpmap.put("p_amount", map.get("p_amount"+i));
+				dataList.add(tmpmap);
+			}
+		}
 		Map<String, Object> insertMap = new HashMap<String, Object>();
 		insertMap.put("insertList", dataList);	// key값=collection의 value값
 		abService.setBud(insertMap);
 		
-		return "/asset/ybudget";
+		return "/asset/budReport";
 	}
 
 	// 예산 조회
@@ -664,34 +697,24 @@ public class AssetController {
 	
 	
 	@PostMapping(value = "/updBud")
-	public void updBudPOST(@RequestParam Map map, HttpSession session, Model model) throws Exception {
+	public String updBudPOST(@RequestParam Map map, HttpSession session, Model model) throws Exception {
 		int mno = (int)session.getAttribute("mno");
-		
-		// form data를 저장하는 List<Map>
-		List<Map<String, Object>> planlist = new ArrayList<Map<String,Object>>();
-		for(int i=1;i<planlist.size();i++) {
+//		
+		List<Map<String, Object>> dataList = new ArrayList<Map<String,Object>>();
+		for(int i=1;i<map.size();i++) {
 			Map<String, Object> tmpmap = new HashMap<String, Object>();
 			if(map.get("ctno"+i)!=null){
-				int a = Integer.parseInt(map.get("p_amount"+i).toString());
-				if(a!=0) {
-					tmpmap.put("mno", mno);
-					tmpmap.put("p_month", map.get("pMonth"));
-					tmpmap.put("ctno", map.get("ctno"+i));
-					tmpmap.put("p_amount", map.get("p_amount"+i));
-					planlist.add(tmpmap);
-				}
+				tmpmap.put("pno", map.get("pno"+i));
+				tmpmap.put("p_amount", map.get("p_amount"+i));
+				dataList.add(tmpmap);
 			}
 		}
-		mylog.debug(planlist.toString());
+		Map<String, Object> updateMap = new HashMap<String, Object>();
+		updateMap.put("updateList", dataList);	// key값=collection의 value값
+		abService.updBud(updateMap);
 		
-		// insert하기 위한 insertmap
-		Map<String, Object> insertMap = new HashMap<String, Object>();
-		insertMap.put("planlist", planlist);	// key값=collection의 value값
-		abService.setBud(insertMap);
-		
-//		return "/asset/budUpdate";	
-		
-		
+		mylog.debug("수정완");
+		return "/asset/budReport";	
 	}
 	
 	// http://localhost:8080/asset/budRpt
