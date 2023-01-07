@@ -51,7 +51,7 @@ var dataAbook = ${jsonAbook}
 var dataCate = ${jsonCate}
 
 $("#jqGrid").jqGrid({
-    url : '/asset/gtest',
+    url : '/asset/reqGrid',
     datatype : "json",
 	mtype: 'get',
 		jsonReader: {
@@ -60,10 +60,10 @@ $("#jqGrid").jqGrid({
 			},
     height: 500, 
     width: 1450,
-    colNames : ['num','분류','날짜','내용','금액','거래수단','카테고리','소분류','메모'], 
+    colNames : ['abno','분류','날짜','내용','금액','거래수단','ctno','카테고리','소분류','메모'], 
     colModel:[
         {name : 'abno', index : 'abno',width : 0, align : 'left',hidden:true,key:true},    	
-        {name:"ab_inout",index:"ab_inout",width:30,align:'center',edittype: "select", formatter: "select",editoptions:{value:"1:지출;2:수입;3:이체;"},
+        {name:"ab_inout",index:"ab_inout",width:30,align:'center',edittype: "select", formatter: "select",editoptions:{value:"1:지출;2:수입;3:이체;"editable:true},
 //                 dataEvents: [{
 //                     type : 'change',
 //                     fn : function(e) {
@@ -74,6 +74,7 @@ $("#jqGrid").jqGrid({
         {name : 'ab_content',index : 'ab_content',width : 100, align : 'center',hidden:false,editable:true},
         {name : 'ab_amount',index : 'ab_amount',width : 70, resizable : true,align : 'right',editrules:{number:true},hidden:false,editable:true},
 	    {name : 'ab_method',index : 'ab_method',width : 70, align : 'center',hidden:false,editable:true},	
+	    {name : 'ctno',index : 'ctno',width : 70, hidden:true},           
 	    {name : 'ct_top',index : 'ct_top',width : 70, edittype:"select",editoptions:{value:"13:식사;14:간식;19:의류;26:문화/여가"},align : 'center',hidden:false,editable:true},           
         {name : 'ct_bottom',index : 'ct_bottom',width : 70, align : 'center',hidden:false,editable:true},              
         {name : 'ab_memo',index : 'ab_memo',width : 50, align : 'center',hidden:false,editable:true}
@@ -99,7 +100,6 @@ $("#jqGrid").jqGrid({
                 $("#jqGrid").setColProp('name', {editable:false});
             }
         }
-        
     },
     
     /* 수정 후 cell 다시 editable flase 로 변경 */
@@ -153,7 +153,6 @@ $("#jqGrid").jqGrid({
     */
     }
     
-    
     function search() {
     	
         alert("저장");
@@ -184,11 +183,7 @@ $("#jqGrid").jqGrid({
     	var foo = {foundation: "Mozilla", model: "box", week: 45, transport: "car", month: 7};
     	var jsonString = JSON.stringify(foo, replacer);
     
-    
-    
     $('#jqGrid').getRowData();
-    
-
     
     function getGridData() {
         $('#jqGrid').setGridParam({
@@ -245,54 +240,6 @@ $("#jqGrid").jqGrid({
 	 
 	////////////////////////////////////////////////grid에서 controller
 	
-	
-	/////////////////////////////////////////////////////////////2
-	
-	$(function(){
-		// 저장 
-   		 var jsonObj = {};
- 		$("#btnC").click(function(){
-			alert("post json");
-			
-			$("#jqGrid").setGridParam({
-	        datatype : "json",
-	        postData : {"param" : JSON.stringify(data)},
-	        loadComplete : function(data) {
-	            
-	        },
-	        
-	        gridComplete : function() {
-	            
-	        }
-	   		 }).trigger("reloadGrid");
- 		});	
-		
-		// json 넘기는 ajax
-		$("#btnCD").click(function(){
-			alert("post json");
-
-			$.ajax({
-				type:"post",
-				url:"/asset/getGrid",
-// 				headers: {'Conten t-Type': 'application/json'},
-				dataType:"json",
-				data : JSON.stringify(obj),
-// 				postdata: {"param":JSON.stringify()},
-				success:function(data){
-					alert("성공");
-					console.log(data);
-				},error:function(){
-					alert("에러");
-					console.log(data);
-				}
-				
-				
-				
-			});
-		});
-		
-	});
-	 
 	// 저장하고 컨트롤러로 보내는 코드 
 	function save(){
 // 		alert("");
@@ -307,16 +254,14 @@ $("#jqGrid").jqGrid({
 			type : 'POST',
 			dataType:'JSON',
 //             postData : {"rows" : JSON.stringify(data)},
-			success:function(data){
-			alert("입력 성공!");
-			}
-			})
-	jQuery("#jqGrid").trigger('reloadGrid');	
+			success:function(data){alert("입력 성공!");}
+		})
+	
+		jQuery("#jqGrid").trigger('reloadGrid');	
 
 	}
 	 
   </script>
-  
   
   <!-- 빈 행 추가 -->
   <script type="text/javascript">
@@ -407,22 +352,18 @@ th {
 	overflow-x: hidden;	
 }
 
-  .ui-jqgrid .ui-jqgrid-htable{
+.ui-jqgrid .ui-jqgrid-htable{
+      	overflow: hidden; 
+      	position:relative; 
+      	height:17px;
+      	font-family:inherit,'NanumGothicB','나눔고딕', "돋움", dotum;
+      	font-size:15px;
+      }
 
-        	overflow: hidden; 
-        	position:relative; 
-        	height:17px;
-        	font-family:inherit,'NanumGothicB','나눔고딕', "돋움", dotum;
-        	font-size:15px;
-
-        }
-
-        .ui-jqgrid-btable, .ui-pg-table  {
-
-        	font-family:inherit,'NanumGothicB','나눔고딕', "돋움", dotum;
-        	font-size:13px;
-
-        }
+ .ui-jqgrid-btable, .ui-pg-table  {
+ 	font-family:inherit,'NanumGothicB','나눔고딕', "돋움", dotum;
+ 	font-size:13px;
+ }
         
 /*     .rowColumn { */
 /* 	border-radius: 5px; */
@@ -433,14 +374,3 @@ th {
 
 </div>
 <%@ include file="../include/footer.jsp"%>
-
-    <!-- Bootstrap 3.3.2 JS -->
-    <script src="${pageContext.request.contextPath }/resources/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-    <!-- FastClick -->
-    <script src='${pageContext.request.contextPath }/resources/plugins/fastclick/fastclick.min.js'></script>
-    <!-- AdminLTE App -->
-    <script src="${pageContext.request.contextPath }/resources/dist/js/app.min.js" type="text/javascript"></script>
-    <!-- AdminLTE for demo purposes -->
-    <script src="${pageContext.request.contextPath }/resources/dist/js/demo.js" type="text/javascript"></script>
-  </body>
-</html>
