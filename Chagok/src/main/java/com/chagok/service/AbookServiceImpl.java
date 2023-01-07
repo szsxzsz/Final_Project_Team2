@@ -25,37 +25,26 @@ public class AbookServiceImpl implements AbookService{
 	private AbookDAO dao;
 	
 	@Override
-	public List<AbookVO> getAbookList(int mno) throws Exception {
-		mylog.debug("♡♡♡♡ Service -> DAO 호출 ");
+	public List<Map<String, AbookVO>> getAbookList(int mno) throws Exception {
+//		mylog.debug("♡♡♡♡ Service -> DAO 호출");
 		return dao.getAbookList(mno);
 	}
 
 	@Override
+	public void setAbookList(AbookVO vo) throws Exception {
+//		mylog.debug("♡♡♡♡ Service -> DAO 호출");
+		dao.setAbookList(vo);
+	}
+	
+
+	@Override
 	public List<CategoryVO> CateList() throws Exception {
-		mylog.debug("♡♡♡♡ Service -> DAO 호출 ");
+//		mylog.debug("♡♡♡♡ Service -> DAO 호출 ");
 		
 		return dao.CateList();
 	}
 
-	@Override
-	public Integer updateAbook(AbookVO vo) throws Exception {
-		mylog.debug("♡♡♡♡ Service -> DAO 호출 ");
-		
-		return dao.updateAbook(vo);
-	}
 
-	@Override
-	public List<Map<String, AbookVO>> AbookList() throws Exception {
-		mylog.debug("♡♡♡♡ Service -> DAO 호출");
-		return dao.AbookList();
-	}
-
-	@Override
-	public void setAbookList(AbookVO vo) throws Exception {
-		// TODO Auto-generated method stub
-		dao.setAbookList(vo);
-	}
-	
 	
 	
 	

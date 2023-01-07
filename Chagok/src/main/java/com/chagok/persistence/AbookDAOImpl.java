@@ -26,21 +26,11 @@ public class AbookDAOImpl implements AbookDAO{
 	//NAMESPACE
 	private static final String NAMESPACE = "com.chagok.mapper.abookMapper";
 	
-	// 가계부 조회 list
-	@Override
-	public List<AbookVO> getAbookList(int mno) throws Exception {
-		mylog.debug("mno="+mno);
-		List<AbookVO> AbookList = sqlSession.selectList(NAMESPACE+".abookList", mno);
-		mylog.debug("Mapper♡♡♡♡♡♡♡♡♡♡♡♡♡"+AbookList);
-		
-		return AbookList;
-	}
 	// 가계부 조회 map
 	@Override
-	public List<Map<String, AbookVO>> AbookList() throws Exception {
-		mylog.debug("Mapper♡♡♡♡♡♡♡♡♡♡♡♡♡AbookList");
-		
-		List<Map<String, AbookVO>> AbookList2 = sqlSession.selectList(NAMESPACE+".abookList"); 
+	public List<Map<String, AbookVO>> getAbookList(int mno) throws Exception {
+//		mylog.debug("Mapper♡♡♡♡♡♡♡♡♡♡♡♡♡AbookList");
+		List<Map<String, AbookVO>> AbookList2 = sqlSession.selectList(NAMESPACE+".getAbookList", mno); 
 		
 		return AbookList2;
 	}
@@ -49,24 +39,15 @@ public class AbookDAOImpl implements AbookDAO{
 	@Override
 	public List<CategoryVO> CateList() throws Exception {
 		List<CategoryVO> CateList = sqlSession.selectList(NAMESPACE+".cateList");
-		mylog.debug("Mapper♡♡♡♡♡♡♡♡♡♡♡♡♡"+CateList);
+//		mylog.debug("Mapper♡♡♡♡♡♡♡♡♡♡♡♡♡"+CateList);
 		
 		return CateList;
 	}
 	
-	// 가계부 수정
-	@Override
-	public Integer updateAbook(AbookVO vo) throws Exception {
-		mylog.debug("Mapper♡♡♡♡♡♡♡♡♡♡♡♡♡"+vo);
-		
-		return sqlSession.update(NAMESPACE+".abookUpdate", vo);
-	}
-
+	// 가계부 수정 저장
 	@Override
 	public void setAbookList(AbookVO vo) throws Exception {
-		mylog.debug("Mapper♡♡♡♡♡♡♡♡♡♡♡♡♡"+vo);
-		
-	sqlSession.update(NAMESPACE+".setAbookList", vo);
+		sqlSession.update(NAMESPACE+".setAbookList", vo);
 	
 	}
 

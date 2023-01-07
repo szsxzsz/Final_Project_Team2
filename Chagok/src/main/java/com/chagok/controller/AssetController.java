@@ -276,6 +276,26 @@ public class AssetController {
 	@Inject
 	private AbookService abservice;
 	
+	// 0. abokkList페이지 get으로 호출 ============================================================
+//	http://localhost:8080/asset/abookList
+	@GetMapping("/abookList")
+//	@ResponseBody
+	public String abookList(HttpSession session,Model model, HttpServletRequest req, HttpServletResponse res) throws Exception {
+		
+		// 0. mno 세션에서 받기 
+		// 로그인 확인
+		if(session.getAttribute("mno")==null) {
+			return "/chagok/login";
+		}
+		int mno = (int)session.getAttribute("mno");
+		UserVO userVO = userService.getUser(mno);
+		
+		mylog.debug("mno : "+mno);
+
+		return "asset/abookList"; 
+	}
+	
+	
 	// 1. 서버 Data 불러서 그리드에 뿌리기 ==========================================================
 	@ResponseBody
 	@RequestMapping("/reqGrid")
@@ -283,18 +303,24 @@ public class AssetController {
 			@RequestParam(value = "page", required=false) String page,//page : 몇번째 페이지를 요청했는지
 			@RequestParam(value = "rows", required=false) String rows,//rows : 페이지 당 몇개의 행이 보여질건지
 			@RequestParam(value  = "sidx", required=false) String sidx,//sidx : 소팅하는 기준이 되는 인덱스
-			@RequestParam(value = "sord", required=false) String sord
-			/*@Pathvariable Integer mno*/) throws Exception {//sord : 내림차순 또는 오름차순
+			@RequestParam(value = "sord", required=false) String sord,
+			HttpSession session) throws Exception {//sord : 내림차순 또는 오름차순
 	    	
 		mylog.debug("json controller 실행 시작");
-//		mylog.debug("mno@@@@@@@@:"+mno);
+		
+		// 로그인 확인
+		int mno = (int)session.getAttribute("mno");
+		UserVO userVO = userService.getUser(mno);
+		
+		mylog.debug("mno@@@@@@@@:"+mno);
 		
 		// list: 그리드 구성할 때 필요한 데이터(page,sidx,sord) 리스트 
 		// list2: 서버 데이터(VO) 리스트
 		JsonObj obj = new JsonObj();
+		
 		List<Map<String,Object>> list = new ArrayList<Map<String,Object>>();
-		List<?> list2 = abservice.AbookList();
-		mylog.debug("list2######"+list2);
+		List<?> list2 = abservice.getAbookList(mno);
+		mylog.debug("vo -> list "+list2);
 		
 		int int_page = Integer.parseInt(page);// 1 2 3
 		int perPageNum = (int)Double.parseDouble(rows);
@@ -310,11 +336,14 @@ public class AssetController {
 			map.put("ab_date", vo.getAb_date());
 			map.put("ab_content", vo.getAb_content());
 			map.put("ab_amount", vo.getAb_amount());
+			map.put("ab_method", vo.getAb_method());
+			map.put("ctno", vo.getCtno());
 			map.put("ct_top", vo.getCt_top());
 			map.put("ct_bottom", vo.getCt_bottom());
 			map.put("ab_memo", vo.getAb_memo());
 			
 			list.add(map);
+//			mylog.debug("&&& for문 직후 "+list);
 	}
 //		}
 	    obj.setRows(list);  // list<map> -> obj
@@ -330,7 +359,7 @@ public class AssetController {
 		int totalPage = (int)Math.ceil(list.size()/Double.parseDouble(rows));
 		obj.setTotal(totalPage); // 총 페이지 수 (마지막 페이지 번호)
 		
-		mylog.debug("obj##############"+obj);
+		mylog.debug("cont -> 그리드로"+obj);
 		
 	    return obj;
 	    
@@ -341,49 +370,21 @@ public class AssetController {
 	 @ResponseBody
 	 public Object saveList(HttpServletRequest request,@RequestBody List<Map<String, Object>> list) throws Exception {
 		
-//		mylog.debug("**map이 되냐?"+param);
-		  
-//		  JSONArray arr = new JSONArray();
-		  
-//		  mylog.debug("0번째 배열!!!!"+list.get(0));
-//		  mylog.debug("0번째 배열!!!!"+list.get(3).get("ab_content").toString());
-		  
-//		List<AbookVO> list7 = new ArrayList<AbookVO>();
-//		
-//		for(int i=0;i<list.size();i++) {
-//	
-//		Map<String, Object> map = new HashMap<String, Object>();
-//		
-//		map.put("abno", list.get(0).get("abno"));
-//		map.put("ab_inout", list.get(0).get("ab_inout"));
-//		map.put("ab_date", list.get(0).get("ab_date"));
-//		map.put("ab_content", list.get(0).get("ab_content"));
-//		map.put("ab_amount", list.get(0).get("ab_amount"));
-//		map.put("ct_top", list.get(0).get("ct_top"));
-//		map.put("ct_bottom",list.get(0).get("ct_bottom"));
-//		map.put("ab_memo", list.get(0).get("ab_memo"));
-//		
-//		list7.add(map);
-//		}
-			
-//		mylog.debug("maplist 실험 중"+list7);
-//		mylog.debug("끝");
-			
-	// 2번째 방법 
-		
-		mylog.debug("###그리드에서 뽑은 리스트"+list);
+		mylog.debug("##그리드 뽑 리스트"+list);
 		 Map <String, String> resultMap =  new HashMap<String, String>();
 		
 		  String result = "ok";
 		  String resultMsg = "";
 		  
 	  try {
+		  
 	   for(int i = 0; i < list.size(); i++) {
 		AbookVO vo = new AbookVO();
 //	    vo.setMno(Integer.parseInt(tList.get("mno").toString( )));
 	    vo.setAbno(Integer.parseInt(list.get(i).get("abno").toString()));
 	    vo.setAb_inout(Integer.parseInt(list.get(i).get("ab_inout").toString()));
 	    vo.setAb_amount(Integer.parseInt(list.get(i).get("ab_amount").toString()));
+	    vo.setCtno(Integer.parseInt(list.get(i).get("ctno").toString()));
 	    
 	    vo.setAb_date(list.get(i).get("ab_date").toString());
 	    vo.setAb_content(list.get(i).get("ab_content").toString());
@@ -411,50 +412,30 @@ public class AssetController {
 	  return resultMap;
 	}
 	// =====================================버려진 코드===============================================================
-//	http://localhost:8080/asset/abookList?mno=1
-//	http://localhost:8080/asset/abookList
-	@GetMapping("/abookList")
-//	@ResponseBody
-	public String abookList(@RequestParam("mno") int mno, HttpSession session,Model model, HttpServletRequest req, HttpServletResponse res) throws Exception {
-		
-		// 1. 서비스에서 가져오기 
-		List<AbookVO> abookList = abservice.getAbookList(mno);
-		List<CategoryVO> cateList = abservice.CateList();
-		
-		// 2.obj로 담아서 string화
-		ObjectMapper mapper = new ObjectMapper();
-//
-		String jsonAbook = mapper.writeValueAsString(abookList);
-		String jsonCate = mapper.writeValueAsString(cateList);
-		
-		// 3. model에 담아 보내기
-		model.addAttribute("jsonAbook",jsonAbook);
-		
-		return "asset/abookList"; 
-	}
+
 	
-	@RequestMapping(value="/getGrid", method = RequestMethod.POST, produces="application/json;charset=utf-8")
-	@ResponseBody
-		public void getGrid (@RequestParam Map<String,Object> rows, RedirectAttributes rttr) throws Exception {
-			
-			mylog.debug("getGrid@@@@@"+rows);	        
-		 
-		 ObjectMapper mapper = new ObjectMapper();
-//		 AbookVO vo = mapper.readValue(param, AbookVO.class);
-		 AbookVO vo = mapper.convertValue(rows, AbookVO.class);
-		 
-		 // 서비스 - DAO : 정보 수정 메서드 호출
-//		 Integer result = service.updateAbook(vo);
+//	@RequestMapping(value="/getGrid", method = RequestMethod.POST, produces="application/json;charset=utf-8")
+//	@ResponseBody
+//		public void getGrid (@RequestParam Map<String,Object> rows, RedirectAttributes rttr) throws Exception {
+//			
+//			mylog.debug("getGrid@@@@@"+rows);	        
 //		 
-//			if(result > 0) {
-//				// "수정완료" - 정보 전달 
-//					rttr.addFlashAttribute("result", "modOK");
-//				}
-//				// 페이지 이동(/board/list) 
-				
-			mylog.debug("수정 처리 완료!!");
-		 
-	}
+//		 ObjectMapper mapper = new ObjectMapper();
+////		 AbookVO vo = mapper.readValue(param, AbookVO.class);
+//		 AbookVO vo = mapper.convertValue(rows, AbookVO.class);
+//		 
+//		 // 서비스 - DAO : 정보 수정 메서드 호출
+////		 Integer result = abservice.updateAbook(vo);
+////		 
+////			if(result > 0) {
+////				// "수정완료" - 정보 전달 
+////					rttr.addFlashAttribute("result", "modOK");
+////				}
+////				// 페이지 이동(/board/list) 
+//				
+//			mylog.debug("수정 처리 완료!!");
+//		 
+//	}
 	 
 	
 	// ===================================================================================
