@@ -397,4 +397,6 @@ public class ChallengeController {
 		return "/challenge/resultdefeat";
 	}
 	
+	
+	
 }
