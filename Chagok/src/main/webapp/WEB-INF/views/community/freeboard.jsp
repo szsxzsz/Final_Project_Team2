@@ -59,8 +59,8 @@
 							${board.b_file }
 						</div>
 						<div class="timeline-footer">
-							<input type="button" class="btn btn-primary btn-xs" value="수정" onclick="location.href='/freeboardupdate';">
-							<input type="button" class="btn btn-danger btn-xs" value="삭제" onclick="location.href='/freedelete';">
+<!-- 							<input type="button" class="btn btn-primary btn-xs" value="수정" onclick="location.href='/freeboardupdate';"> -->
+<!-- 							<input type="button" class="btn btn-danger btn-xs" value="삭제" onclick="location.href='/freedelete';"> -->
 						</div>
 					</div></li>
 

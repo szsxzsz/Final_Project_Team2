@@ -19,6 +19,7 @@ function f_loginCheck(){
 		url : "/login", /* QQQ 테스트후 변경할 것*/
 		contentType : "application/json",
 		data : JSON.stringify(loginData),
+		timeout : 1000,
 		success : function(result){
 			if(result == 0){
 				Swal.fire({
@@ -34,7 +35,6 @@ function f_loginCheck(){
 					  showConfirmButton: false,
 					  timer: 1000
 					})
-				setTimeout('url()',1000);
 			}
 		},
 		error : function(jqXHR, status, error){

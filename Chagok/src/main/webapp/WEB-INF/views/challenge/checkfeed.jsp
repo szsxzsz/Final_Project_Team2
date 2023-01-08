@@ -7,8 +7,8 @@
 <%@ include file="../include/sidebar.jsp" %>
 
 <h1>피드 가기</h1>
-
-${result }
+${user }
+${vo }
 <script type="text/javascript">
 	function move() {
 		
@@ -59,7 +59,7 @@ ${result }
 				<div class="col-lg-6" style="line-height: 180%">
 	             <div class="progress-group" style="width: 280px;" >
 	               <span class="progress-text">챌린지 장 </span>
-	               <span class="progress-number"><b>${vo.c_host }</b>님</span>
+	               <span class="progress-number"><b>${user.nick }</b>님</span>
 	             </div>
 	             <div class="progress-group" style="width: 280px;">
 	               <span class="progress-text">챌린지 인원</span>
@@ -106,7 +106,8 @@ ${result }
 				<c:forEach var="vo" items="${vo.c_person.split(',')}">
 					<ul class="users-list clearfix">
 						<li>
-							<a href="">${vo}</a> 
+							${user.profile }<br>
+							${vo} 
 	 					</li>
 					</ul>
 				</c:forEach>

@@ -26,7 +26,8 @@ ${boardList}
 				<td>${boardList.b_title }</td>
 				<td>21</td>
 				<td>
-					<a href="/reviewcontent?bno=${boardList.bno }">${boardList.b_title } </a>
+<%-- 					<a href="/reviewcontent?bno=${boardList.bno }">${boardList.b_title } </a> --%>
+					${boardList.b_title }
 				</td>
 				<td>${boardList.b_content }</td>
 				<td>11</td>
