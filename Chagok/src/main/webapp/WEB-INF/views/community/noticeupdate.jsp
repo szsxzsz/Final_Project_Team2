@@ -12,12 +12,12 @@ ${board }
 		    <div class="box">
 		        <div class="col-md-12 text-center" style="background: #FAF8F1; height: 50px;">
 				    	<h4 style="marfin-top: 14px;">
-						<span style="color: #10A19D;" text-align:left>
-							<input type="text" > 제목 | ${board.b_title }
+						<span style="color: #10A19D;" class="text-left">
+							제목 | <input type="text" value="${board.b_title }"> 
 						</span>
 						&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-				    	<span style="color: #10A19D;">글쓴이 | ${board.b_writer }</span>
-				    	<span style="color: #10A19D;">작성일 | ${board.b_date }</span>
+				    	<span style="color: #10A19D;"class = "text-right">글쓴이 | ${board.b_writer }</span>
+				    	<span style="color: #10A19D;"class = "text-right">작성일 | ${board.b_date }</span>
 				    	</h4>
 		    	</div>
         <div class="form-group" style="padding-top: 50px; padding-left: 36px; width: 1166px; margin-bottom: 30px;">
@@ -26,12 +26,12 @@ ${board }
            		
            		</strong>
            	</span>
-				 <textarea class="form-control" rows="3" style="margin-top:15px;">${vo.b_content }</textarea>
+				 <textarea class="form-control" rows="3" style="margin-top:15px;">${board.b_content }</textarea>
         		 </div>
 		    </div>
 		</div>
     </div>
 
-        <input class="btn btn-block btn-success btn-lg" type="submit" value="수정하기" style="width:218px; margin-left: 950px;">
+        <input class="btn btn-block btn-success btn-lg" type="submit" value="수정하기" onclick="location.href='/noticeupdate?bno=${bno}';" style="width:218px; margin-left: 950px;">
         <input class="btn btn-block btn-success btn-lg" type="button" value="돌아가기" onclick="location.href='/notice';" style="width:218px; margin-left: 950px;">
 <%@ include file="../include/footer.jsp"%>

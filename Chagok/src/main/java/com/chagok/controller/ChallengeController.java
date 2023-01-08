@@ -230,6 +230,9 @@ public class ChallengeController {
 		int CList = service.getCList(cno);
 		ChallengeVO vo2 = service.getCt_top(cno);
 		List<Map<String, Object>> result = service.getResult(cno);
+		List<Map<String, Object>> minusPeoList = service.getMinusPeople(cno);
+		List<Map<String, Object>> plusPeoList = service.getPlusPeople(cno);
+		
 		
 		model.addAttribute("vo", vo);
 		model.addAttribute("challengeList", challengeList);
@@ -238,6 +241,8 @@ public class ChallengeController {
 		model.addAttribute("CList",CList);
 		model.addAttribute("vo2", vo2);
 		model.addAttribute("result", result);
+		model.addAttribute("minusPeoList", minusPeoList);
+		model.addAttribute("plusPeoList", plusPeoList);
 		
 		return "/challenge/checkfeed";
 	}

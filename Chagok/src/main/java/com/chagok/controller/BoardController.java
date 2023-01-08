@@ -55,12 +55,12 @@ public class BoardController {
 	@GetMapping(value = "/review")
 	public String reviewGET(@RequestParam("cno") int cno, Model model, HttpSession session) throws Exception {
 	
-		mylog.debug(cno + "");
-		int CList = service.getCList(cno);
+		mylog.debug(cno + "reviewGET 호출");
+		Integer Success = service.getSuccess(cno);
 		ChallengeVO vo2 = service.getCt_top(cno);
 		
 		model.addAttribute("review", service.getChallengeInfo(cno));
-		model.addAttribute("CList",CList);
+		model.addAttribute("Success",Success);
 		model.addAttribute("vo2", vo2);
 		model.addAttribute("c_end", service.getChallengeEndDate(cno));
 
@@ -80,24 +80,22 @@ public class BoardController {
 
 		rttr.addFlashAttribute("result", "createOK");
 
-		return "redirect:/community/reviewboard";
+		return "redirect:/reviewboard";
 	}
 	
 	
 	// 후기 게시판 수정 GET
 	// http://localhost:8080/challenge/reviewupdate?bno=4
 	@GetMapping(value= "/reviewupdate")
-	public void reviewupdateGET(@RequestParam("bno") int bno, Model model, HttpSession session) throws Exception{
+	public String reviewupdateGET(@RequestParam("bno") int bno, Model model, HttpSession session) throws Exception{
 					
 		mylog.debug(" reviewupdate 호출");
 			
-		List<BoardVO> boardList = service.getBoardList(bno);
+		mylog.debug(bno+"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 			
-		mylog.debug(boardList+"");
-			
-		model.addAttribute("boardList", boardList);
-			
-		model.addAttribute("vo",service.getBoardList(bno));
+		model.addAttribute("board", service.getBoardContent(bno));
+		
+		return "/community/reviewupdate";
 					
 	}
 				
@@ -201,14 +199,11 @@ public class BoardController {
 	// http://localhost:8080/noticeupdate?bno=4
 	@GetMapping(value = "/noticeupdate")
 	public String noticeupdateGET(@RequestParam("bno") int bno, Model model, HttpSession session) throws Exception{
-		mylog.debug(" reviewupdate 호출");
+		mylog.debug("noticeupdate 호출");
 			
 		mylog.debug(bno+"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-		BoardVO board = service.getBoardContent(bno);
 			
-		mylog.debug(board+"");
-			
-		model.addAttribute("board", board);
+		model.addAttribute("board", service.getBoardContent(bno));
 		
 		return "/community/noticeupdate";
 			
@@ -216,10 +211,9 @@ public class BoardController {
 		
 	// 공지 글 수정하기 POST
 	@PostMapping(value = "/noticeupdate")
-	public String noticeupdatePOST(BoardVO vo,RedirectAttributes rttr) throws Exception {
-		mylog.debug(vo+"");
-			
-			
+	public String noticeupdatePOST(BoardVO vo,RedirectAttributes rttr,HttpSession session) throws Exception {
+		mylog.debug(vo+"수정하기 post 호출");
+					
 		Integer result = service.updateBoard(vo);
 					
 		if(result > 0) {
@@ -228,14 +222,14 @@ public class BoardController {
 						
 		}
 							
-		return "/community/notice";
+		return "redirect:/community/notice";
 			
 	}
 	
 	// 공지 글 삭제하기
 	// http://localhost:8080/noticedelete?bno=
 	@PostMapping(value = "/noticedelete")
-	public String noticedeleteGET(int bno,RedirectAttributes rttr) throws Exception {
+	public String noticedeleteGET(int bno,RedirectAttributes rttr,HttpSession session) throws Exception {
 		mylog.debug(bno+"");
 			
 		service.deleteBoard(bno);
@@ -264,12 +258,13 @@ public class BoardController {
 	}
 	
 	// 자유게시판 글 작성 GET
-	// http://localhost:8080/challenge/freeboardwrite
+	// http://localhost:8080/freeboardwrite
 	@GetMapping(value = "/freeboardwrite")
-	public void freeboardwriteGET() throws Exception {
+	public String freeboardwriteGET() throws Exception {
 		
 		mylog.debug(" freeboardwriteGET 호출");
 		
+		return "/community/freeboardwrite";
 	}
 	
 	// 자유게시판 글 작성 POST
@@ -286,6 +281,41 @@ public class BoardController {
 		rttr.addFlashAttribute("result", "createOK");
 
 		return "redirect:/community/freeboard";
+	}
+	
+	// 자유 게시판 글 수정하기 GET
+	// http://localhost:8080/freeboardupdate?bno=4
+	@GetMapping(value = "/freeboardupdate")
+	public String freeboardupdateGET(@RequestParam("bno") int bno, Model model, HttpSession session) throws Exception{
+		mylog.debug(" reviewupdate 호출");
+				
+		mylog.debug(bno+"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+		BoardVO board = service.getBoardContent(bno);
+				
+		mylog.debug(board+"");
+				
+		model.addAttribute("board", board);
+			
+		return "/community/freeboardupdate";
+				
+	}
+			
+	// 자유 게시판 글 수정하기 POST
+	@PostMapping(value = "/freeboardupdate")
+	public String freeboardupdatePOST(BoardVO vo,RedirectAttributes rttr) throws Exception {
+		mylog.debug(vo+"");
+				
+				
+		Integer result = service.updateBoard(vo);
+						
+		if(result > 0) {
+					
+		rttr.addFlashAttribute("result", "modOK");
+							
+		}
+								
+		return "/community/freeboardupdate";
+				
 	}
 	
 	// 자유 게시판 삭제

@@ -30,5 +30,20 @@ ${boardList }
 		</tbody>
 	</table>
 </div>
+<script type="text/javascript">
+		var result = '${result}';
+		if(result == 'createOK'){
+			alert(" 글쓰기 완료! ");
+		}
+		
+		if(result == 'modOK'){
+			alert(' 글 수정 완료!');
+		}
+		
+		if(result == 'delOK'){
+			alert(' 글 삭제 완료!');
+		}
+		
+	</script>
 <input class="btn btn-block btn-success btn-lg" type="button" value="메인가기" onclick="location.href='/commumain';" style="width:218px; margin-left: 950px;">
 <%@ include file="../include/footer.jsp"%>

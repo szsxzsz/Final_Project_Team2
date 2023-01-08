@@ -23,11 +23,10 @@ ${boardList}
 		<tbody>
 			<c:forEach items="#{boardList }" var="boardList">
 			<tr>
-				<td>${boardList.b_title }</td>
+				<td>${boardList.bno }</td>
 				<td>21</td>
 				<td>
-<%-- 					<a href="/reviewcontent?bno=${boardList.bno }">${boardList.b_title } </a> --%>
-					${boardList.b_title }
+					<a href="/reviewcontent?bno=${boardList.bno }">${boardList.b_title } </a>
 				</td>
 				<td>${boardList.b_content }</td>
 				<td>11</td>

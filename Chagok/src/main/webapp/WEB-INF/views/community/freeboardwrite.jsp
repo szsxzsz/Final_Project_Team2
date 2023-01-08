@@ -9,10 +9,14 @@
 	<div class="box-header with-border">
 		<h3 class="box-title">자유 게시판 작성</h3>
 	</div>
-
 	<div class="box-body">
-		<form role="form" enctype="multipart/form-data" method="post">
+		<form role="form" action="/freeboardwrite" enctype="multipart/form-data" method="post">
 
+			<div class="input-group">
+				<span class="input-group-addon"> 작성자 </span> 
+					<input type="text" class="form-control" name="b_write">
+			</div>
+			<br>
 			<div class="form-group">
 				<label>글 제목</label> 
 					<input type="text" class="form-control" placeholder="제목을 작성해주세요" name="b_title">
@@ -34,7 +38,7 @@
 	</div>
 
 </div>
-			<input type="submit" value=" 게시하기 " class="btn btn-block btn-success btn-sm" onclick="location.href='/freeboard';">
+			<input type="submit" value=" 게시하기 " class="btn btn-block btn-success btn-sm">
 			<input type="hidden" value="3" name="b_sort">
 <%@ include file="../include/footer.jsp"%>
 <script type="text/javascript">
