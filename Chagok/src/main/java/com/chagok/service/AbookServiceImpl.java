@@ -69,22 +69,22 @@ public class AbookServiceImpl implements AbookService{
 	}
 
 	@Override
-	public int chkBud(int mno, String pMonth) throws Exception {
+	public int chkBud(Integer mno, String pMonth) throws Exception {
 		return dao.chkBud(mno, pMonth);
 	}
 
 	@Override
-	public List<Map<String, Object>> getBud(int mno, String pMonth) throws Exception {
+	public List<Map<String, Object>> getBud(Integer mno, String pMonth) throws Exception {
 		return dao.getBud(mno, pMonth);
 	}
 
 	@Override
-	public void setBud(Map<String, Object> insertMap) {
+	public void setBud(Map<String, Object> insertMap) throws Exception {
 		dao.setBud(insertMap);
 	}
 
 	@Override
-	public void updBud(Map<String, Object> updateMap) {
+	public void updBud(Map<String, Object> updateMap) throws Exception {
 		dao.updBud(updateMap);
 	}
 	 

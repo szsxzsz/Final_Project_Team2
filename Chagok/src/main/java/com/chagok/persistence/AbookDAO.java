@@ -32,15 +32,15 @@ public interface AbookDAO {
 	public List<String> getctTop() throws Exception;
 	
 	// 1. 예산 유무
-	public int chkBud(int mno, String pMonth) throws Exception;
+	public int chkBud(Integer mno, String pMonth) throws Exception;
 	
 	// 2. 예산 조회
-	public List<Map<String, Object>> getBud(int mno, String pMonth) throws Exception;
-
+	public List<Map<String, Object>> getBud(Integer mno, String pMonth) throws Exception;
+	
 	// 3. 예산 설정
-	public void setBud(Map<String, Object> insertMap);
+	public void setBud(Map<String, Object> insertMap) throws Exception;
 	
 	// 4. 예산 수정
-	public void updBud(Map<String, Object> updateMap);
+	public void updBud(Map<String, Object> updateMap) throws Exception;
 	
 }

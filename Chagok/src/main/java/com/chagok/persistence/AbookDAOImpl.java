@@ -25,6 +25,7 @@ public class AbookDAOImpl implements AbookDAO{
 	
 	//NAMESPACE
 	private static final String NAMESPACE = "com.chagok.mapper.abookMapper";
+	private static final String NAMESPACE2 = "com.chagok.mapper.reportMapper";
 	
 	// 가계부 조회 map
 	@Override
@@ -70,7 +71,7 @@ public class AbookDAOImpl implements AbookDAO{
 	}	
 	
 	@Override
-	public int chkBud(int mno, String pMonth) throws Exception {
+	public int chkBud(Integer mno, String pMonth) throws Exception {
 		Map map = new HashMap();
 		map.put("mno", mno);
 		map.put("pMonth", pMonth);
@@ -79,7 +80,7 @@ public class AbookDAOImpl implements AbookDAO{
 	}
 
 	@Override
-	public List<Map<String, Object>> getBud(int mno, String pMonth) throws Exception {
+	public List<Map<String, Object>> getBud(Integer mno, String pMonth) throws Exception {
 		Map map = new HashMap();
 		map.put("mno", mno);
 		map.put("pMonth", pMonth);
@@ -87,13 +88,13 @@ public class AbookDAOImpl implements AbookDAO{
 	}
 	
 	@Override
-	public void setBud(Map<String, Object> insertMap) {
+	public void setBud(Map<String, Object> insertMap) throws Exception {
 		mylog.debug("insertMap : "+insertMap.toString());
 		sqlSession.insert(NAMESPACE+".setBud", insertMap);
 	}
 	
 	@Override
-	public void updBud(Map<String, Object> updateMap) {
+	public void updBud(Map<String, Object> updateMap) throws Exception {
 		mylog.debug("updateMap : "+updateMap.toString());
 		sqlSession.update(NAMESPACE+".updBud", updateMap);
 	}

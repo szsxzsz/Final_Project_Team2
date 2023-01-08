@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>   
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="../include/header.jsp" %>
 <%@ include file="../include/sidebarAsset.jsp" %>
 
@@ -31,8 +32,8 @@
 							<input type="text" class="form-control" id="sumpamt" placeholder="예산을 입력하세요" maxlength="10" onkeyup="inputNumFmt(this);">
 						</div>
 						<div class="col-sm-10">
-							<span>지난달 예산 : </span><span id="prevsum"></span><br>
-							<span>최근 3개월 간 평균 지출 : </span><span id="prevavg"></span>
+							<span>지난달 예산 : </span><span id="prevsum"></span> 원<br>
+							<span>최근 3개월 간 평균 지출 : </span><fmt:formatNumber value="${dtAvg3 }"/> 원</span>
 						</div>
 					</div>
 				</div>

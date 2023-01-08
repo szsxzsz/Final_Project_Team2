@@ -72,5 +72,10 @@
 			where pno=#{i.pno}
 		</foreach>
 	</update>
-  
+	
+ 	<!-- 5. 총예산  조회-->
+	<select id="budSum">
+		select sum(p_amount) from plan where mno=#{mno} and p_month=#{p_month};
+	</select>
+	
   </mapper>

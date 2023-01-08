@@ -480,48 +480,51 @@ public class AssetController {
 		int mno = (int)session.getAttribute("mno");
 		UserVO userVO = userService.getUser(mno);
 		
-		mylog.debug("mno : "+mno);
-//		int mno = (int)session.getAttribute("mno");
-		
 		/////////////// 1. service에서 DB 가져오기 ///////////////
+		int mm = 0;
+		int mm2 = 1;
 		// 1. 이번달 총 지출
-		Integer dtSum1 = rptService.dtSum1(mno);
+		Integer dtSum1 = rptService.dtSum(mno, mm);
 		mylog.debug("dtSum1 : "+dtSum1);
 		
 		// 2. 지난달 총 지출
-		Integer dtSum2 = rptService.dtSum2(mno);
+		Integer dtSum2 = rptService.dtSum(mno, mm2);
 		mylog.debug("dtSum2 : "+dtSum2);
 		
 		// 3. 이번달 평균 지출
-		Integer dtAvg1 = rptService.dtAvg1(mno);
+		Integer dtAvg1 = rptService.dtAvg(mno, mm);
 		mylog.debug("dtAvg1 : "+dtAvg1);
 		
 		// 4. 지난달 평균 지출
-		Integer dtAvg2 = rptService.dtAvg2(mno);
+		Integer dtAvg2 = rptService.dtAvg(mno, mm2);
 		mylog.debug("dtAvg2 : "+dtAvg2);
 		
+		// 최근 3개월 평균 지출
+		Integer dtAvg3 = rptService.dtAvg3(mno);
+		mylog.debug("dtAvg3 : "+dtAvg3);
+		
 		// 5. 이번달 예상 지출
-		Integer expSum = rptService.expSum(mno);
+		Integer expSum = rptService.expSum(mno, mm);
 		mylog.debug("expSum : "+expSum);
 		
 		// 6. 이번달 총 수입
-		Integer dtSumIn = rptService.dtSumIn(mno);
+		Integer dtSumIn = rptService.dtSumIn(mno, mm);
 		mylog.debug("dtSumIn : "+dtSumIn);
 		
 		// 7. 이번달 무지출 일수
-		Integer noOut = rptService.noOut(mno);
+		Integer noOut = rptService.noOut(mno, mm);
 		mylog.debug("noOut : "+noOut);
 		
 		// 8. 이번달 결제 건수(지출 횟수)
-		Integer outCnt = rptService.outCnt(mno);
+		Integer outCnt = rptService.outCnt(mno, mm);
 		mylog.debug("outCnt : "+outCnt);
 		
 		// 9. 이번달 누적 지출
-		List<Map<String, Object>> outCum = rptService.outCum(mno);
+		List<Map<String, Object>> outCum = rptService.outCum(mno, mm);
 		mylog.debug("outCum : "+outCum.size());
 		
 		// 10. 일간 통계
-		List<Map<String, Object>> day = rptService.day(mno);
+		List<Map<String, Object>> day = rptService.day(mno, mm);
 		mylog.debug("day : "+day.size());
 		
 		// 11. 주간 통계
@@ -533,11 +536,11 @@ public class AssetController {
 		mylog.debug("month : "+month.size());
 		
 		// 13. 지출액 TOP 4
-		List<Map<String, Object>> amtTop = rptService.amtTop(mno);
+		List<Map<String, Object>> amtTop = rptService.amtTop(mno, mm);
 		mylog.debug("amtTop : "+amtTop.size());
 		
 		// 14. 지출횟수 TOP 4
-		List<Map<String, Object>> cntTop = rptService.cntTop(mno);
+		List<Map<String, Object>> cntTop = rptService.cntTop(mno, mm);
 		mylog.debug("cntTop : "+cntTop.size());		
 		
 		/////////////// 2. List<Map> -> JsonArray ///////////////
@@ -554,6 +557,7 @@ public class AssetController {
 		map.put("dtSum2", dtSum2);
 		map.put("dtAvg1", dtAvg1);
 		map.put("dtAvg2", dtAvg2);
+		map.put("dtAvg3", dtAvg3);
 		map.put("expSum", expSum);
 		map.put("dtSumIn", dtSumIn);
 		map.put("noOut", noOut);
@@ -581,22 +585,23 @@ public class AssetController {
 			return "/chagok/login";
 		}
 		mylog.debug("mno : "+mno);
-		
+
 		/////////////// 1. service에서 DB 가져오기 ///////////////
+		int mm = 0;
 		// 1. 최다 지출 카테고리
-		List<Map<String, Object>> cateCntList = rptService.cateCnt(mno);
+		List<Map<String, Object>> cateCntList = rptService.cateCnt(mno, mm);
 		mylog.debug("cateCntList : "+cateCntList.size());
 //		
 		// 2. 최대 지출 카테고리
-		List<Map<String, Object>> cateSumList = rptService.cateSum(mno);
+		List<Map<String, Object>> cateSumList = rptService.cateSum(mno, mm);
 		mylog.debug("cateSumList : "+cateSumList.size());
 		
 		// 3. 챌린지 추천
-		List<ChallengeVO> chRandList = rptService.chRand(mno);
+		List<ChallengeVO> chRandList = rptService.chRand(mno, mm);
 		mylog.debug("chRandList : "+chRandList.size());
 		
 		// 4. 카드 추천
-		List<PropCardVO> cardRandList = rptService.cardRand(mno);
+		List<PropCardVO> cardRandList = rptService.cardRand(mno, mm);
 		mylog.debug("cardRandList : "+cardRandList.size());
 		
 		/////////////// 2. List<Map> -> JsonArray ///////////////
@@ -623,7 +628,8 @@ public class AssetController {
 
 		List<String> ctTopList = abService.getctTop();
 		String pMonth = abService.getPMonth(mm);
-		
+		Integer dtAvg3 = rptService.dtAvg3(mno);
+		model.addAttribute("dtAvg3", dtAvg3);
 		model.addAttribute("ctTopList", ctTopList);
 		model.addAttribute("pMonth", pMonth);
 		model.addAttribute("mm", mm);
@@ -680,7 +686,8 @@ public class AssetController {
 			return budList;
 		}
 	}
-	
+
+//	http://localhost:8080/asset/updBud?mm=0
 	@GetMapping(value="/updBud")
 	public String updBudGET(@RequestParam("mm") int mm, HttpSession session, Model model) throws Exception {
 		mylog.debug("updBudGET");
@@ -716,11 +723,34 @@ public class AssetController {
 		mylog.debug("수정완");
 		return "/asset/budReport";	
 	}
-	
-	// http://localhost:8080/asset/budRpt
+
+//	http://localhost:8080/asset/budRpt?mm=0
 	@GetMapping(value="/budRpt")
-	public String budRpt() throws Exception {
+	public String budRpt(@RequestParam("mm") int mm, HttpSession session, Model model) throws Exception {
+		// 로그인 확인
+		if(session.getAttribute("mno")==null) {
+			return "/chagok/login";
+		}
+		int mno = (int)session.getAttribute("mno");
+		UserVO userVO = userService.getUser(mno);
 		
+		/////////////// 1. service에서 DB 가져오기 ///////////////
+		// 1. 해당 월 예산
+		Integer dtSum1 = rptService.dtSum(mno, mm);
+		mylog.debug("dtSum1 : "+dtSum1);
+		
+		// 2. 해당 월 지출
+		// 3. 해당 월 평균 지출
+		// 4. 해당 월 예상 지출
+		
+		/////////////// 2. List<Map> -> JsonArray ///////////////
+//		String outCumjson = rptService.listMapToJson(outCum);
+
+		/////////////// 3. model로 전달 ///////////////
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("dtSum1", dtSum1);
+		model.addAttribute("map", map);
+		model.addAttribute("userVO", userVO);		
 
 		return "/asset/budReport";
 	}

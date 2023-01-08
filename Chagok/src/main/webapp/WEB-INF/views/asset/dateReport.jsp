@@ -77,6 +77,7 @@
 							<h4>지난달보다 <fmt:formatNumber value="${d }" type="percent"/> 적게 쓰고 있습니다.</h4>
 					    </c:otherwise>
 					</c:choose>
+					<h4>최근 3개월 간 평균 지출 : <fmt:formatNumber value="${dtAvg3}"/>원</h4>
 				</div>
 				<div class="col-md-6">
 					<h3>이번달 남은 금액은 <fmt:formatNumber value="${c-a }"/>원 입니다.</h3>
@@ -242,8 +243,8 @@ for(var i=0; i<month.length; i++){
 
 for(var i=0; i<day.length; i++){
 	var d = day[i];
-	label1.push(d.day2);
-	value1.push(d.dayout);
+	label1.push(d.date);
+	value1.push(d.sum);
 }
 
 for(var i=0; i<amptop.length; i++){
@@ -266,7 +267,6 @@ for(var i=0; i<outCum.length; i++) {
 	label2.push(d.t2date);
 	value2.push(d.cumSum);
 }
-
 </script>
 
 <script type="text/javascript">
@@ -371,6 +371,26 @@ var linechart = new Chart(ctx2, {
 	data: dataline2,
 	options: optionline
 });
+
+// var areaChartOptions = {
+//   showScale               : true,
+//   scaleShowGridLines      : false,
+//   scaleGridLineColor      : 'rgba(0,0,0,.05)',
+//   scaleGridLineWidth      : 1,
+//   scaleShowHorizontalLines: true,
+//   scaleShowVerticalLines  : true,
+//   bezierCurve             : true,
+//   bezierCurveTension      : 0.3,
+//   pointDot                : false,
+//   pointDotRadius          : 4,
+//   pointDotStrokeWidth     : 1,
+//   pointHitDetectionRadius : 20,
+//   datasetStroke           : true,
+//   datasetStrokeWidth      : 2,
+//   datasetFill             : true,
+//   maintainAspectRatio     : true,
+//   responsive              : true
+// }
 
 </script>
 

@@ -45,7 +45,6 @@ public class ReportServiceImpl implements ReportService {
 		}
 		Gson gson = new Gson();
 		String jsonStr = gson.toJson(jArr);
-//		mylog.debug("jArr : "+jArr);
 		
 		return jsonStr;
 	}
@@ -54,53 +53,48 @@ public class ReportServiceImpl implements ReportService {
 	////////////////////////dateReport ////////////////////////
 	
 	@Override
-	public Integer dtSum1(Integer mno) throws Exception {
-		return rptdao.dtSum1(mno);
+	public Integer dtSum(Integer mno, Integer mm) throws Exception {
+		return rptdao.dtSum(mno, mm);
 	}
 	
 	@Override
-	public Integer dtSum2(Integer mno) throws Exception {
-		return rptdao.dtSum2(mno);
+	public Integer dtAvg(Integer mno, Integer mm) throws Exception {
+		return rptdao.dtAvg(mno, mm);
 	}
 
 	@Override
-	public Integer dtAvg1(Integer mno) throws Exception {
-		return rptdao.dtAvg1(mno);
+	public Integer dtAvg3(Integer mno) throws Exception {
+		return rptdao.dtAvg3(mno);
 	}
 
 	@Override
-	public Integer dtAvg2(Integer mno) throws Exception {
-		return rptdao.dtAvg2(mno);
+	public Integer expSum(Integer mno, Integer mm) throws Exception {
+		return rptdao.expSum(mno, mm);
 	}
 
 	@Override
-	public Integer expSum(Integer mno) throws Exception {
-		return rptdao.expSum(mno);
+	public Integer dtSumIn(Integer mno, Integer mm) throws Exception {
+		return rptdao.dtSumIn(mno, mm);
 	}
 
 	@Override
-	public Integer dtSumIn(Integer mno) throws Exception {
-		return rptdao.dtSumIn(mno);
+	public Integer noOut(Integer mno, Integer mm) throws Exception {
+		return rptdao.noOut(mno, mm);
 	}
 
 	@Override
-	public Integer noOut(Integer mno) throws Exception {
-		return rptdao.noOut(mno);
+	public Integer outCnt(Integer mno, Integer mm) throws Exception {
+		return rptdao.outCnt(mno, mm);
 	}
 
 	@Override
-	public Integer outCnt(Integer mno) throws Exception {
-		return rptdao.outCnt(mno);
+	public List<Map<String, Object>> outCum(Integer mno, Integer mm) throws Exception {
+		return rptdao.outCum(mno, mm);
 	}
-
+	
 	@Override
-	public List<Map<String, Object>> outCum(Integer mno) throws Exception {
-		return rptdao.outCum(mno);
-	}
-
-	@Override
-	public List<Map<String, Object>> day(Integer mno) throws Exception {
-		return rptdao.day(mno);
+	public List<Map<String, Object>> day(Integer mno, Integer mm) throws Exception {
+		return rptdao.day(mno, mm);
 	}
 
 	@Override
@@ -114,36 +108,36 @@ public class ReportServiceImpl implements ReportService {
 	}
 	
 	@Override
-	public List<Map<String, Object>> amtTop(Integer mno) throws Exception {
-		return rptdao.amtTop(mno);
+	public List<Map<String, Object>> amtTop(Integer mno, Integer mm) throws Exception {
+		return rptdao.amtTop(mno, mm);
 	}
 	
 	@Override
-	public List<Map<String, Object>> cntTop(Integer mno) throws Exception {
-		return rptdao.cntTop(mno);
+	public List<Map<String, Object>> cntTop(Integer mno, Integer mm) throws Exception {
+		return rptdao.cntTop(mno, mm);
 	}
 
 	
 	////////////////////////cateReport ////////////////////////
 
 	@Override
-	public List<Map<String, Object>> cateCnt(Integer mno) throws Exception {
-		return rptdao.cateCnt(mno);
+	public List<Map<String, Object>> cateCnt(Integer mno, Integer mm) throws Exception {
+		return rptdao.cateCnt(mno, mm);
 	}
 
 	@Override
-	public List<Map<String, Object>> cateSum(Integer mno) throws Exception {
-		return rptdao.cateSum(mno);
+	public List<Map<String, Object>> cateSum(Integer mno, Integer mm) throws Exception {
+		return rptdao.cateSum(mno, mm);
 	}
 
 	@Override
-	public List<ChallengeVO> chRand(Integer mno) throws Exception {
-		return rptdao.chRand(mno);
+	public List<ChallengeVO> chRand(Integer mno, Integer mm) throws Exception {
+		return rptdao.chRand(mno, mm);
 	}
 
 	@Override
-	public List<PropCardVO> cardRand(Integer mno) throws Exception {
-		return rptdao.cardRand(mno);
+	public List<PropCardVO> cardRand(Integer mno, Integer mm) throws Exception {
+		return rptdao.cardRand(mno, mm);
 	}
 
 	
