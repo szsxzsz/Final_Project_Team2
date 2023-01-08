@@ -264,9 +264,9 @@ public class ChallengeController {
 			
 			Integer mno = (Integer)session.getAttribute("mno");
 			mylog.debug(cno+" : cno , "+mno+" : mno, "+c_sort+" : c_sort");
-//			String nick = uservice.getUser(mno).getNick();
-			
-			String nick = ",효원";
+			String a = ",";
+			String b = uservice.getUser(mno).getNick();
+			String nick = a+b;
 			service.cancelChallenge(nick,cno);
 			
 			if(c_sort == 0) {

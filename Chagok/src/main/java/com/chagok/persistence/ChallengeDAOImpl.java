@@ -66,7 +66,6 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 		
 		List<ChallengeVO> challengeList = sqlSession.selectList(NAMESPACE+".getChallengeInfo",cno);
 		
-		
 		return challengeList;
 		
 	}
