@@ -8,6 +8,8 @@
 
 <h1>후기글 게시판</h1>
 ${boardList}
+${result }
+${review }
 <div class="col-xs-12 table-responsive">
 	<table class="table table-striped">
 		<thead>
@@ -21,13 +23,15 @@ ${boardList}
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach items="#{boardList }" var="boardList">
+			<c:forEach items="${boardList }" var="boardList" begin="1" end="${boardList.size() -1 }" step="1" varStatus="status">
+<%-- 			<c:forEach var="b" begin="0" end="${boardList.size() - 1 }" step="1"> --%>
+<%-- 		    <c:set var="c"  value="${vo2[i] }" /> --%>
+<%-- 		    <c:set var="goods" value="${goodsList[i] }"/> --%>
 			<tr>
-				<td>${boardList.b_title }</td>
-				<td>21</td>
+				<td>${status.index }</td>
+				<td>11</td>
 				<td>
-<%-- 					<a href="/reviewcontent?bno=${boardList.bno }">${boardList.b_title } </a> --%>
-					${boardList.b_title }
+					<a href="/reviewcontent?cno=${boardList.cno }">${boardList.b_title } </a>
 				</td>
 				<td>${boardList.b_content }</td>
 				<td>11</td>

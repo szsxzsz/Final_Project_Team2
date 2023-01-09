@@ -84,7 +84,8 @@
          <h2>절약형 차곡 챌린지</h2>
       </div> 
      ${vo }
-      / http://localhost:8080/challenge/minusFeed?cno=1
+      / http://localhost:8080/challenge/minusFeed?cno=1 // ${mvo }
+      
       <button type="button" class="btn btn-default" onclick="location.href='${pageContext.request.contextPath }/commumain';">메인으로 가기</button>
      
      <div class="row">
@@ -98,7 +99,8 @@
 			 <fmt:parseDate value="${vo.c_start}" var="startDate" pattern="yyyy-MM-dd"/>
 			 <fmt:parseNumber value="${(startDate.time + 1000*60*60*24)/ (1000*60*60*24)}" integerOnly="true" var="startTime" scope="request"/>
 			 <fmt:parseNumber value="${c_end.time / (1000*60*60*24)}" integerOnly="true" var="endTime" scope="request" />
-			
+<%-- 			 <fmt:formatNumber value="${minusPeoList.m_sum}" pattern=",000" var="money" /> --%>
+			 
 			<c:if test="${startTime - nowfmtTime <= 0 && nowfmtTime - endTime <= 0}">
 				<p class="fst-italic">챌린지가 <b>시작</b>되었습니다!</p>
 			</c:if>
@@ -107,17 +109,25 @@
 			</c:if>
 			<c:if test="${nowfmtTime - endTime > 0}">
 				<p class="fst-italic">챌린지가 <b>종료</b>되었습니다!</p>
+				<c:choose>
+					<c:when test="${vo3.m_sum == vo3.c_amount}">
+						<button type="button" onclick="location.href='/challenge/success?cno=${vo.cno}';">결과보기</button>
+					</c:when>
+					<c:otherwise>
+						<button type="button" onclick="location.href='/challenge/defeat?cno=${vo.cno}';">결과보기</button>
+					</c:otherwise>
+				</c:choose>
 			</c:if>
 			<br><br>
 			<div class="row">
 				<div class="col-lg-6" style="line-height: 180%">
 	             <div class="progress-group" style="width: 280px;" >
 	               <span class="progress-text">챌린지 장 </span>
-	               <span class="progress-number"><b>${vo.c_host }</b>님</span>
+<%-- 	               <span class="progress-number"><b>${vo.c_host }</b>님</span> --%>
 	             </div>
 	             <div class="progress-group" style="width: 280px;">
 	               <span class="progress-text">챌린지 인원</span>
-	               <span class="progress-number"><b>${plusPeoList.size() } </b>/ ${vo.c_pcnt }</span>
+	               <span class="progress-number"><b>${minusPeoList.size() } </b>/ ${vo.c_pcnt }</span>
 	             </div>
 	             <div class="progress-group" style="width: 280px;">
 	               <span class="progress-text">예치금</span>
@@ -125,7 +135,7 @@
 	             </div>  
           	 <div class="progress-group" style="width: 280px;">
                <span class="progress-text">챌린지 기간</span>
-               <span class="progress-number"><b>${vo.c_period }</b></span>
+               <span class="progress-number"><b>${vo.c_period }</b>주</span>
               </div> 
              <div class="progress-group" style="width: 280px;">
                <span class="progress-text">챌린지 시작일</span>
@@ -156,7 +166,6 @@
    </div>
    
    
-   
 <!--    가계부 연동하기 모달 -->
 <!-- 모달 css 파일 : resources -> plugins -> modal -> minusModal.css  -->
 	<div class="modal fade" id="modal-default" style="margin-top: 10%;">
@@ -169,12 +178,36 @@
 					<h4 class="modal-title">나의 가계부 연동</h4>
 				</div>
 				<div class="modal-body">
-					<p>
+<!-- 					<iframe src="/asset/abookList?mno=1" width="300" height="300"> -->
+<!-- 					</iframe> -->
+
+<%--    abookList : ${abookList } // --%>
+<%-- 	cateList : ${cateList } // --%>
+<%-- 	jsonCate : ${jsonCate } --%>
+				${minusAbook }
+		<table border="1">
+		<tr>
+		 <td>날짜</td>
+		 <td>내용</td>
+		 <td>금액</td>
+		 <td>카테고리</td>
+		 <td>소분류</td>
+		 <td>연동</td>
+		</tr>
+		<c:forEach var="mAbook" begin="0" end="${minusAbook.size()-1}" items="${minusAbook}">
+		<tr>
+		 <td>${minusAbook.ab_date }</td>
+		 <td>${minusAbook.ab_content }</td>
+		 <td>${minusAbook.ab_amount }</td>
+<%-- 		 <td>${ct_top }</td> --%>
+<%-- 		 <td>${ct_bottom }</td> --%>
+		<td><input type="radio" id="radio"></td>
+		</tr>
+		</c:forEach>
+		</table>
+				
+			
 					
-					<iframe src="/asset/abookList?mno=1" width="300" height="300">
-					</iframe>
-					
-					</p>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default pull-left"
@@ -213,10 +246,10 @@ ${minusPeoList }
 <%--                  <% --%>
 <!--                    String[] colorArr = {"progress-bar-danger","progress-bar-yellow","progress-bar-primary", "progress-bar-success"}; -->
 <%--                   %> --%>
-<%--                  <%=colorArr[1] %> --%>
-<%--                  <c:set var="ca" value="${colorArr }" /> --%>
+
+<!-- minusPeople.m_sum 이 숫자로 변환안됨 vo.c_amount -> minusPeoList.m_sum 으로 변환 필요! -->
                 <c:forEach var="minusPeople" begin="0" end="${minusPeoList.size()-1}" items="${minusPeoList}">
-<%--                 <c:forEach var="colorArr" begin="0" end="arr.size()-1" items="colorArr"> --%>
+<%--                  <fmt:formatNumber value="${minusPeoList.m_sum}" pattern=",000" var="money" /> --%>
                 <c:set var="i" value="${i+1 }"/>
                   <tr>
                      <td>${i }.</td>

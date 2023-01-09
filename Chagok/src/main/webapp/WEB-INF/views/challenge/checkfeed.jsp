@@ -7,8 +7,6 @@
 <%@ include file="../include/sidebar.jsp" %>
 
 <h1>피드 가기</h1>
-${user }
-${vo }
 <script type="text/javascript">
 	function move() {
 		
@@ -103,11 +101,22 @@ ${vo }
 			</div>
 	
 			<div class="box-body no-padding">
-				<c:forEach var="vo" items="${vo.c_person.split(',')}">
+				<c:forEach var="plus" items="${plusPeoList}">
 					<ul class="users-list clearfix">
 						<li>
-							${user.profile }<br>
-							${vo} 
+							<img src="./upload/${plus.profile }" width="60" height="60">
+				      		 <br>
+							${plus.nick} 
+	 					</li>
+					</ul>
+				</c:forEach>
+				<c:forEach var="minus" items="${minusPeoList}">
+					<ul class="users-list clearfix">
+					
+						<li>
+							 <img src="./upload/${minus.profile }" width="60" height="60">
+							 <br>
+							${minus.nick} 
 	 					</li>
 					</ul>
 				</c:forEach>

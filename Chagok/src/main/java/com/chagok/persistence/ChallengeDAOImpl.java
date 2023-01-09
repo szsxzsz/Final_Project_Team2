@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
+import com.chagok.domain.AbookVO;
 import com.chagok.domain.BoardVO;
 import com.chagok.domain.ChallengeVO;
 import com.chagok.domain.Criteria;
@@ -300,6 +301,31 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 		Integer cListCount = sqlSession.selectOne(NAMESPACE + ".cListCount", scri);
 		
 		return cListCount;
+	}
+
+	// 챌린지 성공여부 (절약형)
+	@Override
+	public ChallengeVO getMoney(Integer mno) {
+		mylog.debug(" getMoney(mno) 호출 ");
+		ChallengeVO vo3 = sqlSession.selectOne(NAMESPACE+".getMoney");
+		
+		return vo3;
+	}
+
+	// 가계부 가져오기 
+	@Override
+	public List<AbookVO> getMinusAbook(Integer mno) {
+		mylog.debug(" getMinusAbook(mno) 호출 ");
+		List<AbookVO> minusAbook = sqlSession.selectList(NAMESPACE+".getMinusAbook");
+		return minusAbook;
+	}
+	
+	// 게시판 + 챌린지
+	@Override
+	public List<Map<String, Object>> getBoardChallenge(Integer cno) throws Exception {
+		mylog.debug("getBoardChallenge 호출");
+		List<Map<String, Object>> boardChallenge = sqlSession.selectList(NAMESPACE+".boardChallenge", cno);
+		return boardChallenge;
 	}
 	
 	
