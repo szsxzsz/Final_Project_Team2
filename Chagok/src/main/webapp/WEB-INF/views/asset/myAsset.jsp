@@ -72,18 +72,31 @@
 		
 		// 카드 모달창
 		$('.startModal_card').click(function(){
+			$('#str_card').text($(this).children('.card_name_card').val());
+			$('#str_cardNum').text($(this).children('.card_num_masked_card').val());
 			
-			alert("test");
-			
-			$('#iframe_card').attr("src", "/asset/cardHistory?card_id="+$(this).children().val());
+			$('#iframe_card').attr("src", "/asset/cardHistory?card_id="+$(this).children().val()
+					+"&cardSum="+$(this).children('.card_part_sum_card').val() );
 			
 			$('#modal-card').modal();
-		})
+		});
 		
-		
+			
+		// 현금 모달창
+		$('.startModal_cash').click(function(){
+
+			$('#iframe_cash').attr("src", "/asset/insertCash");
+			
+			$('#modal-cash').modal();
+		});
 		// 모달창 관련
 		
-		
+		$(".btn.btn-primary.mo").click(function(){
+
+			location.reload();
+		});
+			
+			
 		
 		
 	});
@@ -158,7 +171,7 @@
 		<!-- 전체 순자산 (계좌합 - 카드값 + 현금) -->	
 		<div style="margin: 50px 0 0 100px;">
 			<h1>📌 내 자산</h1>
-			<h2> 💎 ${userVO.nick } 님의 순자산은 : <fmt:formatNumber value="${accountSum - cardSum }"/> 원 입니다 💎 </h2>
+			<h2> 💎 ${userVO.nick } 님의 순자산은 : <fmt:formatNumber value="${accountSum - cardSum + cashVO.cash_amt}"/> 원 입니다 💎 </h2>
 		</div>
 	
 		<div style="margin: 50px 100px 0 80px;">
@@ -249,20 +262,42 @@
 				</span>
 				<div class="info-box-content" style="padding-top: 15px">
 					<span class="info-box-text" style="font-size: 3em; margin-left: 20px; display: inline;">현 금</span> 
-					<span class="info-box-text" style="font-size: 3em; margin-left: 200px; display: inline;">총 0 원</span> 
+					<span class="info-box-text" style="font-size: 3em; margin-left: 200px; display: inline;">
+						총
+						<c:if test="${cashVO == null }">
+						 	0 
+						</c:if>
+						<c:if test="${cashVO != null }">
+							<fmt:formatNumber value="${cashVO.cash_amt }"/>
+						</c:if>
+						원
+					</span> 
 				</div>
 			</div>
 			
 			<!-- 현금목록 -->
 			<div id="cash_ch" style="display: none;">
 				<div class="info-box" style="margin: 0 0 1px 30px; width: 95%">
-					<span class="info-box-icon">
-						<i class="fa fa-database"></i>
-					</span>
-					<div class="info-box-content" style="padding-top: 15px;">
-						<span class="info-box-text" style="font-size: 3em; margin-left: 20px; display: inline;">현 금</span> 
-						<span class="info-box-text" style="font-size: 3em; margin-left: 200px; display: inline;">총 0 원</span> 
-					</div>
+					<a href="#" class="startModal_cash">
+						<span class="info-box-icon">
+							<i class="fa fa-database"></i>
+						</span>
+						<div class="info-box-content" style="padding-top: 15px;">
+							<span class="info-box-text" style="font-size: 3em; margin-left: 20px; display: inline;">
+								<c:if test="${cashVO == null }">
+									현금 내역이 없습니다.
+								</c:if>
+								<c:if test="${cashVO != null }">
+									${cashVO.cash_inout }
+								</c:if>
+							</span> 
+							<span class="info-box-text" style="font-size: 3em; margin-left: 200px; display: inline;">
+								<c:if test="${cashVO != null }">
+									총  <fmt:formatNumber value="${cashVO.cash_amt }"/> 원
+								</c:if>
+							</span> 
+						</div>
+					</a>
 				</div>
 			</div>
 					
@@ -273,7 +308,7 @@
 
 
 <!-- 계좌 내역 정보 불러오기 모달창 -->
-	<div class="modal fade" id="modal-account" style="margin-top: 5%;">
+	<div class="modal fade" id="modal-account" style="margin-top: 0%; padding-top: 5%">
 		<div class="modal-dialog" style="width:1200px; height: 800px;">
 			<div class="modal-content" style="height: 700px; text">
 				<div class="modal-header" style="height: 100px; background-color: #04c584;">
@@ -281,7 +316,7 @@
 						<span aria-hidden="true">&times;</span>
 					</button>
 					<h4 class="modal-title" style="color: #fff; font-size: 3em; letter-spacing: 3px; margin-top: 5px">
-						<strong id="str_account">월급통장</strong>
+						<strong id="str_account">임시통장</strong>
 						<strong id="str_accountNum" style="float: right;">123132313123</strong>
 					</h4>
 				</div>
@@ -304,7 +339,7 @@
 
 
 <!-- 카드 내역 정보 불러오기 모달창 -->
-	<div class="modal fade" id="modal-card" style="margin-top: 5%;">
+	<div class="modal fade" id="modal-card" style="margin-top: 0%; padding-top: 5%">
 		<div class="modal-dialog" style="width:1200px; height: 800px;">
 			<div class="modal-content" style="height: 700px; text">
 				<div class="modal-header" style="height: 100px; background-color: #04c584;">
@@ -312,8 +347,8 @@
 						<span aria-hidden="true">&times;</span>
 					</button>
 					<h4 class="modal-title" style="color: #fff; font-size: 3em; letter-spacing: 3px; margin-top: 5px">
-						<strong id="str_account">월급통장</strong>
-						<strong id="str_accountNum" style="float: right;">123132313123</strong>
+						<strong id="str_card">임시카드</strong>
+						<strong id="str_cardNum" style="float: right;">123132313123</strong>
 					</h4>
 				</div>
 				<div class="modal-body" style="height: 530px;">
@@ -332,6 +367,35 @@
 		</div>
 	</div>
 <!-- 카드 내역 정보 불러오기 모달창 -->
+
+<!-- 현금 내역 정보 불러오기 모달창 -->
+	<div class="modal fade" id="modal-cash" style="margin-top: 0%; padding-top: 5%">
+		<div class="modal-dialog" style="width:600px; height: 700px;">
+			<div class="modal-content" style="height: 600px; text">
+				<div class="modal-header" style="height: 100px; background-color: #04c584;">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" style="color: #fff; font-size: 3em; letter-spacing: 3px; margin-top: 5px">
+						<strong id="str_cash">내 현금</strong>
+					</h4>
+				</div>
+				<div class="modal-body" style="height: 430px;">
+					<p>
+					
+					<iframe id="iframe_cash" src="" width="500px;" height="430px;">
+					</iframe>
+					
+					</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary mo" id="saveABook" data-dismiss="modal" style="background-color: #363A3C; margin-right: 30px; width: 100px">닫 기</button>
+				</div>
+			</div>
+
+		</div>
+	</div>
+<!-- 현금 내역 정보 불러오기 모달창 -->
  
 
 

@@ -12,8 +12,10 @@
 </div>
 
 <hr>
+<c:set var="mm" value="${param.mm }"/>
 <input type="button" id="setbud" class="btn btn-block btn-success btn-lg" 
-	style="width: 200px; margin: 20px 40px" value="예산 수정하기" onclick = "location.href = '/asset/updBud?mm='+${mm}+'';">  
+	style="width: 200px; margin: 20px 40px" value="예산 수정하기" 
+	onclick="location.href='/asset/updBud?mm='+${mm}+'';">  
 
 <div class="row">
 	<div class="col-md-12">

@@ -49,12 +49,24 @@
 	
 	<select id="getAccountHistory" resultType="com.chagok.apiDomain.AccountHistoryVO">
 		select * from account_history where fintech_use_num = #{fintech_use_num} 
-		order by tran_date desc
+		order by tran_date desc, tran_time desc
 	</select>
 	
 	<select id="getCardHistoryList" resultType="com.chagok.apiDomain.CardHistoryVO">
 		select * from card_history where card_id = #{card_id} 
-		order by card_tran_date desc
+		order by card_tran_date desc, card_tran_time desc
 	</select>
 	
+	<insert id="insertCash">
+		insert into cash(mno, cash_inout, cash_amt) value(#{mno}, #{cash_inout}, #{cash_amt})
+	</insert>
+	
+	<delete id="deleteCash">
+		delete from cash where mno = #{mno} 
+	</delete>
+	
+	<select id="getCashInfo" resultType="com.chagok.apiDomain.CashVO">
+		select * from cash where mno = #{mno}
+	</select>	
+
   </mapper>

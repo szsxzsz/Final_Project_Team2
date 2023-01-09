@@ -9,6 +9,7 @@ import com.chagok.apiDomain.AccountVO;
 import com.chagok.apiDomain.CardHistoryVO;
 import com.chagok.apiDomain.CardInfoResponseVO;
 import com.chagok.apiDomain.CardInfoVO;
+import com.chagok.apiDomain.CashVO;
 
 public interface AccountDAO {
 	
@@ -41,5 +42,11 @@ public interface AccountDAO {
 	
 	// 카드 내역 조회 (card_id)
 	public List<CardHistoryVO> getCardHistory(String card_id) throws Exception;
+	
+	// 현금 등록 하기
+	public void insertCash(CashVO vo) throws Exception;
+	
+	// 현금 조회 하기
+	public CashVO getCashInfo(int mno) throws Exception;
 	
 }

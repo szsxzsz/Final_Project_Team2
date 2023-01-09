@@ -13,6 +13,7 @@ import com.chagok.apiDomain.AccountVO;
 import com.chagok.apiDomain.CardHistoryVO;
 import com.chagok.apiDomain.CardInfoResponseVO;
 import com.chagok.apiDomain.CardInfoVO;
+import com.chagok.apiDomain.CashVO;
 import com.chagok.persistence.AccountDAO;
 
 @Service
@@ -69,6 +70,16 @@ public class AccountServiceImpl implements AccountService{
 	@Override
 	public List<CardHistoryVO> getCardHistory(String card_id) throws Exception {
 		return accountDAO.getCardHistory(card_id);
+	}
+
+	@Override
+	public void insertCash(CashVO vo) throws Exception {
+		accountDAO.insertCash(vo);
+	}
+
+	@Override
+	public CashVO getCashInfo(int mno) throws Exception {
+		return accountDAO.getCashInfo(mno);
 	}
 
 	

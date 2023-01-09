@@ -41,6 +41,9 @@ public interface AbookDAO {
 	public void setBud(Map<String, Object> insertMap) throws Exception;
 	
 	// 4. 예산 수정
-	public void updBud(Map<String, Object> updateMap) throws Exception;
+	public void updBud(List<Map<String, Object>> updateList) throws Exception;
+
+	// 5. 예산 삭제
+	public void delBud(Integer mno, String pMonth) throws Exception;
 	
 }
