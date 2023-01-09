@@ -249,5 +249,20 @@
 <!-- 			<if test="searchType == 'c_tc_co'.toString()">AND (c_title LIKE '%' || #{keyword} || '%') or (c_content LIKE '%' || #{keyword} || '%')</if> -->
 <!-- 		</if> -->
 <!-- 	</sql> -->
+
+
+<!-- 	챌린지 성공여부 (절약형) -->
+	<select id="getMoney" resultType="ChallengeVO">
+		select * from challenge c right join minus m on c.cno = m.cno
+		where c.cno=#{cno} and m.mno = #{mno}
+	</select>
+	
+<!-- 	가계부 가져오기 -->
+	<select id="getMinusAbook" resultType="List">
+		select * from account_book a right join challenge c on a.mno = c.mno
+		where c.cno=#{cno} and a.ctno = c.ctno
+	</select>
+
+
 	
   </mapper>

@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import com.chagok.domain.AbookVO;
 import com.chagok.domain.BoardVO;
 import com.chagok.domain.ChallengeVO;
 import com.chagok.domain.Criteria;
@@ -92,4 +93,11 @@ public interface ChallengeDAO {
 	
 	// 챌린지 성공 인원 조회
 	public Integer getSuccess(Integer cno) throws Exception;
+	
+	// 챌린지 성공여부 (절약형)
+	public ChallengeVO getMoney(Integer mno);
+	
+	// 가계부 가져오기
+	public List<AbookVO> getMinusAbook(Integer mno);
+	
 }
