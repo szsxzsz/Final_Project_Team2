@@ -33,9 +33,10 @@ public class FeedDTO {
 	private int	fno;
 	private String roomId;
 	private String contents;
-	private List<MessageVO> content2;
+//	private List<MessageVO> content2;
     private String f_date; // 채팅시간
     private int cno;  // 채팅 방 번호
+    private String f_receive;  // 채팅 방 번호
     private Set<WebSocketSession> sessions = new HashSet<WebSocketSession>();
     //WebSocketSession은 Spring에서 Websocket Connection이 맺어진 세션
 
@@ -51,10 +52,10 @@ public class FeedDTO {
     
     public void handleMessage(WebSocketSession session, MessageVO chatMessage, ObjectMapper objectMapper) throws Exception {
 
-        if (chatMessage.getType() == MessageType.JOIN) {
-            join(session);
-            chatMessage.setMessage(chatMessage.getWriter() + "님이 입장했습니다.");
-        }
+//        if (chatMessage.getType() == MessageType.JOIN) {
+//            join(session);
+//            chatMessage.setMessage(chatMessage.getWriter() + "님이 입장했습니다.");
+//        }
         
         send(chatMessage, objectMapper);
     }
