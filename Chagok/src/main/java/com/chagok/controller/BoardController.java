@@ -134,7 +134,7 @@ public class BoardController {
 	
 	// 후기글 상세
 	// http://localhost:8080/reviewcontent?bno=1
-	@GetMapping(value = "/reivewcontent")
+	@GetMapping(value = "/reviewcontent")
 	public String reviewcontentGET(HttpSession session,Model model,@RequestParam("bno") int bno) throws Exception {
 			
 		BoardVO vo = service.getBoardContent(bno);
@@ -166,7 +166,15 @@ public class BoardController {
 	public String noticecontentGET(HttpSession session,Model model,@RequestParam("bno") int bno) throws Exception {
 			
 		BoardVO vo = service.getBoardContent(bno);
-			
+		
+		String nick = (String)session.getAttribute("nick");
+		
+		if(nick == "admin") {
+			BoardVO vo2 = service.getBoardContent(bno);
+			model.addAttribute("vo2", vo2);
+			mylog.debug(vo2+"");
+		}
+		
 		model.addAttribute("vo",vo);
 			
 		return "/community/noticecontent";
@@ -174,9 +182,11 @@ public class BoardController {
 	// 공지 글 작성하기
 	// http://localhost:8080/noticewrite
 	@GetMapping(value = "/noticewrite")
-	public void noticewriteGET() throws Exception {
+	public String noticewriteGET() throws Exception {
 			
 		mylog.debug(" noticewriteGET 호출");
+		
+		return "/community/noticewrite";
 			
 	}
 		
@@ -199,7 +209,7 @@ public class BoardController {
 	// http://localhost:8080/noticeupdate?bno=4
 	@GetMapping(value = "/noticeupdate")
 	public String noticeupdateGET(@RequestParam("bno") int bno, Model model, HttpSession session) throws Exception{
-		mylog.debug("noticeupdate 호출");
+		mylog.debug("noticeupdate GET 호출");
 			
 		mylog.debug(bno+"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 			
@@ -212,6 +222,8 @@ public class BoardController {
 	// 공지 글 수정하기 POST
 	@PostMapping(value = "/noticeupdate")
 	public String noticeupdatePOST(BoardVO vo,RedirectAttributes rttr,HttpSession session) throws Exception {
+		mylog.debug("noticeupdate POST 호출");
+		
 		mylog.debug(vo+"수정하기 post 호출");
 					
 		Integer result = service.updateBoard(vo);

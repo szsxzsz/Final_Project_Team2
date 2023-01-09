@@ -7,7 +7,6 @@
 <%@ include file="../include/sidebar.jsp" %>
 
 <h1>공지게시판</h1>
-${boardList }
 <div class="col-xs-12 table-responsive">
 	<table class="table table-striped">
 		<thead>
@@ -45,5 +44,8 @@ ${boardList }
 		}
 		
 	</script>
+	<c:if test="${nick.equals('관리자') }">
+		<input class="btn btn-block btn-success btn-lg" type="button" value="공지 작성하기" onclick="location.href='/noticewrite';" style="width:218px; margin-left: 950px;">
+	</c:if>
 <input class="btn btn-block btn-success btn-lg" type="button" value="메인가기" onclick="location.href='/commumain';" style="width:218px; margin-left: 950px;">
 <%@ include file="../include/footer.jsp"%>

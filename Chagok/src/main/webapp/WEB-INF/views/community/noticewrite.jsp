@@ -7,6 +7,7 @@
 <%@ include file="../include/sidebar.jsp" %>
 <h1> 공지사항 작성 </h1>
 ${vo }
+<form role="form" action="/noticewrite" method="post">
 	 <div class="row" style="width: 1200px; padding-left: 50px; padding-right: 20px; padding-top: 50px;">
 	    <div class="d-flex justify-content-center">
 		    <div class="box">
@@ -17,7 +18,7 @@ ${vo }
 						</span>
 						&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
 				    	<span style="color: #10A19D;"> 글쓴이 |
-				    		<input type="text" name="b_writer" >
+				    		<input type="text" name="b_writer" value="user">
 				    	</span>
 				    	<span style="color: #10A19D;">작성일 |
 				    		 <input type="" name="b_date">
@@ -35,9 +36,10 @@ ${vo }
 		    </div>
 		</div>
     </div>
-
-        <input class="btn btn-block btn-success btn-lg" type="button" value="작성하기" onclick="location.href='';" style="width:218px; margin-left: 950px;">
-        <input class="btn btn-block btn-success btn-lg" type="button" value="돌아가기" onclick="location.href='';" style="width:218px; margin-left: 950px;">
-
+		<input type="hidden" value="2" name="b_sort" >
+</form>
+        <input class="btn btn-block btn-success btn-lg" type="submit" value="작성하기" style="width:218px; margin-left: 950px;">
+        <input class="btn btn-block btn-success btn-lg" type="button" value="돌아가기" onclick="location.href='/notice';" style="width:218px; margin-left: 950px;">
+		
 
 <%@ include file="../include/footer.jsp"%>

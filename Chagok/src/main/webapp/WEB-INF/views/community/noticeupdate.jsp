@@ -7,6 +7,7 @@
 
 <h1> 공지사항 수정 </h1>
 ${board }
+<form role="form" method="post">
 	 <div class="row" style="width: 1200px; padding-left: 50px; padding-right: 20px; padding-top: 50px;">
 	    <div class="d-flex justify-content-center">
 		    <div class="box">
@@ -31,7 +32,8 @@ ${board }
 		    </div>
 		</div>
     </div>
+</form>
 
-        <input class="btn btn-block btn-success btn-lg" type="submit" value="수정하기" onclick="location.href='/noticeupdate?bno=${bno}';" style="width:218px; margin-left: 950px;">
+        <input class="btn btn-block btn-success btn-lg" type="submit" value="수정하기" onclick="location.href='/noticeupdate?bno=${board.bno}';" style="width:218px; margin-left: 950px;">
         <input class="btn btn-block btn-success btn-lg" type="button" value="돌아가기" onclick="location.href='/notice';" style="width:218px; margin-left: 950px;">
 <%@ include file="../include/footer.jsp"%>

@@ -5,7 +5,7 @@
 <%@ include file="../include/header.jsp" %>
 <%@ include file="../include/sidebar.jsp" %>
 
-<h1> 공지사항 상세 </h1>
+<h1> 후기글 상세 </h1>
 ${vo }
 	 <div class="row" style="width: 1200px; padding-left: 50px; padding-right: 20px; padding-top: 50px;">
 	    <div class="d-flex justify-content-center">
@@ -29,10 +29,12 @@ ${vo }
 		    </div>
 		</div>
     </div>
-
+    <c:set var="writer" value="${vo.b_writer }"/>
+	<c:if test= "${nick == '관리자' || nick == writer}">
         <input class="btn btn-block btn-success btn-lg" type="button" value="수정하기" onclick="location.href='/reviewupdate'" style="width:218px; margin-left: 950px;">
-        <input class="btn btn-block btn-success btn-lg" type="button" value="돌아가기" onclick="location.href='/reviewboard'" style="width:218px; margin-left: 950px;">
         <input class="btn btn-block btn-success btn-lg" type="button" value="삭제하기" onclick="location.href='/revireremove'" style="width:218px; margin-left: 950px;">
+	</c:if>
+        <input class="btn btn-block btn-success btn-lg" type="button" value="돌아가기" onclick="location.href='/reviewboard'" style="width:218px; margin-left: 950px;">
 <%@ include file="../include/footer.jsp"%>
 <script>
 // 			$(document).ready(function(){

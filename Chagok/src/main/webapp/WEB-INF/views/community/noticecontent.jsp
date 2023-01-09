@@ -7,6 +7,8 @@
 
 <h1> 공지사항 상세 </h1>
 ${boardList }
+${vo }
+${vo2 }
 	 <div class="row" style="width: 1200px; padding-left: 50px; padding-right: 20px; padding-top: 50px;">
 	    <div class="d-flex justify-content-center">
 		    <div class="box">
@@ -29,35 +31,9 @@ ${boardList }
 		    </div>
 		</div>
     </div>
-
+	<c:if test="${nick.equals('관리자') }">
         <input class="btn btn-block btn-success btn-lg" type="button" value="수정하기" onclick="location.href='/noticeupdate?bno=${vo.bno}';" style="width:218px; margin-left: 950px;">
-        <input class="btn btn-block btn-success btn-lg" type="button" value="돌아가기" onclick="location.href='/notice';" style="width:218px; margin-left: 950px;">
         <input class="btn btn-block btn-success btn-lg" type="button" value="삭제하기" onclick="location.href='/noticedelete';" style="width:218px; margin-left: 950px;">
+	</c:if>
+        <input class="btn btn-block btn-success btn-lg" type="button" value="돌아가기" onclick="location.href='/notice';" style="width:218px; margin-left: 950px;">
 <%@ include file="../include/footer.jsp"%>
-<!-- <script> -->
-// 			$(document).ready(function(){
-// 				var formObj = $("form[role='form']");
-				
-// 				// 수정
-// 				$(".btn-block btn-success btn-lg").click(function(){
-					
-// 					formObj.attr("action","/challenge/noticeupdate"); 
-// 					formObj.attr("method","get"); 
-// 					formObj.submit();
-					
-// 				});
-			
-// 				// 삭제
-// 				$(".btn-warning").click(function(){
-// 					formObj.attr("action","/challenge/noticedelete");
-// 					formObj.submit();
-// 				});
-				
-// 				// 목록가기
-// 				$(".bg-purple").click(function(){
-// 					location.href = "/board/list";
-// 				});
-				
-				
-// 			});
-<!-- </script> -->
