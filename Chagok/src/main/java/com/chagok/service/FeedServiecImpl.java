@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import com.chagok.domain.FeedDTO;
 import com.chagok.domain.MessageVO;
 import com.chagok.persistence.FeedDAO;
 
@@ -41,6 +42,18 @@ public class FeedServiecImpl implements FeedService {
 //			jsonArray.set(i, json);
 //		}
 //		return null;
+	}
+
+	@Override
+	public void saveMsg(MessageVO messageVO, FeedDTO feedDTO) throws Exception {
+		mylog.debug(" saveMessage() 호출");
+		
+		String msgContent = "{\"message\": \""+ messageVO.getMessage() + "\", \"time\": \"" + messageVO.getTime() + "\", \"writer\": \""+ messageVO.getWriter()+"\"}"; 
+		
+		feedDTO.setContents(msgContent);
+		
+		// 메시지 저장 db사용
+		dao.saveMsg(feedDTO);
 	}
 
 	

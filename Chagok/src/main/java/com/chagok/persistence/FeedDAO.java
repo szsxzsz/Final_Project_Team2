@@ -24,4 +24,7 @@ public interface FeedDAO {
 	
 	// 지난 메시지 가져오기
 	public List<MessageVO> getMsgList(Integer cno) throws Exception;
+	
+	// 메시지 저장
+	public void saveMsg(FeedDTO feedDTO) throws Exception;
 }

@@ -12,9 +12,9 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		connectSockJS();
-		var currT = new Date().getHours() + ":" + new Date().getMinutes() + "  |  " + "Today";
+		var currT = new Date().getHours() + ":" + new Date().getMinutes();
 		var nick = '${nick}';
-		var html;
+// 		var html;
 		
 		$('#btnSend').on('click', function(event) {
 			
@@ -22,29 +22,22 @@
 			
 			event.preventDefault();
 			
+// 			var msg2 = $('.received_withd_msg p').text();
+// 			var msg3 = $('.sent_msg p').text();
 			
-			var msg2 = $('.received_withd_msg p').text();
-			var msg3 = $('.sent_msg p').text();
-			
-			console.log("222222222222222222222>>>>", msg2);
-			console.log("222222222222222222222>>>>", msg3);
-			
+// 			console.log("222222222222222222222>>>>", msg2);
+// 			console.log("222222222222222222222>>>>", msg3);
 			
 			
-			console.log("mmmmmmmmmmm>>>>", msg);
+			console.log("보낸 메시지>>>>", msg);
 			
 			if (!isStomp && socket.readyState!== 1 ) return;
 				if(isStomp){
-					// send(path, header, message)형태
-					socket.send('/send/'+cno , {}, JSON.stringify({"cno": cno, "writer": nick, "message" : msg}));
-// 					socket.send('/feed/'+cno , {}, {"writer": nick, "message" : msg});
-					
+					// send(path, header, message(cno, writer, message, time))형태
+					socket.send('/send/'+cno , {}, JSON.stringify({"cno": cno, "writer": nick, "message" : msg, "time": currT}));
 					
 				}else
 					socket.send(msg);
-				
-// 			$("#nextMsg").html(html+"\n");
-// 			$("#msg").val("");
 			
 			console.log("ReceiveMessage:" + msg);
 		});
@@ -54,23 +47,20 @@
 	var socket = null;
 	var isStomp = false;
 	var cno = ${vo.cno};
-	var currT;
+	var currT = new Date().getHours() + ":" + new Date().getMinutes();
 	var chatBox = $('#chat_box');
 	var nick = '${nick}';
-	var html;
-	var currT = new Date().getHours() + ":" + new Date().getMinutes() + "  |  " + "Today";
+	var currD = new Date().getMonth() + 1 + "월 " + new Date().getDate()+"일";
 	
 	function connectSockJS(){
-		//alert("시작ㄴ");
 		//STOMP Client
 		var sock = new SockJS("/plusFeed"); // endpoint
 		var client = Stomp.over(sock);
 		isStomp = true;
 		socket = client;
 		
-// 		console.log(sock);
-		console.log(client);
-		console.log(sock);
+		// 소켓 연결확인
+// 		console.log(client);
 		
 		client.connect({}, function(frame){
 			console.log("Connected stomp!");
@@ -79,67 +69,70 @@
 			// callback 첫번째 파라미터의 body로 메시지의 내용이 들어온다.
 			client.subscribe('/topic/feed/'+cno, function(chat){ // 컨트롤러(sendTo)
 				// 서버에서 돌아온 것 (구독하고 있는 클라이언트들에게 )
-				console.log('!!!!!!!!!!!!!!!!!!!!!!chat>>', chat);
+				console.log('subscribe_chat(서버에서 돌아온 내용) >>', chat);
 				var content = JSON.parse(chat.body);
-				console.log(content.message);
-				showChat(JSON.parse(chat.body));
+				console.log(content);
+
 				if(content.writer != null){
 					
 					if( content.writer == nick ){ 
-						html += '<div class="outgoing_msg">'
-									+ '<div class="sent_msg">'
+						var html = '<div class="outgoing_msg">';
+						html += '<div class="sent_msg">'
 						            + '<p>'+content.message+'</p>'
-						            + '<span class="time_date"> '+ currT +'</span></div></div>';
+						            + '<span class="time_date"> '+ currT + " | "; 
+			            if(currD == (new Date().getMonth() + 1 + "월 " + new Date().getDate()+"일") ){
+							html += '오늘' +'</span></div></div>';
+						}else{
+							html += currD +'</span></div></div>';
+						}
 						
 					}else {
-						html += content.writer + '<div class="incoming_msg">'
+						var html = content.writer;
+						html += '<div class="incoming_msg">'
 								+ '<div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>'
 								+ '<div class="received_msg"> <div class="received_withd_msg">'
 								+ '<p>'+content.message+'</p>'
-								+ '<span class="time_date">'+currT+'</span></div></div>'
+								+ '<span class="time_date">'+ currT + " | ";
+						if(currD == (new Date().getMonth() + 1 + "월 " + new Date().getDate()+"일") ){
+							html += '오늘' +'</span></div></div>';
+						}else{
+							html += currD +'</span></div></div>';
+						}
+								
 					}
 					
-					$("#nextMsg").html(html+"\n");
-// 					$("").focus();
+					$("#nextMsg").append(html+"\n");
 				}
 				
 				$("#msg").val("");
-			});
-		});
-
-		client.onopen = function () {
-	        console.log('Info: connection opened.');
-	        client.send("hi~");
-	    };
-			
-	        
-	    client.onmessage = function (event) {
-			console.log("ReceiveMessage : ", event.data+'\n');
-        };
-        
-        client.onclose = function (event) {
-	            console.log('Info: connection closed.');
-        };
+				
+				var chat = {"writer": content.writer, "message":content.message , "time": currT, "cno": cno, "receiver": "all", "f_date": currD };
+				
+				// 새로운 대화내용 저장하기 (접속인원 수 만큼 저장되므로, ajax말고 다른 방법 OR 중복된 내용시 1번만 가게 제어)
+			    $.ajax({
+			        type: 'post',
+			       url: '/challenge/saveChat',
+			        contentType: 'application/json; charset=utf-8',
+			        dataType: 'text',
+			        data: JSON.stringify(chat),
+			        success: function(){    // db전송 성공시 실시간 알림 전송
+			        	console.log("메시지 저장 완료");
+			        }
+			    }); // saveChat ajax 끝
+			}); 	//client.subscribe 끝
+		}); 		// client.connect 끝
 
 	}	
 	
-	function moveScroll() {
+	function moveScroll() { // 최근 글로 시점이동하도록 할 것
 	    var el = document.getElementById('nextMsg');
 	    console.log(el);
 		if (el.scrollHeight > 0) el.scrollTop = el.scrollHeight;
 	}
-	
-	function showChat(chat){
-		
-	}
-	
 </script>
 
 <h1 style="padding: 0 15px 0 15px;"> 저축형 차곡 챌린지 </h1>
-${msgList}
-<%-- ${msgList.writer} --%>
-<%-- ${JSON.stringify(msgList.content)} --%>
-
+<%-- ${msgList} --%>
 <%-- ${mno} --%>
 <%-- ${plusPeoList } --%>
 <%-- ${vo} --%>
@@ -226,7 +219,7 @@ ${msgList}
 		    </div>
 		</div>
     </div>
-    <button class="btn btn-default" data-toggle="modal" data-target="#modal-default" style="margin-left: 90%">
+    <button class="btn btn-success" data-toggle="modal" data-target="#modal-default" style="margin-left: 90%">
    			입금하기</button>
 <!-- 모달 css 파일 : resources -> plugins -> modal -> minusModal.css  -->
 	<div class="modal fade" id="modal-default" style="margin-top: 10%;">
@@ -245,13 +238,16 @@ ${msgList}
 						<div class="whitespace" id="whitespace">
 						<h5>차곡은행 (차곡 챌린지 계좌)</h5>
   						<h3>1234-1231-12345</h3>
-  						<h4>보내는 사람 : ${LOGIN.id}</h4>
+  						<h4>보내는 사람 : ${nick}</h4>
   					</div>
-						<div class="result2" id="result" align="right"></div><span style="text-align: right;">원</span>
+						<div class="result2" id="result" align="right"></div>
+							<div class="calc-wrap" id="calc-wrap">
+								<span style="text-align: right;">원</span>
+							</div>
 						<div class="accountInfo2" id="accountInfo2"></div>
 					    <div class="content2">
 					      <div class="key-wrap" id="key-wrap"></div>
-					      <div class="calc-wrap" id="calc-wrap"></div>
+<!-- 					      <div class="calc-wrap" id="calc-wrap"></div> -->
 					    </div>
 				    </div>
 			    </div>
@@ -437,25 +433,10 @@ ${msgList}
 	          <div class="msg_history">
 				<main class="chat">
 				
-<%-- 				${msgList} --%>
-				<c:forEach var="content" items="${msgList}" >
-					<c:if test="${content.writer == nick }">
-						<div class="outgoing_msg">
-						<div class="sent_msg">
-					     <p>${content.message}</p>
-					      <span class="time_date">${content.time}</span></div></div>
-					</c:if>
-					<c:if test="${content.writer != nick }">
-						${content.writer} <div class="incoming_msg">
-							<div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
-							<div class="received_msg"> <div class="received_withd_msg">
-							 <p>${content.message}</p>
-								<span class="time_date">${content.time}</span></div></div>
-					</c:if>
-				</c:forEach>
             <!-- 받은 메시지 -->
 				<div id="nextMsg"></div>
 			<!-- 받은 메시지 -->
+			
 			</main>
 	          </div>
 	          <div class="type_msg">
@@ -471,22 +452,66 @@ ${msgList}
 	  <!-- /.content-wrapper -->
 	</div>
 </div>
-
 </div>
 </div>
 <%@ include file="../include/footer.jsp" %>
 
+<script type="text/javascript">
+$(document).ready(function(){
+	var cno = ${vo.cno};
+	var nick = '${nick}';
+	
+	// 이전 대화내용 가져오기
+	$.ajax({
+		type : "post",
+		url : "/challenge/getPreChat", 
+		contentType : "application/json",
+		data : JSON.stringify(cno),
+		success : function(result){
+			console.log("이전데이터 가져옴");
+			console.log(result);
+			console.log(nick);
+			for(var i=0; result.length; i++){
+				if( (result[i].writer) == nick){
+					var data = '<div class="outgoing_msg">';
+					data += '<div class="sent_msg">'
+			            	 + '<p>'+ result[i].message +'</p>'
+			           		 + '<span class="time_date"> '+ result[i].time +'</span></div></div>';
+					$('#nextMsg').append(data);
+				}else{
+					var data = result[i].writer;
+					data += '<div class="incoming_msg">'
+							+ '<div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>'
+							+ '<div class="received_msg"> <div class="received_withd_msg">'
+							+ '<p>'+ result[i].message +'</p>'
+							+ '<span class="time_date">'+ result[i].time +'</span></div></div>'
+					
+					$('#nextMsg').append(data);
+					
+				}
+				console.log(result[i].writer);
+				console.log(result[i].writer == nick);
+			}
+			
+		},
+		error : function(jqXHR, status, error){
+			console.log("알 수 없는 에러 [" + error + "]");
+		}
+	}); // ajax 끝
+	
+});
+</script>
 
 <!--계산기 -->
 <script type="text/javascript">
 	//get element
 	var numWrap = document.querySelector('.key-wrap');
-	var calcWrap = document.querySelector('.calc-wrap');
+// 	var calcWrap = document.querySelector('.calc-wrap');
 	var result = document.querySelector('.result2');
 	
 	//init data
 	const keyboard = [1, 2, 3, 4, 5, 6, 7, 8, 9, '00', 0, '<'];
-	const calc = ['<', '+', '-'];
+	//const calc = ['<', '+', '-'];
 	let formula = [];
 	
 	//append dom, event
@@ -499,14 +524,14 @@ ${msgList}
 	  btn.addEventListener('click', calculate);
 	  numWrap.appendChild(btn);
 	}
-	for(const i in calc) {
-	  const btn = document.createElement('button');
-	  btn.classList.add('calc2');
-	  btn.value = calc[i];
-	  btn.innerText = calc[i];
-	  btn.addEventListener('click', calculate);
-	  calcWrap.appendChild(btn);
-	}
+// 	for(const i in calc) {
+// 	  const btn = document.createElement('button');
+// 	  btn.classList.add('calc2');
+// 	  btn.value = calc[i];
+// 	  btn.innerText = calc[i];
+// 	  btn.addEventListener('click', calculate);
+// 	  calcWrap.appendChild(btn);
+// 	}
 	
 	// calculate function
 	function calculate(e) {
@@ -575,9 +600,9 @@ ${msgList}
   align-items: center;
   border-radius: 2px;
   box-shadow: 4px 8px 16px 0 rgba(0,0,0,0.1);
-  background: #FC5C7D; 
+/*   background: #FC5C7D;  */
   background: -webkit-linear-gradient(to right, #6A82FB, #FC5C7D); 
-  background: linear-gradient(to right, #6A82FB, #FC5C7D);
+/*   background: linear-gradient(to right, #6A82FB, #FC5C7D); */
 }
 .calculator2 {
   margin-left: 2%;

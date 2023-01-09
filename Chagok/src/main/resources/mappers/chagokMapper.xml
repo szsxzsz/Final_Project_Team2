@@ -287,4 +287,9 @@
 		insert into alert(cno, a_receive, a_content) values(#{cno}, #{a_receive}, #{a_content});
 	</insert>
 	
+	<!-- 메시지 저장  -->
+	<insert id="saveMsg">
+		insert into feed(contents, f_date, f_receive, cno) values(#{contents}, #{f_date}, #{f_receive}, #{cno});
+	</insert>
+	
   </mapper>
