@@ -77,9 +77,11 @@
    where c_person like concat('%',#{nick},'%')
    </select>
    
-    <!-- 챌린지 신청 취소 닉네임 잘라내기 (콤마는 앞에서 연결해서 nick으로 받아줄 것)-->
+    <!-- 챌린지 신청 취소 닉네임 잘라내고 c_cnt-1 (콤마는 앞에서 연결해서 nick으로 받아줄 것)-->
     <update id="cancelChallenge" parameterType="map">
-   		update challenge set c_person = replace(c_person,#{nick},'') where cno=#{cno};
+   		update challenge set c_person = replace(c_person,#{nick},''), 
+   		c_cnt = c_cnt-1
+   		where cno=#{cno};
     </update>
     
     <!-- 저축형 챌린지 신청취소  -->
