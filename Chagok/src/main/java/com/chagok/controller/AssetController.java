@@ -47,8 +47,9 @@ import com.chagok.service.AccountService;
 import com.chagok.service.OpenBankingService;
 import com.chagok.service.ReportService;
 import com.chagok.service.UserService;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
+@JsonAutoDetect 
 @Controller
 @RequestMapping("/asset/*")
 public class AssetController {
@@ -434,6 +435,54 @@ public class AssetController {
 	  
 	  return resultMap;
 	}
+	
+	@RequestMapping("/saveRows")
+	 @ResponseBody
+	 public Object saveRows(HttpServletRequest request,@RequestBody List<Map<String, String>> list) throws Exception {
+		
+		mylog.debug("##Rows 뽑 "+list);
+		 Map <String, String> resultMap =  new HashMap<String, String>();
+		
+		  String result = "ok";
+		  String resultMsg = "";
+		  
+	  try {
+//		  
+	   for(int i = 0; i < list.size(); i++) {
+//		AbookVO vo = new AbookVO();
+////	    vo.setMno(Integer.parseInt(tList.get("mno").toString( )));
+//	    vo.setAbno(Integer.parseInt(list.get(i).get("abno").toString()));
+//	    vo.setAb_inout(Integer.parseInt(list.get(i).get("ab_inout").toString()));
+//	    vo.setAb_amount(Integer.parseInt(list.get(i).get("ab_amount").toString()));
+//	    vo.setCtno(Integer.parseInt(list.get(i).get("ctno").toString()));
+//	    
+//	    vo.setAb_date(list.get(i).get("ab_date").toString());
+//	    vo.setAb_content(list.get(i).get("ab_content").toString());
+//	    vo.setAb_memo(list.get(i).get("ab_memo").toString());
+//	    vo.setAb_method(list.get(i).get("ab_method").toString());
+//	    vo.setCt_top(list.get(i).get("ct_top").toString());
+//	    vo.setCt_bottom(list.get(i).get("ct_bottom").toString());
+//	   
+//	    mylog.debug("!!!!!!!!!!!!!!!!!"+vo);
+//	    abservice.setAbookList(vo);
+//	    mylog.debug(vo+"%%%%%%%%%%cont");
+	   }
+	    result = "success";
+	    resultMsg = "성공" ;
+	     
+	   }catch (Exception e) { 
+	    result = "failure";
+	    resultMsg = "실패" ;
+	   }
+	  
+	  resultMap.put("result", result);
+	  resultMap.put("resultMsg", resultMsg);
+	  mylog.debug("#######resultMap"+resultMap);
+	  
+	  return resultMap;
+	}
+	
+	
 	// =====================================버려진 코드===============================================================
 
 	

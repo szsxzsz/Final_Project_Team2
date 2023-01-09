@@ -38,20 +38,45 @@
 <span><a href="#" onclick="javascript:gridFunc.clearGrid();">초기화</a></span>
 <span><a href="#" onclick="javascript:jqgridTable.deleteData();">삭제</a></span>
 
-<input type="BUTTON" id="btnC" value="Edit Selected" />
-<input type="BUTTON" id="btnD" value="Edit Selected" />
-
+<!-- <input type="BUTTON" id="btnC" value="Edit Selected" /> -->
+<!-- <input type="BUTTON" id="btnD" value="Edit Selected" /> -->
 <%-- ${jsonAbook} --%>
 <%-- obj: ${j_abookList }+@@ --%>
 <%-- ${map } --%>
+<!-- $( "#datepicker1" ).datepicker( "getDate" ); -->
 
- <script type="text/javascript">
- 
- // 그리드 설정
+
+<input type="text" id="date-time-picker">
+    
+<script src="https://npmcdn.com/flatpickr/dist/flatpickr.min.js"></script>    <!-- flatpicker min js -->
+<script src="https://npmcdn.com/flatpickr/dist/l10n/ko.js"></script>          <!-- flatpicker ko -->
+<script> 
+    $("#date-time-picker").flatpickr({
+    enableTime: true,            // 시간 선택 여부
+    altInput: true,              // 기존 입력을 숨기고 새 입력을 만듦
+    altFormat: 'Y-m-d H:i',      // 날짜 선택 후 표시 형태
+    dateFormat: 'Y-m-d H:i',     // date format 형식
+    defaultDate: new Date(),     // 기본 선택 시간
+    minDate: new Date(),         // 최소 선택 시간
+    locale: 'ko',                // 한국어
+    time_24hr: true,             // 24시간 형태
+    disableMobile: true          // 모바일 지원 
+  });
+</script>
+
+
+
+
+ <script>
+
 $("#jqGrid").jqGrid({
     url : '/asset/reqGrid',
     datatype : "json",
 	mtype: 'get',
+	ajaxGridOptions: { contentType: "application/json; charset=UTF-8" },
+	ajaxRowOptions: { contentType: "application/json; charset=UTF-8", async: true },
+	ajaxSelectOptions: { contentType: "application/json; charset=UTF-8", dataType: "JSON" },
+
 		jsonReader: {
 				repeatitems:false,
 				root:"rows"
@@ -69,7 +94,22 @@ $("#jqGrid").jqGrid({
 //                     }] 
 //                 }
 	        hidden:false,editable:true},
-        {name : 'ab_date',index : 'ab_date',width : 70, align : 'left',formatter: "date",formatoptions: { newformat: "Y-m-d" },hidden:false,editable:true},
+
+        {name:'ab_date', index:'ab_date', width:90, editable:true, editoptions:{size:20, 
+               dataInit:function(el){ 
+                     $(el).datepicker({dateFormat:'yy-mm-dd'}); 
+               }, 
+               defaultValue: function(){ 
+                 var currentTime = new Date(); 
+                 var month = parseInt(currentTime.getMonth() + 1); 
+                 month = month <= 9 ? "0"+month : month; 
+                 var day = currentTime.getDate(); 
+                 day = day <= 9 ? "0"+day : day; 
+                 var year = currentTime.getFullYear(); 
+                 return year+"-"+month + "-"+day; 
+               } 
+             } 
+           },
         {name : 'ab_content',index : 'ab_content',width : 100, align : 'center',hidden:false,editable:true},
         {name : 'ab_amount',index : 'ab_amount',width : 70, resizable : true,align : 'right',editrules:{number:true},hidden:false,editable:true},
 	    {name : 'ab_method',index : 'ab_method',width : 70, align : 'center',hidden:false,editable:true},	
@@ -82,13 +122,15 @@ $("#jqGrid").jqGrid({
 	shrinkToFit: true, 
     loadtext: "조회 중..",
     caption: "가계부 내역 조회",
+    multiselect : true, // 그리드 왼쪽부분에 셀렉트 박스가 생겨 다중선택이 가능해진다
+    emptyrecode : "작성된 내역이 없습니다!", // 뿌려줄 데이터가 없을 경우 보여줄 문자열 지정
     pager:"#gridpager",
     rowNum:5,
     rownumbers : true, 
     
     cellEdit: true,
     cellsubmit:'clientArray',
-    cellurl:'/asset/updateGrid',
+//     cellurl:'/asset/updateGrid',
     onCellSelect: function(rowId, colId, val, e) { // e의 의미는 무엇인가요?
         var seq = $("#jqGrid").getCell(rowId, "seq");
         
@@ -151,31 +193,57 @@ $("#jqGrid").jqGrid({
     "postData" : { param1 : "1" , param2  "2" }
     }).trigger("reloadGrid");
     */
-    }
-    
+    }setGridParam
 	 
 	// 저장하고 컨트롤러로 보내는 코드 
 	function save(){
 		alert("");
-		var data =  $("#jqGrid").getRowData();
-		data = JSON.stringify(data);
+// 		var data =  $("#jqGrid").jqGrid('getGridParam', 'selarrrow');
+		var data =  $("#jqGrid").getRowdata;
 		
 		$.ajax({
-			url : "/asset/saveGrid",
-			data : data,
+			url : "/asset/saveRows",
+			async:false,
+			contentType:'application/json; charset=utf-8',
+			data : JSON.stringify(data),
 			traditional: true ,
-			contentType:"application/json",
 			type : 'POST',
 			dataType:'JSON',
+			url : "/asset/saveRows",
 //             postData : {"rows" : JSON.stringify(data)},
+
 			success:function(data){
+				console.log(data);
 			alert("입력 성공!");
 			}
 			})
 	jQuery("#jqGrid").trigger('reloadGrid');	
 
 	}
-	 
+	
+	// insert  
+	var gridFunc = {
+	        addRow : function() {
+	            
+	            var totCnt = $("#jqGrid").getGridParam("records");
+	            var addData = {"abno":"", "ab_inout": "", "ab_date": "", "ab_content" : "", 
+				 "ab_amount" : "", "ctno":"", "ct_top" : "", "ct_bottom" : "", "ab_memo" : ""};
+	            
+	            $("#jqGrid").addRowData(totCnt+1, addData);
+	            $("#jqGrid").setColProp("name", {editable: true}); // 수정 필요함 
+	        
+	        }
+	}
+	
+	// col edit 가능하게 일괄 처리하기 
+	function setColData(param){
+    const gridColData = ["abno", "ab_inout", "ab_date", "ab_content", "ab_amount", "ctno", "ct_top", "ct_bottom", "ab_memo"];
+    for(var idx in gridColData){
+        $("#jqGrid").setColProp(gridColData[idx], {editable : param});
+    }
+}
+
+	///////////////////////////////////////아직 안 쓰는 코드 
     function search() {
     	
         alert("저장");
@@ -210,17 +278,6 @@ $("#jqGrid").jqGrid({
     
     $('#jqGrid').getRowData();
     
-
-    
-    function getGridData() {
-        $('#jqGrid').setGridParam({
-            postData : {system:'system'}
-        });
-        
-        //reload 
-        $('#jqGrid').trigger('reloadGrid');
-    }
- 
 	 //nav
 	 jQuery("#list1").jqGrid('navGrid','#gridpager',{
 		 //nav 설정						
@@ -317,23 +374,61 @@ $("#jqGrid").jqGrid({
 
   </script>
   
-  
-  <!-- 빈 행 추가 -->
   <script type="text/javascript">
-	var gridFunc = {
-	        addRow : function() {
-	            
-	            var totCnt = $("#jqGrid").getGridParam("records");
-	            var addData = {"ab_inout": "", "ab_date": "", "ab_content" : "", 
-				 "ab_amount" : "", "ct_top" : "", "ct_bottom" : "", "ab_memo" : ""};
-	            
-	            $("#jqGrid").addRowData(totCnt+1, addData);
-	            $("#jqGrid").setColProp("name", {editable: true});
-	        
-	        }
-	}
- </script>   
-   <!-- 빈 행 추가 -->
+$(document).ready(function()
+{
+//	$.datetimepicker.setLocale('kr');  
+
+	$('#start_date').datetimepicker({
+  showSecond: true,
+currentText: '현재시간적용',
+			closeText: '확인',
+			amNames: ['AM', 'A'],
+			pmNames: ['PM', 'P'],
+			timeFormat: 'HH:mm',
+			timeSuffix: '',
+			timeOnlyTitle: 'Choose Time',
+			timeText: '시간선택',
+			hourText: '시',
+			minuteText: '분',
+			secondText: '초',
+  dateFormat: 'yy-mm-dd',
+  timeFormat: 'hh:mm:ss'
+	});
+
+	$('#end_date').datetimepicker({
+  showSecond: true,
+currentText: '현재시간적용',
+			closeText: '확인',
+			amNames: ['AM', 'A'],
+			pmNames: ['PM', 'P'],
+			timeFormat: 'HH:mm',
+			timeSuffix: '',
+			timeOnlyTitle: 'Choose Time',
+			timeText: '시간선택',
+			hourText: '시',
+			minuteText: '분',
+			secondText: '초',
+  dateFormat: 'yy-mm-dd',
+  timeFormat: 'hh:mm:ss'
+	});
+});
+</script>
+
+
+ <script>
+ $("#date-time-picker").flatpickr({
+ enableTime: true,            // 시간 선택 여부
+ altInput: true,              // 기존 입력을 숨기고 새 입력을 만듦
+ altFormat: 'Y-m-d H:i',      // 날짜 선택 후 표시 형태
+ dateFormat: 'Y-m-d H:i',     // date format 형식
+ defaultDate: new Date(),     // 기본 선택 시간
+ minDate: new Date(),         // 최소 선택 시간
+ locale: 'ko',                // 한국어
+ time_24hr: true,             // 24시간 형태
+ disableMobile: true          // 모바일 지원 
+});
+</script>
 
 
 <!-- Datepicker -->

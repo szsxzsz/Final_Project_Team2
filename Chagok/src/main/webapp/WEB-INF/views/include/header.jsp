@@ -45,6 +45,23 @@
 <script type="text/javascript" src="../resources/plugins/jqGrid_4.4.3/js/jquery.jqGrid.min.js" ></script>
 <!-- jQuery -->
 
+<!-- <link rel="stylesheet" type="text/css" media="screen" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css"> -->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script> -->
+<script type="text/javascript" src="../resources/plugins/datepicker/jquery.datetimepicker.min.js"></script>
+<script type="text/javascript" src="../resources/plugins/datepicker/jquery.datetimepicker.full.min.js"></script>
+<link rel="stylesheet" type="text/css" media="screen" href="../resources/plugins/datepicker/datepicker3.css" />
+<!-- <script type="text/javascript" src="../resources/plugins/datepicker/ko.js"></script> -->
+<!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script> -->
+<script src="//code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
+
+<!-- date+time picker -->
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<link rel="stylesheet" type="text/css" href="https://npmcdn.com/flatpickr/dist/themes/confetti.css">
+<script src="https://npmcdn.com/flatpickr/dist/flatpickr.min.js"></script>    <!-- flatpicker min js -->
+<script src="https://npmcdn.com/flatpickr/dist/l10n/ko.js"></script>          <!-- flatpicker ko -->
+
+
+
 <!-- 결제 : iamport.payment.js -->
 <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
 
