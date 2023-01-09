@@ -14,7 +14,7 @@
 </div>
 
 		<div id="div1">
-			<h3>설정된 예산이 없어요 ㅜ^ㅜ</h3>
+			<h3>${pMonth }월에 설정된 예산이 없어요 ㅜ^ㅜ</h3>
 			<h3>예산은 효율적이고 계획적인 소비 습관 생성에 도움이 됩니다.</h3>
 			<input type="button" id="setbud" class="btn btn-block btn-success btn-lg" 
 			style="width: 200px; margin: 20px 40px" value="한 달 예산 세우기">   

@@ -678,13 +678,15 @@ public class AssetController {
 		
 		// 예산 조회
 		List<Map<String, Object>> budList = abService.getBud(mno, pMonth);
-		if(budList.isEmpty()) {
-			mylog.debug(pMonth+"__예산 없음");
-			return budList;
-		} else {
-			mylog.debug(pMonth+"__budList : "+budList);
-			return budList;
-		}
+//		if(budList.isEmpty()) {
+//			mylog.debug(pMonth+"__예산 없음");
+//			return budList;
+//		} else {
+//			mylog.debug(pMonth+"__budList : "+budList);
+//			return budList;
+//		}
+		mylog.debug(pMonth+"__예산 조회 완료");
+		return budList;
 	}
 
 //	http://localhost:8080/asset/updBud?mm=0
@@ -702,28 +704,34 @@ public class AssetController {
 		return "/asset/budUpdate";
 	}
 	
-	
 	@PostMapping(value = "/updBud")
 	public String updBudPOST(@RequestParam Map map, HttpSession session, Model model) throws Exception {
 		int mno = (int)session.getAttribute("mno");
-//		
-		List<Map<String, Object>> dataList = new ArrayList<Map<String,Object>>();
+
+		// map : form data, tmpmap : 재배치
+		List<Map<String, Object>> updateList = new ArrayList<Map<String,Object>>();
 		for(int i=1;i<map.size();i++) {
 			Map<String, Object> tmpmap = new HashMap<String, Object>();
 			if(map.get("ctno"+i)!=null){
 				tmpmap.put("pno", map.get("pno"+i));
 				tmpmap.put("p_amount", map.get("p_amount"+i));
-				dataList.add(tmpmap);
+				updateList.add(tmpmap);
 			}
 		}
-		Map<String, Object> updateMap = new HashMap<String, Object>();
-		updateMap.put("updateList", dataList);	// key값=collection의 value값
-		abService.updBud(updateMap);
+		abService.updBud(updateList);
 		
-		mylog.debug("수정완");
-		return "/asset/budReport";	
+		return "/asset/budReport";
 	}
 
+	@GetMapping(value = "/delBud")
+	public String delBud(@RequestParam("mm") int mm, HttpSession session, Model model) throws Exception {
+		int mno = (int)session.getAttribute("mno");
+		String pMonth = abService.getPMonth(mm);
+		abservice.delBud(mno, pMonth);
+		
+		return "/asset/budget";	
+	}
+	
 //	http://localhost:8080/asset/budRpt?mm=0
 	@GetMapping(value="/budRpt")
 	public String budRpt(@RequestParam("mm") int mm, HttpSession session, Model model) throws Exception {
@@ -736,11 +744,14 @@ public class AssetController {
 		
 		/////////////// 1. service에서 DB 가져오기 ///////////////
 		// 1. 해당 월 예산
+		
+		// 2. 해당 월 지출
 		Integer dtSum1 = rptService.dtSum(mno, mm);
 		mylog.debug("dtSum1 : "+dtSum1);
 		
-		// 2. 해당 월 지출
 		// 3. 해당 월 평균 지출
+		
+		
 		// 4. 해당 월 예상 지출
 		
 		/////////////// 2. List<Map> -> JsonArray ///////////////

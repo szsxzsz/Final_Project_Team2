@@ -11,15 +11,14 @@
 	<a href="/asset/budget?mm=3">3개월 전</a>
 <hr>
 </div>
-<!-- ctTopList, pMonth, mm -->
 <div class="box box-info">
 <form class="form-horizontal" id="budform" method="post">
 	<c:set var="mm" value="${param.mm }"/>
 	<div class="box-body">
 		<div class="form-group">
-			<label for="sumpamt" class="col-sm-2 control-label">${pMonth }월 예산</label>
+			<label for="sumpamt" class="col-sm-2 control-label">${p_month }월 예산</label>
 			<div class="col-sm-10">
-				<input type="hidden" name="pMonth" value="${pMonth }">
+				<input type="hidden" name="pMonth" value="${p_month }">
 				<input type="text" class="form-control" id="sumpamt" placeholder="예산을 입력하세요" maxlength="10" onkeyup="inputNumFmt(this);">
 			</div>
 			<div class="col-sm-10">
@@ -33,7 +32,8 @@
 	
 	<div class="box-footer">
 		<input type="submit" class="btn btn-info pull-right" value="등록하기"/>
-		<button type="button" id="copy" class="btn btn-info pull-right">지난달 예산 복사하기</button>
+		<button type="button" class="btn btn-info pull-right" onclick="location.href='/asset/delBud?mm='+${mm}+'';">예산 삭제하기</button>
+		<button type="button" class="btn btn-info pull-right" id="copy" >지난달 예산 복사하기</button>
 	</div>	
 		      
 	<c:forEach var="top" items="${ctTopList }" varStatus="status">
