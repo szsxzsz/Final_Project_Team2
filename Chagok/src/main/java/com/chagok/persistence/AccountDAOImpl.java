@@ -163,8 +163,18 @@ public class AccountDAOImpl implements AccountDAO{
 
 	@Override
 	public void insertCash(CashVO vo) throws Exception {
+		
+		// 기존 데이터 삭제
+		sqlSession.delete(NAMESPACE+".deleteCash", vo);
+		
+		// DB 에 데이터 추가
 		sqlSession.insert(NAMESPACE+".insertCash", vo);
 		
+	}
+
+	@Override
+	public CashVO getCashInfo(int mno) throws Exception {
+		return sqlSession.selectOne(NAMESPACE+".getCashInfo", mno);
 	}
 
 	

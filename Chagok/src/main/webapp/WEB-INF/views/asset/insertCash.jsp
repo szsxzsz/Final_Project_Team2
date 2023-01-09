@@ -53,6 +53,8 @@
 				var cash_amt = $('.input_3Pz_8').val();
 				
 				$(this).attr("href", "/asset/insertCashPro?cash_inout="+cash_inout+"&cash_amt="+cash_amt);
+				
+				$('#modal-cash').modal('hide');
 			}
 			
 			
@@ -74,6 +76,23 @@
 </head>
 
 <body>
+	
+	
+<c:if test="${insertOK.equals('OK') }">
+	
+	<div class="wrap_1JcE-" style="padding-bottom: 0px; padding-top: 15px;">
+		<div class="container_3PD-f">
+		
+			<div class="container_3m_kA">
+				<div class="question_1wxEH">
+					<span class="tag_2Ltsy">알림</span>입력이 완료되었습니다 !
+				</div>
+			</div>
+		</div>
+	</div>
+	
+</c:if>
+	
 	
 	<!-- 
 	<div class="wrap_1y4z9">
@@ -101,8 +120,8 @@
 		</div> 
 		-->
 
-
-
+<c:if test="${insertOK == null }">
+	
 	<div class="wrap_1JcE-" style="padding-bottom: 0px; padding-top: 15px;">
 		<div class="container_3PD-f">
 		
@@ -162,6 +181,7 @@
 		</div>
 	</div>
 
+</c:if>
 		
 </body>
 </html>

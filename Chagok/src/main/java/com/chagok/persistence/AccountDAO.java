@@ -43,7 +43,10 @@ public interface AccountDAO {
 	// 카드 내역 조회 (card_id)
 	public List<CardHistoryVO> getCardHistory(String card_id) throws Exception;
 	
-	// 현금 정보 조회
+	// 현금 등록 하기
 	public void insertCash(CashVO vo) throws Exception;
+	
+	// 현금 조회 하기
+	public CashVO getCashInfo(int mno) throws Exception;
 	
 }

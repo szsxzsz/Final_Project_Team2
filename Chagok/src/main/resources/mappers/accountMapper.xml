@@ -61,6 +61,12 @@
 		insert into cash(mno, cash_inout, cash_amt) value(#{mno}, #{cash_inout}, #{cash_amt})
 	</insert>
 	
+	<delete id="deleteCash">
+		delete from cash where mno = #{mno} 
+	</delete>
 	
-	
+	<select id="getCashInfo" resultType="com.chagok.apiDomain.CashVO">
+		select * from cash where mno = #{mno}
+	</select>	
+
   </mapper>

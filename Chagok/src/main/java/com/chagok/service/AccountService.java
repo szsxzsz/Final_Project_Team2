@@ -45,4 +45,7 @@ public interface AccountService {
 	
 	// 현금 등록하기 
 	public void insertCash(CashVO vo) throws Exception;
+	
+	// 현금 조회하기
+	public CashVO getCashInfo(int mno) throws Exception;
 }

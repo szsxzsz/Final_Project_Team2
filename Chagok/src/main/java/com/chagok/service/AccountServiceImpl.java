@@ -77,6 +77,11 @@ public class AccountServiceImpl implements AccountService{
 		accountDAO.insertCash(vo);
 	}
 
+	@Override
+	public CashVO getCashInfo(int mno) throws Exception {
+		return accountDAO.getCashInfo(mno);
+	}
+
 	
 
 	

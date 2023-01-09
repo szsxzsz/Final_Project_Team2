@@ -81,14 +81,22 @@
 			$('#modal-card').modal();
 		});
 		
+			
 		// 현금 모달창
 		$('.startModal_cash').click(function(){
+
+			$('#iframe_cash').attr("src", "/asset/insertCash");
 			
 			$('#modal-cash').modal();
 		});
 		// 모달창 관련
 		
-		
+		$(".btn.btn-primary.mo").click(function(){
+
+			location.reload();
+		});
+			
+			
 		
 		
 	});
@@ -163,7 +171,7 @@
 		<!-- 전체 순자산 (계좌합 - 카드값 + 현금) -->	
 		<div style="margin: 50px 0 0 100px;">
 			<h1>📌 내 자산</h1>
-			<h2> 💎 ${userVO.nick } 님의 순자산은 : <fmt:formatNumber value="${accountSum - cardSum }"/> 원 입니다 💎 </h2>
+			<h2> 💎 ${userVO.nick } 님의 순자산은 : <fmt:formatNumber value="${accountSum - cardSum + cashVO.cash_amt}"/> 원 입니다 💎 </h2>
 		</div>
 	
 		<div style="margin: 50px 100px 0 80px;">
@@ -254,7 +262,16 @@
 				</span>
 				<div class="info-box-content" style="padding-top: 15px">
 					<span class="info-box-text" style="font-size: 3em; margin-left: 20px; display: inline;">현 금</span> 
-					<span class="info-box-text" style="font-size: 3em; margin-left: 200px; display: inline;">총 0 원</span> 
+					<span class="info-box-text" style="font-size: 3em; margin-left: 200px; display: inline;">
+						총
+						<c:if test="${cashVO == null }">
+						 	0 
+						</c:if>
+						<c:if test="${cashVO != null }">
+							<fmt:formatNumber value="${cashVO.cash_amt }"/>
+						</c:if>
+						원
+					</span> 
 				</div>
 			</div>
 			
@@ -266,8 +283,19 @@
 							<i class="fa fa-database"></i>
 						</span>
 						<div class="info-box-content" style="padding-top: 15px;">
-							<span class="info-box-text" style="font-size: 3em; margin-left: 20px; display: inline;">현 금</span> 
-							<span class="info-box-text" style="font-size: 3em; margin-left: 200px; display: inline;">총 0 원</span> 
+							<span class="info-box-text" style="font-size: 3em; margin-left: 20px; display: inline;">
+								<c:if test="${cashVO == null }">
+									현금 내역이 없습니다.
+								</c:if>
+								<c:if test="${cashVO != null }">
+									${cashVO.cash_inout }
+								</c:if>
+							</span> 
+							<span class="info-box-text" style="font-size: 3em; margin-left: 200px; display: inline;">
+								<c:if test="${cashVO != null }">
+									총  <fmt:formatNumber value="${cashVO.cash_amt }"/> 원
+								</c:if>
+							</span> 
 						</div>
 					</a>
 				</div>
@@ -355,13 +383,13 @@
 				<div class="modal-body" style="height: 430px;">
 					<p>
 					
-					<iframe id="iframe_card" src="/asset/insertCash" width="500px;" height="430px;">
+					<iframe id="iframe_cash" src="" width="500px;" height="430px;">
 					</iframe>
 					
 					</p>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-primary" id="saveABook" data-dismiss="modal" style="background-color: #363A3C; margin-right: 30px; width: 100px">확 인</button>
+					<button type="button" class="btn btn-primary mo" id="saveABook" data-dismiss="modal" style="background-color: #363A3C; margin-right: 30px; width: 100px">닫 기</button>
 				</div>
 			</div>
 

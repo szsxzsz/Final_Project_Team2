@@ -92,6 +92,18 @@ public class AssetController {
 			// 카드 내역/금액 조회
 			List<List<CardHistoryVO>> cardHistoryList = accountService.getCardHistory(cardList);
 			model.addAttribute("cardHistoryList", cardHistoryList);
+			
+			// 현금 내역 조회
+			CashVO cashVO = accountService.getCashInfo(mno);
+			if (cashVO != null) {
+				cashVO.setCash_amt(cashVO.getCash_amt().replaceAll(",", ""));
+			}
+			
+			
+			
+			model.addAttribute("cashVO", cashVO);
+			
+			
 		}
 		
 		
@@ -148,11 +160,12 @@ public class AssetController {
 	
 	@GetMapping("/insertCash")
 	public String insertCashGET() throws Exception{
+		
 		return "/asset/insertCash";
 	}
 	
 	@GetMapping("/insertCashPro")
-	public String insertCashProGET(CashVO vo, HttpSession session) throws Exception{
+	public String insertCashProGET(CashVO vo, HttpSession session, RedirectAttributes rttr) throws Exception{
 		
 		mylog.debug("현금등록 호출!!!!");
 		
@@ -162,6 +175,8 @@ public class AssetController {
 		mylog.debug(vo+"");
 
 		accountService.insertCash(vo);
+
+		rttr.addFlashAttribute("insertOK", "OK");
 		
 		return "redirect:/asset/insertCash";
 	}
