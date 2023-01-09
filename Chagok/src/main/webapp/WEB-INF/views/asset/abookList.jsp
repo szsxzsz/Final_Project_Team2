@@ -193,7 +193,7 @@ $("#jqGrid").jqGrid({
     "postData" : { param1 : "1" , param2  "2" }
     }).trigger("reloadGrid");
     */
-    }setGridParam
+    }setGridParam 
 	 
 	// 저장하고 컨트롤러로 보내는 코드 
 	function save(){
