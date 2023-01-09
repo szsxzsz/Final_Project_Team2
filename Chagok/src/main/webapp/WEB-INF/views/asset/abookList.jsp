@@ -199,28 +199,22 @@ $("#jqGrid").jqGrid({
 	function save(){
 		alert("");
 // 		var data =  $("#jqGrid").jqGrid('getGridParam', 'selarrrow');
-		var data =  $("#jqGrid").getRowdata;
+// 		alert("");
+		var data =  $("#jqGrid").getRowData();
+		data = JSON.stringify(data);
 		
 		$.ajax({
-			url : "/asset/saveRows",
-			async:false,
-			contentType:'application/json; charset=utf-8',
-			data : JSON.stringify(data),
+			url : "/asset/saveGrid",
+			data : data,
 			traditional: true ,
+			contentType:"application/json",
 			type : 'POST',
 			dataType:'JSON',
-			url : "/asset/saveRows",
 //             postData : {"rows" : JSON.stringify(data)},
-
-			success:function(data){
-				console.log(data);
-			alert("입력 성공!");
-			}
-			})
-	jQuery("#jqGrid").trigger('reloadGrid');	
-
+			success:function(data){alert("입력 성공!");}
+		})
+				jQuery("#jqGrid").trigger('reloadGrid');	
 	}
-	
 	// insert  
 	var gridFunc = {
 	        addRow : function() {

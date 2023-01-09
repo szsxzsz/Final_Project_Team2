@@ -335,7 +335,7 @@ public class AssetController {
 	
 	//서비스 객체 주입
 	@Inject
-	private AbookService abservice;
+	private AbookService abService;
 	
 	// 0. abokkList페이지 get으로 호출 ============================================================
 //	http://localhost:8080/asset/abookList
@@ -380,7 +380,7 @@ public class AssetController {
 		JsonObj obj = new JsonObj();
 		
 		List<Map<String,Object>> list = new ArrayList<Map<String,Object>>();
-		List<?> list2 = abservice.getAbookList(mno);
+		List<?> list2 = abService.getAbookList(mno);
 		mylog.debug("vo -> list "+list2);
 		
 		int int_page = Integer.parseInt(page);// 1 2 3
@@ -455,7 +455,7 @@ public class AssetController {
 	    vo.setCt_bottom(list.get(i).get("ct_bottom").toString());
 	   
 	    mylog.debug("!!!!!!!!!!!!!!!!!"+vo);
-	    abservice.setAbookList(vo);
+	    abService.setAbookList(vo);
 //	    mylog.debug(vo+"%%%%%%%%%%cont");
 	   }
 	    result = "success";
@@ -501,7 +501,7 @@ public class AssetController {
 //	    vo.setCt_bottom(list.get(i).get("ct_bottom").toString());
 //	   
 //	    mylog.debug("!!!!!!!!!!!!!!!!!"+vo);
-//	    abservice.setAbookList(vo);
+//	    abService.setAbookList(vo);
 //	    mylog.debug(vo+"%%%%%%%%%%cont");
 	   }
 	    result = "success";
@@ -534,7 +534,7 @@ public class AssetController {
 //		 AbookVO vo = mapper.convertValue(rows, AbookVO.class);
 //		 
 //		 // 서비스 - DAO : 정보 수정 메서드 호출
-////		 Integer result = abservice.updateAbook(vo);
+////		 Integer result = abService.updateAbook(vo);
 ////		 
 ////			if(result > 0) {
 ////				// "수정완료" - 정보 전달 
@@ -553,8 +553,6 @@ public class AssetController {
 	
 	@Inject
 	private ReportService rptService;
-	@Inject
-	private AbookService abService;
 //	http://localhost:8080/assetmain
 //	http://localhost:8080/asset/dtRpt
 	@GetMapping(value = "/dtRpt")
@@ -813,7 +811,7 @@ public class AssetController {
 	public String delBud(@RequestParam("mm") int mm, HttpSession session, Model model) throws Exception {
 		int mno = (int)session.getAttribute("mno");
 		String pMonth = abService.getPMonth(mm);
-		abservice.delBud(mno, pMonth);
+		abService.delBud(mno, pMonth);
 		
 		return "/asset/budget";	
 	}
