@@ -11,28 +11,28 @@
   		where mno=#{mno}
   	</select>
 
-	<!-- 회원번호, inout=1, 이번달 -->
-	<sql id="wh1out">
+	<!-- 회원번호, inout=1, mm달 이전 -->
+	<sql id="whOut">
 		where ab.mno=#{mno} 
 		and ab.ab_inout=1 
-		and ab.ab_date between last_day(now() - interval 1 month) + interval 1 day 
-			and last_day(now())
-	</sql>
-	
-	<!-- 회원번호, inout=2, 이번달 -->
-	<sql id="wh1in">
-		where ab.mno=#{mno} 
-		and ab.ab_inout=2 
-		and ab.ab_date between last_day(now() - interval 1 month) + interval 1 day 
-			and last_day(now())
+		and ab.ab_date between last_day(now() - interval #{mm}+1 month) + interval 1 day 
+			and last_day(now() - interval #{mm} month)
 	</sql>
 
-	<!-- 회원번호, inout=1, 저번달 -->
-	<sql id="wh2out">
+	<!-- 회원번호, inout=2, 이번달 -->
+	<sql id="whIn">
+		where ab.mno=#{mno} 
+		and ab.ab_inout=2 
+		and ab.ab_date between last_day(now() - interval #{mm}+1 month) + interval 1 day 
+			and last_day(now() - interval #{mm} month)
+	</sql>
+
+	<!-- 회원번호, inout=1, 지난 3개월 -->
+	<sql id="whOut3">
 		where ab.mno=#{mno} 
 		and ab.ab_inout=1 
-		and ab.ab_date between last_day(now() - interval 2 month) + interval 1 day 
-			and last_day(now() - interval 1 month) + interval 1 day
+		and ab.ab_date between last_day(now() - interval 4 month) + interval 1 day
+			and last_day(now() - interval 1 month);
 	</sql>
 	
 	<!-- 총 지출 -->
@@ -47,16 +47,14 @@
 		from account_book ab
 	</sql>
 	
-	<!-- 누적 지출 -->
-	<sql id="cumsum">
-		(select date_format(ab_date, '%Y-%m-%d') date, sum(ab_amount) sum
-		from account_book
-		where mno=#{mno} 
-		and ab_inout=1 
-		and ab_date between LAST_DAY(NOW() - interval 1 month) + interval 1 DAY and LAST_DAY(NOW())
-		group by date)
+	<!-- 일간 통계 -->
+	<sql id="day">
+		select date_format(ab.ab_date, '%Y-%m-%d') date, sum(ab.ab_amount) sum
+		from account_book ab
+		<include refid="whOut"/>
+		group by date
 	</sql>
-	
+
 	<!-- 주간 통계 -->
 	<sql id="week2">
 	select
@@ -121,7 +119,7 @@
 	<sql id="top4cate">
 		(select ct.ct_top
 		from account_book ab inner join category ct on ab.ctno=ct.ctno
-		<include refid="wh1out"/>
+		<include refid="whOut"/>
 		group by ct.ct_top
 		order by sum(ab.ab_amount) desc limit 4
 		) as tmp
@@ -129,30 +127,24 @@
 	
 	
   	<!-- //////////////////////// dateReport //////////////////////// -->
-  	<!-- 1. 이번달 총 지출  -->
-  	<select id="dtSum1" resultType="Integer">
+  	<!-- 1~2. 총 지출  -->
+  	<select id="dtSum" resultType="Integer">
   		<include refid="absum"/>
-  		<include refid="wh1out"/>
+  		<include refid="whOut"/>
   	</select>
   	
-  	<!-- 2. 지난달 총 지출  -->
-  	<select id="dtSum2" resultType="Integer">
-		<include refid="absum"/>
-		<include refid="wh2out"/>
-	</select>
-  		
-  	<!-- 3. 이번달 평균 지출  -->
-  	<select id="dtAvg1" resultType="Integer">
+  	<!-- 3~4. 평균 지출  -->
+  	<select id="dtAvg" resultType="Integer">
   		<include refid="abavg"/>
-  		<include refid="wh1out"/>
+  		<include refid="whOut"/>
   	</select>
-  	
-  	<!-- 4. 지난달 평균 지출  -->
-  	<select id="dtAvg2" resultType="Integer">
+ 	
+	<!-- 최근 3개월 평균 지출 -->
+	<select id="dtAvg3" resultType="Integer">
 		<include refid="abavg"/>
-		<include refid="wh2out"/>
+		<include refid="whOut3"/>
 	</select>
-  
+	 	
   	<!-- 5. 이번달 예상 지출 -->
    	<select id="expSum" resultType="Integer">
 		select
@@ -160,13 +152,13 @@
 			* (datediff(last_day(now()), date_format(now(), '%Y-%m-%d'))
 		) expSum
 		from account_book ab
-		<include refid="wh1out"/>
+		<include refid="whOut"/>
 	</select> 	
 	
 	<!-- 6. 월간 수입 -->
 	<select id="dtSumIn" resultType="Integer">
   		<include refid="absum"/>
-  		<include refid="wh1in"/>
+  		<include refid="whIn"/>
 	</select>
 	
 	<!-- 7. 이번달 무지출 일수 -->
@@ -177,7 +169,7 @@
 				from (
 					select date_format(ab.ab_date, '%Y-%m-%d') date
 					from account_book ab
-					<include refid="wh1out"/>
+					<include refid="whOut"/>
 					group by date)
 				as c);
 	</select>
@@ -186,23 +178,23 @@
 	<select id="outCnt" resultType="Integer">
 		select count(ab.abno)
 		from account_book ab
-		<include refid="wh1out"/>
+		<include refid="whOut"/>
 	</select>
 	
 	<!-- 9. 이번달 누적 지출 -->
 	<select id="outCum" resultType="map">
-		select t2.date t2date, (select sum(t1.sum) 
-			from <include refid="cumsum"/> as t1
-				where t1.date<![CDATA[<=]]> t2.date) as cumSum
-		from <include refid="cumsum"/> as t2;
+		select t2.date t2date, 
+			(select sum(t1.sum) 
+			from (<include refid="day"/>) as t1
+		where t1.date<![CDATA[<=]]> t2.date) as cumSum
+		from (<include refid="day"/>) as t2
+		order by t2date;
 	</select>
 	
 	<!-- 10. 일간 통계 (지출) -->
 	<select id="day" resultType="map">
-		select date_format(ab.ab_date, '%Y-%m-%d') day2, sum(ab.ab_amount) dayout
-		from account_book ab
-		<include refid="wh1out"/>
-		group by day2;
+		<include refid="day"/>
+		order by date;
 	</select>
 	
 	<!-- 11. 주간 통계 (지출, 수입) -->
@@ -249,7 +241,7 @@
 	<select id="amtTop" resultType="map">
 		select ct.ct_top top1, ct.ct_bottom bottom1, ab.ab_amount amt, ab_content content
 		<include refid="joinct"/>
-		<include refid="wh1out"/>
+		<include refid="whOut"/>
 		order by amt desc limit 4;
 	</select>
 	
@@ -257,10 +249,11 @@
 	<select id="cntTop" resultType="map">
 		select ct.ct_top top2, ct.ct_bottom bottom2, count(ab.ctno) cnt
 		<include refid="joinct"/>
-		<include refid="wh1out"/>
+		<include refid="whOut"/>
 		group by ab.ctno
 		order by cnt desc limit 4;
 	</select>
+	
 	
   	<!-- //////////////////////// cateReport //////////////////////// -->
   	<!-- 1.최다 지출 카테고리 -->
@@ -268,7 +261,7 @@
 		select count(ab.abno) cateCnt, ct.ct_top cateName1
 		from account_book ab 
 		inner join category ct on ab.ctno=ct.ctno 
-		<include refid="wh1out"/>
+		<include refid="whOut"/>
 		group by cateName1
 		order by cateCnt desc;
 	</select>	
@@ -278,7 +271,7 @@
 		select sum(ab.ab_amount) cateSum, ct.ct_top cateName2
 		from account_book ab 
 		inner join category ct on ab.ctno=ct.ctno 
-		<include refid="wh1out"/>
+		<include refid="whOut"/>
 		group by cateName2
 		order by cateSum desc;
 	</select>
@@ -308,8 +301,7 @@
 		)
 		order by rand() limit 4;	
 	</select>
-	
-	
+
 	
 	
 	

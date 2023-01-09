@@ -293,7 +293,7 @@ $(document).ready(function(){
 		$('#tbody1').append("<tr");
 		$('#tbody1').append("<td>"+i+"</td>");
 		$('#tbody1').append("<td>"+label1[i]+"</td>");
-		$('#tbody1').append("<td>"+$.number(value1[i])+"원</td>");
+		$('#tbody1').append("<td>"+$.number(value1[i])+"회</td>");
 		$('#tbody1').append("/<tr>");
 	});
 	

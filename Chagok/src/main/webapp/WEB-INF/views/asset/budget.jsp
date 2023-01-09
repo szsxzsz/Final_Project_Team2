@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>   
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="../include/header.jsp" %>
 <%@ include file="../include/sidebarAsset.jsp" %>
 
@@ -13,7 +14,7 @@
 </div>
 
 		<div id="div1">
-			<h3>설정된 예산이 없어요 ㅜ^ㅜ</h3>
+			<h3>${pMonth }월에 설정된 예산이 없어요 ㅜ^ㅜ</h3>
 			<h3>예산은 효율적이고 계획적인 소비 습관 생성에 도움이 됩니다.</h3>
 			<input type="button" id="setbud" class="btn btn-block btn-success btn-lg" 
 			style="width: 200px; margin: 20px 40px" value="한 달 예산 세우기">   
@@ -31,8 +32,8 @@
 							<input type="text" class="form-control" id="sumpamt" placeholder="예산을 입력하세요" maxlength="10" onkeyup="inputNumFmt(this);">
 						</div>
 						<div class="col-sm-10">
-							<span>지난달 예산 : </span><span id="prevsum"></span><br>
-							<span>최근 3개월 간 평균 지출 : </span><span id="prevavg"></span>
+							<span>지난달 예산 : </span><span id="prevsum"></span> 원<br>
+							<span>최근 3개월 간 평균 지출 : </span><fmt:formatNumber value="${dtAvg3 }"/> 원</span>
 						</div>
 					</div>
 				</div>

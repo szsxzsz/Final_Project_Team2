@@ -29,7 +29,7 @@
 	
 	<sql id="wh1">
 		where mno=#{mno} 
-		and p_month=#{pMonth}
+		and p_month=#{p_month}
 	</sql>
 	
 	<!-- 상위 카테고리 -->
@@ -65,12 +65,20 @@
 	</insert>
 	
 	<!-- 4. 예산 수정 -->
-	<update id="updBud" parameterType="map">
-		<foreach item="i" collection="updateList" separator=",">
-			update plan set 
-			p_amount=#{i.p_amount} 
-			where pno=#{i.pno}
-		</foreach>
+	<update id="updBud">
+		update plan set 
+		p_amount=#{p_amount} 
+		where pno=#{pno}
 	</update>
-  
+	
+	<!-- 5. 예산 삭제 -->
+	<delete id="delBud">
+		delete from plan where mno=#{mno} and p_month=#{p_month};
+	</delete>
+	
+ 	<!-- 6. 총예산  조회-->
+	<select id="budSum">
+		select sum(p_amount) from plan where mno=#{mno} and p_month=#{p_month};
+	</select>
+	
   </mapper>

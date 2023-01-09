@@ -25,6 +25,7 @@ public class AbookDAOImpl implements AbookDAO{
 	
 	//NAMESPACE
 	private static final String NAMESPACE = "com.chagok.mapper.abookMapper";
+	private static final String NAMESPACE2 = "com.chagok.mapper.reportMapper";
 	
 	// 가계부 조회 map
 	@Override
@@ -70,32 +71,44 @@ public class AbookDAOImpl implements AbookDAO{
 	}	
 	
 	@Override
-	public int chkBud(int mno, String pMonth) throws Exception {
-		Map map = new HashMap();
+	public int chkBud(Integer mno, String pMonth) throws Exception {
+		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("mno", mno);
-		map.put("pMonth", pMonth);
+		map.put("p_month", pMonth);
 		int chkBud = sqlSession.selectOne(NAMESPACE+".chkBud", map);
 		return chkBud;
 	}
 
 	@Override
-	public List<Map<String, Object>> getBud(int mno, String pMonth) throws Exception {
-		Map map = new HashMap();
+	public List<Map<String, Object>> getBud(Integer mno, String pMonth) throws Exception {
+		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("mno", mno);
-		map.put("pMonth", pMonth);
+		map.put("p_month", pMonth);
 		return sqlSession.selectList(NAMESPACE+".getBud", map);
 	}
 	
 	@Override
-	public void setBud(Map<String, Object> insertMap) {
-		mylog.debug("insertMap : "+insertMap.toString());
+	public void setBud(Map<String, Object> insertMap) throws Exception {
+//		mylog.debug("insertMap : "+insertMap.toString());
 		sqlSession.insert(NAMESPACE+".setBud", insertMap);
 	}
 	
 	@Override
-	public void updBud(Map<String, Object> updateMap) {
-		mylog.debug("updateMap : "+updateMap.toString());
-		sqlSession.update(NAMESPACE+".updBud", updateMap);
+	public void updBud(List<Map<String, Object>> updateList) throws Exception {
+//		mylog.debug("updateList : "+updateList.toString());
+		for(Map<String, Object> updatemap : updateList) {
+	        sqlSession.update(NAMESPACE+".updBud", updatemap);
+		}
+		mylog.debug("수정완료");
+	}
+
+	@Override
+	public void delBud(Integer mno, String pMonth) throws Exception {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("mno", mno);
+		map.put("p_month", pMonth);
+		sqlSession.delete(NAMESPACE+".delBud", map);
+		mylog.debug("삭제완료");
 	}
 	
 	
