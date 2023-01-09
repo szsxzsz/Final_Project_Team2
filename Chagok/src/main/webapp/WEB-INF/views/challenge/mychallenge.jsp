@@ -18,7 +18,6 @@
 			$('.location').attr("href", "/challenge/cancelChallenge?cno="+cno+"&mno="+mno+"&c_sort="+c_sort);
 		});
 	});
-	test
 	
 </script>
 
