@@ -282,7 +282,7 @@ public class BoardController {
 						
 		}
 							
-		return "redirect:/community/notice";
+		return "redirect:/notice";
 			
 	}
 	
