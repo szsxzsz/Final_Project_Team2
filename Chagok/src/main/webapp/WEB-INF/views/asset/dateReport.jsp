@@ -19,7 +19,7 @@
 <%-- 			${map.outCum} --%>
 <%-- 			${map.weekjson } --%>
 <%-- 				${map.weekjson } --%>
-			<h1>${userVO.nick }님의
+			<h1>${nick }님의
 				<fmt:formatDate value="${today }" pattern="MM"/>월 날짜별 리포트
 			</h1>
 		</section>

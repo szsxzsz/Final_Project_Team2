@@ -13,6 +13,8 @@
 
 <hr>
 <c:set var="mm" value="${param.mm }"/>
+<!-- map : dtSum, dtAvg, expSum -->
+
 <input type="button" id="setbud" class="btn btn-block btn-success btn-lg" 
 	style="width: 200px; margin: 20px 40px" value="예산 수정하기" 
 	onclick="location.href='/asset/updBud?mm='+${mm}+'';">  
@@ -62,7 +64,7 @@
 
 					<div class="col-md-4">
 						<p class="text-center">
-							<h4>12월 예산 100,000원</h4>
+							<h4>${map.dtSum }</h4>
 							<h4>오늘까지 지출 40,000원</h4>
 						</p>
 						<div class="progress-group">

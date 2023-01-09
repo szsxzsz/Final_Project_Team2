@@ -13,6 +13,7 @@
 <hr>
 </div>
 
+<%-- 		<c:set var="mm" value="${param.mm }"/> --%>
 		<div id="div1">
 			<h3>${pMonth }월에 설정된 예산이 없어요 ㅜ^ㅜ</h3>
 			<h3>예산은 효율적이고 계획적인 소비 습관 생성에 도움이 됩니다.</h3>
@@ -23,7 +24,7 @@
 		<div id="div2">
 			<div class="box box-info">
 			<form class="form-horizontal" id="budform" method="post">
-				<c:set var="mm" value="${param.mm }"/>
+<%-- 				<c:set var="mm" value="${param.mm }"/> --%>
 				<div class="box-body">
 					<div class="form-group">
 						<label for="sumpamt" class="col-sm-2 control-label">${pMonth }월 예산</label>
@@ -32,8 +33,8 @@
 							<input type="text" class="form-control" id="sumpamt" placeholder="예산을 입력하세요" maxlength="10" onkeyup="inputNumFmt(this);">
 						</div>
 						<div class="col-sm-10">
-							<span>지난달 예산 : </span><span id="prevsum"></span> 원<br>
-							<span>최근 3개월 간 평균 지출 : </span><fmt:formatNumber value="${dtAvg3 }"/> 원</span>
+							<span>지난달 예산 : </span><span id="prevsum"></span>원<br>
+							<span>최근 3개월 간 평균 지출 : </span><fmt:formatNumber value="${dtAvg3 }"/>원</span>
 						</div>
 					</div>
 				</div>
@@ -54,7 +55,7 @@
 								<input type="hidden" name="ctno${i}" value="${i}">
 								<input type="text" class="form-control" id="pamt${i}" name="p_amount${i}" placeholder="예산을 입력하세요" maxlength="10" onkeyup="inputNumFmt(this);">
 							</div>
-							<p class="col-sm-2 control-label">지난달 예산 <span id="prevamt${i}"></span> 원</p>
+							<p class="col-sm-2 control-label">지난달 예산 <span id="prevamt${i}"></span>원</p>
 						</div>
 					</div>
 				</c:forEach>
@@ -115,15 +116,14 @@ $(document).ready(function(){
 						var top = item.ct_top;
 						var amp = item.p_amount;
 						if(b==top){
-							$('#prevamt'+i+'').text(''+$.number(amp)+'');
-							$('#prevamt'+i+'').text(''+$.number(amp)+'');
+							$('#prevamt'+i+'').text(amp);
 							sum+=amp;
 						}
 					}
 				});
 				for(i=1; i<12; i++){
 					if($('#prevamt'+i+'').text()==''){
-						$('#prevamt'+i+'').text(''+0+'');
+						$('#prevamt'+i+'').text(0);
 					}
 				}
 				$('#prevsum').text($.number(sum));

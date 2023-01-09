@@ -99,7 +99,6 @@ public class AbookDAOImpl implements AbookDAO{
 		for(Map<String, Object> updatemap : updateList) {
 	        sqlSession.update(NAMESPACE+".updBud", updatemap);
 		}
-		mylog.debug("수정완료");
 	}
 
 	@Override
@@ -108,7 +107,15 @@ public class AbookDAOImpl implements AbookDAO{
 		map.put("mno", mno);
 		map.put("p_month", pMonth);
 		sqlSession.delete(NAMESPACE+".delBud", map);
-		mylog.debug("삭제완료");
+		mylog.debug("예산 삭제");
+	}
+
+	@Override
+	public Integer totalBud(Integer mno, String pMonth) throws Exception {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("mno", mno);
+		map.put("p_month", pMonth);
+		return sqlSession.selectOne(NAMESPACE+".totalBud", map);
 	}
 	
 	

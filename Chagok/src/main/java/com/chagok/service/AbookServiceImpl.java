@@ -89,8 +89,15 @@ public class AbookServiceImpl implements AbookService{
 	}
 
 	@Override
-	public void delBud(Integer mno, String p_month) throws Exception {
-		dao.delBud(mno, p_month);
+	public void delBud(Integer mno, String pMonth) throws Exception {
+		dao.delBud(mno, pMonth);
 	}
+
+	@Override
+	public Integer totalBud(Integer mno, String pMonth) throws Exception {
+		return dao.totalBud(mno, pMonth);
+	}
+	
+	
 	
 }

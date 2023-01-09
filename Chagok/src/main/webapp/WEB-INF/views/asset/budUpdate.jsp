@@ -16,9 +16,9 @@
 	<c:set var="mm" value="${param.mm }"/>
 	<div class="box-body">
 		<div class="form-group">
-			<label for="sumpamt" class="col-sm-2 control-label">${p_month }월 예산</label>
+			<label for="sumpamt" class="col-sm-2 control-label">${pMonth }월 예산</label>
 			<div class="col-sm-10">
-				<input type="hidden" name="pMonth" value="${p_month }">
+				<input type="hidden" name="pMonth" value="${pMonth }">
 				<input type="text" class="form-control" id="sumpamt" placeholder="예산을 입력하세요" maxlength="10" onkeyup="inputNumFmt(this);">
 			</div>
 			<div class="col-sm-10">
