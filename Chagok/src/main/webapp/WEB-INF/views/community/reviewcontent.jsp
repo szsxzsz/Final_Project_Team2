@@ -8,10 +8,11 @@
 
 <h1> 후기글 상세 </h1>
 ${vo }
+${review }
 	<section class="content">
 	<div class="row">
 		<div class="col-lg-5 mx-6 aos-init aos-animate" data-aos="fade-right" >
-	        <img class="img-responsive" src="${pageContext.request.contextPath }/resources/dist/img/photo1.png" alt="Photo" style="width:500px; height:400px;">
+	        <img class="img-responsive" src="${vo.c_file}" alt="Photo" >
 		</div>
 		<div class="col-lg-6 pt-4 pt-lg-0 content aos-init aos-animate" data-aos="fade-left" >
 			<c:forEach var="vo" items="${challengeList }">
@@ -76,12 +77,12 @@ ${vo }
 		</div>
 	</div>
 	<br>
-	<textarea rows="15" cols="100" name="${vo3.b_content }" readonly></textarea>
- <c:set var="writer" value="${vo.b_writer }"/>
-	<c:if test= "${nick == '관리자' || nick == writer}">
-        <input class="btn btn-danger" type="submit" value="수정하기" onclick="location.href='/reviewupdate'" style="width:218px; margin-left: 950px;">
-        <input class="btn btn-warning" type="submit" value="삭제하기" onclick="location.href='/revireremove'" style="width:218px; margin-left: 950px;">
-	</c:if>
+	<textarea rows="15" cols="100" name="${review.b_content }" readonly></textarea>
+<%--  <c:set var="writer" value="${vo.b_writer }"/> --%>
+<%-- 	<c:if test= "${nick == '관리자' || nick == writer}"> --%>
+<!--         <input class="btn btn-danger" type="submit" value="수정하기" onclick="location.href='/reviewupdate'" style="width:218px; margin-left: 950px;"> -->
+<!--         <input class="btn btn-warning" type="submit" value="삭제하기" onclick="location.href='/revireremove'" style="width:218px; margin-left: 950px;"> -->
+<%-- 	</c:if> --%>
         <input class="btn bg-purple" type="submit" value="돌아가기" onclick="location.href='/reviewboard'" style="width:218px; margin-left: 950px;">
 </section>
 <%@ include file="../include/footer.jsp"%>

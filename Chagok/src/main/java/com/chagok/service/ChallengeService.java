@@ -111,7 +111,7 @@ public interface ChallengeService {
 	
 	
 	// 게시판 + 챌린지 리스트
-	public List<Map<String, Object>> getBoardChallenge(Integer cno) throws Exception;
+	public String getBoardChallenge(Integer cno) throws Exception;
 	
 	// 가계부 값 연동하기
 	public void updateMoney(Integer mno, Integer ab_amount, Integer cno);

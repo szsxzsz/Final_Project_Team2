@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <%@ include file="../include/header.jsp" %>
 <%@ include file="../include/sidebar.jsp" %>
@@ -23,12 +24,17 @@ ${review }
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach items="${boardList }" var="boardList" begin="1" end="${boardList.size() -1 }" step="1" varStatus="status">
+<%-- 			<c:set var="board" value="${fn:length(boardList)}"/> --%>
+<%-- 			<c:forEach items="${boardList }" var="boardList" begin="1" end="${board }"> --%>
+			<c:forEach items="${boardList }" var="boardList" varStatus="status">
 <%-- 			<c:forEach var="b" begin="0" end="${boardList.size() - 1 }" step="1"> --%>
 <%-- 		    <c:set var="c"  value="${vo2[i] }" /> --%>
 <%-- 		    <c:set var="goods" value="${goodsList[i] }"/> --%>
 			<tr>
-				<td>${status.index }</td>
+<%-- 				<td> ${pagination.total - ((pagination.nowPage-1) * 10 + status.index) - 1}</td> --%>
+<%-- 				<td>${paginationInfo.totalRecordCount - ((paginationInfo.currentPageNo-1) * paginationInfo.recordCountPerPage + status.index) }</td> --%>
+<%-- 				<td>${boardList[size - i] }</td> --%>
+				<td>${status.index +1}</td>
 				<td>11</td>
 				<td>
 					<a href="/reviewcontent?cno=${boardList.cno }">${boardList.b_title } </a>
