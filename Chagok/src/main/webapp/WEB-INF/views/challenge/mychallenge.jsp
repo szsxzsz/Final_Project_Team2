@@ -4,14 +4,6 @@
 <%@ include file="../include/sidebar.jsp" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<%-- <% --%>
-<!-- // 로그인 세션제어 -->
-<!-- String nick = (String) session.getAttribute("nick"); -->
-<!-- if(nick == null){ -->
-<!-- 	response.sendRedirect("chagok/login"); -->
-<!-- } -->
-<%-- %> --%>
-
 <script type="text/javascript">
 	$(document).ready(function(){
 		$('.btn.btn-danger.hyo').click(function(){
@@ -72,7 +64,7 @@
 				<a href="" class="location">
 				<button type="button" class="btn btn-danger hyo" style="background-color: #FFDB83; color:#ffffff; font-weight:bold;">신청 취소
 					<input type="hidden" value="${vo.cno}" class="cno_hy">
-					<input type="hidden" value="${vo.mno}" class="mno_hy">
+					<input type="hidden" value="<%=session.getAttribute("mno") %>" class="mno_hy">
 					<input type="hidden" value="${vo.c_sort}" class="c_sort_hy">
 				</button>
 				</a></td>
