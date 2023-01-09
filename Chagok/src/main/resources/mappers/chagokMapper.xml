@@ -114,9 +114,9 @@
 	
 	<!-- 중복된 챌린지(카테고리) 확인 -->	
 	<select id="samechallenge" resultType="Integer">
-	    select distinct ctno from plus p right join challenge c 
+	    select ctno from plus p right join challenge c 
 		on c.cno = p.cno left join minus m on m.cno = c.cno
-	    where  (c.cno = m.cno or c.cno = p.cno) and ( p.mno = #{mno} OR m.mno = #{mno} )and ctno = #{ctno};
+	    where (c.cno = m.cno or c.cno = p.cno) and ( p.mno = #{mno} OR m.mno = #{mno} )and ctno = #{ctno};
 	</select>
 	
 	<!-- 챌린지 리스트(인원수 조회) -->

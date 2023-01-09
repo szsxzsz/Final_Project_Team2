@@ -185,11 +185,10 @@ public class ChallengeController {
 		
 		Integer gctno = service.samechallenge(map);	
 		mylog.debug(gctno+"");
-		if(gctno != null) {
+		if(gctno != null) { // 참여불가능
 			result = "Y";
-		}else {
+		}else { // 참여가능
 			result = "N";
-
 			mylog.debug(map+"");
 			service.joinplusInsert(map); // mno랑 cno필요
 			service.joinplusUpdate(map); // nick이랑 cno
