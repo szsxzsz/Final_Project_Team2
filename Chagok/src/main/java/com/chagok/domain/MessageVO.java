@@ -1,6 +1,8 @@
 package com.chagok.domain;
 
-import com.google.protobuf.Timestamp;
+
+
+import com.chagok.domain.FeedDTO.MessageType;
 
 import lombok.Data;
 
@@ -9,6 +11,7 @@ public class MessageVO {
 	
 	private String writer; // 보내는 사람
 	private String message; // 메시지
-	private Timestamp time;
-	
+	private String time;
+	private MessageType type;
+		
 }

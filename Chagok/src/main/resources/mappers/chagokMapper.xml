@@ -114,9 +114,9 @@
 	
 	<!-- 중복된 챌린지(카테고리) 확인 -->	
 	<select id="samechallenge" resultType="Integer">
-	    select distinct ctno from plus p right join challenge c 
+	    select ctno from plus p right join challenge c 
 		on c.cno = p.cno left join minus m on m.cno = c.cno
-	    where  (c.cno = m.cno or c.cno = p.cno) and ( p.mno = #{mno} OR m.mno = #{mno} )and ctno = #{ctno};
+	    where (c.cno = m.cno or c.cno = p.cno) and ( p.mno = #{mno} OR m.mno = #{mno} )and ctno = #{ctno};
 	</select>
 	
 	<!-- 챌린지 리스트(인원수 조회) -->
@@ -216,15 +216,17 @@
 	<!-- 검색1 -->
 	<select id="cList" resultType="com.chagok.domain.ChallengeVO" parameterType="com.chagok.domain.SearchCriteria">
 		SELECT  *
-		 FROM ( 
-		        SELECT *, 
-		               ROW_NUMBER() OVER(ORDER BY cno DESC) AS RNUM
-		         FROM challenge 
-		         WHERE 1=1 
-		         	<include refid="search"></include>
-		                       ) MP
+		 	FROM ( 
+		      	  SELECT *
+               		FROM  ( select cno, ch.ctno ctno, c_title, c_file, c_pcnt, c_period, c_start, c_deposit, c_content, c_person, mno, c_freq, c_sort, c_amount, c_total, c_min, c_status, c_thumbFile, c_cnt, ct_top, ct_bottom, 
+		            	   ROW_NUMBER() OVER(ORDER BY cno) AS RNUM
+							from challenge ch join category c
+							where ch.ctno = c.ctno) AP
+		         	WHERE 1=1 
+		         		<include refid="search"></include>
+		           							            ) MP
 		WHERE RNUM BETWEEN #{rowStart} AND #{rowEnd}
-		ORDER BY cno DESC
+		ORDER BY cno
 	</select>
 	
 	<!-- 검색2 -->
@@ -238,14 +240,14 @@
 	
 	<sql id="search">
 		<if test="searchType != null">
-			<if test="searchType == 'c_t'.toString()">AND c_title LIKE CONCAT('%' || #{keyword} || '%')</if>
-			<if test="searchType == 'c_co'.toString()">AND c_content LIKE CONCAT('%' || #{keyword} || '%')</if>
-			<if test="searchType == 'c_h'.toString()">AND c_host LIKE CONCAT('%' || #{keyword} || '%')</if>
-			<if test="searchType == 'c_tc_co'.toString()">AND (c_title LIKE CONCAT('%' || #{keyword} || '%')) or (c_content LIKE CONCAT('%' || #{keyword} || '%'))</if>
+			<if test="searchType == 'c_title'.toString()">AND c_title LIKE CONCAT('%', #{keyword}, '%')</if>
+			<if test="searchType == 'c_content'.toString()">AND c_content LIKE CONCAT('%', #{keyword}, '%')</if>
+			<if test="searchType == 'c_host'.toString()">AND c_host LIKE CONCAT('%', #{keyword}, '%')</if>
+			<if test="searchType == 'c_titlec_content'.toString()">AND (c_title LIKE CONCAT('%', #{keyword}, '%')) or (c_content LIKE CONCAT('%', #{keyword}, '%'))</if>
 		</if>
 	</sql>
 	
-<!-- 	<sql id="search"> -->
+	<!-- 	<sql id="search"> -->
 <!-- 		<if test="searchType != null"> -->
 <!-- 			<if test="searchType == 'c_t'.toString()">AND c_title LIKE '%' || #{keyword} || '%'</if> -->
 <!-- 			<if test="searchType == 'c_co'.toString()">AND c_content LIKE '%' || #{keyword} || '%'</if> -->
@@ -284,5 +286,14 @@
 	
 	
 	
+	<!-- 지난 메시지 가져오기   -->
+	<select id="getMsgList" resultType="com.chagok.domain.FeedDTO">
+		select * from feed where cno = #{cno}
+	</select>
+	
+	<!-- 알림  저장 -->
+	<insert id="alert">
+		insert into alert(cno, a_receive, a_content) values(#{cno}, #{a_receive}, #{a_content});
+	</insert>
 	
   </mapper>

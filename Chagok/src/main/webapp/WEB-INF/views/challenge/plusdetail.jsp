@@ -41,7 +41,7 @@
              </div>
              <div class="progress-group" style="width: 280px;">
                <span class="progress-text">챌린지 인원</span>
-               <span class="progress-number"><b>${vo.c_person }</b>/ ${vo.c_pcnt }</span>
+               <span class="progress-number"><b>${vo.c_cnt }</b>/ ${vo.c_pcnt }</span>
                </div>
              <div class="progress-group" style="width: 280px;">
                <span class="progress-text">예치금</span>
@@ -131,15 +131,19 @@
         			dataType :'text',
         			data : JSON.stringify(test),
         			timeout : 3000,
+        			async : false,
         			success : function(data){
 						console.log('통신 성공! ' + data);
         				if(data == "N"){ // 중복된 카테고리num이 아닐 때
-//         					result = "참여 가능한 챌린지 입니다!";
 //         					$("#result_samechallenge").html(result).css("color","green");
-        					alert("참여 가능한 챌린지 입니다! \n 단, 저축형 챌린지는 하나만 참여 가능합니다. \n 참여하시겠습니까?");
+        					if(confirm("참여 가능한 챌린지 입니다! \n 단, 저축형 챌린지는 하나만 참여 가능합니다. \n 참여하시겠습니까?")== true){
+        						alert("챌린지 참여완료!");
         					location.href="/commumain";
+        					}else{
+        						alert("챌린지 참여를 취소하였습니다.")
+        						return data == "Y";
+        					};
         				}else if(data == "Y"){ // 중복된 챌린지 or 중복된 상세카테고리 챌린지 
-//         					result="해당 카테고리로 참여 중인 챌린지가 있습니다.";
 //         					$("result_samechallenge").html(result).css("color","red");
         					alert("해당 카테고리로 참여 중인 챌린지가 있습니다.");
         					return false;

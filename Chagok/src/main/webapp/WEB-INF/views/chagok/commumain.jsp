@@ -7,6 +7,9 @@
 
 <%@ include file="../include/sidebar.jsp" %>
 
+<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+
 <!-- <h1> 커뮤니티 메인 </h1> -->
 <%-- ${challengeList} --%>
 <%-- ${ranking } --%>
@@ -17,10 +20,10 @@
   <div class="search">
     <select name="searchType">
       <option value="n"<c:out value="${scri.searchType == null ? 'selected' : ''}"/>>-----</option>
-      <option value="c_t"<c:out value="${scri.searchType eq 'c_t' ? 'selected' : ''}"/>>제목</option>
-      <option value="c_co"<c:out value="${scri.searchType eq 'c_co' ? 'selected' : ''}"/>>내용</option>
-      <option value="c_h"<c:out value="${scri.searchType eq 'c_h' ? 'selected' : ''}"/>>작성자</option>
-      <option value="c_tc_co"<c:out value="${scri.searchType eq 'c_tc_co' ? 'selected' : ''}"/>>제목+내용</option>
+      <option value="c_title"<c:out value="${scri.searchType eq 'c_title' ? 'selected' : ''}"/>>제목</option>
+      <option value="c_content"<c:out value="${scri.searchType eq 'c_content' ? 'selected' : ''}"/>>내용</option>
+<%--       <option value="c_host"<c:out value="${scri.searchType eq 'c_host' ? 'selected' : ''}"/>>작성자</option> --%>
+      <option value="c_titlec_content"<c:out value="${scri.searchType eq 'c_titlec_content' ? 'selected' : ''}"/>>제목+내용</option>
     </select>
 
     <input type="text" name="keyword" id="keywordInput" value="${scri.keyword}"/>
@@ -29,7 +32,7 @@
     <script>
       $(function(){
         $('#searchBtn').click(function() {
-          self.location = "list" + '${pageMaker.makeQuery(1)}' + "&searchType=" + $("select option:selected").val() + "&keyword=" + encodeURIComponent($('#keywordInput').val());
+          self.location = "commumain" + '${pageMaker.makeQuery(1)}' + "&searchType=" + $("select option:selected").val() + "&keyword=" + encodeURIComponent($('#keywordInput').val());
         });
       });   
     </script>
@@ -57,7 +60,7 @@
 <!-- 챌린지 리스트 -->
   <h2 class="visually-hidden"></h2>
   <div class="row row-cols-lg-4 g-2">
-  <c:forEach var="vo" items="${challengeList }">
+  <c:forEach var="vo" items="${cList }">
   
   <!-- 날짜 계산하기 -->
 		<jsp:useBean id="now" class="java.util.Date" />
@@ -87,7 +90,9 @@
         </a>
         <div class="card-body">
         <div class="card-item-header">
-            <p class="card-item-code">[${vo.ct_top }]</p>
+       
+            <p class="card-item-code">[${vo.ct_top}]</p>
+
             <div class="rate">
              	<p class="card-item-rating">
                 <img src="https://png.pngtree.com/png-clipart/20190705/original/pngtree-vector-business-men-icon-png-image_4186858.jpg" alt=""> </p> 

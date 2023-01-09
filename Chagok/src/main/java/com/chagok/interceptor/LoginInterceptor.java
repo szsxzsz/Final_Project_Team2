@@ -1,20 +1,14 @@
 package com.chagok.interceptor;
 
-import java.util.List;
-
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.messaging.handler.HandlerMethod;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.servlet.HandlerInterceptor;
-
-import com.chagok.domain.ChallengeVO;
 
 public class LoginInterceptor extends HandlerInterceptorAdapter implements SessionNames {
 	
@@ -62,9 +56,13 @@ public class LoginInterceptor extends HandlerInterceptorAdapter implements Sessi
 				
 				String attempted = (String)session.getAttribute(ATTEMPTED);
 				if(StringUtils.isNotEmpty(attempted)) {
+					System.out.println("attempted안 ");
+					
 					response.sendRedirect(attempted);
 					session.removeAttribute(ATTEMPTED);
 				}else {
+					System.out.println("메인으로 ");
+					
 					response.sendRedirect("/main"); /* QQQ 주소어디로 바꿀지 생각해볼 것*/
 				}
 			}
