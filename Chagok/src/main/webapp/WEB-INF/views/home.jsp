@@ -1,8 +1,10 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" 
+	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page session="false" %>
 <html>
 <head>
-<!-- 제이쿼리 Datepicker-->
+<!-- ì ì´ì¿¼ë¦¬ Datepicker-->
 <!-- jQuery -->
 <!-- <script type="text/javascript" src="../jquery-3.4.1.min.js"></script> -->
    <script src="../resources/plugins/jQuery/jQuery-2.1.4.min.js"></script>
@@ -31,11 +33,11 @@
 </script>
 
 <P>  The time on the server is ${serverTime}. </P>
-<button type="button" id="btn">버튼</button>
+<button type="button" id="btn">ë²í¼</button>
 
  <table id="jqGrid"></table>
 <div id="jqGridPager"></div>
-<button type="button" id="btn">버튼</button>
+<button type="button" id="btn">ë²í¼</button>
 
 <script type="text/javascript"> 
        
@@ -73,12 +75,12 @@
 		
 		$('#btn').click(function(){
 			
-			//데이터 추가
+			//ë°ì´í° ì¶ê°
             for(var i=0; i<jsonData.length ; i++ ){
                 //console.log(i);
 				$('#jqGrid').jqGrid('addRowData', i, jsonData[i]);
             }
-			//다시 로드 
+			//ë¤ì ë¡ë 
 			$("#jqGrid").trigger('reloadGrid');
 
 		});
