@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>   
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ include file="../include/header.jsp" %>
 <%@ include file="../include/sidebarAsset.jsp" %>
 
@@ -13,56 +14,60 @@
 <hr>
 </div>
 
-<%-- 		<c:set var="mm" value="${param.mm }"/> --%>
-		<div id="div1">
-			<h3>${pMonth }월에 설정된 예산이 없어요 ㅜ^ㅜ</h3>
-			<h3>예산은 효율적이고 계획적인 소비 습관 생성에 도움이 됩니다.</h3>
-			<input type="button" id="setbud" class="btn btn-block btn-success btn-lg" 
-			style="width: 200px; margin: 20px 40px" value="한 달 예산 세우기">   
-		</div>
+<c:set var="a" value="${pMonth }"/>
+<c:set var="y" value="${fn:substring(a,0,4) }"/>
+<c:set var="m" value="${fn:substring(a,4,6) }"/>
+<c:set var="pMonth" value="${y }년 ${m }월"/>
 
-		<div id="div2">
-			<div class="box box-info">
-			<form class="form-horizontal" id="budform" method="post">
+<div id="div1">
+	<h3>${pMonth }에 설정된 예산이 없어요 ㅜ^ㅜ</h3>
+	<h3>예산은 효율적이고 계획적인 소비 습관 생성에 도움이 됩니다.</h3>
+	<input type="button" id="setbud" class="btn btn-block btn-success btn-lg" 
+	style="width: 200px; margin: 20px 40px" value="한 달 예산 세우기">   
+</div>
+
+<div id="div2">
+	<div class="box box-info">
+	<form class="form-horizontal" id="budform" method="post">
 <%-- 				<c:set var="mm" value="${param.mm }"/> --%>
-				<div class="box-body">
-					<div class="form-group">
-						<label for="sumpamt" class="col-sm-2 control-label">${pMonth }월 예산</label>
-						<div class="col-sm-10">
-							<input type="hidden" name="pMonth" value="${pMonth }">
-							<input type="text" class="form-control" id="sumpamt" placeholder="예산을 입력하세요" maxlength="10" onkeyup="inputNumFmt(this);">
-						</div>
-						<div class="col-sm-10">
-							<span>지난달 예산 : </span><span id="prevsum"></span>원<br>
-							<span>최근 3개월 간 평균 지출 : </span><fmt:formatNumber value="${dtAvg3 }"/>원</span>
-						</div>
-					</div>
+		<div class="box-body">
+			<div class="form-group">
+				<label for="sumpamt" class="col-sm-2 control-label">${pMonth } 예산</label>
+				<div class="col-sm-10">
+					<input type="hidden" name="pMonth" value="${a }">
+					<input type="text" class="form-control" id="sumpamt" placeholder="예산을 입력하세요" maxlength="10" onkeyup="inputNumFmt(this);">
 				</div>
-				
-				<div id="textdiv"></div>
-				
-				<div class="box-footer">
-					<input type="submit" class="btn btn-info pull-right" value="등록하기"/>
-					<button type="button" id="copy" class="btn btn-info pull-right">지난달 예산 복사하기</button>
-				</div>	
-					      
-				<c:forEach var="top" items="${ctTopList }" varStatus="status">
-					<c:set var="i" value="${status.count}"/>
-					<div class="box-body">
-						<div class="form-group">
-							<label for="pamt${i}" id="label${i}" class="col-sm-2 control-label">${top }</label>
-							<div class="col-sm-10">
-								<input type="hidden" name="ctno${i}" value="${i}">
-								<input type="text" class="form-control" id="pamt${i}" name="p_amount${i}" placeholder="예산을 입력하세요" maxlength="10" onkeyup="inputNumFmt(this);">
-							</div>
-							<p class="col-sm-2 control-label">지난달 예산 <span id="prevamt${i}"></span>원</p>
-						</div>
-					</div>
-				</c:forEach>
-				
-			</form>
+				<div class="col-sm-10">
+					<span>지난달 예산 : </span><span id="prevsum"></span>원<br>
+					<span>최근 3개월 간 평균 지출 : </span><fmt:formatNumber value="${dtAvg3 }"/>원</span>
+				</div>
 			</div>
 		</div>
+		
+		<div id="textdiv"></div>
+		
+		<div class="box-footer">
+			<input type="submit" class="btn btn-info pull-right" value="등록하기"/>
+			<button type="button" id="copy" class="btn btn-info pull-right">지난달 예산 복사하기</button>
+		</div>	
+			      
+		<c:forEach var="top" items="${ctTopList }" varStatus="status">
+			<c:set var="i" value="${status.count}"/>
+			<div class="box-body">
+				<div class="form-group">
+					<label for="pamt${i}" id="label${i}" class="col-sm-2 control-label">${top }</label>
+					<div class="col-sm-10">
+						<input type="hidden" name="ctno${i}" value="${i}">
+						<input type="text" class="form-control" id="pamt${i}" name="p_amount${i}" placeholder="예산을 입력하세요" maxlength="10" onkeyup="inputNumFmt(this);">
+					</div>
+					<p class="col-sm-2 control-label">지난달 예산 <span id="prevamt${i}"></span>원</p>
+				</div>
+			</div>
+		</c:forEach>
+		
+	</form>
+	</div>
+</div>
 
 <!-- jQuery.number -->
 <script src="/resources/js/jquery.number.min.js"></script>

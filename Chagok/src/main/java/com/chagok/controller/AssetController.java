@@ -708,12 +708,13 @@ public class AssetController {
 //	http://localhost:8080/asset/budget
 //	http://localhost:8080/asset/budget?mm=0
 	@GetMapping(value = "/budget")
-	public String budgetGET(@RequestParam("mm") int mm, HttpSession session, Model model) throws Exception {	
+	public String budgetGET(@RequestParam("mm") int mm, HttpSession session, Model model, RedirectAttributes rttr) throws Exception {	
 		int mno = (int)session.getAttribute("mno");
 
 		List<String> ctTopList = abService.getctTop();
 		String pMonth = abService.getPMonth(mm);
 		Integer dtAvg3 = rptService.dtAvg3(mno);
+		
 		model.addAttribute("dtAvg3", dtAvg3);
 		model.addAttribute("ctTopList", ctTopList);
 		model.addAttribute("pMonth", pMonth);
@@ -755,7 +756,7 @@ public class AssetController {
 	// 예산 조회
 	@ResponseBody
 	@GetMapping(value = "/getBud")
-	public List<Map<String, Object>> getBud(@RequestParam("mm") int mm, HttpSession session, RedirectAttributes rttr) throws Exception {
+	public List<Map<String, Object>> getBud(@RequestParam("mm") int mm, HttpSession session) throws Exception {
 		int mno = (int)session.getAttribute("mno");
 		String pMonth = abService.getPMonth(mm);
 		
@@ -827,23 +828,30 @@ public class AssetController {
 		// 2. 해당 월 지출
 		Integer dtSum = rptService.dtSum(mno, mm);
 		
-		// 3. 해당 월 평균 지출
-		Integer dtAvg = rptService.dtAvg(mno, mm);
-		
-		// 4. 해당 월 예상 지출
+		// 3. 해당 월 예상 지출
 		Integer expSum = rptService.expSum(mno, mm);
+		
+		// 4. 일간 통계
+		List<Map<String, Object>> day = rptService.day(mno, mm);
+		String dayjson = rptService.listMapToJson(day);
 		
 		/////////////// 2. model로 전달 ///////////////
 		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("totalBud", totalBud);
 		map.put("dtSum", dtSum);
-		map.put("dtAvg", dtAvg);
 		map.put("expSum", expSum);
+		map.put("dayjson", dayjson);
 		model.addAttribute("nick", nick);		
 		model.addAttribute("pMonth", pMonth);
 		model.addAttribute("map", map);
 
 		return "/asset/budReport";
 	}
-	
+
+//	http://localhost:8080/asset/abookCal
+	@GetMapping(value="/abookCal")
+	public String abookCal() throws Exception {
+		return "/asset/calendar";
+	}
 	///////////////////MJ////////////////////
 }

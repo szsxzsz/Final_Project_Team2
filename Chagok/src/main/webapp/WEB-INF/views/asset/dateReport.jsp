@@ -15,10 +15,6 @@
 	<div class="content-wrapper" style="min-height: 986.281px;">
 		<section class="content-header">
 			<c:set var="today" value="<%=new java.util.Date() %>"/><br><br>
-<%-- 			${map.outWeekjson }<hr> --%>
-<%-- 			${map.outCum} --%>
-<%-- 			${map.weekjson } --%>
-<%-- 				${map.weekjson } --%>
 			<h1>${nick }님의
 				<fmt:formatDate value="${today }" pattern="MM"/>월 날짜별 리포트
 			</h1>
@@ -371,26 +367,6 @@ var linechart = new Chart(ctx2, {
 	data: dataline2,
 	options: optionline
 });
-
-// var areaChartOptions = {
-//   showScale               : true,
-//   scaleShowGridLines      : false,
-//   scaleGridLineColor      : 'rgba(0,0,0,.05)',
-//   scaleGridLineWidth      : 1,
-//   scaleShowHorizontalLines: true,
-//   scaleShowVerticalLines  : true,
-//   bezierCurve             : true,
-//   bezierCurveTension      : 0.3,
-//   pointDot                : false,
-//   pointDotRadius          : 4,
-//   pointDotStrokeWidth     : 1,
-//   pointHitDetectionRadius : 20,
-//   datasetStroke           : true,
-//   datasetStrokeWidth      : 2,
-//   datasetFill             : true,
-//   maintainAspectRatio     : true,
-//   responsive              : true
-// }
 
 </script>
 
