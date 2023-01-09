@@ -114,9 +114,9 @@
 	
 	<!-- 중복된 챌린지(카테고리) 확인 -->	
 	<select id="samechallenge" resultType="Integer">
-	    select distinct ctno from plus p right join challenge c 
+	    select ctno from plus p right join challenge c 
 		on c.cno = p.cno left join minus m on m.cno = c.cno
-	    where  (c.cno = m.cno or c.cno = p.cno) and ( p.mno = #{mno} OR m.mno = #{mno} )and ctno = #{ctno};
+	    where (c.cno = m.cno or c.cno = p.cno) and ( p.mno = #{mno} OR m.mno = #{mno} )and ctno = #{ctno};
 	</select>
 	
 	<!-- 챌린지 리스트(인원수 조회) -->
@@ -264,9 +264,10 @@
 	</select>
 	
 <!-- 	가계부 가져오기 -->
-	<select id="getMinusAbook" resultType="List">
+	<select id="getMinusAbook" resultType="map">
 		select * from account_book a right join challenge c on a.mno = c.mno
-		where c.cno=#{cno} and a.ctno = c.ctno
+		left join category ca on a.ctno=ca.ctno
+		where c.cno=1 and a.ctno = c.ctno
 	</select>
 
 
@@ -276,6 +277,14 @@
 		from challenge c inner join board b
 		where bno = #{bno} and b.cno = c.cno
 	</select>
+	
+<!-- 	가계부 값 연동하기  -->
+	<update id="updateMoney">
+		update minus set m_sum = (select * from (select m_sum from minus m where mno=1)as m)-#{ab_amount}
+		where mno=#{mno} and cno = #{cno};
+	</update>
+	
+	
 	
 	<!-- 지난 메시지 가져오기   -->
 	<select id="getMsgList" resultType="com.chagok.domain.FeedDTO">

@@ -90,7 +90,7 @@
      
      <div class="row">
 		<div class="col-lg-5 mx-6 aos-init aos-animate" data-aos="fade-right" >
-	        <img class="img-responsive" src="${pageContext.request.contextPath }/resources/dist/img/photo1.png" alt="Photo" style="width:500px; height:400px;">
+		<img class="img-responsive" src="${vo.c_file}" alt="Photo" >
 		</div>
 		<div class="col-lg-6 pt-4 pt-lg-0 content aos-init aos-animate" data-aos="fade-left" >
 			 <h3><span style="color: #66BB7A; font-weight: bold;">[${vo2.ct_top }]</span> ${vo.c_title }</h3>
@@ -123,7 +123,7 @@
 				<div class="col-lg-6" style="line-height: 180%">
 	             <div class="progress-group" style="width: 280px;" >
 	               <span class="progress-text">챌린지 장 </span>
-<%-- 	               <span class="progress-number"><b>${vo.c_host }</b>님</span> --%>
+	               <span class="progress-number"><b>${vo.mno }</b>님</span>
 	             </div>
 	             <div class="progress-group" style="width: 280px;">
 	               <span class="progress-text">챌린지 인원</span>
@@ -168,6 +168,10 @@
    
 <!--    가계부 연동하기 모달 -->
 <!-- 모달 css 파일 : resources -> plugins -> modal -> minusModal.css  -->
+	<form action="/challenge/minusFeed?cno=${vo.cno}" method="post">
+<!-- 		mno 수정필요 -->
+	<input type="hidden" value="${vo.mno }" id="mno" name="mno">
+	<input type="hidden" value="${vo.cno }" id="cno" name="cno">
 	<div class="modal fade" id="modal-default" style="margin-top: 10%;">
 		<div class="modal-dialog">
 			<div class="modal-content">
@@ -184,7 +188,7 @@
 <%--    abookList : ${abookList } // --%>
 <%-- 	cateList : ${cateList } // --%>
 <%-- 	jsonCate : ${jsonCate } --%>
-				${minusAbook }
+<%-- 				${minusAbook } --%>
 		<table border="1">
 		<tr>
 		 <td>날짜</td>
@@ -194,30 +198,29 @@
 		 <td>소분류</td>
 		 <td>연동</td>
 		</tr>
-		<c:forEach var="mAbook" begin="0" end="${minusAbook.size()-1}" items="${minusAbook}">
+		<c:forEach var="mAbook" begin="0" end="${minusAbook.size()}" items="${minusAbook}">
 		<tr>
-		 <td>${minusAbook.ab_date }</td>
-		 <td>${minusAbook.ab_content }</td>
-		 <td>${minusAbook.ab_amount }</td>
-<%-- 		 <td>${ct_top }</td> --%>
-<%-- 		 <td>${ct_bottom }</td> --%>
-		<td><input type="radio" id="radio"></td>
+		 <td>${mAbook.ab_date }</td>
+		 <td>${mAbook.ab_content }</td>
+		 <td>${mAbook.ab_amount }</td>
+		 <td>${mAbook.ct_top }</td>
+		 <td>${mAbook.ct_bottom }</td>
+		<td><input type="checkbox" id="checkbox"></td>
 		</tr>
 		</c:forEach>
 		</table>
-				
-			
-					
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-default pull-left"
-						data-dismiss="modal">닫기</button>
-					<button type="button" class="btn btn-primary" id="saveABook">저장하기</button>
+					<button type="button" class="btn btn-default pull-left" data-dismiss="modal">닫기</button>
+					<button type="submit" class="btn btn-primary" id="saveABook">
+					저장하기</button>
+<!-- 					mno 수정 필요!! -->
 				</div>
 			</div>
 
 		</div>
 	</div>
+	</form>
 
 	<button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-default" style="margin-left: 90%">
 	가계부 연동하기
@@ -248,7 +251,7 @@ ${minusPeoList }
 <%--                   %> --%>
 
 <!-- minusPeople.m_sum 이 숫자로 변환안됨 vo.c_amount -> minusPeoList.m_sum 으로 변환 필요! -->
-                <c:forEach var="minusPeople" begin="0" end="${minusPeoList.size()-1}" items="${minusPeoList}">
+                <c:forEach var="minusPeople" begin="0" end="${minusPeoList.size()}" items="${minusPeoList}">
 <%--                  <fmt:formatNumber value="${minusPeoList.m_sum}" pattern=",000" var="money" /> --%>
                 <c:set var="i" value="${i+1 }"/>
                   <tr>

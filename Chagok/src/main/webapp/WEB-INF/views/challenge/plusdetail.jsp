@@ -131,13 +131,17 @@
         			dataType :'text',
         			data : JSON.stringify(test),
         			timeout : 3000,
+        			async : false,
         			success : function(data){
 						console.log('통신 성공! ' + data);
         				if(data == "N"){ // 중복된 카테고리num이 아닐 때
 //         					$("#result_samechallenge").html(result).css("color","green");
-        					if(confirm("참여 가능한 챌린지 입니다! \n 단, 저축형 챌린지는 하나만 참여 가능합니다. \n 참여하시겠습니까?")){
-        						alert("참여완료!");
+        					if(confirm("참여 가능한 챌린지 입니다! \n 단, 저축형 챌린지는 하나만 참여 가능합니다. \n 참여하시겠습니까?")== true){
+        						alert("챌린지 참여완료!");
         					location.href="/commumain";
+        					}else{
+        						alert("챌린지 참여를 취소하였습니다.")
+        						return data == "Y";
         					};
         				}else if(data == "Y"){ // 중복된 챌린지 or 중복된 상세카테고리 챌린지 
 //         					$("result_samechallenge").html(result).css("color","red");

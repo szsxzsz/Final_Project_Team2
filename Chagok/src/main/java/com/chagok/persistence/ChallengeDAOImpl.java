@@ -314,9 +314,9 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 
 	// 가계부 가져오기 
 	@Override
-	public List<AbookVO> getMinusAbook(Integer mno) {
-		mylog.debug(" getMinusAbook(mno) 호출 ");
-		List<AbookVO> minusAbook = sqlSession.selectList(NAMESPACE+".getMinusAbook");
+	public List<Map<String, Object>> getMinusAbook(Integer mno, Integer cno) {
+		mylog.debug(" getMinusAbook(mno,cno) 호출 ");
+		List<Map<String, Object>> minusAbook = sqlSession.selectList(NAMESPACE+".getMinusAbook");
 		return minusAbook;
 	}
 	
@@ -326,6 +326,13 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 		mylog.debug("getBoardChallenge 호출");
 		List<Map<String, Object>> boardChallenge = sqlSession.selectList(NAMESPACE+".boardChallenge", cno);
 		return boardChallenge;
+	}
+
+	// 가계부 값 연동하기 
+	@Override
+	public void updateMoney(Integer mno, Integer ab_amount, Integer cno) {
+		mylog.debug(" updateMoney(mno,ab_amount,cno) 호출 ");
+		sqlSession.update(NAMESPACE+".updateMoney");
 	}
 	
 	

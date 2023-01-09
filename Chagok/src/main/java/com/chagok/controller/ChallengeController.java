@@ -159,8 +159,8 @@ public class ChallengeController {
 		// 서비스 -> DAO 게시판 리스트 가져오기
 		// getAbookList(1) -> getAbookList(mno) 수정 필요 !!!!!
 		List<AbookVO> abookList = aService.getAbookList(1);
-		List<AbookVO> minusAbook = service.getMinusAbook(mno);
-		
+		List<Map<String, Object>> minusAbook = service.getMinusAbook(mno, cno);
+		mylog.debug(minusAbook+"");
 //		mylog.debug("abookList : "+abookList);
 		
 //		List<CategoryVO> cateList = aService.CateList();
@@ -193,10 +193,13 @@ public class ChallengeController {
 	   return "/challenge/minusFeed";
 	}
 	
-	@PostMapping(value = "/minusFeedPOST")
-	public String minusFeedPOST() throws Exception {
+	@PostMapping(value = "/minusFeed")
+	public String minusFeedPOST(@RequestParam("cno") int cno,@RequestParam("mno") int mno,AbookVO avo,Model model) throws Exception {
+		mylog.debug("minusFeedPOST 호출 ");
+		service.updateMoney(mno,avo.getAb_amount(),cno);
 
-		return "/challenge/minusFeed";
+		model.addAttribute("cno", cno);
+		return "redirect:/challenge/minusFeed";
 	}
 
 	@PostMapping(value = "/plusdetailPOST")
@@ -209,11 +212,10 @@ public class ChallengeController {
 		
 		Integer gctno = service.samechallenge(map);	
 		mylog.debug(gctno+"");
-		if(gctno != null) {
+		if(gctno != null) { // 참여불가능
 			result = "Y";
-		}else {
+		}else { // 참여가능
 			result = "N";
-
 			mylog.debug(map+"");
 			service.joinplusInsert(map); // mno랑 cno필요
 			service.joinplusUpdate(map); // nick이랑 cno
