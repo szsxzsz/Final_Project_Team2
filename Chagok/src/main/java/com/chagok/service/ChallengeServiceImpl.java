@@ -263,9 +263,16 @@ public class ChallengeServiceImpl implements ChallengeService{
 
 	// 가계부 가져오기 
 	@Override
-	public List<AbookVO> getMinusAbook(Integer mno) {
-		mylog.debug(" getMinusAbook(mno) 호출 ");
-		return dao.getMinusAbook(mno);
+	public List<Map<String, Object>> getMinusAbook(Integer mno, Integer cno) {
+		mylog.debug(" getMinusAbook(mno,cno) 호출 ");
+		return dao.getMinusAbook(mno, cno);
+	}
+
+	// 가계부 값 연동하기 
+	@Override
+	public void updateMoney(Integer mno, Integer ab_amount, Integer cno) {
+		mylog.debug(" updateMoney(mno,ab_amount,cno) 호출 ");
+		dao.updateMoney(mno,ab_amount,cno);
 	}
 
 	

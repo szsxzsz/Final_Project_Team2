@@ -107,10 +107,15 @@ public interface ChallengeService {
 	public ChallengeVO getMoney(Integer mno) throws Exception;
 	
 	// 가계부 가져오기
-	public List<AbookVO> getMinusAbook(Integer mno);
+	public List<Map<String, Object>> getMinusAbook(Integer mno, Integer cno);
 	
 	
 	// 게시판 + 챌린지 리스트
 	public List<Map<String, Object>> getBoardChallenge(Integer cno) throws Exception;
+	
+	// 가계부 값 연동하기
+	public void updateMoney(Integer mno, Integer ab_amount, Integer cno);
+	
+	
 }
 
