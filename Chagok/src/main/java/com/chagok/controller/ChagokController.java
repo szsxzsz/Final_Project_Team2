@@ -22,14 +22,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.util.WebUtils;
 
-import com.chagok.domain.AlertVO;
+//import com.chagok.domain.AlertVO;
 import com.chagok.domain.ChallengeVO;
 import com.chagok.domain.Criteria;
 import com.chagok.domain.PageMaker;
 import com.chagok.domain.SearchCriteria;
 import com.chagok.domain.UserVO;
 import com.chagok.interceptor.SessionNames;
-import com.chagok.service.AlertService;
+//import com.chagok.service.AlertService;
 import com.chagok.service.ChallengeService;
 import com.chagok.service.UserService;
 
@@ -45,7 +45,7 @@ public class ChagokController {
 	private ChallengeService service2;
 	
 	@Inject
-	private AlertService alertService;
+//	private AlertService alertService;
 	
 	// 차곡 메인사이트 
 	// http://localhost:8080/main
@@ -236,17 +236,17 @@ public class ChagokController {
       }
    }
    
-   @PostMapping(value = "/alert")
-   @ResponseBody
-   public void alert(@RequestBody Map<String, Object> map, AlertVO alertVO) throws Exception {
-	   mylog.debug(" 알림기능 ajax 호출");
-	   alertVO.setCno(Integer.parseInt(map.get("type").toString()));
-	   alertVO.setA_content(map.get("content").toString());
-	   alertVO.setA_receive(Integer.parseInt(map.get("target").toString()));
-	   
-	   alertService.alert(alertVO);
-	   
-   }
+//   @PostMapping(value = "/alert")
+//   @ResponseBody
+//   public void alert(@RequestBody Map<String, Object> map, AlertVO alertVO) throws Exception {
+//	   mylog.debug(" 알림기능 ajax 호출");
+//	   alertVO.setCno(Integer.parseInt(map.get("type").toString()));
+//	   alertVO.setA_content(map.get("content").toString());
+//	   alertVO.setA_receive(Integer.parseInt(map.get("target").toString()));
+//	   
+//	   alertService.alert(alertVO);
+//	   
+//   }
    
 	
 }

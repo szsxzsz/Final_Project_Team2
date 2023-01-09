@@ -11,9 +11,9 @@
 			var mno = $(this).children('.mno_hy').val();
 			var c_sort = $(this).children('.c_sort_hy').val();
 			
-			alert(cno);
-			alert(mno);
-			alert(c_sort);
+// 			alert(cno);
+// 			alert(mno);
+// 			alert(c_sort);
 			
 			$('.location').attr("href", "/challenge/cancelChallenge?cno="+cno+"&mno="+mno+"&c_sort="+c_sort);
 		});
@@ -46,8 +46,6 @@
 				<td>절약형</td>
 				</c:if>
 				<td>${vo.ct_top }</td>
-				
-				
 				<c:if test="${vo.c_sort eq 0 }">
 				<td><a href = "/challenge/checkfeed?cno=${vo.cno }">${vo.c_title }</a></td>
 				</c:if>

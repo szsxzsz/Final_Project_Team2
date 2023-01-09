@@ -41,7 +41,7 @@
              </div>
              <div class="progress-group" style="width: 280px;">
                <span class="progress-text">챌린지 인원</span>
-               <span class="progress-number"><b>${vo.c_person }</b>/ ${vo.c_pcnt }</span>
+               <span class="progress-number"><b>${vo.c_cnt }</b>/ ${vo.c_pcnt }</span>
              </div>
              <div class="progress-group" style="width: 280px;">
                <span class="progress-text">예치금</span>
@@ -138,7 +138,6 @@
 						console.log('통신 성공! ' + data);
         				if(data == "N"){ // 중복된 카테고리num이 아닐 때
 //         					$("#result_samechallenge").html(result).css("color","green");
-//         					alert("참여 가능한 챌린지 입니다! \n 가계부 카테고리 당 하나씩 참여 가능합니다.");
         					if(confirm("참여 가능한 챌린지 입니다! \n 가계부 카테고리 당 하나씩 참여 가능합니다.")== true){
         					alert("챌린지 참여완료!");
         					location.href="/commumain";
