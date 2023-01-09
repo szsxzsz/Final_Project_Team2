@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.WebUtils;
@@ -64,21 +65,19 @@ public class ChagokController {
 	// 챌린지 목록 불러오기 (커뮤메인)
 	// http://localhost:8080/commumain
 	@GetMapping(value="/commumain")
-	public String getChallengeList(Model model, Criteria cri, @ModelAttribute("result") String result, SearchCriteria scri) throws Exception {
+	public String getChallengeList(Model model, @ModelAttribute("scri") SearchCriteria scri) throws Exception {
 		mylog.debug(" /commumain 호출 ");
-		
-		// 전달받은 정보 x
-		mylog.debug(" 전달정보 : "+result);
-		
+				
 		// 서비스 -> DAO 게시판 리스트 가져오기
 		List<ChallengeVO> challengeList = service2.getChallengeList();
 		List<UserVO> ranking = service2.ranking();
-		List<ChallengeVO> cList = service2.cList(scri);
+//		List<ChallengeVO> cList = service2.cList(scri);
 		
 		// 연결되어 있는 뷰페이지로 정보 전달 (Model 객체)
 		model.addAttribute("challengeList", challengeList);
 		model.addAttribute("ranking", ranking);
-		model.addAttribute("cList", cList);
+//		model.addAttribute("cList", cList);
+		model.addAttribute("cList", service2.cList(scri));
 		
 		// 페이징 처리
 		PageMaker pageMaker = new PageMaker();

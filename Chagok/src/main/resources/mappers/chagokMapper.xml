@@ -214,15 +214,17 @@
 	<!-- 검색1 -->
 	<select id="cList" resultType="com.chagok.domain.ChallengeVO" parameterType="com.chagok.domain.SearchCriteria">
 		SELECT  *
-		 FROM ( 
-		        SELECT *, 
-		               ROW_NUMBER() OVER(ORDER BY cno DESC) AS RNUM
-		         FROM challenge 
-		         WHERE 1=1 
-		         	<include refid="search"></include>
-		                       ) MP
+		 	FROM ( 
+		      	  SELECT *
+               		FROM  ( select cno, ch.ctno ctno, c_title, c_file, c_pcnt, c_period, c_start, c_deposit, c_content, c_person, mno, c_freq, c_sort, c_amount, c_total, c_min, c_status, c_thumbFile, c_cnt, ct_top, ct_bottom, 
+		            	   ROW_NUMBER() OVER(ORDER BY cno) AS RNUM
+							from challenge ch join category c
+							where ch.ctno = c.ctno) AP
+		         	WHERE 1=1 
+		         		<include refid="search"></include>
+		           							            ) MP
 		WHERE RNUM BETWEEN #{rowStart} AND #{rowEnd}
-		ORDER BY cno DESC
+		ORDER BY cno
 	</select>
 	
 	<!-- 검색2 -->
@@ -236,10 +238,10 @@
 	
 	<sql id="search">
 		<if test="searchType != null">
-			<if test="searchType == 'c_t'.toString()">AND c_title LIKE CONCAT('%' || #{keyword} || '%')</if>
-			<if test="searchType == 'c_co'.toString()">AND c_content LIKE CONCAT('%' || #{keyword} || '%')</if>
-			<if test="searchType == 'c_h'.toString()">AND c_host LIKE CONCAT('%' || #{keyword} || '%')</if>
-			<if test="searchType == 'c_tc_co'.toString()">AND (c_title LIKE CONCAT('%' || #{keyword} || '%')) or (c_content LIKE CONCAT('%' || #{keyword} || '%'))</if>
+			<if test="searchType == 'c_title'.toString()">AND c_title LIKE CONCAT('%', #{keyword}, '%')</if>
+			<if test="searchType == 'c_content'.toString()">AND c_content LIKE CONCAT('%', #{keyword}, '%')</if>
+			<if test="searchType == 'c_host'.toString()">AND c_host LIKE CONCAT('%', #{keyword}, '%')</if>
+			<if test="searchType == 'c_titlec_content'.toString()">AND (c_title LIKE CONCAT('%', #{keyword}, '%')) or (c_content LIKE CONCAT('%', #{keyword}, '%'))</if>
 		</if>
 	</sql>
 	

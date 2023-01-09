@@ -4,10 +4,115 @@
 <%@ include file="../include/header.jsp"%>
 <%@ include file="../include/sidebar.jsp"%>
 
+<head>
+
 <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css" >
 
+<!-- sweetalert -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
 
+<!-- 유효성 검사 -->
+<script type="text/javascript">
+$(document).ready(function(){
+	   
+   $('#regist').click(function(){
+   
+    var title = $('#c_title').val();   
+    var start = $('#datepicker').val();
+    var person = $('#c_pcnt').val();
+    var deposit = $('#c_deposit').val();
+    var amount = $('#c_amount').val();
+    var content = $('#c_content').val();
+    
+    
+	if (title == "" || title == null) {
+	   Swal.fire({
+	        title: '챌린지 제목을 입력해주세요.', 
+	        icon: 'warning'
+	      });
+	     $('#c_title').focus();
+	     return false;
+	}
+	
+	if (start == "" || start == null) {
+		   Swal.fire({
+		        title: '시작일을 선택해주세요.', 
+		        icon: 'warning'
+		      });
+		     $('#datepicker').focus();
+		     return false;
+	}
+	
+	if (person == "" || person == null) {
+		   Swal.fire({
+		        title: '모집인원을 입력해주세요.', 
+		        icon: 'warning'
+		      });
+		     $('#c_pcnt').focus();
+		     return false;
+	}
+	
+	if (deposit == "" || deposit == null) {
+		   Swal.fire({
+		        title: '예치금을 입력해주세요.', 
+		        icon: 'warning'
+		      });
+		     $('#c_deposit').focus();
+		     return false;
+	}
+	
+	if (amount == "" || amount == null) {
+		   Swal.fire({
+		        title: '저축 금액을 입력해주세요.', 
+		        icon: 'warning'
+		      });
+		     $('#c_amount').focus();
+		     return false;
+	} 
+	
+	if (content == "" || content == null) {
+		   Swal.fire({
+		        title: '챌린지 내용을 입력해주세요.', 
+		        icon: 'warning'
+		      });
+		     $('#c_content').focus();
+		     return false;
+	}
+});
+});
+</script>
+
+<script>
+$('#number').on('keyup', function() {
+    if (/\D/.test(this.value)) {
+        this.value = this.value.replace(/\D/g, '')
+        alert('숫자만 입력가능합니다.');
+    }
+  if (this.value > 10) {
+      this.value = 10;
+      alert('10까지만 가능합니다.');
+  }
+});
+</script>
+
+<!-- <script type="text/javascript">
+// $(document).ready(function () {
+//     var minDate = new Date();
+//     var maxDate = new Date();
+//     var dd = maxDate.getDate() + 7;
+//     maxDate.setDate(dd);
+
+//     $("#datepicker").datepicker({
+//         minDate : minDate,
+//         maxDate : maxDate
+//     });
+// });
+ </script> -->
+</head>
+
+<body>
 <h2>차곡 챌린지 등록 (저축형)</h2>
 <form action=""  method="post" enctype="multipart/form-data">
   <div class="main-content">
@@ -78,7 +183,7 @@
                     <div class="col-md-12">
                       <div class="form-group focused">
                         <label class="form-control-label" for="input-address">챌린지 제목</label>
-                        <input type="text" name="c_title" id="input-address" class="form-control form-control-alternative" placeholder="챌린지 제목을 입력하세요." >
+                        <input type="text" name="c_title" id="c_title" class="form-control form-control-alternative" placeholder="챌린지 제목을 입력하세요." required>
                       </div>
                     </div>
                     
@@ -118,20 +223,23 @@
                     <div class="col-lg-4">
                       <div class="form-group focused">
                         <label class="form-control-label" for="input-country">챌린지 시작일</label>
-                        <input type="date" name="c_start" id="input-country" class="form-control form-control-alternative">
+                        <input type="date" name="c_start" id="datepicker" class="form-control form-control-alternative" required>
                       </div>
                     </div>
+   
+                    
+                    
                     <div class="col-lg-4">
                       <div class="form-group">
                         <label class="form-control-label" for="input-country">모집인원</label>
-                        <input type="text" name="c_pcnt" id="input-postal-code" class="form-control form-control-alternative" placeholder="최대 10명">
+                        <input type="text" name="c_pcnt" id="c_pcnt" class="form-control form-control-alternative" placeholder="최대 10명" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" required>
                       </div>
                     </div>
                     
                    <div class="col-md-12">
                       <div class="form-group focused">
                         <label class="form-control-label" for="input-address">예치금 설정</label>
-                        <input type="text" name="c_deposit" id="input-address" class="form-control form-control-alternative" placeholder="최소 1,000원~ 최대 200,000원" >
+                        <input type="text" name="c_deposit" id="c_deposit" class="form-control form-control-alternative" placeholder="최소 1,000원~ 최대 200,000원" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" required>
                       </div>
                     </div>
                     
@@ -139,7 +247,7 @@
                     <div class="col-lg-4">
                       <div class="form-group focused">
           			    <label class="form-control-label" for="input-city">저축주기</label>
-                        <select name="c_freq" id="input-city" class="form-control form-control-alternative">
+                        <select name="c_freq" id="input-city" class="form-control form-control-alternative" >
                            <option value="1">1일</option>
         				   <option value="2">2일</option>
           				   <option value="3">3일</option>
@@ -158,7 +266,7 @@
                     <div class="col-lg-4">
                       <div class="form-group focused">
                         <label class="form-control-label" for="input-country">저축금액</label>
-                        <input type="text" name="c_amount" id="input-country" class="form-control form-control-alternative" placeholder="금액을 자유롭게 입력해주세요." >
+                        <input type="text" name="c_amount" id="c_amount" class="form-control form-control-alternative" placeholder="금액을 자유롭게 입력해주세요." oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" required>
                       </div>
                     </div>
 					
@@ -175,14 +283,14 @@
                 <div class="pl-lg-4">
                   <div class="form-group focused">
                     <label class="form-control-label" for="input-city">챌린지 설명</label>
-                    <textarea rows="4" name="c_content" class="form-control form-control-alternative" placeholder="해당 챌린지에 대한 설명을 간략히 작성해주세요."></textarea>
+                    <textarea rows="4" name="c_content" id="c_content" class="form-control form-control-alternative" placeholder="해당 챌린지에 대한 설명을 간략히 작성해주세요." required></textarea>
                   </div>
                 </div>
                 
 <!--                 button -->
 				<div class="gap-3 d-md-flex justify-content-md-end text-center">
 					<button type="reset" class="btn btn-danger btn-lg">취소하기</button>
-					<input type="submit" class="btn btn-primary btn-lg" value="등록">
+					<button type="submit" class="btn btn-primary btn-lg" id="regist">등록하기</button>
 				</div>
                 
                 
@@ -199,11 +307,36 @@
 	</div>
 </div>
 </form>
-      
-  
-  
+</body>
 
-
+                    
+<!--  <script>
+//         $(function() {
+//             //input을 datepicker로 선언
+//             $("#datepicker").datepicker({
+//                 dateFormat: 'yy-mm-dd' //Input Display Format 변경
+//                 ,showOtherMonths: true //빈 공간에 현재월의 앞뒤월의 날짜를 표시
+//                 ,showMonthAfterYear:true //년도 먼저 나오고, 뒤에 월 표시
+//                 ,changeYear: true //콤보박스에서 년 선택 가능
+//                 ,changeMonth: true //콤보박스에서 월 선택 가능                
+//                 ,showOn: "both" //button:버튼을 표시하고,버튼을 눌러야만 달력 표시 ^ both:버튼을 표시하고,버튼을 누르거나 input을 클릭하면 달력 표시  
+//                 ,buttonImage: "http://jqueryui.com/resources/demos/datepicker/images/calendar.gif" //버튼 이미지 경로
+//                 ,buttonImageOnly: true //기본 버튼의 회색 부분을 없애고, 이미지만 보이게 함
+//                 ,buttonText: "선택" //버튼에 마우스 갖다 댔을 때 표시되는 텍스트                
+//                 ,yearSuffix: "년" //달력의 년도 부분 뒤에 붙는 텍스트
+//                 ,monthNamesShort: ['1','2','3','4','5','6','7','8','9','10','11','12'] //달력의 월 부분 텍스트
+//                 ,monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'] //달력의 월 부분 Tooltip 텍스트
+//                 ,dayNamesMin: ['일','월','화','수','목','금','토'] //달력의 요일 부분 텍스트
+//                 ,dayNames: ['일요일','월요일','화요일','수요일','목요일','금요일','토요일'] //달력의 요일 부분 Tooltip 텍스트
+//                 ,minDate: "-1M" //최소 선택일자(-1D:하루전, -1M:한달전, -1Y:일년전)
+//                 ,maxDate: "+1M" //최대 선택일자(+1D:하루후, -1M:한달후, -1Y:일년후)                
+//             });                    
+            
+//             //초기값을 오늘 날짜로 설정
+//             $('#datepicker').datepicker('setDate', 'today'); //(-1D:하루전, -1M:한달전, -1Y:일년전), (+1D:하루후, -1M:한달후, -1Y:일년후)            
+//         });
+</script> -->
+                 
         
         
      
@@ -211,14 +344,17 @@
         
 
 
-
+</div>
 <%@ include file="../include/footer.jsp" %>
 
 <style>
 
-body{margin-top:20px;
-color: #9b9ca1;
+body{
+	margin-top:20px;
+	color: #9b9ca1;
 }
+
+
 .bg-secondary-soft {
     background-color: rgba(208, 212, 217, 0.1) !important;
 }
@@ -475,6 +611,7 @@ textarea {
   line-height: inherit;
   margin: 0;
 }
+
 
 button,
 input {
@@ -2330,3 +2467,4 @@ p {
   margin-bottom: 20px;
 }
 </style>
+</html>

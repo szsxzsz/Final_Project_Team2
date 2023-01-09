@@ -38,7 +38,6 @@
 
  
  
- 
   <body class="skin-blue sidebar-mini">
   
     <div class="wrapper">
