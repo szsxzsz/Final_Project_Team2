@@ -14,7 +14,7 @@
 
 			<div class="input-group">
 				<span class="input-group-addon"> 작성자 </span> 
-					<input type="text" class="form-control" name="b_write">
+					<input type="text" class="form-control" name="b_write" value="${nick }">
 			</div>
 			<br>
 			<div class="form-group">

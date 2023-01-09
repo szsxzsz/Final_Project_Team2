@@ -301,6 +301,14 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 		
 		return cListCount;
 	}
+
+	// 게시판 + 챌린지
+	@Override
+	public List<Map<String, Object>> getBoardChallenge(Integer cno) throws Exception {
+		mylog.debug("getBoardChallenge 호출");
+		List<Map<String, Object>> boardChallenge = sqlSession.selectList(NAMESPACE+".boardChallenge", cno);
+		return boardChallenge;
+	}
 	
 	
 	

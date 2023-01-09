@@ -7,6 +7,7 @@
 
 <h1> 공지사항 수정 </h1>
 ${board }
+
 <form role="form" method="post">
 	 <div class="row" style="width: 1200px; padding-left: 50px; padding-right: 20px; padding-top: 50px;">
 	    <div class="d-flex justify-content-center">

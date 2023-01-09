@@ -200,7 +200,7 @@
 	<select id="success" resultType="Integer">
 		select count(m_finish) + count(pl_finish)
 		from plus p right join challenge c on c.cno = p.cno left join minus m on m.cno=c.cno
-		where c.cno = 2 and (pl_finish = 'Y' or m_finish = 'Y')
+		where c.cno = #{cno} and (pl_finish = 'Y' or m_finish = 'Y')
 	</select>
 	
 	
@@ -242,5 +242,13 @@
 			<if test="searchType == 'c_tc_co'.toString()">AND (c_title LIKE CONCAT('%' || #{keyword} || '%')) or (c_content LIKE CONCAT('%' || #{keyword} || '%'))</if>
 		</if>
 	</sql>
+	
+	<!-- 게시판과 챌린지 -->
+	<select id="boardChallenge" resultType="map">
+		select *
+		from challenge c inner join board b
+		where bno = #{bno} and b.cno = c.cno
+	</select>
+	
 	
   </mapper>

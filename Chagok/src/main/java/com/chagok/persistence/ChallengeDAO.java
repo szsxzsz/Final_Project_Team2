@@ -101,4 +101,7 @@ public interface ChallengeDAO {
 	
 	// 챌린지 성공 인원 조회
 	public Integer getSuccess(Integer cno) throws Exception;
+	
+	// 게시판 글 + 챌린지
+	public List<Map<String, Object>> getBoardChallenge(Integer cno) throws Exception;
 }

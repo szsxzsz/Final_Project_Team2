@@ -62,7 +62,7 @@
 			<span class="input-group-addon"> 
 				작성자
 			</span> 
-			<input type="text" class="form-control" name="b_writer"  readonly>
+			<input type="text" class="form-control" name="b_writer"  value="${nick }" readonly>
 		</div>
 
 	</div>

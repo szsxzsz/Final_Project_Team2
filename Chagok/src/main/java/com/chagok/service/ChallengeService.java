@@ -101,5 +101,8 @@ public interface ChallengeService {
 	
 	// 챌린지 성공 인원 조회
 	public Integer getSuccess(Integer cno) throws Exception;
+	
+	// 게시판 + 챌린지 리스트
+	public List<Map<String, Object>> getBoardChallenge(Integer cno) throws Exception;
 }
 

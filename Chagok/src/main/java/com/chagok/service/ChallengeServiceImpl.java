@@ -245,6 +245,13 @@ public class ChallengeServiceImpl implements ChallengeService{
 		
 		return dao.cListCount(scri);
 	}
+
+	// 챌린지 + 게시판 리스트
+	@Override
+	public List<Map<String, Object>> getBoardChallenge(Integer cno) throws Exception {
+		mylog.debug(" boardChallenge 호출 ");
+		return dao.getBoardChallenge(cno);
+	}
 	
 	
 	
