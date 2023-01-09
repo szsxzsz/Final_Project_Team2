@@ -77,9 +77,11 @@
    where c_person like concat('%',#{nick},'%')
    </select>
    
-    <!-- 챌린지 신청 취소 닉네임 잘라내기-->
+    <!-- 챌린지 신청 취소 닉네임 잘라내고 c_cnt-1 (콤마는 앞에서 연결해서 nick으로 받아줄 것)-->
     <update id="cancelChallenge" parameterType="map">
-   		update challenge set c_person = replace(c_person,#{nick},'') where cno=#{cno};
+   		update challenge set c_person = replace(c_person,#{nick},''), 
+   		c_cnt = c_cnt-1
+   		where cno=#{cno};
     </update>
     
     <!-- 저축형 챌린지 신청취소  -->
@@ -200,7 +202,7 @@
 	<select id="success" resultType="Integer">
 		select count(m_finish) + count(pl_finish)
 		from plus p right join challenge c on c.cno = p.cno left join minus m on m.cno=c.cno
-		where c.cno = 2 and (pl_finish = 'Y' or m_finish = 'Y')
+		where c.cno = #{cno} and (pl_finish = 'Y' or m_finish = 'Y')
 	</select>
 	
 	
@@ -214,15 +216,17 @@
 	<!-- 검색1 -->
 	<select id="cList" resultType="com.chagok.domain.ChallengeVO" parameterType="com.chagok.domain.SearchCriteria">
 		SELECT  *
-		 FROM ( 
-		        SELECT *, 
-		               ROW_NUMBER() OVER(ORDER BY cno DESC) AS RNUM
-		         FROM challenge 
-		         WHERE 1=1 
-		         	<include refid="search"></include>
-		                       ) MP
+		 	FROM ( 
+		      	  SELECT *
+               		FROM  ( select cno, ch.ctno ctno, c_title, c_file, c_pcnt, c_period, c_start, c_deposit, c_content, c_person, mno, c_freq, c_sort, c_amount, c_total, c_min, c_status, c_thumbFile, c_cnt, ct_top, ct_bottom, 
+		            	   ROW_NUMBER() OVER(ORDER BY cno) AS RNUM
+							from challenge ch join category c
+							where ch.ctno = c.ctno) AP
+		         	WHERE 1=1 
+		         		<include refid="search"></include>
+		           							            ) MP
 		WHERE RNUM BETWEEN #{rowStart} AND #{rowEnd}
-		ORDER BY cno DESC
+		ORDER BY cno
 	</select>
 	
 	<!-- 검색2 -->
@@ -236,12 +240,42 @@
 	
 	<sql id="search">
 		<if test="searchType != null">
-			<if test="searchType == 'c_t'.toString()">AND c_title LIKE CONCAT('%' || #{keyword} || '%')</if>
-			<if test="searchType == 'c_co'.toString()">AND c_content LIKE CONCAT('%' || #{keyword} || '%')</if>
-			<if test="searchType == 'c_h'.toString()">AND c_host LIKE CONCAT('%' || #{keyword} || '%')</if>
-			<if test="searchType == 'c_tc_co'.toString()">AND (c_title LIKE CONCAT('%' || #{keyword} || '%')) or (c_content LIKE CONCAT('%' || #{keyword} || '%'))</if>
+			<if test="searchType == 'c_title'.toString()">AND c_title LIKE CONCAT('%', #{keyword}, '%')</if>
+			<if test="searchType == 'c_content'.toString()">AND c_content LIKE CONCAT('%', #{keyword}, '%')</if>
+			<if test="searchType == 'c_host'.toString()">AND c_host LIKE CONCAT('%', #{keyword}, '%')</if>
+			<if test="searchType == 'c_titlec_content'.toString()">AND (c_title LIKE CONCAT('%', #{keyword}, '%')) or (c_content LIKE CONCAT('%', #{keyword}, '%'))</if>
 		</if>
 	</sql>
+	
+	<!-- 	<sql id="search"> -->
+<!-- 		<if test="searchType != null"> -->
+<!-- 			<if test="searchType == 'c_t'.toString()">AND c_title LIKE '%' || #{keyword} || '%'</if> -->
+<!-- 			<if test="searchType == 'c_co'.toString()">AND c_content LIKE '%' || #{keyword} || '%'</if> -->
+<!-- 			<if test="searchType == 'c_h'.toString()">AND c_host LIKE '%' || #{keyword} || '%'</if> -->
+<!-- 			<if test="searchType == 'c_tc_co'.toString()">AND (c_title LIKE '%' || #{keyword} || '%') or (c_content LIKE '%' || #{keyword} || '%')</if> -->
+<!-- 		</if> -->
+<!-- 	</sql> -->
+
+
+<!-- 	챌린지 성공여부 (절약형) -->
+	<select id="getMoney" resultType="ChallengeVO">
+		select * from challenge c right join minus m on c.cno = m.cno
+		where c.cno=#{cno} and m.mno = #{mno}
+	</select>
+	
+<!-- 	가계부 가져오기 -->
+	<select id="getMinusAbook" resultType="List">
+		select * from account_book a right join challenge c on a.mno = c.mno
+		where c.cno=#{cno} and a.ctno = c.ctno
+	</select>
+
+
+	<!-- 게시판과 챌린지 -->
+	<select id="boardChallenge" resultType="map">
+		select *
+		from challenge c inner join board b
+		where bno = #{bno} and b.cno = c.cno
+	</select>
 	
 	<!-- 지난 메시지 가져오기   -->
 	<select id="getMsgList" resultType="com.chagok.domain.FeedDTO">

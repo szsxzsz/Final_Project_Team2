@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import com.chagok.domain.AbookVO;
 import com.chagok.domain.BoardVO;
 import com.chagok.domain.ChallengeVO;
 import com.chagok.domain.Criteria;
@@ -245,6 +246,30 @@ public class ChallengeServiceImpl implements ChallengeService{
 		
 		return dao.cListCount(scri);
 	}
+
+	// 챌린지 + 게시판 리스트
+	@Override
+	public List<Map<String, Object>> getBoardChallenge(Integer cno) throws Exception {
+		mylog.debug(" boardChallenge 호출 ");
+		return dao.getBoardChallenge(cno);
+	}
+
+	// 챌린지 성공여부 (절약형)
+	@Override
+	public ChallengeVO getMoney(Integer mno) throws Exception {
+		mylog.debug(" getMoney(mno) 호출 ");
+		return dao.getMoney(mno);
+	}
+
+	// 가계부 가져오기 
+	@Override
+	public List<AbookVO> getMinusAbook(Integer mno) {
+		mylog.debug(" getMinusAbook(mno) 호출 ");
+		return dao.getMinusAbook(mno);
+	}
+
+	
+
 	
 	
 	

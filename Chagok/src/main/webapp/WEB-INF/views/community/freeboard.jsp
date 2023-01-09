@@ -13,18 +13,18 @@
 		var formObj = $("form[role='form']");
 
 		// 수정
-		$(".btn-primary btn-xs").click(function() {
+		$(".btn-primary").click(function() {
 
-			formObj.attr("action", "/challenge/freeboardupdate");
+			formObj.attr("action", "/community/freeboardupdate");
 			formObj.attr("method", "get");
 			formObj.submit();
 
 		});
 
 		// 삭제
-		$(".btn-danger btn-xs").click(function() {
+		$(".btn-danger").click(function() {
 
-			formObj.attr("action", "/challenge/freedelete");
+			formObj.attr("action", "/community/freedelete");
 			formObj.submit();
 		});
 
@@ -32,7 +32,7 @@
 </script>
 
 <section class="content">
-
+<input type="button" class="btn btn-primary btn-xs" style="float:right;" value="글 작성하기" onclick="location.href='/freeboardwrite';">
 	<div class="row">
 		<div class="col-md-12">
 		  <c:forEach var="board" items="${boardList }">
@@ -48,7 +48,7 @@
 				<li><i class="fa fa-envelope bg-blue"></i>
 					<div class="timeline-item">
 						<span class="time">
-							<i class="fa fa-clock-o"></i> 
+							<i class="fa fa-clock-o"></i>
 								${board.b_writer }
 						</span>
 						<h3 class="timeline-header">
@@ -59,8 +59,8 @@
 							${board.b_file }
 						</div>
 						<div class="timeline-footer">
-<!-- 							<input type="button" class="btn btn-primary btn-xs" value="수정" onclick="location.href='/freeboardupdate';"> -->
-<!-- 							<input type="button" class="btn btn-danger btn-xs" value="삭제" onclick="location.href='/freedelete';"> -->
+							<input type="submit" class="btn btn-primary btn-xs" value="수정" onclick="location.href='/freeboardupdate?bno=${bno}';">
+							<input type="submit" class="btn btn-danger btn-xs" value="삭제" onclick="location.href='/community/freedelete?bno=${bno}';">
 						</div>
 					</div></li>
 

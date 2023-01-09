@@ -1,7 +1,11 @@
 package com.chagok.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -21,13 +25,24 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.chagok.domain.AbookVO;
+import com.chagok.domain.CategoryVO;
+import com.chagok.domain.BoardVO;
 import com.chagok.domain.ChallengeVO;
+import com.chagok.domain.MinusVO;
 import com.chagok.domain.UserVO;
+import com.chagok.service.AbookService;
 import com.chagok.service.ChallengeService;
 import com.chagok.service.FeedService;
 import com.chagok.service.UserService;
 import com.chagok.utils.UploadFileUtils;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.siot.IamportRestClient.IamportClient;
+import com.siot.IamportRestClient.exception.IamportResponseException;
+import com.siot.IamportRestClient.response.IamportResponse;
+import com.siot.IamportRestClient.response.Payment;
 
 @Controller
 @RequestMapping("/challenge/*")
@@ -103,18 +118,53 @@ public class ChallengeController {
 
 	// http://localhost:8080/challenge/minusFeed?cno=1
 	// http://localhost:8080/challenge/minusFeed
+	@Inject
+	private AbookService aService;
 	@GetMapping(value="/minusFeed")
-	public String minusFeed(Model model,@RequestParam("cno") int cno,HttpSession session) throws Exception {
+	public String minusFeed(Model model,@RequestParam("cno") int cno,HttpSession session,ChallengeVO cvo,MinusVO mvo) throws Exception {
 		mylog.debug(" 수 지 : minusFeed Get 호출 ");
+		
+		int mno = cvo.getMno();
 		
 		ChallengeVO vo = service.getChallengeInfo(cno);
 		List<Map<String, Object>> minusPeoList = service.getMinusPeople(cno);
+		mylog.debug(minusPeoList+"");
 		ChallengeVO vo2 = service.getCt_top(cno);
+		ChallengeVO vo3 = service.getMoney(mno);
 		
+		// 서비스 -> DAO 게시판 리스트 가져오기
+		// getAbookList(1) -> getAbookList(mno) 수정 필요 !!!!!
+		List<AbookVO> abookList = aService.getAbookList(1);
+		List<AbookVO> minusAbook = service.getMinusAbook(mno);
+		
+//		mylog.debug("abookList : "+abookList);
+		
+//		List<CategoryVO> cateList = aService.CateList();
+//		mylog.debug("cateList : "+cateList);
+		mylog.debug("minusFeedGET()에서 id : "+session.getId());
+		//SysLogVO sysLogVO = new SysLogVO();
+		
+//		ObjectMapper mapper = new ObjectMapper();
+
+//		String jsonAbook = mapper.writeValueAsString(abookList);
+//		mylog.debug("jsonAbook : "+jsonAbook);
+//		String jsonCate = mapper.writeValueAsString(cateList);
+//		mylog.debug("jsonCate : "+jsonCate);
+
 	   // 연결된 뷰페이지로 정보 전달(model)
+		//model.addAttribute("sessionId", sysLogVO.getUserId());
 	   model.addAttribute("vo", vo);
 	   model.addAttribute("minusPeoList", minusPeoList);
 	   model.addAttribute("vo2", vo2);
+	   model.addAttribute("c_end", service.getChallengeEndDate(cno));
+	   model.addAttribute("mvo",mvo);
+	   model.addAttribute("vo3", vo3);
+	   
+	   model.addAttribute("abookList", abookList);
+//	   model.addAttribute("cateList", cateList);
+//	   model.addAttribute("jsonAbook",jsonAbook);
+//		model.addAttribute("jsonCate",jsonCate);
+	   model.addAttribute("minusAbook", minusAbook);
 	   
 	   return "/challenge/minusFeed";
 	}
@@ -220,6 +270,8 @@ public class ChallengeController {
 		int CList = service.getCList(cno);
 		ChallengeVO vo2 = service.getCt_top(cno);
 		List<Map<String, Object>> result = service.getResult(cno);
+		List<Map<String, Object>> minusPeoList = service.getMinusPeople(cno);
+		List<Map<String, Object>> plusPeoList = service.getPlusPeople(cno);
 		
 		model.addAttribute("vo", vo);
 		model.addAttribute("challengeList", challengeList);
@@ -228,6 +280,8 @@ public class ChallengeController {
 		model.addAttribute("CList",CList);
 		model.addAttribute("vo2", vo2);
 		model.addAttribute("result", result);
+		model.addAttribute("minusPeoList", minusPeoList);
+		model.addAttribute("plusPeoList", plusPeoList);
 		
 		return "/challenge/checkfeed";
 	}
@@ -254,9 +308,9 @@ public class ChallengeController {
 			
 			Integer mno = (Integer)session.getAttribute("mno");
 			mylog.debug(cno+" : cno , "+mno+" : mno, "+c_sort+" : c_sort");
-//			String nick = uservice.getUser(mno).getNick();
-			
-			String nick = ",효원";
+			String a = ",";
+			String b = uservice.getUser(mno).getNick();
+			String nick = a+b;
 			service.cancelChallenge(nick,cno);
 			
 			if(c_sort == 0) {

@@ -38,7 +38,6 @@
 
  
  
- 
   <body class="skin-blue sidebar-mini">
   
     <div class="wrapper">
@@ -76,7 +75,7 @@
                 <i class="fa fa-trophy"></i> <span>챌린지</span> <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu ">
-                <li><a href="/chagok/challengemain"><i class="fa fa-circle-o"></i> 모집 중 챌린지</a></li>
+                <li><a href="/commumain"><i class="fa fa-circle-o"></i> 모집 중 챌린지</a></li>
                 <li><a href="/challenge/mychallenge"><i class="fa fa-circle-o"></i> 내 챌린지</a></li>
                 <li><a href="/reviewboard"><i class="fa fa-circle-o"></i> 후기 게시판</a></li>
               </ul>

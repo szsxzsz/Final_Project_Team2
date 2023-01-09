@@ -9,6 +9,82 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css" >
 <script src="//ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 
+<!-- sweetalert -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
+
+<!-- 유효성 검사 -->
+<script type="text/javascript">
+$(document).ready(function(){
+	   
+   $('#regist').click(function(){
+   
+    var title = $('#c_title').val();   
+    var start = $('#datepicker').val();
+    var person = $('#c_pcnt').val();
+    var deposit = $('#c_deposit').val();
+    var amount = $('#c_amount').val();
+    var content = $('#c_content').val();
+    
+    
+	if (title == "" || title == null) {
+	   Swal.fire({
+	        title: '챌린지 제목을 입력해주세요.', 
+	        icon: 'warning'
+	      });
+	     $('#c_title').focus();
+	     return false;
+	}
+	
+	if (start == "" || start == null) {
+		   Swal.fire({
+		        title: '시작일을 선택해주세요.', 
+		        icon: 'warning'
+		      });
+		     $('#datepicker').focus();
+		     return false;
+	}
+	
+	if (person == "" || person == null) {
+		   Swal.fire({
+		        title: '모집인원을 입력해주세요.', 
+		        icon: 'warning'
+		      });
+		     $('#c_pcnt').focus();
+		     return false;
+	}
+	
+	if (deposit == "" || deposit == null) {
+		   Swal.fire({
+		        title: '예치금을 입력해주세요.', 
+		        icon: 'warning'
+		      });
+		     $('#c_deposit').focus();
+		     return false;
+	}
+	
+	if (amount == "" || amount == null) {
+		   Swal.fire({
+		        title: '저축 금액을 입력해주세요.', 
+		        icon: 'warning'
+		      });
+		     $('#c_amount').focus();
+		     return false;
+	} 
+	
+	if (content == "" || content == null) {
+		   Swal.fire({
+		        title: '챌린지 내용을 입력해주세요.', 
+		        icon: 'warning'
+		      });
+		     $('#c_content').focus();
+		     return false;
+	}
+});
+});
+</script>
+
+
 <script type="text/javascript">
 $(function(){
     $('select[name="b_ctno"] ').on('change', function()  {
@@ -230,7 +306,7 @@ function getAgreeType() {
                     <div class="col-md-12">
                       <div class="form-group focused">
                         <label class="form-control-label" for="input-address">챌린지 제목</label>
-                        <input type="text" name="c_title" id="input-address" class="form-control form-control-alternative" placeholder="챌린지 제목을 입력하세요." >
+                        <input type="text" name="c_title" id="c_title" class="form-control form-control-alternative" placeholder="챌린지 제목을 입력하세요."  required>
                       </div>
                     </div>
                     
@@ -279,13 +355,13 @@ function getAgreeType() {
                     <div class="col-lg-4">
                       <div class="form-group focused">
                         <label class="form-control-label" for="input-country">챌린지 시작일</label>
-                        <input type="date" name="c_start" id="input-country" class="form-control form-control-alternative">
+                        <input type="date" name="c_start" id="datepicker" class="form-control form-control-alternative" required>
                       </div>
                     </div>
                     <div class="col-lg-4">
                       <div class="form-group">
                         <label class="form-control-label" for="input-country">모집인원</label>
-                        <input type="text" name="c_pcnt" id="input-postal-code" class="form-control form-control-alternative" placeholder="최대 10명">
+                        <input type="text" name="c_pcnt" id="c_pcnt" class="form-control form-control-alternative" placeholder="최대 10명" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" required>
                       </div>
                     </div>
                     
@@ -293,7 +369,7 @@ function getAgreeType() {
                    <div class="col-md-12">
                       <div class="form-group focused">
                         <label class="form-control-label" for="input-address">예치금 설정</label>
-                        <input type="text" name="c_deposit" id="input-address" class="form-control form-control-alternative" placeholder="최소 1,000원~ 최대 200,000원" >
+                        <input type="text" name="c_deposit" id="c_deposit" class="form-control form-control-alternative" placeholder="최소 1,000원~ 최대 200,000원" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" required>
                       </div>
                     </div>
                     
@@ -301,7 +377,7 @@ function getAgreeType() {
                		<div class="col-lg-7">
                       <div class="form-group focused">
                         <label class="form-control-label" for="input-first-name">총 금액</label>
-                        <input type="text" name="c_amount" id="input-first-name" class="form-control form-control-alternative" placeholder="금액을 자유롭게 입력해주세요." >
+                        <input type="text" name="c_amount" id="c_amount" class="form-control form-control-alternative" placeholder="금액을 자유롭게 입력해주세요." oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" required >
                       </div>
                     </div>
 					
@@ -318,14 +394,14 @@ function getAgreeType() {
                 <div class="pl-lg-4">
                   <div class="form-group focused">
                     <label class="form-control-label" for="input-city">챌린지 설명</label>
-                    <textarea rows="4" name="c_content" class="form-control form-control-alternative" placeholder="해당 챌린지에 대한 설명을 간략히 작성해주세요."></textarea>
+                    <textarea rows="4" name="c_content" id="c_content" class="form-control form-control-alternative" placeholder="해당 챌린지에 대한 설명을 간략히 작성해주세요." required></textarea>
                   </div>
                 </div>
                 
                 <!-- button -->
 				<div class="gap-3 d-md-flex justify-content-md-end text-center">
 					<button type="reset" class="btn btn-danger btn-lg">취소하기</button>
-					<input type="submit" class="btn btn-primary btn-lg" value="등록">
+					<button type="submit" class="btn btn-primary btn-lg" id="regist">등록하기</button>
 				</div>
                 
                 
