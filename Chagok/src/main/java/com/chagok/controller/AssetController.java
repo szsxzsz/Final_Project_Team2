@@ -50,6 +50,8 @@ import com.chagok.service.ReportService;
 import com.chagok.service.UserService;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import lombok.Getter;
 @JsonAutoDetect 
 @Controller
 @RequestMapping("/asset/*")
@@ -427,11 +429,11 @@ public class AssetController {
 	} // ===========================================================================================================
 	
 	// 그리드 -> DB(서버 데이터)로 수정하고 저장하는 코드
-	@RequestMapping("/saveGrid")
+	@GetMapping("/saveGrid")
 	 @ResponseBody
-	 public Object saveList(HttpServletRequest request,@RequestBody List<Map<String, Object>> list) throws Exception {
+	 public Object saveList(HttpServletRequest request,@RequestParam("test") String obj) throws Exception {
 		
-		mylog.debug("##그리드 뽑 리스트"+list);
+		mylog.debug("##그리드 뽑 리스트"+obj);
 		 Map <String, String> resultMap =  new HashMap<String, String>();
 		
 		  String result = "ok";
@@ -439,55 +441,9 @@ public class AssetController {
 		  
 	  try {
 		  
-	   for(int i = 0; i < list.size(); i++) {
+//	   for(int i = 0; i < list.size(); i++) {
 		AbookVO vo = new AbookVO();
 //	    vo.setMno(Integer.parseInt(tList.get("mno").toString( )));
-	    vo.setAbno(Integer.parseInt(list.get(i).get("abno").toString()));
-	    vo.setAb_inout(Integer.parseInt(list.get(i).get("ab_inout").toString()));
-	    vo.setAb_amount(Integer.parseInt(list.get(i).get("ab_amount").toString()));
-	    vo.setCtno(Integer.parseInt(list.get(i).get("ctno").toString()));
-	    
-	    vo.setAb_date(list.get(i).get("ab_date").toString());
-	    vo.setAb_content(list.get(i).get("ab_content").toString());
-	    vo.setAb_memo(list.get(i).get("ab_memo").toString());
-	    vo.setAb_method(list.get(i).get("ab_method").toString());
-	    vo.setCt_top(list.get(i).get("ct_top").toString());
-	    vo.setCt_bottom(list.get(i).get("ct_bottom").toString());
-	   
-	    mylog.debug("!!!!!!!!!!!!!!!!!"+vo);
-	    abService.setAbookList(vo);
-//	    mylog.debug(vo+"%%%%%%%%%%cont");
-	   }
-	    result = "success";
-	    resultMsg = "성공" ;
-	     
-	   }catch (Exception e) { 
-	    result = "failure";
-	    resultMsg = "실패" ;
-	   }
-	  
-	  resultMap.put("result", result);
-	  resultMap.put("resultMsg", resultMsg);
-	  mylog.debug("#######resultMap"+resultMap);
-	  
-	  return resultMap;
-	}
-	
-	@RequestMapping("/saveRows")
-	 @ResponseBody
-	 public Object saveRows(HttpServletRequest request,@RequestBody List<Map<String, String>> list) throws Exception {
-		
-		mylog.debug("##Rows 뽑 "+list);
-		 Map <String, String> resultMap =  new HashMap<String, String>();
-		
-		  String result = "ok";
-		  String resultMsg = "";
-		  
-	  try {
-//		  
-	   for(int i = 0; i < list.size(); i++) {
-//		AbookVO vo = new AbookVO();
-////	    vo.setMno(Integer.parseInt(tList.get("mno").toString( )));
 //	    vo.setAbno(Integer.parseInt(list.get(i).get("abno").toString()));
 //	    vo.setAb_inout(Integer.parseInt(list.get(i).get("ab_inout").toString()));
 //	    vo.setAb_amount(Integer.parseInt(list.get(i).get("ab_amount").toString()));
@@ -500,10 +456,10 @@ public class AssetController {
 //	    vo.setCt_top(list.get(i).get("ct_top").toString());
 //	    vo.setCt_bottom(list.get(i).get("ct_bottom").toString());
 //	   
-//	    mylog.debug("!!!!!!!!!!!!!!!!!"+vo);
-//	    abService.setAbookList(vo);
+	    mylog.debug("!!!!!!!!!!!!!!!!!"+vo);
+	    abService.setAbookList(vo);
 //	    mylog.debug(vo+"%%%%%%%%%%cont");
-	   }
+//	   }
 	    result = "success";
 	    resultMsg = "성공" ;
 	     
@@ -519,7 +475,109 @@ public class AssetController {
 	  return resultMap;
 	}
 	
+	// ===============================================================
+	@ResponseBody
+	@RequestMapping("/cateSelect")
+	public JsonObj cateSelect (
+			/*
+			 * @RequestParam(value = "page", required=false) String page,//page : 몇번째 페이지를
+			 * 요청했는지
+			 * 
+			 * @RequestParam(value = "rows", required=false) String rows,//rows : 페이지 당 몇개의
+			 * 행이 보여질건지
+			 * 
+			 * @RequestParam(value = "sidx", required=false) String sidx,//sidx : 소팅하는 기준이
+			 * 되는 인덱스
+			 * 
+			 * @RequestParam(value = "sord", required=false) String sord,
+			 */
+			HttpSession session) throws Exception {//sord : 내림차순 또는 오름차순
+	    	
+		mylog.debug("json controller cate");
+		
+		// 로그인 확인
+		int mno = (int)session.getAttribute("mno");
+		UserVO userVO = userService.getUser(mno);
+		
+		mylog.debug("mno@@@@@@@@:"+mno);
+		
+		// ct_topList: 
+		// ct_botList: 
+		
+		JsonObj obj = new JsonObj();
+		
+		List<?> cList = abService.cateList();
+		mylog.debug("****vo -> list "+cList);
+		
+//	    obj.setRows(cList);  // list<map> -> obj
+	    
+	    //page : 현재 페이지
+//	    obj.setPage(int_page);// 현재 페이지를 매개변수로 넘어온 page로 지정해준다. 
+		
+	    //records : 페이지에 보여지는 데이터 개수
+//	    obj.setRecords(list.size());
+		
+	    //total : rows에 의한 총 페이지수
+		// 총 페이지 갯수는 데이터 갯수 / 한페이지에 보여줄 갯수 이런 식
+//		int totalPage = (int)Math.ceil(list.size()/Double.parseDouble(rows));
+//		obj.setTotal(totalPage); // 총 페이지 수 (마지막 페이지 번호)
+		
+		mylog.debug("cont -> 그리드로"+obj);
+		
+	    return obj;
+	}
 	
+	
+	
+	// ===============================================================
+	
+	@GetMapping("/delGrid")
+	 @ResponseBody
+	 public Object delList(HttpServletRequest request,@RequestParam("test") String obj) throws Exception {
+		mylog.debug("#그리드에서 선택한 abno"+obj);
+		 Map <String, String> resultMap =  new HashMap<String, String>();
+		
+		  String result = "ok";
+		  String resultMsg = "";
+		  
+	  try {
+		  
+//	   for(int i = 0; i < list.size(); i++) {
+		AbookVO vo = new AbookVO();
+//	    vo.setMno(Integer.parseInt(tList.get("mno").toString( )));
+//	    vo.setAbno(Integer.parseInt(list.get(i).get("abno").toString()));
+//	    vo.setAb_inout(Integer.parseInt(list.get(i).get("ab_inout").toString()));
+//	    vo.setAb_amount(Integer.parseInt(list.get(i).get("ab_amount").toString()));
+//	    vo.setCtno(Integer.parseInt(list.get(i).get("ctno").toString()));
+//	    
+//	    vo.setAb_date(list.get(i).get("ab_date").toString());
+//	    vo.setAb_content(list.get(i).get("ab_content").toString());
+//	    vo.setAb_memo(list.get(i).get("ab_memo").toString());
+//	    vo.setAb_method(list.get(i).get("ab_method").toString());
+//	    vo.setCt_top(list.get(i).get("ct_top").toString());
+//	    vo.setCt_bottom(list.get(i).get("ct_bottom").toString());
+//	   
+	    mylog.debug("!!!!!!!!!!!!!!!!!"+vo);
+//	    abService.setAbookList(vo);
+//	    mylog.debug(vo+"%%%%%%%%%%cont");
+//	   }
+	    result = "success";
+	    resultMsg = "성공" ;
+	     
+	   }catch (Exception e) { 
+	    result = "failure";
+	    resultMsg = "실패" ;
+	   }
+	  
+	  resultMap.put("result", result);
+	  resultMap.put("resultMsg", resultMsg);
+	  mylog.debug("##삭제resultMap"+resultMap);
+	  
+	  return resultMap;
+	}
+	
+	
+
 	// =====================================버려진 코드===============================================================
 
 	
@@ -545,7 +603,6 @@ public class AssetController {
 //			mylog.debug("수정 처리 완료!!");
 //		 
 //	}
-	 
 	
 	// ===================================================================================
 	

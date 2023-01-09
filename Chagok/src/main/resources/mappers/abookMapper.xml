@@ -10,9 +10,9 @@
 	select * from account_book as ab inner join category as c on ab.ctno=c.ctno where mno=#{mno}
   </select>
   
-  <!-- 카테고리 목록 -->
+  <!-- 카테고리 top -->
   <select id="cateList" resultType="CategoryVO">
-  	select * from account_book as ab inner join category as ct on ab.ctno=ct.ctno 
+	select * from category where ct_lev=0
   </select>
   
 

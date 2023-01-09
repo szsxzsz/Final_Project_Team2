@@ -1,42 +1,38 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-	<script src="https://code.jquery.com/jquery-3.6.3.js" 
-			integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" 
-			crossorigin="anonymous"></script>
-	<input type="button" value="정보전송" id="btn1">
-	
-	
-	<script type="text/javascript">
-	
-	$(document).ready(function(){
-// 		var member 
-// 		 = {"abno":"1", "mno":"1234","ab_inout":"22","ab_amount":"010-2222-4333"};
-			$("#btn1").click(function(){
-// 				alert(" 클릭! ");
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-				$.ajax({
-					url:"/asset/testhome",
-					type: "POST",
-// 					contentType:"application/json",
-// 					data : JSON.stringify(member), 
-					data : {abno:"1"}, 
-					success:function(){
-						alert(" 성공! ");
-					}
-				});
-			
-	 
-			});
-			
-		});
-	
-	</script>
-</body>
+<%@ include file="../include/header.jsp"%>
+<%@ include file="../include/sidebarAsset.jsp"%>
+<br>
+
+<input type="text" name="test" id="test" value="" >
+
+
+<script>
+$('#test').datetimepicker({
+
+  showSecond: true,
+
+  dateFormat: 'yy-mm-dd',
+
+  timeFormat: 'hh:mm:ss'
+
+});
+
+</script>
+
+</div>
+<%@ include file="../include/footer.jsp"%>
+
+    <!-- Bootstrap 3.3.2 JS -->
+    <script src="${pageContext.request.contextPath }/resources/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+    <!-- FastClick -->
+    <script src='${pageContext.request.contextPath }/resources/plugins/fastclick/fastclick.min.js'></script>
+    <!-- AdminLTE App -->
+    <script src="${pageContext.request.contextPath }/resources/dist/js/app.min.js" type="text/javascript"></script>
+    <!-- AdminLTE for demo purposes -->
+    <script src="${pageContext.request.contextPath }/resources/dist/js/demo.js" type="text/javascript"></script>
+  </body>
 </html>

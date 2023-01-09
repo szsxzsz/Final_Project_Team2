@@ -1,6 +1,7 @@
 
 package com.chagok.persistence;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,6 +13,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
+import com.chagok.apiDomain.AccountHistoryVO;
+import com.chagok.apiDomain.AccountVO;
 import com.chagok.domain.AbookVO;
 import com.chagok.domain.CategoryVO;
 
@@ -38,11 +41,19 @@ public class AbookDAOImpl implements AbookDAO{
 	
 	// 카테고리 리스트 
 	@Override
-	public List<CategoryVO> CateList() throws Exception {
-		List<CategoryVO> CateList = sqlSession.selectList(NAMESPACE+".cateList");
-//		mylog.debug("Mapper♡♡♡♡♡♡♡♡♡♡♡♡♡"+CateList);
-		
-		return CateList;
+	public List<Map<String,Object>> cateList() throws Exception {
+		List<CategoryVO> cateList = sqlSession.selectList(NAMESPACE+".cateList");
+		List<Map<String,Object>> cttopList = new ArrayList<Map<String,Object>>();
+
+			for (int i = 1; i < cateList.size(); i++) {
+
+				Map<String, Object> cateMap = new HashMap<String, Object>();
+				CategoryVO cvo =(CategoryVO) cateList.get(i);
+				cateMap.put("ctno", cvo.getCt_top());
+				
+				cttopList.add(cateMap);
+			}
+			return cttopList;
 	}
 	
 	// 가계부 수정 저장
@@ -53,12 +64,7 @@ public class AbookDAOImpl implements AbookDAO{
 	}
 
 
-	
-	
-	
-	
-	
-	
+
 	
 	
 	

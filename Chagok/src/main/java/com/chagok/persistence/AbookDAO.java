@@ -13,7 +13,7 @@ public interface AbookDAO {
     public List<Map<String, AbookVO>> getAbookList(int mno) throws Exception;
 	
 	// 카테고리 목록 
-	public List<CategoryVO> CateList() throws Exception;
+	public List<Map<String, Object>> cateList() throws Exception;
 	
 	// 그리드 수정
 	public void setAbookList(AbookVO vo) throws Exception;
