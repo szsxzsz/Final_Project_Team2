@@ -18,6 +18,7 @@ import com.chagok.domain.ChallengeVO;
 import com.chagok.domain.Criteria;
 import com.chagok.domain.MinusVO;
 import com.chagok.domain.PlusVO;
+import com.chagok.domain.SearchCriteria;
 import com.chagok.domain.UserVO;
 
 @Repository
@@ -53,17 +54,12 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 		
 		return PPeopleList;
 	}
-
-	// 후기글 작성
 	// 후기글 작성
 	@Override
 	public void createReview(BoardVO vo) {
 		
 		sqlSession.insert(NAMESPACE + ".create", vo);
-		
 	}
-
-	// 챌린지 리스트
 	// 챌린지 리스트
 	@Override
 	public List<ChallengeVO> getChallengeList(Integer cno) {
@@ -71,11 +67,10 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 		
 		List<ChallengeVO> challengeList = sqlSession.selectList(NAMESPACE+".getChallengeInfo",cno);
 		
-		
 		return challengeList;
 		
 	}
-
+	// 내 챌린지 가져오기
 	@Override
 	public List<ChallengeVO> getmyChallenge(String nick) {
 		mylog.debug(" getmyChallenge(String nick) 호출");
@@ -83,6 +78,36 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 		List<ChallengeVO> mychallengeList  = sqlSession.selectList(NAMESPACE+".getmyChallenge", nick);
 		
 		return mychallengeList;
+	}
+	
+	// 챌린지 신청 취소하기 (챌린지 테이블에 닉네임 잘라주기)
+	@Override
+	public void cancelChallenge(String nick, Integer cno) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("nick", nick);
+		map.put("cno", cno);
+		mylog.debug(" cancelChallenge(map) 호출 "+map);
+		sqlSession.update(NAMESPACE+".cancelChallenge", map);
+	}
+	
+	// 저축형 챌린지 신청 취소 (플러스테이블에 mno랑 cno 없애주기)
+	@Override
+	public void cancelPlus(Integer mno, Integer cno) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("mno", mno);
+		map.put("cno", cno);
+		mylog.debug(" cancelPlus(map) 호출 "+map);
+		sqlSession.delete(NAMESPACE+".cancelPlus", map);
+	}
+	
+	// 절약형 챌린지 신청 취소 (마이너스 테이블에 mno랑 cno 없애주기)
+	@Override
+	public void cancelMinus(Integer mno, Integer cno) {
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("mno", mno);
+		map.put("cno", cno);
+		mylog.debug(" cancelMinus(map) 호출"+map);
+		sqlSession.delete(NAMESPACE+".cancelMinus", map);
 	}
 	
 	@Override
@@ -115,7 +140,7 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 	}
 
 	@Override
-	public Integer samechallenge(Map<String, Integer> map) {
+	public Integer samechallenge(Map<String, Object> map) {
 		mylog.debug("dao : samechallenge 호출");
 		return sqlSession.selectOne(NAMESPACE+".samechallenge", map);
 	}
@@ -231,29 +256,23 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 	}
 	// 저축형 챌린지 참여 - plus테이블에 mno랑 cno insert
 	@Override
-	public void joinplusInsert(PlusVO vo) {
-		mylog.debug("joinplusInsert(PlusVO) 호출");
-		sqlSession.insert(NAMESPACE+".joinplusInsert", vo);
+	public void joinplusInsert(Map<String, Object> map) {
+		mylog.debug("dao :joinplusInsert(map) 호출");
+		sqlSession.insert(NAMESPACE+".joinplusInsert", map);
 	}
-	// 저축형 챌린지 참여 - challenge테이블 c_person에 ",닉네임" 업데이트하기
+	// 저축형&절약형 챌린지 참여 - challenge테이블 c_person에 ",닉네임" 업데이트하기
 	@Override
-	public void joinplusUpdate1(String nick, Integer cno) {
-		mylog.debug("joinplusUpdate1 호출 닉네임 업데이트");
-		Map map = new HashMap();
-		map.put("nick", nick);
-		map.put("cno", cno);
-		sqlSession.update(NAMESPACE+".joinplusUpdate1", map);
+	public void joinplusUpdate(Map<String, Object> map) {
+		mylog.debug("dao :joinplusUpdate 호출 닉네임 업데이트, c_cnt+1");
+		sqlSession.update(NAMESPACE+".joinplusUpdate", map);
 	}
-	
-	// 저축형 챌린지 참여 - challenge테이블 c_cnt에 +1하기
+	// 절약형 챌린지 참여 - minus테이블에 mno랑 cno insert
 	@Override
-	public void joinplusUpdate2(Integer cno) {
-		mylog.debug("joinplusUpdate2(cno) 호출");
-		sqlSession.update(NAMESPACE+".joinplusUpdate2", cno);
+	public void joinminusInsert(Map<String, Object> map) {
+		mylog.debug("dao :joinminusInsert(map) 호출");
+		sqlSession.insert(NAMESPACE+".joinminusInsert", map);
 	}
 
-	
-	
 	// 명예의 전당 순위
 	@Override
 	public List<UserVO> ranking() throws Exception {
@@ -268,18 +287,18 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 	
 	// 챌린지 목록 (페이징)
 	@Override
-	public List<ChallengeVO> cList(Criteria cri) throws Exception {
-		mylog.debug(" cList(Criteria cri) 호출 ");
-		List<ChallengeVO> cList = sqlSession.selectList(NAMESPACE +".cList", cri);
+	public List<ChallengeVO> cList(SearchCriteria scri) throws Exception {
+		mylog.debug(" cList(SearchCriteria scri) 호출 ");
+		List<ChallengeVO> cList = sqlSession.selectList(NAMESPACE +".cList", scri);
 		
 		return cList;
 	}
 
 	// 챌린지 총 갯수 (페이징)
 	@Override
-	public Integer cListCount() throws Exception {
-		mylog.debug("cListCount() 호출 ");
-		Integer cListCount = sqlSession.selectOne(NAMESPACE + ".cListCount");
+	public Integer cListCount(SearchCriteria scri) throws Exception {
+		mylog.debug("cListCount(SearchCriteria scri) 호출 ");
+		Integer cListCount = sqlSession.selectOne(NAMESPACE + ".cListCount", scri);
 		
 		return cListCount;
 	}
@@ -301,6 +320,13 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 		return minusAbook;
 	}
 	
+	// 게시판 + 챌린지
+	@Override
+	public List<Map<String, Object>> getBoardChallenge(Integer cno) throws Exception {
+		mylog.debug("getBoardChallenge 호출");
+		List<Map<String, Object>> boardChallenge = sqlSession.selectList(NAMESPACE+".boardChallenge", cno);
+		return boardChallenge;
+	}
 	
 	
 	

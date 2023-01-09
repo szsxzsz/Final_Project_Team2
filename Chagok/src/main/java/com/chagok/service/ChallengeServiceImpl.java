@@ -16,6 +16,7 @@ import com.chagok.domain.ChallengeVO;
 import com.chagok.domain.Criteria;
 import com.chagok.domain.MinusVO;
 import com.chagok.domain.PlusVO;
+import com.chagok.domain.SearchCriteria;
 import com.chagok.domain.UserVO;
 import com.chagok.persistence.ChallengeDAO;
 
@@ -65,6 +66,26 @@ public class ChallengeServiceImpl implements ChallengeService{
 		mylog.debug("getmyChallenge(String nick) : "+mychallengeList);
 		return dao.getmyChallenge(nick);
 	}
+	// 챌린지 취소하기 (챌린지 테이블에 닉네임 잘라주기)
+	@Override
+	public void cancelChallenge(String nick, Integer cno) {
+		mylog.debug("service : cancelChallnege 호출");
+		dao.cancelChallenge(nick, cno);
+	}
+	
+	// 저축형 챌린지 신청 취소 (플러스테이블에 mno랑 cno 없애주기)
+	@Override
+	public void cancelPlus(Integer mno, Integer cno) {
+		mylog.debug("service : cancelPlus 호출");
+		dao.cancelPlus(mno, cno);
+	}
+
+	// 절약형 챌린지 신청 취소 (마이너스 테이블에 mno랑 cno 없애주기)
+	@Override
+	public void cancelMinus(Integer mno, Integer cno) {
+		mylog.debug("service : cancelMinus 호출");
+		dao.cancelMinus(mno, cno);
+	}
 
 	@Override
 	public List<Map<String, Object>> getMinusPeople(Integer cno) {
@@ -112,7 +133,7 @@ public class ChallengeServiceImpl implements ChallengeService{
 
 	// 중복챌린지 체크
 	@Override
-	public Integer samechallenge(Map<String, Integer> map) {
+	public Integer samechallenge(Map<String, Object> map) {
 		mylog.debug("service : samechallenge 호출");
 		return dao.samechallenge(map);
 	}
@@ -131,27 +152,27 @@ public class ChallengeServiceImpl implements ChallengeService{
 		return  dao.getCList(cno);
 		
 	}
-
 	// 저축형 챌린지 참여 - plus테이블에 mno랑 cno insert
 	@Override
-	public void joinplusInsert(PlusVO vo) {
+	public void joinplusInsert(Map<String, Object> map) {
 		mylog.debug("service: joinplusInsert 호출");
-		dao.joinplusInsert(vo);
+		dao.joinplusInsert(map);
 	}
-	// 저축형 챌린지 참여 - challenge테이블 c_person에 ",닉네임" 업데이트하기
+	// 저축형&절약형 챌린지 참여 - challenge테이블 c_person에 ",닉네임" 업데이트하기
 	@Override
-	public void joinplusUpdate1(String nick, Integer cno) {
-		mylog.debug("service: joinplusUpdate1 호출");
-		dao.joinplusUpdate1(nick, cno);
+	public void joinplusUpdate(Map<String, Object> map) {
+		mylog.debug("service: joinplusUpdate 호출");
+		dao.joinplusUpdate(map);
+	}
+
+	// 절약형 챌린지 참여 - minus테이블에 mno랑 cno insert
+	@Override
+	public void joinminusInsert(Map<String, Object> map) {
+		mylog.debug("service: joinminusInsert 호출");
+		dao.joinminusInsert(map);
 		
 	}
-	// 저축형 챌린지 참여 - challenge테이블 c_cnt에 +1하기
-	@Override
-	public void joinplusUpdate2(Integer cno) {
-		mylog.debug("service: joinplusUpdate2 호출");
-		dao.joinplusUpdate2(cno);
-	}
-	
+
 	// 게시판 글 수정
 	@Override
 	public Integer updateBoard(BoardVO vo) throws Exception {
@@ -211,19 +232,26 @@ public class ChallengeServiceImpl implements ChallengeService{
 	
 	// 챌린지 목록 (페이징)
 	@Override
-	public List<ChallengeVO> cList(Criteria cri) throws Exception {
-		mylog.debug(" cList(Criteria cri) 호출 ");
+	public List<ChallengeVO> cList(SearchCriteria scri) throws Exception {
+		mylog.debug(" cList(SearchCriteria scri) 호출 ");
 		
-		return dao.cList(cri);
+		return dao.cList(scri);
 	}
 	
 	
 	// 챌린지 총 갯수 (페이징)
 	@Override
-	public Integer cListCount() throws Exception {
-		mylog.debug(" cListCount() 호출 ");
+	public Integer cListCount(SearchCriteria scri) throws Exception {
+		mylog.debug(" cListCount(SearchCriteria scri) 호출 ");
 		
-		return dao.cListCount();
+		return dao.cListCount(scri);
+	}
+
+	// 챌린지 + 게시판 리스트
+	@Override
+	public List<Map<String, Object>> getBoardChallenge(Integer cno) throws Exception {
+		mylog.debug(" boardChallenge 호출 ");
+		return dao.getBoardChallenge(cno);
 	}
 
 	// 챌린지 성공여부 (절약형)

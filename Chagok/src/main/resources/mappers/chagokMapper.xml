@@ -76,6 +76,23 @@
    on A.ctno = B.ctno
    where c_person like concat('%',#{nick},'%')
    </select>
+   
+    <!-- 챌린지 신청 취소 닉네임 잘라내고 c_cnt-1 (콤마는 앞에서 연결해서 nick으로 받아줄 것)-->
+    <update id="cancelChallenge" parameterType="map">
+   		update challenge set c_person = replace(c_person,#{nick},''), 
+   		c_cnt = c_cnt-1
+   		where cno=#{cno};
+    </update>
+    
+    <!-- 저축형 챌린지 신청취소  -->
+    <delete id="cancelPlus" parameterType="map">
+    	delete from plus where mno=#{mno} and cno=#{cno};
+    </delete>
+    
+    <!-- 절약형 챌린지 신청 취소 -->
+    <delete id="cancelMinus" parameterType="map">
+    	delete from minus where mno=#{mno} and cno=#{cno};
+    </delete>
 	
 	<!-- [절약형]챌린지 참가자 조회-->
 	<select id="getMinusPeople" resultType="map">
@@ -97,12 +114,9 @@
 	
 	<!-- 중복된 챌린지(카테고리) 확인 -->	
 	<select id="samechallenge" resultType="Integer">
-<!-- 		select count(*) from challenge where ctno=#{ctno} -->
-<!--     select ctno from challenge A inner join plus B  -->
-<!--     where A.cno = B.cno and mno = #{mno} and ctno = #{ctno}; -->
-    select ctno from plus p right join challenge c 
-	on c.cno = p.cno left join minus m on m.cno = c.cno
-    where  (c.cno = m.cno or c.cno = p.cno) and ( p.mno = #{mno} OR m.mno = #{mno} )and ctno = #{ctno};
+	    select distinct ctno from plus p right join challenge c 
+		on c.cno = p.cno left join minus m on m.cno = c.cno
+	    where  (c.cno = m.cno or c.cno = p.cno) and ( p.mno = #{mno} OR m.mno = #{mno} )and ctno = #{ctno};
 	</select>
 	
 	<!-- 챌린지 리스트(인원수 조회) -->
@@ -113,31 +127,21 @@
 	</select>
 	
 	<!-- 저축형 챌린지 참여 - plus테이블에 mno랑 cno insert -->
-	<insert id="joinplusInsert">
+	<insert id="joinplusInsert" parameterType="map">
 		insert into plus(mno,cno) values(#{mno},#{cno});
 	</insert>
 	
-	<!-- 저축형 챌린지 참여 - challenge테이블 c_person에 ",닉네임" 업데이트하기 -->
-	<update id="joinplusUpdate1">
-		update challenge A inner join user B
-		on A.mno = B.mno
-		set c_person = concat(c_person,',',#{nick}) 
-		where cno =#{cno};
+	<!-- 저축형&절약형 챌린지 참여 - challenge테이블 c_person에 ",닉네임" 업데이트하기 -->
+	<update id="joinplusUpdate" parameterType="map">
+		update challenge set c_person = concat(c_person, ',', (select nick from user where mno=#{mno})),
+		c_cnt=c_cnt+1
+		where cno=#{cno};
 	</update>
 	
-	<!-- 저축형 챌린지 참여 - challenge테이블 c_cnt에 +1하기 -->
-	<update id="joinplusUpdate2">
-		update challenge set(c_cnt) values(c_cnt+1) 
-		where cno =#{cno};
-	</update>
-	
-<!-- 	<insert id="joinplus"> -->
-<!-- 		insert all  -->
-<!-- 		into challenge(c_person,c_cnt) values(#{c_person},#{c_cnt})  -->
-<!-- 		into plus(mno,cno) values(#{mno},#{cno})  -->
-<!-- 		select c_person c_person,c_cnt c_cnt,mno mno,cno cno -->
-<!-- 		from dual; -->
-<!-- 	</insert> -->
+	<!-- 절약형 챌린지 참여 - minus 테이블에 mno랑 cno insert -->
+	<insert id="joinminusInsert" parameterType="map">
+		insert into minus(mno,cno) values(#{mno},#{cno});
+	</insert>
 	
 	<!-- 챌린지 종료일자 정보 가져오기  -->
 	<select id="getChallengeEndDate" resultType="date">
@@ -198,7 +202,7 @@
 	<select id="success" resultType="Integer">
 		select count(m_finish) + count(pl_finish)
 		from plus p right join challenge c on c.cno = p.cno left join minus m on m.cno=c.cno
-		where c.cno = 2 and (pl_finish = 'Y' or m_finish = 'Y')
+		where c.cno = #{cno} and (pl_finish = 'Y' or m_finish = 'Y')
 	</select>
 	
 	
@@ -210,36 +214,36 @@
 	</select>
 	
 	<!-- 검색1 -->
-	<select id="cList" resultType="com.chagok.domain.ChallengeVO" parameterType="com.chagok.domain.Criteria">
+	<select id="cList" resultType="com.chagok.domain.ChallengeVO" parameterType="com.chagok.domain.SearchCriteria">
 		SELECT  *
 		 FROM ( 
 		        SELECT *, 
 		               ROW_NUMBER() OVER(ORDER BY cno DESC) AS RNUM
 		         FROM challenge 
-<!-- 		         WHERE 1=1  -->
-<!-- 		         	<include refid="search"></include> -->
+		         WHERE 1=1 
+		         	<include refid="search"></include>
 		                       ) MP
 		WHERE RNUM BETWEEN #{rowStart} AND #{rowEnd}
 		ORDER BY cno DESC
 	</select>
 	
-	<!-- 검색2 --> 
-	<select id="cListCount" resultType="Integer">
-	<![CDATA[
- 		SELECT COUNT(cno)
- 		 FROM challenge
- 		 WHERE cno > 0
- 	]]> 
+	<!-- 검색2 -->
+	<select id="cListCount" resultType="Integer" parameterType="com.chagok.domain.SearchCriteria">
+		SELECT COUNT(cno)
+		   FROM challenge
+		   WHERE 1=1
+		<include refid="search"></include>	
+		   AND cno > 0
 	</select>
 	
-	<!-- 검색2 -->
-<!-- 	<select id="cListCount" resultType="Integer" parameterType="com.chagok.domain.SearchCriteria"> -->
-<!-- 		SELECT COUNT(cno) -->
-<!-- 		   FROM challenge -->
-<!-- 		   WHERE 1=1 -->
-<!-- 		<include refid="search"></include>	 -->
-<!-- 		   AND cno > 0 -->
-<!-- 	</select> -->
+	<sql id="search">
+		<if test="searchType != null">
+			<if test="searchType == 'c_t'.toString()">AND c_title LIKE CONCAT('%' || #{keyword} || '%')</if>
+			<if test="searchType == 'c_co'.toString()">AND c_content LIKE CONCAT('%' || #{keyword} || '%')</if>
+			<if test="searchType == 'c_h'.toString()">AND c_host LIKE CONCAT('%' || #{keyword} || '%')</if>
+			<if test="searchType == 'c_tc_co'.toString()">AND (c_title LIKE CONCAT('%' || #{keyword} || '%')) or (c_content LIKE CONCAT('%' || #{keyword} || '%'))</if>
+		</if>
+	</sql>
 	
 <!-- 	<sql id="search"> -->
 <!-- 		<if test="searchType != null"> -->
@@ -264,5 +268,12 @@
 	</select>
 
 
+	<!-- 게시판과 챌린지 -->
+	<select id="boardChallenge" resultType="map">
+		select *
+		from challenge c inner join board b
+		where bno = #{bno} and b.cno = c.cno
+	</select>
+	
 	
   </mapper>

@@ -10,6 +10,7 @@ import com.chagok.domain.ChallengeVO;
 import com.chagok.domain.Criteria;
 import com.chagok.domain.MinusVO;
 import com.chagok.domain.PlusVO;
+import com.chagok.domain.SearchCriteria;
 import com.chagok.domain.UserVO;
 
 public interface ChallengeDAO {
@@ -32,6 +33,15 @@ public interface ChallengeDAO {
 	// 내 챌린지 ( 챌린지유형 / 카테고리 / 챌린지제목 / 챌린지기간 / 챌린지상태 )
 	public List<ChallengeVO> getmyChallenge(String nick);
 	
+	// 챌린지 신청 취소 (챌린지 테이블에 닉네임 잘라주기)
+	public void cancelChallenge(String nick, Integer cno);
+	
+	// 저축형 챌린지 신청 취소 (플러스테이블에 mno랑 cno 없애주기)
+	public void cancelPlus(Integer mno, Integer cno);
+	
+	// 절약형 챌린지 신청 취소 (마이너스 테이블에 mno랑 cno 없애주기)
+	public void cancelMinus(Integer mno, Integer cno);
+	
 	// [절약형]챌린지 참가자 조회 
 	public List<Map<String, Object>> getMinusPeople(Integer cno);
 	
@@ -42,16 +52,16 @@ public interface ChallengeDAO {
 	public List<BoardVO> getBoard(Integer b_sort);
 	
 	// 중복 챌린지 체크
-	public Integer samechallenge(Map<String, Integer> map);
+	public Integer samechallenge(Map<String, Object> map);
 	
 	// 저축형 챌린지 참여 - plus테이블에 mno랑 cno insert
-	public void joinplusInsert(PlusVO vo);
+	public void joinplusInsert(Map<String, Object> map);
 	
-	// 저축형 챌린지 참여 - challenge테이블 c_person에 ",닉네임" 업데이트하기
-	public void joinplusUpdate1(String nick, Integer cno);
+	// 저축형&절약형 챌린지 참여 - challenge테이블 c_person에 ",닉네임" 업데이트 , c_cnt에 +1하기
+	public void joinplusUpdate(Map<String, Object> map);
 	
-	// 저축형 챌린지 참여 - challenge테이블 c_cnt에 +1하기
-	public void joinplusUpdate2(Integer cno);
+	// 절약형 챌린지 참여 - minus테이블에 mno랑 cno insert
+	public void joinminusInsert(Map<String, Object> map);
 	
 	// 게시판 글 조회
 	public BoardVO getBoardContent(Integer bno);
@@ -61,7 +71,6 @@ public interface ChallengeDAO {
 		
 	// 챌린지 목록
 	public List<ChallengeVO> getChallengeList() throws Exception;
-	
 	
 	// 챌린지 피드 인원 조회
 //	public void getCList(Integer cno) throws Exception;
@@ -80,10 +89,10 @@ public interface ChallengeDAO {
 	public List<UserVO> ranking() throws Exception;
 	
 	// 챌린지 목록 (페이징)
-	public List<ChallengeVO> cList(Criteria cri) throws Exception;
+	public List<ChallengeVO> cList(SearchCriteria scri) throws Exception;
 	
 	// 챌린지 총 갯수 (페이징)
-	public Integer cListCount() throws Exception;
+	public Integer cListCount(SearchCriteria scri) throws Exception;
 	
 	// 챌린지 예치금 합산
 	public int getChallengeMoney(Integer cno) throws Exception;
@@ -100,4 +109,6 @@ public interface ChallengeDAO {
 	// 가계부 가져오기
 	public List<AbookVO> getMinusAbook(Integer mno);
 	
+	// 게시판 글 + 챌린지
+	public List<Map<String, Object>> getBoardChallenge(Integer cno) throws Exception;
 }
