@@ -18,6 +18,7 @@ import com.chagok.apiDomain.AccountVO;
 import com.chagok.apiDomain.CardHistoryVO;
 import com.chagok.apiDomain.CardInfoResponseVO;
 import com.chagok.apiDomain.CardInfoVO;
+import com.chagok.apiDomain.CashVO;
 
 @Repository
 public class AccountDAOImpl implements AccountDAO{
@@ -158,6 +159,12 @@ public class AccountDAOImpl implements AccountDAO{
 		List<CardHistoryVO> list = sqlSession.selectList(NAMESPACE+".getCardHistoryList", card_id);
 				
 		return list;
+	}
+
+	@Override
+	public void insertCash(CashVO vo) throws Exception {
+		sqlSession.insert(NAMESPACE+".insertCash", vo);
+		
 	}
 
 	

@@ -33,6 +33,7 @@ import com.chagok.apiDomain.CardHistoryVO;
 import com.chagok.apiDomain.CardInfoRequestVO;
 import com.chagok.apiDomain.CardInfoResponseVO;
 import com.chagok.apiDomain.CardInfoVO;
+import com.chagok.apiDomain.CashVO;
 import com.chagok.apiDomain.RequestTokenVO;
 import com.chagok.apiDomain.ResponseTokenVO;
 import com.chagok.apiDomain.UserInfoResponseVO;
@@ -123,7 +124,7 @@ public class AssetController {
 	
 	@GetMapping("/cardHistory")
 	public String cardHistoryGET(HttpSession session, Model model, 
-			@RequestParam("card_id") String card_id) throws Exception{
+			@RequestParam("card_id") String card_id, @RequestParam("cardSum") String cardSum) throws Exception{
 		
 		if (session.getAttribute("mno") != null) {
 			int mno = (int)session.getAttribute("mno");
@@ -135,6 +136,7 @@ public class AssetController {
 			
 			List<CardHistoryVO> cardHistoryList = accountService.getCardHistory(card_id);
 			model.addAttribute("cardHistoryList", cardHistoryList);
+			model.addAttribute("cardSum", cardSum);
 			
 			mylog.debug(cardHistoryList+"");
 			
@@ -142,6 +144,26 @@ public class AssetController {
 		}
 		
 		return "/asset/cardHistory";
+	}
+	
+	@GetMapping("/insertCash")
+	public String insertCashGET() throws Exception{
+		return "/asset/insertCash";
+	}
+	
+	@GetMapping("/insertCashPro")
+	public String insertCashProGET(CashVO vo, HttpSession session) throws Exception{
+		
+		mylog.debug("현금등록 호출!!!!");
+		
+		int mno = (int)session.getAttribute("mno");
+		vo.setMno(mno);
+		
+		mylog.debug(vo+"");
+
+		accountService.insertCash(vo);
+		
+		return "redirect:/asset/insertCash";
 	}
 	
 	@RequestMapping(value = "/callback", method = RequestMethod.GET)
