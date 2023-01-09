@@ -2,7 +2,6 @@ package com.chagok.controller;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Spliterator;
 
 import javax.inject.Inject;
 import javax.servlet.http.Cookie;
@@ -20,15 +19,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.WebUtils;
 
+import com.chagok.domain.AlertVO;
 import com.chagok.domain.ChallengeVO;
 import com.chagok.domain.Criteria;
 import com.chagok.domain.PageMaker;
 import com.chagok.domain.SearchCriteria;
 import com.chagok.domain.UserVO;
 import com.chagok.interceptor.SessionNames;
+import com.chagok.service.AlertService;
 import com.chagok.service.ChallengeService;
 import com.chagok.service.UserService;
 
@@ -43,6 +43,8 @@ public class ChagokController {
 	@Inject
 	private ChallengeService service2;
 	
+	@Inject
+	private AlertService alertService;
 	
 	// 차곡 메인사이트 
 	// http://localhost:8080/main
@@ -233,6 +235,18 @@ public class ChagokController {
          mylog.debug("절약형 챌린지로 이동");
          return "redirect:/challenge/minusdetail?cno="+cno;
       }
+   }
+   
+   @PostMapping(value = "/alert")
+   @ResponseBody
+   public void alert(@RequestBody Map<String, Object> map, AlertVO alertVO) throws Exception {
+	   mylog.debug(" 알림기능 ajax 호출");
+	   alertVO.setCno(Integer.parseInt(map.get("type").toString()));
+	   alertVO.setA_content(map.get("content").toString());
+	   alertVO.setA_receive(Integer.parseInt(map.get("target").toString()));
+	   
+	   alertService.alert(alertVO);
+	   
    }
    
 	

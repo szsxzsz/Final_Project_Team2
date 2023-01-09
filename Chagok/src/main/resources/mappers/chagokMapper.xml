@@ -243,4 +243,14 @@
 		</if>
 	</sql>
 	
+	<!-- 지난 메시지 가져오기   -->
+	<select id="getMsgList" resultType="com.chagok.domain.FeedDTO">
+		select * from feed where cno = #{cno}
+	</select>
+	
+	<!-- 알림  저장 -->
+	<insert id="alert">
+		insert into alert(cno, a_receive, a_content) values(#{cno}, #{a_receive}, #{a_content});
+	</insert>
+	
   </mapper>

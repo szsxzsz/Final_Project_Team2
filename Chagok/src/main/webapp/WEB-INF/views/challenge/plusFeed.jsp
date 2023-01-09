@@ -4,6 +4,7 @@
 <%@ include file="../include/sidebar.jsp" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
 <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js" integrity="sha512-iKDtgDyTHjAitUDdLljGhenhPwrbBfqTKWO1mkhSFH3A7blITC9MhYon6SjnMhp4o0rADGw9yAC6EW4t5a4K3g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -12,15 +13,13 @@
 	$(document).ready(function() {
 		connectSockJS();
 		var currT = new Date().getHours() + ":" + new Date().getMinutes() + "  |  " + "Today";
-		var chatBox = $('.chat_box');
 		var nick = '${nick}';
+		var html;
+		
 		$('#btnSend').on('click', function(event) {
 			
-			
-			var currT = new Date().getHours() + ":" + new Date().getMinutes() + "  |  " + "Today";
 			var msg = $('#msg').val();
 			
-			//console.log("hjjjhgjhgj",socket);
 			event.preventDefault();
 			
 			
@@ -31,50 +30,23 @@
 			console.log("222222222222222222222>>>>", msg3);
 			
 			
-			var html = $("#nextMsg").html();
+			
 			console.log("mmmmmmmmmmm>>>>", msg);
 			
 			if (!isStomp && socket.readyState!== 1 ) return;
 				if(isStomp){
+					// send(path, header, message)형태
+					socket.send('/send/'+cno , {}, JSON.stringify({"cno": cno, "writer": nick, "message" : msg}));
+// 					socket.send('/feed/'+cno , {}, {"writer": nick, "message" : msg});
 					
-					socket.send('/user/'+cno , {}, JSON.stringify({"writer": nick, "message" : msg}));
 					
-					socket.subscribe('/topic/feed/'+cno, function(chat){ // 컨트롤러(sendTo)
-						console.log('!!!!!!!!!!!!!!!!!!!!!!chat>>', chat);
-						var content = JSON.parse(chat.body);
-						var writer = content.writer;
-						
-						// 다른사람이 채팅보내는 형태
-						if( writer == nick ){ 
-							html += '<div class="outgoing_msg">'
-										+ '<div class="sent_msg">'
-							            + '<p>'+content.message+'</p>'
-							            + '<span class="time_date"> '+ currT +'</span></div></div>';
-							
-						}else {
-							html += content.writer +'<div class="incoming_msg">'
-									+ '<div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>'
-									+ '<div class="received_msg"> <div class="received_withd_msg">'
-									+ '<p>'+content.message+'</p>'
-									+ '<span class="time_date">'+currT+'</span></div></div>'
-						}
-						
-					});
-				
 				}else
 					socket.send(msg);
 				
-			//protocol: RoomNum, 보내는id, 내용 
-			//socket.send( ${vo.cno} + "," + '${sessionId}' + "," + msg); 
+// 			$("#nextMsg").html(html+"\n");
+// 			$("#msg").val("");
 			
-				
-			$("#nextMsg").html(html+"\n");
-			$("#msg").val("");
-			
-			
-			
-			console.log("ReceiveMessage:" + event.data+'\n');
-			console.log("ReceiveMessage:" + event+'\n');
+			console.log("ReceiveMessage:" + msg);
 		});
 
 	});
@@ -85,53 +57,51 @@
 	var currT;
 	var chatBox = $('#chat_box');
 	var nick = '${nick}';
-	var html = $("#nextMsg").html();
+	var html;
 	var currT = new Date().getHours() + ":" + new Date().getMinutes() + "  |  " + "Today";
 	
 	function connectSockJS(){
+		//alert("시작ㄴ");
 		//STOMP Client
-		var sock = new SockJS('/plusFeed'); // endpoint
+		var sock = new SockJS("/plusFeed"); // endpoint
 		var client = Stomp.over(sock);
 		isStomp = true;
 		socket = client;
 		
-// 		console.log(client);
 // 		console.log(sock);
-// 		console.log(socket);
-// 		console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+		console.log(client);
+		console.log(sock);
 		
 		client.connect({}, function(frame){
 			console.log("Connected stomp!");
 			
-			// send(path, header, message)형태
-			client.send('/user/'+cno, {}, JSON.stringify({"writer": nick, "message" : msg})); // 컨트롤러(MessageMapping), 
-			//console.log("Connected : " + frame);
-// 			loadChat(chatList);
-			
-			
 			// 해당 토픽을 구독한다! subscribe(path, callback)로 메시지를 받을 수 있다.
 			// callback 첫번째 파라미터의 body로 메시지의 내용이 들어온다.
 			client.subscribe('/topic/feed/'+cno, function(chat){ // 컨트롤러(sendTo)
+				// 서버에서 돌아온 것 (구독하고 있는 클라이언트들에게 )
 				console.log('!!!!!!!!!!!!!!!!!!!!!!chat>>', chat);
 				var content = JSON.parse(chat.body);
 				console.log(content.message);
-				
-				// 내가 채팅보내는 형태
-				if( content.writer == nick ){ 
-					html += '<div class="outgoing_msg">'
-								+ '<div class="sent_msg">'
-					            + '<p>'+content.message+'</p>'
-					            + '<span class="time_date"> '+ currT +'</span></div></div>';
+				showChat(JSON.parse(chat.body));
+				if(content.writer != null){
 					
-				}else {
-					html += content.writer + '<div class="incoming_msg">'
-							+ '<div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>'
-							+ '<div class="received_msg"> <div class="received_withd_msg">'
-							+ '<p>'+content.message+'</p>'
-							+ '<span class="time_date">'+currT+'</span></div></div>'
+					if( content.writer == nick ){ 
+						html += '<div class="outgoing_msg">'
+									+ '<div class="sent_msg">'
+						            + '<p>'+content.message+'</p>'
+						            + '<span class="time_date"> '+ currT +'</span></div></div>';
+						
+					}else {
+						html += content.writer + '<div class="incoming_msg">'
+								+ '<div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>'
+								+ '<div class="received_msg"> <div class="received_withd_msg">'
+								+ '<p>'+content.message+'</p>'
+								+ '<span class="time_date">'+currT+'</span></div></div>'
+					}
+					
+					$("#nextMsg").html(html+"\n");
+// 					$("").focus();
 				}
-				
-				$("#nextMsg").html(html+"\n");
 				
 				$("#msg").val("");
 			});
@@ -156,13 +126,21 @@
 	function moveScroll() {
 	    var el = document.getElementById('nextMsg');
 	    console.log(el);
-	if (el.scrollHeight > 0) el.scrollTop = el.scrollHeight;
+		if (el.scrollHeight > 0) el.scrollTop = el.scrollHeight;
+	}
+	
+	function showChat(chat){
+		
 	}
 	
 </script>
 
 <h1 style="padding: 0 15px 0 15px;"> 저축형 차곡 챌린지 </h1>
-${mno}
+${msgList}
+<%-- ${msgList.writer} --%>
+<%-- ${JSON.stringify(msgList.content)} --%>
+
+<%-- ${mno} --%>
 <%-- ${plusPeoList } --%>
 <%-- ${vo} --%>
  <!-- Main content -->
@@ -193,7 +171,7 @@ ${mno}
 				<div class="col-lg-6" style="line-height: 180%">
 	             <div class="progress-group" style="width: 280px;" >
 	               <span class="progress-text">챌린지 장 </span>
-	               <span class="progress-number"><b>${vo.mno }</b>님</span>
+	               <span class="progress-number"><b>${host.nick }</b>님</span>
 	             </div>
 	             <div class="progress-group" style="width: 280px;">
 	               <span class="progress-text">챌린지 인원</span>
@@ -378,7 +356,8 @@ ${mno}
                		</c:if>
                		<c:if test="${nowfmtTime - endTime < 0}">
                   		<c:if test="${saveMoney == vo.c_amount}">
-	                  		<span class="badge bg-light-blue">${plusPeoList.pl_cnt} / ${vo.c_total }</span>
+<%-- 	                  		<span class="badge bg-light-blue">${plusPeoList.pl_cnt} / ${vo.c_total }</span> --%>
+	                  		<span class="badge bg-green">${plusPeoList.pl_cnt} / ${vo.c_total }</span>
 	                  	</c:if>
 	                  	<c:if test="${saveMoney != vo.c_amount && plusPeoList.pl_finish == false}">
 	                  		<span class="badge bg-red">${plusPeoList.pl_cnt} / ${vo.c_total }</span>
@@ -428,7 +407,7 @@ ${mno}
 	        <div class="inbox_people">
 	          <div class="headind_srch">
 	            <div class="recent_heading">
-	              <h4>Recent</h4>
+	              <h4>최근 메시지</h4>
 	            </div>
 	          </div>
 	          <div class="inbox_chat">
@@ -457,32 +436,25 @@ ${mno}
 	        <div class="mesgs">
 	          <div class="msg_history">
 				<main class="chat">
-	            <div class="incoming_msg">
-	              <div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
-	              <div class="received_msg">
-	                <div class="received_withd_msg">
-	                  <p>Test which is a new approach to have all solutions</p>
-	                  <span class="time_date"> 11:01 AM    |    June 9</span></div>
-	              </div>
-	            </div>
-	            
-	            <div class="outgoing_msg">
-	              <div class="sent_msg">
-	                <p>Test which is a new approach to have all solutions</p>
-	                <span class="time_date"> 11:01 AM    |    June 9</span> </div>
-	            </div>
-	            
-	            <div class="incoming_msg">
-	              <div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
-	              <div class="received_msg">
-	                <div class="received_withd_msg">
-	                  <p>ㅇㄹㅇㅇㅇㅇ</p>
-	                  <span class="time_date"> 11:01 AM    |    Today</span></div>
-	              </div>
-	            </div>
+				
+<%-- 				${msgList} --%>
+				<c:forEach var="content" items="${msgList}" >
+					<c:if test="${content.writer == nick }">
+						<div class="outgoing_msg">
+						<div class="sent_msg">
+					     <p>${content.message}</p>
+					      <span class="time_date">${content.time}</span></div></div>
+					</c:if>
+					<c:if test="${content.writer != nick }">
+						${content.writer} <div class="incoming_msg">
+							<div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
+							<div class="received_msg"> <div class="received_withd_msg">
+							 <p>${content.message}</p>
+								<span class="time_date">${content.time}</span></div></div>
+					</c:if>
+				</c:forEach>
             <!-- 받은 메시지 -->
 				<div id="nextMsg"></div>
-				<div id="chat_box"></div>
 			<!-- 받은 메시지 -->
 			</main>
 	          </div>
@@ -553,9 +525,120 @@ ${mno}
 	
 	//---------------
 	//animation
-	const html = document.documentElement;
-	html.addEventListener("mousemove", function(e) {    
-	  html.style.setProperty('--x', e.clientX + 'px');  
-	  html.style.setProperty('--y', e.clientY + 'px');
-	});
+// 	const html = document.documentElement;
+// 	html.addEventListener("mousemove", function(e) {    
+// 	  html.style.setProperty('--x', e.clientX + 'px');  
+// 	  html.style.setProperty('--y', e.clientY + 'px');
+// 	});
 </script>
+
+<style>
+.whitespace{
+/* 	border: solid red; */
+	width: 100%;
+	height: 40%;
+	padding: 0 1.4rem;
+	font-weight: 500;
+	font-size: 2rem;
+	overflow: auto;
+	box-sizing: border-box;
+	color: #363A3C;
+}
+.accountInfo2{
+	width: 100%;
+/* 	border: solid red; */
+	/* height: 1%; */
+	padding: 0 1.4rem;
+	font-weight: 500;
+	font-size: 2rem;
+	overflow: auto;
+	box-sizing: border-box;
+	color: #363A3C;
+}
+
+
+.modal-content{
+	height: 570px;
+}
+.modal-body{
+	height: 80%;
+}
+.modal-body .frame2 {
+  width: 85%;
+  height: 400px;
+  position: fixed;
+  top: 35%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 2px;
+  box-shadow: 4px 8px 16px 0 rgba(0,0,0,0.1);
+  background: #FC5C7D; 
+  background: -webkit-linear-gradient(to right, #6A82FB, #FC5C7D); 
+  background: linear-gradient(to right, #6A82FB, #FC5C7D);
+}
+.calculator2 {
+  margin-left: 2%;
+  width: 75%;
+  height: 75%;
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: column;
+  background: rgba( 250, 250, 250, 0.8);
+  box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.7 );
+  backdrop-filter: blur(4px);
+  border-radius: 0.5rem;
+  border: 1px solid rgba( 255, 255, 255, 0.18 );
+/*   transform: translate(calc(var(--x)/45), calc(var(--y)/45)); */
+}
+.result2 {
+  width: 100%;
+  height: 10%;
+  padding: 0 1.4rem;
+  font-weight: 500;
+  font-size: 2rem;
+  overflow: auto;
+  box-sizing: border-box;
+  color: #363A3C;
+}
+.content2 {
+  width: 100%;
+  display: flex;
+}
+.key-wrap,
+.calc-wrap {
+  height: 13rem;
+  display: grid;  
+}
+.key-wrap {
+  flex: 4;
+  grid-template-columns: auto auto auto;
+}
+.calc-wrap {
+  flex: 1;
+}
+.num2,
+.calc2 {
+  position: relative;
+  background: transparent;
+  color: #363A3C;
+  border: 1px solid rgba(0,0,0, 0.2);
+  font-size: 2rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: 0.25s;
+  &:hover {
+    background: #000;
+    color: #3d3d3d;
+  }
+}
+
+.label-112 {
+  background: #6A82FB;
+  &:hover {
+    background: #FC5C7D;
+  }
+}
+</style>

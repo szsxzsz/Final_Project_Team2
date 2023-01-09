@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+      
+      <div id="myToastEl"></div>
+      
       <footer class="main-footer">
         <div class="pull-right hidden-xs">
           <b>Version</b> 2.0
@@ -184,40 +187,125 @@
     <script src="${pageContext.request.contextPath }/resources/dist/js/app.min.js" type="text/javascript"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="${pageContext.request.contextPath }/resources/dist/js/demo.js" type="text/javascript"></script>
-	<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.min.js"></script>
+
 <script>
-	var socket = null;
-	$(document).ready(function(){
-		//connectWS();
-	});
+var socket = null;
+$(document).ready(function(){
+	//console.log("footer 내  알림");
+	socket = new SockJS("/plusFeed");
 	
-	function connectWS(){
-		console.log("footer의 알림 웹소켓");
-		var ws = new WebSocket("/plusFeed");
-		socket = ws;	
-			
-		ws.onopen=function(event){
-	        if(event.data===undefined) return;
-	        writeResponse(event.data);
- 	    };
- 	   	ws.onmessage=function(event){
- 	        writeResponse("ReceiveMessage : ", event.data+'\n');
- 	        var $socketAlert =  $('div#socketAlert');
- 	        $socketAlert.html(event.data);
- 	        $socketAlert.css('display', 'block');
- 	        
- 	        setTimeout(function(){
- 	        	$socketAlert.css('display', 'none');
- 	        }, 3000);
- 	    };
- 	  	ws.onclose=function(event){
- 	        writeResponse("Connection closed");
- 	    }
- 	  	wr.onerror = function(err) {console.log('Error', err); };
-	}
+	socket.onmessage = onMessage;
+}); 	   
+ 	   
+function onMessage(event){
+	var data = event.data;
+	
+	$("#myToastEl").on("click", function(){
+      toastr.options.escapeHtml = true;
+      toastr.options.closeButton = true;
+      toastr.options.newestOnTop = false;
+      toastr.options.progressBar = true;
+      toastr.success('예제', data, {timeOut: 5000});
+    });
+	
+	
+	// 일시적인 메시지
+	var toast =  '<div class"position-fixed bottom-0 end-0 p-3" style="z-index: 11">';
+    toast += '<div id="liveToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">';
+    toast += '<div class="toast-header"><img src="..." class="rounded me-2" alt="..."><strong class="me-auto">Bootstrap</strong>';
+    toast += '<small>11 mins ago</small><button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>';
+    toast += "</div> <div class='toast-body'>" + data + "</div></div></div>";
+    $("#myToastEl").append(toast);
+ 
+}
+
+$('#btnSend').click(function(e){
+    //let modal = $('.modal-content').has(e.target);
+    var type = ${vo.cno};
+    var target = ${mno}; // 대상은 수정필요 QQQQQQ
+    var content = $('#msg').val();
+    var url = '${contextPath}/challenge/plusFeed?cno='+cno;
+    var submitObj = {
+			            target: target,
+			            content: content,
+			            type: type,
+			            url: url
+			        };
+    
+    // 전송한 정보를 db에 저장	
+    $.ajax({
+        type: 'post',
+   //     url: '${contextPath}/alert',
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'text',
+        data: JSON.stringify(submitObj),
+        success: function(){    // db전송 성공시 실시간 알림 전송
+        	
+        	console.log("메시지 전달성공");
+            // 소켓에 전달되는 메시지
+            // 위에 기술한 EchoHandler에서 ,(comma)를 이용하여 분리시킨다.
+           // socket.send(type+","+target+","+content+","+url);	
+        }
+    });
+    //modal.find('.modal-body textarea').val('');	// textarea 초기화
+});
 </script>
-    
-    
-    
+<<script type="text/javascript">
+var Client = null;
+
+function setConnected(connected) {
+    $("#connect").prop("disabled", connected);
+    $("#disconnect").prop("disabled", !connected);
+    if (connected) {
+        $("#conversation").show();
+    }
+    else {
+        $("#conversation").hide();
+    }
+    $("#greetings").html("");
+}
+
+function connect() {
+    var socket = new SockJS('http://localhost:8080/plusFeed');
+    Client = Stomp.over(socket);
+    Client.connect({"token" : "발급받은 토큰"}, function (frame) {
+        setConnected(true);
+        console.log('Connected: ' + frame);
+        Client.subscribe('/sub/'+${nick }, function (msg) {
+            console.log('구독 중', msg);
+        });
+    });
+}
+
+function disconnect() {
+    if (stompClient !== null) {
+        stompClient.disconnect();
+    }
+    setConnected(false);
+    console.log("Disconnected");
+}
+
+function sendName() {
+    stompClient.send("/app/hello", {}, JSON.stringify({'name': $("#name").val()}));
+}
+
+function showGreeting(message) {
+    $("#greetings").append("<tr><td>" + message + "</td></tr>");
+}
+
+$(function () {
+    $("form").on('submit', function (e) {
+        e.preventDefault();
+    });
+    $( "#connect" ).click(function() { connect(); });
+    $( "#disconnect" ).click(function() { disconnect(); });
+    $( "#send" ).click(function() { sendName(); });
+});
+</script>
+
+<script type="text/javascript" src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
+ <!-- toastr js 라이브러리 -->
+ <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />   
   </body>
 </html>

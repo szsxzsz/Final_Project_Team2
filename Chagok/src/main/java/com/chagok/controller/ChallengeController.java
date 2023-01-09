@@ -1,11 +1,7 @@
 package com.chagok.controller;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -18,8 +14,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,21 +21,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.chagok.domain.BoardVO;
 import com.chagok.domain.ChallengeVO;
-import com.chagok.domain.MinusVO;
-import com.chagok.domain.PlusVO;
-import com.chagok.domain.SysLogVO;
 import com.chagok.domain.UserVO;
 import com.chagok.service.ChallengeService;
+import com.chagok.service.FeedService;
 import com.chagok.service.UserService;
 import com.chagok.utils.UploadFileUtils;
-import com.siot.IamportRestClient.IamportClient;
-import com.siot.IamportRestClient.exception.IamportResponseException;
-import com.siot.IamportRestClient.response.IamportResponse;
-import com.siot.IamportRestClient.response.Payment;
 
 @Controller
 @RequestMapping("/challenge/*")
@@ -56,22 +42,26 @@ public class ChallengeController {
 	@Resource(name="uploadPath")
 	private String uploadPath;
 
+	@Inject
+	private FeedService feedsevice;
 
 	private static final Logger mylog = LoggerFactory.getLogger(ChallengeController.class);
 
-	// http://localhost:8080/challenge/plusFeed?cno=2
+	// http://localhost:8080/challenge/plusFeed?cno=44
 	@GetMapping(value = "/plusFeed")
 	public String plusfeedGET(Model model, int cno, HttpSession session) throws Exception {
 		mylog.debug("plusfeedGET() 호출");
 
 		List<Map<String, Object>> plusPeoList = service.getPlusPeople(cno);
 		mylog.debug("plusFeedGET()에서 id : "+session.getId());
-		SysLogVO sysLogVO = new SysLogVO();
-
-		model.addAttribute("sessionId", sysLogVO.getUserId());
+		//SysLogVO sysLogVO = new SysLogVO();
+		
+		
+		//model.addAttribute("sessionId", sysLogVO.getUserId());
 		model.addAttribute("vo", service.getChallengeInfo(cno));
 		model.addAttribute("plusPeoList", plusPeoList);
 		model.addAttribute("c_end", service.getChallengeEndDate(cno));
+		model.addAttribute("msgList", feedsevice.getMsgList(cno));
 		
 		return "/challenge/plusFeed";
 	}
