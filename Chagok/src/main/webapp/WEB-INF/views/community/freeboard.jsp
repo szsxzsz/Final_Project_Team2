@@ -35,15 +35,17 @@
 <input type="button" class="btn btn-primary btn-xs" style="float:right;" value="글 작성하기" onclick="location.href='/freeboardwrite';">
 	<div class="row">
 		<div class="col-md-12">
-		  <c:forEach var="board" items="${boardList }">
+		
+		
+		  <c:forEach var="i" start="0" end="${boardList.size() }" begin="1">
 			<ul class="timeline">
-
-				<li class="time-label">
-					<span class="bg-red"> 
-						<b><fmt:formatDate value="${board.b_date }" pattern="MMM.dd.yyyy"/></b>
-					</span>
-				</li>
-
+				<c:if test="">
+					<li class="time-label">
+						<span class="bg-red"> 
+							<b><fmt:formatDate value="${board.b_date }" pattern="MMM.dd.yyyy"/></b>
+						</span>
+					</li>
+				</c:if>
 
 				<li><i class="fa fa-envelope bg-blue"></i>
 					<div class="timeline-item">
@@ -59,31 +61,15 @@
 							${board.b_file }
 						</div>
 						<div class="timeline-footer">
-							<input type="submit" class="btn btn-primary btn-xs" value="수정" onclick="location.href='/freeboardupdate?bno=${bno}';">
-							<input type="submit" class="btn btn-danger btn-xs" value="삭제" onclick="location.href='/community/freedelete?bno=${bno}';">
+							<input type="submit" class="btn btn-primary btn-xs" value="수정" onclick="location.href='/freeboardupdate?bno=${board.bno}';">
+							<input type="submit" class="btn btn-danger btn-xs" value="삭제" onclick="location.href='/freedelete?bno=${board.bno}';">
 						</div>
 					</div></li>
-
-
-				<li><i class="fa fa-user bg-aqua"></i>
-					<div class="timeline-item">
-						<span class="time"><i class="fa fa-clock-o"></i> 5 mins ago</span>
-						<h3 class="timeline-header no-border">
-							<a href="#">Sarah Young</a> accepted your friend request
-						</h3>
-					</div></li>
-
-
-				
-				<li class="time-label">
-					<span class="bg-green">
-				 		3 Jan.2014 
-					</span>
-				</li>
 
 				<li><i class="fa fa-clock-o bg-gray"></i></li>
 			</ul>
 		  </c:forEach>
+		  
 		</div>
 
 	</div>

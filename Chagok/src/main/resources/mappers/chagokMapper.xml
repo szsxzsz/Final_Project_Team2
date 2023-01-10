@@ -297,4 +297,64 @@
 		insert into feed(contents, f_date, f_receive, cno) values(#{contents}, #{f_date}, #{f_receive}, #{cno});
 	</insert>
 	
+	<!-- 페이징처리 공지게시판 한 페이지당 최대갯수 -->
+	<select id="nboardPage" resultType="com.chagok.domain.BoardVO">
+	  <![CDATA[
+		select * from board
+		where b_sort = 2
+		order by bno desc, b_date desc
+		limit #{page},9
+		]]>
+	</select>
+	
+	<!-- 페이징처리 공지게시판 페이지 넘버 -->
+	<select id="nboardPageNo" resultType="com.chagok.domain.BoardVO">
+	  <![CDATA[
+		select * from board
+		where b_sort = 2
+		order by bno desc, b_date desc
+		limit #{pageStart},#{perPageNum}
+		]]>
+	</select>
+	
+	<!-- 공지게시판 글 전체 개수 -->
+	<select id="nboardCount" resultType="int">
+		select count(*) 
+		from board
+		where b_sort= 2
+	</select>
+	
+	<!-- 페이징처리 후기게시판 한 페이지당 최대갯수 -->
+	<select id="rboardPage" resultType="com.chagok.domain.BoardVO">
+	  <![CDATA[
+		select * from board
+		where b_sort = 1
+		order by bno desc, b_date desc
+		limit #{page},9
+		]]>
+	</select>
+	
+	<!-- 페이징처리 후기게시판 페이지 넘버 -->
+	<select id="rboardPageNo" resultType="com.chagok.domain.BoardVO">
+	  <![CDATA[
+		select * from board
+		where b_sort = 1
+		order by bno desc, b_date desc
+		limit #{pageStart},#{perPageNum}
+		]]>
+	</select>
+	
+	<!-- 후기게시판 글 전체 개수 -->
+	<select id="rboardCount" resultType="int">
+		select count(*) 
+		from board
+		where b_sort= 1
+	</select>
+	
+	<!-- 관리자 챌린지 승인 -->
+	<update id="confirmChallenge">
+		update challenge set c_status=#{c_status}
+		where cno = #{cno}
+	</update>
+	
   </mapper>

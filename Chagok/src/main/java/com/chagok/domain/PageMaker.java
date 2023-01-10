@@ -63,6 +63,13 @@ public class PageMaker {
 		}
 		prev = startPage == 1 ? false : true;
 		next = endPage * cri.getPerPageNum() >= totalCount ? false : true;
+		
+		System.out.println("endPage : "+endPage);
+		System.out.println("startPage : "+startPage);
+		System.out.println("prev : "+prev);
+		System.out.println("next : "+next);
+		System.out.println("totalCount : "+totalCount);
+		System.out.println("tmpEndPage : "+tempEndPage);
 	}
 	
 	public String makeQuery(int page) {

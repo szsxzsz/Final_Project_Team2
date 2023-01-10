@@ -12,7 +12,7 @@
 	<title>관리자 챌린지 승인</title>
 </head>	
 	<body>
-${challengeList }
+<%-- ${challengeList } --%>
     <div class="board_wrap">
         <div class="board_title">
         <strong>관리자 챌린지 승인</strong>
@@ -20,11 +20,12 @@ ${challengeList }
  	    <div class="board_list_wrap">
          <div class="board_list">
              <div class="top">
-                 <div class="num" style="padding-right: 25px; width:155px; padding-left: 50px;">챌린지 번호</div>
-                 <div class="num" style="padding-left:25px; width: 200px;">절약형 / 저축형</div>
+                 <div class="num" style="padding-right: 10px; width:155px; padding-left: 10px;">챌린지 번호</div>
+                 <div class="num" style="padding-left:10px; width: 200px;">절약형 / 저축형</div>
                  <div class="title" style="width: 250px;">챌린지 명</div>
                  <div class="num">참여기간</div>
-                 <div class="date">최소 인원/총 인원</div>
+                 <div class="date" style="width:130px;">최소 인원/총 인원</div>
+                 <div class="num" style="padding-left:25px; width:110px;">챌린지 상태</div>
          	</div>
          
          <c:forEach items="${challengeList }" var="cl">
@@ -34,8 +35,13 @@ ${challengeList }
                     <div class="num" style="padding-left: 65px; width: auto; padding-right: 10px;"><c:if test="${cl.c_sort eq 1 }">/ 절약형</c:if></div>
                     <div class="title" style="padding-left: 65px; width:auto;"><c:if test="${cl.c_sort eq 0 }"><a href="/challenge/plusFeed?cno=${cl.cno }">${cl.c_title }</a></c:if></div>
                     <div class="title" style="padding-left: 65px; width:auto;"><c:if test="${cl.c_sort eq 1 }"><a href="/challenge/minusFeed?cno=${cl.cno }">${cl.c_title }</a></c:if></div>
-                    <div class="num" style="padding-left: 150px; width: auto;">${cl.c_period }주</div>
-                    <div class="date" style="padding-left: 100px; width: auto;"><b>${cl.c_min }</b>/ ${cl.c_cnt }</div>
+                    <div class="num" style="padding-left: auto; width: auto;">${cl.c_period }주</div>
+                    <div class="date" style="padding-left: auto; width: auto;"><b>${cl.c_min }</b>/ ${cl.c_cnt }</div>
+                    <div class="num">${cl.c_status }</div>
+                    <div>
+                    <button type="submit" class="btn btn-block btn-info btn-xs" style="width:auto;">승인</button>
+                    <button type="submit" class="btn btn-block btn-danger btn-xs" style="width:auto;">거절</button>
+                    </div>
                 </div>
                 </c:forEach>
          </div>

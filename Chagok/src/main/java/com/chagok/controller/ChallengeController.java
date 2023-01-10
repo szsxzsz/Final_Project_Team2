@@ -463,12 +463,19 @@ public class ChallengeController {
 	// 관리자 챌린지 승인
 	// http://localhost:8080/challenge/adminconfirm
 	@GetMapping("/adminconfirm")
-	public String adminconfirm(Model model) throws Exception {
-		mylog.debug("/adminconfirm 호출");
+	public String adminconfirmGET(Model model) throws Exception {
+		mylog.debug("/adminconfirmGET 호출");
 		
 		List<ChallengeVO> challengeList = service.getChallengeList();
 		model.addAttribute("challengeList", challengeList);
 		
+		return "/challenge/adminconfirm";
+	}
+	
+	@PostMapping(value="/adminconfirm")
+	public String adminconfirmPOST(ChallengeVO vo) throws Exception {
+		mylog.debug("adminconfirmPOST 호출"+vo.toString());
+		service.confirmChallenge(vo);
 		return "/challenge/adminconfirm";
 	}
 	

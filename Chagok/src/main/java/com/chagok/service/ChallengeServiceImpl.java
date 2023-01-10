@@ -138,13 +138,6 @@ public class ChallengeServiceImpl implements ChallengeService{
 		return dao.samechallenge(map);
 	}
 
-	// 챌린지 피드 인원 조회
-//	@Override
-//	public List<Map<String, Object>> getCList(Integer cno) {
-//		mylog.debug("getCList("+cno+") 호출");
-//		return dao.getCList(cno);
-//	}
-	
 	@Override
 	public int getCList(Integer cno) throws Exception {
 		mylog.debug("getCList("+cno+") 호출");
@@ -273,6 +266,27 @@ public class ChallengeServiceImpl implements ChallengeService{
 	public void updateMoney(Integer mno, Integer ab_amount, Integer cno) {
 		mylog.debug(" updateMoney(mno,ab_amount,cno) 호출 ");
 		dao.updateMoney(mno,ab_amount,cno);
+	}
+
+	// 글 정보 조회(페이징처리 cri)
+	@Override
+	public List<BoardVO> getNBoardPage(Criteria cri) throws Exception {
+		mylog.debug(" getBoardPage(Criteria cri) 호출 ");
+		return dao.getNBoardPage(cri);
+	}
+
+	// 전체 게시판 글 개수 조회
+	@Override
+	public int NboardCount() throws Exception {
+		mylog.debug("boardCount() 호출");
+		return dao.NBoardCount();
+	}
+
+	// 관리자 챌린지 승인
+	@Override
+	public void confirmChallenge(ChallengeVO vo) throws Exception {
+		mylog.debug("service : 관리자 챌린지승인");
+		dao.confirmChallenge(vo);
 	}
 
 	

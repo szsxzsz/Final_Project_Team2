@@ -117,6 +117,40 @@
 	}
 </script>
 
+<!-- 영민 입금하기 (비지니스계좌 구현중) -->
+<script type="text/javascript">
+	$(document).ready(function(){
+		
+		$('#a_biz').click(function(){
+			if ($('#result').text() == "") {
+				alert('금액을 입력하세요 !');
+				
+				return false;
+				
+			} else {
+				
+				alert(${vo.c_amount / vo.c_period});
+				
+				var bizCheck = confirm("진짜 입금 할래?");
+				
+				if (bizCheck) {
+					$('#a_biz').attr('href', '/challenge/sendBiz');
+				} else {
+					return false;
+				}
+			}
+			
+			
+			
+		});
+	});
+</script>
+
+<!-- 영민 입금하기 (비지니스계좌 구현중) -->
+
+
+
+
 <h1 style="padding: 0 15px 0 15px;"> 저축형 차곡 챌린지 </h1>
 <%-- ${msgList} --%>
 <%-- ${mno} --%>
@@ -205,8 +239,11 @@
 		    </div>
 		</div>
     </div>
+    
+<!-- 입금하기 기능용 모달창 -->
     <button class="btn btn-success" data-toggle="modal" data-target="#modal-default" style="margin-left: 90%">
    			입금하기</button>
+    
 <!-- 모달 css 파일 : resources -> plugins -> modal -> minusModal.css  -->
 	<div class="modal fade" id="modal-default" style="margin-top: 10%;">
 		<div class="modal-dialog" style=" height: 800px;">
@@ -241,11 +278,16 @@
 				<div class="modal-footer">
 					<!-- <button type="button" class="btn btn-default pull-left"
 						data-dismiss="modal">닫기</button> -->
-					<button type="button" class="btn btn-block btn-success btn-sm">입금하기</button>
+					<a href="" id="a_biz">
+						<button type="button" class="btn btn-block btn-success btn-sm biz">입금하기</button>
+					</a>
 				</div>
 			</div>
     	</div>
    	</div>
+<!-- 입금하기 기능용 모달창 -->	
+   	
+   	
    	<!-- 모달 창 -->
     	<br>
       <div class="row">
