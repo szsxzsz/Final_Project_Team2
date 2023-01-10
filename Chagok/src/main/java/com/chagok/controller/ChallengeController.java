@@ -476,6 +476,17 @@ public class ChallengeController {
 		return "/challenge/resultdefeat";
 	}
 	
+	// 관리자 챌린지 승인
+	// http://localhost:8080/challenge/adminconfirm
+	@GetMapping("/adminconfirm")
+	public String adminconfirm(Model model) throws Exception {
+		mylog.debug("/adminconfirm 호출");
+		
+		List<ChallengeVO> challengeList = service.getChallengeList();
+		model.addAttribute("challengeList", challengeList);
+		
+		return "/challenge/adminconfirm";
+	}
 	
 	
 }

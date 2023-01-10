@@ -87,11 +87,21 @@
 				 <textarea class="form-control" rows="3" style="margin-top:15px;" readonly>${vo.c_content }</textarea>
                           
 <!--     <ul class="list-inline pull-right" style="margin-top: 10px;"> -->
-      <a href="#" id="kakaotalk-sharing-btn"><i class="fa fa-share margin-r-5" style="font-size:1.2em;"><b>Share</b></i></a>
+      <a href="#" id="kakaotalk-sharing-btn"><i class="fa fa-share margin-r-5" style="font-size:1.2em; padding-left:1068px; padding-top:11px;"><b>Share</b></i></a>
 <!-- 			<a href="#" id="kakaotalk-sharing-btn">공유하기</a> -->
 <!--     </ul> -->
         </div>
         
+        <div class="form-group has-error" style="border-left-width:3px; margin-left:36px; width:1133px;">
+                  <label class="control-label" for="inputError"><i class="fa fa-times-circle-o"></i>유의사항</label>
+                  <textarea class="form-control" id="inputError" 
+                  style="height: 100px; font-size: 15px;" readonly>
+저축형과 절약형 챌린지 모두 가계부 하나의 상세 카테고리로만 참여 가능합니다.
+ex) 저축형 챌린지 [교통] 카테고리 참여 중이라면 절약형 [교통] 카테고리 챌린지 참여 불가!
+
+챌린지 참여 도중 하트 사용은 1회로 제한됩니다.
+        		  </textarea>
+        </div>
         
         <div>
 <!--        	 <form name="participateForm"> -->
