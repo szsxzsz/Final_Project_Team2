@@ -27,27 +27,31 @@ public class PaymentController {
 	private static final Logger mylog = LoggerFactory.getLogger(PaymentController.class);
 
 	// 결제하기
-//	// http://localhost:8080/pay
-//	@GetMapping(value="/pay")
-//	public String payGET() {
-//		
-//		return "/challenge/pay";
-//	}
-	
-	
-	private IamportClient api;
-	// 결제정보 확인(검증)
-	
-	@ResponseBody
-	@RequestMapping(value="/payCallback", method=RequestMethod.POST)
-	public IamportResponse<Payment> paymentByImpUid(
-			Model model
-			, Locale locale
-			, HttpSession session
-			, @PathVariable(value= "imp_uid") String imp_uid) throws IamportResponseException, IOException
-	{	
-			return api.paymentByImpUid(imp_uid);
+	// http://localhost:8080/pay
+	@GetMapping(value="/pay")
+	public String payGET() {
+		
+		return "/challenge/pay";
 	}
+	
+	
+//	private IamportClient api;
+//	public PaymentController() {
+//		// REST API 키와 REST API secret 를 아래처럼 순서대로 입력한다.
+//		this.api = new IamportClient("5615632670260363","a4x93RXR27aEPQ3s7WSqhacyrdZNUzK0S3J1UQtqU1FfhC9D5urwfaSrlAkjtyFzsoSZsYXVWCliOsPN");
+//	}
+//	// 결제정보 확인(검증)
+//	
+//	@ResponseBody
+//	@RequestMapping(value="/payCallback", method=RequestMethod.POST)
+//	public IamportResponse<Payment> paymentByImpUid(
+//			Model model
+//			, Locale locale
+//			, HttpSession session
+//			, @PathVariable(value= "imp_uid") String imp_uid) throws IamportResponseException, IOException
+//	{	
+//			return api.paymentByImpUid(imp_uid);
+//	}
 
 	// 결제페이지 - GET
 	// http://localhost:8080/payment
