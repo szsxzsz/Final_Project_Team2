@@ -1,7 +1,9 @@
 package com.chagok.service;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -23,41 +25,35 @@ public class AbookServiceImpl implements AbookService{
 	private AbookDAO dao;
 	
 	@Override
-	public List<AbookVO> getAbookList(int mno) throws Exception {
-		mylog.debug("♡♡♡♡ Service -> DAO 호출 ");
+	public List<Map<String, AbookVO>> getAbookList(int mno) throws Exception {
+//		mylog.debug("♡♡♡♡ Service -> DAO 호출");
 		return dao.getAbookList(mno);
 	}
 
 	@Override
-	public List<CategoryVO> CateList() throws Exception {
-		mylog.debug("♡♡♡♡ Service -> DAO 호출 ");
-		
-		return dao.CateList();
+	public void setAbookList(AbookVO vo) throws Exception {
+//		mylog.debug("♡♡♡♡ Service -> DAO 호출");
+		dao.setAbookList(vo);
 	}
-
-	@Override
-	public Integer updateAbook(AbookVO vo) throws Exception {
-		mylog.debug("♡♡♡♡ Service -> DAO 호출 ");
-		
-		return dao.updateAbook(vo);
-	}
-
-	@Override
-	public List<Map<String, AbookVO>> AbookList() throws Exception {
-		mylog.debug("♡♡♡♡ Service -> DAO 호출");
-		return dao.AbookList();
-	}
-
 	
+
+	@Override
+	public List<Map<String,Object>> cateList() throws Exception {
+//		mylog.debug("♡♡♡♡ Service -> DAO 호출 ");
+		
+		return dao.cateList();
+	}
+
+
 	
 	
 	
 	
 	///////////////////MJ/////////////////////
 	
+
 	@Override
 	public String getPMonth(int mm) throws Exception {
-		mylog.debug("mm : "+mm);
 		SimpleDateFormat fmt = new SimpleDateFormat("yyyyMM");
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.MONTH, -mm);
@@ -73,14 +69,35 @@ public class AbookServiceImpl implements AbookService{
 	}
 
 	@Override
-	public int chkBud(int mno, String pMonth) throws Exception {
+	public int chkBud(Integer mno, String pMonth) throws Exception {
 		return dao.chkBud(mno, pMonth);
 	}
 
 	@Override
-	public List<Map<String, Object>> getBud(int mno, String pMonth) throws Exception {
+	public List<Map<String, Object>> getBud(Integer mno, String pMonth) throws Exception {
 		return dao.getBud(mno, pMonth);
 	}
+
+	@Override
+	public void setBud(Map<String, Object> insertMap) throws Exception {
+		dao.setBud(insertMap);
+	}
+
+	@Override
+	public void updBud(List<Map<String, Object>> updateList) throws Exception {
+		dao.updBud(updateList);
+	}
+
+	@Override
+	public void delBud(Integer mno, String pMonth) throws Exception {
+		dao.delBud(mno, pMonth);
+	}
+
+	@Override
+	public Integer totalBud(Integer mno, String pMonth) throws Exception {
+		return dao.totalBud(mno, pMonth);
+	}
+	
 	
 	
 }

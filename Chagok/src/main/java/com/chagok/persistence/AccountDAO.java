@@ -6,8 +6,10 @@ import java.util.Map;
 import com.chagok.apiDomain.AccountHistoryResponseVO;
 import com.chagok.apiDomain.AccountHistoryVO;
 import com.chagok.apiDomain.AccountVO;
+import com.chagok.apiDomain.CardHistoryVO;
 import com.chagok.apiDomain.CardInfoResponseVO;
 import com.chagok.apiDomain.CardInfoVO;
+import com.chagok.apiDomain.CashVO;
 
 public interface AccountDAO {
 	
@@ -31,5 +33,20 @@ public interface AccountDAO {
 	
 	// 카드 정보 조회
 	public List<CardInfoVO> getCardInfo(String user_seq_no) throws Exception;
+	
+	// 카드 내역/금액 조회
+	public List<List<CardHistoryVO>> getCardHistory(List<CardInfoVO> list) throws Exception;
+	
+	// 계좌 내역 조회 (fintech_use_num)
+	public List<AccountHistoryVO> getAccountHistory(String fintech_use_num) throws Exception;
+	
+	// 카드 내역 조회 (card_id)
+	public List<CardHistoryVO> getCardHistory(String card_id) throws Exception;
+	
+	// 현금 등록 하기
+	public void insertCash(CashVO vo) throws Exception;
+	
+	// 현금 조회 하기
+	public CashVO getCashInfo(int mno) throws Exception;
 	
 }

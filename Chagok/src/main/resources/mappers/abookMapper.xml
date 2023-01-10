@@ -6,53 +6,87 @@
   <mapper namespace="com.chagok.mapper.abookMapper">
   
   <!-- 가계부 목록 -->
-  <select id="abookList" resultType="AbookVO">
-	select * from account_book as ab inner join category as c on ab.ctno=c.ctno;
+  <select id="getAbookList" resultType="AbookVO">
+	select * from account_book as ab inner join category as c on ab.ctno=c.ctno where mno=#{mno}
   </select>
   
-  <!-- 카테고리 목록 -->
+  <!-- 카테고리 top -->
   <select id="cateList" resultType="CategoryVO">
-  	select * from account_book as ab inner join category as ct on ab.ctno=ct.ctno;
+	select * from category where ct_lev=0
   </select>
   
-  <!-- 그리드 수정 -->
-  <insert id="abookUpdate">
-  	update into account_book set 
-  </insert>
+
+  <!-- 가계부 저장(수정) -->
+    <update id="setAbookList">
+	update account_book set 
+	ab_inout=#{ab_inout},ab_date=#{ab_date},ab_content=#{ab_content},ab_method=#{ab_method},ab_memo=#{ab_memo},ctno=#{ctno}, ab_amount=#{ab_amount}
+	where abno=#{abno};
+	</update>
   
-  
-  
-  
+  <!-- 가계부 삭제 -->
+  <delete id="delAbookList">
+  	delete * from account_book where abno=#{abno};
+  </delete>
   
   
  	<!-- //////////////////// MJ //////////////////// -->
-	
+	<!-- 해당월 예산 조회 -->
 	<sql id="wh1">
+		from plan
 		where mno=#{mno} 
-		and p_month=#{pMonth}
+		and p_month=#{p_month}
 	</sql>
 	
 	<!-- 상위 카테고리 -->
 	<select id="getctTop" resultType="String">
 		select ct_top
 		from category
-		where ct_inout=1 and ct_lev=0;
+		where ct_inout=1 and ct_lev=0 and ctno != 12;
 	</select>
 	
 	<!-- 1. 예산 유무 -->
 	<select id="chkBud" resultType="int">
-		select count(pno) from plan 
-		<include refid="wh1"/>;
+		select count(pno)
+		<include refid="wh1"/>
 	</select>
 	 
 	<!-- 2. 예산 조회 -->
 	<select id="getBud" resultType="map">
-		select ct.ct_top ct_top, p_amount
+		select ct.ct_top ct_top, p_amount, pno
 		from plan p 
 		inner join category ct 
 		on p.ctno=ct.ctno
-		<include refid="wh1"/>
+		where mno=#{mno} 
+		and p_month=#{p_month}
 		group by ct.ct_top;
-	</select> 
-  
+	</select>
+	
+	<!-- 3. 예산 설정 -->
+	<insert id="setBud" parameterType="map">
+		insert into plan (mno, p_month, p_amount, ctno)
+		values
+		<foreach item="i" collection="insertList" separator=",">
+			(#{i.mno}, #{i.p_month}, #{i.p_amount}, #{i.ctno})
+		</foreach>
+	</insert>
+	
+	<!-- 4. 예산 수정 -->
+	<update id="updBud">
+		update plan set 
+		p_amount=#{p_amount} 
+		where pno=#{pno}
+	</update>
+	
+	<!-- 5. 예산 삭제 -->
+	<delete id="delBud">
+		delete
+		<include refid="wh1"/>
+	</delete>
+	
+ 	<!-- 6. 총예산  조회-->
+	<select id="totalBud" resultType="Integer">
+		select sum(p_amount) 
+		<include refid="wh1"/>
+	</select>
+	
   </mapper>

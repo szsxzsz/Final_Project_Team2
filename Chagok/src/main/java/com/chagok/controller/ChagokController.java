@@ -204,5 +204,22 @@ public class ChagokController {
       }
    }
 	
-	
+   @GetMapping("/iframeMyAsset")
+   public String iframeMyAsset() {
+	   
+	   return "/iframe/iframeMyAsset";
+   }
+   
+   @GetMapping("/iframeAbookList")
+   public String iframeAbookList() {
+	   
+	   return "/iframe/iframeAbookList";
+   }
+   
+   @GetMapping("/iframeDateReport")
+   public String iframeDateReport() {
+	   
+	   return "/iframe/iframeDateReport";
+   }
+   
 }

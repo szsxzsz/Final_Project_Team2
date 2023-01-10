@@ -11,16 +11,11 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.css"/>
 
 </head>
-<body>
+<!-- <body> -->
 	<div class="content-wrapper" style="min-height: 986.281px;">
 		<section class="content-header">
 			<c:set var="today" value="<%=new java.util.Date() %>"/><br><br>
-<%-- 			${map.outWeekjson }<hr> --%>
-<%-- 			${map.outCum} --%>
-<%-- 			${map.weekjson } --%>
-<%-- 				${map.weekjson } --%>
-			<h1>
-			${userVO.nick }님의
+			<h1>${nick }님의
 				<fmt:formatDate value="${today }" pattern="MM"/>월 날짜별 리포트
 			</h1>
 		</section>
@@ -78,6 +73,7 @@
 							<h4>지난달보다 <fmt:formatNumber value="${d }" type="percent"/> 적게 쓰고 있습니다.</h4>
 					    </c:otherwise>
 					</c:choose>
+					<h4>최근 3개월 간 평균 지출 : <fmt:formatNumber value="${dtAvg3}"/>원</h4>
 				</div>
 				<div class="col-md-6">
 					<h3>이번달 남은 금액은 <fmt:formatNumber value="${c-a }"/>원 입니다.</h3>
@@ -191,8 +187,6 @@
 	
 	</div>	
 
-<!-- jQuery -->
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.min.js"></script>
 <!-- jQuery.number -->
 <script src="/resources/js/jquery.number.min.js"></script>
 <!-- chart.js -->
@@ -245,8 +239,8 @@ for(var i=0; i<month.length; i++){
 
 for(var i=0; i<day.length; i++){
 	var d = day[i];
-	label1.push(d.day2);
-	value1.push(d.dayout);
+	label1.push(d.date);
+	value1.push(d.sum);
 }
 
 for(var i=0; i<amptop.length; i++){
@@ -269,12 +263,15 @@ for(var i=0; i<outCum.length; i++) {
 	label2.push(d.t2date);
 	value2.push(d.cumSum);
 }
-
 </script>
 
 <script type="text/javascript">
-$(document).ready(function(){
+var a = $.number(5000000);
+console.log(a);
 
+
+$(document).ready(function(){
+	var arr = ${map.amtTopjson};
 	$.each (week2, function (i, el) {
 		$('#tbody1').append("<tr>");
 		$('#tbody1').append("<td>"+week2[i]+"</td>");

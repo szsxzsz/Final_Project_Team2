@@ -15,8 +15,10 @@ import org.springframework.stereotype.Repository;
 import com.chagok.apiDomain.AccountHistoryResponseVO;
 import com.chagok.apiDomain.AccountHistoryVO;
 import com.chagok.apiDomain.AccountVO;
+import com.chagok.apiDomain.CardHistoryVO;
 import com.chagok.apiDomain.CardInfoResponseVO;
 import com.chagok.apiDomain.CardInfoVO;
+import com.chagok.apiDomain.CashVO;
 
 @Repository
 public class AccountDAOImpl implements AccountDAO{
@@ -128,6 +130,51 @@ public class AccountDAOImpl implements AccountDAO{
 		List<CardInfoVO> list = sqlSession.selectList(NAMESPACE+".getCardInfo", user_seq_no);
 		
 		return list;
+	}
+
+	@Override
+	public List<List<CardHistoryVO>>  getCardHistory(List<CardInfoVO> list) throws Exception {
+		List<List<CardHistoryVO>> resultList = new ArrayList<List<CardHistoryVO>>();
+		
+		for (int i = 0; i < list.size(); i++) {
+			List<CardHistoryVO> cardHistoryList = 
+					sqlSession.selectList(NAMESPACE+".getCardHistory", list.get(i).getCard_id());
+			resultList.add(cardHistoryList);
+		}
+		
+		return resultList;
+	}
+
+	@Override
+	public List<AccountHistoryVO> getAccountHistory(String fintech_use_num) throws Exception {
+		
+		List<AccountHistoryVO> list = sqlSession.selectList(NAMESPACE+".getAccountHistory", fintech_use_num);
+		
+		return list;
+	}
+
+	@Override
+	public List<CardHistoryVO> getCardHistory(String card_id) throws Exception {
+		
+		List<CardHistoryVO> list = sqlSession.selectList(NAMESPACE+".getCardHistoryList", card_id);
+				
+		return list;
+	}
+
+	@Override
+	public void insertCash(CashVO vo) throws Exception {
+		
+		// 기존 데이터 삭제
+		sqlSession.delete(NAMESPACE+".deleteCash", vo);
+		
+		// DB 에 데이터 추가
+		sqlSession.insert(NAMESPACE+".insertCash", vo);
+		
+	}
+
+	@Override
+	public CashVO getCashInfo(int mno) throws Exception {
+		return sqlSession.selectOne(NAMESPACE+".getCashInfo", mno);
 	}
 
 	

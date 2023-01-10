@@ -15,10 +15,7 @@
 	<div class="content-wrapper" style="min-height: 986.281px;">
 	<section class="content-header">
 		<c:set var="today" value="<%=new java.util.Date() %>"/><br><br>
-<%-- 		${map.chRandList }<hr> --%>
-<%-- 		${map.cateCntjson} --%>
-<%-- 		${map.cardRandList} --%>
-		<h1>${userVO.nick }님의
+		<h1>${nick }님의
 			<fmt:formatDate value="${today }" pattern="MM"/>월 카테고리별 리포트
 		</h1>
 	</section>
@@ -106,7 +103,6 @@
 
 		<div class="box box-danger">
 			<div class="box-header with-border">
-				<c:set var="nick" value="${userVO.nick }"/>
 				<h3 class="box-title">${nick }님, 함께 절약하는 습관을 길러요</h3>
 			</div>
 
@@ -293,7 +289,7 @@ $(document).ready(function(){
 		$('#tbody1').append("<tr");
 		$('#tbody1').append("<td>"+i+"</td>");
 		$('#tbody1').append("<td>"+label1[i]+"</td>");
-		$('#tbody1').append("<td>"+$.number(value1[i])+"원</td>");
+		$('#tbody1').append("<td>"+$.number(value1[i])+"회</td>");
 		$('#tbody1').append("/<tr>");
 	});
 	
