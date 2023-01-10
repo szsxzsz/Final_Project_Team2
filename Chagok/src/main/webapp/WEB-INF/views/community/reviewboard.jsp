@@ -26,6 +26,7 @@ ${review }
 		<tbody>
 <%-- 			<c:set var="board" value="${fn:length(boardList)}"/> --%>
 <%-- 			<c:forEach items="${boardList }" var="boardList" begin="1" end="${board }"> --%>
+			<c:set var="no" value="${boardList.size()} "></c:set>
 			<c:forEach items="${boardList }" var="boardList" varStatus="status">
 <%-- 			<c:forEach var="b" begin="0" end="${boardList.size() - 1 }" step="1"> --%>
 <%-- 		    <c:set var="c"  value="${vo2[i] }" /> --%>
@@ -34,7 +35,7 @@ ${review }
 <%-- 				<td> ${pagination.total - ((pagination.nowPage-1) * 10 + status.index) - 1}</td> --%>
 <%-- 				<td>${paginationInfo.totalRecordCount - ((paginationInfo.currentPageNo-1) * paginationInfo.recordCountPerPage + status.index) }</td> --%>
 <%-- 				<td>${boardList[size - i] }</td> --%>
-				<td>${status.index +1}</td>
+				<td>${no}</td>
 				<td>11</td>
 				<td>
 					<a href="/reviewcontent?cno=${boardList.cno }">${boardList.b_title } </a>
@@ -42,6 +43,7 @@ ${review }
 				<td>${boardList.b_content }</td>
 				<td>11</td>
 				<td>${boardList.b_writer }</td>
+					<c:set var="no" value="${no-1} "></c:set>
 			</tr>
 			</c:forEach>
 			

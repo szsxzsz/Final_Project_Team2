@@ -17,14 +17,16 @@
 			</tr>
 		</thead>
 		<tbody>
+			<c:set var="no" value="${boardList.size()} "></c:set>
 			<c:forEach items="${boardList }" var="boardList" varStatus="status" >
 			<tr>
-				<td>${status.index + 1 }</td>
+				<td>${no }</td>
 				<td>
 					<a href="http://localhost:8080/noticecontent?bno=${boardList.bno }">${boardList.b_title }</a>
 				</td>
 				<td>${boardList.b_date }</td>
 			</tr>
+			<c:set var="no" value="${no}"></c:set>
 			</c:forEach>
 		</tbody>
 	</table>
