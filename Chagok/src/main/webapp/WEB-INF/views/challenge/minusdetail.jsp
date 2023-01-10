@@ -88,7 +88,7 @@
 
         <div class="form-group has-warning" style="padding-top: 50px; border-left-width:3px; margin-left:36px; width:1133px;">
                   <label class="control-label" for="inputWarning"><i class="fa fa-bell-o"></i>챌린지 설명</label>
-                  <textarea class="form-control" id="inputWarning" style="height: 70px; font-size: 15px;" readonly>
+                  <textarea class="form-control" id="inputWarning" style="height: 180px; font-size: 15px;" readonly>
 ${vo.c_content }
         		  </textarea>
         <a href="#" id="kakaotalk-sharing-btn"><i class="fa fa-share-alt" style="font-size:1.2em; padding-left:1068px; padding-top:11px;"><b> Share</b></i></a>   		  

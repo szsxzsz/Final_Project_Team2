@@ -6,33 +6,6 @@
 <%@ include file="../include/header.jsp" %>
 <%@ include file="../include/sidebar.jsp" %>
 
-<!-- <<<<<<< HEAD -->
-<!-- <h1>공지게시판</h1> -->
-<!-- <div class="col-xs-12 table-responsive"> -->
-<!-- 	<table class="table table-striped"> -->
-<!-- 		<thead> -->
-<!-- 			<tr> -->
-<!-- 				<th>글번호</th> -->
-<!-- 				<th>공지사항 제목</th> -->
-<!-- 				<th>작성일자</th> -->
-<!-- 			</tr> -->
-<!-- 		</thead> -->
-<!-- 		<tbody> -->
-<%-- 			<c:set var="no" value="${boardList.size()} "></c:set> --%>
-<%-- 			<c:forEach items="${boardList }" var="boardList" varStatus="status" > --%>
-<!-- 			<tr> -->
-<%-- 				<td>${no }</td> --%>
-<!-- 				<td> -->
-<%-- 					<a href="http://localhost:8080/noticecontent?bno=${boardList.bno }">${boardList.b_title }</a> --%>
-<!-- 				</td> -->
-<%-- 				<td>${boardList.b_date }</td> --%>
-<!-- 			</tr> -->
-<%-- 			<c:set var="no" value="${no}"></c:set> --%>
-<%-- 			</c:forEach> --%>
-<!-- 		</tbody> -->
-<!-- 	</table> -->
-<!-- </div> -->
-<!-- ======= -->
 
 <html lang="ko">
 <head>
@@ -40,7 +13,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>공지사항</title>
 </head>
-${pageMaker }
+
 <body>
     <div class="board_wrap">
         <div class="board_title">
@@ -52,21 +25,18 @@ ${pageMaker }
                 <div class="top">
                     <div class="num">번호</div>
                     <div class="title">제목</div>
-<!--                     <div class="writer">작성자</div> -->
                     <div class="date">작성일</div>
                 </div>
          	
- 				<c:set var="boardno" value="${boardList2.size() }"></c:set>
- 				<fmt:parseNumber var="boardno" value="${boardno }" type="number" />
-                <c:forEach items="${boardList2 }" var="boardList2" >
+ 
+                <c:forEach items="${boardList }" var="boardList" varStatus="status" >
                 <div>
-                    <div class="num">${boardno }</div>
-                    <div class="title"><a href="http://localhost:8080/noticecontent?bno=${boardList2.bno }">${boardList2.b_title }</a></div>
-<%--                     <div class="writer">${boardList.b_writer }</div> --%>
-                    <div class="date"><fmt:formatDate value="${boardList2.b_date }" pattern="yyyy-MM-dd"/> </div>
+                    <div class="num">${status.index + 1 }</div>
+                    <div class="title"><a href="http://localhost:8080/noticecontent?bno=${boardList.bno }">${boardList.b_title }</a></div>
+<!--                     <div class="writer">김이름</div> -->
+                    <div class="date">${boardList.b_date }</div>
 <!--                      <div class="count">33</div> -->
                 </div>
-                <c:set var="boardno" value="${boardno -1 }"></c:set>
                 </c:forEach>
                 
              </div>
@@ -80,26 +50,18 @@ ${pageMaker }
 <!--                 <a href="write.html" class="on">등록</a> -->
                 <!--<a href="#">수정</a>-->
           </div>
-          
-           <div class="box-footer clearfix">
+             
+             
+            <div class="board_page">
 <!--                 <a href="#" class="bt first"><<</a> -->
-			<ul class="pagination pagination-sm no-margin pull-right">
-                
-                <c:if test="${pageMaker.prev }">
-					<li><a href="/notice?page=${pageMaker.startPage-1 }"class="bt prev"><</a></li>
-				</c:if>
-				<c:forEach var="idx" begin="${pageMaker.startPage }" end="${pageMaker.endPage }" step="1">
-					<li 
-						<c:out value="${idx == pageMaker.cri.page? 'class=active':'' }"/>
-					
-					><a href="/notice?page=${idx }">${idx }</a></li>
-				</c:forEach>
-                <c:if test="${pageMaker.next }">
-					<li><a href="/notice?page=${pageMaker.endPage+1 }" class="bt next">></a></li>
-				</c:if>
-               
+                <a href="#" class="bt prev"><</a>
+                <a href="#" class="num on">1</a>
+                <a href="#" class="num">2</a>
+                <a href="#" class="num">3</a>
+                <a href="#" class="num">4</a>
+                <a href="#" class="num">5</a>
+                <a href="#" class="bt next">></a>
 <!--                 <a href="#" class="bt last">>></a> -->
-			</ul>
             </div>
             
 
@@ -107,7 +69,6 @@ ${pageMaker }
     </div>
 </body>
 </html> 
-
 
 <script type="text/javascript">
 		var result = '${result}';

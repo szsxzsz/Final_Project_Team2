@@ -13,12 +13,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.chagok.domain.BoardVO;
 import com.chagok.domain.ChallengeVO;
+import com.chagok.domain.Criteria;
 import com.chagok.domain.PageMaker;
 import com.chagok.domain.SearchCriteria;
 import com.chagok.domain.SysLogVO;
@@ -188,21 +190,24 @@ public class BoardController {
 	// 공지 글 리스트 (b_sort=2)
 	// http://localhost:8080/notice
 	@GetMapping(value = "/notice")
-	public String noticeGET(Model model,HttpSession session,SearchCriteria scri) throws Exception {
+	public String noticeGET(Model model,HttpSession session,Criteria cri) throws Exception {
 			
-		List<BoardVO> boardList = service.getBoardList(2);
+//		List<BoardVO> boardList = service.getBoardList(2);
 //		List<ChallengeVO> cList = service2.cList(scri);
-		
-		mylog.debug(boardList+"");
+		List<BoardVO> boardList2 = service.getNBoardPage(cri);
+		mylog.debug(boardList2+"");
 			
-		model.addAttribute("boardList", boardList);
 		
+		// 페이징 처리
 		PageMaker pageMaker = new PageMaker();
-		pageMaker.setCri(scri);
-//		pageMaker.setTotalCount(service2.cListCount(scri));
-		
+		pageMaker.setCri(cri);
+		pageMaker.setTotalCount(service.NboardCount());
+		mylog.debug("@@@@@@@@@@@@@@@@");
+		mylog.debug("totalCnt : "+service.NboardCount());
 		model.addAttribute("pageMaker", pageMaker);
 			
+		model.addAttribute("boardList2", boardList2);
+
 		return "/community/notice";
 	}
 	
@@ -305,7 +310,7 @@ public class BoardController {
 	// 자유 게시판 (b_sort = 3)
 	//  http://localhost:8080/freeboard
 	@GetMapping(value = "/freeboard")
-	public String FreeBoardGET(HttpSession session,Model model) throws Exception {
+	public String FreeBoardGET(HttpSession session,Model model, @ModelAttribute("scri") SearchCriteria scri) throws Exception {
 		mylog.debug(" /freeboard 호출");
 			
 		List<BoardVO> boardList = service.getBoardList(3);
@@ -313,6 +318,8 @@ public class BoardController {
 		mylog.debug(boardList+"");
 			
 		model.addAttribute("boardList", boardList);
+		
+		
 			
 		return "/community/freeboard";
 	}
@@ -340,14 +347,14 @@ public class BoardController {
 
 		rttr.addFlashAttribute("result", "createOK");
 
-		return "redirect:/community/freeboard";
+		return "redirect:/freeboard";
 	}
 	
 	// 자유 게시판 글 수정하기 GET
 	// http://localhost:8080/freeboardupdate?bno=4
 	@GetMapping(value = "/freeboardupdate")
 	public String freeboardupdateGET(@RequestParam("bno") int bno, Model model, HttpSession session) throws Exception{
-		mylog.debug(" reviewupdate 호출");
+		mylog.debug(" freeboardupdateGET 호출");
 				
 		mylog.debug(bno+"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 		BoardVO board = service.getBoardContent(bno);
@@ -363,6 +370,8 @@ public class BoardController {
 	// 자유 게시판 글 수정하기 POST
 	@PostMapping(value = "/freeboardupdate")
 	public String freeboardupdatePOST(BoardVO vo,RedirectAttributes rttr,HttpSession session) throws Exception {
+		mylog.debug(" freeboardupdatePOST 호출 ");
+		
 		mylog.debug(vo+"");
 				
 				
@@ -374,7 +383,7 @@ public class BoardController {
 							
 		}
 								
-		return "/community/freeboardupdate";
+		return "redirect:/freeboard";
 				
 	}
 	
@@ -387,7 +396,11 @@ public class BoardController {
 				
 		rttr.addFlashAttribute("result", "delOK");
 				
-		return "/community/freeboard";
+		return "redirect:/freeboard";
 	}
 	// =================================================================================
+	
+
+	
+	
 }

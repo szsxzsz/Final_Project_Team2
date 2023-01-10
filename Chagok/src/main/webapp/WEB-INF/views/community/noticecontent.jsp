@@ -9,6 +9,9 @@
 ${boardList }
 ${vo }
 ${vo2 }
+<form role="form" method="post">
+	<input type="hidden" name="bno" value="${vo.bno }">
+</form>
 	 <div class="row" style="width: 1200px; padding-left: 50px; padding-right: 20px; padding-top: 50px;">
 	    <div class="d-flex justify-content-center">
 		    <div class="box">
@@ -29,11 +32,27 @@ ${vo2 }
 				 <textarea class="form-control" rows="3" style="margin-top:15px;" readonly>${vo.b_content }</textarea>
         		 </div>
 		    </div>
+        <input class="btn btn-block btn-success btn-lg" type="button" value="돌아가기" onclick="location.href='/notice';" style="width:218px; margin-left: 950px;">
 		</div>
-    </div>
+		<div class="box-footer">
 	<c:if test="${nick.equals('관리자') }">
         <input class="btn btn-block btn-success btn-lg" type="button" value="수정하기" onclick="location.href='/noticeupdate?bno=${vo.bno}';" style="width:218px; margin-left: 950px;">
-        <input class="btn btn-block btn-success btn-lg" type="button" value="삭제하기" onclick="location.href='/noticedelete';" style="width:218px; margin-left: 950px;">
+        <input class="btn btn-warning" type="submit" value="삭제하기" style="background-color: #1e282c; width:218px; margin-left: 950px;">
 	</c:if>
-        <input class="btn btn-block btn-success btn-lg" type="button" value="돌아가기" onclick="location.href='/notice';" style="width:218px; margin-left: 950px;">
+		</div>
+    </div>
+        
+        <script>
+			$(document).ready(function(){
+				var formObj = $("form[role='form']");
+				
+				
+				$(".btn-warning").click(function(){
+					formObj.attr("action","/noticedelete");
+					formObj.submit();
+				});
+				
+			});
+		</script>
+        
 <%@ include file="../include/footer.jsp"%>
