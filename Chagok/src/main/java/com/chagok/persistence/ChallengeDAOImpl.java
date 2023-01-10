@@ -334,10 +334,8 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 		mylog.debug(" updateMoney(mno,ab_amount,cno) 호출 ");
 		sqlSession.update(NAMESPACE+".updateMoney");
 	}
-	
-	
-	
-	
+
+
 	
 	
 	

@@ -349,9 +349,17 @@ public class ChallengeController {
 		
 	// 챌린지 등록 (저축형) - POST
 	@RequestMapping(value = "/plusregist", method=RequestMethod.POST)
-	public String plusRegistPOST(ChallengeVO vo, MultipartFile file) throws Exception{
+	public String plusRegistPOST(ChallengeVO vo, MultipartFile file, HttpSession session, Model model) throws Exception{
 		mylog.debug(" /challenge/plusRegist(POST) 호출 ");	
 		
+		// 회원정보 저장
+		Integer mno = (Integer)session.getAttribute("mno");
+		mylog.debug("mno :" +mno);
+			
+		UserVO userVO = uservice.getUser(mno);
+		model.addAttribute("userVO", userVO);
+		
+		// 사진등록
 		String imgUploadPath = uploadPath + File.separator + "imgUpload";
 		String ymdPath = UploadFileUtils.calcPath(imgUploadPath);
 		String fileName = null;
@@ -364,7 +372,6 @@ public class ChallengeController {
 
 		vo.setC_file(File.separator + "imgUpload" + ymdPath + File.separator + fileName);
 		vo.setC_thumbFile(File.separator + "imgUpload" + ymdPath + File.separator + "s" + File.separator + "s_" + fileName);
-		
 		
 		// 1. 전달된 정보 저장
 		mylog.debug(vo.toString());
@@ -412,7 +419,7 @@ public class ChallengeController {
 		
 		// 2. 서비스 -> DAO 접근 (mapper)
 		service.challengeRegist(vo);
-		mylog.debug(" 챌린지 등록(저축형) 완료! ");
+		mylog.debug(" 챌린지 등록(절약형) 완료! ");
 		
 		// 3. 페이지로 이동(모집중 챌린지)
 //		rttr.addFlashAttribute("result", "plusRegistOK");

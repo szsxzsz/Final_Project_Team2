@@ -152,8 +152,8 @@
 	
 	<!-- 챌린지 등록하기 --> 
   	<insert id="challengeRegist">
-     	insert into challenge (c_title,ctno,c_period,c_start,c_pcnt,c_deposit,c_freq,c_amount,c_content,c_status,c_sort,c_min,c_file,c_thumbFile) 
-     	values (#{c_title},#{ctno},#{c_period},#{c_start},#{c_pcnt},#{c_deposit},#{c_freq},#{c_amount},#{c_content},#{c_status},#{c_sort},#{c_min},#{c_file},#{c_thumbFile})  
+     	insert into challenge (c_title,ctno,c_period,c_start,c_pcnt,c_deposit,c_freq,c_amount,c_content,c_status,c_sort,c_min,c_file,c_thumbFile,c_cnt) 
+     	values (#{c_title},#{ctno},#{c_period},#{c_start},#{c_pcnt},#{c_deposit},#{c_freq},#{c_amount},#{c_content},#{c_status},#{c_sort},#{c_min},#{c_file},#{c_thumbFile},#{c_cnt})  
   	</insert>
   	
   	<!-- 챌린지 목록 -->
@@ -242,20 +242,11 @@
 		<if test="searchType != null">
 			<if test="searchType == 'c_title'.toString()">AND c_title LIKE CONCAT('%', #{keyword}, '%')</if>
 			<if test="searchType == 'c_content'.toString()">AND c_content LIKE CONCAT('%', #{keyword}, '%')</if>
-			<if test="searchType == 'c_host'.toString()">AND c_host LIKE CONCAT('%', #{keyword}, '%')</if>
+<!-- 			<if test="searchType == 'c_host'.toString()">AND c_host LIKE CONCAT('%', #{keyword}, '%')</if> -->
 			<if test="searchType == 'c_titlec_content'.toString()">AND (c_title LIKE CONCAT('%', #{keyword}, '%')) or (c_content LIKE CONCAT('%', #{keyword}, '%'))</if>
 		</if>
 	</sql>
 	
-	<!-- 	<sql id="search"> -->
-<!-- 		<if test="searchType != null"> -->
-<!-- 			<if test="searchType == 'c_t'.toString()">AND c_title LIKE '%' || #{keyword} || '%'</if> -->
-<!-- 			<if test="searchType == 'c_co'.toString()">AND c_content LIKE '%' || #{keyword} || '%'</if> -->
-<!-- 			<if test="searchType == 'c_h'.toString()">AND c_host LIKE '%' || #{keyword} || '%'</if> -->
-<!-- 			<if test="searchType == 'c_tc_co'.toString()">AND (c_title LIKE '%' || #{keyword} || '%') or (c_content LIKE '%' || #{keyword} || '%')</if> -->
-<!-- 		</if> -->
-<!-- 	</sql> -->
-
 
 <!-- 	챌린지 성공여부 (절약형) -->
 	<select id="getMoney" resultType="ChallengeVO">
@@ -296,4 +287,5 @@
 		insert into alert(cno, a_receive, a_content) values(#{cno}, #{a_receive}, #{a_content});
 	</insert>
 	
+
   </mapper>
