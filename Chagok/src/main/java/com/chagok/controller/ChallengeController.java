@@ -31,6 +31,8 @@ import com.chagok.domain.AbookVO;
 import com.chagok.domain.CategoryVO;
 import com.chagok.domain.BoardVO;
 import com.chagok.domain.ChallengeVO;
+import com.chagok.domain.FeedDTO;
+import com.chagok.domain.MessageVO;
 import com.chagok.domain.MinusVO;
 import com.chagok.domain.UserVO;
 import com.chagok.service.AbookService;
@@ -64,35 +66,57 @@ public class ChallengeController {
 
 	// http://localhost:8080/challenge/plusFeed?cno=44
 	@GetMapping(value = "/plusFeed")
-	public String plusfeedGET(Model model, int cno, HttpSession session) throws Exception {
+	public String plusfeedGET(Model model, int cno, HttpSession session, UserVO vo) throws Exception {
 		mylog.debug("plusfeedGET() 호출");
 
 		List<Map<String, Object>> plusPeoList = service.getPlusPeople(cno);
 		mylog.debug("plusFeedGET()에서 id : "+session.getId());
-		//SysLogVO sysLogVO = new SysLogVO();
+		Integer mno = service.getChallengeInfo(cno).getMno();
 		
-		
-		//model.addAttribute("sessionId", sysLogVO.getUserId());
 		model.addAttribute("vo", service.getChallengeInfo(cno));
 		model.addAttribute("plusPeoList", plusPeoList);
 		model.addAttribute("c_end", service.getChallengeEndDate(cno));
 		model.addAttribute("msgList", feedsevice.getMsgList(cno));
+		model.addAttribute("host",uservice.getUser(mno));
 		
 		return "/challenge/plusFeed";
 	}
 	
-	@PostMapping(value = "/plusFeed")
-	public String plusfeedPOST(Model model, int cno, HttpSession session) throws Exception {
-		mylog.debug("plusfeedPOST() 호출");
+	@PostMapping(value = "/getPreChat")
+	@ResponseBody 
+	public List<MessageVO> preChat(@RequestBody String cno) throws Exception {
 		
-		ChallengeVO chVO = service.getChallengeInfo(cno);
-		List<Map<String, Object>> plusPeoList = service.getPlusPeople(cno);
-		
-		model.addAttribute("vo", chVO);
-		model.addAttribute("plusPeoList", plusPeoList);
-		
-		return "/challenge/plusFeed";
+		return feedsevice.getMsgList(Integer.parseInt(cno));
 	}
+	
+	@PostMapping(value = "/saveChat")
+	@ResponseBody 
+	public void saveChat(@RequestBody Map<String, Object> map, MessageVO messageVO, FeedDTO feedDTO) throws Exception {
+		   mylog.debug(" 메시지 저장 ajax 호출");
+		   messageVO.setMessage(map.get("message").toString());
+		   messageVO.setWriter(map.get("writer").toString());
+		   String time = map.get("time").toString();
+		   messageVO.setTime(time+" ");
+		  
+		   feedDTO.setCno(Integer.parseInt(map.get("cno").toString()));
+		   feedDTO.setF_receive(map.get("receiver").toString());
+		   feedDTO.setF_date(map.get("f_date").toString());
+		   
+		   feedsevice.saveMsg(messageVO, feedDTO);
+	}
+	
+//	@PostMapping(value = "/plusFeed")
+//	public String plusfeedPOST(Model model, int cno, HttpSession session) throws Exception {
+//		mylog.debug("plusfeedPOST() 호출");
+//		
+//		ChallengeVO chVO = service.getChallengeInfo(cno);
+//		List<Map<String, Object>> plusPeoList = service.getPlusPeople(cno);
+//		
+//		model.addAttribute("vo", chVO);
+//		model.addAttribute("plusPeoList", plusPeoList);
+//		
+//		return "/challenge/plusFeed";
+//	}
 	
 	// http://localhost:8080/challenge/plusdetail?cno=2
 
@@ -240,27 +264,6 @@ public class ChallengeController {
 		mylog.debug(result);
 		return result;
 }
-
-	// http://localhost:8080/challenge/echo
-	@GetMapping(value = "/echo")
-	public String echoGET() throws Exception {
-
-		return "/challenge/echo";
-	}
-	
-
-	// http://localhost:8080/challenge/chat
-	@GetMapping(value = "/chat")
-	public String chatGET(Model model) throws Exception{
-		mylog.debug("==================================");
-		UserVO user = new UserVO();
-		mylog.debug("@ChatController, GET Chat / Username : " + user.getNick());
-		
-		model.addAttribute("user", user.getNick());
-		
-		return "/challenge/chat";
-	}
-
 	
 	// http://localhost:8080/challenge/checkfeed?cno=2
 	@GetMapping(value = "/checkfeed")

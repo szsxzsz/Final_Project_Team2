@@ -322,9 +322,9 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 	
 	// 게시판 + 챌린지
 	@Override
-	public List<Map<String, Object>> getBoardChallenge(Integer cno) throws Exception {
+	public String getBoardChallenge(Integer cno) throws Exception {
 		mylog.debug("getBoardChallenge 호출");
-		List<Map<String, Object>> boardChallenge = sqlSession.selectList(NAMESPACE+".boardChallenge", cno);
+		String boardChallenge = sqlSession.selectOne(NAMESPACE+".boardChallenge", cno);
 		return boardChallenge;
 	}
 
@@ -334,8 +334,10 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 		mylog.debug(" updateMoney(mno,ab_amount,cno) 호출 ");
 		sqlSession.update(NAMESPACE+".updateMoney");
 	}
-
-
+	
+	
+	
+	
 	
 	
 	

@@ -296,7 +296,7 @@ public class BoardController {
 					
 		rttr.addFlashAttribute("result", "delOK");
 					
-		return "/community/notice";
+		return "redirect:/notice";
 	}
 	
 	// =================================================================================

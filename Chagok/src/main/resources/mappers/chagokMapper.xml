@@ -101,14 +101,20 @@
 	</select>
 
 	<!-- 게시글 리스트(카테고리) -->
+<!-- 	<select id="boardList" resultType="com.chagok.domain.BoardVO"> -->
+<!-- 		select * from board -->
+<!-- 		where b_sort = #{b_sort} -->
+<!-- 	</select> -->
+	<!-- 게시글 리스트(카테고리) , 내림차순 -->
 	<select id="boardList" resultType="com.chagok.domain.BoardVO">
 		select * from board
 		where b_sort = #{b_sort}
+		order by b_date desc
 	</select>
-
+	
 	<!-- 게시글 확인 -->
 	<select id="board" resultType="com.chagok.domain.BoardVO">
-		select * from board 
+		select * from board
 		where bno = #{bno}
 	</select>
 	
@@ -263,7 +269,7 @@
 
 
 	<!-- 게시판과 챌린지 -->
-	<select id="boardChallenge" resultType="map">
+	<select id="boardChallenge" resultType="string">
 		select *
 		from challenge c inner join board b
 		where bno = #{bno} and b.cno = c.cno
@@ -287,5 +293,9 @@
 		insert into alert(cno, a_receive, a_content) values(#{cno}, #{a_receive}, #{a_content});
 	</insert>
 	
-
+	<!-- 메시지 저장  -->
+	<insert id="saveMsg">
+		insert into feed(contents, f_date, f_receive, cno) values(#{contents}, #{f_date}, #{f_receive}, #{cno});
+	</insert>
+	
   </mapper>

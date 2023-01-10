@@ -49,17 +49,9 @@
 	 <beans:property name="defaultEncoding" value="utf-8" />
 	</beans:bean>
 
-	<beans:bean id="sampleInterceptor" class="com.chagok.interceptor.SampleInterceptor"/>
 	<beans:bean id="loginInterceptor" class="com.chagok.interceptor.LoginInterceptor"/>
 	<beans:bean id="authInterceptor" class="com.chagok.interceptor.AuthInterceptor"/>
 
-	<interceptors>
-	   <interceptor>
-	       <mapping path="/commumain" />
-	       <beans:ref bean="sampleInterceptor" />
-	       
-	   </interceptor>
-	</interceptors>
 	
 	<interceptors>
 	   <interceptor>
