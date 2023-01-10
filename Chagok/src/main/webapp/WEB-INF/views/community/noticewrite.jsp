@@ -35,10 +35,10 @@
 		    </div>
 		</div>
 		<input type="hidden" value="2" name="b_sort" >
+        <input class="btn btn-block btn-success" type="submit" value="작성하기" style="width:218px; margin-left: 950px;">
+        <input class="btn btn-block btn-success btn-lg" type="button" value="돌아가기" onclick="location.href='/notice';" style="width:218px; margin-left: 950px;">
 </form>
     </div>
-        <input class="btn btn-block btn-success btn-lg" type="submit" value="작성하기" onclick="location.href='/noticewrite';"style="width:218px; margin-left: 950px;">
-        <input class="btn btn-block btn-success btn-lg" type="button" value="돌아가기" onclick="location.href='/notice';" style="width:218px; margin-left: 950px;">
 		
 
 <%@ include file="../include/footer.jsp"%>

@@ -80,7 +80,13 @@ public class FeedDAOImpl implements FeedDAO {
 		return message;
 	}
 
-	
+	// 메시지 저장
+	public void saveMsg(FeedDTO feedDTO) throws Exception{
+		mylog.debug(" saveMessage() 호출");
+		
+		sqlSession.insert(NAMESPACE+".saveMsg",feedDTO);
+		
+	}
 	
 	
 }

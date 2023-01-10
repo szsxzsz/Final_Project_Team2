@@ -60,18 +60,16 @@ public class StompController {
 	
 	
     @SendTo("/topic/feed/2")
-    public MessageVO ttt(@RequestBody MessageVO message) throws Exception{
-    	System.out.println("stomp message>>"+ message);
-//    	System.out.println("ID =" + message.g); // 클라이언트의 id
-//    	System.out.println(cno+ "번 message>>"+ message);
-//    	System.out.println("ID =" + message.getMno()); // 클라이언트의 id
+    public MessageVO ttt(@RequestBody MessageVO message, @PathVariable("cno") String cno) throws Exception{
+    	System.out.println("/topic/feed/"+cno+"의 stomp message>>"+ message);
+    	
     	return message;
     }
 
     @MessageMapping("/send/2")
-    public void ttte(@RequestBody MessageVO message) throws Exception{
-    	System.out.println("user/cno :  message>>"+ message.getMessage());
-    	System.out.println("user/writer :  message>>"+ message.getWriter());
+    public void ttte(@RequestBody MessageVO message, @Payload String cno) throws Exception{
+    	System.out.println("/send/"+cno+ " user의 메시지 :  message>> "+ message.getMessage());
+    	System.out.println("/send/"+cno+ " writer>> "+ message.getWriter());
     	Date now = new Date();
     	
     	message.setTime(now.toString());
@@ -81,6 +79,28 @@ public class StompController {
 //    	Chat chat chatService.create
 //    	
 		template.convertAndSend("/topic/feed/2", message);
+    }
+    
+    @MessageMapping("/send/44")
+    public void room(@RequestBody MessageVO message, @Payload String cno) throws Exception{
+    	System.out.println("/send/"+cno+ " user의 메시지 :  message>> "+ message.getMessage());
+    	System.out.println("/send/"+cno+ " writer>> "+ message.getWriter());
+    	Date now = new Date();
+    	
+    	message.setTime(now.toString());
+    	Map<String, Object> payload = new HashMap<String, Object>();
+    	
+    	// 채팅 저장
+//    	Chat chat chatService.create
+//    	
+		template.convertAndSend("/topic/feed/44", message);
+    }
+    
+    @SendTo("/topic/feed/44")
+    public MessageVO room2(@RequestBody MessageVO message, @PathVariable("cno") String cno) throws Exception{
+    	System.out.println("/topic/feed/"+cno+"의 stomp message>>"+ message);
+    	
+    	return message;
     }
     
     @MessageMapping("/chat/enter") // 호출함(socket.send)
