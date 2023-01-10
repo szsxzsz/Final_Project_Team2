@@ -1,6 +1,7 @@
 package com.chagok.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.io.File;
 import java.io.IOException;
@@ -41,6 +42,7 @@ import com.chagok.domain.SysLogVO;
 import com.chagok.domain.UserVO;
 import com.chagok.service.AbookService;
 import com.chagok.service.ChallengeService;
+import com.chagok.service.FeedService;
 import com.chagok.service.UserService;
 import com.chagok.utils.UploadFileUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -62,6 +64,8 @@ public class ChallengeController {
 	@Resource(name="uploadPath")
 	private String uploadPath;
 
+	@Inject
+	private FeedService feedservice;
 
 	private static final Logger mylog = LoggerFactory.getLogger(ChallengeController.class);
 
@@ -80,48 +84,19 @@ public class ChallengeController {
 		model.addAttribute("vo", service.getChallengeInfo(cno));
 		model.addAttribute("plusPeoList", plusPeoList);
 		model.addAttribute("c_end", service.getChallengeEndDate(cno));
-//		model.addAttribute("msgList", feedsevice.getMsgList(cno));
+		model.addAttribute("msgList", feedservice.getMsgList(cno));
 		model.addAttribute("host",uservice.getUser(mno));
 		
 		return "/challenge/plusFeed";
 	}
 	
+	// 과거 채팅기록 가져옴
 	@PostMapping(value = "/getPreChat")
 	@ResponseBody 
 	public List<MessageVO> preChat(@RequestBody String cno) throws Exception {
 		
-//		return feedsevice.getMsgList(Integer.parseInt(cno));
-		return null; // 오류때문에 임의로 넣은 것!
+		return feedservice.getMsgList(Integer.parseInt(cno));
 	}
-	
-	@PostMapping(value = "/saveChat")
-	@ResponseBody 
-	public void saveChat(@RequestBody Map<String, Object> map, MessageVO messageVO, FeedDTO feedDTO) throws Exception {
-		   mylog.debug(" 메시지 저장 ajax 호출");
-		   messageVO.setMessage(map.get("message").toString());
-		   messageVO.setWriter(map.get("writer").toString());
-		   String time = map.get("time").toString();
-		   messageVO.setTime(time+" ");
-		  
-		   feedDTO.setCno(Integer.parseInt(map.get("cno").toString()));
-		   feedDTO.setF_receive(map.get("receiver").toString());
-		   feedDTO.setF_date(map.get("f_date").toString());
-		   
-//		   feedsevice.saveMsg(messageVO, feedDTO);
-	}
-	
-//	@PostMapping(value = "/plusFeed")
-//	public String plusfeedPOST(Model model, int cno, HttpSession session) throws Exception {
-//		mylog.debug("plusfeedPOST() 호출");
-//		
-//		ChallengeVO chVO = service.getChallengeInfo(cno);
-//		List<Map<String, Object>> plusPeoList = service.getPlusPeople(cno);
-//		
-//		model.addAttribute("vo", chVO);
-//		model.addAttribute("plusPeoList", plusPeoList);
-//		
-//		return "/challenge/plusFeed";
-//	}
 	
 	// http://localhost:8080/challenge/plusdetail?cno=2
 

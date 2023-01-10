@@ -30,6 +30,9 @@
     <websocket:message-broker application-destination-prefix="/">
     <websocket:transport send-timeout="15000" send-buffer-size="524288" message-size="131072" />
         <websocket:stomp-endpoint path="/plusFeed" allowed-origins="*">
+            <websocket:handshake-interceptors>
+            	<beans:bean class="com.chagok.interceptor.HttpHandshakeInterceptor"/>
+            </websocket:handshake-interceptors>
             <websocket:sockjs websocket-enabled="true"/>
         </websocket:stomp-endpoint>
         <websocket:simple-broker prefix="/topic, /queue"/>
@@ -68,6 +71,5 @@
 	       <beans:ref bean="authInterceptor" />
 	   </interceptor>
 	</interceptors>
-	
 
 </beans:beans>

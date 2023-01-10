@@ -282,8 +282,6 @@
 		where mno = #{mno} and cno = #{cno}
 	</update>
 	
-	
-	
 	<!-- 지난 메시지 가져오기   -->
 	<select id="getMsgList" resultType="com.chagok.domain.FeedDTO">
 		select * from feed where cno = #{cno}
@@ -295,7 +293,7 @@
 	</insert>
 	
 	<!-- 메시지 저장  -->
-	<insert id="saveMsg">
+	<insert id="saveMsg1">
 		insert into feed(contents, f_date, f_receive, cno) values(#{contents}, #{f_date}, #{f_receive}, #{cno});
 	</insert>
 	

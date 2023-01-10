@@ -24,28 +24,21 @@ import lombok.Data;
 @Data
 public class FeedDTO {
 	
-//	private int fno; // 메시지 덩어리 번호
-//	private	String f_react;
-//	private Timestamp f_date;
-//	private String f_send;
-//	private String f_receive; // 받느나
-	
 	private int	fno;
 	private String roomId;
 	private String contents;
-//	private List<MessageVO> content2;
-    private String f_date; // 채팅시간
+    private Date f_date; // 채팅시간
     private int cno;  // 채팅 방 번호
     private String f_receive;  // 채팅 방 번호
     private Set<WebSocketSession> sessions = new HashSet<WebSocketSession>();
     //WebSocketSession은 Spring에서 Websocket Connection이 맺어진 세션
 
-    public static FeedDTO create(String date, Integer cno){
+    public static FeedDTO create(Date date, String f_receiver){
     	FeedDTO room = new FeedDTO();
     	
         room.roomId = UUID.randomUUID().toString();
         room.f_date = date;
-        room.cno = cno;
+        room.f_receive = f_receiver;
         
         return room;
     }
@@ -76,9 +69,4 @@ public class FeedDTO {
 		});
     }
 	
-    public enum MessageType {
-        CHAT,
-        JOIN,
-        LEAVE
-    }
 }
