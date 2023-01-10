@@ -77,6 +77,11 @@ public class UserServiceImpl implements UserService {
 		dao.updateIsCheck(mno);
 	}
 
+	@Override
+	public void updateSeqNo(Map<String, Object> map) {
+		dao.updateSeqNo(map);
+	}
+
 	
 
 	

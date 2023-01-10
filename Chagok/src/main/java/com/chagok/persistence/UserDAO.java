@@ -29,5 +29,8 @@ public interface UserDAO {
 	
 	// 인증성공 isCheck N => Y
 	public void updateIsCheck(int mno);
+	
+	// user_seq_no 저장
+	public void updateSeqNo(Map<String, Object> map);
 
 }

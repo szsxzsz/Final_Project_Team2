@@ -140,6 +140,8 @@
 		update user set isCheck = "Y" where mno = #{mno}
 	</update>
 	
-	
+	<update id="updateSeqNo">
+		update user set user_seq_no = #{user_seq_no} where mno = #{mno}
+	</update>
 	
   </mapper>

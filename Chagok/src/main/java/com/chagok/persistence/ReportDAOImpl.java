@@ -1,5 +1,6 @@
 package com.chagok.persistence;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -12,7 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import com.chagok.domain.AbookVO;
 import com.chagok.domain.ChallengeVO;
-import com.chagok.domain.ReportVO;
+import com.chagok.domain.PropCardVO;
 
 @Repository
 public class ReportDAOImpl implements ReportDAO {
@@ -35,95 +36,136 @@ public class ReportDAOImpl implements ReportDAO {
 	////////////////////////dateReport ////////////////////////
 	
 	@Override
-	public Integer dtSum1(Integer mno) throws Exception {
-		mylog.debug("dtSum1() 호출");
-		return sqlSession.selectOne(NAMESPACE+".dtSum1", mno);
+	public Integer dtSum(Integer mno, Integer mm) throws Exception {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("mno", mno);
+		map.put("mm", mm);
+		return sqlSession.selectOne(NAMESPACE+".dtSum", map);
 	}
 	
 	@Override
-	public Integer dtSum2(Integer mno) throws Exception {
-		mylog.debug("dtSum2() 호출");
-		return sqlSession.selectOne(NAMESPACE+".dtSum2", mno);
+	public Integer dtAvg(Integer mno, Integer mm) throws Exception {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("mno", mno);
+		map.put("mm", mm);
+		return sqlSession.selectOne(NAMESPACE+".dtAvg", map);
 	}
 
 	@Override
-	public Integer dtAvg1(Integer mno) throws Exception {
-		mylog.debug("dtAvg1() 호출");
-		return sqlSession.selectOne(NAMESPACE+".dtAvg1", mno);
+	public Integer dtAvg3(Integer mno) throws Exception {
+		return sqlSession.selectOne(NAMESPACE+".dtAvg3", mno);
 	}
 
 	@Override
-	public Integer dtAvg2(Integer mno) throws Exception {
-		mylog.debug("dtAvg2() 호출");
-		return sqlSession.selectOne(NAMESPACE+".dtAvg2", mno);
+	public Integer expSum(Integer mno, Integer mm) throws Exception {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("mno", mno);
+		map.put("mm", mm);
+		return sqlSession.selectOne(NAMESPACE+".expSum", map);
 	}
 
 	@Override
-	public Integer expSum(Integer mno) throws Exception {
-		mylog.debug("expSum() 호출");
-		return sqlSession.selectOne(NAMESPACE+".expSum", mno);
+	public Integer dtSumIn(Integer mno, Integer mm) throws Exception {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("mno", mno);
+		map.put("mm", mm);
+		return sqlSession.selectOne(NAMESPACE+".dtSumIn", map);
 	}
 
 	@Override
-	public Integer dtSumIn(Integer mno) throws Exception {
-		mylog.debug("dtSumIn() 호출");
-		return sqlSession.selectOne(NAMESPACE+".dtSumIn", mno);
+	public Integer noOut(Integer mno, Integer mm) throws Exception {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("mno", mno);
+		map.put("mm", mm);
+		return sqlSession.selectOne(NAMESPACE+".noOut", map);
 	}
 
 	@Override
-	public Integer noOut(Integer mno) throws Exception {
-		mylog.debug("noOut() 호출");
-		return sqlSession.selectOne(NAMESPACE+".noOut", mno);
+	public Integer outCnt(Integer mno, Integer mm) throws Exception {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("mno", mno);
+		map.put("mm", mm);
+		return sqlSession.selectOne(NAMESPACE+".outCnt", map);
 	}
 
 	@Override
-	public Integer outCnt(Integer mno) throws Exception {
-		mylog.debug("outCnt() 호출");
-		return sqlSession.selectOne(NAMESPACE+".outCnt", mno);
-	}
-
-	@Override
-	public Map<String, Integer> outWeek(Integer mno) throws Exception {
-		mylog.debug("outWeek() 호출");
-		return sqlSession.selectOne(NAMESPACE+".outWeek", mno);
-	}
-
-	@Override
-	public Map<String, Integer> inWeek(Integer mno) throws Exception {
-		mylog.debug("inWeek() 호출");
-		return sqlSession.selectOne(NAMESPACE+".inWeek", mno);
+	public List<Map<String, Object>> outCum(Integer mno, Integer mm) throws Exception {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("mno", mno);
+		map.put("mm", mm);
+		return sqlSession.selectList(NAMESPACE+".outCum", map);
 	}
 	
+	@Override
+	public List<Map<String, Object>> day(Integer mno, Integer mm) throws Exception {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("mno", mno);
+		map.put("mm", mm);
+		return sqlSession.selectList(NAMESPACE+".day", map);
+	}
+
+	@Override
+	public List<Map<String, Object>> week(Integer mno) throws Exception {
+		return sqlSession.selectList(NAMESPACE+".week", mno);
+	}
 	
+	@Override
+	public List<Map<String, Object>> month(Integer mno) throws Exception {
+		return sqlSession.selectList(NAMESPACE+".month", mno);
+	}
 	
-	
+	@Override
+	public List<Map<String, Object>> amtTop(Integer mno, Integer mm) throws Exception {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("mno", mno);
+		map.put("mm", mm);
+		return sqlSession.selectList(NAMESPACE+".amtTop", map);
+	}
+
+	@Override
+	public List<Map<String, Object>> cntTop(Integer mno, Integer mm) throws Exception {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("mno", mno);
+		map.put("mm", mm);
+		return sqlSession.selectList(NAMESPACE+".cntTop", map);
+	}
+
 	////////////////////////cateReport ////////////////////////
-
 	@Override
-	public List<ReportVO> cateCnt(Integer mno) throws Exception {
-		mylog.debug("cateCnt() 호출");
-		List<ReportVO> cateCntList = sqlSession.selectList(NAMESPACE+".cateCnt", mno);
-		mylog.debug("cateCntList : "+cateCntList.size());
-		return cateCntList;
+	public List<Map<String, Object>> cateCnt(Integer mno, Integer mm) throws Exception {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("mno", mno);
+		map.put("mm", mm);
+		return sqlSession.selectList(NAMESPACE+".cateCnt", map);
 	}
 
 	@Override
-	public List<ReportVO> cateSum(Integer mno) throws Exception {
-		mylog.debug("cateSum() 호출");
-		List<ReportVO> cateSumList = sqlSession.selectList(NAMESPACE+".cateSum", mno);
-		mylog.debug("cateSumList : "+cateSumList.size());
-		return cateSumList;
+	public List<Map<String, Object>> cateSum(Integer mno, Integer mm) throws Exception {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("mno", mno);
+		map.put("mm", mm);
+		return sqlSession.selectList(NAMESPACE+".cateSum", map);
 	}
 
 	@Override
-	public List<ChallengeVO> chRand(Integer mno) throws Exception {
-		mylog.debug("chRand() 호출");
-		List<ChallengeVO> chRandList = sqlSession.selectList(NAMESPACE+".chRand", mno);
+	public List<ChallengeVO> chRand(Integer mno, Integer mm) throws Exception {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("mno", mno);
+		map.put("mm", mm);
+		List<ChallengeVO> chRandList = sqlSession.selectList(NAMESPACE+".chRand", map);
 		return chRandList;
 	}
 
+	@Override
+	public List<PropCardVO> cardRand(Integer mno, Integer mm) throws Exception {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("mno", mno);
+		map.put("mm", mm);
+		List<PropCardVO> cardRandList = sqlSession.selectList(NAMESPACE+".cardRand", map);
+		return cardRandList;
+	}
 
 	
-	
+
 	
 }
