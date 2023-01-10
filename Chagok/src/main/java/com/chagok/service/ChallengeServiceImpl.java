@@ -282,6 +282,13 @@ public class ChallengeServiceImpl implements ChallengeService{
 		return dao.NBoardCount();
 	}
 
+	// 관리자 챌린지 승인
+	@Override
+	public void confirmChallenge(ChallengeVO vo) throws Exception {
+		mylog.debug("service : 관리자 챌린지승인");
+		dao.confirmChallenge(vo);
+	}
+
 	
 
 	

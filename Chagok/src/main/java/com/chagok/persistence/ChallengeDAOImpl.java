@@ -355,6 +355,13 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 		return sqlSession.selectOne(NAMESPACE+".nboardCount");
 	
 	}
+
+	// 관리자 챌린지 승인
+	@Override
+	public void confirmChallenge(ChallengeVO vo) throws Exception {
+		mylog.debug("daoimpl: 챌린지 승인");
+		sqlSession.update(NAMESPACE+".confirmChallenge",vo.getC_status());
+	}
 	
 	
 	

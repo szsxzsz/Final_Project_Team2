@@ -353,4 +353,10 @@
 		where b_sort= 1
 	</select>
 	
+	<!-- 관리자 챌린지 승인 -->
+	<update id="confirmChallenge">
+		update challenge set c_status=#{c_status}
+		where cno = #{cno}
+	</update>
+	
   </mapper>

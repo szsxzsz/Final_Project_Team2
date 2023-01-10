@@ -122,6 +122,9 @@ public interface ChallengeService {
 	// 전체 게시판 글 개수 조회
 	public int NboardCount() throws Exception;
 	
+	// 관리자 챌린지 승인
+	public void confirmChallenge(ChallengeVO vo) throws Exception;
+	
 	
 }
 
