@@ -192,9 +192,9 @@
 var socket = null;
 $(document).ready(function(){
 	//console.log("footer 내  알림");
-	socket = new SockJS("/plusFeed");
+// 	socket = new SockJS("/plusFeed");
 	
-	socket.onmessage = onMessage;
+// 	socket.onmessage = onMessage;
 }); 	   
  	   
 function onMessage(event){
@@ -232,25 +232,25 @@ $('#btnSend').click(function(e){
 			            url: url
 			        };
     
-    // 전송한 정보를 db에 저장	
-    $.ajax({
-        type: 'post',
-   //     url: '${contextPath}/alert',
-        contentType: 'application/json; charset=utf-8',
-        dataType: 'text',
-        data: JSON.stringify(submitObj),
-        success: function(){    // db전송 성공시 실시간 알림 전송
+//     // 전송한 정보를 db에 저장	
+//     $.ajax({
+//         type: 'post',
+//        url: '${contextPath}/alert',
+//         contentType: 'application/json; charset=utf-8',
+//         dataType: 'text',
+//         data: JSON.stringify(submitObj),
+//         success: function(){    // db전송 성공시 실시간 알림 전송
         	
-        	console.log("메시지 전달성공");
-            // 소켓에 전달되는 메시지
-            // 위에 기술한 EchoHandler에서 ,(comma)를 이용하여 분리시킨다.
-           // socket.send(type+","+target+","+content+","+url);	
-        }
-    });
+//         	console.log("메시지 전달성공");
+//             // 소켓에 전달되는 메시지
+//             // 위에 기술한 EchoHandler에서 ,(comma)를 이용하여 분리시킨다.
+//            // socket.send(type+","+target+","+content+","+url);	
+//         }
+//     });
     //modal.find('.modal-body textarea').val('');	// textarea 초기화
 });
 </script>
-<<script type="text/javascript">
+<script type="text/javascript">
 var Client = null;
 
 function setConnected(connected) {
@@ -271,7 +271,7 @@ function connect() {
     Client.connect({"token" : "발급받은 토큰"}, function (frame) {
         setConnected(true);
         console.log('Connected: ' + frame);
-        Client.subscribe('/sub/'+${nick }, function (msg) {
+        Client.subscribe('/sub/'+ ${nick }, function (msg) {
             console.log('구독 중', msg);
         });
     });

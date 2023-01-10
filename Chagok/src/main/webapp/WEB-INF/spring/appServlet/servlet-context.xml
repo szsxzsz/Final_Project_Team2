@@ -26,7 +26,7 @@
 	
 	<context:component-scan base-package="com.chagok.controller" />
 	
-	<!-- 웹 소켓 메시지 브로커-->
+	<!-- 웹 소켓핸들러 -->
     <websocket:message-broker application-destination-prefix="/">
     <websocket:transport send-timeout="15000" send-buffer-size="524288" message-size="131072" />
         <websocket:stomp-endpoint path="/plusFeed" allowed-origins="*">
@@ -49,17 +49,9 @@
 	 <beans:property name="defaultEncoding" value="utf-8" />
 	</beans:bean>
 
-	<beans:bean id="sampleInterceptor" class="com.chagok.interceptor.SampleInterceptor"/>
 	<beans:bean id="loginInterceptor" class="com.chagok.interceptor.LoginInterceptor"/>
 	<beans:bean id="authInterceptor" class="com.chagok.interceptor.AuthInterceptor"/>
 
-	<interceptors>
-	   <interceptor>
-	       <mapping path="/commumain" />
-	       <beans:ref bean="sampleInterceptor" />
-	       
-	   </interceptor>
-	</interceptors>
 	
 	<interceptors>
 	   <interceptor>

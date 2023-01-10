@@ -86,7 +86,7 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("nick", nick);
 		map.put("cno", cno);
-		mylog.debug(" cancelChallenge(map) 호출 "+map);
+		mylog.debug(" cancelChallenge 호출 닉네임 잘라내기, c_cnt-1 "+map);
 		sqlSession.update(NAMESPACE+".cancelChallenge", map);
 	}
 	
@@ -325,9 +325,9 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 	
 	// 게시판 + 챌린지
 	@Override
-	public List<Map<String, Object>> getBoardChallenge(Integer cno) throws Exception {
+	public String getBoardChallenge(Integer cno) throws Exception {
 		mylog.debug("getBoardChallenge 호출");
-		List<Map<String, Object>> boardChallenge = sqlSession.selectList(NAMESPACE+".boardChallenge", cno);
+		String boardChallenge = sqlSession.selectOne(NAMESPACE+".boardChallenge", cno);
 		return boardChallenge;
 	}
 
