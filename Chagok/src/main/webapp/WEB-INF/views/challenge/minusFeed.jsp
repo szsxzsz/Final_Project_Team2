@@ -168,7 +168,8 @@
    
 <!--    가계부 연동하기 모달 -->
 <!-- 모달 css 파일 : resources -> plugins -> modal -> minusModal.css  -->
-	<form action="/challenge/minusFeed?cno=${vo.cno}" method="post">
+<%-- ${vo.cno} / ${vo.mno} --%>
+	<form action="/challenge/minusFeed?cno=${vo.cno}" method="post" id="frm">
 <!-- 		mno 수정필요 -->
 	<input type="hidden" value="${vo.mno }" id="mno" name="mno">
 	<input type="hidden" value="${vo.cno }" id="cno" name="cno">
@@ -205,14 +206,14 @@
 		 <td>${mAbook.ab_amount }</td>
 		 <td>${mAbook.ct_top }</td>
 		 <td>${mAbook.ct_bottom }</td>
-		<td><input type="checkbox" id="checkbox"></td>
+		<td><input type="checkbox" id="checkbox" name="ab_amount" value="${mAbook.ab_amount}"></td>
 		</tr>
 		</c:forEach>
 		</table>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default pull-left" data-dismiss="modal">닫기</button>
-					<button type="submit" class="btn btn-primary" id="saveABook">
+					<button type="submit" class="btn btn-primary" id="saveABook" onclick="document.getElementById('frm').submit();">
 					저장하기</button>
 <!-- 					mno 수정 필요!! -->
 				</div>
