@@ -46,4 +46,7 @@ public interface AbookDAO {
 	// 5. 예산 삭제
 	public void delBud(Integer mno, String pMonth) throws Exception;
 	
+	// 6. 총예산 조회
+	public Integer totalBud(Integer mno, String pMonth) throws Exception;
+	
 }

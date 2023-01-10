@@ -26,8 +26,9 @@
   
   
  	<!-- //////////////////// MJ //////////////////// -->
-	
+	<!-- 해당월 예산 조회 -->
 	<sql id="wh1">
+		from plan
 		where mno=#{mno} 
 		and p_month=#{p_month}
 	</sql>
@@ -41,8 +42,8 @@
 	
 	<!-- 1. 예산 유무 -->
 	<select id="chkBud" resultType="int">
-		select count(pno) from plan 
-		<include refid="wh1"/>;
+		select count(pno)
+		<include refid="wh1"/>
 	</select>
 	 
 	<!-- 2. 예산 조회 -->
@@ -51,7 +52,8 @@
 		from plan p 
 		inner join category ct 
 		on p.ctno=ct.ctno
-		<include refid="wh1"/>
+		where mno=#{mno} 
+		and p_month=#{p_month}
 		group by ct.ct_top;
 	</select>
 	
@@ -73,12 +75,14 @@
 	
 	<!-- 5. 예산 삭제 -->
 	<delete id="delBud">
-		delete from plan where mno=#{mno} and p_month=#{p_month};
+		delete
+		<include refid="wh1"/>
 	</delete>
 	
  	<!-- 6. 총예산  조회-->
-	<select id="budSum">
-		select sum(p_amount) from plan where mno=#{mno} and p_month=#{p_month};
+	<select id="totalBud" resultType="Integer">
+		select sum(p_amount) 
+		<include refid="wh1"/>
 	</select>
 	
   </mapper>

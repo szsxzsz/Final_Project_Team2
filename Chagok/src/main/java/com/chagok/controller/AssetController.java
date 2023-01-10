@@ -610,6 +610,7 @@ public class AssetController {
 	
 	@Inject
 	private ReportService rptService;
+	
 //	http://localhost:8080/assetmain
 //	http://localhost:8080/asset/dtRpt
 	@GetMapping(value = "/dtRpt")
@@ -619,7 +620,7 @@ public class AssetController {
 			return "/chagok/login";
 		}
 		int mno = (int)session.getAttribute("mno");
-		UserVO userVO = userService.getUser(mno);
+		String nick = userService.getUser(mno).getNick();
 		
 		/////////////// 1. service에서 DB 가져오기 ///////////////
 		int mm = 0;
@@ -710,7 +711,7 @@ public class AssetController {
 		map.put("amtTopjson", amtTopjson);
 		map.put("cntTopjson", cntTopjson);
 		model.addAttribute("map", map);
-		model.addAttribute("userVO", userVO);
+		model.addAttribute("nick", nick);
 		
 		return "/asset/dateReport";
 	}	
@@ -721,7 +722,7 @@ public class AssetController {
 	public String cateReport(HttpSession session, Model model) throws Exception {
 		// 로그인 확인
 		int mno = (int)session.getAttribute("mno");
-		UserVO userVO = userService.getUser(mno);
+		String nick = userService.getUser(mno).getNick();
 		if(mno==0) {
 			return "/chagok/login";
 		}
@@ -756,7 +757,7 @@ public class AssetController {
 		map.put("chRandList", chRandList);
 		map.put("cardRandList", cardRandList);
 		model.addAttribute("map", map);
-		model.addAttribute("userVO", userVO);
+		model.addAttribute("nick", nick);
 		return "/asset/cateReport";
 	}
 	
@@ -764,12 +765,13 @@ public class AssetController {
 //	http://localhost:8080/asset/budget
 //	http://localhost:8080/asset/budget?mm=0
 	@GetMapping(value = "/budget")
-	public String budgetGET(@RequestParam("mm") int mm, HttpSession session, Model model) throws Exception {	
+	public String budgetGET(@RequestParam("mm") int mm, HttpSession session, Model model, RedirectAttributes rttr) throws Exception {	
 		int mno = (int)session.getAttribute("mno");
 
 		List<String> ctTopList = abService.getctTop();
 		String pMonth = abService.getPMonth(mm);
 		Integer dtAvg3 = rptService.dtAvg3(mno);
+		
 		model.addAttribute("dtAvg3", dtAvg3);
 		model.addAttribute("ctTopList", ctTopList);
 		model.addAttribute("pMonth", pMonth);
@@ -782,12 +784,12 @@ public class AssetController {
 			return "/asset/budget";
 		} else {
 			mylog.debug(pMonth+"__예산 있음");
-			return "/asset/budReport";
+			return "redirect:/asset/budRpt?mm="+mm+"";
 		}
 	}
 	
 	@PostMapping(value = "/budget")
-	public String budgetPOST(@RequestParam Map map, HttpSession session, Model model) throws Exception {
+	public String budgetPOST(@RequestParam("mm") int mm, @RequestParam Map map, HttpSession session) throws Exception {
 		int mno = (int)session.getAttribute("mno");
 		
 		List<Map<String, Object>> dataList = new ArrayList<Map<String,Object>>();
@@ -805,7 +807,7 @@ public class AssetController {
 		insertMap.put("insertList", dataList);	// key값=collection의 value값
 		abService.setBud(insertMap);
 		
-		return "/asset/budReport";
+		return "redirect:/asset/budRpt?mm="+mm+"";
 	}
 
 	// 예산 조회
@@ -813,19 +815,11 @@ public class AssetController {
 	@GetMapping(value = "/getBud")
 	public List<Map<String, Object>> getBud(@RequestParam("mm") int mm, HttpSession session) throws Exception {
 		int mno = (int)session.getAttribute("mno");
-		
-		// pMonth
 		String pMonth = abService.getPMonth(mm);
 		
 		// 예산 조회
 		List<Map<String, Object>> budList = abService.getBud(mno, pMonth);
-//		if(budList.isEmpty()) {
-//			mylog.debug(pMonth+"__예산 없음");
-//			return budList;
-//		} else {
-//			mylog.debug(pMonth+"__budList : "+budList);
-//			return budList;
-//		}
+		mylog.debug("budList"+budList.toString());
 		mylog.debug(pMonth+"__예산 조회 완료");
 		return budList;
 	}
@@ -846,7 +840,7 @@ public class AssetController {
 	}
 	
 	@PostMapping(value = "/updBud")
-	public String updBudPOST(@RequestParam Map map, HttpSession session, Model model) throws Exception {
+	public String updBudPOST(@RequestParam("mm") int mm, @RequestParam Map map, HttpSession session) throws Exception {
 		int mno = (int)session.getAttribute("mno");
 
 		// map : form data, tmpmap : 재배치
@@ -861,16 +855,16 @@ public class AssetController {
 		}
 		abService.updBud(updateList);
 		
-		return "/asset/budReport";
+		return "redirect:/asset/budget?mm="+mm+"";
 	}
 
 	@GetMapping(value = "/delBud")
-	public String delBud(@RequestParam("mm") int mm, HttpSession session, Model model) throws Exception {
+	public String delBud(@RequestParam("mm") int mm, HttpSession session) throws Exception {
 		int mno = (int)session.getAttribute("mno");
 		String pMonth = abService.getPMonth(mm);
 		abService.delBud(mno, pMonth);
 		
-		return "/asset/budget";	
+		return "redirect:/asset/budget?mm="+mm+"";
 	}
 	
 //	http://localhost:8080/asset/budRpt?mm=0
@@ -881,31 +875,40 @@ public class AssetController {
 			return "/chagok/login";
 		}
 		int mno = (int)session.getAttribute("mno");
-		UserVO userVO = userService.getUser(mno);
+		String nick = userService.getUser(mno).getNick();
+		String pMonth = abService.getPMonth(mm);
 		
 		/////////////// 1. service에서 DB 가져오기 ///////////////
 		// 1. 해당 월 예산
+		Integer totalBud = abService.totalBud(mno, pMonth);
 		
 		// 2. 해당 월 지출
-		Integer dtSum1 = rptService.dtSum(mno, mm);
-		mylog.debug("dtSum1 : "+dtSum1);
+		Integer dtSum = rptService.dtSum(mno, mm);
 		
-		// 3. 해당 월 평균 지출
+		// 3. 해당 월 예상 지출
+		Integer expSum = rptService.expSum(mno, mm);
 		
+		// 4. 일간 통계
+		List<Map<String, Object>> day = rptService.day(mno, mm);
+		String dayjson = rptService.listMapToJson(day);
 		
-		// 4. 해당 월 예상 지출
-		
-		/////////////// 2. List<Map> -> JsonArray ///////////////
-//		String outCumjson = rptService.listMapToJson(outCum);
-
-		/////////////// 3. model로 전달 ///////////////
+		/////////////// 2. model로 전달 ///////////////
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("dtSum1", dtSum1);
+		map.put("totalBud", totalBud);
+		map.put("dtSum", dtSum);
+		map.put("expSum", expSum);
+		map.put("dayjson", dayjson);
+		model.addAttribute("nick", nick);		
+		model.addAttribute("pMonth", pMonth);
 		model.addAttribute("map", map);
-		model.addAttribute("userVO", userVO);		
 
 		return "/asset/budReport";
 	}
-	
+
+//	http://localhost:8080/asset/abookCal
+	@GetMapping(value="/abookCal")
+	public String abookCal() throws Exception {
+		return "/asset/calendar";
+	}
 	///////////////////MJ////////////////////
 }

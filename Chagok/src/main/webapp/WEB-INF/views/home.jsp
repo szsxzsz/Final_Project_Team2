@@ -2,7 +2,7 @@
 <%@ page session="false" %>
 <html>
 <head>
-<!-- ì ì´ì¿¼ë¦¬ Datepicker-->
+<!-- 제이쿼리 Datepicker-->
 <!-- jQuery -->
 <!-- <script type="text/javascript" src="../jquery-3.4.1.min.js"></script> -->
    <script src="../resources/plugins/jQuery/jQuery-2.1.4.min.js"></script>
@@ -23,76 +23,19 @@
 	Hello world!  
 </h1>
 
-<input class="datepicker">1
-<input type="text" name="test" id="test" value="" >왜
-
-
-
-
+<input class="datepicker">
 <script>
   $(function(){
     $('.datepicker').datepicker();
   })
 </script>
-<script type="text/javascript">
-
-$('#test').datetimepicker();
-
-</script>
-
 
 <P>  The time on the server is ${serverTime}. </P>
-<button type="button" id="btn">ë²í¼</button>
+<button type="button" id="btn">버튼</button>
 
  <table id="jqGrid"></table>
 <div id="jqGridPager"></div>
-<button type="button" id="btn">ë²í¼</button>
-
-<input type="text" name="test" id="test" value="" >
-
-//Modify the Form Fields to suit the needs of your website.
-<div class="container">
-  <div class="panel panel-primary">
-    <div class="panel-heading">Schedule an Appointment</div>
-      <div class="panel-body">
-         <div class="row">
-            <div class="col-md-6">
-               <div class="form-group">
-                  <label class="control-label">First Name</label>
-                  <input type="text" class="form-control" name="fname" id="fname">
-               </div>
-            </div>
-            <div class="col-md-6">
-               <div class="form-group">
-                  <label class="control-label">Last Name</label>
-                  <input type="text" class="form-control" name="lname" id="lname">
-               </div>
-            </div>
-         </div>
-         <div class="row">
-            <div class="col-md-6">
-               <div class="form-group">
-                  <label class="control-label">Email</label>
-                  <input type="text" class="form-control" name="email" id="email">
-               </div>
-            </div>
-            <div class='col-md-6'>
-               <div class="form-group">
-                  <label class="control-label">Appointment Time</label>
-                  <div class='input-group date' id='datetimepicker1'>
-                     <input type='text' class="form-control" />
-                     <span class="input-group-addon">
-                     <span class="glyphicon glyphicon-calendar"></span>
-                     </span>
-                  </div>
-               </div>
-            </div>
-        </div>
-        <input type="submit" class="btn btn-primary" value="Submit">
-      </div>
-   </div>
-</div>
-
+<button type="button" id="btn">버튼</button>
 
 <script type="text/javascript"> 
        
@@ -130,41 +73,16 @@ $('#test').datetimepicker();
 		
 		$('#btn').click(function(){
 			
-			//ë°ì´í° ì¶ê°
+			//데이터 추가
             for(var i=0; i<jsonData.length ; i++ ){
                 //console.log(i);
 				$('#jqGrid').jqGrid('addRowData', i, jsonData[i]);
             }
-			//ë¤ì ë¡ë 
+			//다시 로드 
 			$("#jqGrid").trigger('reloadGrid');
 
 		});
 
     </script>
-    
-<script>
-  $(function () {
-    $('#datetimepicker1').datetimepicker();
- });
-</script>
-    
-<script type="text/javascript">
-
-$('#test').datetimepicker({
-  showSecond: true,
-  dateFormat: 'yy-mm-dd',
-  timeFormat: 'hh:mm:ss'
-
-});
-</script>    
-    
-    
- <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js" type="text/javascript" ></script>
-
-<script src=" https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js" type="text/javascript" ></script>
-
-<script src="./js/jquery-ui-timepicker-addon.js" type="text/javascript" ></script>
 </body>
 </html>
