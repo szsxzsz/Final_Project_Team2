@@ -328,7 +328,7 @@ $("#jqGrid").jqGrid({
 //     		  			 postData: function(rowid){
 //             		return {data: data}
 //         		    },
-	          buildSelect:function (data){
+	          buildSelect:function (data){ 
 // 	        	  console.log(data);
 	          
 	            if(typeof(data)=='String') 
