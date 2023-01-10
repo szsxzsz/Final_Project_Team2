@@ -10,11 +10,14 @@ import java.util.Map;
 import javax.annotation.PreDestroy;
 import javax.inject.Inject;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.messaging.simp.annotation.SubscribeMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,9 +33,24 @@ public class StompController {
 
 	private final SimpMessagingTemplate template; //특정 Broker로 메세지를 전달
 
+	private static final Logger mylog = LoggerFactory.getLogger(StompController.class);
+	
 	@Inject
 	public StompController(SimpMessagingTemplate template) {
 		this.template = template;
+	}
+	
+	@MessageMapping("")
+	public void handleShout(Shout incomming) {
+		mylog.debug("Received Message : " +incomming.getMessage());
+	}
+	
+	// 일회용 구독(알림용)
+	@SubscribeMapping({"/mno"})
+	public Shout handleSubscription() {
+		Shout outgoing = new Shout();
+		outgoing.setMessage("일회용!");
+		 return outgoing;
 	}
 	
 	//Client가 SEND할 수 있는 경로
@@ -115,6 +133,17 @@ public class StompController {
     	template.convertAndSend("/queue/" + nick, "alarm socket connection completed.");
     }
     
-    
+    // 메시지를 전달하는 단순 유일 특성 자바빈
+    public class Shout{
+    	  private String message;
+
+    	   public String getMessage(){
+    	      return message;
+    	}
+
+    	public void setMessage(String message){
+    	   this.message=message;
+    	}
+    }
     
 }
