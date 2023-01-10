@@ -11,11 +11,19 @@
   </select>
   
   <!-- 카테고리 top -->
-  <select id="cateList" resultType="CategoryVO">
-	select * from category where ct_lev=0
+  <select id="cttopList" resultType="CategoryVO">
+	select ctno, ct_top
+	from category
+	where ct_lev=0;
   </select>
   
-
+  <!-- 카테고리 bottom -->
+    <select id="ctbottomList" resultType="CategoryVO">
+	select ctno, ct_bottom
+	from category
+	where ct_lev=1;
+  </select>
+  
   <!-- 가계부 저장(수정) -->
     <update id="setAbookList">
 	update account_book set 

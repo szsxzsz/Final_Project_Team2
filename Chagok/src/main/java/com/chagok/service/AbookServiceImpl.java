@@ -38,7 +38,7 @@ public class AbookServiceImpl implements AbookService{
 	
 
 	@Override
-	public List<Map<String,Object>> cateList() throws Exception {
+	public List<Map<Object, Object>> cateList() throws Exception {
 //		mylog.debug("♡♡♡♡ Service -> DAO 호출 ");
 		
 		return dao.cateList();

@@ -282,7 +282,7 @@ $("#jqGrid").jqGrid({
 
 		jsonReader: {
 				repeatitems:false,
-				root:"rows"
+// 				root:"rows"
 			},
 // 	alert("시작");
     height: 500, 
@@ -322,17 +322,18 @@ $("#jqGrid").jqGrid({
 // 	    {name:"ct_top",label:"ct_top",width:50,align:'center',edittype: "select", /* formatter: "select", */
 // 	    	editoptions:{value:"1:식비;2:의복/미용;3:문화/여가;4:생활;5:주거/통신;6:건강/통신;7:교육/육아;8:교통/차량;9:경조사/회비;10:금융;11:저축/보험"},
 // 	    	editable:true,
-		{name: "ctno", label: 'Customer ID', width: 150,
+		{name: "ctno", label: 'Customer ID', width: 150, /* formatter: "select", */
 		editable: true, edittype: "select",
 		editoptions:{  dataUrl: '/asset/cateSelect',
 //     		  			 postData: function(rowid){
 //             		return {data: data}
 //         		    },
-	          buildSelect:function (datas){
-
-	            if(typeof(datas)=='string') 
-            		datas = $.parseJSON(datas);
-					var data = datas.list;
+	          buildSelect:function (data){
+// 	        	  console.log(data);
+	          
+	            if(typeof(data)=='String') 
+	            	data = $.parseJSON({"rows":JSON.stringify(data)});
+	            console.log(data);// 	        
 					var selrt = '<select name="cateSelect">';
 
 						for ( var i = 0 ; i < data.length ; i ++) {
@@ -457,12 +458,12 @@ $("#jqGrid").jqGrid({
 		var data =  $("#jqGrid").getRowData();
 // 		var data = $( "#jqGrid" ).getGridParam( "selrow" );    
 			console.log(data);
-        data ={"test":JSON.stringify(data)};
+        data ={"rows":JSON.stringify(data)};
 // 		data = JSON.stringify(data);
 		console.log(data);
 
 		$.ajax({
-			url : "/asset/cateSelect",
+			url : "/asset/saveGrid",
 // 			traditional: true ,
 			contentType:"application/json",
 			data : data,

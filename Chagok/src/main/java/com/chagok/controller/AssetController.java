@@ -22,6 +22,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -330,6 +331,14 @@ public class AssetController {
 	//서비스 객체 주입
 	@Inject
 	private AbookService abService;
+	// ====================================================
+	
+
+	
+	// =============================================test
+	
+	
+	
 	
 	// 0. abokkList페이지 get으로 호출 ============================================================
 //	http://localhost:8080/asset/abookList
@@ -516,49 +525,35 @@ public class AssetController {
 	
 	// ===============================================================
 	@ResponseBody
-	@RequestMapping("/cateSelect")
-	public JsonObj cateSelect (@RequestParam(value="datas")
-			/*
-			 * @RequestParam(value = "page", required=false) String page,//page : 몇번째 페이지를
-			 * 요청했는지
-			 * 
-			 * @RequestParam(value = "rows", required=false) String rows,//rows : 페이지 당 몇개의
-			 * 행이 보여질건지
-			 * 
-			 * @RequestParam(value = "sidx", required=false) String sidx,//sidx : 소팅하는 기준이
-			 * 되는 인덱스
-			 * 
-			 * @RequestParam(value = "sord", required=false) String sord,
-			 */
-			HttpSession session) throws Exception {//sord : 내림차순 또는 오름차순
-	    	
-		mylog.debug("json controller cate");
+	@RequestMapping(value = "/cateSelect", method = {RequestMethod.GET,RequestMethod.POST})
+	public JsonObj cateSelect (@RequestParam(value = "cate", required=false) String test,		
+			HttpSession session) throws Exception {
+		mylog.debug("%%json controller cate"+test);
 		
 		// 로그인 확인
 		int mno = (int)session.getAttribute("mno");
 		UserVO userVO = userService.getUser(mno);
-		
 		mylog.debug("mno@@@@@@@@:"+mno);
 		
-		// ct_topList: 
-		// ct_botList: 
-		
 		JsonObj obj = new JsonObj();
+//		int int_page = Integer.parseInt(page);// 1 2 3
+//		int perPageNum = (int)Double.parseDouble(rows);
 		
-		List<?> cList = abService.cateList();
-		mylog.debug("****vo -> list "+cList);
 		
-//	    obj.setRows(cList);  // list<map> -> obj
+		List<?> ctList = abService.cateList();
+		mylog.debug("****vo -> list "+ctList);
+		
+	    obj.setRows(ctList);  // list<map> -> obj
 	    
 	    //page : 현재 페이지
 //	    obj.setPage(int_page);// 현재 페이지를 매개변수로 넘어온 page로 지정해준다. 
 		
 	    //records : 페이지에 보여지는 데이터 개수
-//	    obj.setRecords(list.size());
+//	    obj.setRecords(ctList.size());
 		
 	    //total : rows에 의한 총 페이지수
 		// 총 페이지 갯수는 데이터 갯수 / 한페이지에 보여줄 갯수 이런 식
-//		int totalPage = (int)Math.ceil(list.size()/Double.parseDouble(rows));
+//		int totalPage = (int)Math.ceil(ctList.size()/Double.parseDouble(rows));
 //		obj.setTotal(totalPage); // 총 페이지 수 (마지막 페이지 번호)
 		
 		mylog.debug("cont -> 그리드로"+obj);

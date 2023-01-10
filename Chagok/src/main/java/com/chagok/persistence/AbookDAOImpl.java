@@ -1,6 +1,7 @@
 
 package com.chagok.persistence;
 
+import java.security.KeyStore.Entry;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -40,20 +41,47 @@ public class AbookDAOImpl implements AbookDAO{
 	
 	// 카테고리 리스트 
 	@Override
-	public List<Map<String,Object>> cateList() throws Exception {
-		List<CategoryVO> cateList = sqlSession.selectList(NAMESPACE+".cateList");
-		List<Map<String,Object>> cttopList = new ArrayList<Map<String,Object>>();
+	public List<Map<Object,Object>> cateList() throws Exception {
+		
+		List<CategoryVO> cttopList = sqlSession.selectList(NAMESPACE+".cttopList");
+		List<Map<Object,Object>> ctList = new ArrayList<Map<Object,Object>>();
+			
+		// TOP CATEGORY
+			for (int i = 0; i < cttopList.size(); i++) {
 
-			for (int i = 1; i < cateList.size(); i++) {
-
-				Map<String, Object> cateMap = new HashMap<String, Object>();
-				CategoryVO cvo =(CategoryVO) cateList.get(i);
-				cateMap.put("ct_top", cvo.getCt_top());
-				cateMap.put("ct_bottom", cvo.getCt_bottom());
+				Map<Object, Object> cttopmap = new HashMap<Object, Object>();
+				CategoryVO cvo =(CategoryVO) cttopList.get(i);
 				
-				cttopList.add(cateMap);
+				String ctno = String.valueOf(cvo.getCtno());
+				cttopmap.put(ctno, cvo.getCt_top());
+				
+				ctList.add(cttopmap);
 			}
-			return cttopList;
+			
+			mylog.debug("***dao에서 topmap"+ctList);
+			
+		// BOTTOM CATEGORY
+	
+			List<CategoryVO> ctbottomList = sqlSession.selectList(NAMESPACE+".ctbottomList");
+			
+			for (int i = 0; i < ctbottomList.size(); i++) {
+
+				Map<Object, Object> ctbottommap = new HashMap<Object, Object>();
+				CategoryVO cvo =(CategoryVO) ctbottomList.get(i);
+				
+				String ctno = String.valueOf(cvo.getCtno());
+				ctbottommap.put(ctno, cvo.getCt_bottom());
+				
+				ctList.add(ctbottommap);
+			}
+			
+			mylog.debug("***dao에서 bot"+ctList);
+			
+//	        for (Entry entrySet : topmap.entrySet()) {
+//	            System.out.println(entrySet.getKey() + " : " + entrySet.getValue());
+//	        }
+	 
+			return ctList;
 	}
 	
 	// 가계부 수정 저장
