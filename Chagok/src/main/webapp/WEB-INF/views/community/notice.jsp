@@ -17,9 +17,9 @@
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach items="#{boardList }" var="boardList">
+			<c:forEach items="${boardList }" var="boardList" varStatus="status" >
 			<tr>
-				<td>${boardList.bno }</td>
+				<td>${status.index + 1 }</td>
 				<td>
 					<a href="http://localhost:8080/noticecontent?bno=${boardList.bno }">${boardList.b_title }</a>
 				</td>

@@ -247,10 +247,10 @@ public class BoardController {
 		mylog.debug(vo+"");
 			
 		service.insertBoard(vo);
-			
+			mylog.debug("@@@@@@@@@@@@@@");
 		rttr.addFlashAttribute("result", "createOK");
-			
-		return "/community/notice";
+			mylog.debug("!!!!!!!!!!!");
+		return "redirect:/notice";
 	}	
 	
 	// 공지 글 수정하기 GET
@@ -287,7 +287,7 @@ public class BoardController {
 	}
 	
 	// 공지 글 삭제하기
-	// http://localhost:8080/noticedelete?bno=
+	// http://localhost:8080/noticedelete
 	@PostMapping(value = "/noticedelete")
 	public String noticedeleteGET(int bno,RedirectAttributes rttr,HttpSession session) throws Exception {
 		mylog.debug(bno+"");
