@@ -28,7 +28,6 @@ public class AbookDAOImpl implements AbookDAO{
 	
 	//NAMESPACE
 	private static final String NAMESPACE = "com.chagok.mapper.abookMapper";
-	private static final String NAMESPACE2 = "com.chagok.mapper.reportMapper";
 	
 	// 가계부 조회 map
 	@Override
@@ -122,6 +121,14 @@ public class AbookDAOImpl implements AbookDAO{
 		map.put("mno", mno);
 		map.put("p_month", pMonth);
 		return sqlSession.selectOne(NAMESPACE+".totalBud", map);
+	}
+
+	@Override
+	public List<Map<String, Object>> cal(Integer mno, Integer mm) throws Exception {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("mno", mno);
+		map.put("mm", mm);
+		return sqlSession.selectList(NAMESPACE+".cal", map);
 	}
 	
 	

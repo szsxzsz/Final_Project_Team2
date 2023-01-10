@@ -49,4 +49,7 @@ public interface AbookDAO {
 	// 6. 총예산 조회
 	public Integer totalBud(Integer mno, String pMonth) throws Exception;
 	
+	// 달력
+	public List<Map<String, Object>> cal(Integer mno, Integer mm) throws Exception;
+	
 }

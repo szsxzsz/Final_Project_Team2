@@ -1,8 +1,10 @@
 package com.chagok.controller;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,13 +14,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -38,7 +41,6 @@ import com.chagok.apiDomain.RequestTokenVO;
 import com.chagok.apiDomain.ResponseTokenVO;
 import com.chagok.apiDomain.UserInfoResponseVO;
 import com.chagok.domain.AbookVO;
-import com.chagok.domain.CategoryVO;
 import com.chagok.domain.ChallengeVO;
 import com.chagok.domain.JsonObj;
 import com.chagok.domain.PropCardVO;
@@ -49,9 +51,6 @@ import com.chagok.service.OpenBankingService;
 import com.chagok.service.ReportService;
 import com.chagok.service.UserService;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import lombok.Getter;
 @JsonAutoDetect 
 @Controller
 @RequestMapping("/asset/*")
@@ -908,7 +907,37 @@ public class AssetController {
 //	http://localhost:8080/asset/abookCal
 	@GetMapping(value="/abookCal")
 	public String abookCal() throws Exception {
+		
 		return "/asset/calendar";
+		
 	}
+	
+	@ResponseBody
+	@GetMapping(value="/cal")
+	public List<Map<String, Object>> cal() throws Exception {
+		int mno=1;
+		int mm=0;
+		List<Map<String, Object>> cal = abService.cal(mno, mm);
+		JSONArray jArr = new JSONArray();
+		for(Map<String, Object> map : cal) {
+			JSONObject jObj = new JSONObject();
+			for(Map.Entry<String, Object> entry : map.entrySet()) {
+				String key = "";
+				String value = String.valueOf(entry.getValue());
+				if(entry.getKey().equals("date")) {
+					key = "start";
+				} else if (entry.getKey().equals("sum")) {
+					key = "title";
+				} else {
+					key = entry.getKey();
+				}
+				jObj.put(key, value);
+			}
+			jArr.add(jObj);
+		}
+		mylog.debug("jArr"+jArr.toString());
+		return jArr;
+	}
+	
 	///////////////////MJ////////////////////
 }

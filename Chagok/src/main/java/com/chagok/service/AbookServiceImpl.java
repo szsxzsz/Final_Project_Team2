@@ -97,6 +97,11 @@ public class AbookServiceImpl implements AbookService{
 	public Integer totalBud(Integer mno, String pMonth) throws Exception {
 		return dao.totalBud(mno, pMonth);
 	}
+
+	@Override
+	public List<Map<String, Object>> cal(Integer mno, Integer mm) throws Exception {
+		return dao.cal(mno, mm);
+	}
 	
 	
 	
