@@ -452,7 +452,7 @@ $("#jqGrid").jqGrid({
 	// 저장하고 컨트롤러로 보내는 코드 
 	function save(){
 		alert("저장 시작");
-// 		var data =  $("#jqGrid").jqGrid('getGridParam', 'selarrrow');
+// 		var data =  $("#jqGrid").jqGrid('getGridParam', 'selarrrow'); 
 // 		alert("");
 		var data =  $("#jqGrid").getRowData();
 // 		var data = $( "#jqGrid" ).getGridParam( "selrow" );    
