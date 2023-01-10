@@ -86,29 +86,27 @@
 		</div>
     </div>
 
-        <div class="form-group" style="padding-top: 50px; padding-left: 36px; width: 1166px; margin-bottom: 30px;">
-           	<span style = "font-size: 16px; font-family: 'Pretendard','Source Sans Pro', sans-serif;"><strong>챌린지 설명</strong></span>
-				 <textarea class="form-control" rows="3" style="margin-top:15px;" readonly>${vo.c_content }</textarea>
-                          
-<!--     <ul class="list-inline pull-right" style="margin-top: 10px;"> -->
-      <a href="#" id="kakaotalk-sharing-btn"><i class="fa fa-share margin-r-5" style="font-size:1.2em;"><b>Share</b></i></a>
-<!-- 			<a href="#" id="kakaotalk-sharing-btn">공유하기</a> -->
-<!--     </ul> -->
+        <div class="form-group has-warning" style="padding-top: 50px; border-left-width:3px; margin-left:36px; width:1133px;">
+                  <label class="control-label" for="inputWarning"><i class="fa fa-bell-o"></i>챌린지 설명</label>
+                  <textarea class="form-control" id="inputWarning" style="height: 70px; font-size: 15px;" readonly>
+${vo.c_content }
+        		  </textarea>
+        <a href="#" id="kakaotalk-sharing-btn"><i class="fa fa-share-alt" style="font-size:1.2em; padding-left:1068px; padding-top:11px;"><b> Share</b></i></a>   		  
+        </div>
+        <div class="form-group has-error" style="border-left-width:3px; margin-left:36px; width:1133px;">
+                  <label class="control-label" for="inputError"><i class="fa fa-times-circle-o"></i>주의사항</label>
+                  <textarea class="form-control" id="inputError" style="height: 70px; font-size: 15px;" readonly>
+저축형과 절약형 챌린지 모두 가계부 하나의 상세 카테고리로만 참여 가능합니다.
+ex) 저축형 챌린지 [교통] 카테고리 참여 중이라면 절약형 [교통] 카테고리 챌린지 참여 불가!
+        		  </textarea>
         </div>
         
-        
         <div>
-<!--        	 <form name="participateForm"> -->
-<!--         <input class="btn btn-block btn-success btn-lg" type="button" value="참여가능한지 확인하기" id="samechallenge" style="width:218px; margin-left: 950px;"> -->
-<!--         <div><span style="font-size:12px;"></span></div> -->
         <button class="btn btn-block btn-success btn-lg" type="button" id="samechallenge" style="width:218px; margin-left: 950px;">참여하기</button>
 		<div id="result_samechallenge"></div>
 		</div>
-<!-- 		 </form> -->
-<!-- onclick="location.href='${pageContext.request.contextPath }/commumain';" -->
 	</div>
 	
-<!-- 	<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script> -->
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.min.js"></script>
 <!-- 카카오톡 공유하기 -->
 <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
@@ -125,37 +123,37 @@
         		var ctno = ${vo.ctno};
         		var mno = ${mno};
         		var cno = ${vo.cno};
-        		var test = {"ctno":ctno,"mno":mno,"cno":cno};
         		
-				$.ajax({
-        			type : "post",
-        			url : "/challenge/minusdetailPOST",
-        			contentType : "application/json",
-        			dataType :'text',
-        			data : JSON.stringify(test),
-        			timeout : 3000,
-        			success : function(data){
-						console.log('통신 성공! ' + data);
-        				if(data == "N"){ // 중복된 카테고리num이 아닐 때
-//         					$("#result_samechallenge").html(result).css("color","green");
-        					if(confirm("참여 가능한 챌린지 입니다! \n 가계부 카테고리 당 하나씩 참여 가능합니다.")== true){
-        						alert("챌린지 참여완료!");
-        					location.href="/commumain";
-        					}else{
-        						alert("챌린지 참여를 취소하였습니다.")
-        						return false;
-        					};
-        				}else if(data == "Y"){ // 중복된 챌린지 or 중복된 상세카테고리 챌린지 
-//         					$("result_samechallenge").html(result).css("color","red");
-        					alert("해당 카테고리로 참여 중인 챌린지가 있습니다.");
-        					return false;
-        				}
-        			},
-        				error : function(error, data){
-        					console.log(error);
-        					console.log(data);
-        					}
-        			});
+        		var test = {"ctno":ctno,"mno":mno, "cno":cno};
+        		var confirmm = confirm("참여 가능한 챌린지입니다! \n 단, 저축형 챌린지는 하나만 참여 가능합니다. \n 참여하시겠습니까?");
+        		
+        		if (confirmm) {
+					$.ajax({
+	        			type : "post",
+	        			url : "/challenge/minusdetailPOST",
+	        			contentType : "application/json",
+	        			dataType :'text',
+	        			data : JSON.stringify(test),
+	        			timeout : 3000,
+	        			async : false,
+	        			success : function(data){
+							console.log('통신 성공! ' + data);
+	        				if(data == "N"){ // 중복된 카테고리num이 아닐 때
+			        			alert('챌린지 참여완료!');
+	        					location.href="/commumain";
+	        				}else if(data == "Y"){ // 중복된 챌린지 or 중복된 상세카테고리 챌린지 
+	        					alert("해당 카테고리로 참여 중인 챌린지가 있습니다.");
+	        					return false;
+	        				}
+	        			},
+	        				error : function(error, data){
+	        					console.log(error);
+	        					console.log(data);
+	        					}
+	        			});
+        		} else {
+        			alert('챌린지 참여를 취소하였습니다.');
+        		}
         		});
         	});
         </script>

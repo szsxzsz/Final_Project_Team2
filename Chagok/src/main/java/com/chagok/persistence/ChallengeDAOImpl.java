@@ -86,7 +86,7 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("nick", nick);
 		map.put("cno", cno);
-		mylog.debug(" cancelChallenge(map) 호출 "+map);
+		mylog.debug(" cancelChallenge 호출 닉네임 잘라내기, c_cnt-1 "+map);
 		sqlSession.update(NAMESPACE+".cancelChallenge", map);
 	}
 	
