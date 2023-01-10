@@ -101,17 +101,11 @@ public class AssetController {
 				cashVO.setCash_amt(cashVO.getCash_amt().replaceAll(",", ""));
 			}
 			
-			
-			
 			model.addAttribute("cashVO", cashVO);
-			
-			
 		}
-		
 		
 		return "/asset/myAsset";
 	}
-	
 	
 	@GetMapping("/accountHistory")
 	public String accountHistoryGET(HttpSession session, Model model, 
@@ -129,7 +123,6 @@ public class AssetController {
 			model.addAttribute("accountHistoryList", accountHistoryList);
 			
 			mylog.debug(accountHistoryList+"");
-			
 			
 		}
 		
@@ -360,7 +353,7 @@ public class AssetController {
 	
 	// 1. 서버 Data 불러서 그리드에 뿌리기 ==========================================================
 	@ResponseBody
-	@RequestMapping("/reqGrid")
+	@RequestMapping(value = "/reqGrid", method = {RequestMethod.GET,RequestMethod.POST})
 	public JsonObj test (
 			@RequestParam(value = "page", required=false) String page,//page : 몇번째 페이지를 요청했는지
 			@RequestParam(value = "rows", required=false) String rows,//rows : 페이지 당 몇개의 행이 보여질건지
@@ -428,7 +421,54 @@ public class AssetController {
 	} // ===========================================================================================================
 	
 	// 그리드 -> DB(서버 데이터)로 수정하고 저장하는 코드
-	@GetMapping("/saveGrid")
+	@RequestMapping("/saveGrid")
+	 @ResponseBody
+	 public Object saveList(HttpServletRequest request,@RequestBody List<Map<String, Object>> list) throws Exception {
+		
+		mylog.debug("##그리드 뽑 리스트"+list);
+		 Map <String, String> resultMap =  new HashMap<String, String>();
+		
+		  String result = "ok";
+		  String resultMsg = "";
+		  
+	  try {
+		  
+	   for(int i = 0; i < list.size(); i++) {
+		AbookVO vo = new AbookVO();
+//	    vo.setMno(Integer.parseInt(tList.get("mno").toString( )));
+	    vo.setAbno(Integer.parseInt(list.get(i).get("abno").toString()));
+	    vo.setAb_inout(Integer.parseInt(list.get(i).get("ab_inout").toString()));
+	    vo.setAb_amount(Integer.parseInt(list.get(i).get("ab_amount").toString()));
+	    vo.setCtno(Integer.parseInt(list.get(i).get("ctno").toString()));
+	    
+	    vo.setAb_date(list.get(i).get("ab_date").toString());
+	    vo.setAb_content(list.get(i).get("ab_content").toString());
+	    vo.setAb_memo(list.get(i).get("ab_memo").toString());
+	    vo.setAb_method(list.get(i).get("ab_method").toString());
+	    vo.setCt_top(list.get(i).get("ct_top").toString());
+	    vo.setCt_bottom(list.get(i).get("ct_bottom").toString());
+
+	    mylog.debug("!!!!!!!!!!!!!!!!!"+vo);
+	    abService.setAbookList(vo);
+//	    mylog.debug(vo+"%%%%%%%%%%cont");
+	   }
+	    result = "success";
+	    resultMsg = "성공" ;
+	     
+	   }catch (Exception e) { 
+	    result = "failure";
+	    resultMsg = "실패" ;
+	   }
+	  
+	  resultMap.put("result", result);
+	  resultMap.put("resultMsg", resultMsg);
+	  mylog.debug("#######resultMap"+resultMap);
+	  
+	  return resultMap;
+	}
+	
+	// 그리드 -> DB(서버 데이터)로 수정하고 저장하는 코드
+	@GetMapping("/saveRows")
 	 @ResponseBody
 	 public Object saveList(HttpServletRequest request,@RequestParam("test") String obj) throws Exception {
 		
@@ -477,7 +517,7 @@ public class AssetController {
 	// ===============================================================
 	@ResponseBody
 	@RequestMapping("/cateSelect")
-	public JsonObj cateSelect (
+	public JsonObj cateSelect (@RequestParam(value="datas")
 			/*
 			 * @RequestParam(value = "page", required=false) String page,//page : 몇번째 페이지를
 			 * 요청했는지
@@ -534,11 +574,15 @@ public class AssetController {
 	 @ResponseBody
 	 public Object delList(HttpServletRequest request,@RequestParam("test") String obj) throws Exception {
 		mylog.debug("#그리드에서 선택한 abno"+obj);
-		 Map <String, String> resultMap =  new HashMap<String, String>();
+//		 Map <String, String> resultMap =  new HashMap<String, String>();
+		List<AbookVO> delRow = new ArrayList<AbookVO>();
 		
+//		mylog.debug("0번째 인덱스@@@"+delRow[0]);
 		  String result = "ok";
 		  String resultMsg = "";
 		  
+			 Map <String, String> resultMap =  new HashMap<String, String>();
+
 	  try {
 		  
 //	   for(int i = 0; i < list.size(); i++) {
