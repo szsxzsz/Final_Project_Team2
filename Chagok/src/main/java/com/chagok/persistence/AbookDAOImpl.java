@@ -49,7 +49,8 @@ public class AbookDAOImpl implements AbookDAO{
 
 				Map<String, Object> cateMap = new HashMap<String, Object>();
 				CategoryVO cvo =(CategoryVO) cateList.get(i);
-				cateMap.put("ctno", cvo.getCt_top());
+				cateMap.put("ct_top", cvo.getCt_top());
+				cateMap.put("ct_bottom", cvo.getCt_bottom());
 				
 				cttopList.add(cateMap);
 			}

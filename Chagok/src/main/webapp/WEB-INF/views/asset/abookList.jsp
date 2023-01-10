@@ -37,9 +37,10 @@
 <table id="jqGrid"></table>
 <div id="gridpager"></div>
  <span><a href="#" onclick="javascript:save();">저장</a></span>
+ <span><a href="#" onclick="javascript:insert();">insert저장</a></span>
 <span><a href="#" onclick="javascript:gridFunc.addRow();">행 추가</a></span>
 <span><a href="#" onclick="javascript:gridFunc.clearGrid();">초기화</a></span>
-<span><a href="#" onclick="javascript:jqgridTable.deleteData();">삭제</a></span>
+<span><a href="#" onclick="javascript:delRow();">삭제</a></span>
 
 <!-- <input type="BUTTON" id="btnC" value="Edit Selected" /> -->
 <!-- <input type="BUTTON" id="btnD" value="Edit Selected" /> -->
@@ -47,6 +48,7 @@
 <%-- obj: ${j_abookList }+@@ --%>
 <%-- ${map } --%>
 <!-- $( "#datepicker1" ).datepicker( "getDate" ); -->
+
 
 
 <script type="text/javascript">
@@ -61,14 +63,197 @@ function grid_Datepicker(text, obj){
 }
 </script>
 
+
+
 시작일시 : <input type='text' class='datetimepicker' name='start_dt'  style='width:140px;'>, 
 종료일시 : <input type='text' id="datepicker" class='' name='end_dt'   style='width:140px; padding-left:10px;'>
+<hr>
+                <div class="pl-lg-4">
+<!--                   <div class="col-lg-6"> -->
+<!--                       <div class="form-group focused"> -->
+<!--                         <label class="form-control-label" for="input-username" >카테고리</label> -->
+                        <select name="ct_top" id="input-address" class="form-control form-control-alternative" >
+                           <option>카테고리</option>
+                           <option value="1">식비</option>
+        				   <option value="2">의복/미용</option>
+          				   <option value="3">문화/여가</option>
+          				   <option value="4">생활</option>
+        				   <option value="5">주거/통신</option>
+          				   <option value="6">건강/운동</option>
+          				   <option value="7">교육/육아</option>
+          				   <option value="8">교통/차량</option>
+          				   <option value="9">경조사/회비</option>
+          				   <option value="10">금융</option>
+          				   <option value="11">저축/보험</option>
+          				   <option value="12">자산이동</option>
+                        </select>
+<!--                       </div> -->
+<!--                     </div> -->
+                    <div class="col-lg-6">
+                      <div class="form-group">
+                        <label class="form-control-label" for="input-email">상세 카테고리</label>
+                         <select name="ct_bottom" id="input-address" class="form-control form-control-alternative" >
+                           <option>상세 카테고리</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
 
 <script>
 
 jQuery(function($) {
     $("#datepicker").datetimepicker();
 });
+
+$(function (){
+    $('select[name="ct_top"] ').on('change', function()  {
+        var arrType = getAgreeType();
+        var optionType = $(this).parents('.pl-lg-4').find($('select[name="ct_bottom"]'));
+        optionType.empty();
+
+        if($(this).val() == '1'){ 
+            for(prop in arrType['1']){
+                optionType.append('<option value='+prop+' >'+arrType['1'][prop]+'</option>');
+            }
+        }else if($(this).val() == '2'){                            
+            for(prop in arrType['2']){
+                optionType.append('<option value='+prop+' >'+arrType['2'][prop]+'</option>');
+            }                  
+        }else if($(this).val() == '3'){                            
+            for(prop in arrType['3']){
+                optionType.append('<option value='+prop+' >'+arrType['3'][prop]+'</option>');
+            }                  
+        }else if($(this).val() == '4'){                            
+            for(prop in arrType['4']){
+                optionType.append('<option value='+prop+' >'+arrType['4'][prop]+'</option>');
+            }     
+        }else if($(this).val() == '5'){                            
+            for(prop in arrType['5']){
+                optionType.append('<option value='+prop+' >'+arrType['5'][prop]+'</option>');
+            }  
+        }else if($(this).val() == '6'){                            
+            for(prop in arrType['6']){
+                optionType.append('<option value='+prop+' >'+arrType['6'][prop]+'</option>');
+            }  
+        }else if($(this).val() == '7'){                            
+            for(prop in arrType['7']){
+                optionType.append('<option value='+prop+' >'+arrType['7'][prop]+'</option>');
+            }  
+        }else if($(this).val() == '8'){                            
+            for(prop in arrType['8']){
+                optionType.append('<option value='+prop+' >'+arrType['8'][prop]+'</option>');
+            }  
+        }else if($(this).val() == '9'){                            
+            for(prop in arrType['9']){
+                optionType.append('<option value='+prop+' >'+arrType['9'][prop]+'</option>');
+            }  
+        }else if($(this).val() == '10'){                            
+            for(prop in arrType['10']){
+                optionType.append('<option value='+prop+' >'+arrType['10'][prop]+'</option>');
+            }  
+        }else if($(this).val() == '11'){                            
+            for(prop in arrType['11']){
+                optionType.append('<option value='+prop+' >'+arrType['11'][prop]+'</option>');
+            } 
+        }else if($(this).val() == '12'){                            
+            for(prop in arrType['12']){
+                optionType.append('<option value='+prop+' >'+arrType['12'][prop]+'</option>');
+            } 
+        }
+    });
+});
+</script>
+
+
+
+
+<script type="text/javascript">
+function getAgreeType() {    
+    var obj = {
+        "1" : "1:식비;2:의복/미용;3:문화/여가;4:생활;5:주거/통신;6:건강/통신;7:교육/육아;8:교통/차량;9:경조사/회비;10:금융;11:저축/보험"
+//         "2" : "1:식비;2:의복/미용;3:문화/여가;4:생활;5:주거/통신;6:건강/통신;7:교육/육아;8:교통/차량;9:경조사/회비;10:금융;11:저축/보험",
+        
+//         "3" : {
+//             '24' : '여행/숙박',
+//             '25' : '공연/전시',
+//             '26' : '도서/영화',
+//             '27' : '취미',
+//             '28' : '선물',
+//             '29' : '기타',
+//         },
+//         "4" : {
+//             '30' : '가전/가구',
+//             '31' : '주방/욕실',
+//             '32' : '잡화/소모',
+//             '33' : '반려동물',
+//             '34' : '기타',
+//         },
+//         "5" : {
+//             '35' : '관리비',
+//             '36' : '공과금',
+//             '37' : '통신',
+//             '38' : '월세',
+//             '39' : '기타',
+//         },
+//         "6" : {
+//             '40' : '운동',
+//             '41' : '운동용품',
+//             '42' : '병원',
+//             '43' : '약국',
+//             '44' : '기타',
+//         },
+//         "7" : {
+//             '45' : '등록금',
+//             '46' : '학원',
+//             '47' : '교재',
+//             '48' : '육아용품',
+//             '49' : '기타',
+//         },
+//         "8" : {
+//             '50' : '대중교통',
+//             '51' : '택시',
+//             '52' : '주유소',
+//             '53' : '장비/부품',
+//             '54' : '기타',
+//         },
+//         "9" : {
+//             '55' : '경조사',
+//             '56' : '회비',
+//             '57' : '용돈',
+//             '58' : '헌금',
+//             '59' : '기부',
+//             '60' : '기타',
+//         },
+//         "10" : {
+//             '61' : '세금',
+//             '62' : '은행',
+//             '63' : '이자',
+//             '64' : '투자',
+//             '65' : '기타',
+//         },
+//         "11" : {
+//             '66' : '예/적금',
+//             '67' : '보험',
+//             '68' : '기타',
+//         },
+//         "12" : {
+//             '69' : '출금',
+//             '70' : '이체',
+//             '71' : '카드대금',
+//             '72' : '기타',
+//         }
+    }
+    
+    
+    
+    var json = JSON.stringify(obj);
+    
+	console.log(JSON.stringify(obj));
+    
+    return JSON.stringify(obj);
+}
+</script>
+
 </script>
 
 <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" /> -->
@@ -82,29 +267,6 @@ jQuery(function($) {
 
 <script src="https://npmcdn.com/flatpickr/dist/flatpickr.min.js"></script>    <!-- flatpicker min js -->
 <script src="https://npmcdn.com/flatpickr/dist/l10n/ko.js"></script>          <!-- flatpicker ko -->
-<script> 
-
-    function fechaReg(el) {
-        jQuery(el).datetimepicker({
-            dateFormat: 'yy-mm-dd',
-            timeFormat: 'hh:mm:ss',
-            changeYear: true,
-            changeMonth: true,
-            numberOfMonths: 1,
-            timeOnlyTitle: 'Seleccione Horario',
-            timeText: 'Hora seleccionada',
-            hourText: 'Hora',
-            minuteText: 'Minuto',
-            secondText: 'Segundo',
-            millisecText: 'Milisegundo',
-            currentText: 'Ahora',
-            closeText: 'Listo',
-            ampm: false
-        });
-    }
-</script>
-
-
 
 
  <script>
@@ -114,9 +276,9 @@ $("#jqGrid").jqGrid({
     url : '/asset/reqGrid',
     datatype : "json",
 	mtype: 'get',
-	ajaxGridOptions: { contentType: "application/json; charset=UTF-8" },
-	ajaxRowOptions: { contentType: "application/json; charset=UTF-8", async: true },
-	ajaxSelectOptions: { contentType: "application/json; charset=UTF-8", dataType: "JSON" },
+// 	ajaxGridOptions: { contentType: "application/json; charset=UTF-8" },
+// 	ajaxRowOptions: { contentType: "application/json; charset=UTF-8", async: true },
+// 	ajaxSelectOptions: { contentType: "application/json; charset=UTF-8", dataType: "JSON" },
 
 		jsonReader: {
 				repeatitems:false,
@@ -125,7 +287,7 @@ $("#jqGrid").jqGrid({
 // 	alert("시작");
     height: 500, 
     width: 1450,
-    colNames : ['num','분류','날짜','내용','금액','거래수단','ctno','카테고리','소분류','메모'], 
+    colNames : ['num','분류','날짜','내용','금액','거래수단','카테고리','소분류','메모'], 
     colModel:[
         {name : 'abno', index : 'abno',width : 0, align : 'left',hidden:true,key:true},    	
         {name:"ab_inout",index:"ab_inout",width:30,align:'center',edittype: "select", formatter: "select",editoptions:{value:"1:지출;2:수입;3:이체;"},editable:true,
@@ -136,9 +298,6 @@ $("#jqGrid").jqGrid({
 //                 }
 	        hidden:false,editable:true},
 
-	        
-	        
-	        
         {name:'ab_date', index:'ab_date', width:90, editable:true, editoptions:{size:20, 
                dataInit:function(el){ 
                      $(el).datetimepicker({dateFormat:'yy-mm-dd', onClose :grid_Datepicker}); 
@@ -155,41 +314,22 @@ $("#jqGrid").jqGrid({
                }
 
            }},
-// 				{ name : 'ab_date', index :"ab_date", width:100, align:'center', editable: true
-//                      ,search:true/* ,searchoptions: { sopt: ['eq', 'ne', 'cn']} */
-//                      , editoptions: {
-//                      dataInit: function(el) {
-//                      $(el).datetimepicker({
-//                          addSliderAccess: true
-//                          ,sliderAccessArgs: { touchonly: true }
-//                      ,timeFormat : "HH:mm"
-//                      ,dateFormat : "yy-mm-dd"
-//                       });
-//                      $(el).datetimepicker({
-//                   	    $("#date-time-picker").flatpickr({
-//                   	        enableTime: true,            // 시간 선택 여부
-//                   	        altInput: true,              // 기존 입력을 숨기고 새 입력을 만듦
-//                   	        altFormat: 'Y-m-d H:i',      // 날짜 선택 후 표시 형태
-//                   	        dateFormat: 'Y-m-d H:i',     // date format 형식
-//                   	        defaultDate: new Date(),     // 기본 선택 시간
-//                   	        minDate: new Date(),         // 최소 선택 시간
-//                   	        locale: 'ko',                // 한국어
-//                   	        time_24hr: true,             // 24시간 형태
-//                   	        disableMobile: true          // 모바일 지원 
-//                   	      });
+
 // 	    {name: 'ab_date', index: 'ab_date', width: 80, align: "center", hidden: false, editable: true, editoptions: {dataInit: fechaReg, readonly: 'readonly'}, editrules: {required: true, edithidden: true}, search: false},
         {name : 'ab_content',index : 'ab_content',width : 100, align : 'center',hidden:false,editable:true},
         {name : 'ab_amount',index : 'ab_amount',width : 70, resizable : true,align : 'right',editrules:{number:true},hidden:false,editable:true},
 	    {name : 'ab_method',index : 'ab_method',width : 70, align : 'center',hidden:false,editable:true},	
-//         {name : 'ctno', index : 'ctno',width : 0, align : 'left',hidden:true},    	
-		{name: "ctno", width: 150,
+// 	    {name:"ct_top",label:"ct_top",width:50,align:'center',edittype: "select", /* formatter: "select", */
+// 	    	editoptions:{value:"1:식비;2:의복/미용;3:문화/여가;4:생활;5:주거/통신;6:건강/통신;7:교육/육아;8:교통/차량;9:경조사/회비;10:금융;11:저축/보험"},
+// 	    	editable:true,
+		{name: "ctno", label: 'Customer ID', width: 150,
 		editable: true, edittype: "select",
 		editoptions:{  dataUrl: '/asset/cateSelect',
-    		  			 postData: function(rowid){
-            		return {data: data}
-	
-        		    },
+//     		  			 postData: function(rowid){
+//             		return {data: data}
+//         		    },
 	          buildSelect:function (datas){
+
 	            if(typeof(datas)=='string') 
             		datas = $.parseJSON(datas);
 					var data = datas.list;
@@ -204,8 +344,15 @@ $("#jqGrid").jqGrid({
 		  									} 
       				}
       	},
-	    {name : 'ct_top',index : 'ct_top',width : 70, alian: "center", hidden:false,editable:true},           
-        {name : 'ct_bottom',index : 'ct_bottom',width : 70, align : 'center',hidden:false,editable:true},              
+// 	    {name : 'ct_top',index : 'ct_top',width : 70, alian: "center", hidden:false,editable:true},           
+		{name:"ct_bottom",index:"ctno2",width:50,align:'center',edittype: "select", /* formatter: "select", */
+		    	editoptions:{value:/* "13:간식;14:외식;18:의류" */getAgreeType}
+//      dataEvents: [{
+//      type : 'change',
+//      fn : function(e) {
+//      }] 
+//  }
+		    	,editable:true},
         {name : 'ab_memo',index : 'ab_memo',width : 50, align : 'center',hidden:false,editable:true}
       ],
 //      gridComplete: function(){
@@ -216,6 +363,9 @@ $("#jqGrid").jqGrid({
 //    	        $("#jqGrid").jqGrid('setRowData',ids[i],{pwReset:chgPw});
 //    	    } 
 //    	},
+
+
+    
     autowidth: true,
 	shrinkToFit: true, 
     loadtext: "조회 중..",
@@ -232,7 +382,7 @@ $("#jqGrid").jqGrid({
     onCellSelect: function(rowId, colId, val, e) { // e의 의미는 무엇인가요?
         var seq = $("#jqGrid").getCell(rowId, "seq");
         
-        if(colId == 2) {
+        if(colId == 4) {
             if(CommonJsUtil.isEmpty(seq)) {
                 $("#jqGrid").setColProp('name', {editable:true});
             } else {
@@ -278,6 +428,12 @@ $("#jqGrid").jqGrid({
 
     }); //jqgrid default
     
+//     $(window).on('resize.jqGrid', function () {
+//         jQuery("#jqGrid").jqGrid( 'setGridWidth', $(".main-panel").width() - 100 );
+//     },
+    
+    
+   
  	// 리로딩 처리
     function reload() {
     jQuery("#jqGrid").trigger('reloadGrid');
@@ -296,9 +452,9 @@ $("#jqGrid").jqGrid({
 	// 저장하고 컨트롤러로 보내는 코드 
 	function save(){
 		alert("저장 시작");
-		var data =  $("#jqGrid").jqGrid('getGridParam', 'selarrrow');
+// 		var data =  $("#jqGrid").jqGrid('getGridParam', 'selarrrow');
 // 		alert("");
-// 		var data =  $("#jqGrid").getRowData();
+		var data =  $("#jqGrid").getRowData();
 // 		var data = $( "#jqGrid" ).getGridParam( "selrow" );    
 			console.log(data);
         data ={"test":JSON.stringify(data)};
@@ -306,7 +462,7 @@ $("#jqGrid").jqGrid({
 		console.log(data);
 
 		$.ajax({
-			url : "/asset/saveGrid",
+			url : "/asset/cateSelect",
 // 			traditional: true ,
 			contentType:"application/json",
 			data : data,
@@ -319,7 +475,35 @@ $("#jqGrid").jqGrid({
 		})
 				jQuery("#jqGrid").trigger('reloadGrid');	
 	}
-	// insert  
+	// update
+	
+	function insert(){
+		alert("insert 시작");
+// 		var data =  $("#jqGrid").jqGrid('getGridParam', 'selarrrow');
+// 		alert("");
+		var data =  $("#jqGrid").getRowData();
+// 		var data = $( "#jqGrid" ).getGridParam( "selrow" );    
+			console.log(data);
+        data ={"test":JSON.stringify(data)};
+// 		data = JSON.stringify(data);
+		console.log(data);
+
+		$.ajax({
+			url : "/asset/saveRows",
+// 			traditional: true ,
+			contentType:"application/json",
+			data : data,
+// 			dataType:'application/json',
+//             postData : {"rows" : JSON.stringify(data)},
+			success:function(val){alert("입력 성공!");
+			},error:function(err){
+			      console.log(err);
+			}
+		})
+				jQuery("#jqGrid").trigger('reloadGrid');	
+	}	
+	
+	
 	var gridFunc = {
 	        addRow : function() {
 	            
@@ -331,6 +515,29 @@ $("#jqGrid").jqGrid({
 	            $("#jqGrid").setColProp("name", {editable: true}); // 수정 필요함 
 	        
 	        }
+			
+	}
+	
+	function delRow(){
+		alert("삭제 시작");
+		var data =  $("#jqGrid").jqGrid('getGridParam', 'selarrrow');
+// 		var data =  $("#jqGrid").getRowData();
+// 		var data = $( "#jqGrid" ).getGridParam( "selrow" );    
+			console.log(data);
+        data ={"test":JSON.stringify(data)};
+// 		data = JSON.stringify(data);
+		console.log(data);
+
+		$.ajax({
+			url : "/asset/delGrid",
+			contentType:"application/json",
+			data : data,
+			success:function(val){alert("입력 성공!");
+			},error:function(err){
+			      console.log(err);
+			}
+		})
+				jQuery("#jqGrid").trigger('reloadGrid');	
 	}
 	
 	// col edit 가능하게 일괄 처리하기 
@@ -425,30 +632,12 @@ $("#jqGrid").jqGrid({
 	
 	/////////////////////////////////////////////////////////////2
 	// 선택 삭제(abno 가져가기)
-		function del(){
-			alert("삭제 시작");
-			var data =  $("#jqGrid").jqGrid('getGridParam', 'selarrrow');
-//	 		var data =  $("#jqGrid").getRowData();
-//	 		var data = $( "#jqGrid" ).getGridParam( "selrow" );    
-				console.log(data);
-	        data ={"test":JSON.stringify(data)};
-//	 		data = JSON.stringify(data);
-			console.log(data);
-
-			$.ajax({
-				url : "/asset/delGrid",
-				contentType:"application/json",
-				data : data,
-				success:function(val){alert("입력 성공!");
-				},error:function(err){
-				      console.log(err);
-				}
-			})
-					jQuery("#jqGrid").trigger('reloadGrid');	
-		}
+	
 
   </script>
-  
+
+
+
   <script type="text/javascript">
 $(document).ready(function()
 {
