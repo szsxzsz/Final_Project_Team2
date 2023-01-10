@@ -18,6 +18,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,16 +30,17 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.chagok.domain.AbookVO;
-import com.chagok.domain.CategoryVO;
 import com.chagok.domain.BoardVO;
+import com.chagok.domain.CategoryVO;
 import com.chagok.domain.ChallengeVO;
 import com.chagok.domain.FeedDTO;
 import com.chagok.domain.MessageVO;
 import com.chagok.domain.MinusVO;
+import com.chagok.domain.PlusVO;
+import com.chagok.domain.SysLogVO;
 import com.chagok.domain.UserVO;
 import com.chagok.service.AbookService;
 import com.chagok.service.ChallengeService;
-import com.chagok.service.FeedService;
 import com.chagok.service.UserService;
 import com.chagok.utils.UploadFileUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -59,24 +62,25 @@ public class ChallengeController {
 	@Resource(name="uploadPath")
 	private String uploadPath;
 
-	@Inject
-	private FeedService feedsevice;
 
 	private static final Logger mylog = LoggerFactory.getLogger(ChallengeController.class);
 
-	// http://localhost:8080/challenge/plusFeed?cno=44
+	// http://localhost:8080/challenge/plusFeed?cno=2
 	@GetMapping(value = "/plusFeed")
 	public String plusfeedGET(Model model, int cno, HttpSession session, UserVO vo) throws Exception {
 		mylog.debug("plusfeedGET() 호출");
 
 		List<Map<String, Object>> plusPeoList = service.getPlusPeople(cno);
 		mylog.debug("plusFeedGET()에서 id : "+session.getId());
+		SysLogVO sysLogVO = new SysLogVO();
+
+		model.addAttribute("sessionId", sysLogVO.getUserId());
 		Integer mno = service.getChallengeInfo(cno).getMno();
 		
 		model.addAttribute("vo", service.getChallengeInfo(cno));
 		model.addAttribute("plusPeoList", plusPeoList);
 		model.addAttribute("c_end", service.getChallengeEndDate(cno));
-		model.addAttribute("msgList", feedsevice.getMsgList(cno));
+//		model.addAttribute("msgList", feedsevice.getMsgList(cno));
 		model.addAttribute("host",uservice.getUser(mno));
 		
 		return "/challenge/plusFeed";
@@ -86,7 +90,8 @@ public class ChallengeController {
 	@ResponseBody 
 	public List<MessageVO> preChat(@RequestBody String cno) throws Exception {
 		
-		return feedsevice.getMsgList(Integer.parseInt(cno));
+//		return feedsevice.getMsgList(Integer.parseInt(cno));
+		return null; // 오류때문에 임의로 넣은 것!
 	}
 	
 	@PostMapping(value = "/saveChat")
@@ -102,7 +107,7 @@ public class ChallengeController {
 		   feedDTO.setF_receive(map.get("receiver").toString());
 		   feedDTO.setF_date(map.get("f_date").toString());
 		   
-		   feedsevice.saveMsg(messageVO, feedDTO);
+//		   feedsevice.saveMsg(messageVO, feedDTO);
 	}
 	
 //	@PostMapping(value = "/plusFeed")
@@ -158,7 +163,7 @@ public class ChallengeController {
 		
 		// 서비스 -> DAO 게시판 리스트 가져오기
 		// getAbookList(1) -> getAbookList(mno) 수정 필요 !!!!!
-		List<AbookVO> abookList = aService.getAbookList(1);
+		List<AbookVO> abookList = aService.getAbookList(mno);
 		List<Map<String, Object>> minusAbook = service.getMinusAbook(mno, cno);
 		mylog.debug(minusAbook+"");
 //		mylog.debug("abookList : "+abookList);
@@ -166,7 +171,7 @@ public class ChallengeController {
 //		List<CategoryVO> cateList = aService.CateList();
 //		mylog.debug("cateList : "+cateList);
 		mylog.debug("minusFeedGET()에서 id : "+session.getId());
-		//SysLogVO sysLogVO = new SysLogVO();
+		SysLogVO sysLogVO = new SysLogVO();
 		
 //		ObjectMapper mapper = new ObjectMapper();
 
@@ -176,7 +181,7 @@ public class ChallengeController {
 //		mylog.debug("jsonCate : "+jsonCate);
 
 	   // 연결된 뷰페이지로 정보 전달(model)
-		//model.addAttribute("sessionId", sysLogVO.getUserId());
+		model.addAttribute("sessionId", sysLogVO.getUserId());
 	   model.addAttribute("vo", vo);
 	   model.addAttribute("minusPeoList", minusPeoList);
 	   model.addAttribute("vo2", vo2);
@@ -194,9 +199,11 @@ public class ChallengeController {
 	}
 	
 	@PostMapping(value = "/minusFeed")
-	public String minusFeedPOST(@RequestParam("cno") int cno,@RequestParam("mno") int mno,AbookVO avo,Model model) throws Exception {
+	public String minusFeedPOST(@RequestParam("cno") int cno,@RequestParam("mno") int mno,Model model,@RequestParam("ab_amount") int ab_amount) throws Exception {
 		mylog.debug("minusFeedPOST 호출 ");
-		service.updateMoney(mno,avo.getAb_amount(),cno);
+		
+		
+		service.updateMoney(mno,ab_amount,cno);
 
 		model.addAttribute("cno", cno);
 		return "redirect:/challenge/minusFeed";
@@ -212,10 +219,11 @@ public class ChallengeController {
 		
 		Integer gctno = service.samechallenge(map);	
 		mylog.debug(gctno+"");
-		if(gctno != null) { // 참여불가능
+		if(gctno != null) {
 			result = "Y";
-		}else { // 참여가능
+		}else {
 			result = "N";
+
 			mylog.debug(map+"");
 			service.joinplusInsert(map); // mno랑 cno필요
 			service.joinplusUpdate(map); // nick이랑 cno
@@ -277,6 +285,7 @@ public class ChallengeController {
 		List<Map<String, Object>> result = service.getResult(cno);
 		List<Map<String, Object>> minusPeoList = service.getMinusPeople(cno);
 		List<Map<String, Object>> plusPeoList = service.getPlusPeople(cno);
+		
 		
 		model.addAttribute("vo", vo);
 		model.addAttribute("challengeList", challengeList);
