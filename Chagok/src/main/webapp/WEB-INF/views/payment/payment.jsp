@@ -32,7 +32,7 @@ IMP.init("imp44431277"); // 예: imp00000000a (가맹점 식별코드)
 	        console.log(msg);
 	        $.ajax({
 	        	type : 'POST',
-	        	url : "/payCallback", 
+	        	url : "/verifyIamport", 
 	        	dataType: 'json',
 	        	data: {
 	        		imp_uid : rsp.imp_uid,

@@ -4,6 +4,17 @@
 <%@ include file="../include/sidebar.jsp"%>
 <script type="text/javascript">
 // const IMP = window.IMP; // 생략 가능
+/** 결제 **/
+    // 결제 금액, 구매자의 이름, 이메일
+    const priceAmount = $('#totalPrice').val();
+    const buyerMemberEmail = $('#memberEmail').val();
+    const buyerMemberName = $('#memberName').val();
+    // const form = document.getElementById("payment");
+
+    console.log(priceAmount);
+    console.log(buyerMemberName);
+    console.log(buyerMemberEmail);
+    const IMP = window.IMP;
 IMP.init("imp44431277"); // 예: imp00000000a (가맹점 식별코드)
 </script>
 
@@ -32,20 +43,38 @@ IMP.init("imp44431277"); // 예: imp00000000a (가맹점 식별코드)
 	        console.log(msg);
 	        $.ajax({
 	        	type : 'POST',
-	        	url : "/challenge/payCallback", 
+	        	url: '/verifyIamport/'+rsp.imp_uid, 
 	        	dataType: 'json',
 	        	data: {
 	        		imp_uid : rsp.imp_uid,
 	        		msg : msg
 	        	}
-	        });
-	    } else {
-	    	 var msg = '결제에 개같이 실패하였습니다.';
-	         msg += '에러내용 : ' + rsp.error_msg;
-	    }
-	    alert(msg);
-	}); // function(rsp)
-} // function requestPay()
+	        	beforeSend: function(xhr){
+                xhr.setRequestHeader(header, token);
+            }
+	        }).done(function(result){
+
+                // rsp.paid_amount와 result.response.amount(서버 검증) 비교 후 로직 실행
+                if(rsp.paid_amount === result.response.amount){
+                    alert("결제가 완료되었습니다.");
+                    $.ajax({
+                        type:'POST',
+                        url:'/payment/payment',
+                        beforeSend: function(xhr){
+                            xhr.setRequestHeader(header, token);
+                        }
+                    }).done(function() {
+                        window.location.reload();
+                    }).fail(function(error){
+                            alert(JSON.stringify(error));
+                    })
+                } else{
+                    alert("결제에 실패했습니다."+"에러코드 : "+rsp.error_code+"에러 메시지 : "+rsp.error_message);
+
+                }
+            })
+        });
+    };
 </script>
 
 <button onclick="requestPay()">결제하기</button> <!-- 결제하기 버튼 생성 -->
