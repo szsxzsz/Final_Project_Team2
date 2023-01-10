@@ -24,18 +24,13 @@ ${review }
 			</tr>
 		</thead>
 		<tbody>
-<%-- 			<c:set var="board" value="${fn:length(boardList)}"/> --%>
-<%-- 			<c:forEach items="${boardList }" var="boardList" begin="1" end="${board }"> --%>
-			<c:set var="no" value="${boardList.size()} "></c:set>
+
+			<c:set var="boardno" value="${boardList.size() }"></c:set>
+			<fmt:parseNumber var="boardno" value="${boardno }" type="number" />
 			<c:forEach items="${boardList }" var="boardList" varStatus="status">
-<%-- 			<c:forEach var="b" begin="0" end="${boardList.size() - 1 }" step="1"> --%>
-<%-- 		    <c:set var="c"  value="${vo2[i] }" /> --%>
-<%-- 		    <c:set var="goods" value="${goodsList[i] }"/> --%>
+
 			<tr>
-<%-- 				<td> ${pagination.total - ((pagination.nowPage-1) * 10 + status.index) - 1}</td> --%>
-<%-- 				<td>${paginationInfo.totalRecordCount - ((paginationInfo.currentPageNo-1) * paginationInfo.recordCountPerPage + status.index) }</td> --%>
-<%-- 				<td>${boardList[size - i] }</td> --%>
-				<td>${no}</td>
+ 				<td>>${boardno }</td>
 				<td>11</td>
 				<td>
 					<a href="/reviewcontent?cno=${boardList.cno }">${boardList.b_title } </a>
@@ -43,12 +38,32 @@ ${review }
 				<td>${boardList.b_content }</td>
 				<td>11</td>
 				<td>${boardList.b_writer }</td>
-					<c:set var="no" value="${no-1} "></c:set>
+					<c:set var="boardno" value="${boardno -1 }"></c:set>
 			</tr>
 			</c:forEach>
 			
 		</tbody>
 	</table>
+	 <div class="box-footer clearfix">
+<!--                 <a href="#" class="bt first"><<</a> -->
+			<ul class="pagination pagination-sm no-margin pull-right">
+                
+                <c:if test="${pageMaker.prev }">
+					<li><a href="/notice?page=${pageMaker.startPage-1 }"class="bt prev"><</a></li>
+				</c:if>
+				<c:forEach var="idx" begin="${pageMaker.startPage }" end="${pageMaker.endPage }" step="1">
+					<li 
+						<c:out value="${idx == pageMaker.cri.page? 'class=active':'' }"/>
+					
+					><a href="/notice?page=${idx }">${idx }</a></li>
+				</c:forEach>
+                <c:if test="${pageMaker.next }">
+					<li><a href="/notice?page=${pageMaker.endPage+1 }" class="bt next">></a></li>
+				</c:if>
+               
+<!--                 <a href="#" class="bt last">>></a> -->
+			</ul>
+            </div>
 </div>
 
 	<script type="text/javascript">

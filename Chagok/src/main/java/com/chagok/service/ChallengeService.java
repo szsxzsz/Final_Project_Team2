@@ -116,6 +116,12 @@ public interface ChallengeService {
 	// 가계부 값 연동하기
 	public void updateMoney(Integer mno, Integer ab_amount, Integer cno);
 	
+	// 글 정보 조회(페이징처리 cri)
+	public List<BoardVO> getNBoardPage(Criteria cri) throws Exception;
+		
+	// 전체 게시판 글 개수 조회
+	public int NboardCount() throws Exception;
+	
 	
 }
 

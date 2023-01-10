@@ -114,4 +114,13 @@ public interface ChallengeDAO {
 	
 	// 가계부 값 연동하기
 	public void updateMoney(Integer mno, Integer ab_amount, Integer cno);
+	
+	// 페이징 처리 구현된 리스트 조회
+	public List<BoardVO> getNBoardPage(Integer page) throws Exception;
+		
+	// 리스트 조회 (페이징처리 cri)
+	public List<BoardVO> getNBoardPage(Criteria cri) throws Exception;
+	
+	// 전체 게시판 글 개수 조회
+	public int NBoardCount() throws Exception;
 }

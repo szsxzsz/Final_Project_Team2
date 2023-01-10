@@ -14,7 +14,7 @@
 
 			<div class="input-group">
 				<span class="input-group-addon"> 작성자 </span> 
-					<input type="text" class="form-control" name="b_write" value="${nick }">
+					<input type="text" class="form-control" name="b_writer" value="${nick }" readonly>
 			</div>
 			<br>
 			<div class="form-group">
@@ -30,16 +30,16 @@
 					<i class="fa fa-check"></i> 
 					첨부파일 첨부
 				</label> 
-					<input type="button" class="btn btn-block btn-success btn-sm" id="inputSuccess"  value="파일 첨부" onclick="file_add();">
+					<input type="button" class="btn btn-block btn-success btn-sm" id="inputSuccess" name="b_file" value="파일 첨부" onclick="file_add();">
 				<div id="d_file">
 				</div>
 			</div>
+			<input type="submit" value=" 게시하기 " class="btn btn-block btn-success btn-sm">
+			<input type="hidden" value="3" name="b_sort">
 		</form>
 	</div>
 
 </div>
-			<input type="submit" value=" 게시하기 " class="btn btn-block btn-success btn-sm">
-			<input type="hidden" value="3" name="b_sort">
 <%@ include file="../include/footer.jsp"%>
 <script type="text/javascript">
 	  var cnt=1;
