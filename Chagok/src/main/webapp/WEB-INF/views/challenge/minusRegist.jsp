@@ -5,13 +5,15 @@
 <%@ include file="../include/sidebar.jsp"%>
 
 
+<head>
+
 <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css" >
-<script src="//ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 
 <!-- sweetalert -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
+
 
 <!-- 유효성 검사 -->
 <script type="text/javascript">
@@ -235,7 +237,9 @@ function getAgreeType() {
     return obj;
 }
 </script>
+</head>
 
+<body>
 <h1>차곡 챌린지 등록 (절약형)</h1>
 <form action=""  method="post" enctype="multipart/form-data">
   <div class="main-content">
@@ -408,7 +412,7 @@ function getAgreeType() {
                 <input type="hidden" name="c_status" value="0">
                 <input type="hidden" name="c_sort" value="1">
                 <input type="hidden" name="c_min" value="2">
-                
+                <input type="hidden" name="c_cnt" value="1">
                 
             </div>
           </div>
@@ -417,10 +421,11 @@ function getAgreeType() {
 	</div>
 </div>
 </form>
+</body>
 
 
 
-
+</div>
 <%@ include file="../include/footer.jsp" %>
 
 <style>

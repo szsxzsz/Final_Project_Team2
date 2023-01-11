@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.chagok.domain.AbookVO;
 import com.chagok.domain.BoardVO;
+import com.chagok.domain.BusinessAccountVO;
 import com.chagok.domain.ChallengeVO;
 import com.chagok.domain.Criteria;
 import com.chagok.domain.MinusVO;
@@ -242,7 +243,7 @@ public class ChallengeServiceImpl implements ChallengeService{
 
 	// 챌린지 + 게시판 리스트
 	@Override
-	public String getBoardChallenge(Integer cno) throws Exception {
+	public Map<String, Object> getBoardChallenge(Integer cno) throws Exception {
 		mylog.debug(" boardChallenge 호출 ");
 		return dao.getBoardChallenge(cno);
 	}
@@ -268,17 +269,17 @@ public class ChallengeServiceImpl implements ChallengeService{
 		dao.updateMoney(mno,ab_amount,cno);
 	}
 
-	// 글 정보 조회(페이징처리 cri)
+	// 공지글 정보 조회(페이징처리 cri)
 	@Override
 	public List<BoardVO> getNBoardPage(Criteria cri) throws Exception {
-		mylog.debug(" getBoardPage(Criteria cri) 호출 ");
+		mylog.debug(" getNBoardPage(Criteria cri) 호출 ");
 		return dao.getNBoardPage(cri);
 	}
 
-	// 전체 게시판 글 개수 조회
+	// 전체 공지게시판 글 개수 조회
 	@Override
 	public int NboardCount() throws Exception {
-		mylog.debug("boardCount() 호출");
+		mylog.debug("NboardCount() 호출");
 		return dao.NBoardCount();
 	}
 
@@ -289,7 +290,47 @@ public class ChallengeServiceImpl implements ChallengeService{
 		dao.confirmChallenge(vo);
 	}
 
+	// 후기글 정보 조회(페이징처리 cri)
+	@Override
+	public List<BoardVO> getRBoardPage(Criteria cri) throws Exception {
+		mylog.debug(" getRBoardPage(Criteria cri) 호출 ");
+		return dao.getRBoardPage(cri);
+	}
+
+	// 전체 후기게시판 글 개수 조회
+	@Override
+	public int RboardCount() throws Exception {
+		mylog.debug("RboardCount() 호출");
+		return dao.RBoardCount();
+	}	
+
+	// 관리자 챌린지 승인거절
+	@Override
+	public void rejectChallenge(ChallengeVO vo) throws Exception {
+		mylog.debug("service : 관리자 챌린지 승인거절");
+		dao.rejectChallenge(vo);
+	}
+
+	// 비지니스 계좌 송금
+	@Override
+	public void sendBiz(BusinessAccountVO vo) throws Exception {
+		dao.sendBiz(vo);
+	}
 	
+	// 비지니스 계좌 송금시 플러스 테이블 업데이트 (pl_sum)
+	@Override
+	public void updatePlusSum(BusinessAccountVO vo) throws Exception {
+		dao.updatePlusSum(vo);
+	}
+
+	// 내 plus 테이블 정보 가져오기
+	@Override
+	public PlusVO getPlusOne(int mno, int cno) throws Exception {
+		return dao.getPlusOne(mno, cno);
+	}
+
+	
+
 
 	
 	

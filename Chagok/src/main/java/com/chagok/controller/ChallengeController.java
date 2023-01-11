@@ -32,6 +32,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.chagok.domain.AbookVO;
 import com.chagok.domain.BoardVO;
+import com.chagok.domain.BusinessAccountVO;
 import com.chagok.domain.CategoryVO;
 import com.chagok.domain.ChallengeVO;
 import com.chagok.domain.FeedDTO;
@@ -71,7 +72,7 @@ public class ChallengeController {
 
 	// http://localhost:8080/challenge/plusFeed?cno=2
 	@GetMapping(value = "/plusFeed")
-	public String plusfeedGET(Model model, int cno, HttpSession session, UserVO vo) throws Exception {
+	public String plusfeedGET(Model model, @RequestParam("cno") int cno, HttpSession session, UserVO vo) throws Exception {
 		mylog.debug("plusfeedGET() 호출");
 
 		List<Map<String, Object>> plusPeoList = service.getPlusPeople(cno);
@@ -80,6 +81,11 @@ public class ChallengeController {
 
 		model.addAttribute("sessionId", sysLogVO.getUserId());
 		Integer mno = service.getChallengeInfo(cno).getMno();
+		
+		// 영민 추가 (plus 테이블에서 cno, mno로 내 정보만 호출)
+		PlusVO plusVO = service.getPlusOne((int)session.getAttribute("mno"), cno);
+		model.addAttribute("myPlusVO", plusVO);
+		// 영민 추가
 		
 		model.addAttribute("vo", service.getChallengeInfo(cno));
 		model.addAttribute("plusPeoList", plusPeoList);
@@ -340,11 +346,12 @@ public class ChallengeController {
 		mylog.debug(" /challenge/plusRegist(POST) 호출 ");	
 		
 		// 회원정보 저장
-		Integer mno = (Integer)session.getAttribute("mno");
-		mylog.debug("mno :" +mno);
+		int mno = (Integer)session.getAttribute("mno");
 			
 		UserVO userVO = uservice.getUser(mno);
 		model.addAttribute("userVO", userVO);
+		vo.setMno(mno);
+		vo.setC_person(userVO.getNick()+",");
 		
 		// 사진등록
 		String imgUploadPath = uploadPath + File.separator + "imgUpload";
@@ -360,7 +367,7 @@ public class ChallengeController {
 		vo.setC_file(File.separator + "imgUpload" + ymdPath + File.separator + fileName);
 		vo.setC_thumbFile(File.separator + "imgUpload" + ymdPath + File.separator + "s" + File.separator + "s_" + fileName);
 		
-		// 1. 전달된 정보 저장
+//		// 1. 전달된 정보 저장
 		mylog.debug(vo.toString());
 		
 		// 2. 서비스 -> DAO 접근 (mapper)
@@ -384,9 +391,18 @@ public class ChallengeController {
 	
 	// 챌린지 등록 (절약형) - POST
 	@RequestMapping(value = "/minusregist", method=RequestMethod.POST)
-	public String minusRegistPOST(ChallengeVO vo, MultipartFile file) throws Exception{
+	public String minusRegistPOST(ChallengeVO vo, MultipartFile file, HttpSession session, Model model) throws Exception{
 		mylog.debug(" /challenge/minusRegist(POST) 호출 ");	
 		
+		// 회원정보 저장
+		int mno = (Integer)session.getAttribute("mno");
+			
+		UserVO userVO = uservice.getUser(mno);
+		model.addAttribute("userVO", userVO);
+		vo.setMno(mno);
+		vo.setC_person(userVO.getNick()+",");
+		
+		// 사진등록
 		String imgUploadPath = uploadPath + File.separator + "imgUpload";
 		String ymdPath = UploadFileUtils.calcPath(imgUploadPath);
 		String fileName = null;
@@ -399,7 +415,6 @@ public class ChallengeController {
 
 		vo.setC_file(File.separator + "imgUpload" + ymdPath + File.separator + fileName);
 		vo.setC_thumbFile(File.separator + "imgUpload" + ymdPath + File.separator + "s" + File.separator + "s_" + fileName);
-		
 		
 		// 1. 전달된 정보 저장
 		mylog.debug(vo.toString());
@@ -478,6 +493,46 @@ public class ChallengeController {
 		service.confirmChallenge(vo);
 		return "/challenge/adminconfirm";
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	/////////////////////////// 영민 비지니스 계좌 송금 ///////////////////////////////////
+	@GetMapping(value = "/sendBiz")
+	public String sendBiz(BusinessAccountVO vo, HttpSession session, RedirectAttributes rttr) throws Exception{
+		
+		if (session.getAttribute("mno") != null) {
+			int mno = (int)session.getAttribute("mno");
+			UserVO userVO = uservice.getUser(mno);
+			vo.setBiz_holder_name(userVO.getNick());
+			vo.setBiz_inout(1);
+			vo.setMno(mno);
+		}
+		
+		service.sendBiz(vo);
+		
+		service.updatePlusSum(vo);
+		
+		rttr.addFlashAttribute("sendOK", "OK");
+		
+		return "redirect:/challenge/plusFeed?cno="+vo.getCno();
+	}
+	
+	/////////////////////////// 영민 비지니스 계좌 송금 ///////////////////////////////////
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 }
