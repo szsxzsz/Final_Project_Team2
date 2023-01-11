@@ -507,7 +507,7 @@ public class ChallengeController {
 		}
 		return result;
 	}
-	//
+	// http://localhost:8080/challenge/memberManagement
 	// 관리자 회원관리
 	@GetMapping("/memberManagement")
 	public String memberManagementGET(Model model) throws Exception {
@@ -555,7 +555,6 @@ public class ChallengeController {
 	}
 	
 	/////////////////////////// 영민 비지니스 계좌 송금 ///////////////////////////////////
-	
 	
 	
 	
