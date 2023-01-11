@@ -213,12 +213,12 @@ public class ChagokController {
 	 }
 	 
 	 // 가계부 가져오기 (연동) - 수지 
-	 @RequestMapping(value="/abookList")
-		public String getAbookList() throws Exception{
-			mylog.debug(" /abookList -> 연결된 뷰 abookList.jsp -> 데이터 생성 -> ChallengeController ");
-			
-			return "/asset/abookList";
-		}
+//	 @RequestMapping(value="/abookList")
+//		public String getAbookList() throws Exception{
+//			mylog.debug(" /abookList -> 연결된 뷰 abookList.jsp -> 데이터 생성 -> ChallengeController ");
+//			
+//			return "/asset/abookList";
+//		}
 	
 	 
 	// http://localhost:8080/challenge/detail?cno=1
@@ -247,6 +247,20 @@ public class ChagokController {
 //	   alertService.alert(alertVO);
 //	   
 //   }
+   
+   // 마이페이지
+ //  http://localhost:8080/myPage
+   @GetMapping(value="/myPage")
+   public String myPage(Integer mno) {
+	   mylog.debug(" mypage 호출 ");
+	   
+	   // UserVO vo = service.getUser(mno);
+	   
+	   
+	   return "/chagok/myPage";
+   }
+   
+   
    
 	
 }
