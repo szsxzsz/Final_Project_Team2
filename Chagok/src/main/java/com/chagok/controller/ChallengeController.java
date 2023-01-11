@@ -522,7 +522,11 @@ public class ChallengeController {
 		return "/challenge/memberManagement";
 	}
 	
-	
+	@GetMapping("/modal")
+	public String adminmodal() throws Exception {
+		
+		return "";
+	}
 	
 	
 	////////////////////// 관리자 페이지 ///////////////////////////
