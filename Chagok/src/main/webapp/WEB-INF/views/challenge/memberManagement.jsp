@@ -8,7 +8,23 @@
 <html lang="ko">
 <head>
 <script>
-
+	$(function(){
+		$(".btn.btn-block.btn-success").click(function(){
+			alert('아작스 힘내라');
+			var mno = $(this).children().val();
+			
+			$.ajax({
+				type : "get",
+				url : "/adminmodal",
+				data : mno,
+				dataType : "json",
+				success : function(data){
+					console.log("어드민 모달창 등장"+data);
+// 					$.modal(data);
+				}
+			});
+		})
+	});
 
 </script>
 	<title>회원 관리</title>
@@ -28,6 +44,7 @@ ${userlist.size() }
                  <div class="num">포인트</div>
                  <div class="date" style="width: auto;">가입일자</div>
                  <div class="num" style="padding-left:25px; width: auto;">가계부 인증</div>
+                 <div class="num" style="width: auto; padding-left:25px;">구독상태</div>
                  <div class="num" style="padding-left:25px; width: auto;">관리</div>
          	</div>
          
@@ -38,11 +55,67 @@ ${userlist.size() }
                     <div class="title" style="padding-left: 65px; width: auto;;">${user.nick }</div>
                     <div class="num" style="padding-left: auto;">${user.buypoint }</div>
                     <div class="date" style="padding-left: auto; width: auto;">${user.regdate }</div>
-                    <div class="num" >${user.isCheck }</div>
-                    <div class="num" style="width: auto;"><button class="btn btn-block btn-success">상세정보</button></div>
+                    <div class="num" style="padding-left:25px; width: auto;">${user.isCheck }</div>
+                    <div class="num" style="padding-left:25px; width: auto;">${user.isSub }</div>
+                    <div class="num" style="padding-left:25px; width: auto;">
+                    	<button class="btn btn-block btn-success" data-toggle="modal">상세정보
+                    		<input type="hidden" value="${user.mno }">
+                    	</button>
+                    </div>
                 </div>
                 </c:forEach>
          </div>
+         
+         <!-- 모달 css 파일 : resources -> plugins -> modal -> minusModal.css  -->
+	<div class="modal fade" id="modal-default" style="margin-top: 10%;">
+		<div class="modal-dialog" style=" height: 800px;">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true"><b>&times;</b></span>
+					</button>
+					<h4 class="modal-title">상세정보</h4>
+				</div>
+				<div class="modal-body" >
+				<div class="frame2">
+  					<div class="calculator2">
+						<div class="whitespace" id="whitespace">
+						<table style="border:2px;">
+						<tr>
+							<th>생년</th>
+							<th>전화번호</th>
+							<th>예금주명</th>
+							<th>은행</th>
+							<th>환급계좌</th>
+						</tr>
+						
+						<tr>
+						<c:forEach items="${userlist }" var="user">
+							<td>${user.year }</td>
+							<td>${user.tel }</td>
+							<td>${user.rname }</td>
+							<td>${user.rbank }</td>
+							<td>${user.raccount }</td>
+						</c:forEach>
+						</tr>
+						</table>
+  						</div>
+					    <div class="content2">
+					      <div class="key-wrap" id="key-wrap"></div>
+<!-- 					      <div class="calc-wrap" id="calc-wrap"></div> -->
+					    </div>
+				    </div>
+			    </div>
+				</div>
+				<div class="modal-footer">
+					<!-- <button type="button" class="btn btn-default pull-left"
+						data-dismiss="modal">닫기</button> -->
+				</div>
+			</div>
+    	</div>
+   	</div>
+<!-- 입금하기 기능용 모달창 -->	
          
            <div class="board_page">
 <!--                 <a href="#" class="bt first"><<</a> -->

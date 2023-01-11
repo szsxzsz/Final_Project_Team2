@@ -364,6 +364,12 @@
 		where cno = #{cno}
 	</update>
 	
+	<!-- 관리자 모달창 회원mno -->
+	<select id="adminmodal">
+		select * from user 
+		where mno = #{mno}
+	</select>
+	
  	<!-- 관리자 챌린지 승인거절 --> 
 <!-- 	<update id="confirmChallenge"> -->
 <!-- 		update challenge set c_status=6 -->

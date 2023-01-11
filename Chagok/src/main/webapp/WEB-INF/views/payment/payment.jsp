@@ -9,9 +9,11 @@ IMP.init("imp44431277"); // 예: imp00000000a (가맹점 식별코드)
 
 
 <script type="text/javascript">
+$(document).ready(function(){
+	$("#pay").click(requestPay);
+});
 function requestPay() 
 {
- 
 	IMP.request_pay({
   		pg : 'html5_inicis',
   	    pay_method : 'card',
@@ -23,45 +25,62 @@ function requestPay()
   	    buyer_tel : '010-1234-5678',
   	    buyer_addr : '서울특별시 강남구 삼성동',
   	    buyer_postcode : '123-456'
-    }, function(rsp) {
-		
-	   
-	
-	
-	
+    },
+    function(rsp) {
 	if ( rsp.success ) {
     	var msg = '결제가 완료되었습니다.';
         msg += '고유ID : ' + rsp.imp_uid;
         msg += '상점 거래ID : ' + rsp.merchant_uid;
         msg += '결제 금액 : ' + rsp.paid_amount;
         msg += '카드 승인번호 : ' + rsp.apply_num;
-        console.log(msg+"AAAA"); */
-        $.ajax({
-        	type : 'POST',
-        	url : "/verifyIamport", 
-        	dataType: 'json',
-        	data: {
-        		imp_uid : "ab"
+        console.log(msg+"AAAA"); 
+        alert('결제가 완료되었습니다');
+        
+        	$.ajax({
+        	    type : 'post',           // 타입 (get, post, put 등등)
+        	    url : '/paymentPOST',           // 요청할 서버url
+        	    async : true,            // 비동기화 여부 (default : true)
+        	    contentType : "application/json",
+//         	    headers : {              // Http header
+//         	      "Content-Type" : "application/json",
+//         	      "X-HTTP-Method-Override" : "POST"
+//         	    },
+        	   // dataType : 'json',       // 데이터 타입 (html, xml, json, text 등등)
+        	    data : JSON.stringify({  // 보낼 데이터 (Object , String, Array)
+        	      "mno" : ${mno},
+        	      "pay_cash" : rsp.paid_amount,
+        	      "pay_mean" : rsp.pay_method,
+        	      "pay_regdate" : new Date().getTime()
+        	    })
+//         	    ,
+//         	    success : function(result) { // 결과 성공 콜백함수
+//         	        console.log(result);
+//         	    	alert('성공!');
+//         	    },
+//         	    error : function(request, status, error) { // 결과 에러 콜백함수
+//         	        console.log(error)
+//         	    }
+        	});
+        
+        
+//         $.ajax({
+//         	type : 'POST',
+//         	url : "/verifyIamport", 
+//         	dataType: 'json',
+//         	data: {
+//         		imp_uid : "ab"
         		
-        	},
-        	success:function(){location.href="http://localhost:8080/refund"},
-        	error:function(){alert("AAA")}
-        });
-/*         
-        
-        
+//         	}
+//         	success:function(){location.href="http://localhost:8080/refund"},
+//         	error:function(){alert("AAA")}
+//         });
+
     } else {
     	 var msg = '결제에 개같이 실패하였습니다.\n';
          msg += '에러내용 : ' + rsp.error_msg;
     }
-	
-	
-	
     }
-	
-	
 	) 
-	
 }
 </script>
 
@@ -123,6 +142,7 @@ function requestPay()
               <a href="https://imgbb.com/"><img src="https://i.ibb.co/tbSR7Ch/hero.png" alt="hero" border="0"></a>
             </div>
             <div class="pinfo">
+<%--             ${mno} --%>
                 <h1>차곡 결제 페이지</h1>
                 <h4>
                     <strong>닉네임: </strong>Amine <br>
@@ -164,7 +184,7 @@ function requestPay()
         </div>
         <hr>
         <div>
-		<button onclick="requestPay()">결제하기</button> <!-- 결제하기 버튼 생성 -->
+		<button onclick="requestPay()" id="pay">결제하기</button> <!-- 결제하기 버튼 생성 -->
 		</div>
 		<div class="pcard">
 			<h1 class="pcard__title">Option 1</h1>
