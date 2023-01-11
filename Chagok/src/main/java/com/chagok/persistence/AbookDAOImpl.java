@@ -153,11 +153,19 @@ public class AbookDAOImpl implements AbookDAO{
 	}
 
 	@Override
-	public List<Map<String, Object>> cal(Integer mno, Integer mm) throws Exception {
+	public List<Map<String, Object>> calInout(Integer mno, Integer mm, Integer inout) throws Exception {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("mno", mno);
 		map.put("mm", mm);
-		return sqlSession.selectList(NAMESPACE+".cal", map);
+		
+		if(inout==0) {
+			mylog.debug("calAll");
+			return sqlSession.selectList(NAMESPACE+".calAll", map);
+		} else {
+			map.put("inout", inout);
+			mylog.debug("calInout");
+			return sqlSession.selectList(NAMESPACE+".calInout", map);
+		}
 	}
 	
 	

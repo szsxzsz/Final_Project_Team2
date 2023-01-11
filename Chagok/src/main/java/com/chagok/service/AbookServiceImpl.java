@@ -99,8 +99,8 @@ public class AbookServiceImpl implements AbookService{
 	}
 
 	@Override
-	public List<Map<String, Object>> cal(Integer mno, Integer mm) throws Exception {
-		return dao.cal(mno, mm);
+	public List<Map<String, Object>> calInout(Integer mno, Integer mm, Integer inout) throws Exception {
+		return dao.calInout(mno, mm, inout);
 	}
 	
 	
