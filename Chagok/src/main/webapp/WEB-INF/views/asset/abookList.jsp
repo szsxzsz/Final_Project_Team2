@@ -68,7 +68,7 @@ function grid_Datepicker(text, obj){
 시작일시 : <input type='text' class='datetimepicker' name='start_dt'  style='width:140px;'>, 
 종료일시 : <input type='text' id="datepicker" class='' name='end_dt'   style='width:140px; padding-left:10px;'>
 <hr>
-                <div class="pl-lg-4">
+                <div class="pl-lg-4"> 
 <!--                   <div class="col-lg-6"> -->
 <!--                       <div class="form-group focused"> -->
 <!--                         <label class="form-control-label" for="input-username" >카테고리</label> -->
