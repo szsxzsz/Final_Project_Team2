@@ -9,48 +9,48 @@
 <head>
 <script>
 	$(function(){
-		$("#yess").click(function(){
+		$(".btn.btn-block.btn-info.yes").click(function(){
 			
-			alert("승인 호출");
-			var c_status = 1;
+			var a = $(this).children().val();
 			
 			$.ajax({
 				type : "post",
-				url : "/challenge/adminconfirm",
-// 				contentType : "application/json",
-// 				dataType :'text',
-				data :c_status,
+				url : "/challenge/confirm",
+				data : {
+					status : 1,
+					cno : a
+				},
+				dataType : "text",
 				success : function(data){
-					console.log('챌린지 승인!');
-					alert('챌린지 승인 완료!');
+					console.log(data);
+					if (data=="승인"){
+						alert("승인 완료");
+					}
+				}
+			});
+		});
+		
+		$(".btn.btn-block.btn-danger.no").click(function(){
+			
+			var a = $(this).children().val();
+			
+			$.ajax({
+				type : "get",
+				url : "/challenge/confirm",
+				data : {
+					status : 6,
+					cno : a
+				},
+				success : function(data){
+					console.log('챌린지 승인 거절!');
 				}
 			});
 		});
 	});
-	
-	$(function(){
-		$("#noo").click(function(){
-			
-			alert("승인거절 호출");
-			var c_status = 6;
-			
-			$.ajax({
-				type : "post",
-				url : "/challenge/adminconfirm",
-				data : c_status,
-				success : function(data){
-					console.log('챌린지 승인거절');
-					alert('챌린지 승인 거절');
-				}
-			});
-			
-		});
-	});
-	
 	
 </script>
 
-    <meta charset="UTF-8">
+     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>관리자 챌린지 승인</title>
 </head>	
@@ -64,27 +64,57 @@
          <div class="board_list">
              <div class="top">
                  <div class="num" style="padding-right: 10px; width:155px; padding-left: 10px;">챌린지 번호</div>
-                 <div class="num" style="padding-left:10px; width: 200px;">절약형 / 저축형</div>
-                 <div class="title" style="width: 250px;">챌린지 명</div>
+                 <div class="num" style="padding-left:10px; width: 110px;">분류</div>
+                 <div class="num" style="width: 250px;">챌린지 명</div>
                  <div class="num">참여기간</div>
-                 <div class="date" style="width:130px;">최소 인원/총 인원</div>
-                 <div class="num" style="padding-left:25px; width:110px;">챌린지 상태</div>
+                 <div class="num" style="width:130px;">최소 인원/총 인원</div>
+                 <div class="num" style="padding-left:25px; width:100px;">상태</div>
+                 <div class="num" style="padding-left:25px; width:100px;">모집중</div>
          	</div>
          
          <c:forEach items="${challengeList }" var="cl">
                 <div>
-                    <div class="num" style="padding-left: 65px; width: auto; padding-right: 65px;">${cl.cno }</div>
-                    <div class="num" style="padding-left: 65px; width: auto; padding-right: 10px;"><c:if test="${cl.c_sort eq 0 }">저축형 /</c:if></div>
-                    <div class="num" style="padding-left: 65px; width: auto; padding-right: 10px;"><c:if test="${cl.c_sort eq 1 }">/ 절약형</c:if></div>
-                    <div class="title" style="padding-left: 65px; width:auto;"><c:if test="${cl.c_sort eq 0 }"><a href="/challenge/plusFeed?cno=${cl.cno }">${cl.c_title }</a></c:if></div>
-                    <div class="title" style="padding-left: 65px; width:auto;"><c:if test="${cl.c_sort eq 1 }"><a href="/challenge/minusFeed?cno=${cl.cno }">${cl.c_title }</a></c:if></div>
-                    <div class="num" style="padding-left: auto; width: auto;">${cl.c_period }주</div>
-                    <div class="date" style="padding-left: auto; width: auto;"><b>${cl.c_min }</b>/ ${cl.c_cnt }</div>
-                    <div class="num">${cl.c_status }</div>
-                    <div>
-                    <button type="button" class="btn btn-block btn-info btn-xs" id="yess" style="width:auto;">승인</button>
-                    <button type="button" class="btn btn-block btn-danger btn-xs" id="noo" style="width:auto;">거절</button>
+                    <div class="num" style="padding-right: 10px; width:155px; padding-left: 10px;">${cl.cno }</div>
+                    <div class="num" style="padding-left:10px; width: 110px;">
+                   	 <c:choose>
+                   	 	<c:when test="${cl.c_sort eq 0 }">저축형
+                   	 	</c:when>
+                   	 	<c:when test="${cl.c_sort eq 1 }">절약형
+                   	 	</c:when>
+                	 </c:choose>
                     </div>
+                    <div class="num" style="width: 250px;">
+                   	 <c:choose>
+                   	 	<c:when test="${cl.c_sort eq 0 }"><a href="/challenge/plusFeed?cno=${cl.cno }">${cl.c_title }</a>
+                   	 	</c:when>
+                   	 	<c:when test="${cl.c_sort eq 1 }"><a href="/challenge/minusFeed?cno=${cl.cno }">${cl.c_title }</a>
+                   	 	</c:when>
+                	 </c:choose>
+                    </div>
+                    <div class="num">${cl.c_period }주</div>
+                    <div class="num" style="width:130px;"><b>${cl.c_min }</b>/ ${cl.c_cnt }</div>
+                    <div class="num" style="padding-left:25px; width:100px;">
+                   	 <c:choose>
+                   	 	<c:when test="${cl.c_status eq 0 }">승인 대기</div>
+ 		                    <div style="    margin: -5px 40px 0 0;
+								padding: 0 100px 0 px;
+								float: right;">
+			                    <button type="button" class="btn btn-block btn-info yes" style="width: auto; display: inline-block;">승인
+									<input type="hidden" value="${cl.cno }" class="test">
+								</button>
+			                    <button type="button" class="btn btn-block btn-danger no" style="width: auto; display: inline-block; margin-bottom: 6px;">거절
+									<input type="hidden" value="${cl.cno }" class="test">
+								</button>
+		                    </div>
+	                    </c:when>
+                   	 	<c:when test="${cl.c_status eq 1 }">모집중</div></c:when>
+                   	 	<c:when test="${cl.c_status eq 2 }">진행중</div></c:when>
+                   	 	<c:when test="${cl.c_status eq 3 }">챌린지 성공</div></c:when>
+                   	 	<c:when test="${cl.c_status eq 4 }">챌린지 실패</div></c:when>
+                   	 	<c:when test="${cl.c_status eq 5 }">모집 실패</div></c:when>
+                   	 	<c:when test="${cl.c_status eq 6 }">승인 거절</div></c:when>
+                	 </c:choose>                    
+                	
                 </div>
                 </c:forEach>
          </div>
@@ -101,7 +131,7 @@
 <!--                 <a href="#" class="bt last">>></a> -->
             </div>
     </div>  
-</div>      
+</div> 
 </body>
 </html>
 
