@@ -7,138 +7,49 @@
 <%@ include file="../include/sidebar.jsp" %>
 <html lang="ko">
 <head>
-<script>
-	$(function(){
-		$(".btn.btn-block.btn-info.yes").click(function(){
-			
-			var a = $(this).children().val();
-			
-			$.ajax({
-				type : "get",
-				url : "/challenge/confirm",
-				data : {
-					status : 1,
-					cno : a
-				},
-				dataType: "json",
-				success : function(data){
-					console.log(data);
-					if (data==1){
-						alert('승인 완료!');
-						document.location.reload();
-					}
-				}
-			});
-		});
-		
-		$(".btn.btn-block.btn-danger.no").click(function(){
-			
-			var a = $(this).children().val();
-			
-			$.ajax({
-				type : "get",
-				url : "/challenge/confirm",
-				data : {
-					status : 6,
-					cno : a
-				},
-				dataType: "json",
-				success : function(data){
-					console.log(data);
-					if (data==6){
-						alert('거절 완료!');
-						document.location.reload();
-					}
-				}
-			});
-		});
-	});
-	
-</script>
-
-     <meta charset="UTF-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>관리자 챌린지 승인</title>
+	<title> 후기글 수정 </title>
 </head>	
-<body>
-<%-- ${challengeList } --%>
-	<div class="board_wrap">
-		<div class="board_title"><strong>관리자 챌린지 승인</strong></div>
-		<div class="board_list_wrap">
-			<div class="board_list">
-				<div class="top">
-					<div class="num" style="padding-right: 10px; width:155px; padding-left: 10px;">챌린지 번호</div>
-					<div class="num" style="padding-left:10px; width: 110px;">분류</div>
-					<div class="num" style="width: 250px;">챌린지 명</div>
-					<div class="num">참여기간</div>
-					<div class="num" style="width:130px;">최소 인원/총 인원</div>
-					<div class="num" style="padding-left:25px; width:200px;">상태</div>
-				</div>
-				
-				<div>
-					<c:forEach items="${challengeList }" var="cl">
-						<div class="num" style="padding-right:10px; width:155px; padding-left: 10px;">${cl.cno }</div>
-						<div class="num" style="padding-left:10px; width: 110px;">
-							<c:choose>
-								<c:when test="${cl.c_sort eq 0 }">저축형</c:when>
-								<c:when test="${cl.c_sort eq 1 }">절약형</c:when>
-							</c:choose>
-						</div>
-						<div class="num" style="width: 250px;">
-							<c:choose>
-								<c:when test="${cl.c_sort eq 0 }"><a href="/challenge/plusFeed?cno=${cl.cno }">${cl.c_title }</a>
-								</c:when>
-								<c:when test="${cl.c_sort eq 1 }"><a href="/challenge/minusFeed?cno=${cl.cno }">${cl.c_title }</a>
-								</c:when>
-							</c:choose>
-						</div>
-						<div class="num">${cl.c_period }주</div>
-						<div class="num" style="width:130px;"><b>${cl.c_min }</b>/ ${cl.c_cnt }</div>
-						<div class="num" style="padding-left:25px; width:200px;">
-							<c:choose>
-								<c:when test="${cl.c_status eq 0 }">승인 대기
-									<button type="button" class="btn btn-block btn-info yes" style="width: auto; display: inline-block;">승인
-										<input type="hidden" value="${cl.cno }" class="test">
-									</button>
-									<button type="button" class="btn btn-block btn-danger no" style="width: auto; display: inline-block; margin-bottom: 6px;">거절
-										<input type="hidden" value="${cl.cno }" class="test">
-									</button>
-								</c:when>
-								<c:when test="${cl.c_status eq 1 }">모집중</c:when>
-								<c:when test="${cl.c_status eq 2 }">진행중</c:when>
-								<c:when test="${cl.c_status eq 3 }">챌린지 성공</c:when>
-								<c:when test="${cl.c_status eq 4 }">챌린지 실패</c:when>
-								<c:when test="${cl.c_status eq 5 }">모집 실패</c:when>
-								<c:when test="${cl.c_status eq 6 }">승인 거절</c:when>
-							</c:choose>                    
-						</div>
-					</c:forEach>
-				</div>
-		     
-				<div class="board_page">
-					<div class="box-footer clearfix">
-					    <ul class="pagination pagination-sm no-margin pull-right">
-					
-					        <c:if test="${pagevo.prev }">
-					            <li><a href="/challenge/chListAll?page=${pagevo.startPage-1 }">«</a></li>
-					        </c:if>
-					
-					        <c:forEach var="idx" begin="${pagevo.startPage }" end="${pagevo.endPage }" step="1">
-					            <li
-								    <c:out value="${idx == pagevo.cri.page? 'class=active':'' }"/>
-								>
-								    <a href="/challenge/chListAll?page=${idx }">${idx }</a>
-								</li>
-					        </c:forEach>
-					
-					        <c:if test="${pagevo.next }">
-					            <li><a href="/challenge/chListAll?page=${pagevo.endPage+1 }">»</a></li>
-					        </c:if>
-					    </ul>
-					</div>
-				</div>
-		</div>  
-	</div> 
+	<body>
+
+
+    <div class="board_wrap">
+        <div class="board_title">
+        <strong>후기글 수정</strong>
+        <p> 후기 글 수정</p>
+    	</div>
+ 	    <div class="board_list_wrap">
+         <div class="board_list">
+             <div class="top">
+             	 <div class="title" >
+             	 	후기 제목
+             	 	<hr>
+				     <input type="text" class="form-control" name="b_title" value="${boardChallenge.b_title }" style="text-align:center; display:block; margin: 0 auto; width:300px;">
+             	 </div>
+             	 
+             	 <div class="title" >작성자
+             		 <hr>
+				     <input type="text" class="form-control" name="b_writer" value="${boardChallenge.b_writer }" style="text-align:center; display:block; margin: 0 auto; width:150px">
+             	 </div>
+			 </div>
+         </div>
+         <div class="board_list">
+             <div class="top">
+             	 <div class="title" style="width:100%;">후기 내용</div>
+			    
+			     <textarea class="form-control" rows="3" style="margin-top:15px; display:block; margin: 0 auto; width: 600px; height: 280px;">${boardChallenge.b_content }</textarea>
+			     <br>
+			     <br>
+             	 <br>
+			</div>
+         </div>
+       <div class="bt_wrap">
+       <input class="sbtn" type="button" value="작성하기" onclick="location.href='/';" >
+       <input class="sbtn" type="button" value="목록으로 돌아가기" onclick="location.href='/reviewboard';" >
+  </div>  
+</div> 
+</div>     
 </body>
 </html>
 
@@ -243,7 +154,7 @@ a {
 }
 
 .board_list .title {
-	width: 70%;
+	width: 50%;
     text-align: center;
 }
 
@@ -520,5 +431,5 @@ a {
 
 </style>
 
-</div>
+
 <%@ include file="../include/footer.jsp"%>

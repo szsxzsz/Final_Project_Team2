@@ -123,26 +123,28 @@ public interface ChallengeService {
 	public int NboardCount() throws Exception;
 	
 	// 관리자 챌린지 승인
-	public void confirmChallenge(ChallengeVO vo) throws Exception;
+	public void confirmChallenge(Integer status, Integer cno) throws Exception;
+	
+	// 관리자 모달창 회원mno
+	public List<UserVO> adminmodal(Integer mno) throws Exception;
 
 	// 후기글 정보 조회(페이징처리 cri)
-	public List<BoardVO> getRBoardPage(Criteria cri) throws Exception;
+//	public List<BoardVO> getRBoardPage(Criteria cri) throws Exception;
+	public List<Map<String, Object>> getRBoardPage(Criteria cri) throws Exception;
 		
 	// 전체 후기 게시판 글 개수 조회
 	public int RboardCount() throws Exception;	
-	
-	// 관리자 챌린지 승인거절
-	public void rejectChallenge(ChallengeVO vo) throws Exception;
 	
 	// 비즈니스 계좌 송금
 	public void sendBiz(BusinessAccountVO vo) throws Exception;
 	
 	// 비지니스 계좌 송금시 플러스 테이블 업데이트 (pl_sum)
 	public void updatePlusSum(BusinessAccountVO vo) throws Exception;
-
 	
 	// 내 plus 테이블 정보 가져오기
 	public PlusVO getPlusOne(int mno, int cno) throws Exception;
 	
+	// 챌린지목록(페이징처리)
+	public List<ChallengeVO> chListAll(Criteria cri) throws Exception;
 }
 

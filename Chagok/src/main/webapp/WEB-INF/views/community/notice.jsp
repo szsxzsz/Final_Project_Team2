@@ -10,7 +10,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>공지사항</title>
+    <title>관리자 챌린지 승인</title>
 </head>
 
 <body>
@@ -43,6 +43,24 @@
                 
              </div>
              
+                <div class="board_page">
+                <ul class= "pagination pagination-sm no-margin pull-right">
+<!--                 <a href="#" class="bt first"><<</a> -->
+                <c:if test="${pageMaker.prev }">
+					<li><a href="/notice?page=${pageMaker.startPage-1 }"class="bt prev"><</a></li>
+				</c:if>
+               <c:forEach var="idx" begin="${pageMaker.startPage }" end="${pageMaker.endPage }" step="1">
+					<li 
+						<c:out value="${idx == pageMaker.cri.page? 'class=active':'' }"/>
+					
+					><a href="/notice?page=${idx }" class="num">${idx }</a></li>
+				</c:forEach>
+                <c:if test="${pageMaker.next }">
+					<li><a href="/notice?page=${pageMaker.endPage+1 }" class="bt next">></a></li>
+				</c:if>
+<!--                 <a href="#" class="bt last">>></a> -->
+                </ul>
+                </div>
              
            <div class="bt_wrap">
              <c:if test="${nick.equals('관리자') }">
@@ -53,27 +71,26 @@
                 <!--<a href="#">수정</a>-->
           </div>
           
-           <div class="box-footer clearfix">
-                <a href="#" class="bt first"><<</a>
-
-                <a href="#" class="bt last">>></a>
-			<ul class="pagination pagination-sm no-margin pull-right">
-                
-                <c:if test="${pageMaker.prev }">
-					<li><a href="/notice?page=${pageMaker.startPage-1 }"class="bt prev"><</a></li>
-				</c:if>
-				<c:forEach var="idx" begin="${pageMaker.startPage }" end="${pageMaker.endPage }" step="1">
-					<li 
-						<c:out value="${idx == pageMaker.cri.page? 'class=active':'' }"/>
+          
+          
+          
+<!--            <div class="board_page"> -->
+<!--             <ul class="pagination pagination-sm no-margin pull-right"> -->
+<%--                 <c:if test="${pageMaker.prev }"> --%>
+<%-- 					<li><a href="/notice?page=${pageMaker.startPage-1 }"class="bt prev"><</a></li> --%>
+<%-- 				</c:if> --%>
+<%-- 				<c:forEach var="idx" begin="${pageMaker.startPage }" end="${pageMaker.endPage }" step="1"> --%>
+<!-- 					<li  -->
+<%-- 						<c:out value="${idx == pageMaker.cri.page? 'class=active':'' }"/> --%>
 					
-					><a href="/notice?page=${idx }">${idx }</a></li>
-				</c:forEach>
-                <c:if test="${pageMaker.next }">
-					<li><a href="/notice?page=${pageMaker.endPage+1 }" class="bt next">></a></li>
-				</c:if>
+<%-- 					><a href="/notice?page=${idx }" class="num">${idx }</a></li> --%>
+<%-- 				</c:forEach> --%>
+<%--                 <c:if test="${pageMaker.next }"> --%>
+<%-- 					<li><a href="/notice?page=${pageMaker.endPage+1 }" class="bt next">></a></li> --%>
+<%-- 				</c:if> --%>
                
-			</ul>
-            </div>
+<!-- 			</ul> -->
+<!--             </div> -->
             
 
         </div>
@@ -479,5 +496,5 @@ a {
 
 </style>
 
-</div>
+
 <%@ include file="../include/footer.jsp"%>

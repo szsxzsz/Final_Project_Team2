@@ -235,7 +235,7 @@
 <button class="button" type="button" onclick="restart()">Replay</button>
 
 <button class="button" type="button"
-	onclick="location.href='/chagok/commumain';">후기 작성하기</button>
+	onclick="location.href='/review';">후기 작성하기</button>
 <script type="text/javascript">
 	//Shorten typing because I'm lazy
 	function qsa(el) {

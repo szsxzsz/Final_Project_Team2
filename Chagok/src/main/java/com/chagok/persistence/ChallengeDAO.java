@@ -125,13 +125,18 @@ public interface ChallengeDAO {
 	public int NBoardCount() throws Exception;
 	
 	// 관리자 챌린지 승인
-	public void confirmChallenge(ChallengeVO vo) throws Exception;
+	public void confirmChallenge(Integer c_status, Integer cno) throws Exception;
+	
+	// 관리자 모달창 회원mno
+	public List<UserVO> adminmodal(Integer mno) throws Exception;
 	
 	// 페이징 처리 구현된 후기리스트 조회
-	public List<BoardVO> getRBoardPage(Integer page) throws Exception;
+//	public List<BoardVO> getRBoardPage(Integer page) throws Exception;
+	public List<Map<String, Object>> getRBoardPage(Integer page) throws Exception;
 			
 	// 후기리스트 조회 (페이징처리 cri)
-	public List<BoardVO> getRBoardPage(Criteria cri) throws Exception;
+//	public List<BoardVO> getRBoardPage(Criteria cri) throws Exception;
+	public List<Map<String, Object>> getRBoardPage(Criteria cri) throws Exception;
 		
 	// 전체 후기게시판 글 개수 조회
 	public int RBoardCount() throws Exception;
@@ -144,8 +149,8 @@ public interface ChallengeDAO {
 	
 	// 내 plus 테이블 정보 가져오기
 	public PlusVO getPlusOne(int mno, int cno) throws Exception;
-	
-	// 관리자 챌린지 승인거절
-	public void rejectChallenge(ChallengeVO vo) throws Exception;
+
+	// 챌린지목록(페이징처리)
+	public List<ChallengeVO> chListAll(Criteria cri) throws Exception;
 
 }

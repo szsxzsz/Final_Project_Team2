@@ -8,7 +8,7 @@
 
 <h1> 후기글 상세 </h1>
 
-	<section class="content">
+	<section class="content" >
 	 <form role="form" method="post">
 		<input type="hidden" name="bno" value="${boardChallenge.bno }">
 	</form>
@@ -17,6 +17,7 @@
 <%-- 	        <img class="img-responsive" src="${vo.c_file}" alt="Photo" > --%>
 		<h3><span style="color: #66BB7A; font-weight: bold;">[후기 제목]</span> ${boardChallenge.b_title }</h3>
 		<h4><span style="color: #66BB7A; font-weight: bold;">[작성자]</span> ${boardChallenge.b_writer }</h4>
+		<h4><span style="color: #66BB7A; font-weight: bold;">[후기 내용]</span></h4>
 	        <textarea class="form-control" rows="3" style="margin-top:15px; width: 600px; height: 280px" readonly>${boardChallenge.b_content }</textarea>
 		</div>
 		<div class="col-lg-6 pt-4 pt-lg-0 content aos-init aos-animate" data-aos="fade-left" >

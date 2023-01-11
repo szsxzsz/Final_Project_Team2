@@ -35,9 +35,11 @@ import com.chagok.domain.BoardVO;
 import com.chagok.domain.BusinessAccountVO;
 import com.chagok.domain.CategoryVO;
 import com.chagok.domain.ChallengeVO;
+import com.chagok.domain.Criteria;
 import com.chagok.domain.FeedDTO;
 import com.chagok.domain.MessageVO;
 import com.chagok.domain.MinusVO;
+import com.chagok.domain.PageMaker;
 import com.chagok.domain.PlusVO;
 import com.chagok.domain.SysLogVO;
 import com.chagok.domain.UserVO;
@@ -474,25 +476,74 @@ public class ChallengeController {
 		return "/challenge/resultdefeat";
 	}
 	
+	////////////////////// 관리자 페이지 ///////////////////////////
+	
+	
 	// 관리자 챌린지 승인
-	// http://localhost:8080/challenge/adminconfirm
-	@GetMapping("/adminconfirm")
-	public String adminconfirmGET(Model model) throws Exception {
+	// http://localhost:8080/challenge/chListAll
+	@GetMapping("/chListAll")
+	public String adminconfirmGET(Criteria cri, Model model) throws Exception {
 		mylog.debug("/adminconfirmGET 호출");
 		
-		List<ChallengeVO> challengeList = service.getChallengeList();
+		cri.setPerPageNum(10);
+		List<ChallengeVO> challengeList = service.chListAll(cri);
+		
+		// 페이징 처리
+	    PageMaker pagevo = new PageMaker();
+	    pagevo.setCri(cri);
+	    pagevo.setTotalCount(10000);
+		
+	    model.addAttribute("pagevo", pagevo);
 		model.addAttribute("challengeList", challengeList);
 		
 		return "/challenge/adminconfirm";
 	}
 	
-	@PostMapping(value="/adminconfirm")
-	public String adminconfirmPOST(ChallengeVO vo) throws Exception {
-		mylog.debug("adminconfirmPOST 호출"+vo.toString());
-		service.confirmChallenge(vo);
-		return "/challenge/adminconfirm";
+	@ResponseBody
+	@GetMapping(value="/confirm")
+	public int confirm(@RequestParam int status, @RequestParam int cno, RedirectAttributes rttr) throws Exception {
+		mylog.debug("status : "+status+", cno : "+cno);
+		int result=0;
+		
+		service.confirmChallenge(status, cno);
+
+		if(status==1) {
+			result = 1;
+		} else if(status==6) {
+			result = 6;
+		}
+		mylog.debug("결과"+result);
+		return result;
+	}
+
+	// http://localhost:8080/challenge/memberManagement
+	// 관리자 회원관리
+	@GetMapping("/memberManagement")
+	public String memberManagementGET(Model model) throws Exception {
+		mylog.debug("/memberManagementGET 호출");
+		
+		List<UserVO> user = uservice.getUserList();
+		
+		mylog.debug(user.toString());
+		
+		model.addAttribute("userlist", user);
+		
+		return "/challenge/memberManagement";
+	}
+	// http://localhost:8080/challenge/adminmodal
+	@ResponseBody
+	@GetMapping("/adminmodal")
+	public String adminmodal(Model model,@RequestParam Integer mno) throws Exception {
+		mylog.debug("모달창에 넘길 mno : " + mno);
+		
+		List<UserVO> vo = service.adminmodal(mno);
+		
+		model.addAttribute("UserVO", vo);
+		
+		return "challenge/memberManagement";
 	}
 	
+	////////////////////// 관리자 페이지 ///////////////////////////
 	
 	
 	
@@ -522,7 +573,6 @@ public class ChallengeController {
 	}
 	
 	/////////////////////////// 영민 비지니스 계좌 송금 ///////////////////////////////////
-	
 	
 	
 	

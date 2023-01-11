@@ -359,16 +359,19 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 
 	// 관리자 챌린지 승인
 	@Override
-	public void confirmChallenge(ChallengeVO vo) throws Exception {
-		sqlSession.update(NAMESPACE+".confirmChallenge",vo);
-		mylog.debug("daoimpl: 챌린지 승인");
+	public void confirmChallenge(Integer status, Integer cno) throws Exception {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("c_status", status);
+		map.put("cno", cno);
+		sqlSession.update(NAMESPACE+".confirmChallenge", map);
+		mylog.debug("status : "+status+", cno : "+cno);
 	}
-
-	// 관리자 챌린지 승인거절
+	
+	// 관리자 모달창 회원mno
 	@Override
-	public void rejectChallenge(ChallengeVO vo) throws Exception {
-		sqlSession.update(NAMESPACE+".rejectChallenge", vo);
-		mylog.debug("dao:챌린지 승인거절" +vo.getC_status());
+	public List<UserVO> adminmodal(Integer mno) throws Exception {
+		mylog.debug("daoimpl : 모달창 mno가져가기");
+		return sqlSession.selectOne(NAMESPACE+".adminmodal", mno);
 	}
 
 	// 비즈니스 계좌 송금
@@ -416,7 +419,8 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 	
 	// 페이징 처리 구현된 후기리스트 조회
 	@Override
-	public List<BoardVO> getRBoardPage(Integer page) throws Exception {
+//	public List<BoardVO> getRBoardPage(Integer page) throws Exception {
+	public List<Map<String, Object>> getRBoardPage(Integer page) throws Exception {
 		mylog.debug(" BoardPage 호출 ");
 			
 		if(page < 0) {
@@ -430,7 +434,8 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 
 	// 후기리스트 조회
 	@Override
-	public List<BoardVO> getRBoardPage(Criteria cri) throws Exception {
+//	public List<BoardVO> getRBoardPage(Criteria cri) throws Exception {
+	public List<Map<String, Object>> getRBoardPage(Criteria cri) throws Exception {
 		mylog.debug("  getBoardPage(Criteria cri) 페이징처리 ");
 		mylog.debug(cri+"@@@@@@@@@@@@@@@@@@@@@@");
 			
@@ -443,7 +448,15 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 			
 		return sqlSession.selectOne(NAMESPACE+".rboardCount");
 		
-	}	
+	}
+
+	@Override
+	public List<ChallengeVO> chListAll(Criteria cri) throws Exception {
+	    mylog.debug("chListAll 페이징처리 ");
+	    
+	    return sqlSession.selectList(NAMESPACE + ".chList", cri);
+	}
+
 	
 	
 	

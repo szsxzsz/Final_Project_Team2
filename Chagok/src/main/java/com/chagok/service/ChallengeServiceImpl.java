@@ -285,14 +285,26 @@ public class ChallengeServiceImpl implements ChallengeService{
 
 	// 관리자 챌린지 승인
 	@Override
-	public void confirmChallenge(ChallengeVO vo) throws Exception {
-		mylog.debug("service : 관리자 챌린지승인");
-		dao.confirmChallenge(vo);
+	public void confirmChallenge(Integer status, Integer cno) throws Exception {
+		mylog.debug("status : "+status+", cno : "+cno);
+		dao.confirmChallenge(status, cno);
+	}
+
+	// 관리자 모달창 회원mno
+	@Override
+	public List<UserVO> adminmodal(Integer mno) throws Exception {
+		mylog.debug("service : "+mno);
+		return dao.adminmodal(mno);
 	}
 
 	// 후기글 정보 조회(페이징처리 cri)
+//	@Override
+//	public List<BoardVO> getRBoardPage(Criteria cri) throws Exception {
+//		mylog.debug(" getRBoardPage(Criteria cri) 호출 ");
+//		return dao.getRBoardPage(cri);
+//	}
 	@Override
-	public List<BoardVO> getRBoardPage(Criteria cri) throws Exception {
+	public List<Map<String, Object>> getRBoardPage(Criteria cri) throws Exception {
 		mylog.debug(" getRBoardPage(Criteria cri) 호출 ");
 		return dao.getRBoardPage(cri);
 	}
@@ -303,13 +315,6 @@ public class ChallengeServiceImpl implements ChallengeService{
 		mylog.debug("RboardCount() 호출");
 		return dao.RBoardCount();
 	}	
-
-	// 관리자 챌린지 승인거절
-	@Override
-	public void rejectChallenge(ChallengeVO vo) throws Exception {
-		mylog.debug("service : 관리자 챌린지 승인거절");
-		dao.rejectChallenge(vo);
-	}
 
 	// 비지니스 계좌 송금
 	@Override
@@ -327,6 +332,11 @@ public class ChallengeServiceImpl implements ChallengeService{
 	@Override
 	public PlusVO getPlusOne(int mno, int cno) throws Exception {
 		return dao.getPlusOne(mno, cno);
+	}
+
+	@Override
+	public List<ChallengeVO> chListAll(Criteria cri) throws Exception {
+		return dao.chListAll(cri);
 	}
 
 	

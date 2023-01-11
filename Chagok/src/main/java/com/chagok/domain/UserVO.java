@@ -16,12 +16,13 @@ public class UserVO {
 	private String gender;
 	private String profile;
 	private Timestamp regdate;
+	private String rname;
 	private String rbank;
 	private String raccount;
 	private int buypoint;
 	private int getpoint;
 	private int success_cnt;
 	private String isCheck;
-	private String sub;
+	private String isSub;
 	private String isBen;
 }

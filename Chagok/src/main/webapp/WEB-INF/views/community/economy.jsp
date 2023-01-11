@@ -7,138 +7,58 @@
 <%@ include file="../include/sidebar.jsp" %>
 <html lang="ko">
 <head>
-<script>
-	$(function(){
-		$(".btn.btn-block.btn-info.yes").click(function(){
-			
-			var a = $(this).children().val();
-			
-			$.ajax({
-				type : "get",
-				url : "/challenge/confirm",
-				data : {
-					status : 1,
-					cno : a
-				},
-				dataType: "json",
-				success : function(data){
-					console.log(data);
-					if (data==1){
-						alert('승인 완료!');
-						document.location.reload();
-					}
-				}
-			});
-		});
-		
-		$(".btn.btn-block.btn-danger.no").click(function(){
-			
-			var a = $(this).children().val();
-			
-			$.ajax({
-				type : "get",
-				url : "/challenge/confirm",
-				data : {
-					status : 6,
-					cno : a
-				},
-				dataType: "json",
-				success : function(data){
-					console.log(data);
-					if (data==6){
-						alert('거절 완료!');
-						document.location.reload();
-					}
-				}
-			});
-		});
-	});
-	
-</script>
-
-     <meta charset="UTF-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>관리자 챌린지 승인</title>
+	<title> 뉴스 / 재테크 </title>
 </head>	
-<body>
+	<body>
 <%-- ${challengeList } --%>
-	<div class="board_wrap">
-		<div class="board_title"><strong>관리자 챌린지 승인</strong></div>
-		<div class="board_list_wrap">
-			<div class="board_list">
-				<div class="top">
-					<div class="num" style="padding-right: 10px; width:155px; padding-left: 10px;">챌린지 번호</div>
-					<div class="num" style="padding-left:10px; width: 110px;">분류</div>
-					<div class="num" style="width: 250px;">챌린지 명</div>
-					<div class="num">참여기간</div>
-					<div class="num" style="width:130px;">최소 인원/총 인원</div>
-					<div class="num" style="padding-left:25px; width:200px;">상태</div>
-				</div>
-				
-				<div>
-					<c:forEach items="${challengeList }" var="cl">
-						<div class="num" style="padding-right:10px; width:155px; padding-left: 10px;">${cl.cno }</div>
-						<div class="num" style="padding-left:10px; width: 110px;">
-							<c:choose>
-								<c:when test="${cl.c_sort eq 0 }">저축형</c:when>
-								<c:when test="${cl.c_sort eq 1 }">절약형</c:when>
-							</c:choose>
-						</div>
-						<div class="num" style="width: 250px;">
-							<c:choose>
-								<c:when test="${cl.c_sort eq 0 }"><a href="/challenge/plusFeed?cno=${cl.cno }">${cl.c_title }</a>
-								</c:when>
-								<c:when test="${cl.c_sort eq 1 }"><a href="/challenge/minusFeed?cno=${cl.cno }">${cl.c_title }</a>
-								</c:when>
-							</c:choose>
-						</div>
-						<div class="num">${cl.c_period }주</div>
-						<div class="num" style="width:130px;"><b>${cl.c_min }</b>/ ${cl.c_cnt }</div>
-						<div class="num" style="padding-left:25px; width:200px;">
-							<c:choose>
-								<c:when test="${cl.c_status eq 0 }">승인 대기
-									<button type="button" class="btn btn-block btn-info yes" style="width: auto; display: inline-block;">승인
-										<input type="hidden" value="${cl.cno }" class="test">
-									</button>
-									<button type="button" class="btn btn-block btn-danger no" style="width: auto; display: inline-block; margin-bottom: 6px;">거절
-										<input type="hidden" value="${cl.cno }" class="test">
-									</button>
-								</c:when>
-								<c:when test="${cl.c_status eq 1 }">모집중</c:when>
-								<c:when test="${cl.c_status eq 2 }">진행중</c:when>
-								<c:when test="${cl.c_status eq 3 }">챌린지 성공</c:when>
-								<c:when test="${cl.c_status eq 4 }">챌린지 실패</c:when>
-								<c:when test="${cl.c_status eq 5 }">모집 실패</c:when>
-								<c:when test="${cl.c_status eq 6 }">승인 거절</c:when>
-							</c:choose>                    
-						</div>
-					</c:forEach>
-				</div>
-		     
-				<div class="board_page">
-					<div class="box-footer clearfix">
-					    <ul class="pagination pagination-sm no-margin pull-right">
-					
-					        <c:if test="${pagevo.prev }">
-					            <li><a href="/challenge/chListAll?page=${pagevo.startPage-1 }">«</a></li>
-					        </c:if>
-					
-					        <c:forEach var="idx" begin="${pagevo.startPage }" end="${pagevo.endPage }" step="1">
-					            <li
-								    <c:out value="${idx == pagevo.cri.page? 'class=active':'' }"/>
-								>
-								    <a href="/challenge/chListAll?page=${idx }">${idx }</a>
-								</li>
-					        </c:forEach>
-					
-					        <c:if test="${pagevo.next }">
-					            <li><a href="/challenge/chListAll?page=${pagevo.endPage+1 }">»</a></li>
-					        </c:if>
-					    </ul>
-					</div>
-				</div>
-		</div>  
-	</div> 
+    <div class="board_wrap">
+        <div class="board_title">
+        <strong>뉴스 / 재테크</strong>
+    	</div>
+ 	    <div class="board_list_wrap">
+         <div class="board_list">
+             <div class="top">
+                 <div class="num" style="padding-right: 10px; width:155px; padding-left: 10px;">챌린지 번호</div>
+                 <div class="num" style="padding-left:10px; width: 200px;">절약형 / 저축형</div>
+                 <div class="title" style="width: 250px;">챌린지 명</div>
+                 <div class="num">참여기간</div>
+                 <div class="date" style="width:130px;">최소 인원/총 인원</div>
+                 <div class="num" style="padding-left:25px; width:110px;">챌린지 상태</div>
+         	</div>
+         
+         <c:forEach items="${challengeList }" var="cl">
+                <div>
+                    <div class="num" style="padding-left: 65px; width: auto; padding-right: 65px;">${cl.cno }</div>
+                    <div class="num" style="padding-left: 65px; width: auto; padding-right: 10px;"><c:if test="${cl.c_sort eq 0 }">저축형 /</c:if></div>
+                    <div class="num" style="padding-left: 65px; width: auto; padding-right: 10px;"><c:if test="${cl.c_sort eq 1 }">/ 절약형</c:if></div>
+                    <div class="title" style="padding-left: 65px; width:auto;"><c:if test="${cl.c_sort eq 0 }"><a href="/challenge/plusFeed?cno=${cl.cno }">${cl.c_title }</a></c:if></div>
+                    <div class="title" style="padding-left: 65px; width:auto;"><c:if test="${cl.c_sort eq 1 }"><a href="/challenge/minusFeed?cno=${cl.cno }">${cl.c_title }</a></c:if></div>
+                    <div class="num" style="padding-left: auto; width: auto;">${cl.c_period }주</div>
+                    <div class="date" style="padding-left: auto; width: auto;"><b>${cl.c_min }</b>/ ${cl.c_cnt }</div>
+                    <div class="num">${cl.c_status }</div>
+                    <div>
+                    <button type="button" class="btn btn-block btn-info btn-xs" id="yess" style="width:auto;">승인</button>
+                    <button type="button" class="btn btn-block btn-danger btn-xs" id="noo" style="width:auto;">거절</button>
+                    </div>
+                </div>
+                </c:forEach>
+         </div>
+         
+           <div class="board_page">
+<!--                 <a href="#" class="bt first"><<</a> -->
+                <a href="#" class="bt prev"><</a>
+                <a href="#" class="num on">1</a>
+                <a href="#" class="num">2</a>
+                <a href="#" class="num">3</a>
+                <a href="#" class="num">4</a>
+                <a href="#" class="num">5</a>
+                <a href="#" class="bt next">></a>
+<!--                 <a href="#" class="bt last">>></a> -->
+            </div>
+    </div>  
+</div>      
 </body>
 </html>
 

@@ -1,5 +1,6 @@
 package com.chagok.persistence;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -81,6 +82,13 @@ public class UserDAOImpl implements UserDAO {
 	@Override
 	public void updateIsCheck(int mno) throws Exception {
 		sqlSession.update(NAMESPACE+".updateIsCheck", mno);
+	}
+
+	// 관리자 전체 회원 조회
+	@Override
+	public List<UserVO> getUserList() throws Exception {
+		
+		return sqlSession.selectList(NAMESPACE +".getUserList");
 	}
 	
 	

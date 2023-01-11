@@ -1,5 +1,6 @@
 package com.chagok.service;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -65,6 +66,12 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void updateIsCheck(int mno) throws Exception {
 		dao.updateIsCheck(mno);
+	}
+
+	// 관리자 전체 회원 조회
+	@Override
+	public List<UserVO> getUserList() throws Exception {
+		return dao.getUserList();
 	}
 
 	

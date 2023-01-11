@@ -9,136 +9,127 @@
 <head>
 <script>
 	$(function(){
-		$(".btn.btn-block.btn-info.yes").click(function(){
-			
-			var a = $(this).children().val();
-			
-			$.ajax({
-				type : "get",
-				url : "/challenge/confirm",
-				data : {
-					status : 1,
-					cno : a
-				},
-				dataType: "json",
-				success : function(data){
-					console.log(data);
-					if (data==1){
-						alert('승인 완료!');
-						document.location.reload();
-					}
-				}
-			});
-		});
-		
-		$(".btn.btn-block.btn-danger.no").click(function(){
-			
-			var a = $(this).children().val();
+		$(".btn.btn-block.btn-success").click(function(){
+			alert('아작스 힘내라');
+			var mno = $(this).children().val();
 			
 			$.ajax({
 				type : "get",
-				url : "/challenge/confirm",
-				data : {
-					status : 6,
-					cno : a
-				},
-				dataType: "json",
+				url : "/adminmodal",
+				data : mno,
+				dataType : "json",
 				success : function(data){
-					console.log(data);
-					if (data==6){
-						alert('거절 완료!');
-						document.location.reload();
-					}
+					console.log("어드민 모달창 등장"+data);
+// 					$.modal(data);
 				}
 			});
-		});
+		})
 	});
-	
-</script>
 
-     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>관리자 챌린지 승인</title>
+</script>
+	<title>회원 관리</title>
 </head>	
-<body>
-<%-- ${challengeList } --%>
-	<div class="board_wrap">
-		<div class="board_title"><strong>관리자 챌린지 승인</strong></div>
-		<div class="board_list_wrap">
-			<div class="board_list">
-				<div class="top">
-					<div class="num" style="padding-right: 10px; width:155px; padding-left: 10px;">챌린지 번호</div>
-					<div class="num" style="padding-left:10px; width: 110px;">분류</div>
-					<div class="num" style="width: 250px;">챌린지 명</div>
-					<div class="num">참여기간</div>
-					<div class="num" style="width:130px;">최소 인원/총 인원</div>
-					<div class="num" style="padding-left:25px; width:200px;">상태</div>
+	<body>
+${userlist.size() }
+    <div class="board_wrap">
+        <div class="board_title">
+        <strong>회원 관리</strong>
+    	</div>
+ 	    <div class="board_list_wrap">
+         <div class="board_list">
+             <div class="top">
+                 <div class="num" style="padding-right: 10px; width: auto; padding-left: 10px;">회원 번호</div>
+                 <div class="num" style="padding-left:10px; width: auto;">아이디</div>
+                 <div class="title" style="width: auto;">닉네임</div>
+                 <div class="num">포인트</div>
+                 <div class="date" style="width: auto;">가입일자</div>
+                 <div class="num" style="padding-left:25px; width: auto;">가계부 인증</div>
+                 <div class="num" style="width: auto; padding-left:25px;">구독상태</div>
+                 <div class="num" style="padding-left:25px; width: auto;">관리</div>
+         	</div>
+         
+         <c:forEach items="${userlist }" var="user">
+                <div>
+                    <div class="num" style="padding-left: 65px; width: auto; padding-right: 65px;">${user.mno }</div>
+                    <div class="num" style="padding-left: 65px; width: auto; padding-right: 10px;">${user.id }</div>
+                    <div class="title" style="padding-left: 65px; width: auto;;">${user.nick }</div>
+                    <div class="num" style="padding-left: auto;">${user.buypoint }</div>
+                    <div class="date" style="padding-left: auto; width: auto;">${user.regdate }</div>
+                    <div class="num" style="padding-left:25px; width: auto;">${user.isCheck }</div>
+                    <div class="num" style="padding-left:25px; width: auto;">${user.isSub }</div>
+                    <div class="num" style="padding-left:25px; width: auto;">
+                    	<button class="btn btn-block btn-success" data-toggle="modal">상세정보
+                    		<input type="hidden" value="${user.mno }">
+                    	</button>
+                    </div>
+                </div>
+                </c:forEach>
+         </div>
+         
+         <!-- 모달 css 파일 : resources -> plugins -> modal -> minusModal.css  -->
+	<div class="modal fade" id="modal-default" style="margin-top: 10%;">
+		<div class="modal-dialog" style=" height: 800px;">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true"><b>&times;</b></span>
+					</button>
+					<h4 class="modal-title">상세정보</h4>
 				</div>
-				
-				<div>
-					<c:forEach items="${challengeList }" var="cl">
-						<div class="num" style="padding-right:10px; width:155px; padding-left: 10px;">${cl.cno }</div>
-						<div class="num" style="padding-left:10px; width: 110px;">
-							<c:choose>
-								<c:when test="${cl.c_sort eq 0 }">저축형</c:when>
-								<c:when test="${cl.c_sort eq 1 }">절약형</c:when>
-							</c:choose>
-						</div>
-						<div class="num" style="width: 250px;">
-							<c:choose>
-								<c:when test="${cl.c_sort eq 0 }"><a href="/challenge/plusFeed?cno=${cl.cno }">${cl.c_title }</a>
-								</c:when>
-								<c:when test="${cl.c_sort eq 1 }"><a href="/challenge/minusFeed?cno=${cl.cno }">${cl.c_title }</a>
-								</c:when>
-							</c:choose>
-						</div>
-						<div class="num">${cl.c_period }주</div>
-						<div class="num" style="width:130px;"><b>${cl.c_min }</b>/ ${cl.c_cnt }</div>
-						<div class="num" style="padding-left:25px; width:200px;">
-							<c:choose>
-								<c:when test="${cl.c_status eq 0 }">승인 대기
-									<button type="button" class="btn btn-block btn-info yes" style="width: auto; display: inline-block;">승인
-										<input type="hidden" value="${cl.cno }" class="test">
-									</button>
-									<button type="button" class="btn btn-block btn-danger no" style="width: auto; display: inline-block; margin-bottom: 6px;">거절
-										<input type="hidden" value="${cl.cno }" class="test">
-									</button>
-								</c:when>
-								<c:when test="${cl.c_status eq 1 }">모집중</c:when>
-								<c:when test="${cl.c_status eq 2 }">진행중</c:when>
-								<c:when test="${cl.c_status eq 3 }">챌린지 성공</c:when>
-								<c:when test="${cl.c_status eq 4 }">챌린지 실패</c:when>
-								<c:when test="${cl.c_status eq 5 }">모집 실패</c:when>
-								<c:when test="${cl.c_status eq 6 }">승인 거절</c:when>
-							</c:choose>                    
-						</div>
-					</c:forEach>
+				<div class="modal-body" >
+				<div class="frame2">
+  					<div class="calculator2">
+						<div class="whitespace" id="whitespace">
+						<table style="border:2px;">
+						<tr>
+							<th>생년</th>
+							<th>전화번호</th>
+							<th>예금주명</th>
+							<th>은행</th>
+							<th>환급계좌</th>
+						</tr>
+						
+						<tr>
+						<c:forEach items="${userlist }" var="user">
+							<td>${user.year }</td>
+							<td>${user.tel }</td>
+							<td>${user.rname }</td>
+							<td>${user.rbank }</td>
+							<td>${user.raccount }</td>
+						</c:forEach>
+						</tr>
+						</table>
+  						</div>
+					    <div class="content2">
+					      <div class="key-wrap" id="key-wrap"></div>
+<!-- 					      <div class="calc-wrap" id="calc-wrap"></div> -->
+					    </div>
+				    </div>
+			    </div>
 				</div>
-		     
-				<div class="board_page">
-					<div class="box-footer clearfix">
-					    <ul class="pagination pagination-sm no-margin pull-right">
-					
-					        <c:if test="${pagevo.prev }">
-					            <li><a href="/challenge/chListAll?page=${pagevo.startPage-1 }">«</a></li>
-					        </c:if>
-					
-					        <c:forEach var="idx" begin="${pagevo.startPage }" end="${pagevo.endPage }" step="1">
-					            <li
-								    <c:out value="${idx == pagevo.cri.page? 'class=active':'' }"/>
-								>
-								    <a href="/challenge/chListAll?page=${idx }">${idx }</a>
-								</li>
-					        </c:forEach>
-					
-					        <c:if test="${pagevo.next }">
-					            <li><a href="/challenge/chListAll?page=${pagevo.endPage+1 }">»</a></li>
-					        </c:if>
-					    </ul>
-					</div>
+				<div class="modal-footer">
+					<!-- <button type="button" class="btn btn-default pull-left"
+						data-dismiss="modal">닫기</button> -->
 				</div>
-		</div>  
-	</div> 
+			</div>
+    	</div>
+   	</div>
+<!-- 입금하기 기능용 모달창 -->	
+         
+           <div class="board_page">
+<!--                 <a href="#" class="bt first"><<</a> -->
+                <a href="#" class="bt prev"><</a>
+                <a href="#" class="num on">1</a>
+                <a href="#" class="num">2</a>
+                <a href="#" class="num">3</a>
+                <a href="#" class="num">4</a>
+                <a href="#" class="num">5</a>
+                <a href="#" class="bt next">></a>
+<!--                 <a href="#" class="bt last">>></a> -->
+            </div>
+    </div>  
+</div>      
 </body>
 </html>
 
