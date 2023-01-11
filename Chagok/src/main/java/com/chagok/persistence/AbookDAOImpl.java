@@ -41,27 +41,24 @@ public class AbookDAOImpl implements AbookDAO{
 	
 	// 카테고리 리스트 
 	@Override
-	public List<Map<Object,Object>> cateList() throws Exception {
+	public List<Map<String, Object>> cateList() throws Exception {
 		
-		List<CategoryVO> cttopList = sqlSession.selectList(NAMESPACE+".cttopList");
+		List<Map<String, Object>> cttopList = sqlSession.selectList(NAMESPACE+".cttopList");
 		List<Map<Object,Object>> ctList = new ArrayList<Map<Object,Object>>();
 			
 		// TOP CATEGORY
-			for (int i = 0; i < cttopList.size(); i++) {
-
-				Map<Object, Object> cttopmap = new HashMap<Object, Object>();
-				CategoryVO cvo =(CategoryVO) cttopList.get(i);
-				
-				String ctno = String.valueOf(cvo.getCtno());
-				cttopmap.put(ctno, cvo.getCt_top());
-				
-				ctList.add(cttopmap);
-			}
-			
-			mylog.debug("***dao에서 topmap"+ctList);
+//			for (int i = 0; i < cttopList.size(); i++) {
+//
+//				Map<Object, Object> cttopmap = new HashMap<Object, Object>();
+//				CategoryVO cvo =(CategoryVO) cttopList.get(i);
+//				
+//				String ctno = String.valueOf(cvo.getCtno());
+//				cttopmap.put(ctno, cvo.getCt_top());
+//				ctList.add(cttopmap);
+//			}
+//			mylog.debug("***dao에서 topmap"+ctList);
 			
 		// BOTTOM CATEGORY
-	
 			List<CategoryVO> ctbottomList = sqlSession.selectList(NAMESPACE+".ctbottomList");
 			
 			for (int i = 0; i < ctbottomList.size(); i++) {
@@ -74,14 +71,12 @@ public class AbookDAOImpl implements AbookDAO{
 				
 				ctList.add(ctbottommap);
 			}
-			
 			mylog.debug("***dao에서 bot"+ctList);
 			
 //	        for (Entry entrySet : topmap.entrySet()) {
 //	            System.out.println(entrySet.getKey() + " : " + entrySet.getValue());
 //	        }
-	 
-			return ctList;
+			return cttopList;
 	}
 	
 	// 가계부 수정 저장

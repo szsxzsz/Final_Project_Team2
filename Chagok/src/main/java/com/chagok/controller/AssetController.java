@@ -52,6 +52,7 @@ import com.chagok.service.OpenBankingService;
 import com.chagok.service.ReportService;
 import com.chagok.service.UserService;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.google.gson.Gson;
 @JsonAutoDetect 
 @Controller
 @RequestMapping("/asset/*")
@@ -331,13 +332,6 @@ public class AssetController {
 	//서비스 객체 주입
 	@Inject
 	private AbookService abService;
-	// ====================================================
-	
-
-	
-	// =============================================test
-	
-	
 	
 	
 	// 0. abokkList페이지 get으로 호출 ============================================================
@@ -526,7 +520,7 @@ public class AssetController {
 	// ===============================================================
 	@ResponseBody
 	@RequestMapping(value = "/cateSelect", method = {RequestMethod.GET,RequestMethod.POST})
-	public JsonObj cateSelect (@RequestParam(value = "cate", required=false) String test,		
+	public JSONArray cateSelect (@RequestParam(value = "cate", required=false) String test,		
 			HttpSession session) throws Exception {
 		mylog.debug("%%json controller cate"+test);
 		
@@ -535,15 +529,42 @@ public class AssetController {
 		UserVO userVO = userService.getUser(mno);
 		mylog.debug("mno@@@@@@@@:"+mno);
 		
-		JsonObj obj = new JsonObj();
+//		JsonObj obj = new JsonObj();
 //		int int_page = Integer.parseInt(page);// 1 2 3
 //		int perPageNum = (int)Double.parseDouble(rows);
 		
 		
-		List<?> ctList = abService.cateList();
+		List<Map<String, Object>> ctList = abService.cateList();
 		mylog.debug("****vo -> list "+ctList);
 		
-	    obj.setRows(ctList);  // list<map> -> obj
+//	    obj.setRows(ctList);  // list<map> -> obj
+	    	
+//	    Map<String, Object> map = new HashMap<String, Object>();
+	    
+//	    String st = rptService.listMapToJson(ctList);
+//	    map.put("st",st);
+	    
+
+		JSONArray jArr = new JSONArray();
+		for(Map<String, Object> map : ctList) {
+			JSONObject jsonobj2 = new JSONObject();
+			for(Map.Entry<String, Object> entry : map.entrySet()) {
+				String key = entry.getKey();
+				Object value = entry.getValue();
+				jsonobj2.put(key, value);
+				mylog.debug("+++"+jsonobj2);
+			    
+			}
+			jArr.add(jsonobj2);
+//			jArr.add(jsonobj);
+		}
+//		jsonobj = jsonobj2;
+//		Gson gson = new Gson();
+//		String jsonStr = gson.toJson(jArr);    
+	    
+	    
+//	    mylog.debug("***********"+st);
+//	    JSONArray items = (JSONArray)jsonObject.get("obj");
 	    
 	    //page : 현재 페이지
 //	    obj.setPage(int_page);// 현재 페이지를 매개변수로 넘어온 page로 지정해준다. 
@@ -556,9 +577,11 @@ public class AssetController {
 //		int totalPage = (int)Math.ceil(ctList.size()/Double.parseDouble(rows));
 //		obj.setTotal(totalPage); // 총 페이지 수 (마지막 페이지 번호)
 		
-		mylog.debug("cont -> 그리드로"+obj);
-		
-	    return obj;
+//		mylog.debug("cont -> 그리드로"+obj);
+
+//		mylog.debug("jsonobj&&&&&&&&&&&&&&&&&&&&&&"+jsonobj);
+		return jArr;
+
 	}
 	
 	

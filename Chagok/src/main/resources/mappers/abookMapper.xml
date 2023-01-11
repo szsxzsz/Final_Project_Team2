@@ -11,7 +11,7 @@
   </select>
   
   <!-- 카테고리 top -->
-  <select id="cttopList" resultType="CategoryVO">
+  <select id="cttopList" resultType="map">
 	select ctno, ct_top
 	from category
 	where ct_lev=0;

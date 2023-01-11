@@ -2,6 +2,7 @@
 package com.chagok.domain;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -11,6 +12,7 @@ public class JsonObj {
     private int records;
     private int total;
     private List<?> rows = new ArrayList<Map<String, Object>>();
+//    private Map<String, Object> cate = new HashMap<String, Object>();
     
 	public int getPage() {
 		return page;
