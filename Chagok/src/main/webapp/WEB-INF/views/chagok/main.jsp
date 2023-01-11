@@ -243,7 +243,7 @@
 					</div>
 				</div>
 			</section>
-			<section class="section_bubble">
+			<section class="section_bubble" style="padding:15px;">
 				<div class="cnt">
 					<h3 class="blind">차곡</h3>
 					<div class="cnt_bx">
@@ -251,18 +251,18 @@
 							<div class="left"
 								style="opacity: 1; transform: matrix(1, 0, 0, 1, 0, 0);">
 								<div class="txt">
-									<p>회사 비품 샀는데</p>
-									<p>엑셀에 하나하나</p>
-									<p>다 입력해야하는데</p>
+									<p>이번달 내 월급</p>
+									<p>도대체 어디로</p>
+									<p>다 날아간거지?</p>
 									<p>하..</p>
 								</div>
 							</div>
 							<div class="right"
 								style="opacity: 1; transform: matrix(1, 0, 0, 1, 0, 0);">
 								<div class="txt">
-									<p>소프트웨어는</p>
-									<p>비품 사듯이 간편하게</p>
-									<p>구매할 수 없을까?!</p>
+									<p>다른 사람들과</p>
+									<p>같이 돈 모으면</p>
+									<p>쉽지 않을까?!</p>
 								</div>
 							</div>
 						</div>
@@ -270,17 +270,17 @@
 							<div class="left"
 								style="opacity: 1; transform: matrix(1, 0, 0, 1, 0, 0);">
 								<div class="txt">
-									<p>자산관리솔루션이라고</p>
-									<p>구매는 해봤는데..</p>
-									<p>어차피 내가 작성..</p>
-									<p>내가 엑셀로 하고말지..</p>
+									<p>경제 뉴스</p>
+									<p>한번에 모아서..</p>
+									<p>정보 공유하도 하고..</p>
+									<p>너무 좋을 것 같은데..</p>
 								</div>
 							</div>
 							<div class="right"
 								style="opacity: 1; transform: matrix(1, 0, 0, 1, 0, 0);">
 								<div class="txt">
-									<p>비품등록 때문에</p>
-									<p>야근하네..</p>
+									<p>내 자산 분석은</p>
+									<p>어떻게 하지..</p>
 									<p class="under">진짜 자동으로 관리해주는</p>
 									<p class="under">자산관리 어디 없을까?</p>
 								</div>
@@ -289,33 +289,32 @@
 					</div>
 				</div>
 			</section>
-			<section class="section_admin">
+			<section class="section_admin" style="padding:15px;">
 				<div class="cnt">
-					<h3 class="blind">샘큐</h3>
+					<h3 class="blind">차곡</h3>
 					<div class="cnt_bx">
 						<dl>
-							<dt class="icon"></dt>
 							<dd class="txt_bx">
 								<p>
-									안녕하세요! 저는 <i>샘큐</i>라고해요.
+									안녕하세요! 저는 <i>차곡</i>이라고해요.
 								</p>
-								<p>어렵고 불편한 사내자산관리</p>
+								<p>어렵고 불편한 자산관리</p>
 								<p>
 									<i>지금부터 제가 도와드릴게요. :)</i>
 								</p>
 							</dd>
 							<dd class="tag_bx">
 								<ul>
-									<li class="tag">#기업자산관리</li>
-									<li class="tag">#대표님들주목</li>
-									<li class="tag">#완전자동화관리</li>
+									<li class="tag">#개인자산관리</li>
+									<li class="tag">#좋은소비습관</li>
+									<li class="tag">#나만의리포트</li>
 								</ul>
 							</dd>
 						</dl>
 					</div>
 				</div>
 			</section>
-			<section class="section_function">
+<!--			<section class="section_function">
 				<div class="cnt">
 					<h3 class="blind">샘큐</h3>
 					<div class="cnt_bx">
@@ -385,7 +384,7 @@
 								<p>관리자가 구매만 하고 사용자가</p>
 								<p>사용하지 않은 자산을 뜻합니다.</p>
 							</div>
-						</li> -->
+						</li> 
 							<div class="slick-list draggable">
 								<div class="slick-track"
 									style="opacity: 1; width: auto; transform: translate3d(-745px, 0px, 0px);">
@@ -1360,31 +1359,34 @@
 						</ul>
 					</div>
 				</div>
-			</section>
+			</section> -->
 			<section class="section_proposal">
 				<div class="cnt">
-					<h3 class="blind">샘큐</h3>
+					<h3 class="blind">차곡</h3>
 					<div class="cnt_bx">
 						<dl>
 							<dt>
 								<div class="bubble">
 									<div class="txt">
 										<p>
-											샘큐가 해주는 <i class="mob">편리해진</i>
+											차곡과 함께 <i class="mob">개인 자산</i>
 										</p>
 										<p>
-											<i class="pc">편리해진</i> 기업용 자산관리
+											<i class="pc">차곡차곡</i> 개인 자산
 										</p>
-										<p>직접 느껴보세요.</p>
+										<p>모아보세요!</p>
 									</div>
 								</div>
-								<div class="icon"></div>
+								<!-- <div class="icon"></div>  -->
 							</dt>
 							<dd>
-								<a href="/files/Samq_Proposal.pdf" class="btn_download"
-									download="">제안서 다운로드</a>
-								<button type="button" class="btn_inquiry"
-									onclick="pop_inquiry_show();">제품 문의하기</button>
+							<!-- 	<a href="/files/Samq_Proposal.pdf" class="btn_download"
+									download="">제안서 다운받기</a>  -->
+									<button type="button" class="btn_demo border" onclick="location.href='/register';"
+									style="margin:10px 150px 50px 50px;">
+									지금 가입하기</button>
+							<!-- 	<button type="button" class="btn_inquiry"
+									onclick="location.href='/register';">지금 가입하기</button>  -->
 							</dd>
 						</dl>
 					</div>
@@ -1393,7 +1395,7 @@
 		</div>
 
 
-		<footer class="footer">
+<!-- 		<footer class="footer">
 			<div class="wrap">
 				<div class="left_cnt">
 					<dl>
@@ -1428,10 +1430,8 @@
 					</ul>
 				</div>
 			</div>
-		</footer>
-
-
-		<div class="dimmed"
+		</footer> -->
+<!-- 		<div class="dimmed"
 			onclick="pop_terms_hide();pop_send_hide();pop_inquiry_hide();pop_solution_apply_hide();"></div>
 
 		<div class="floating_btn">
@@ -1603,6 +1603,6 @@
 				style="position: relative !important; height: 100% !important; width: 100% !important; border: none !important;"></iframe>
 		</div>
 	</div>
-	<style data-styled="active" data-styled-version="5.1.1"></style>
+	<style data-styled="active" data-styled-version="5.1.1"></style>  -->
 </body>
 </html>
