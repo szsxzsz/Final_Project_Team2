@@ -34,7 +34,7 @@
   <!-- 가계부 삭제 -->
   <delete id="delAbookList">
   	delete * from account_book where abno=#{abno};
-  </delete>
+  </delete> 
   
   <!-- 가계부 적기 -->
   <insert id="insAbookList" parameterType="AbookVO">
