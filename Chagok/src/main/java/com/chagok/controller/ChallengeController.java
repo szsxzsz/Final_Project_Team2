@@ -356,11 +356,12 @@ public class ChallengeController {
 		mylog.debug(" /challenge/plusRegist(POST) 호출 ");	
 		
 		// 회원정보 저장
-		Integer mno = (Integer)session.getAttribute("mno");
-		mylog.debug("mno :" +mno);
+		int mno = (Integer)session.getAttribute("mno");
 			
 		UserVO userVO = uservice.getUser(mno);
 		model.addAttribute("userVO", userVO);
+		vo.setMno(mno);
+		vo.setC_person(userVO.getNick()+",");
 		
 		// 사진등록
 		String imgUploadPath = uploadPath + File.separator + "imgUpload";
@@ -376,7 +377,7 @@ public class ChallengeController {
 		vo.setC_file(File.separator + "imgUpload" + ymdPath + File.separator + fileName);
 		vo.setC_thumbFile(File.separator + "imgUpload" + ymdPath + File.separator + "s" + File.separator + "s_" + fileName);
 		
-		// 1. 전달된 정보 저장
+//		// 1. 전달된 정보 저장
 		mylog.debug(vo.toString());
 		
 		// 2. 서비스 -> DAO 접근 (mapper)
@@ -400,9 +401,18 @@ public class ChallengeController {
 	
 	// 챌린지 등록 (절약형) - POST
 	@RequestMapping(value = "/minusregist", method=RequestMethod.POST)
-	public String minusRegistPOST(ChallengeVO vo, MultipartFile file) throws Exception{
+	public String minusRegistPOST(ChallengeVO vo, MultipartFile file, HttpSession session, Model model) throws Exception{
 		mylog.debug(" /challenge/minusRegist(POST) 호출 ");	
 		
+		// 회원정보 저장
+		int mno = (Integer)session.getAttribute("mno");
+			
+		UserVO userVO = uservice.getUser(mno);
+		model.addAttribute("userVO", userVO);
+		vo.setMno(mno);
+		vo.setC_person(userVO.getNick()+",");
+		
+		// 사진등록
 		String imgUploadPath = uploadPath + File.separator + "imgUpload";
 		String ymdPath = UploadFileUtils.calcPath(imgUploadPath);
 		String fileName = null;
@@ -415,7 +425,6 @@ public class ChallengeController {
 
 		vo.setC_file(File.separator + "imgUpload" + ymdPath + File.separator + fileName);
 		vo.setC_thumbFile(File.separator + "imgUpload" + ymdPath + File.separator + "s" + File.separator + "s_" + fileName);
-		
 		
 		// 1. 전달된 정보 저장
 		mylog.debug(vo.toString());
