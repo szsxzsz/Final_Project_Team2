@@ -170,7 +170,7 @@ $(function (){
 <script type="text/javascript">
 function getAgreeType() {    
     var obj = {
-        "1" : "1:식비;2:의복/미용;3:문화/여가;4:생활;5:주거/통신;6:건강/통신;7:교육/육아;8:교통/차량;9:경조사/회비;10:금융;11:저축/보험".
+//         "1" : "1:식비;2:의복/미용;3:문화/여가;4:생활;5:주거/통신;6:건강/통신;7:교육/육아;8:교통/차량;9:경조사/회비;10:금융;11:저축/보험",
         
         "3" : {
             '24' : '여행/숙박',
@@ -245,11 +245,11 @@ function getAgreeType() {
     
     
     
-    var json = JSON.stringify(obj);
+//     var json = JSON.stringify(obj);
     
-	console.log(JSON.stringify(obj));
+// 	console.log(JSON.stringify(obj));
     
-    return JSON.stringify(obj);
+//     return JSON.stringify(obj);
 }
 </script>
 
@@ -290,6 +290,7 @@ $("#jqGrid").jqGrid({
 // 	alert("시작");
     height: 500, 
     width: 1450,
+
     colNames : ['num','분류','날짜','내용','금액','거래수단','카테고리','소분류','메모'], 
     colModel:[
         {name : 'abno', index : 'abno',width : 0, align : 'left',hidden:true,key:true},    	
@@ -350,15 +351,16 @@ $("#jqGrid").jqGrid({
 // 			} 
 
 			buildSelect:function (data){
+
 		 			let key = JSON.parse(data)
-		 			let key10 = key[10].ctno
-		            console.log(key);
-		            console.log(key[10].ctno);
-		            console.log(JSON.parse(data)[5].ctno);
+// 		 			let key10 = key[10].ctno
+// 		            console.log(key);
+// 		            console.log(key[10].ctno);
+// 		            console.log(JSON.parse(data)[5].ctno);
 // 	        			alert(key[0].ctno);
 // 				if(typeof(data)=='string')
 	// 			data = $.parseJSON(data);
-				var rtSlt = '<select id="cate">';
+				var rtSlt = '<select id="ct_top">';
 				for ( var idx = 0 ; idx < key.length ; idx ++) {
 				rtSlt +='<option value="'+key[idx].ctno+'">'+key[idx].ct_top+'</option>';
 				}
@@ -366,12 +368,14 @@ $("#jqGrid").jqGrid({
 				return rtSlt;
 
 // 		dataUrl : '/some/code/url.html?type=json'
-	    dataEvents: [
-	    	  { type: 'change', fn: function(e) {alert(""); } },
-	    	  { type: 'keypress', fn: function(e) { console.log('keypress'); }}]
-			} // build
+       dataEvents:[{ type:'change', fn: function(e){   
+
+
+//     detailChanged(grid, "DR_CR_DTIL",$(e.target).val()); 
+    }// dataevem    
+			}] // build
 	}	// edit
-		}, //name
+		}}, //name
 //            	data = $.parseJSON({"rows":JSON.stringify(data)});
 // 				console.log(data[0]);	  
 
@@ -410,13 +414,72 @@ $("#jqGrid").jqGrid({
 // 						return selrt;
 
 // 	    {name : 'ct_top',index : 'ct_top',width : 70, alian: "center", hidden:false,editable:true},           
-		{name:"ct_bottom",index:"ctno2",width:50,align:'center',edittype: "select", /* formatter: "select", */
-		    	editoptions:{value: "13:간식;14:외식;18:의류" }
-//      dataEvents: [{
-//      type : 'change',
-//      fn : function(e) {
-//      }] 
-		    	,editable:true},
+		{name:"ct_bottom",index:"ct_bottom",width:50,align:'center', editable: true, edittype: "select", /* formatter: "select", */
+		    	editoptions:{dataUrl: '/asset/cateSelect',
+
+					buildSelect:function (data){
+			 			let key = JSON.parse(data)
+// 						alert("");
+					    var rowid = $( "#jqGrid" ).getGridParam( "selrow" );   
+					    console.log(rowid);
+
+					    var rowdata = jQuery("#jqGrid").getRowData(rowid);  
+					    console.log(rowdata);
+
+					     var ct_top= rowdata['ct_top'];
+					    console.log(ct_top);
+					    
+// 						var data =  $("#jqGrid").getRowData();
+// //				 		var data = $( "#jqGrid" ).getGridParam( "selrow" );    
+// 							console.log(data);
+				       test = {"ct_top":JSON.stringify(ct_top)};
+							$.ajax({
+								url : "/asset/catebottom",
+//					 			traditional: true ,
+								contentType:"application/json",
+								data : test,
+								success:function(val){alert("입력 성공!");
+								},error:function(err){
+								      console.log(err);
+								}
+							})
+// 				         $("#select_box > option[value='"+$(e.target).val()+"']").attr("selected", "true");
+// 				         detailChanged(jqGrid, "ct_bottom",$(e.target).val());
+// 					      var evalue = $(e.target).val();
+
+
+// 							$.ajax({
+// 								url : "/asset/catebottom2",
+// 								contentType:"application/json",
+// 								data : test,
+// 								success:function(val){alert("값 받기!");
+// 								},error:function(err){
+// 								      console.log(err);
+// 								}
+// 							})
+
+
+// 			 			let keyb = JSON.parse(test)
+			 			
+//	 		 			let key10 = key[10].ctno
+// 	 		            alert(keyb+"keyb");
+//	 		            console.log(key[10].ctno);
+//	 		            console.log(JSON.parse(data)[5].ctno);
+//	 	        			alert(key[0].ctno);
+//	 				if(typeof(data)=='string')
+		// 			data = $.parseJSON(data);
+					var rtSlt = '<select id="ct_bottom">';
+					for ( var idx = 0 ; idx < key.length ; idx ++) {
+					rtSlt +='<option value="'+key[idx].ctno+'">'+key[idx].ct_top+'</option>';
+					}
+					rtSlt +='</select>';
+					return rtSlt;
+
+					} // build
+				}	// edit
+		},    	
+
+	
         {name : 'ab_memo',index : 'ab_memo',width : 50, align : 'center',hidden:false,editable:true}
       ],
 //      gridComplete: function(){
@@ -428,7 +491,9 @@ $("#jqGrid").jqGrid({
 //    	    } 
 //    	},
 
-
+//       onCellSelect : function(rowid, iCell, content){
+//     	  alert(""+content);
+//     	 } ,
     
     autowidth: true,
 	shrinkToFit: true, 
@@ -444,16 +509,24 @@ $("#jqGrid").jqGrid({
     cellsubmit:'clientArray',
 //     cellurl:'/asset/updateGrid',
     onCellSelect: function(rowId, colId, val, e) { // e의 의미는 무엇인가요?
-        var seq = $("#jqGrid").getCell(rowId, "seq");
+        var seq = $("#jqGrid").getCell(rowId, "ct_bottom");
+        var rowid = $( "#jqGrid" ).getGridParam( "selrow" );   
+        console.log(rowid);
+
+        var rowdata = jQuery("#jqGrid").getRowData(rowid);  
+        console.log(rowdata);
+
+         var data= rowdata['ct_top'];
+        console.log(data);
         
-        if(colId == 4) {
-            if(CommonJsUtil.isEmpty(seq)) {
-                $("#jqGrid").setColProp('name', {editable:true});
-            } else {
-                $("#jqGrid").setColProp('name', {editable:false});
-            }
+        data ={"value":JSON.stringify(data)};
+        
+        if(colId == 'ct_bottom') {
+//           console.log("0");
         }
         
+    	
+ 
     },
     
     /* 수정 후 cell 다시 editable flase 로 변경 */
@@ -496,7 +569,7 @@ $("#jqGrid").jqGrid({
 //         jQuery("#jqGrid").jqGrid( 'setGridWidth', $(".main-panel").width() - 100 );
 //     },
     
-    
+
    
  	// 리로딩 처리
     function reload() {
@@ -548,13 +621,12 @@ $("#jqGrid").jqGrid({
 		var data =  $("#jqGrid").getRowData();
 // 		var data = $( "#jqGrid" ).getGridParam( "selrow" );    
 			console.log(data);
-        data ={"test":JSON.stringify(data)};
+	        data ={"rows":JSON.stringify(data)};
 // 		data = JSON.stringify(data);
 		console.log(data);
 
 		$.ajax({
 			url : "/asset/saveRows",
-// 			traditional: true ,
 			contentType:"application/json",
 			data : data,
 // 			dataType:'application/json',
@@ -570,7 +642,16 @@ $("#jqGrid").jqGrid({
 	
 	var gridFunc = {
 	        addRow : function() {
-	            
+	        	  const options = {
+	        		        modal : true,
+	        		        width : 400,
+	        		        url : '/asset/saveRows',
+	        		        mtype : 'get',
+	        		        addCaption : "MENUMAST 추가",
+	        		        closeAfterAdd : true,
+	        		        recreateForm : true, //대화상자가 활성화될 때 마다 form이 다시 생성된다 
+	        		        reloadAfterSubmit:true //서버 ajax후 그리드 데이터 다시 로드 
+	        		    }
 	            var totCnt = $("#jqGrid").getGridParam("records");
 	            var addData = {"abno":"", "ab_inout": "", "ab_date": "", "ab_content" : "", 
 				 "ab_amount" : "", "ctno":"", "ct_top" : "", "ct_bottom" : "", "ab_memo" : ""};
@@ -611,6 +692,7 @@ $("#jqGrid").jqGrid({
         $("#jqGrid").setColProp(gridColData[idx], {editable : param});
     }
 }
+
 
 	///////////////////////////////////////아직 안 쓰는 코드 
     function search() {

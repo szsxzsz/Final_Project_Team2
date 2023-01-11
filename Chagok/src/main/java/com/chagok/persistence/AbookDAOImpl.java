@@ -57,28 +57,18 @@ public class AbookDAOImpl implements AbookDAO{
 //				ctList.add(cttopmap);
 //			}
 //			mylog.debug("***dao에서 topmap"+ctList);
-			
-		// BOTTOM CATEGORY
-			List<CategoryVO> ctbottomList = sqlSession.selectList(NAMESPACE+".ctbottomList");
-			
-			for (int i = 0; i < ctbottomList.size(); i++) {
+		return cttopList;
 
-				Map<Object, Object> ctbottommap = new HashMap<Object, Object>();
-				CategoryVO cvo =(CategoryVO) ctbottomList.get(i);
-				
-				String ctno = String.valueOf(cvo.getCtno());
-				ctbottommap.put(ctno, cvo.getCt_bottom());
-				
-				ctList.add(ctbottommap);
-			}
-			mylog.debug("***dao에서 bot"+ctList);
-			
-//	        for (Entry entrySet : topmap.entrySet()) {
-//	            System.out.println(entrySet.getKey() + " : " + entrySet.getValue());
-//	        }
-			return cttopList;
 	}
 	
+	// BOTTOM CATEGORY
+	@Override
+	public List<Map<String, Object>> ctbottomList() throws Exception {
+		
+		List<Map<String, Object>> ctbottomList = sqlSession.selectList(NAMESPACE+".ctbottomList");
+	
+	return ctbottomList;
+}	
 	// 가계부 수정 저장
 	@Override
 	public void setAbookList(AbookVO vo) throws Exception {

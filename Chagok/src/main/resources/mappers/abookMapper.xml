@@ -18,8 +18,8 @@
   </select>
   
   <!-- 카테고리 bottom -->
-    <select id="ctbottomList" resultType="CategoryVO">
-	select ctno, ct_bottom
+    <select id="ctbottomList" resultType="map">
+	select ctno, ct_top, ct_bottom
 	from category
 	where ct_lev=1;
   </select>
@@ -36,6 +36,11 @@
   	delete * from account_book where abno=#{abno};
   </delete>
   
+  <!-- 가계부 적기 -->
+  <insert id="insAbookList" parameterType="AbookVO">
+  insert into account_book()
+  values(#{},)
+  </insert>
   
  	<!-- //////////////////// MJ //////////////////// -->
 	<!-- 해당월 예산 조회 -->

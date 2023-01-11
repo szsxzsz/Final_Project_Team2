@@ -44,6 +44,11 @@ public class AbookServiceImpl implements AbookService{
 		return dao.cateList();
 	}
 
+	@Override
+	public List<Map<String, Object>> ctbottomList() throws Exception {
+		
+		return dao.ctbottomList();
+	}
 
 	
 	
@@ -51,6 +56,7 @@ public class AbookServiceImpl implements AbookService{
 	
 	///////////////////MJ/////////////////////
 	
+
 
 	@Override
 	public String getPMonth(int mm) throws Exception {

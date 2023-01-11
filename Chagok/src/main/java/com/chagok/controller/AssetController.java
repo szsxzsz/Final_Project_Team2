@@ -16,6 +16,7 @@ import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -52,6 +53,7 @@ import com.chagok.service.OpenBankingService;
 import com.chagok.service.ReportService;
 import com.chagok.service.UserService;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.core.JsonParser;
 import com.google.gson.Gson;
 @JsonAutoDetect 
 @Controller
@@ -471,11 +473,17 @@ public class AssetController {
 	}
 	
 	// 그리드 -> DB(서버 데이터)로 수정하고 저장하는 코드
-	@GetMapping("/saveRows")
-	 @ResponseBody
-	 public Object saveList(HttpServletRequest request,@RequestParam("test") String obj) throws Exception {
+	@RequestMapping(value = "/saveRows", method = {RequestMethod.GET})
+	@ResponseBody
+	 public Object saveRows(HttpServletRequest request, @RequestParam Map<String,Object> param, HttpSession session) throws Exception {
 		
-		mylog.debug("##그리드 뽑 리스트"+obj);
+		int mno = (int)session.getAttribute("mno");
+		UserVO userVO = userService.getUser(mno);
+		
+//		mylog.debug("##그리드 뽑 리스트"+inlist);
+		mylog.debug("##param"+param);
+		mylog.debug(request.getParameter("abno")+"이게 되나");
+		
 		 Map <String, String> resultMap =  new HashMap<String, String>();
 		
 		  String result = "ok";
@@ -483,23 +491,23 @@ public class AssetController {
 		  
 	  try {
 		  
-//	   for(int i = 0; i < list.size(); i++) {
-		AbookVO vo = new AbookVO();
-//	    vo.setMno(Integer.parseInt(tList.get("mno").toString( )));
-//	    vo.setAbno(Integer.parseInt(list.get(i).get("abno").toString()));
-//	    vo.setAb_inout(Integer.parseInt(list.get(i).get("ab_inout").toString()));
-//	    vo.setAb_amount(Integer.parseInt(list.get(i).get("ab_amount").toString()));
-//	    vo.setCtno(Integer.parseInt(list.get(i).get("ctno").toString()));
+//	   for(int i = 0; i < inlist.size(); i++) {
+//		AbookVO vo = new AbookVO();
+//	    vo.setMno(mno);
+//	    vo.setAbno(Integer.parseInt(inlist.get(i).get("abno").toString()));
+//	    vo.setAb_inout(Integer.parseInt(inlist.get(i).get("ab_inout").toString()));
+//	    vo.setAb_amount(Integer.parseInt(inlist.get(i).get("ab_amount").toString()));
+//	    vo.setCtno(Integer.parseInt(inlist.get(i).get("ctno").toString()));
 //	    
-//	    vo.setAb_date(list.get(i).get("ab_date").toString());
-//	    vo.setAb_content(list.get(i).get("ab_content").toString());
-//	    vo.setAb_memo(list.get(i).get("ab_memo").toString());
-//	    vo.setAb_method(list.get(i).get("ab_method").toString());
-//	    vo.setCt_top(list.get(i).get("ct_top").toString());
-//	    vo.setCt_bottom(list.get(i).get("ct_bottom").toString());
+//	    vo.setAb_date(inlist.get(i).get("ab_date").toString());
+//	    vo.setAb_content(inlist.get(i).get("ab_content").toString());
+//	    vo.setAb_memo(inlist.get(i).get("ab_memo").toString());
+//	    vo.setAb_method(inlist.get(i).get("ab_method").toString());
+//	    vo.setCt_top(inlist.get(i).get("ct_top").toString());
+//	    vo.setCt_bottom(inlist.get(i).get("ct_bottom").toString());
 //	   
-	    mylog.debug("!!!!!!!!!!!!!!!!!"+vo);
-	    abService.setAbookList(vo);
+//	    mylog.debug("insert -> vo 넣기"+vo);
+//	    abService.setAbookList(vo);
 //	    mylog.debug(vo+"%%%%%%%%%%cont");
 //	   }
 	    result = "success";
@@ -552,39 +560,48 @@ public class AssetController {
 				String key = entry.getKey();
 				Object value = entry.getValue();
 				jsonobj2.put(key, value);
-				mylog.debug("+++"+jsonobj2);
+//				mylog.debug("+++"+jsonobj2);
 			    
 			}
 			jArr.add(jsonobj2);
 //			jArr.add(jsonobj);
 		}
-//		jsonobj = jsonobj2;
-//		Gson gson = new Gson();
-//		String jsonStr = gson.toJson(jArr);    
-	    
-	    
-//	    mylog.debug("***********"+st);
-//	    JSONArray items = (JSONArray)jsonObject.get("obj");
-	    
-	    //page : 현재 페이지
-//	    obj.setPage(int_page);// 현재 페이지를 매개변수로 넘어온 page로 지정해준다. 
-		
-	    //records : 페이지에 보여지는 데이터 개수
-//	    obj.setRecords(ctList.size());
-		
-	    //total : rows에 의한 총 페이지수
-		// 총 페이지 갯수는 데이터 갯수 / 한페이지에 보여줄 갯수 이런 식
-//		int totalPage = (int)Math.ceil(ctList.size()/Double.parseDouble(rows));
-//		obj.setTotal(totalPage); // 총 페이지 수 (마지막 페이지 번호)
-		
-//		mylog.debug("cont -> 그리드로"+obj);
 
-//		mylog.debug("jsonobj&&&&&&&&&&&&&&&&&&&&&&"+jsonobj);
 		return jArr;
 
 	}
 	
+	// ===========================================================
+	@RequestMapping("/catebottom")
+	 @ResponseBody
+	 public JSONArray ctbottomList(HttpServletRequest request,@RequestParam("ct_top") String ct_top) throws Exception {
 	
+		mylog.debug("%%value"+ct_top);
+
+		
+		List<Map<String, Object>> ctbottomList = abService.ctbottomList();
+		mylog.debug("****vo -> list "+ctbottomList);
+		
+		JSONArray jArrB = new JSONArray();
+		for(Map<String, Object> map : ctbottomList) {
+			JSONObject jsonobjb = new JSONObject();
+			for(Map.Entry<String, Object> entry : map.entrySet()) {
+				String key = entry.getKey();
+				Object value = entry.getValue();
+				jsonobjb.put(key, value);
+//				if(ct_top == "식비") {
+//			}
+//				mylog.debug("&&&"+jsonobjb);
+			}
+			jArrB.add(jsonobjb);
+		
+			
+		}
+		return jArrB;
+
+	}
+	
+
 	
 	// ===============================================================
 	

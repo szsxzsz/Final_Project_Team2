@@ -14,6 +14,9 @@ public interface AbookService {
 	// 카테고리 목록
 	public List<Map<String, Object>> cateList() throws Exception;
 	
+	// 카테고리 bottom
+	public List<Map<String, Object>> ctbottomList() throws Exception;
+	
 	// 그리드 수정
 	public void setAbookList(AbookVO vo) throws Exception;
 	
