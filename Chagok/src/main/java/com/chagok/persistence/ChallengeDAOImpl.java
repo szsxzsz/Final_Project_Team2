@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 
 import com.chagok.domain.AbookVO;
 import com.chagok.domain.BoardVO;
+import com.chagok.domain.BusinessAccountVO;
 import com.chagok.domain.ChallengeVO;
 import com.chagok.domain.Criteria;
 import com.chagok.domain.MinusVO;
@@ -361,6 +362,30 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 	public void confirmChallenge(ChallengeVO vo) throws Exception {
 		mylog.debug("daoimpl: 챌린지 승인");
 		sqlSession.update(NAMESPACE+".confirmChallenge",vo.getC_status());
+	}
+
+	// 비즈니스 계좌 송금
+	@Override
+	public void sendBiz(BusinessAccountVO vo) throws Exception {
+		// 가장 최근 추가된 계좌 조회
+		BusinessAccountVO tmpvo = sqlSession.selectOne(NAMESPACE+".selectBizOne");
+		
+		if(tmpvo == null) {
+			tmpvo = new BusinessAccountVO();
+			tmpvo.setBiz_balance(0);
+		}
+		
+		vo.setBiz_balance(tmpvo.getBiz_balance());
+//		vo.setBiz_balance(tmpvo.getBiz_balance()+vo.getBiz_amount());
+		// 계좌 업데이트
+		sqlSession.insert(NAMESPACE+".sendBiz", vo);
+		
+	}
+
+	// 비지니스 계좌 송금시 플러스 테이블 업데이트 (pl_sum)
+	@Override
+	public void updatePlusSum(BusinessAccountVO vo) throws Exception {
+		sqlSession.update(NAMESPACE+".updatePlusSum", vo);
 	}
 	
 	

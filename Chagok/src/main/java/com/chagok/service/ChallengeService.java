@@ -6,6 +6,7 @@ import java.util.Map;
 
 import com.chagok.domain.AbookVO;
 import com.chagok.domain.BoardVO;
+import com.chagok.domain.BusinessAccountVO;
 import com.chagok.domain.ChallengeVO;
 import com.chagok.domain.Criteria;
 import com.chagok.domain.MinusVO;
@@ -125,6 +126,11 @@ public interface ChallengeService {
 	// 관리자 챌린지 승인
 	public void confirmChallenge(ChallengeVO vo) throws Exception;
 	
+	// 비즈니스 계좌 송금
+	public void sendBiz(BusinessAccountVO vo) throws Exception;
+	
+	// 비지니스 계좌 송금시 플러스 테이블 업데이트 (pl_sum)
+	public void updatePlusSum(BusinessAccountVO vo) throws Exception;
 	
 }
 

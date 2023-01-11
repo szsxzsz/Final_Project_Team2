@@ -357,4 +357,21 @@
 		where cno = #{cno}
 	</update>
 	
+	<!-- 비지니스 계좌 입금(송금) -->
+	<insert id="sendBiz">
+		insert into business_account(biz_inout, biz_amount, mno, biz_holder_name, biz_balance, cno) 
+		values(#{biz_inout}, #{biz_amount}, #{mno}, #{biz_holder_name}, #{biz_balance}+#{biz_amount}, #{cno})
+	</insert>
+	
+	<!-- 가장 최근 비즈니스 계좌 1개 조회 -->
+	<select id="selectBizOne" resultType="com.chagok.domain.BusinessAccountVO">
+		select * from business_account order by bizno desc limit 1
+	</select>
+
+	<!-- 비즈니스 계좌 입금시 plus 테이블 pl_sum 업데이트 -->
+	<update id="updatePlusSum">
+		update plus set pl_sum=(select pl_sum where mno = #{mno} and cno = #{cno})+#{biz_amount}, 
+		pl_cnt=(select pl_cnt where mno = #{mno} and cno = #{cno}) + 1 
+		where mno = #{mno} and cno = #{cno}
+	</update>
   </mapper>

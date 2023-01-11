@@ -32,6 +32,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.chagok.domain.AbookVO;
 import com.chagok.domain.BoardVO;
+import com.chagok.domain.BusinessAccountVO;
 import com.chagok.domain.CategoryVO;
 import com.chagok.domain.ChallengeVO;
 import com.chagok.domain.FeedDTO;
@@ -71,7 +72,7 @@ public class ChallengeController {
 
 	// http://localhost:8080/challenge/plusFeed?cno=2
 	@GetMapping(value = "/plusFeed")
-	public String plusfeedGET(Model model, int cno, HttpSession session, UserVO vo) throws Exception {
+	public String plusfeedGET(Model model, @RequestParam("cno") int cno, HttpSession session, UserVO vo) throws Exception {
 		mylog.debug("plusfeedGET() 호출");
 
 		List<Map<String, Object>> plusPeoList = service.getPlusPeople(cno);
@@ -478,6 +479,46 @@ public class ChallengeController {
 		service.confirmChallenge(vo);
 		return "/challenge/adminconfirm";
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	/////////////////////////// 영민 비지니스 계좌 송금 ///////////////////////////////////
+	@GetMapping(value = "/sendBiz")
+	public String sendBiz(BusinessAccountVO vo, HttpSession session, RedirectAttributes rttr) throws Exception{
+		
+		if (session.getAttribute("mno") != null) {
+			int mno = (int)session.getAttribute("mno");
+			UserVO userVO = uservice.getUser(mno);
+			vo.setBiz_holder_name(userVO.getNick());
+			vo.setBiz_inout(1);
+			vo.setMno(mno);
+		}
+		
+		service.sendBiz(vo);
+		
+		service.updatePlusSum(vo);
+		
+		rttr.addFlashAttribute("sendOK", "OK");
+		
+		return "redirect:/challenge/plusFeed?cno="+vo.getCno();
+	}
+	
+	/////////////////////////// 영민 비지니스 계좌 송금 ///////////////////////////////////
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 }
