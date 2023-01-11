@@ -46,22 +46,13 @@ public class BoardController {
 	// 후기글 리스트 (b_sort=1)
 	// http://localhost:8080/reviewboard
 	@GetMapping(value = "/reviewboard")
-	public String reviewboardGET(HttpSession session,Model model,Integer cno,Criteria cri) throws Exception {
+	public String reviewboardGET(HttpSession session,Model model,Criteria cri) throws Exception {
 		mylog.debug(" /reviewboard 호출");
-		model.addAttribute("review", service.getBoardChallenge(cno));
-		
-//		List<BoardVO> boardList = service.getBoardList(1);
-		ChallengeVO vo2 = service.getCt_top(cno);
-		List<Map<String, Object>> result = service.getResult(cno);
-		List<BoardVO> boardList2 = service.getRBoardPage(cri);
-		
+	
+		List<Map<String, Object>> boardList2 = service.getRBoardPage(cri);	
 		
 		mylog.debug(boardList2+"");
-		
-//		model.addAttribute("boardList", boardList);
-		model.addAttribute("vo2", vo2);
-		model.addAttribute("result", result);
-		
+			
 		// 페이징 처리
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCri(cri);
@@ -130,7 +121,7 @@ public class BoardController {
 		model.addAttribute("boardChallenge", boardChallenge);
 		mylog.debug("여기까진 출력되나?");
 		
-		return "/community/reviewupdate";
+		return "/community/reviewupdate2";
 					
 	}
 				

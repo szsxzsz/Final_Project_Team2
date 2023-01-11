@@ -291,8 +291,13 @@ public class ChallengeServiceImpl implements ChallengeService{
 	}
 
 	// 후기글 정보 조회(페이징처리 cri)
+//	@Override
+//	public List<BoardVO> getRBoardPage(Criteria cri) throws Exception {
+//		mylog.debug(" getRBoardPage(Criteria cri) 호출 ");
+//		return dao.getRBoardPage(cri);
+//	}
 	@Override
-	public List<BoardVO> getRBoardPage(Criteria cri) throws Exception {
+	public List<Map<String, Object>> getRBoardPage(Criteria cri) throws Exception {
 		mylog.debug(" getRBoardPage(Criteria cri) 호출 ");
 		return dao.getRBoardPage(cri);
 	}

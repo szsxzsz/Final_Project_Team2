@@ -128,10 +128,12 @@ public interface ChallengeDAO {
 	public void confirmChallenge(ChallengeVO vo) throws Exception;
 	
 	// 페이징 처리 구현된 후기리스트 조회
-	public List<BoardVO> getRBoardPage(Integer page) throws Exception;
+//	public List<BoardVO> getRBoardPage(Integer page) throws Exception;
+	public List<Map<String, Object>> getRBoardPage(Integer page) throws Exception;
 			
 	// 후기리스트 조회 (페이징처리 cri)
-	public List<BoardVO> getRBoardPage(Criteria cri) throws Exception;
+//	public List<BoardVO> getRBoardPage(Criteria cri) throws Exception;
+	public List<Map<String, Object>> getRBoardPage(Criteria cri) throws Exception;
 		
 	// 전체 후기게시판 글 개수 조회
 	public int RBoardCount() throws Exception;

@@ -398,7 +398,8 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 	
 	// 페이징 처리 구현된 후기리스트 조회
 	@Override
-	public List<BoardVO> getRBoardPage(Integer page) throws Exception {
+//	public List<BoardVO> getRBoardPage(Integer page) throws Exception {
+	public List<Map<String, Object>> getRBoardPage(Integer page) throws Exception {
 		mylog.debug(" BoardPage 호출 ");
 			
 		if(page < 0) {
@@ -412,7 +413,8 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 
 	// 후기리스트 조회
 	@Override
-	public List<BoardVO> getRBoardPage(Criteria cri) throws Exception {
+//	public List<BoardVO> getRBoardPage(Criteria cri) throws Exception {
+	public List<Map<String, Object>> getRBoardPage(Criteria cri) throws Exception {
 		mylog.debug("  getBoardPage(Criteria cri) 페이징처리 ");
 		mylog.debug(cri+"@@@@@@@@@@@@@@@@@@@@@@");
 			

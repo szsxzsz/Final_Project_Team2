@@ -126,7 +126,8 @@ public interface ChallengeService {
 	public void confirmChallenge(ChallengeVO vo) throws Exception;
 
 	// 후기글 정보 조회(페이징처리 cri)
-	public List<BoardVO> getRBoardPage(Criteria cri) throws Exception;
+//	public List<BoardVO> getRBoardPage(Criteria cri) throws Exception;
+	public List<Map<String, Object>> getRBoardPage(Criteria cri) throws Exception;
 		
 	// 전체 후기 게시판 글 개수 조회
 	public int RboardCount() throws Exception;	
