@@ -277,10 +277,10 @@
 	
 <!-- 	가계부 값 연동하기  -->
 	<update id="updateMoney">
-		update minus set m_sum = (select * from (select m_sum from minus m where mno=1)as m)-#{ab_amount}
-		where mno=#{mno} and cno = #{cno};
+		update minus set m_sum =
+		(select m_sum-#{ab_amount} from (select * from minus) m where m.mno = #{mno})
+		where mno = #{mno} and cno = #{cno}
 	</update>
-	
 	
 	<!-- 지난 메시지 가져오기   -->
 	<select id="getMsgList" resultType="com.chagok.domain.FeedDTO">
@@ -293,7 +293,7 @@
 	</insert>
 	
 	<!-- 메시지 저장  -->
-	<insert id="saveMsg">
+	<insert id="saveMsg1">
 		insert into feed(contents, f_date, f_receive, cno) values(#{contents}, #{f_date}, #{f_receive}, #{cno});
 	</insert>
 	
@@ -303,5 +303,65 @@
 		c_cnt=c_cnt+1
 		where cno=#{cno};
 	</update>
+
+	<!-- 페이징처리 공지게시판 한 페이지당 최대갯수 -->
+	<select id="nboardPage" resultType="com.chagok.domain.BoardVO">
+	  <![CDATA[
+		select * from board
+		where b_sort = 2
+		order by bno desc, b_date desc
+		limit #{page},9
+		]]>
+	</select>
 	
-  </mapper>
+	<!-- 페이징처리 공지게시판 페이지 넘버 -->
+	<select id="nboardPageNo" resultType="com.chagok.domain.BoardVO">
+	  <![CDATA[
+		select * from board
+		where b_sort = 2
+		order by bno desc, b_date desc
+		limit #{pageStart},#{perPageNum}
+		]]>
+	</select>
+	
+	<!-- 공지게시판 글 전체 개수 -->
+	<select id="nboardCount" resultType="int">
+		select count(*) 
+		from board
+		where b_sort= 2
+	</select>
+	
+	<!-- 페이징처리 후기게시판 한 페이지당 최대갯수 -->
+	<select id="rboardPage" resultType="com.chagok.domain.BoardVO">
+	  <![CDATA[
+		select * from board
+		where b_sort = 1
+		order by bno desc, b_date desc
+		limit #{page},9
+		]]>
+	</select>
+	
+	<!-- 페이징처리 후기게시판 페이지 넘버 -->
+	<select id="rboardPageNo" resultType="com.chagok.domain.BoardVO">
+	  <![CDATA[
+		select * from board
+		where b_sort = 1
+		order by bno desc, b_date desc
+		limit #{pageStart},#{perPageNum}
+		]]>
+	</select>
+	
+	<!-- 후기게시판 글 전체 개수 -->
+	<select id="rboardCount" resultType="int">
+		select count(*) 
+		from board
+		where b_sort= 1
+	</select>
+	
+	<!-- 관리자 챌린지 승인 -->
+	<update id="confirmChallenge">
+		update challenge set c_status=#{c_status}
+		where cno = #{cno}
+	</update>
+	
+ </mapper>

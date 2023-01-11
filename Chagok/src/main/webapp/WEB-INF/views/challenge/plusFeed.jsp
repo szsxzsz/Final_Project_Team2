@@ -8,13 +8,15 @@
 <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js" integrity="sha512-iKDtgDyTHjAitUDdLljGhenhPwrbBfqTKWO1mkhSFH3A7blITC9MhYon6SjnMhp4o0rADGw9yAC6EW4t5a4K3g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/@stomp/stompjs@5.0.0/bundles/stomp.umd.js" integrity="sha512-iKDtgDyTHjAitUDdLljGhenhPwrbBfqTKWO1mkhSFH3A7blITC9MhYon6SjnMhp4o0rADGw9yAC6EW4t5a4K3g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
 
 <script type="text/javascript">
 	$(document).ready(function() {
 		connectSockJS();
-		var currT = new Date().getHours() + ":" + new Date().getMinutes();
+		var today = new Date(); 
+		var currT = ('0' + today.getHours()).slice(-2) + ":" + ('0' + today.getMinutes()).slice(-2);
+		
 		var nick = '${nick}';
-// 		var html;
 		
 		$('#btnSend').on('click', function(event) {
 			
@@ -22,19 +24,12 @@
 			
 			event.preventDefault();
 			
-// 			var msg2 = $('.received_withd_msg p').text();
-// 			var msg3 = $('.sent_msg p').text();
-			
-// 			console.log("222222222222222222222>>>>", msg2);
-// 			console.log("222222222222222222222>>>>", msg3);
-			
-			
 			console.log("보낸 메시지>>>>", msg);
 			
 			if (!isStomp && socket.readyState!== 1 ) return;
 				if(isStomp){
 					// send(path, header, message(cno, writer, message, time))형태
-					socket.send('/send/'+cno , {}, JSON.stringify({"cno": cno, "writer": nick, "message" : msg, "time": currT}));
+					socket.send('/send/'+cno , {cno}, JSON.stringify({"cno": cno, "writer": nick, "message" : msg, "time": currT}));
 					
 				}else
 					socket.send(msg);
@@ -47,8 +42,10 @@
 	var socket = null;
 	var isStomp = false;
 	var cno = ${vo.cno};
-	var currT = new Date().getHours() + ":" + new Date().getMinutes();
-	var chatBox = $('#chat_box');
+	
+	var today = new Date(); 
+	var currT = ('0' + today.getHours()).slice(-2) + ":" + ('0' + today.getMinutes()).slice(-2);
+	
 	var nick = '${nick}';
 	var currD = new Date().getMonth() + 1 + "월 " + new Date().getDate()+"일";
 	
@@ -94,11 +91,11 @@
 								+ '<p>'+content.message+'</p>'
 								+ '<span class="time_date">'+ currT + " | ";
 						if(currD == (new Date().getMonth() + 1 + "월 " + new Date().getDate()+"일") ){
-							html += '오늘' +'</span></div></div>';
+							html += '오늘' +'</span></div></div></div>';
 						}else{
 							html += currD +'</span></div></div>';
 						}
-								
+						
 					}
 					
 					$("#nextMsg").append(html+"\n");
@@ -108,17 +105,6 @@
 				
 				var chat = {"writer": content.writer, "message":content.message , "time": currT, "cno": cno, "receiver": "all", "f_date": currD };
 				
-				// 새로운 대화내용 저장하기 (접속인원 수 만큼 저장되므로, ajax말고 다른 방법 OR 중복된 내용시 1번만 가게 제어)
-			    $.ajax({
-			        type: 'post',
-			       url: '/challenge/saveChat',
-			        contentType: 'application/json; charset=utf-8',
-			        dataType: 'text',
-			        data: JSON.stringify(chat),
-			        success: function(){    // db전송 성공시 실시간 알림 전송
-			        	console.log("메시지 저장 완료");
-			        }
-			    }); // saveChat ajax 끝
 			}); 	//client.subscribe 끝
 		}); 		// client.connect 끝
 
@@ -130,6 +116,40 @@
 		if (el.scrollHeight > 0) el.scrollTop = el.scrollHeight;
 	}
 </script>
+
+<!-- 영민 입금하기 (비지니스계좌 구현중) -->
+<script type="text/javascript">
+	$(document).ready(function(){
+		
+		$('#a_biz').click(function(){
+			if ($('#result').text() == "") {
+				alert('금액을 입력하세요 !');
+				
+				return false;
+				
+			} else {
+				
+				alert(${vo.c_amount / vo.c_period});
+				
+				var bizCheck = confirm("진짜 입금 할래?");
+				
+				if (bizCheck) {
+					$('#a_biz').attr('href', '/challenge/sendBiz');
+				} else {
+					return false;
+				}
+			}
+			
+			
+			
+		});
+	});
+</script>
+
+<!-- 영민 입금하기 (비지니스계좌 구현중) -->
+
+
+
 
 <h1 style="padding: 0 15px 0 15px;"> 저축형 차곡 챌린지 </h1>
 <%-- ${msgList} --%>
@@ -219,8 +239,11 @@
 		    </div>
 		</div>
     </div>
+    
+<!-- 입금하기 기능용 모달창 -->
     <button class="btn btn-success" data-toggle="modal" data-target="#modal-default" style="margin-left: 90%">
    			입금하기</button>
+    
 <!-- 모달 css 파일 : resources -> plugins -> modal -> minusModal.css  -->
 	<div class="modal fade" id="modal-default" style="margin-top: 10%;">
 		<div class="modal-dialog" style=" height: 800px;">
@@ -255,11 +278,16 @@
 				<div class="modal-footer">
 					<!-- <button type="button" class="btn btn-default pull-left"
 						data-dismiss="modal">닫기</button> -->
-					<button type="button" class="btn btn-block btn-success btn-sm">입금하기</button>
+					<a href="" id="a_biz">
+						<button type="button" class="btn btn-block btn-success btn-sm biz">입금하기</button>
+					</a>
 				</div>
 			</div>
     	</div>
    	</div>
+<!-- 입금하기 기능용 모달창 -->	
+   	
+   	
    	<!-- 모달 창 -->
     	<br>
       <div class="row">
@@ -397,36 +425,37 @@
  <!-- 칭찬하기/주시하기  @@@@@@@@@@@@@@@@@@@@@@@@@ -->
     <div class="col-xs-12" style="margin-left: 10px; ">
 	 <div class="row">
-	  <h3 class=" text-center">${vo.c_title }</h3>
+	  <h3 class=" text-center"> << ${vo.c_title } >> </h3>
 	   <div class="messaging">
 	      <div class="inbox_msg">
 	        <div class="inbox_people">
 	          <div class="headind_srch">
 	            <div class="recent_heading">
-	              <h4>최근 메시지</h4>
+	              <h4>참가자</h4>
 	            </div>
 	          </div>
+         <!-- <div class="chat_list active_chat"> 어두운색 배경으로 비활성화 가능 -->
 	          <div class="inbox_chat">
-	            <div class="chat_list active_chat">
-	              <div class="chat_people">
-	                <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
-	                <div class="chat_ib">
-	                  <h5>보낸 사람 <span class="chat_date">날 짜</span></h5>
-	                  <p>Test, which is a new approach to have all solutions 
-	                    astrology under one roof.</p>
-	                </div>
-	              </div>
-	            </div>
+          <c:forEach var="plusPeoList" begin="0" end="${plusPeoList.size()-1}" items="${plusPeoList}">
 	            <div class="chat_list">
 	              <div class="chat_people">
-	                <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
+	                <div class="chat_img"> 
+	                <c:if test="${plusPeoList.profile != null }">
+	                	<img src="/${plusPeoList.profile }" alt="sunil"> 
+	                </c:if>
+	                <c:if test="${plusPeoList.profile == null }">
+	                	<img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> 
+	                </c:if>
+	                </div>
 	                <div class="chat_ib">
-	                  <h5>Sunil Rajput <span class="chat_date">Dec 25</span></h5>
-	                  <p>Test, which is a new approach to have all solutions 
-	                    astrology under one roof.</p>
+<%-- 	                  <h5>${plusPeoList.nick} <span class="chat_date"><fmt:formatDate value="${now }" pattern="MMM DD일"/></span></h5><!-- 최근 접속일자로 바꿀 것 --> --%>
+	                  <h5>${plusPeoList.nick} <span class="chat_date"><a href="#"><i class="fa fa-circle text-success"></i> Online</a></span></h5><!-- 최근 접속일자로 바꿀 것 -->
+	                  <a href="#"><i class="fa fa-circle text-gray"></i> Offline</a>
+	                  <p>세션에서 받아와서 접속중/비접속중</p>
 	                </div>
 	              </div>
 	            </div>
+	          </c:forEach>
 	          </div>
 	        </div>
 	        <div class="mesgs">
@@ -468,9 +497,8 @@ $(document).ready(function(){
 		contentType : "application/json",
 		data : JSON.stringify(cno),
 		success : function(result){
-			console.log("이전데이터 가져옴");
+			console.log("과거 채팅기록");
 			console.log(result);
-			console.log(nick);
 			for(var i=0; result.length; i++){
 				if( (result[i].writer) == nick){
 					var data = '<div class="outgoing_msg">';
@@ -489,8 +517,6 @@ $(document).ready(function(){
 					$('#nextMsg').append(data);
 					
 				}
-				console.log(result[i].writer);
-				console.log(result[i].writer == nick);
 			}
 			
 		},
@@ -524,15 +550,6 @@ $(document).ready(function(){
 	  btn.addEventListener('click', calculate);
 	  numWrap.appendChild(btn);
 	}
-// 	for(const i in calc) {
-// 	  const btn = document.createElement('button');
-// 	  btn.classList.add('calc2');
-// 	  btn.value = calc[i];
-// 	  btn.innerText = calc[i];
-// 	  btn.addEventListener('click', calculate);
-// 	  calcWrap.appendChild(btn);
-// 	}
-	
 	// calculate function
 	function calculate(e) {
 	  const value = e.target.value;
@@ -546,15 +563,6 @@ $(document).ready(function(){
 	  
 	  result.innerText = formula.join('');
 	}
-	
-	
-	//---------------
-	//animation
-// 	const html = document.documentElement;
-// 	html.addEventListener("mousemove", function(e) {    
-// 	  html.style.setProperty('--x', e.clientX + 'px');  
-// 	  html.style.setProperty('--y', e.clientY + 'px');
-// 	});
 </script>
 
 <style>

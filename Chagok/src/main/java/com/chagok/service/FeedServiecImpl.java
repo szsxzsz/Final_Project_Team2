@@ -23,37 +23,23 @@ public class FeedServiecImpl implements FeedService {
 
 	@Override
 	public List<MessageVO> getMsgList(Integer cno) throws Exception {
+		
 		return dao.getMsgList(cno);
-		
-		
-		//		List<MessageVO> messageList = dao.getMsgList(cno);
-//		Map<String, Object> map = new HashMap<String, Object>();
-//		JSONObject json = new JSONObject();
-//		JsonArray jsonArray = new JsonArray();
-//				
-//		for(int i= 0; i < messageList.size(); i++) {
-//			map.put("message", messageList.get(i).getMessage());
-//			map.put("writer", messageList.get(i).getWriter());
-//			map.put("time", messageList.get(i).getTime());
-////			map.put("message", messageList.get(i).getMessage());
-////			map.put("writer", messageList.get(i).getWriter());
-////			map.put("time", messageList.get(i).getTime());
-//			json.putAll(map);
-//			jsonArray.set(i, json);
-//		}
-//		return null;
 	}
 
 	@Override
-	public void saveMsg(MessageVO messageVO, FeedDTO feedDTO) throws Exception {
-		mylog.debug(" saveMessage() 호출");
+	public void saveMsg1(MessageVO messageVO, Integer cno) throws Exception {
+		FeedDTO feedDTO = new FeedDTO();
 		
-		String msgContent = "{\"message\": \""+ messageVO.getMessage() + "\", \"time\": \"" + messageVO.getTime() + "\", \"writer\": \""+ messageVO.getWriter()+"\"}"; 
-		
+		String msgContent = "{\"message\": \""+ messageVO.getMessage() + "\", \"time\": \"" + messageVO.getTime() + "\", \"writer\": \""+ messageVO.getWriter()+"\"}";
+		System.out.println(messageVO.getTime());
 		feedDTO.setContents(msgContent);
+		feedDTO.setCno(cno);
 		
-		// 메시지 저장 db사용
-		dao.saveMsg(feedDTO);
+		String f_receiver = "all"; // 나중에 '@이름'을 사용할 경우에는 따로 받아서 처리할 것
+		
+		dao.saveMsg1(feedDTO, f_receiver);
+		
 	}
 
 	

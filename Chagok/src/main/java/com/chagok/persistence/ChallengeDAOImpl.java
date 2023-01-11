@@ -86,7 +86,7 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("nick", nick);
 		map.put("cno", cno);
-		mylog.debug(" cancelChallenge(map) 호출 "+map);
+		mylog.debug(" cancelChallenge 호출 닉네임 잘라내기, c_cnt-1 "+map);
 		sqlSession.update(NAMESPACE+".cancelChallenge", map);
 	}
 	
@@ -178,23 +178,6 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 		return challengeList;
 	}
 
-
-	// 챌린지 피드 인원 조회
-//	@Override
-//	public List<Map<String, Object> getCList(Integer cno) {
-//		mylog.debug(" getCList(Integer cno) 호출 ");
-//		
-//		List<Map<String, Object>> CList = sqlSession.selectList(NAMESPACE+".CList");
-//		return CList;
-//	}
-//	@Override
-//	public void getCList(Integer cno) {
-//		mylog.debug(" getCList(Integer cno) 호출 ");
-//		
-//		sqlSession.selectOne(NAMESPACE+".CList");
-//		
-//	}
-	
 	// 챌린지 참여 인원 조회(checkfeed 용)
 	@Override
 	public int getCList(Integer cno) throws Exception {
@@ -316,7 +299,10 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 	@Override
 	public List<Map<String, Object>> getMinusAbook(Integer mno, Integer cno) {
 		mylog.debug(" getMinusAbook(mno,cno) 호출 ");
-		List<Map<String, Object>> minusAbook = sqlSession.selectList(NAMESPACE+".getMinusAbook");
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("mno", mno);
+		map.put("cno", cno);
+		List<Map<String, Object>> minusAbook = sqlSession.selectList(NAMESPACE+".getMinusAbook",map);
 		return minusAbook;
 	}
 	
@@ -331,8 +317,50 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 	// 가계부 값 연동하기 
 	@Override
 	public void updateMoney(Integer mno, Integer ab_amount, Integer cno) {
-		mylog.debug(" updateMoney(mno,ab_amount,cno) 호출 ");
-		sqlSession.update(NAMESPACE+".updateMoney");
+		mylog.debug(" updateMoney("+mno+","+ab_amount+","+cno+") 호출 ");
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("mno", mno);
+		map.put("ab_amount",ab_amount);
+		map.put("cno", cno);
+		sqlSession.update(NAMESPACE+".updateMoney", map);
+	}
+
+	// 페이징 처리 구현된 리스트 조회
+	@Override
+	public List<BoardVO> getNBoardPage(Integer page) throws Exception {
+		mylog.debug(" BoardPage 호출 ");
+		
+		if(page < 0) {
+			page = 1;
+		}
+				
+		page = (page - 1) * 10;
+				
+		return sqlSession.selectList(NAMESPACE+".boardPage", page);
+	}
+
+	// 리스트 조회
+	@Override
+	public List<BoardVO> getNBoardPage(Criteria cri) throws Exception {
+		mylog.debug("  getBoardPage(Criteria cri) 페이징처리 ");
+		mylog.debug(cri+"@@@@@@@@@@@@@@@@@@@@@@");
+		
+		return sqlSession.selectList(NAMESPACE + ".nboardPageNo",cri);
+	}
+
+	// 전체 게시판 글 개수 조회
+	@Override
+	public int NBoardCount() throws Exception {
+		
+		return sqlSession.selectOne(NAMESPACE+".nboardCount");
+	
+	}
+
+	// 관리자 챌린지 승인
+	@Override
+	public void confirmChallenge(ChallengeVO vo) throws Exception {
+		mylog.debug("daoimpl: 챌린지 승인");
+		sqlSession.update(NAMESPACE+".confirmChallenge",vo.getC_status());
 	}
 	
 	
