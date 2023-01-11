@@ -98,18 +98,34 @@
 	</select>
 	
 	<!-- 달력 -->
-	<select id="cal" resultType="map">
+	<sql id="cal1">
 		select date_format(ab.ab_date, '%Y-%m-%d') date, sum(ab.ab_amount) sum, 
 			case 
 				when ab_inout='1' then 'out'
 				when ab_inout='2' then 'in'
 			end as sort
 		from account_book ab
-		where ab.mno=#{mno}
+		where ab.mno=#{mno}	
+	</sql>
+	
+	<sql id="cal2">
 		and ab.ab_date between last_day(now() - interval #{mm}+1 month) + interval 1 day 
 			and last_day(now() - interval #{mm} month)
 		group by date, ab_inout 
-		order by date;
+		order by date;	
+	</sql>
+	
+	<!-- 전체 -->
+	<select id="calAll" resultType="map">
+		<include refid="cal1"/>
+		<include refid="cal2"/>
+	</select>
+	
+	<!-- 수입, 지출 -->
+	<select id="calInout" resultType="map">
+		<include refid="cal1"/>
+		and ab.ab_inout=#{inout}
+		<include refid="cal2"/>
 	</select>
 	
 	

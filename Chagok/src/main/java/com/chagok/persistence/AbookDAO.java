@@ -50,6 +50,6 @@ public interface AbookDAO {
 	public Integer totalBud(Integer mno, String pMonth) throws Exception;
 	
 	// 달력
-	public List<Map<String, Object>> cal(Integer mno, Integer mm) throws Exception;
+	public List<Map<String, Object>> calInout(Integer mno, Integer mm, Integer inout) throws Exception;
 	
 }

@@ -976,10 +976,12 @@ public class AssetController {
 	
 	@ResponseBody
 	@GetMapping(value="/cal")
-	public List<Map<String, Object>> cal() throws Exception {
-		int mno=1;
-		int mm=0;
-		List<Map<String, Object>> cal = abService.cal(mno, mm);
+	public List<Map<String, Object>> cal(@RequestParam int mm, @RequestParam int inout, HttpSession session) throws Exception {
+		int mno = (int)session.getAttribute("mno");
+		mylog.debug("mm : "+mm);
+		mylog.debug("inout : "+inout);
+		
+		List<Map<String, Object>> cal = abService.calInout(mno, mm, inout);
 		JSONArray jArr = new JSONArray();
 		for(Map<String, Object> map : cal) {
 			JSONObject jObj = new JSONObject();
@@ -997,7 +999,7 @@ public class AssetController {
 			}
 			jArr.add(jObj);
 		}
-		mylog.debug("jArr"+jArr.toString());
+//		mylog.debug("jArr"+jArr.toString());
 		return jArr;
 	}
 	

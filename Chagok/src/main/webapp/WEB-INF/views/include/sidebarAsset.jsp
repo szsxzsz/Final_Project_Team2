@@ -66,7 +66,7 @@
               </a>
               <ul class="treeview-menu">
                 <li class="active"><a href="/asset/abookList"><i class="fa fa-circle-o"></i> 목록형</a></li>
-                <li><a href="advanced.html"><i class="fa fa-circle-o"></i> 달력형</a></li>
+                <li><a href="/asset/abookCal"><i class="fa fa-circle-o"></i> 달력형</a></li>
                 <li><a href="/asset/budget?mm=0"><i class="fa fa-circle-o"></i> 예 산</a></li>
               </ul>
             </li>
