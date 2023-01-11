@@ -8,113 +8,140 @@
 <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js" integrity="sha512-iKDtgDyTHjAitUDdLljGhenhPwrbBfqTKWO1mkhSFH3A7blITC9MhYon6SjnMhp4o0rADGw9yAC6EW4t5a4K3g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<!-- <script src="https://cdn.jsdelivr.net/npm/@stomp/stompjs@5.0.0/bundles/stomp.umd.js" integrity="sha512-iKDtgDyTHjAitUDdLljGhenhPwrbBfqTKWO1mkhSFH3A7blITC9MhYon6SjnMhp4o0rADGw9yAC6EW4t5a4K3g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
 
 <script type="text/javascript">
-	$(document).ready(function() {
-		connectSockJS();
-		var today = new Date(); 
-		var currT = ('0' + today.getHours()).slice(-2) + ":" + ('0' + today.getMinutes()).slice(-2);
+// 	$(document).ready(function() {
 		
-		var nick = '${nick}';
+// 		connectSockJS();
 		
-		$('#btnSend').on('click', function(event) {
+// 		var today = new Date(); 
+// 		var currT = ('0' + today.getHours()).slice(-2) + ":" + ('0' + today.getMinutes()).slice(-2);
+		
+// 		var nick = '${nick}';
+		
+// 		$('#btnSend').on('click', function(event) {
 			
-			var msg = $('#msg').val();
+// 			var msg = $('#msg').val();
 			
-			event.preventDefault();
+// 			event.preventDefault();
 			
-			console.log("보낸 메시지>>>>", msg);
+// 			console.log("보낸 메시지>>>>", msg);
 			
-			if (!isStomp && socket.readyState!== 1 ) return;
-				if(isStomp){
-					// send(path, header, message(cno, writer, message, time))형태
-					socket.send('/send/'+cno , {cno}, JSON.stringify({"cno": cno, "writer": nick, "message" : msg, "time": currT}));
+// 			if (!isStomp && socket.readyState!== 1 ) return;
+// 				if(isStomp){
+// 					// send(path, header, message(cno, writer, message, time))형태
+// 					socket.send('/send/'+cno , {cno}, JSON.stringify({"cno": cno, "writer": nick, "message" : msg, "time": currT}));
 					
-				}else
-					socket.send(msg);
+// 				}else
+// 					socket.send(msg);
 			
-			console.log("ReceiveMessage:" + msg);
-		});
+// 			console.log("ReceiveMessage:" + msg);
+// 		});
 
-	});
+// 	});
 	
-	var socket = null;
-	var isStomp = false;
-	var cno = ${vo.cno};
+// 	var socket = null;
+// 	var isStomp = false;
+// 	var cno = ${vo.cno};
 	
-	var today = new Date(); 
-	var currT = ('0' + today.getHours()).slice(-2) + ":" + ('0' + today.getMinutes()).slice(-2);
+// 	var today = new Date(); 
+// 	var currT = ('0' + today.getHours()).slice(-2) + ":" + ('0' + today.getMinutes()).slice(-2);
 	
-	var nick = '${nick}';
-	var currD = new Date().getMonth() + 1 + "월 " + new Date().getDate()+"일";
+// 	var nick = '${nick}';
+// 	var currD = new Date().getMonth() + 1 + "월 " + new Date().getDate()+"일";
 	
-	function connectSockJS(){
-		//STOMP Client
-		var sock = new SockJS("/plusFeed"); // endpoint
-		var client = Stomp.over(sock);
-		isStomp = true;
-		socket = client;
+// 	function connectSockJS(){
+// 		//STOMP Client
+// 		var sock = new SockJS("/plusFeed"); // endpoint
+// 		var client = Stomp.over(sock);
+// 		isStomp = true;
+// 		socket = client;
 		
-		// 소켓 연결확인
-// 		console.log(client);
 		
-		client.connect({}, function(frame){
-			console.log("Connected stomp!");
+// 		// 소켓 연결확인
+// // 		console.log(client);
+		
+// 		client.connect({}, function(frame){
+// 			console.log("Connected stomp!");
 			
-			// 해당 토픽을 구독한다! subscribe(path, callback)로 메시지를 받을 수 있다.
-			// callback 첫번째 파라미터의 body로 메시지의 내용이 들어온다.
-			client.subscribe('/topic/feed/'+cno, function(chat){ // 컨트롤러(sendTo)
-				// 서버에서 돌아온 것 (구독하고 있는 클라이언트들에게 )
-				console.log('subscribe_chat(서버에서 돌아온 내용) >>', chat);
-				var content = JSON.parse(chat.body);
-				console.log(content);
+// 			// 해당 토픽을 구독한다! subscribe(path, callback)로 메시지를 받을 수 있다.
+// 			// callback 첫번째 파라미터의 body로 메시지의 내용이 들어온다.
+// 			client.subscribe('/topic/feed/'+cno, function(chat){ // 컨트롤러(sendTo)
+// 				// 서버에서 돌아온 것 (구독하고 있는 클라이언트들에게 )
+// 				console.log('subscribe_chat(서버에서 돌아온 내용) >>', chat);
+// 				var content = JSON.parse(chat.body);
+// 				console.log(content);
+// 				//socket.onmessage = onMessage;
 
-				if(content.writer != null){
+// 				if(content.writer != null){
 					
-					if( content.writer == nick ){ 
-						var html = '<div class="outgoing_msg">';
-						html += '<div class="sent_msg">'
-						            + '<p>'+content.message+'</p>'
-						            + '<span class="time_date"> '+ currT + " | "; 
-			            if(currD == (new Date().getMonth() + 1 + "월 " + new Date().getDate()+"일") ){
-							html += '오늘' +'</span></div></div>';
-						}else{
-							html += currD +'</span></div></div>';
-						}
+// 					if( content.writer == nick ){ 
+// 						var html = '<div class="outgoing_msg">';
+// 						html += '<div class="sent_msg">'
+// 						            + '<p>'+content.message+'</p>'
+// 						            + '<span class="time_date"> '+ currT + " | "; 
+// 			            if(currD == (new Date().getMonth() + 1 + "월 " + new Date().getDate()+"일") ){
+// 							html += '오늘' +'</span></div></div>';
+// 						}else{
+// 							html += currD +'</span></div></div>';
+// 						}
+			            
+			            
+// 					}else {
+// 						var html = content.writer;
+// 						html += '<div class="incoming_msg">'
+// 								+ '<div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>'
+// 								+ '<div class="received_msg"> <div class="received_withd_msg">'
+// 								+ '<p>'+content.message+'</p>'
+// 								+ '<span class="time_date">'+ currT + " | ";
+// 						if(currD == (new Date().getMonth() + 1 + "월 " + new Date().getDate()+"일") ){
+// 							html += '오늘' +'</span></div></div></div>';
+// 						}else{
+// 							html += currD +'</span></div></div>';
+// 						}
 						
-					}else {
-						var html = content.writer;
-						html += '<div class="incoming_msg">'
-								+ '<div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>'
-								+ '<div class="received_msg"> <div class="received_withd_msg">'
-								+ '<p>'+content.message+'</p>'
-								+ '<span class="time_date">'+ currT + " | ";
-						if(currD == (new Date().getMonth() + 1 + "월 " + new Date().getDate()+"일") ){
-							html += '오늘' +'</span></div></div></div>';
-						}else{
-							html += currD +'</span></div></div>';
-						}
+// 						const Toast = Swal.mixin({
+// 							  toast: true,
+// 							  position: 'top-end',
+// 							  showConfirmButton: false,
+// 							  timer: 5000,
+// 							  timerProgressBar: true,
+// 							  didOpen: (toast) => {
+// 							    toast.addEventListener('mouseenter', Swal.stopTimer)
+// 							    toast.addEventListener('mouseleave', Swal.resumeTimer)
+// 							  }
+// 							})
 						
-					}
+// 						Toast.fire({
+// 							  icon: 'success',
+// 							  title: '${vo.c_title}' + '챌린지에서 메시지가 도착했습니다.'
+// 							});	
+						
 					
-					$("#nextMsg").append(html+"\n");
-				}
+						
+// 					}
+					
+// 					$("#nextMsg").append(html+"\n");
+// 				}
 				
-				$("#msg").val("");
+// 				$("#msg").val("");
 				
-				var chat = {"writer": content.writer, "message":content.message , "time": currT, "cno": cno, "receiver": "all", "f_date": currD };
+// 				var chat = {"writer": content.writer, "message":content.message , "time": currT, "cno": cno, "receiver": "all", "f_date": currD };
 				
-			}); 	//client.subscribe 끝
-		}); 		// client.connect 끝
+				
+				
+				
+				
+// 			}); 	//client.subscribe 끝
+// 		}); 		// client.connect 끝
 
-	}	
+// 	}	
 	
-	function moveScroll() { // 최근 글로 시점이동하도록 할 것
-	    var el = document.getElementById('nextMsg');
-	    console.log(el);
-		if (el.scrollHeight > 0) el.scrollTop = el.scrollHeight;
-	}
+// 	function moveScroll() { // 최근 글로 시점이동하도록 할 것
+// 	    var el = document.getElementById('nextMsg');
+// 	    console.log(el);
+// 		if (el.scrollHeight > 0) el.scrollTop = el.scrollHeight;
+// 	}
 </script>
 
 <!-- 영민 입금하기 (비지니스계좌 구현중) -->
@@ -150,13 +177,13 @@
 
 
 
-
 <h1 style="padding: 0 15px 0 15px;"> 저축형 차곡 챌린지 </h1>
 <%-- ${msgList} --%>
 <%-- ${mno} --%>
 <%-- ${plusPeoList } --%>
 <%-- ${vo} --%>
  <!-- Main content -->
+<button class="btn btn-success pull-right" id="alertStart" >알림테스트용 </button>
 <section class="content">
 	<div class="row">
 		<div class="col-lg-5 mx-6 aos-init aos-animate" data-aos="fade-right" >
@@ -420,13 +447,12 @@
     </section>
     <!-- /.content -->
     
-    <div class="chat_box"></div>
     
  <!-- 칭찬하기/주시하기  @@@@@@@@@@@@@@@@@@@@@@@@@ -->
     <div class="col-xs-12" style="margin-left: 10px; ">
 	 <div class="row">
 	  <h3 class=" text-center"> << ${vo.c_title } >> </h3>
-	   <div class="messaging">
+	   <div class="messaging" id="messaging">
 	      <div class="inbox_msg">
 	        <div class="inbox_people">
 	          <div class="headind_srch">
@@ -451,7 +477,6 @@
 <%-- 	                  <h5>${plusPeoList.nick} <span class="chat_date"><fmt:formatDate value="${now }" pattern="MMM DD일"/></span></h5><!-- 최근 접속일자로 바꿀 것 --> --%>
 	                  <h5>${plusPeoList.nick} <span class="chat_date"><a href="#"><i class="fa fa-circle text-success"></i> Online</a></span></h5><!-- 최근 접속일자로 바꿀 것 -->
 	                  <a href="#"><i class="fa fa-circle text-gray"></i> Offline</a>
-	                  <p>세션에서 받아와서 접속중/비접속중</p>
 	                </div>
 	              </div>
 	            </div>
@@ -459,8 +484,8 @@
 	          </div>
 	        </div>
 	        <div class="mesgs">
-	          <div class="msg_history">
-				<main class="chat">
+	          <div class="msg_history" id="msg_history">
+				<main class="chat" id="chat">
 				
             <!-- 받은 메시지 -->
 				<div id="nextMsg"></div>
@@ -486,46 +511,46 @@
 <%@ include file="../include/footer.jsp" %>
 
 <script type="text/javascript">
-$(document).ready(function(){
-	var cno = ${vo.cno};
-	var nick = '${nick}';
+// $(document).ready(function(){
+// 	var cno = ${vo.cno};
+// 	var nick = '${nick}';
 	
-	// 이전 대화내용 가져오기
-	$.ajax({
-		type : "post",
-		url : "/challenge/getPreChat", 
-		contentType : "application/json",
-		data : JSON.stringify(cno),
-		success : function(result){
-			console.log("과거 채팅기록");
-			console.log(result);
-			for(var i=0; result.length; i++){
-				if( (result[i].writer) == nick){
-					var data = '<div class="outgoing_msg">';
-					data += '<div class="sent_msg">'
-			            	 + '<p>'+ result[i].message +'</p>'
-			           		 + '<span class="time_date"> '+ result[i].time +'</span></div></div>';
-					$('#nextMsg').append(data);
-				}else{
-					var data = result[i].writer;
-					data += '<div class="incoming_msg">'
-							+ '<div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>'
-							+ '<div class="received_msg"> <div class="received_withd_msg">'
-							+ '<p>'+ result[i].message +'</p>'
-							+ '<span class="time_date">'+ result[i].time +'</span></div></div>'
+// 	// 이전 대화내용 가져오기
+// 	$.ajax({
+// 		type : "post",
+// 		url : "/challenge/getPreChat", 
+// 		contentType : "application/json",
+// 		data : JSON.stringify(cno),
+// 		success : function(result){
+// 			console.log("과거 채팅기록");
+// 			console.log(result);
+// 			for(var i=0; result.length; i++){
+// 				if( (result[i].writer) == nick){
+// 					var data = '<div class="outgoing_msg">';
+// 					data += '<div class="sent_msg">'
+// 			            	 + '<p>'+ result[i].message +'</p>'
+// 			           		 + '<span class="time_date"> '+ result[i].time +'</span></div></div>';
+// 					$('#nextMsg').append(data);
+// 				}else{
+// 					var data = result[i].writer;
+// 					data += '<div class="incoming_msg">'
+// 							+ '<div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>'
+// 							+ '<div class="received_msg"> <div class="received_withd_msg">'
+// 							+ '<p>'+ result[i].message +'</p>'
+// 							+ '<span class="time_date">'+ result[i].time +'</span></div></div>'
 					
-					$('#nextMsg').append(data);
+// 					$('#nextMsg').append(data);
 					
-				}
-			}
+// 				}
+// 			}
 			
-		},
-		error : function(jqXHR, status, error){
-			console.log("알 수 없는 에러 [" + error + "]");
-		}
-	}); // ajax 끝
+// 		},
+// 		error : function(jqXHR, status, error){
+// 			console.log("알 수 없는 에러 [" + error + "]");
+// 		}
+// 	}); // ajax 끝
 	
-});
+// });
 </script>
 
 <!--계산기 -->
