@@ -15,19 +15,141 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
 
 
+<!-- Datepicker -->
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<script type="text/javascript">
+	/* 설정 */
+$.datepicker.setDefaults({
+	  dateFormat: 'yy-mm-dd',
+	  prevText: '이전 달',
+	  nextText: '다음 달',
+	  monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+	  monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+	  dayNames: ['일', '월', '화', '수', '목', '금', '토'],
+	  dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
+	  dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
+	  showMonthAfterYear: true,
+	  yearSuffix: '년'
+});
+</script> 
+
+<script>
+$(document).ready(function(){
+     $("#datepicker").datepicker({ 
+    	   minDate: "0",
+    	   maxDate: "+6D", 
+     });
+});
+</script>
+
+<style>
+.ui-widget-header { border: 0px solid #dddddd; background: #fff; } 
+
+ .ui-datepicker-calendar>thead>tr>th { font-size: 14px !important; } 
+
+ .ui-datepicker .ui-datepicker-header { position: relative; padding: 10px 0; } 
+
+ .ui-state-default,
+ .ui-widget-content .ui-state-default,
+ .ui-widget-header .ui-state-default,
+ .ui-button,
+ html .ui-button.ui-state-disabled:hover,
+ html .ui-button.ui-state-disabled:active { border: 0px solid #c5c5c5; background-color: transparent; font-weight: normal; color: #454545; text-align: center; } 
+
+ .ui-datepicker .ui-datepicker-title { margin: 0 0em; line-height: 16px; text-align: center; font-size: 14px; padding: 0px; font-weight: bold; } 
+
+ .ui-datepicker { display: none; background-color: #fff; border-radius: 4px; margin-top: 10px; margin-left: 0px; margin-right: 0px; padding: 20px; padding-bottom: 10px; width: 300px; box-shadow: 10px 10px 40px rgba(0, 0, 0, 0.1); } 
+
+ .ui-widget.ui-widget-content { border: 1px solid #eee; } 
+
+ #datepicker:focus>.ui-datepicker { display: block; } 
+
+ .ui-datepicker-prev,
+ .ui-datepicker-next { cursor: pointer; } 
+
+ .ui-datepicker-next { float: right; } 
+
+ .ui-state-disabled { cursor: auto; color: hsla(0, 0%, 80%, 1); } 
+
+ .ui-datepicker-title { text-align: center; padding: 10px; font-weight: 100; font-size: 20px; } 
+
+ .ui-datepicker-calendar { width: 100%; } 
+
+ .ui-datepicker-calendar>thead>tr>th { padding: 5px; font-size: 20px; font-weight: 400; } 
+
+ .ui-datepicker-calendar>tbody>tr>td>a { color: #000; font-size: 12px !important; font-weight: bold !important; text-decoration: none;}
+
+ .ui-datepicker-calendar>tbody>tr>.ui-state-disabled:hover { cursor: auto; background-color: #fff; } 
+
+ .ui-datepicker-calendar>tbody>tr>td { border-radius: 100%; width: 44px; height: 30px; cursor: pointer; padding: 5px; font-weight: 100; text-align: center; font-size: 12px; } 
+
+ .ui-datepicker-calendar>tbody>tr>td:hover { background-color: transparent; opacity: 0.6; } 
+
+ .ui-state-hover,
+ .ui-widget-content .ui-state-hover,
+ .ui-widget-header .ui-state-hover,
+ .ui-state-focus,
+ .ui-widget-content .ui-state-focus,
+ .ui-widget-header .ui-state-focus,
+ .ui-button:hover,
+ .ui-button:focus { border: 0px solid #cccccc; background-color: transparent; font-weight: normal; color: #2b2b2b; } 
+
+ .ui-widget-header .ui-icon { background-image: url('./src/main/webapp/WEB-INF/views/challenge/btns.png'); } 
+
+ .ui-icon-circle-triangle-e { background-position: -20px 0px; background-size: 36px; } 
+
+ .ui-icon-circle-triangle-w { background-position: -0px -0px; background-size: 36px; } 
+
+ .ui-datepicker-calendar>tbody>tr>td:first-child a { color: red !important; } 
+
+ .ui-datepicker-calendar>tbody>tr>td:last-child a { color: #0099ff !important; } 
+
+ .ui-datepicker-calendar>thead>tr>th:first-child { color: red !important; } 
+
+ .ui-datepicker-calendar>thead>tr>th:last-child { color: #0099ff !important; } 
+
+ .ui-state-highlight,
+ .ui-widget-content .ui-state-highlight,
+ .ui-widget-header .ui-state-highlight {    
+border: 0px;
+    background: #66c14a38;
+    border-radius: 50%;
+   } 
+
+ .inp { padding: 10px 10px; background-color: #f1f1f1; border-radius: 4px; border: 0px; } 
+
+ .inp:focus { outline: none; background-color: #eee; } 
+</style>
+<!-- Datepicker -->
+
+
 <!-- 유효성 검사 -->
 <script type="text/javascript">
 $(document).ready(function(){
 	   
    $('#regist').click(function(){
    
+	var file =  $('#customFile').val(); 
     var title = $('#c_title').val();   
+    var cate = $('#b_ctno').val();   
     var start = $('#datepicker').val();
     var person = $('#c_pcnt').val();
     var deposit = $('#c_deposit').val();
     var amount = $('#c_amount').val();
     var content = $('#c_content').val();
     
+    
+    if (file == "" || file == null) {
+  	   Swal.fire({
+  	        title: '사진을 등록해주세요.', 
+  	        icon: 'warning'
+  	      });
+  	     $('#customFile').focus();
+  	     return false;
+  	}
     
 	if (title == "" || title == null) {
 	   Swal.fire({
@@ -37,6 +159,15 @@ $(document).ready(function(){
 	     $('#c_title').focus();
 	     return false;
 	}
+	
+	if (cate == "0") {
+		   Swal.fire({
+		        title: '카테고리를 선택해주세요.', 
+		        icon: 'warning'
+		      });
+		     $('#b_ctno').focus();
+		     return false;
+		}
 	
 	if (start == "" || start == null) {
 		   Swal.fire({
@@ -85,6 +216,24 @@ $(document).ready(function(){
 });
 });
 </script>
+
+<script>
+$(document).on("keyup", "input[name^=c_pcnt]", function() {
+    var val= $(this).val();
+    if(val < 3 || val > 10) {
+        alert("3명~10명까지만 모집가능합니다.");
+        $(this).val('');
+    }
+});
+
+$(document).on("keyup", "input[name^=c_deposit]", function() {
+    var val= $(this).val();
+    if(val < 1000 || val > 200000) {
+        alert("1,000원~200,000원내로 입력해주세요.");
+        $(this).val('');
+    }
+});
+</script> 
 
 
 <script type="text/javascript">
@@ -259,7 +408,7 @@ function getAgreeType() {
 								<h4 class="mb-4 mt-0">챌린지 사진 등록</h4>
 									<div class="select_img"><img src="" /></div>
 								</div>
-								<button type="button" class="btn btn-danger-soft">취소</button>
+								<button type="reset" class="btn btn-danger-soft">취소</button>
 								<input type="file" id="customFile" name="file" hidden="">
 								<label class="btn btn-success-soft btn-block" for="customFile">업로드</label>
 								<p class="text-muted mt-3 mb-0">
@@ -317,8 +466,8 @@ function getAgreeType() {
                    <div class="col-lg-6">
                       <div class="form-group focused">
                         <label class="form-control-label" for="input-username" >카테고리</label>
-                        <select name="b_ctno" id="input-address" class="form-control form-control-alternative" >
-                           <option>카테고리</option>
+                        <select name="b_ctno" id="b_ctno" class="form-control form-control-alternative" required >
+                           <option value="0">카테고리</option>
                            <option value="1">식비</option>
         				   <option value="2">의복/미용</option>
           				   <option value="3">문화/여가</option>
@@ -359,13 +508,13 @@ function getAgreeType() {
                     <div class="col-lg-4">
                       <div class="form-group focused">
                         <label class="form-control-label" for="input-country">챌린지 시작일</label>
-                        <input type="date" name="c_start" id="datepicker" class="form-control form-control-alternative" required>
+                        <input type="text" name="c_start" id="datepicker" class="form-control form-control-alternative" placeholder="7일이내로 날짜를 선택해주세요. " required>
                       </div>
                     </div>
                     <div class="col-lg-4">
                       <div class="form-group">
                         <label class="form-control-label" for="input-country">모집인원</label>
-                        <input type="text" name="c_pcnt" id="c_pcnt" class="form-control form-control-alternative" placeholder="최대 10명" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" required>
+                        <input type="text" name="c_pcnt" id="c_pcnt" class="form-control form-control-alternative" placeholder="3~10명까지 모집가능합니다" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" required>
                       </div>
                     </div>
                     
@@ -430,8 +579,10 @@ function getAgreeType() {
 
 <style>
 
-body{margin-top:20px;
-color: #9b9ca1;
+body{
+	margin-top:20px;
+	color: #9b9ca1;
+	min-height: 100% !important;
 }
 .bg-secondary-soft {
     background-color: rgba(208, 212, 217, 0.1) !important;
@@ -566,13 +717,14 @@ section {
 
 body {
   font-family: Open Sans, sans-serif;
-  font-size: 1rem;
+/*   font-size: 1rem; */
   font-weight: 400;
   line-height: 1.5;
   margin: 0;
   text-align: left;
   color: #525f7f;
   background-color: #f8f9fe;
+  min-height: 100% !important;
 }
 
 [tabindex='-1']:focus {
@@ -911,6 +1063,7 @@ a>code {
   min-height: 1px;
   padding-right: 15px;
   padding-left: 15px;
+  font-size: 1rem;
 }
 
 .col {
@@ -1145,15 +1298,15 @@ textarea.form-control {
 
 .btn-primary {
   color: #fff;
-  border-color: #5e72e4;
-  background-color: #5e72e4;
+  border-color: #ffcb4d;
+  background-color: #ffcb4d;
   box-shadow: 0 4px 6px rgba(50, 50, 93, .11), 0 1px 3px rgba(0, 0, 0, .08);
 }
 
 .btn-primary:hover {
   color: #fff;
-  border-color: #5e72e4;
-  background-color: #5e72e4;
+  border-color: #ffcb4d;
+  background-color: #ffcb4d;
 }
 
 .btn-primary:focus {
@@ -1543,6 +1696,7 @@ textarea.form-control {
 .card-body {
   padding: 1.5rem;
   flex: 1 1 auto;
+  background-color: #66c14a05;
 }
 
 .card-header {
@@ -1642,6 +1796,7 @@ button.bg-white:focus {
 
   .d-md-flex {
     display: flex !important;
+    justify-content: center;
   }
 }
 
@@ -2505,7 +2660,6 @@ textarea[resize='horizontal'] {
 }
 
 p {
-  font-size: 1rem;
   font-weight: 300;
   line-height: 1.7;
 }
@@ -2542,5 +2696,14 @@ p {
 
 #navbar .navbar {
   margin-bottom: 20px;
+}
+
+.textstyle {
+	font-size: 1.3rem;
+    font-weight: 600;
+    color: #525f7f;
+    margin-top: 30px;
+    margin-left: -8px;
+    margin-right: 10px;
 }
 </style>

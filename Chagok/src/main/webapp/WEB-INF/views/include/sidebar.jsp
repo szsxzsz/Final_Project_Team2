@@ -52,8 +52,8 @@
             </div>
             <div class="pull-left info">
             <c:if test="${nick != null }">
-             <p><a href="#" style="color: black;">${nick }</a></p>
-              <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+              <p><a href="#" style="color: black;">${nick }</a></p>
+              <a href="#" ><i class="fa fa-circle text-success" ></i> Online</a>
             </c:if>
             <c:if test="${nick == null }">
               <p><a href="/login">로그인을 해주세요</a></p>
@@ -73,28 +73,29 @@
           <!-- /.search form -->
           <!-- sidebar menu: : style can be found in sidebar.less -->
           <ul class="sidebar-menu">
-            <li class="header">마이페이지</li>
+<!--             <li class="header">마이페이지</li> -->
             <li class="treeview active">
               <a href="#">
                 <i class="fa fa-trophy"></i> <span>챌린지</span> <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu ">
-                <li><a href="/commumain"><i class="fa fa-circle-o"></i> 모집 중 챌린지</a></li>
-                <li><a href="/challenge/mychallenge"><i class="fa fa-circle-o"></i> 내 챌린지</a></li>
-                <li><a href="/reviewboard"><i class="fa fa-circle-o"></i> 후기 게시판</a></li>
+                <li><a href="/commumain"></i> 모집 중 챌린지</a></li>
+                <li><a href="/challenge/mychallenge"></i> 내 챌린지</a></li>
+                <li><a href="/reviewboard"></i> 후기 게시판</a></li>
               </ul>
             </li>
             <li class="treeview active">
               <a href="#">
                 <i class="fa fa-group"></i>
                 <span>커뮤니티</span>
-                <span class="label label-primary pull-right">4</span>
+                <i class="fa fa-angle-left pull-right"></i>
+<!--                 <span class="label label-primary pull-right">4</span> -->
               </a>
               <ul class="treeview-menu active">
-                <li><a href="../community/canibuy"><i class="fa fa-circle-o"></i> 사도 돼?</a></li>
-                <li><a href="../community/news"><i class="fa fa-circle-o"></i> 뉴스 / 재테크</a></li>
-                <li><a href="../community/balancing"><i class="fa fa-circle-o"></i> 월말 결산</a></li>
-                <li><a href="/freeboard"><i class="fa fa-circle-o"></i> 자유 게시판</a></li>
+<!--                 <li><a href="../community/canibuy"><i class="fa fa-circle-o"></i> 사도 돼?</a></li> -->
+                <li><a href="../community/news"></i> 뉴스 / 재테크</a></li>
+                <li><a href="../community/balancing"></i> 월말 결산</a></li>
+                <li><a href="/freeboard"></i> 자유 게시판</a></li>
               </ul>
             </li>
 <!--             <li> -->
@@ -109,8 +110,8 @@
                 <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu active">
-                <li><a href="/notice"><i class="fa fa-circle-o"></i> 공지 게시판</a></li>
-                <li><a href="/community/report"><i class="fa fa-circle-o"></i> 신고 게시판</a></li>
+                <li><a href="/notice"></i> 공지 게시판</a></li>
+                <li><a href="/community/report"></i> 신고 게시판</a></li>
 <!--                 <li><a href="../charts/flot.html"><i class="fa fa-circle-o"></i> Flot</a></li> -->
 <!--                 <li><a href="../charts/inline.html"><i class="fa fa-circle-o"></i> Inline charts</a></li> -->
               </ul>
@@ -122,9 +123,9 @@
                 <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu active">
-                <li><a href="/challenge/chListAll"><i class="fa fa-circle-o"></i> 챌린지 관리</a></li>
-                <li><a href="/#"><i class="fa fa-circle-o"></i> 회원 관리</a></li>
-                <li><a href="#"><i class="fa fa-circle-o"></i> 결제 관리</a></li>
+                <li><a href="/challenge/chListAll"></i> 챌린지 관리</a></li>
+                <li><a href="/#"></i> 회원 관리</a></li>
+                <li><a href="#"></i> 결제 관리</a></li>
 <!--                 <li><a href="../charts/flot.html"><i class="fa fa-circle-o"></i> Flot</a></li> -->
 <!--                 <li><a href="../charts/inline.html"><i class="fa fa-circle-o"></i> Inline charts</a></li> -->
               </ul>
@@ -216,10 +217,10 @@
 <!--               </ul> -->
 <!--             </li> -->
 <!--             <li><a href="/resources/documentation/index.html"><i class="fa fa-book"></i> <span>Documentation</span></a></li> -->
-            <li class="header">LABELS</li>
-            <li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>Important</span></a></li>
-            <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>Warning</span></a></li>
-            <li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>Information</span></a></li>
+<!--             <li class="header">LABELS</li> -->
+<!--             <li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>Important</span></a></li> -->
+<!--             <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>Warning</span></a></li> -->
+<!--             <li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>Information</span></a></li> -->
           </ul>
         </section>
         <!-- /.sidebar -->

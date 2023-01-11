@@ -156,6 +156,7 @@
 html {
   margin: 0;
   padding: 0;
+  font-family: 'GmarketSans';
 }
 
 body {
@@ -166,6 +167,7 @@ body {
   overflow-x: hidden;
   width: 100%;
   height: 100%;
+  font-family: 'GmarketSans';
 }
 
 .visually-hidden {
@@ -501,7 +503,7 @@ main .card .card-body .card-title {
   margin: 0;
   padding: 10px 10px;
   height: 80px;
-  font-family: "Noto Sans", "Arial", sans-serif;
+/*   font-family: "Noto Sans", "Arial", sans-serif; */
   font-size: 18px;
   font-style: normal;
   font-weight: 600;
@@ -613,7 +615,7 @@ main .card .card-item-chevron {
   -webkit-border-radius: 4px;
   border-radius: 4px;
   color: #ffffff;
-  font-family: "Noto Sans", "Arial", sans-serif;
+/*   font-family: "Noto Sans", "Arial", sans-serif; */
   font-size: 10px;
   font-weight: 700;
   line-height: 1.4;
@@ -628,7 +630,7 @@ main .card .card-item-chevron--hit {
 }
 
 main .card .card-item-chevron--new {
- 	background-color: #ff523d;
+	background-color: #ff523d;
     position: absolute;
     z-index: 2;
     top: 180px;
@@ -636,16 +638,16 @@ main .card .card-item-chevron--new {
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
     margin: 0;
-    padding: 13px 0px;
+    padding: 15px 0px;
     -webkit-border-radius: 4px;
     border-radius: 5rem;
     color: #ffffff;
-    font-family: "Noto Sans", "Arial", sans-serif;
-    font-size: 16px;
+    /* font-family: "Noto Sans", "Arial", sans-serif; */
+    font-size: 13px;
     font-weight: 700;
     line-height: 1.4;
     width: 5rem;
-    height: 5rem;
+    /* height: 5rem; */
     text-align: center;
 }
 
@@ -725,7 +727,11 @@ main .card .card-item-chevron--new {
         font-size: 16px;
     }
 }
-
+.search{
+	display: flex;
+    justify-content: flex-end;
+    margin-right: 30px;
+}
 
 
 </style>

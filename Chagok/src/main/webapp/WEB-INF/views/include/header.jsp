@@ -73,7 +73,7 @@
 	display: flex;
     height: 75px;
     background: rgba(255, 255, 255,1);
-    padding: 0 100px 0 100px;
+    padding: 0 0 0 100px;
     align-items: center;
     border-bottom: 1px solid #bfb7b773;
     flex-direction: row;
@@ -142,28 +142,28 @@ color : rgba(255, 219, 131 / 80%);
     flex-direction: row;
     justify-content: flex-end;
     width: 240px;
+    margin-left: 120px;
 }
 
 .custom_inner .user_menu div {
-	width: 70px;
+/* 	width: 70px; */
     height: auto;
     text-align: center;
-    margin-left: 10px;
     }
 .custom_inner .user_menu .login,
 .custom_inner .user_menu .join{
-border: 3px solid rgb(255 191 131 / 40%);
-    border-radius: 9px;
-    width: 87px;  
+/* border: 3px solid rgb(255 191 131 / 40%); */
+/*     border-radius: 9px; */
+/*     width: 180px;   */
     height: auto;
-    text-align: center;
-    font-size: 17px;
+    text-align: right;
+    font-size: 14px;
     padding: 5px;
     margin-right: 5px;
     }
 .custom_inner .user_menu .login:hover,
 .custom_inner .user_menu .join:hover{
- border: 3px solid rgb(255 191 131 / 80%);
+/*  border: 3px solid rgb(255 191 131 / 80%); */
  background: rgb(176 224 229 / 5%);
  }   
 </style>
