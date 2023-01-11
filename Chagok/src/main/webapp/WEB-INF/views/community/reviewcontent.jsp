@@ -7,12 +7,17 @@
 <%@ include file="../include/sidebar.jsp" %>
 
 <h1> 후기글 상세 </h1>
-${vo }
-${review }
+
 	<section class="content">
+	 <form role="form" method="post">
+		<input type="hidden" name="bno" value="${boardChallenge.bno }">
+	</form>
 	<div class="row">
 		<div class="col-lg-5 mx-6 aos-init aos-animate" data-aos="fade-right" >
-	        <img class="img-responsive" src="${vo.c_file}" alt="Photo" >
+<%-- 	        <img class="img-responsive" src="${vo.c_file}" alt="Photo" > --%>
+		<h3><span style="color: #66BB7A; font-weight: bold;">[후기 제목]</span> ${boardChallenge.b_title }</h3>
+		<h4><span style="color: #66BB7A; font-weight: bold;">[작성자]</span> ${boardChallenge.b_writer }</h4>
+	        <textarea class="form-control" rows="3" style="margin-top:15px; width: 600px; height: 280px" readonly>${boardChallenge.b_content }</textarea>
 		</div>
 		<div class="col-lg-6 pt-4 pt-lg-0 content aos-init aos-animate" data-aos="fade-left" >
 			<c:forEach var="vo" items="${challengeList }">
@@ -25,21 +30,14 @@ ${review }
 				</c:if>
 				
 			</c:forEach>
-			<h3><span style="color: #66BB7A; font-weight: bold;">[${sort } : ${vo2.ct_top}]</span> <br>${vo.c_title }</h3>
+			<h3><span style="color: #66BB7A; font-weight: bold;"> 참여한 챌린지 정보</span></h3>
+			<h3><span style="color: #66BB7A; font-weight: bold;"> [${sort } : ${vo2.ct_top}]</span> <br> ${vo.c_title }</h3>
 			 <jsp:useBean id="now" class="java.util.Date" />
 			 <fmt:parseNumber value="${now.time / (1000*60*60*24)}" integerOnly="true" var="nowfmtTime" scope="request"/>
 			 <fmt:parseDate value="${vo.c_start}" var="startDate" pattern="yyyy-MM-dd"/>
 			 <fmt:parseNumber value="${(startDate.time + 1000*60*60*24)/ (1000*60*60*24)}" integerOnly="true" var="startTime" scope="request"/>
 			 <fmt:parseNumber value="${c_end.time / (1000*60*60*24)}" integerOnly="true" var="endTime" scope="request" />
-			<c:if test="${startTime - nowfmtTime <= 0 && nowfmtTime - endTime <= 0}">
-				<p class="fst-italic">챌린지가 <b>시작</b>되었습니다!</p>
-			</c:if>
-			<c:if test="${startTime - nowfmtTime > 0}">
-				<p class="fst-italic">챌린지가 &nbsp;&nbsp;  <span style="color: #66BB7A; font-weight: bold; font-size: 20px;"> ${startTime - nowfmtTime }</span> 일 후에 시작됩니다!</p>
-			</c:if>
-			<c:if test="${nowfmtTime - endTime > 0}">
-				<p class="fst-italic">챌린지가 <b>종료</b>되었습니다!</p>
-			</c:if>
+
 			<br><br>
 			<div class="row">
 				<div class="col-lg-6" style="line-height: 180%">
@@ -50,6 +48,10 @@ ${review }
 	             <div class="progress-group" style="width: 280px;">
 	               <span class="progress-text">챌린지 인원</span>
 	               <span class="progress-number"><b>${CList} </b>/ ${vo.c_pcnt }</span>
+	             </div>
+	             <div class="progress-group" style="width: 280px;">
+	               <span class="progress-text">챌린지 성공인원</span>
+	               <span class="progress-number"><b>${Success } </b>/ ${CList }</span>
 	             </div>
 	             <div class="progress-group" style="width: 280px;">
 	               <span class="progress-text">예치금</span>
@@ -77,12 +79,13 @@ ${review }
 		</div>
 	</div>
 	<br>
-	<textarea rows="15" cols="100" name="${review.b_content }" readonly></textarea>
-<%--  <c:set var="writer" value="${vo.b_writer }"/> --%>
-<%-- 	<c:if test= "${nick == '관리자' || nick == writer}"> --%>
-<!--         <input class="btn btn-danger" type="submit" value="수정하기" onclick="location.href='/reviewupdate'" style="width:218px; margin-left: 950px;"> -->
-<!--         <input class="btn btn-warning" type="submit" value="삭제하기" onclick="location.href='/revireremove'" style="width:218px; margin-left: 950px;"> -->
-<%-- 	</c:if> --%>
+
+ 	<c:set var="writer" value="${boardChallenge.b_writer }"/>
+	<c:if test= "${nick == '관리자' || nick == writer}">
+        <input class="btn btn-danger" type="submit" value="수정하기" onclick="location.href='/reviewupdate?bno=${boardChallenge.bno}&cno=${boardChallenge.cno }';" style="width:218px; margin-left: 950px;">
+<!--         <input class="btn btn-danger" type="submit" value="수정하기"  style="width:218px; margin-left: 950px;"> -->
+		<input class="btn btn-warning" type="submit" value="삭제하기" style="width:218px; margin-left: 950px;">
+	</c:if>
         <input class="btn bg-purple" type="submit" value="돌아가기" onclick="location.href='/reviewboard'" style="width:218px; margin-left: 950px;">
 </section>
 <%@ include file="../include/footer.jsp"%>
@@ -90,14 +93,14 @@ ${review }
 			$(document).ready(function(){
 				var formObj = $("form[role='form']");
 				
-				// 수정
-				$(".btn-danger").click(function(){
+// 				// 수정
+// 				$(".btn-danger").click(function(){
 					
-					formObj.attr("action","/reviewupdate"); 
-					formObj.attr("method","get"); 
-					formObj.submit();
+// 					formObj.attr("action","/reviewupdate"); 
+// 					formObj.attr("method","get"); 
+// 					formObj.submit();
 					
-				});
+// 				});
 			
 				// 삭제
 				$(".btn-warning").click(function(){

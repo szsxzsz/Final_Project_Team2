@@ -6,41 +6,13 @@
 <%@ include file="../include/header.jsp" %>
 <%@ include file="../include/sidebar.jsp" %>
 
-<!-- <<<<<<< HEAD -->
-<!-- <h1>공지게시판</h1> -->
-<!-- <div class="col-xs-12 table-responsive"> -->
-<!-- 	<table class="table table-striped"> -->
-<!-- 		<thead> -->
-<!-- 			<tr> -->
-<!-- 				<th>글번호</th> -->
-<!-- 				<th>공지사항 제목</th> -->
-<!-- 				<th>작성일자</th> -->
-<!-- 			</tr> -->
-<!-- 		</thead> -->
-<!-- 		<tbody> -->
-<%-- 			<c:set var="no" value="${boardList.size()} "></c:set> --%>
-<%-- 			<c:forEach items="${boardList }" var="boardList" varStatus="status" > --%>
-<!-- 			<tr> -->
-<%-- 				<td>${no }</td> --%>
-<!-- 				<td> -->
-<%-- 					<a href="http://localhost:8080/noticecontent?bno=${boardList.bno }">${boardList.b_title }</a> --%>
-<!-- 				</td> -->
-<%-- 				<td>${boardList.b_date }</td> --%>
-<!-- 			</tr> -->
-<%-- 			<c:set var="no" value="${no}"></c:set> --%>
-<%-- 			</c:forEach> --%>
-<!-- 		</tbody> -->
-<!-- 	</table> -->
-<!-- </div> -->
-<!-- ======= -->
-
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>공지사항</title>
 </head>
-${pageMaker }
+
 <body>
     <div class="board_wrap">
         <div class="board_title">
@@ -82,7 +54,9 @@ ${pageMaker }
           </div>
           
            <div class="box-footer clearfix">
-<!--                 <a href="#" class="bt first"><<</a> -->
+                <a href="#" class="bt first"><<</a>
+
+                <a href="#" class="bt last">>></a>
 			<ul class="pagination pagination-sm no-margin pull-right">
                 
                 <c:if test="${pageMaker.prev }">
@@ -98,7 +72,6 @@ ${pageMaker }
 					<li><a href="/notice?page=${pageMaker.endPage+1 }" class="bt next">></a></li>
 				</c:if>
                
-<!--                 <a href="#" class="bt last">>></a> -->
 			</ul>
             </div>
             

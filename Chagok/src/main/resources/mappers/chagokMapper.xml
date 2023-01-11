@@ -269,7 +269,7 @@
 
 
 	<!-- 게시판과 챌린지 -->
-	<select id="boardChallenge" resultType="string">
+	<select id="boardChallenge" resultType="map">
 		select *
 		from challenge c inner join board b
 		where bno = #{bno} and b.cno = c.cno
@@ -360,9 +360,15 @@
 	
 	<!-- 관리자 챌린지 승인 -->
 	<update id="confirmChallenge">
-		update challenge set c_status=#{c_status}
+		update challenge set c_status=1
 		where cno = #{cno}
 	</update>
+	
+	<!-- 관리자 챌린지 승인거절 -->
+<!-- 	<update id="confirmChallenge"> -->
+<!-- 		update challenge set c_status=6 -->
+<!-- 		where cno = #{cno} -->
+<!-- 	</update> -->
 	
 	<!-- 비지니스 계좌 입금(송금) -->
 	<insert id="sendBiz">

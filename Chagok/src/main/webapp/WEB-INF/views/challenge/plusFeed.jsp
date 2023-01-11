@@ -174,7 +174,6 @@
 
 <h1 style="padding: 0 15px 0 15px;"> 저축형 차곡 챌린지 </h1>
 
-${myPlusVO }
 
 <%-- ${msgList} --%>
 <%-- ${mno} --%>

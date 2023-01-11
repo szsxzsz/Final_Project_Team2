@@ -7,6 +7,49 @@
 <%@ include file="../include/sidebar.jsp" %>
 <html lang="ko">
 <head>
+<script>
+	$(function(){
+		$("#yess").click(function(){
+			
+			alert("승인 호출");
+			var c_status = 1;
+			
+			$.ajax({
+				type : "post",
+				url : "/challenge/adminconfirm",
+// 				contentType : "application/json",
+// 				dataType :'text',
+				data :c_status,
+				success : function(data){
+					console.log('챌린지 승인!');
+					alert('챌린지 승인 완료!');
+				}
+			});
+		});
+	});
+	
+	$(function(){
+		$("#noo").click(function(){
+			
+			alert("승인거절 호출");
+			var c_status = 6;
+			
+			$.ajax({
+				type : "post",
+				url : "/challenge/adminconfirm",
+				data : c_status,
+				success : function(data){
+					console.log('챌린지 승인거절');
+					alert('챌린지 승인 거절');
+				}
+			});
+			
+		});
+	});
+	
+	
+</script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>관리자 챌린지 승인</title>
@@ -39,8 +82,8 @@
                     <div class="date" style="padding-left: auto; width: auto;"><b>${cl.c_min }</b>/ ${cl.c_cnt }</div>
                     <div class="num">${cl.c_status }</div>
                     <div>
-                    <button type="submit" class="btn btn-block btn-info btn-xs" style="width:auto;">승인</button>
-                    <button type="submit" class="btn btn-block btn-danger btn-xs" style="width:auto;">거절</button>
+                    <button type="button" class="btn btn-block btn-info btn-xs" id="yess" style="width:auto;">승인</button>
+                    <button type="button" class="btn btn-block btn-danger btn-xs" id="noo" style="width:auto;">거절</button>
                     </div>
                 </div>
                 </c:forEach>

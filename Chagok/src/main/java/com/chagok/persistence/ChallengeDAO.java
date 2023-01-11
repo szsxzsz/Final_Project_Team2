@@ -74,7 +74,6 @@ public interface ChallengeDAO {
 	public List<ChallengeVO> getChallengeList() throws Exception;
 	
 	// 챌린지 피드 인원 조회
-//	public void getCList(Integer cno) throws Exception;
 	public int getCList(Integer cno) throws Exception;
 
 	// 게시판 글 수정
@@ -111,23 +110,32 @@ public interface ChallengeDAO {
 	public List<Map<String, Object>> getMinusAbook(Integer mno, Integer cno);
 	
 	// 게시판 글 + 챌린지
-	public String getBoardChallenge(Integer cno) throws Exception;
+	public Map<String, Object> getBoardChallenge(Integer cno) throws Exception;
 	
 	// 가계부 값 연동하기
 	public void updateMoney(Integer mno, Integer ab_amount, Integer cno);
 	
-	// 페이징 처리 구현된 리스트 조회
+	// 페이징 처리 구현된 공지리스트 조회
 	public List<BoardVO> getNBoardPage(Integer page) throws Exception;
 		
-	// 리스트 조회 (페이징처리 cri)
+	// 공지리스트 조회 (페이징처리 cri)
 	public List<BoardVO> getNBoardPage(Criteria cri) throws Exception;
 	
-	// 전체 게시판 글 개수 조회
+	// 전체 공지게시판 글 개수 조회
 	public int NBoardCount() throws Exception;
 	
 	// 관리자 챌린지 승인
 	public void confirmChallenge(ChallengeVO vo) throws Exception;
 	
+	// 페이징 처리 구현된 후기리스트 조회
+	public List<BoardVO> getRBoardPage(Integer page) throws Exception;
+			
+	// 후기리스트 조회 (페이징처리 cri)
+	public List<BoardVO> getRBoardPage(Criteria cri) throws Exception;
+		
+	// 전체 후기게시판 글 개수 조회
+	public int RBoardCount() throws Exception;
+
 	// 비즈니스 계좌 송금
 	public void sendBiz(BusinessAccountVO vo) throws Exception;
 	
@@ -137,4 +145,7 @@ public interface ChallengeDAO {
 	// 내 plus 테이블 정보 가져오기
 	public PlusVO getPlusOne(int mno, int cno) throws Exception;
 	
+	// 관리자 챌린지 승인거절
+	public void rejectChallenge(ChallengeVO vo) throws Exception;
+
 }

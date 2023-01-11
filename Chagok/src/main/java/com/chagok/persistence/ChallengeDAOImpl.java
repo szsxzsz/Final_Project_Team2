@@ -309,9 +309,9 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 	
 	// 게시판 + 챌린지
 	@Override
-	public String getBoardChallenge(Integer cno) throws Exception {
+	public Map<String, Object> getBoardChallenge(Integer cno) throws Exception {
 		mylog.debug("getBoardChallenge 호출");
-		String boardChallenge = sqlSession.selectOne(NAMESPACE+".boardChallenge", cno);
+		Map<String, Object> boardChallenge = sqlSession.selectOne(NAMESPACE+".boardChallenge", cno);
 		return boardChallenge;
 	}
 
@@ -326,7 +326,7 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 		sqlSession.update(NAMESPACE+".updateMoney", map);
 	}
 
-	// 페이징 처리 구현된 리스트 조회
+	// 페이징 처리 구현된 공지리스트 조회
 	@Override
 	public List<BoardVO> getNBoardPage(Integer page) throws Exception {
 		mylog.debug(" BoardPage 호출 ");
@@ -337,10 +337,10 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 				
 		page = (page - 1) * 10;
 				
-		return sqlSession.selectList(NAMESPACE+".boardPage", page);
+		return sqlSession.selectList(NAMESPACE+".nboardPage", page);
 	}
 
-	// 리스트 조회
+	// 공지리스트 조회
 	@Override
 	public List<BoardVO> getNBoardPage(Criteria cri) throws Exception {
 		mylog.debug("  getBoardPage(Criteria cri) 페이징처리 ");
@@ -349,7 +349,7 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 		return sqlSession.selectList(NAMESPACE + ".nboardPageNo",cri);
 	}
 
-	// 전체 게시판 글 개수 조회
+	// 전체 공지게시판 글 개수 조회
 	@Override
 	public int NBoardCount() throws Exception {
 		
@@ -360,8 +360,15 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 	// 관리자 챌린지 승인
 	@Override
 	public void confirmChallenge(ChallengeVO vo) throws Exception {
+		sqlSession.update(NAMESPACE+".confirmChallenge",vo);
 		mylog.debug("daoimpl: 챌린지 승인");
-		sqlSession.update(NAMESPACE+".confirmChallenge",vo.getC_status());
+	}
+
+	// 관리자 챌린지 승인거절
+	@Override
+	public void rejectChallenge(ChallengeVO vo) throws Exception {
+		sqlSession.update(NAMESPACE+".rejectChallenge", vo);
+		mylog.debug("dao:챌린지 승인거절" +vo.getC_status());
 	}
 
 	// 비즈니스 계좌 송금
@@ -407,7 +414,36 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 	}
 	
 	
-	
+	// 페이징 처리 구현된 후기리스트 조회
+	@Override
+	public List<BoardVO> getRBoardPage(Integer page) throws Exception {
+		mylog.debug(" BoardPage 호출 ");
+			
+		if(page < 0) {
+			page = 1;
+		}
+					
+		page = (page - 1) * 10;
+					
+		return sqlSession.selectList(NAMESPACE+".rboardPage", page);
+	}
+
+	// 후기리스트 조회
+	@Override
+	public List<BoardVO> getRBoardPage(Criteria cri) throws Exception {
+		mylog.debug("  getBoardPage(Criteria cri) 페이징처리 ");
+		mylog.debug(cri+"@@@@@@@@@@@@@@@@@@@@@@");
+			
+		return sqlSession.selectList(NAMESPACE + ".rboardPageNo",cri);
+	}
+
+	// 전체 후기게시판 글 개수 조회
+	@Override
+	public int RBoardCount() throws Exception {
+			
+		return sqlSession.selectOne(NAMESPACE+".rboardCount");
+		
+	}	
 	
 	
 	

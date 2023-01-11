@@ -46,20 +46,31 @@ public class BoardController {
 	// 후기글 리스트 (b_sort=1)
 	// http://localhost:8080/reviewboard
 	@GetMapping(value = "/reviewboard")
-	public String reviewboardGET(HttpSession session,Model model,Integer cno,SearchCriteria scri) throws Exception {
+	public String reviewboardGET(HttpSession session,Model model,Integer cno,Criteria cri) throws Exception {
 		mylog.debug(" /reviewboard 호출");
 		model.addAttribute("review", service.getBoardChallenge(cno));
 		
-		List<BoardVO> boardList = service.getBoardList(1);
+//		List<BoardVO> boardList = service.getBoardList(1);
 		ChallengeVO vo2 = service.getCt_top(cno);
 		List<Map<String, Object>> result = service.getResult(cno);
+		List<BoardVO> boardList2 = service.getRBoardPage(cri);
 		
-		mylog.debug(boardList+"");
 		
-		model.addAttribute("boardList", boardList);
+		mylog.debug(boardList2+"");
+		
+//		model.addAttribute("boardList", boardList);
 		model.addAttribute("vo2", vo2);
 		model.addAttribute("result", result);
 		
+		// 페이징 처리
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCri(cri);
+		pageMaker.setTotalCount(service.RboardCount());
+		mylog.debug("@@@@@@@@@@@@@@@@");
+		mylog.debug("totalCnt : "+service.RboardCount());
+		model.addAttribute("pageMaker", pageMaker);
+					
+		model.addAttribute("boardList2", boardList2);
 		
 		return "/community/reviewboard";
 	}
@@ -98,7 +109,7 @@ public class BoardController {
 	}
 	
 	
-	// 후기 게시판 수정 GET
+	// 후기 글 수정 GET
 	// http://localhost:8080/challenge/reviewupdate?bno=4
 	@GetMapping(value= "/reviewupdate")
 	public String reviewupdateGET(@RequestParam("bno") int bno, Model model, HttpSession session,Integer cno) throws Exception{
@@ -106,6 +117,7 @@ public class BoardController {
 		mylog.debug(" reviewupdateGET 호출");
 			
 		mylog.debug(bno+"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+		Map<String, Object> boardChallenge = service.getBoardChallenge(bno);
 		
 		Integer Success = service.getSuccess(cno);
 		ChallengeVO vo2 = service.getCt_top(cno);
@@ -115,15 +127,16 @@ public class BoardController {
 		model.addAttribute("vo2", vo2);
 		model.addAttribute("c_end", service.getChallengeEndDate(cno));
 		
-		model.addAttribute("board", service.getBoardContent(bno));
+		model.addAttribute("boardChallenge", boardChallenge);
+		mylog.debug("여기까진 출력되나?");
 		
 		return "/community/reviewupdate";
 					
 	}
 				
-	// 후기 게시판 수정 POST
+	// 후기 글 수정 POST
 	@PostMapping(value = "/reviewupdate")
-	public String reviewupdatePOST(BoardVO vo,RedirectAttributes rttr) throws Exception{
+	public String reviewupdatePOST(BoardVO vo,RedirectAttributes rttr,HttpSession session) throws Exception{
 			
 		mylog.debug("reviewupdatePOST 호출");
 		mylog.debug(vo+"");
@@ -137,7 +150,7 @@ public class BoardController {
 						
 		}
 							
-		return "/community/reviewupdate";
+		return "redirect:/reviewboard";
 							
 	}
 		
@@ -151,28 +164,25 @@ public class BoardController {
 					
 		rttr.addFlashAttribute("result", "delOK");
 					
-		return "/community/reviewboard";
+		return "redirect:/reviewboard";
 					
 	}
 	
 	// 후기글 상세
 	// http://localhost:8080/reviewcontent?bno=1
 	@GetMapping(value = "/reviewcontent")
-	public String reviewcontentGET(HttpSession session,Model model,@RequestParam("cno") int cno) throws Exception {
+	public String reviewcontentGET(HttpSession session,Model model,@RequestParam("cno") int cno,Integer bno) throws Exception {
 		mylog.debug("reviewcontent 호출");	
-		
-		model.addAttribute("review", service.getBoardChallenge(cno));	
-//		BoardVO vo3 = service.getBoardContent(bno);
-		mylog.debug("11111111111111111111111111111");	
-//		model.addAttribute("vo3",vo3);
-		mylog.debug("222222222222222222222222222222");
+		Map<String, Object> boardChallenge = service.getBoardChallenge(bno);
+		Integer Success = service.getSuccess(cno);
+
 		ChallengeVO vo = service.getChallengeInfo(cno);
-		mylog.debug("33333333333333333333333333333");
+		
 		List<ChallengeVO> challengeList = service.getChallengeList(cno);
 		int CList = service.getCList(cno);
 		ChallengeVO vo2 = service.getCt_top(cno);
 		List<Map<String, Object>> result = service.getResult(cno);
-		mylog.debug("4444444444444444444444444444");
+		
 		model.addAttribute("vo", vo);
 		model.addAttribute("challengeList", challengeList);
 		model.addAttribute("c_end", service.getChallengeEndDate(cno));
@@ -180,7 +190,11 @@ public class BoardController {
 		model.addAttribute("CList",CList);
 		model.addAttribute("vo2", vo2);
 		model.addAttribute("result", result);
-		mylog.debug("55555555555555555555555555555");
+		model.addAttribute("boardChallenge", boardChallenge);
+		model.addAttribute("Success", Success);
+		
+		mylog.debug(boardChallenge+" boardChallenge + @@@@@@@@@@@@@@@@@@@@@@@@@@@");
+		
 		
 		return "/community/reviewcontent";
 	}

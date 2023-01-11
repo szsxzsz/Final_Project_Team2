@@ -10,7 +10,7 @@
 <div class="box box-info">
 
 	<div class="box-body">
-		<form role="form" action="/review" method="post">
+		<form role="form" action="/reviewupdate" method="post">
 		<div class="input-group">
 		
 			
@@ -28,11 +28,11 @@
 		<div class="input-group" >
 			
 			<span class="input-group-addon"> 챌린지 제목 </span>
-			<span class="input-group-addon"> ${review.c_title } </span>
+			<span class="input-group-addon"> ${boardChallenge.c_title } </span>
 		</div>
 		<div class="input-group" >
 		<span class="input-group-addon"> 후기 제목 </span>
-		<input type="text" class="form-control" name="b_title" value="${board.b_title }"/> 
+		<input type="text" class="form-control" name="b_title" value="${boardChallenge.b_title }"/> 
 		</div>
 
 		<hr>
@@ -43,7 +43,7 @@
 			<span class="input-group-addon"> 
 				챌린지 기간
 			</span> 
-			<input type="text" class="form-control" value="${review.c_period }" readonly> 
+			<input type="text" class="form-control" value="${boardChallenge.c_period }" readonly> 
 		</div>
 
 	</div>
@@ -81,13 +81,14 @@
 	<hr>
 	<h5> 후기 </h5>
 	
-	<textarea rows="15" cols="100" name="b_content">${board.b_content }</textarea>
+	<textarea rows="15" cols="100" name="b_content">${boardChallenge.b_content }</textarea>
+     	<input type="hidden" name="bno" value="${boardChallenge.bno }">
+     	<input type="hidden" name="cno" value="${boardChallenge.cno }">
 	
 	 <div class="box-footer">
-          <button type="submit" class="btn btn-primary" >글쓰기</button>
+          <input type="submit" value="수정하기" class="btn btn-block btn-success btn-sm" style="width:218px; margin-left: 950px;">
           <input class="btn btn-block btn-success btn-lg" type="button" value="메인가기" onclick="location.href='/commumain';" style="width:218px; margin-left: 950px;">
      </div>
-     <input type="hidden" name="b_sort" value="1">
 	</form>
 	</div>
 </div>
