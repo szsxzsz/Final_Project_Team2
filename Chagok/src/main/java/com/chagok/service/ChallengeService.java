@@ -123,16 +123,13 @@ public interface ChallengeService {
 	public int NboardCount() throws Exception;
 	
 	// 관리자 챌린지 승인
-	public void confirmChallenge(ChallengeVO vo) throws Exception;
+	public void confirmChallenge(Integer status, Integer cno) throws Exception;
 
 	// 후기글 정보 조회(페이징처리 cri)
 	public List<BoardVO> getRBoardPage(Criteria cri) throws Exception;
 		
 	// 전체 후기 게시판 글 개수 조회
 	public int RboardCount() throws Exception;	
-	
-	// 관리자 챌린지 승인거절
-	public void rejectChallenge(ChallengeVO vo) throws Exception;
 	
 	// 비즈니스 계좌 송금
 	public void sendBiz(BusinessAccountVO vo) throws Exception;

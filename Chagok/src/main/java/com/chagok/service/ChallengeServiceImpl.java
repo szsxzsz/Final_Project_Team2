@@ -285,9 +285,9 @@ public class ChallengeServiceImpl implements ChallengeService{
 
 	// 관리자 챌린지 승인
 	@Override
-	public void confirmChallenge(ChallengeVO vo) throws Exception {
+	public void confirmChallenge(Integer status, Integer cno) throws Exception {
 		mylog.debug("service : 관리자 챌린지승인");
-		dao.confirmChallenge(vo);
+		dao.confirmChallenge(status, cno);
 	}
 
 	// 후기글 정보 조회(페이징처리 cri)
@@ -303,13 +303,6 @@ public class ChallengeServiceImpl implements ChallengeService{
 		mylog.debug("RboardCount() 호출");
 		return dao.RBoardCount();
 	}	
-
-	// 관리자 챌린지 승인거절
-	@Override
-	public void rejectChallenge(ChallengeVO vo) throws Exception {
-		mylog.debug("service : 관리자 챌린지 승인거절");
-		dao.rejectChallenge(vo);
-	}
 
 	// 비지니스 계좌 송금
 	@Override
