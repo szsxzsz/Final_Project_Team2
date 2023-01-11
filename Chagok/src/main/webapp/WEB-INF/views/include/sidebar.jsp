@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-   
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
  <head>
@@ -51,9 +51,14 @@
               <img src="/resources/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image" />
             </div>
             <div class="pull-left info">
-              <p>Alexander Pierce</p>
-
+            <c:if test="${nick != null }">
+             <p><a href="#" style="color: black;">${nick }</a></p>
               <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+            </c:if>
+            <c:if test="${nick == null }">
+              <p><a href="/login">로그인을 해주세요</a></p>
+            </c:if>
+
             </div>
           </div>
           <!-- search form -->
@@ -106,6 +111,20 @@
               <ul class="treeview-menu active">
                 <li><a href="/notice"><i class="fa fa-circle-o"></i> 공지 게시판</a></li>
                 <li><a href="/community/report"><i class="fa fa-circle-o"></i> 신고 게시판</a></li>
+<!--                 <li><a href="../charts/flot.html"><i class="fa fa-circle-o"></i> Flot</a></li> -->
+<!--                 <li><a href="../charts/inline.html"><i class="fa fa-circle-o"></i> Inline charts</a></li> -->
+              </ul>
+            </li>
+            <li class="treeview active">
+              <a href="#">
+                <i class="fa fa-asterisk"></i>
+                <span>관리자</span>
+                <i class="fa fa-angle-left pull-right"></i>
+              </a>
+              <ul class="treeview-menu active">
+                <li><a href="/challenge/adminconfirm"><i class="fa fa-circle-o"></i> 챌린지 관리</a></li>
+                <li><a href="/#"><i class="fa fa-circle-o"></i> 회원 관리</a></li>
+                <li><a href="#"><i class="fa fa-circle-o"></i> 결제 관리</a></li>
 <!--                 <li><a href="../charts/flot.html"><i class="fa fa-circle-o"></i> Flot</a></li> -->
 <!--                 <li><a href="../charts/inline.html"><i class="fa fa-circle-o"></i> Inline charts</a></li> -->
               </ul>

@@ -6,9 +6,7 @@
 <%@ include file="../include/sidebar.jsp" %>
 
 <h1> 공지사항 상세 </h1>
-${boardList }
-${vo }
-${vo2 }
+
 <form role="form" method="post">
 	<input type="hidden" name="bno" value="${vo.bno }">
 </form>

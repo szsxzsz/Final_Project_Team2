@@ -13,8 +13,10 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
 
-
-
+<!-- 데이트피커 -->
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 
 <!-- 유효성 검사 -->
@@ -227,7 +229,7 @@ $('#number').on('keyup', function() {
                     <div class="col-lg-4">
                       <div class="form-group focused">
                         <label class="form-control-label" for="input-country">챌린지 시작일</label>
-                        <input type="date" name="c_start" id="datepicker" class="form-control form-control-alternative" required>
+                        <input type="text" name="c_start" id="datepicker" class="form-control form-control-alternative" required>
                       </div>
                     </div>
    

@@ -10,167 +10,203 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js" integrity="sha512-iKDtgDyTHjAitUDdLljGhenhPwrbBfqTKWO1mkhSFH3A7blITC9MhYon6SjnMhp4o0rADGw9yAC6EW4t5a4K3g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 <script type="text/javascript">
-	$(document).ready(function() {
-		connectSockJS();
-		var currT = new Date().getHours() + ":" + new Date().getMinutes();
-		var nick = '${nick}';
-// 		var html;
+// 	$(document).ready(function() {
 		
-		$('#btnSend').on('click', function(event) {
+// 		connectSockJS();
+		
+// 		var today = new Date(); 
+// 		var currT = ('0' + today.getHours()).slice(-2) + ":" + ('0' + today.getMinutes()).slice(-2);
+		
+// 		var nick = '${nick}';
+		
+// 		$('#btnSend').on('click', function(event) {
 			
-			var msg = $('#msg').val();
+// 			var msg = $('#msg').val();
 			
-			event.preventDefault();
+// 			event.preventDefault();
 			
-// 			var msg2 = $('.received_withd_msg p').text();
-// 			var msg3 = $('.sent_msg p').text();
+// 			console.log("보낸 메시지>>>>", msg);
 			
-// 			console.log("222222222222222222222>>>>", msg2);
-// 			console.log("222222222222222222222>>>>", msg3);
-			
-			
-			console.log("보낸 메시지>>>>", msg);
-			
-			if (!isStomp && socket.readyState!== 1 ) return;
-				if(isStomp){
-					// send(path, header, message(cno, writer, message, time))형태
-					socket.send('/send/'+cno , {}, JSON.stringify({"cno": cno, "writer": nick, "message" : msg, "time": currT}));
+// 			if (!isStomp && socket.readyState!== 1 ) return;
+// 				if(isStomp){
+// 					// send(path, header, message(cno, writer, message, time))형태
+// 					socket.send('/send/'+cno , {cno}, JSON.stringify({"cno": cno, "writer": nick, "message" : msg, "time": currT}));
 					
-				}else
-					socket.send(msg);
+// 				}else
+// 					socket.send(msg);
 			
-			console.log("ReceiveMessage:" + msg);
-		});
+// 			console.log("ReceiveMessage:" + msg);
+// 		});
 
-	});
+// 	});
 	
-	var socket = null;
-	var isStomp = false;
-	var cno = ${vo.cno};
-	var currT = new Date().getHours() + ":" + new Date().getMinutes();
-	var chatBox = $('#chat_box');
-	var nick = '${nick}';
-	var currD = new Date().getMonth() + 1 + "월 " + new Date().getDate()+"일";
+// 	var socket = null;
+// 	var isStomp = false;
+// 	var cno = ${vo.cno};
 	
-	function connectSockJS(){
-		//STOMP Client
-		var sock = new SockJS("/plusFeed"); // endpoint
-		var client = Stomp.over(sock);
-		isStomp = true;
-		socket = client;
+// 	var today = new Date(); 
+// 	var currT = ('0' + today.getHours()).slice(-2) + ":" + ('0' + today.getMinutes()).slice(-2);
+	
+// 	var nick = '${nick}';
+// 	var currD = new Date().getMonth() + 1 + "월 " + new Date().getDate()+"일";
+	
+// 	function connectSockJS(){
+// 		//STOMP Client
+// 		var sock = new SockJS("/plusFeed"); // endpoint
+// 		var client = Stomp.over(sock);
+// 		isStomp = true;
+// 		socket = client;
 		
-		// 소켓 연결확인
-// 		console.log(client);
 		
-		client.connect({}, function(frame){
-			console.log("Connected stomp!");
+// 		// 소켓 연결확인
+// // 		console.log(client);
+		
+// 		client.connect({}, function(frame){
+// 			console.log("Connected stomp!");
 			
-			// 해당 토픽을 구독한다! subscribe(path, callback)로 메시지를 받을 수 있다.
-			// callback 첫번째 파라미터의 body로 메시지의 내용이 들어온다.
-			client.subscribe('/topic/feed/'+cno, function(chat){ // 컨트롤러(sendTo)
-				// 서버에서 돌아온 것 (구독하고 있는 클라이언트들에게 )
-				console.log('subscribe_chat(서버에서 돌아온 내용) >>', chat);
-				var content = JSON.parse(chat.body);
-				console.log(content);
+// 			// 해당 토픽을 구독한다! subscribe(path, callback)로 메시지를 받을 수 있다.
+// 			// callback 첫번째 파라미터의 body로 메시지의 내용이 들어온다.
+// 			client.subscribe('/topic/feed/'+cno, function(chat){ // 컨트롤러(sendTo)
+// 				// 서버에서 돌아온 것 (구독하고 있는 클라이언트들에게 )
+// 				console.log('subscribe_chat(서버에서 돌아온 내용) >>', chat);
+// 				var content = JSON.parse(chat.body);
+// 				console.log(content);
+// 				//socket.onmessage = onMessage;
 
-				if(content.writer != null){
+// 				if(content.writer != null){
 					
-					if( content.writer == nick ){ 
-						var html = '<div class="outgoing_msg">';
-						html += '<div class="sent_msg">'
-						            + '<p>'+content.message+'</p>'
-						            + '<span class="time_date"> '+ currT + " | "; 
-			            if(currD == (new Date().getMonth() + 1 + "월 " + new Date().getDate()+"일") ){
-							html += '오늘' +'</span></div></div>';
-						}else{
-							html += currD +'</span></div></div>';
-						}
+// 					if( content.writer == nick ){ 
+// 						var html = '<div class="outgoing_msg">';
+// 						html += '<div class="sent_msg">'
+// 						            + '<p>'+content.message+'</p>'
+// 						            + '<span class="time_date"> '+ currT + " | "; 
+// 			            if(currD == (new Date().getMonth() + 1 + "월 " + new Date().getDate()+"일") ){
+// 							html += '오늘' +'</span></div></div>';
+// 						}else{
+// 							html += currD +'</span></div></div>';
+// 						}
+			            
+			            
+// 					}else {
+// 						var html = content.writer;
+// 						html += '<div class="incoming_msg">'
+// 								+ '<div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>'
+// 								+ '<div class="received_msg"> <div class="received_withd_msg">'
+// 								+ '<p>'+content.message+'</p>'
+// 								+ '<span class="time_date">'+ currT + " | ";
+// 						if(currD == (new Date().getMonth() + 1 + "월 " + new Date().getDate()+"일") ){
+// 							html += '오늘' +'</span></div></div></div>';
+// 						}else{
+// 							html += currD +'</span></div></div>';
+// 						}
 						
-					}else {
-						var html = content.writer;
-						html += '<div class="incoming_msg">'
-								+ '<div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>'
-								+ '<div class="received_msg"> <div class="received_withd_msg">'
-								+ '<p>'+content.message+'</p>'
-								+ '<span class="time_date">'+ currT + " | ";
-						if(currD == (new Date().getMonth() + 1 + "월 " + new Date().getDate()+"일") ){
-							html += '오늘' +'</span></div></div>';
-						}else{
-							html += currD +'</span></div></div>';
-						}
-								
-					}
+// 						const Toast = Swal.mixin({
+// 							  toast: true,
+// 							  position: 'top-end',
+// 							  showConfirmButton: false,
+// 							  timer: 5000,
+// 							  timerProgressBar: true,
+// 							  didOpen: (toast) => {
+// 							    toast.addEventListener('mouseenter', Swal.stopTimer)
+// 							    toast.addEventListener('mouseleave', Swal.resumeTimer)
+// 							  }
+// 							})
+						
+// 						Toast.fire({
+// 							  icon: 'success',
+// 							  title: '${vo.c_title}' + '챌린지에서 메시지가 도착했습니다.'
+// 							});	
+						
 					
-					$("#nextMsg").append(html+"\n");
-				}
+						
+// 					}
+					
+// 					$("#nextMsg").append(html+"\n");
+// 				}
 				
-				$("#msg").val("");
+// 				$("#msg").val("");
 				
-				var chat = {"writer": content.writer, "message":content.message , "time": currT, "cno": cno, "receiver": "all", "f_date": currD };
+// 				var chat = {"writer": content.writer, "message":content.message , "time": currT, "cno": cno, "receiver": "all", "f_date": currD };
 				
-				// 새로운 대화내용 저장하기 (접속인원 수 만큼 저장되므로, ajax말고 다른 방법 OR 중복된 내용시 1번만 가게 제어)
-			    $.ajax({
-			        type: 'post',
-			       url: '/challenge/saveChat',
-			        contentType: 'application/json; charset=utf-8',
-			        dataType: 'text',
-			        data: JSON.stringify(chat),
-			        success: function(){    // db전송 성공시 실시간 알림 전송
-			        	console.log("메시지 저장 완료");
-			        }
-			    }); // saveChat ajax 끝
-			}); 	//client.subscribe 끝
-		}); 		// client.connect 끝
+				
+				
+				
+				
+// 			}); 	//client.subscribe 끝
+// 		}); 		// client.connect 끝
 
-	}	
+// 	}	
 	
-	function moveScroll() { // 최근 글로 시점이동하도록 할 것
-	    var el = document.getElementById('nextMsg');
-	    console.log(el);
-		if (el.scrollHeight > 0) el.scrollTop = el.scrollHeight;
-	}
+// 	function moveScroll() { // 최근 글로 시점이동하도록 할 것
+// 	    var el = document.getElementById('nextMsg');
+// 	    console.log(el);
+// 		if (el.scrollHeight > 0) el.scrollTop = el.scrollHeight;
+// 	}
 </script>
 
 <!-- 영민 입금하기 (비지니스계좌 구현중) -->
 <script type="text/javascript">
 	$(document).ready(function(){
 		
-		$('#a_biz').click(function(){
-			if ($('#result').text() == "") {
-				alert('금액을 입력하세요 !');
-				
-				return false;
-				
-			} else {
-				
-				alert(${vo.c_amount / vo.c_period});
-				
-				var bizCheck = confirm("진짜 입금 할래?");
-				
-				if (bizCheck) {
-					$('#a_biz').attr('href', '/challenge/sendBiz');
-				} else {
+			
+		$('#a_biz').click(function(){ // 입금하기 버튼 클릭
+			if(${vo.c_amount} > ${myPlusVO.pl_sum} ) { // 입금해야할 금액보다 현재 입금한 금액이 적을때 (더입금 가능)
+	
+				if ($('#result').text() == "") {
+					alert('금액을 입력하세요 !');
+					
 					return false;
+					
+				} else {
+					
+					var biz_amount = $('#result').text().replace(/,/gi, "");
+					
+					if (${(vo.c_amount / vo.c_period)} == biz_amount) {
+						
+						var bizCheck = confirm("진짜 입금 할래?");
+						
+						if (bizCheck) {
+							$('#a_biz').attr('href', '/challenge/sendBiz?biz_amount='+biz_amount+'&cno='+${vo.cno});
+						} else {
+							return false;
+						}
+					
+					} else {
+						alert("입금 금액이 일치하지 않습니다.\n금액을 확인하세요.");
+						
+						return false;
+					}
 				}
+			} else { // 더 입금 불가능
+				alert("더 이상 입금할 수 없습니다!");
 			}
-			
-			
-			
-		});
+		}); // 입금하기 버튼 끝
+		
+		
+		
+		
 	});
+</script>
+
+<script>
+	if (${sendOK == "OK"}) {
+		alert("송금 완료!");
+	}
 </script>
 
 <!-- 영민 입금하기 (비지니스계좌 구현중) -->
 
 
 
-
 <h1 style="padding: 0 15px 0 15px;"> 저축형 차곡 챌린지 </h1>
+
+
 <%-- ${msgList} --%>
 <%-- ${mno} --%>
 <%-- ${plusPeoList } --%>
 <%-- ${vo} --%>
  <!-- Main content -->
+<button class="btn btn-success pull-right" id="alertStart" >알림테스트용 </button>
 <section class="content">
 	<div class="row">
 		<div class="col-lg-5 mx-6 aos-init aos-animate" data-aos="fade-right" >
@@ -255,9 +291,15 @@
     </div>
     
 <!-- 입금하기 기능용 모달창 -->
+<c:if test="${vo.c_amount > myPlusVO.pl_sum}">
     <button class="btn btn-success" data-toggle="modal" data-target="#modal-default" style="margin-left: 90%">
    			입금하기</button>
-    
+  </c:if>
+<c:if test="${vo.c_amount == myPlusVO.pl_sum}">
+	<button class="btn btn-success" data-toggle="modal" data-target="#modal-default" style="margin-left: 90%" disabled="disabled">
+   			입금완료</button>
+</c:if>
+
 <!-- 모달 css 파일 : resources -> plugins -> modal -> minusModal.css  -->
 	<div class="modal fade" id="modal-default" style="margin-top: 10%;">
 		<div class="modal-dialog" style=" height: 800px;">
@@ -277,7 +319,7 @@
   						<h3>1234-1231-12345</h3>
   						<h4>보내는 사람 : ${nick}</h4>
   					</div>
-						<div class="result2" id="result" align="right"></div>
+						<div class="result2" id="result" align="right"><fmt:formatNumber value="${vo.c_amount / vo.c_period}" pattern=",000"/></div>
 							<div class="calc-wrap" id="calc-wrap">
 								<span style="text-align: right;">원</span>
 							</div>
@@ -293,7 +335,7 @@
 					<!-- <button type="button" class="btn btn-default pull-left"
 						data-dismiss="modal">닫기</button> -->
 					<a href="" id="a_biz">
-						<button type="button" class="btn btn-block btn-success btn-sm biz">입금하기</button>
+						<button type="button" class="btn btn-block btn-success btn-sm biz" disabled="disabled">입금하기</button>
 					</a>
 				</div>
 			</div>
@@ -434,46 +476,45 @@
     </section>
     <!-- /.content -->
     
-    <div class="chat_box"></div>
     
  <!-- 칭찬하기/주시하기  @@@@@@@@@@@@@@@@@@@@@@@@@ -->
     <div class="col-xs-12" style="margin-left: 10px; ">
 	 <div class="row">
-	  <h3 class=" text-center">${vo.c_title }</h3>
-	   <div class="messaging">
+	  <h3 class=" text-center"> << ${vo.c_title } >> </h3>
+	   <div class="messaging" id="messaging">
 	      <div class="inbox_msg">
 	        <div class="inbox_people">
 	          <div class="headind_srch">
 	            <div class="recent_heading">
-	              <h4>최근 메시지</h4>
+	              <h4>참가자</h4>
 	            </div>
 	          </div>
+         <!-- <div class="chat_list active_chat"> 어두운색 배경으로 비활성화 가능 -->
 	          <div class="inbox_chat">
-	            <div class="chat_list active_chat">
-	              <div class="chat_people">
-	                <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
-	                <div class="chat_ib">
-	                  <h5>보낸 사람 <span class="chat_date">날 짜</span></h5>
-	                  <p>Test, which is a new approach to have all solutions 
-	                    astrology under one roof.</p>
-	                </div>
-	              </div>
-	            </div>
+          <c:forEach var="plusPeoList" begin="0" end="${plusPeoList.size()-1}" items="${plusPeoList}">
 	            <div class="chat_list">
 	              <div class="chat_people">
-	                <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
+	                <div class="chat_img"> 
+	                <c:if test="${plusPeoList.profile != null }">
+	                	<img src="/${plusPeoList.profile }" alt="sunil"> 
+	                </c:if>
+	                <c:if test="${plusPeoList.profile == null }">
+	                	<img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> 
+	                </c:if>
+	                </div>
 	                <div class="chat_ib">
-	                  <h5>Sunil Rajput <span class="chat_date">Dec 25</span></h5>
-	                  <p>Test, which is a new approach to have all solutions 
-	                    astrology under one roof.</p>
+<%-- 	                  <h5>${plusPeoList.nick} <span class="chat_date"><fmt:formatDate value="${now }" pattern="MMM DD일"/></span></h5><!-- 최근 접속일자로 바꿀 것 --> --%>
+	                  <h5>${plusPeoList.nick} <span class="chat_date"><a href="#"><i class="fa fa-circle text-success"></i> Online</a></span></h5><!-- 최근 접속일자로 바꿀 것 -->
+	                  <a href="#"><i class="fa fa-circle text-gray"></i> Offline</a>
 	                </div>
 	              </div>
 	            </div>
+	          </c:forEach>
 	          </div>
 	        </div>
 	        <div class="mesgs">
-	          <div class="msg_history">
-				<main class="chat">
+	          <div class="msg_history" id="msg_history">
+				<main class="chat" id="chat">
 				
             <!-- 받은 메시지 -->
 				<div id="nextMsg"></div>
@@ -499,49 +540,46 @@
 <%@ include file="../include/footer.jsp" %>
 
 <script type="text/javascript">
-$(document).ready(function(){
-	var cno = ${vo.cno};
-	var nick = '${nick}';
+// $(document).ready(function(){
+// 	var cno = ${vo.cno};
+// 	var nick = '${nick}';
 	
-	// 이전 대화내용 가져오기
-	$.ajax({
-		type : "post",
-		url : "/challenge/getPreChat", 
-		contentType : "application/json",
-		data : JSON.stringify(cno),
-		success : function(result){
-			console.log("이전데이터 가져옴");
-			console.log(result);
-			console.log(nick);
-			for(var i=0; result.length; i++){
-				if( (result[i].writer) == nick){
-					var data = '<div class="outgoing_msg">';
-					data += '<div class="sent_msg">'
-			            	 + '<p>'+ result[i].message +'</p>'
-			           		 + '<span class="time_date"> '+ result[i].time +'</span></div></div>';
-					$('#nextMsg').append(data);
-				}else{
-					var data = result[i].writer;
-					data += '<div class="incoming_msg">'
-							+ '<div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>'
-							+ '<div class="received_msg"> <div class="received_withd_msg">'
-							+ '<p>'+ result[i].message +'</p>'
-							+ '<span class="time_date">'+ result[i].time +'</span></div></div>'
+// 	// 이전 대화내용 가져오기
+// 	$.ajax({
+// 		type : "post",
+// 		url : "/challenge/getPreChat", 
+// 		contentType : "application/json",
+// 		data : JSON.stringify(cno),
+// 		success : function(result){
+// 			console.log("과거 채팅기록");
+// 			console.log(result);
+// 			for(var i=0; result.length; i++){
+// 				if( (result[i].writer) == nick){
+// 					var data = '<div class="outgoing_msg">';
+// 					data += '<div class="sent_msg">'
+// 			            	 + '<p>'+ result[i].message +'</p>'
+// 			           		 + '<span class="time_date"> '+ result[i].time +'</span></div></div>';
+// 					$('#nextMsg').append(data);
+// 				}else{
+// 					var data = result[i].writer;
+// 					data += '<div class="incoming_msg">'
+// 							+ '<div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>'
+// 							+ '<div class="received_msg"> <div class="received_withd_msg">'
+// 							+ '<p>'+ result[i].message +'</p>'
+// 							+ '<span class="time_date">'+ result[i].time +'</span></div></div>'
 					
-					$('#nextMsg').append(data);
+// 					$('#nextMsg').append(data);
 					
-				}
-				console.log(result[i].writer);
-				console.log(result[i].writer == nick);
-			}
+// 				}
+// 			}
 			
-		},
-		error : function(jqXHR, status, error){
-			console.log("알 수 없는 에러 [" + error + "]");
-		}
-	}); // ajax 끝
+// 		},
+// 		error : function(jqXHR, status, error){
+// 			console.log("알 수 없는 에러 [" + error + "]");
+// 		}
+// 	}); // ajax 끝
 	
-});
+// });
 </script>
 
 <!--계산기 -->
@@ -566,15 +604,6 @@ $(document).ready(function(){
 	  btn.addEventListener('click', calculate);
 	  numWrap.appendChild(btn);
 	}
-// 	for(const i in calc) {
-// 	  const btn = document.createElement('button');
-// 	  btn.classList.add('calc2');
-// 	  btn.value = calc[i];
-// 	  btn.innerText = calc[i];
-// 	  btn.addEventListener('click', calculate);
-// 	  calcWrap.appendChild(btn);
-// 	}
-	
 	// calculate function
 	function calculate(e) {
 	  const value = e.target.value;
@@ -588,15 +617,6 @@ $(document).ready(function(){
 	  
 	  result.innerText = formula.join('');
 	}
-	
-	
-	//---------------
-	//animation
-// 	const html = document.documentElement;
-// 	html.addEventListener("mousemove", function(e) {    
-// 	  html.style.setProperty('--x', e.clientX + 'px');  
-// 	  html.style.setProperty('--y', e.clientY + 'px');
-// 	});
 </script>
 
 <style>

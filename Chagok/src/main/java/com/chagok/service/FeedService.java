@@ -12,6 +12,5 @@ public interface FeedService {
 	public List<MessageVO> getMsgList(Integer cno) throws Exception;
 	
 	// 메시지 저장
-	public void saveMsg(MessageVO messageVO, FeedDTO feedDTO) throws Exception;
-	
+	public void saveMsg1(MessageVO messageVO, Integer cno) throws Exception;
 }
