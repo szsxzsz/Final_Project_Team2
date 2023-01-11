@@ -364,7 +364,7 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 		map.put("c_status", status);
 		map.put("cno", cno);
 		sqlSession.update(NAMESPACE+".confirmChallenge", map);
-		mylog.debug("daoimpl: 챌린지 승인");
+		mylog.debug("status : "+status+", cno : "+cno);
 	}
 
 	// 비즈니스 계좌 송금
@@ -441,7 +441,15 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 			
 		return sqlSession.selectOne(NAMESPACE+".rboardCount");
 		
-	}	
+	}
+
+	@Override
+	public List<ChallengeVO> chListAll(Criteria cri) throws Exception {
+	    mylog.debug("chListAll 페이징처리 ");
+	    
+	    return sqlSession.selectList(NAMESPACE + ".chList", cri);
+	}
+
 	
 	
 	

@@ -379,7 +379,7 @@
 	
 	<!-- 관리자 챌린지 승인 -->
 	<update id="confirmChallenge">
-		update challenge set c_status=1
+		update challenge set c_status=#{c_status}
 		where cno = #{cno}
 	</update>
 	
@@ -425,6 +425,13 @@
 		select * from user
 	</select>
 	
-
+	<!-- 챌린지목록(페이징처리) -->
+	<select id="chList" resultType="com.chagok.domain.ChallengeVO">
+		select * from challenge ch join category c
+		on ch.ctno = c.ctno
+		order by cno desc
+		limit #{pageStart}, #{perPageNum};
+	</select>
+	
 	
  </mapper>

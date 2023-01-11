@@ -286,7 +286,7 @@ public class ChallengeServiceImpl implements ChallengeService{
 	// 관리자 챌린지 승인
 	@Override
 	public void confirmChallenge(Integer status, Integer cno) throws Exception {
-		mylog.debug("service : 관리자 챌린지승인");
+		mylog.debug("status : "+status+", cno : "+cno);
 		dao.confirmChallenge(status, cno);
 	}
 
@@ -325,6 +325,11 @@ public class ChallengeServiceImpl implements ChallengeService{
 	@Override
 	public PlusVO getPlusOne(int mno, int cno) throws Exception {
 		return dao.getPlusOne(mno, cno);
+	}
+
+	@Override
+	public List<ChallengeVO> chListAll(Criteria cri) throws Exception {
+		return dao.chListAll(cri);
 	}
 
 	
