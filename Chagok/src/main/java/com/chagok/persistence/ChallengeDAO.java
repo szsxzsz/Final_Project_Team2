@@ -152,5 +152,14 @@ public interface ChallengeDAO {
 
 	// 챌린지목록(페이징처리)
 	public List<ChallengeVO> chListAll(Criteria cri) throws Exception;
+	
+	// 페이징 처리 구현된 자유게시판 조회
+	public List<BoardVO> getFBoardPage(Integer page) throws Exception;
+		
+	// 자유게시판 조회 (페이징처리 cri)
+	public List<BoardVO> getFBoardPage(Criteria cri) throws Exception;
+	
+	// 전체 자유게시판 글 개수 조회
+	public int FBoardCount() throws Exception;
 
 }

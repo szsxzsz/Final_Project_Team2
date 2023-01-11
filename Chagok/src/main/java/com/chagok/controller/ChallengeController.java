@@ -530,7 +530,8 @@ public class ChallengeController {
 		
 		return "/challenge/memberManagement";
 	}
-	
+	// http://localhost:8080/challenge/adminmodal
+	@ResponseBody
 	@GetMapping("/adminmodal")
 	public String adminmodal(Model model,@RequestParam Integer mno) throws Exception {
 		mylog.debug("모달창에 넘길 mno : " + mno);
@@ -539,7 +540,7 @@ public class ChallengeController {
 		
 		model.addAttribute("UserVO", vo);
 		
-		return "/adminmodal";
+		return "challenge/memberManagement";
 	}
 	
 	////////////////////// 관리자 페이지 ///////////////////////////

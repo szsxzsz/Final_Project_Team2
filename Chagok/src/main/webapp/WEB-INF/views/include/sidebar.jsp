@@ -17,7 +17,7 @@
    <link href="${pageContext.request.contextPath }/resources/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
    <!-- AdminLTE Skins. Choose a skin from the css/skins 
         folder instead of downloading all of them to reduce the load. -->
-   <link href="${pageContext.request.contextPath }/resources/dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
+ 	<link href="${pageContext.request.contextPath }/resources/dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
 	<!-- 채팅 js -->
     <%-- <script src="${pageContext.request.contextPath }/resources/plugins/chat/feed.js"></script> --%>
     <!-- 채팅 css  -->
@@ -35,8 +35,6 @@
      <!-- jQuery 2.1.4 -->
    <script src="${pageContext.request.contextPath }/resources/plugins/jQuery/jQuery-2.1.4.min.js"></script>
 
- 
- 
   <body class="skin-blue sidebar-mini">
   
     <div class="wrapper">
@@ -61,16 +59,7 @@
 
             </div>
           </div>
-          <!-- search form -->
-<!--           <form action="#" method="get" class="sidebar-form"> -->
-<!--             <div class="input-group"> -->
-<!--               <input type="text" name="q" class="form-control" placeholder="Search..."/> -->
-<!--               <span class="input-group-btn"> -->
-<!--                 <button type='submit' name='search' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i></button> -->
-<!--               </span> -->
-<!--             </div> -->
-<!--           </form> -->
-          <!-- /.search form -->
+
           <!-- sidebar menu: : style can be found in sidebar.less -->
           <ul class="sidebar-menu">
 <!--             <li class="header">마이페이지</li> -->
@@ -130,6 +119,7 @@
 <!--                 <li><a href="../charts/inline.html"><i class="fa fa-circle-o"></i> Inline charts</a></li> -->
               </ul>
             </li>
+<<<<<<< HEAD
 <!--             <li class="treeview"> -->
 <!--               <a href="#"> -->
 <!--                 <i class="fa fa-laptop"></i> -->
@@ -221,6 +211,13 @@
 <!--             <li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>Important</span></a></li> -->
 <!--             <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>Warning</span></a></li> -->
 <!--             <li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>Information</span></a></li> -->
+=======
+
+            <li class="header">LABELS</li>
+            <li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>Important</span></a></li>
+            <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>Warning</span></a></li>
+            <li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>Information</span></a></li>
+>>>>>>> branch 'develop_community' of https://github.com/Ju-Yeongmin/Final_Project_Team2.git
           </ul>
         </section>
         <!-- /.sidebar -->

@@ -5,228 +5,17 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-
 <div id="message"></div>
-
-<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js" integrity="sha512-iKDtgDyTHjAitUDdLljGhenhPwrbBfqTKWO1mkhSFH3A7blITC9MhYon6SjnMhp4o0rADGw9yAC6EW4t5a4K3g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-<script type="text/javascript">
-// 	$(document).ready(function() {
-		
-// 		connectSockJS();
-		
-// 		var today = new Date(); 
-// 		var currT = ('0' + today.getHours()).slice(-2) + ":" + ('0' + today.getMinutes()).slice(-2);
-		
-// 		var nick = '${nick}';
-		
-// 		$('#btnSend').on('click', function(event) {
-			
-// 			var msg = $('#msg').val();
-			
-// 			event.preventDefault();
-			
-// 			console.log("보낸 메시지>>>>", msg);
-			
-// 			if (!isStomp && socket.readyState!== 1 ) return;
-// 				if(isStomp){
-// 					// send(path, header, message(cno, writer, message, time))형태
-// 					socket.send('/send/'+cno , {cno}, JSON.stringify({"cno": cno, "writer": nick, "message" : msg, "time": currT}));
-					
-// 				}else
-// 					socket.send(msg);
-			
-// 			console.log("ReceiveMessage:" + msg);
-// 		});
-
-// 	});
-	
-// 	var socket = null;
-// 	var isStomp = false;
-// 	var cno = ${vo.cno};
-	
-// 	var today = new Date(); 
-// 	var currT = ('0' + today.getHours()).slice(-2) + ":" + ('0' + today.getMinutes()).slice(-2);
-	
-// 	var nick = '${nick}';
-// 	var currD = new Date().getMonth() + 1 + "월 " + new Date().getDate()+"일";
-	
-// 	function connectSockJS(){
-// 		//STOMP Client
-// 		var sock = new SockJS("/plusFeed"); // endpoint
-// 		var client = Stomp.over(sock);
-// 		isStomp = true;
-// 		socket = client;
-		
-		
-// 		// 소켓 연결확인
-// // 		console.log(client);
-		
-// 		client.connect({}, function(frame){
-// 			console.log("Connected stomp!");
-			
-// 			// 해당 토픽을 구독한다! subscribe(path, callback)로 메시지를 받을 수 있다.
-// 			// callback 첫번째 파라미터의 body로 메시지의 내용이 들어온다.
-// 			client.subscribe('/topic/feed/'+cno, function(chat){ // 컨트롤러(sendTo)
-// 				// 서버에서 돌아온 것 (구독하고 있는 클라이언트들에게 )
-// 				console.log('subscribe_chat(서버에서 돌아온 내용) >>', chat);
-// 				var content = JSON.parse(chat.body);
-// 				console.log(content);
-// 				//socket.onmessage = onMessage;
-
-// 				if(content.writer != null){
-					
-// 					if( content.writer == nick ){ 
-// 						var html = '<div class="outgoing_msg">';
-// 						html += '<div class="sent_msg">'
-// 						            + '<p>'+content.message+'</p>'
-// 						            + '<span class="time_date"> '+ currT + " | "; 
-// 			            if(currD == (new Date().getMonth() + 1 + "월 " + new Date().getDate()+"일") ){
-// 							html += '오늘' +'</span></div></div>';
-// 						}else{
-// 							html += currD +'</span></div></div>';
-// 						}
-			            
-			            
-// 					}else {
-// 						var html = content.writer;
-// 						html += '<div class="incoming_msg">'
-// 								+ '<div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>'
-// 								+ '<div class="received_msg"> <div class="received_withd_msg">'
-// 								+ '<p>'+content.message+'</p>'
-// 								+ '<span class="time_date">'+ currT + " | ";
-// 						if(currD == (new Date().getMonth() + 1 + "월 " + new Date().getDate()+"일") ){
-// 							html += '오늘' +'</span></div></div></div>';
-// 						}else{
-// 							html += currD +'</span></div></div>';
-// 						}
-						
-// 						const Toast = Swal.mixin({
-// 							  toast: true,
-// 							  position: 'top-end',
-// 							  showConfirmButton: false,
-// 							  timer: 5000,
-// 							  timerProgressBar: true,
-// 							  didOpen: (toast) => {
-// 							    toast.addEventListener('mouseenter', Swal.stopTimer)
-// 							    toast.addEventListener('mouseleave', Swal.resumeTimer)
-// 							  }
-// 							})
-						
-// 						Toast.fire({
-// 							  icon: 'success',
-// 							  title: '${vo.c_title}' + '챌린지에서 메시지가 도착했습니다.'
-// 							});	
-						
-					
-						
-// 					}
-					
-// 					$("#nextMsg").append(html+"\n");
-// 				}
-				
-// 				$("#msg").val("");
-				
-// 				var chat = {"writer": content.writer, "message":content.message , "time": currT, "cno": cno, "receiver": "all", "f_date": currD };
-				
-				
-				
-				
-				
-// 			}); 	//client.subscribe 끝
-// 		}); 		// client.connect 끝
-
-// 	}	
-	
-// 	function moveScroll() { // 최근 글로 시점이동하도록 할 것
-// 	    var el = document.getElementById('nextMsg');
-// 	    console.log(el);
-// 		if (el.scrollHeight > 0) el.scrollTop = el.scrollHeight;
-// 	}
-</script>
-
-<script type="text/javascript">
-//     var ws;
-//     var messages = document.getElementById("message");
-    
-//     function openSocket(){
-    	
-//     	alert(ws);
-    	
-//          if(ws!==undefined && ws.readyState!==WebSocket.CLOSED)
-//         {
-//             writeResponse("WebSocket is already opend.");
-//             return;
-//         } 
-         
-//         //웹소켓 객체 만드는 코드
-//         ws = new WebSocket('ws://localhost:8080/challenge/echo');
-        
-//         ws.onopen=function(event){
-//         	alert("SS");
-//             if(event.data===undefined) return;
-//             writeResponse(event.data);
-//         };
-//         ws.onmessage=function(event){
-//             writeResponse(event.data);
-//         };
-//         ws.onclose=function(event){
-//             writeResponse("Connection closed");
-//         } 
-//     }
-//     function send(){
-//         var text = document.getElementById("messageinput").value;
-//         ws.send(text);
-//         text="";
-//     }
-//     function closeSocket(){
-//         ws.close();
-//     }
-//     function writeResponse(text){
-//         message.innerHTML+="<br/>"+text;
-//     }
-    
-    
-    
-    // 가계부 연동위한 에이잭스 
-// 	$(document).ready(function(){
-		
-// 		$("#saveABook").click(function(){
-// 			// alert(" 클릭! ");
-// 			var aBook = {"abno":$("#abno").val(),"mno":$("#mno").val(),"ctno":$("#ctno").val(),
-// 					"ab_amount":$("#ab_amount").val(),"ab_date":$("#ab_date").val(),"ab_content":$("#ab_content").val(),
-// 					"ab_method":$("#ab_method").val(),"ab_memo":$("#ab_memo").val()};
-			
-// 			// JSON.stringify(객체) : 객체정보를 JSON 형태로 변경 및 전달
-			
-// 			$.ajax({
-// 				url:"/minusFeedPost",
-// 				type:"post",
-// 				contentType:"application/json",
-// 				data: JSON.stringify(aBook),
-// // 				data: member,
-// 				success:function(){
-// 					alert(" 성공 ! ")
-// 				}
-// 			});
-			
-			
-// 		});
-		
-// 	});
-</script>
 
 <section id="about" class="about">
    <div class="container">
       <div class="section-title">
          <h2>절약형 차곡 챌린지</h2>
       </div> 
-     ${vo }
-      / http://localhost:8080/challenge/minusFeed?cno=1 // ${mvo }
+<%--      ${vo } --%>
+<%--       / http://localhost:8080/challenge/minusFeed?cno=1 // ${mvo } --%>
       
-      <button type="button" class="btn btn-default" onclick="location.href='${pageContext.request.contextPath }/commumain';">메인으로 가기</button>
+<%--       <button type="button" class="btn btn-default" onclick="location.href='${pageContext.request.contextPath }/commumain';">메인으로 가기</button> --%>
      
      <div class="row">
 		<div class="col-lg-5 mx-6 aos-init aos-animate" data-aos="fade-right" >
@@ -302,7 +91,6 @@
          <h3 class="box-title">${vo2.ct_top }을(를) ${vo.c_amount }원 절약하는 조건이 있습니다.</h3>
       </div>
       </div>
-      <!--          <div class="box-body">The great content goes here</div> -->
    </div>
    
    
@@ -369,7 +157,6 @@
 </section>
 
 
-
 <!-- Main content -->
 <%-- ${minusPeoList } --%>
 <section class="content">
@@ -387,9 +174,7 @@
                      <th class="col-md-1">달성 여부</th>
                   </tr>
                   
-<%--                  <% --%>
 <!--                    String[] colorArr = {"progress-bar-danger","progress-bar-yellow","progress-bar-primary", "progress-bar-success"}; -->
-<%--                   %> --%>
 
 <!-- minusPeople.m_sum 이 숫자로 변환안됨 vo.c_amount -> minusPeoList.m_sum 으로 변환 필요! -->
                 <c:forEach var="minusPeople" begin="0" end="${minusPeoList.size()}" items="${minusPeoList}">
@@ -428,43 +213,6 @@
                   </td>
                   </tr>
                   </c:forEach>
-<%--                   </c:forEach> --%>
-                  
-                  
-                  
-<!--                   <tr> -->
-<!--                      <td>2.</td> -->
-<!--                      <td> </td> -->
-<!--                      <td> -->
-<!--                         <div class="progress progress-xs progress-striped active"> -->
-<!--                            <div class="progress-bar progress-bar-yellow" -->
-<!--                               style="width: 70%"></div> -->
-<!--                         </div> -->
-<!--                      </td> -->
-<!--                      <td><span class="badge bg-yellow">70%</span></td> -->
-<!--                   </tr> -->
-<!--                   <tr> -->
-<!--                      <td>3.</td> -->
-<!--                      <td>Cron job running</td> -->
-<!--                      <td> -->
-<!--                         <div class="progress progress-xs progress-striped active"> -->
-<!--                            <div class="progress-bar progress-bar-primary" -->
-<!--                               style="width: 30%"></div> -->
-<!--                         </div> -->
-<!--                      </td> -->
-<!--                      <td><span class="badge bg-light-blue">30%</span></td> -->
-<!--                   </tr> -->
-<!--                   <tr> -->
-<!--                      <td>4.</td> -->
-<!--                      <td>Fix and squish bugs</td> -->
-<!--                      <td> -->
-<!--                         <div class="progress progress-xs progress-striped active"> -->
-<!--                            <div class="progress-bar progress-bar-success" -->
-<!--                               style="width: 90%"></div> -->
-<!--                         </div> -->
-<!--                      </td> -->
-<!--                      <td><span class="badge bg-green">90%</span></td> -->
-<!--                   </tr> -->
                </table>
             </div>
             <!-- /.box-body -->
@@ -477,35 +225,6 @@
 </section>
 <!-- /.content -->
 
-<!-- 주시/칭찬하기 -->
-
-<!-- 	<div class="modal fade" id="modal-chat" style="margin-top: 10%;"> -->
-<!-- 		<div class="modal-dialog"> -->
-<!-- 			<div class="modal-content"> -->
-<!-- 				<div class="modal-header"> -->
-<!-- 					<button type="button" class="close" data-dismiss="modal" aria-label="Close"> -->
-<!-- 						<span aria-hidden="true">&times;</span> -->
-<!-- 					</button> -->
-<!-- 					<h4 class="modal-title">채팅하기</h4> -->
-<!-- 				</div> -->
-<!-- 				<div class="modal-body"> -->
-<!-- 					<p> -->
-<%-- 					<%@ include file="./webSocket.jsp"%> --%>
-<!-- 					</p> -->
-<!-- 				</div> -->
-<!-- 				<div class="modal-footer"> -->
-<!-- 					<button type="button" class="btn btn-default pull-left" data-dismiss="modal">닫기</button> -->
-<!-- <!-- 					<button type="button" class="btn btn-primary">저장하기</button> --> 
-<!-- 				</div> -->
-<!-- 			</div> -->
-
-<!-- 		</div> -->
-<!-- 	</div> -->
-	
-<!-- 	<button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-chat" style="margin-left: 90%"> -->
-<!-- 	채팅하기 -->
-<!-- 	</button> -->
-	
  <!-- 칭찬하기/주시하기  @@@@@@@@@@@@@@@@@@@@@@@@@ -->
     <div class="col-xs-12" style="margin-left: 10px; ">
 	 <div class="row">
@@ -567,46 +286,3 @@
 </div>
 </div>
 <%@ include file="../include/footer.jsp"%>
-
-<script type="text/javascript">
-// $(document).ready(function(){
-// 	var cno = ${vo.cno};
-// 	var nick = '${nick}';
-	
-// 	// 이전 대화내용 가져오기
-// 	$.ajax({
-// 		type : "post",
-// 		url : "/challenge/getPreChat", 
-// 		contentType : "application/json",
-// 		data : JSON.stringify(cno),
-// 		success : function(result){
-// 			console.log("과거 채팅기록");
-// 			console.log(result);
-// 			for(var i=0; result.length; i++){
-// 				if( (result[i].writer) == nick){
-// 					var data = '<div class="outgoing_msg">';
-// 					data += '<div class="sent_msg">'
-// 			            	 + '<p>'+ result[i].message +'</p>'
-// 			           		 + '<span class="time_date"> '+ result[i].time +'</span></div></div>';
-// 					$('#nextMsg').append(data);
-// 				}else{
-// 					var data = result[i].writer;
-// 					data += '<div class="incoming_msg">'
-// 							+ '<div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>'
-// 							+ '<div class="received_msg"> <div class="received_withd_msg">'
-// 							+ '<p>'+ result[i].message +'</p>'
-// 							+ '<span class="time_date">'+ result[i].time +'</span></div></div>'
-					
-// 					$('#nextMsg').append(data);
-					
-// 				}
-// 			}
-			
-// 		},
-// 		error : function(jqXHR, status, error){
-// 			console.log("알 수 없는 에러 [" + error + "]");
-// 		}
-// 	}); // ajax 끝
-	
-// });
-</script>
