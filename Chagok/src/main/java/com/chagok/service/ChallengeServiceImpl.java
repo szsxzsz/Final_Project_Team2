@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.chagok.domain.AbookVO;
 import com.chagok.domain.BoardVO;
+import com.chagok.domain.BusinessAccountVO;
 import com.chagok.domain.ChallengeVO;
 import com.chagok.domain.Criteria;
 import com.chagok.domain.MinusVO;
@@ -294,6 +295,18 @@ public class ChallengeServiceImpl implements ChallengeService{
 	public void rejectChallenge(ChallengeVO vo) throws Exception {
 		mylog.debug("service : 관리자 챌린지 승인거절");
 		dao.rejectChallenge(vo);
+	}
+
+	// 비지니스 계좌 송금
+	@Override
+	public void sendBiz(BusinessAccountVO vo) throws Exception {
+		dao.sendBiz(vo);
+	}
+	
+	// 비지니스 계좌 송금시 플러스 테이블 업데이트 (pl_sum)
+	@Override
+	public void updatePlusSum(BusinessAccountVO vo) throws Exception {
+		dao.updatePlusSum(vo);
 	}
 
 	

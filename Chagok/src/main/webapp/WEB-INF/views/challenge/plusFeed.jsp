@@ -129,21 +129,32 @@
 				
 			} else {
 				
-				alert(${vo.c_amount / vo.c_period});
+				var biz_amount = $('#result').text().replace(/,/gi, "");
 				
-				var bizCheck = confirm("진짜 입금 할래?");
+				if (${(vo.c_amount / vo.c_period)} == biz_amount) {
+					
+					var bizCheck = confirm("진짜 입금 할래?");
+					
+					if (bizCheck) {
+						$('#a_biz').attr('href', '/challenge/sendBiz?biz_amount='+biz_amount+'&cno='+${vo.cno});
+					} else {
+						return false;
+					}
 				
-				if (bizCheck) {
-					$('#a_biz').attr('href', '/challenge/sendBiz');
 				} else {
+					alert("입금 금액이 일치하지 않습니다.\n금액을 확인하세요.");
+					
 					return false;
 				}
 			}
-			
-			
-			
 		});
 	});
+</script>
+
+<script>
+	if (${sendOK == "OK"}) {
+		alert("송금 완료!");
+	}
 </script>
 
 <!-- 영민 입금하기 (비지니스계좌 구현중) -->
@@ -263,7 +274,7 @@
   						<h3>1234-1231-12345</h3>
   						<h4>보내는 사람 : ${nick}</h4>
   					</div>
-						<div class="result2" id="result" align="right"></div>
+						<div class="result2" id="result" align="right"><fmt:formatNumber value="${vo.c_amount / vo.c_period}" pattern=",000"/></div>
 							<div class="calc-wrap" id="calc-wrap">
 								<span style="text-align: right;">원</span>
 							</div>
@@ -278,6 +289,7 @@
 				<div class="modal-footer">
 					<!-- <button type="button" class="btn btn-default pull-left"
 						data-dismiss="modal">닫기</button> -->
+					
 					<a href="" id="a_biz">
 						<button type="button" class="btn btn-block btn-success btn-sm biz">입금하기</button>
 					</a>
