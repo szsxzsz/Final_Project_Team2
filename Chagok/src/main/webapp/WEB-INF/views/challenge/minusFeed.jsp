@@ -7,46 +7,186 @@
 
 
 <div id="message"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js" integrity="sha512-iKDtgDyTHjAitUDdLljGhenhPwrbBfqTKWO1mkhSFH3A7blITC9MhYon6SjnMhp4o0rADGw9yAC6EW4t5a4K3g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 <script type="text/javascript">
-    var ws;
-    var messages = document.getElementById("message");
+// 	$(document).ready(function() {
+		
+// 		connectSockJS();
+		
+// 		var today = new Date(); 
+// 		var currT = ('0' + today.getHours()).slice(-2) + ":" + ('0' + today.getMinutes()).slice(-2);
+		
+// 		var nick = '${nick}';
+		
+// 		$('#btnSend').on('click', function(event) {
+			
+// 			var msg = $('#msg').val();
+			
+// 			event.preventDefault();
+			
+// 			console.log("보낸 메시지>>>>", msg);
+			
+// 			if (!isStomp && socket.readyState!== 1 ) return;
+// 				if(isStomp){
+// 					// send(path, header, message(cno, writer, message, time))형태
+// 					socket.send('/send/'+cno , {cno}, JSON.stringify({"cno": cno, "writer": nick, "message" : msg, "time": currT}));
+					
+// 				}else
+// 					socket.send(msg);
+			
+// 			console.log("ReceiveMessage:" + msg);
+// 		});
+
+// 	});
+	
+// 	var socket = null;
+// 	var isStomp = false;
+// 	var cno = ${vo.cno};
+	
+// 	var today = new Date(); 
+// 	var currT = ('0' + today.getHours()).slice(-2) + ":" + ('0' + today.getMinutes()).slice(-2);
+	
+// 	var nick = '${nick}';
+// 	var currD = new Date().getMonth() + 1 + "월 " + new Date().getDate()+"일";
+	
+// 	function connectSockJS(){
+// 		//STOMP Client
+// 		var sock = new SockJS("/plusFeed"); // endpoint
+// 		var client = Stomp.over(sock);
+// 		isStomp = true;
+// 		socket = client;
+		
+		
+// 		// 소켓 연결확인
+// // 		console.log(client);
+		
+// 		client.connect({}, function(frame){
+// 			console.log("Connected stomp!");
+			
+// 			// 해당 토픽을 구독한다! subscribe(path, callback)로 메시지를 받을 수 있다.
+// 			// callback 첫번째 파라미터의 body로 메시지의 내용이 들어온다.
+// 			client.subscribe('/topic/feed/'+cno, function(chat){ // 컨트롤러(sendTo)
+// 				// 서버에서 돌아온 것 (구독하고 있는 클라이언트들에게 )
+// 				console.log('subscribe_chat(서버에서 돌아온 내용) >>', chat);
+// 				var content = JSON.parse(chat.body);
+// 				console.log(content);
+// 				//socket.onmessage = onMessage;
+
+// 				if(content.writer != null){
+					
+// 					if( content.writer == nick ){ 
+// 						var html = '<div class="outgoing_msg">';
+// 						html += '<div class="sent_msg">'
+// 						            + '<p>'+content.message+'</p>'
+// 						            + '<span class="time_date"> '+ currT + " | "; 
+// 			            if(currD == (new Date().getMonth() + 1 + "월 " + new Date().getDate()+"일") ){
+// 							html += '오늘' +'</span></div></div>';
+// 						}else{
+// 							html += currD +'</span></div></div>';
+// 						}
+			            
+			            
+// 					}else {
+// 						var html = content.writer;
+// 						html += '<div class="incoming_msg">'
+// 								+ '<div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>'
+// 								+ '<div class="received_msg"> <div class="received_withd_msg">'
+// 								+ '<p>'+content.message+'</p>'
+// 								+ '<span class="time_date">'+ currT + " | ";
+// 						if(currD == (new Date().getMonth() + 1 + "월 " + new Date().getDate()+"일") ){
+// 							html += '오늘' +'</span></div></div></div>';
+// 						}else{
+// 							html += currD +'</span></div></div>';
+// 						}
+						
+// 						const Toast = Swal.mixin({
+// 							  toast: true,
+// 							  position: 'top-end',
+// 							  showConfirmButton: false,
+// 							  timer: 5000,
+// 							  timerProgressBar: true,
+// 							  didOpen: (toast) => {
+// 							    toast.addEventListener('mouseenter', Swal.stopTimer)
+// 							    toast.addEventListener('mouseleave', Swal.resumeTimer)
+// 							  }
+// 							})
+						
+// 						Toast.fire({
+// 							  icon: 'success',
+// 							  title: '${vo.c_title}' + '챌린지에서 메시지가 도착했습니다.'
+// 							});	
+						
+					
+						
+// 					}
+					
+// 					$("#nextMsg").append(html+"\n");
+// 				}
+				
+// 				$("#msg").val("");
+				
+// 				var chat = {"writer": content.writer, "message":content.message , "time": currT, "cno": cno, "receiver": "all", "f_date": currD };
+				
+				
+				
+				
+				
+// 			}); 	//client.subscribe 끝
+// 		}); 		// client.connect 끝
+
+// 	}	
+	
+// 	function moveScroll() { // 최근 글로 시점이동하도록 할 것
+// 	    var el = document.getElementById('nextMsg');
+// 	    console.log(el);
+// 		if (el.scrollHeight > 0) el.scrollTop = el.scrollHeight;
+// 	}
+</script>
+
+<script type="text/javascript">
+//     var ws;
+//     var messages = document.getElementById("message");
     
-    function openSocket(){
+//     function openSocket(){
     	
-    	alert(ws);
+//     	alert(ws);
     	
-         if(ws!==undefined && ws.readyState!==WebSocket.CLOSED)
-        {
-            writeResponse("WebSocket is already opend.");
-            return;
-        } 
+//          if(ws!==undefined && ws.readyState!==WebSocket.CLOSED)
+//         {
+//             writeResponse("WebSocket is already opend.");
+//             return;
+//         } 
          
-        //웹소켓 객체 만드는 코드
-        ws = new WebSocket('ws://localhost:8080/challenge/echo');
+//         //웹소켓 객체 만드는 코드
+//         ws = new WebSocket('ws://localhost:8080/challenge/echo');
         
-        ws.onopen=function(event){
-        	alert("SS");
-            if(event.data===undefined) return;
-            writeResponse(event.data);
-        };
-        ws.onmessage=function(event){
-            writeResponse(event.data);
-        };
-        ws.onclose=function(event){
-            writeResponse("Connection closed");
-        } 
-    }
-    function send(){
-        var text = document.getElementById("messageinput").value;
-        ws.send(text);
-        text="";
-    }
-    function closeSocket(){
-        ws.close();
-    }
-    function writeResponse(text){
-        message.innerHTML+="<br/>"+text;
-    }
+//         ws.onopen=function(event){
+//         	alert("SS");
+//             if(event.data===undefined) return;
+//             writeResponse(event.data);
+//         };
+//         ws.onmessage=function(event){
+//             writeResponse(event.data);
+//         };
+//         ws.onclose=function(event){
+//             writeResponse("Connection closed");
+//         } 
+//     }
+//     function send(){
+//         var text = document.getElementById("messageinput").value;
+//         ws.send(text);
+//         text="";
+//     }
+//     function closeSocket(){
+//         ws.close();
+//     }
+//     function writeResponse(text){
+//         message.innerHTML+="<br/>"+text;
+//     }
     
     
     
@@ -231,7 +371,7 @@
 
 
 <!-- Main content -->
-${minusPeoList }
+<%-- ${minusPeoList } --%>
 <section class="content">
    <div class="row">
       <div class="col-md-12">
@@ -337,139 +477,136 @@ ${minusPeoList }
 </section>
 <!-- /.content -->
 
-
-
 <!-- 주시/칭찬하기 -->
 
-<div class="modal fade" id="modal-chat" style="margin-top: 10%;">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-					<h4 class="modal-title">채팅하기</h4>
-				</div>
-				<div class="modal-body">
-					<p>
-					<%@ include file="./webSocket.jsp"%>
-					</p>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default pull-left" data-dismiss="modal">닫기</button>
-<!-- 					<button type="button" class="btn btn-primary">저장하기</button> -->
-				</div>
-			</div>
+<!-- 	<div class="modal fade" id="modal-chat" style="margin-top: 10%;"> -->
+<!-- 		<div class="modal-dialog"> -->
+<!-- 			<div class="modal-content"> -->
+<!-- 				<div class="modal-header"> -->
+<!-- 					<button type="button" class="close" data-dismiss="modal" aria-label="Close"> -->
+<!-- 						<span aria-hidden="true">&times;</span> -->
+<!-- 					</button> -->
+<!-- 					<h4 class="modal-title">채팅하기</h4> -->
+<!-- 				</div> -->
+<!-- 				<div class="modal-body"> -->
+<!-- 					<p> -->
+<%-- 					<%@ include file="./webSocket.jsp"%> --%>
+<!-- 					</p> -->
+<!-- 				</div> -->
+<!-- 				<div class="modal-footer"> -->
+<!-- 					<button type="button" class="btn btn-default pull-left" data-dismiss="modal">닫기</button> -->
+<!-- <!-- 					<button type="button" class="btn btn-primary">저장하기</button> --> 
+<!-- 				</div> -->
+<!-- 			</div> -->
 
-		</div>
+<!-- 		</div> -->
+<!-- 	</div> -->
+	
+<!-- 	<button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-chat" style="margin-left: 90%"> -->
+<!-- 	채팅하기 -->
+<!-- 	</button> -->
+	
+ <!-- 칭찬하기/주시하기  @@@@@@@@@@@@@@@@@@@@@@@@@ -->
+    <div class="col-xs-12" style="margin-left: 10px; ">
+	 <div class="row">
+	  <h3 class=" text-center"> << ${vo.c_title } >> </h3>
+	   <div class="messaging" id="messaging">
+	      <div class="inbox_msg">
+	        <div class="inbox_people">
+	          <div class="headind_srch">
+	            <div class="recent_heading">
+	              <h4>참가자</h4>
+	            </div>
+	          </div>
+         <!-- <div class="chat_list active_chat"> 어두운색 배경으로 비활성화 가능 -->
+	          <div class="inbox_chat">
+          <c:forEach var="minusPeoList" begin="0" end="${minusPeoList.size()-1}" items="${minusPeoList}">
+	            <div class="chat_list">
+	              <div class="chat_people">
+	                <div class="chat_img"> 
+	                <c:if test="${minusPeoList.profile != null }">
+	                	<img src="/${minusPeoList.profile }" alt="sunil"> 
+	                </c:if>
+	                <c:if test="${minusPeoList.profile == null }">
+	                	<img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> 
+	                </c:if>
+	                </div>
+	                <div class="chat_ib">
+<%-- 	                  <h5>${plusPeoList.nick} <span class="chat_date"><fmt:formatDate value="${now }" pattern="MMM DD일"/></span></h5><!-- 최근 접속일자로 바꿀 것 --> --%>
+	                  <h5>${minusPeoList.nick} <span class="chat_date"><a href="#"><i class="fa fa-circle text-success"></i> Online</a></span></h5><!-- 최근 접속일자로 바꿀 것 -->
+	                  <a href="#"><i class="fa fa-circle text-gray"></i> Offline</a>
+	                </div>
+	              </div>
+	            </div>
+	          </c:forEach>
+	          </div>
+	        </div>
+	        <div class="mesgs">
+	          <div class="msg_history" id="msg_history">
+				<main class="chat" id="chat">
+				
+            <!-- 받은 메시지 -->
+				<div id="nextMsg"></div>
+			<!-- 받은 메시지 -->
+			
+			</main>
+	          </div>
+	          <div class="type_msg">
+	            <div class="input_msg_write">
+	              <input type="text" class="msg" id="msg" placeholder="Type a message" />
+	              <button class="msg_send_btn" id="btnSend"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
+	            </div>
+	          </div>
+	        </div>
+	      </div>
+	      </div>
+	  <!-- <!-- 칭찬하기/주시하기  @@@@@@@@@@@@@@@@@@@@@@@@@ -->
+	  <!-- /.content-wrapper -->
 	</div>
-	
-	<button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-chat" style="margin-left: 90%">
-	채팅하기
-	</button>
-
-<!-- <div> -->
-<!-- 		<button onclick="openSocket();">채팅on</button> -->
-<!-- 		<button onclick="closeSocket();">채팅off</button> -->
-<!-- </div> -->
-	
-<!-- <div class="box box-success"> -->
-<!--    <div class="box-header ui-sortable-handle" style="cursor: move;"> -->
-<!--       <i class="fa fa-comments-o"></i> -->
-<%--       <h3 class="box-title">${vo.c_title }</h3> --%>
-<!--       <div class="box-tools pull-right" data-toggle="tooltip" title="" --> 
-<!--           data-original-title="Status"> --> 
-<!--           <div class="btn-group" data-toggle="btn-toggle"> --> 
-<!--              <button type="button" class="btn btn-default btn-sm active"> --> 
-<!--                 <i class="fa fa-square text-green"></i> --> 
-<!--              </button> --> 
-<!--              <button type="button" class="btn btn-default btn-sm"> --> 
-<!--                 <i class="fa fa-square text-red"></i> --> 
-<!--              </button> --> 
-<!--           </div> -->
-<!--       </div> --> 
-<!--    </div> -->
-<!--    <div class="slimScrollDiv" -->
-<!--       style="position: relative; overflow: hidden; width: auto; height: 250px;"> -->
-<!--       <div class="box-body chat" id="chat-box" -->
-<!--          style="overflow: hidden; width: auto; height: 250px;"> -->
-
-<!--          <div class="item"> -->
-<!--             <img src="dist/img/user4-128x128.jpg" alt="user image" -->
-<!--                class="online"> -->
-<!--             <p class="message"> -->
-<!--                <a href="#" class="name"> <small class="text-muted pull-right"><i -->
-<!--                      class="fa fa-clock-o"></i> 2:15</small> Mike Doe -->
-<!--                </a> 웹소켓 구현 어케하누 ~ -->
-<!--             </p> -->
-            
-<!-- <             채팅 첨부파일 양식  --> 
-<!--              <div class="attachment"> -->
-<!--                <h4>Attachments:</h4> --> 
-<!--                 <p class="filename">Theme-thumbnail-image.jpg</p> --> 
-<!--                 <div class="pull-right"> --> 
-<!--                    <button type="button" class="btn btn-primary btn-sm btn-flat">Open</button> --> 
-<!--                 </div> -->
-<!--              </div> --> 
-
-<!--          </div> -->
-
-
-<!--          <div class="item"> -->
-<!--             <img src="dist/img/user3-128x128.jpg" alt="user image" -->
-<!--                class="offline"> -->
-<!--             <p class="message"> -->
-<!--                <a href="#" class="name"> <small class="text-muted pull-right"><i -->
-<!--                      class="fa fa-clock-o"></i> 5:15</small> Alexander Pierce -->
-<!--                </a> 어 케 하 누 ! -->
-<!--             </p> -->
-<!--          </div> -->
-
-
-<!--          <div class="item"> -->
-<!--             <img src="dist/img/user2-160x160.jpg" alt="user image" class="offline"> -->
-<!--             <p class="message"> -->
-<!--                <a href="#" class="name"> <small class="text-muted pull-right"><i -->
-<!--                      class="fa fa-clock-o"></i> 5:30</small> Susan Doe -->
-<!--                </a> 왜 안 되 누 ! -->
-<!--             </p> -->
-<!--          </div> -->
-
-<!--       </div> -->
-<!--       <div class="slimScrollBar" -->
-<!--          style="background: rgb(0, 0, 0); width: 7px; position: absolute; top: 66px; opacity: 0.4; display: none; border-radius: 7px; z-index: 99; right: 1px; height: 184.366px;"></div> -->
-<!--       <div class="slimScrollRail" -->
-<!--          style="width: 7px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 7px; background: rgb(51, 51, 51); opacity: 0.2; z-index: 90; right: 1px;"></div> -->
-<!--    </div> -->
-
-<!-- <div class="input_msg_write"> -->
-<!--  <input type="text" class="write_msg" id="messageinput" placeholder="Type a message" /> -->
-<!--  <button class="msg_send_btn" onclick="send();"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button> -->
- 
- 
- 
-<!--   <div class="input-group-btn"> --> 
-<!--              <button type="button" class="btn btn-success"> --> 
-<!--                 <i class="fa fa-plus"></i> --> 
-<!--             </button> --> 
-<!--        </div> -->
-<!-- </div> -->
-
-<!--    <div class="box-footer"> --> 
-<!--        <div class="input-group"> --> 
-<!--          <input class="form-control" placeholder="Type message..."> --> 
-<!--           <div class="input-group-btn"> --> 
-<!--              <button type="button" class="btn btn-success"> --> 
-<!--                 <i class="fa fa-plus"></i> -->
-<!--              </button> -->
-<!--          </div> --> 
-<!--       </div> --> 
-<!--     </div> --> 
-<!-- </div> -->
-
-
-
-
-
+</div>
+</div>
 </div>
 <%@ include file="../include/footer.jsp"%>
+
+<script type="text/javascript">
+// $(document).ready(function(){
+// 	var cno = ${vo.cno};
+// 	var nick = '${nick}';
+	
+// 	// 이전 대화내용 가져오기
+// 	$.ajax({
+// 		type : "post",
+// 		url : "/challenge/getPreChat", 
+// 		contentType : "application/json",
+// 		data : JSON.stringify(cno),
+// 		success : function(result){
+// 			console.log("과거 채팅기록");
+// 			console.log(result);
+// 			for(var i=0; result.length; i++){
+// 				if( (result[i].writer) == nick){
+// 					var data = '<div class="outgoing_msg">';
+// 					data += '<div class="sent_msg">'
+// 			            	 + '<p>'+ result[i].message +'</p>'
+// 			           		 + '<span class="time_date"> '+ result[i].time +'</span></div></div>';
+// 					$('#nextMsg').append(data);
+// 				}else{
+// 					var data = result[i].writer;
+// 					data += '<div class="incoming_msg">'
+// 							+ '<div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>'
+// 							+ '<div class="received_msg"> <div class="received_withd_msg">'
+// 							+ '<p>'+ result[i].message +'</p>'
+// 							+ '<span class="time_date">'+ result[i].time +'</span></div></div>'
+					
+// 					$('#nextMsg').append(data);
+					
+// 				}
+// 			}
+			
+// 		},
+// 		error : function(jqXHR, status, error){
+// 			console.log("알 수 없는 에러 [" + error + "]");
+// 		}
+// 	}); // ajax 끝
+	
+// });
+</script>

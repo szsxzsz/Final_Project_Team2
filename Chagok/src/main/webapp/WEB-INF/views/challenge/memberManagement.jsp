@@ -5,118 +5,60 @@
 
 <%@ include file="../include/header.jsp" %>
 <%@ include file="../include/sidebar.jsp" %>
-
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>관리자 챌린지 승인</title>
-</head>
+<script>
 
-<body>
+
+</script>
+	<title>회원 관리</title>
+</head>	
+	<body>
+${userlist.size() }
     <div class="board_wrap">
         <div class="board_title">
-            <strong>공지사항</strong>
-            <p>공지사항을 빠르고 정확하게 안내해드립니다.</p>
-        </div>
-        <div class="board_list_wrap">
-            <div class="board_list">
-                <div class="top">
-                    <div class="num">번호</div>
-                    <div class="title">제목</div>
-<!--                     <div class="writer">작성자</div> -->
-                    <div class="date">작성일</div>
-                </div>
-         	
- 				<c:set var="boardno" value="${boardList2.size() }"></c:set>
- 				<fmt:parseNumber var="boardno" value="${boardno }" type="number" />
-                <c:forEach items="${boardList2 }" var="boardList2" >
+        <strong>회원 관리</strong>
+    	</div>
+ 	    <div class="board_list_wrap">
+         <div class="board_list">
+             <div class="top">
+                 <div class="num" style="padding-right: 10px; width: auto; padding-left: 10px;">회원 번호</div>
+                 <div class="num" style="padding-left:10px; width: auto;">아이디</div>
+                 <div class="title" style="width: auto;">닉네임</div>
+                 <div class="num">포인트</div>
+                 <div class="date" style="width: auto;">가입일자</div>
+                 <div class="num" style="padding-left:25px; width: auto;">가계부 인증</div>
+                 <div class="num" style="padding-left:25px; width: auto;">관리</div>
+         	</div>
+         
+         <c:forEach items="${userlist }" var="user">
                 <div>
-                    <div class="num">${boardno }</div>
-                    <div class="title"><a href="http://localhost:8080/noticecontent?bno=${boardList2.bno }">${boardList2.b_title }</a></div>
-<%--                     <div class="writer">${boardList.b_writer }</div> --%>
-                    <div class="date"><fmt:formatDate value="${boardList2.b_date }" pattern="yyyy-MM-dd"/> </div>
-<!--                      <div class="count">33</div> -->
+                    <div class="num" style="padding-left: 65px; width: auto; padding-right: 65px;">${user.mno }</div>
+                    <div class="num" style="padding-left: 65px; width: auto; padding-right: 10px;">${user.id }</div>
+                    <div class="title" style="padding-left: 65px; width: auto;;">${user.nick }</div>
+                    <div class="num" style="padding-left: auto;">${user.buypoint }</div>
+                    <div class="date" style="padding-left: auto; width: auto;">${user.regdate }</div>
+                    <div class="num" >${user.isCheck }</div>
+                    <div class="num" style="width: auto;"><button class="btn btn-block btn-success">상세정보</button></div>
                 </div>
-                <c:set var="boardno" value="${boardno -1 }"></c:set>
                 </c:forEach>
-                
-             </div>
-             
-                <div class="board_page">
-                <ul class= "pagination pagination-sm no-margin pull-right">
+         </div>
+         
+           <div class="board_page">
 <!--                 <a href="#" class="bt first"><<</a> -->
-                <c:if test="${pageMaker.prev }">
-					<li><a href="/notice?page=${pageMaker.startPage-1 }"class="bt prev"><</a></li>
-				</c:if>
-               <c:forEach var="idx" begin="${pageMaker.startPage }" end="${pageMaker.endPage }" step="1">
-					<li 
-						<c:out value="${idx == pageMaker.cri.page? 'class=active':'' }"/>
-					
-					><a href="/notice?page=${idx }" class="num">${idx }</a></li>
-				</c:forEach>
-                <c:if test="${pageMaker.next }">
-					<li><a href="/notice?page=${pageMaker.endPage+1 }" class="bt next">></a></li>
-				</c:if>
+                <a href="#" class="bt prev"><</a>
+                <a href="#" class="num on">1</a>
+                <a href="#" class="num">2</a>
+                <a href="#" class="num">3</a>
+                <a href="#" class="num">4</a>
+                <a href="#" class="num">5</a>
+                <a href="#" class="bt next">></a>
 <!--                 <a href="#" class="bt last">>></a> -->
-                </ul>
-                </div>
-             
-           <div class="bt_wrap">
-             <c:if test="${nick.equals('관리자') }">
-				<input class="sbtn" type="button" value="공지 작성하기" onclick="location.href='/noticewrite';" >
-			  </c:if>
-				<input class="sbtn" type="button" value="메인가기" onclick="location.href='/commumain';" >
-<!--                 <a href="write.html" class="on">등록</a> -->
-                <!--<a href="#">수정</a>-->
-          </div>
-          
-          
-          
-          
-<!--            <div class="board_page"> -->
-<!--             <ul class="pagination pagination-sm no-margin pull-right"> -->
-<%--                 <c:if test="${pageMaker.prev }"> --%>
-<%-- 					<li><a href="/notice?page=${pageMaker.startPage-1 }"class="bt prev"><</a></li> --%>
-<%-- 				</c:if> --%>
-<%-- 				<c:forEach var="idx" begin="${pageMaker.startPage }" end="${pageMaker.endPage }" step="1"> --%>
-<!-- 					<li  -->
-<%-- 						<c:out value="${idx == pageMaker.cri.page? 'class=active':'' }"/> --%>
-					
-<%-- 					><a href="/notice?page=${idx }" class="num">${idx }</a></li> --%>
-<%-- 				</c:forEach> --%>
-<%--                 <c:if test="${pageMaker.next }"> --%>
-<%-- 					<li><a href="/notice?page=${pageMaker.endPage+1 }" class="bt next">></a></li> --%>
-<%-- 				</c:if> --%>
-               
-<!-- 			</ul> -->
-<!--             </div> -->
-            
-
-        </div>
-    </div>
+            </div>
+    </div>  
+</div>      
 </body>
-</html> 
-
-
-<script type="text/javascript">
-		var result = '${result}';
-		if(result == 'createOK'){
-			alert(" 글쓰기 완료! ");
-		}
-		
-		if(result == 'modOK'){
-			alert(' 글 수정 완료!');
-		}
-		
-		if(result == 'delOK'){
-			alert(' 글 삭제 완료!');
-		}
-		
-</script>
-	
-<!-- <input class="btn btn-block btn-success btn-lg" type="button" value="메인가기" onclick="location.href='/commumain';" style="width:218px; margin-left: 950px;"> -->
-
+</html>
 
 <style>
 
@@ -496,5 +438,5 @@ a {
 
 </style>
 
-
+</div>
 <%@ include file="../include/footer.jsp"%>

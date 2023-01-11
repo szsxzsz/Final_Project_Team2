@@ -22,13 +22,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.util.WebUtils;
 
-//import com.chagok.domain.AlertVO;
+import com.chagok.domain.AlertVO;
 import com.chagok.domain.ChallengeVO;
 import com.chagok.domain.Criteria;
 import com.chagok.domain.PageMaker;
 import com.chagok.domain.SearchCriteria;
 import com.chagok.domain.UserVO;
 import com.chagok.interceptor.SessionNames;
+import com.chagok.service.AlertService;
 //import com.chagok.service.AlertService;
 import com.chagok.service.ChallengeService;
 import com.chagok.service.UserService;
@@ -45,7 +46,7 @@ public class ChagokController {
 	private ChallengeService service2;
 	
 	@Inject
-//	private AlertService alertService;
+	private AlertService alertService;
 	
 	// 차곡 메인사이트 
 	// http://localhost:8080/main
@@ -213,12 +214,12 @@ public class ChagokController {
 	 }
 	 
 	 // 가계부 가져오기 (연동) - 수지 
-	 @RequestMapping(value="/abookList")
-		public String getAbookList() throws Exception{
-			mylog.debug(" /abookList -> 연결된 뷰 abookList.jsp -> 데이터 생성 -> ChallengeController ");
-			
-			return "/asset/abookList";
-		}
+//	 @RequestMapping(value="/abookList")
+//		public String getAbookList() throws Exception{
+//			mylog.debug(" /abookList -> 연결된 뷰 abookList.jsp -> 데이터 생성 -> ChallengeController ");
+//			
+//			return "/asset/abookList";
+//		}
 	
 	 
 	// http://localhost:8080/challenge/detail?cno=1
@@ -236,17 +237,31 @@ public class ChagokController {
       }
    }
    
-//   @PostMapping(value = "/alert")
-//   @ResponseBody
-//   public void alert(@RequestBody Map<String, Object> map, AlertVO alertVO) throws Exception {
-//	   mylog.debug(" 알림기능 ajax 호출");
-//	   alertVO.setCno(Integer.parseInt(map.get("type").toString()));
-//	   alertVO.setA_content(map.get("content").toString());
-//	   alertVO.setA_receive(Integer.parseInt(map.get("target").toString()));
-//	   
-//	   alertService.alert(alertVO);
-//	   
-//   }
+   @PostMapping(value = "/alert")
+   @ResponseBody
+   public void alert(@RequestBody Map<String, Object> map, AlertVO alertVO) throws Exception {
+	   mylog.debug(" 알림기능 ajax 호출");
+	   alertVO.setCno(Integer.parseInt(map.get("type").toString()));
+	   alertVO.setA_content(map.get("content").toString());
+	   alertVO.setA_receive(Integer.parseInt(map.get("target").toString()));
+	   
+	   alertService.alert(alertVO);
+	   
+   }
+   
+   // 마이페이지
+ //  http://localhost:8080/myPage
+   @GetMapping(value="/myPage")
+   public String myPage(Integer mno) {
+	   mylog.debug(" mypage 호출 ");
+	   
+	   // UserVO vo = service.getUser(mno);
+	   
+	   
+	   return "/chagok/myPage";
+   }
+   
+   
    
    // http://localhost:8080/adminUser
    

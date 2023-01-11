@@ -359,16 +359,12 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 
 	// 관리자 챌린지 승인
 	@Override
-	public void confirmChallenge(ChallengeVO vo) throws Exception {
-		sqlSession.update(NAMESPACE+".confirmChallenge",vo);
+	public void confirmChallenge(Integer status, Integer cno) throws Exception {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("c_status", status);
+		map.put("cno", cno);
+		sqlSession.update(NAMESPACE+".confirmChallenge", map);
 		mylog.debug("daoimpl: 챌린지 승인");
-	}
-
-	// 관리자 챌린지 승인거절
-	@Override
-	public void rejectChallenge(ChallengeVO vo) throws Exception {
-		sqlSession.update(NAMESPACE+".rejectChallenge", vo);
-		mylog.debug("dao:챌린지 승인거절" +vo.getC_status());
 	}
 
 	// 비즈니스 계좌 송금
@@ -393,6 +389,24 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 	@Override
 	public void updatePlusSum(BusinessAccountVO vo) throws Exception {
 		sqlSession.update(NAMESPACE+".updatePlusSum", vo);
+	}
+	
+	// 내 plus 테이블 정보 가져오기
+	@Override
+	public PlusVO getPlusOne(int mno, int cno) throws Exception {
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("mno", mno);
+		map.put("cno", cno);
+		
+		mylog.debug("map : "+map);
+		
+		
+		PlusVO vo = sqlSession.selectOne(NAMESPACE+".getPlusOne", map);
+		
+		mylog.debug("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ vo : " + vo);
+		
+		return vo;
 	}
 	
 	

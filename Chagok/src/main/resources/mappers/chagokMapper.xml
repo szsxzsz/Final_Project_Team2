@@ -388,7 +388,7 @@
 <!-- 		update challenge set c_status=6 -->
 <!-- 		where cno = #{cno} -->
 <!-- 	</update> -->
-	
+
 	<!-- 비지니스 계좌 입금(송금) -->
 	<insert id="sendBiz">
 		insert into business_account(biz_inout, biz_amount, mno, biz_holder_name, biz_balance, cno) 
@@ -407,11 +407,24 @@
 		where mno = #{mno} and cno = #{cno}
 	</update>
 	
+
 	<!-- 게시판과 챌린지 (후기보드리스트용) -->
 	<select id="rboardChallenge" resultType="map">
 		select *
 		from challenge c inner join board b
 		where b_sort = 1 and b.cno = c.cno
 	</select>
+
+	<!-- plus 테이블 내 정보 가져오기 -->
+	<select id="getPlusOne" resultType="com.chagok.domain.PlusVO">
+		select * from plus where mno = #{mno} and cno = #{cno}
+	</select>
+	
+	<!-- 관리자 회원 정보  -->
+	<select id="getUserList" resultType="com.chagok.domain.UserVO">
+		select * from user
+	</select>
+	
+
 	
  </mapper>

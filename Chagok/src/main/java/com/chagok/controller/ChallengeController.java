@@ -82,6 +82,11 @@ public class ChallengeController {
 		model.addAttribute("sessionId", sysLogVO.getUserId());
 		Integer mno = service.getChallengeInfo(cno).getMno();
 		
+		// 영민 추가 (plus 테이블에서 cno, mno로 내 정보만 호출)
+		PlusVO plusVO = service.getPlusOne((int)session.getAttribute("mno"), cno);
+		model.addAttribute("myPlusVO", plusVO);
+		// 영민 추가
+		
 		model.addAttribute("vo", service.getChallengeInfo(cno));
 		model.addAttribute("plusPeoList", plusPeoList);
 		model.addAttribute("c_end", service.getChallengeEndDate(cno));
@@ -148,7 +153,6 @@ public class ChallengeController {
 //		mylog.debug("cateList : "+cateList);
 		mylog.debug("minusFeedGET()에서 id : "+session.getId());
 		SysLogVO sysLogVO = new SysLogVO();
-		
 //		ObjectMapper mapper = new ObjectMapper();
 
 //		String jsonAbook = mapper.writeValueAsString(abookList);
@@ -470,9 +474,12 @@ public class ChallengeController {
 		return "/challenge/resultdefeat";
 	}
 	
+	////////////////////// 관리자 페이지 ///////////////////////////
+	
+	
 	// 관리자 챌린지 승인
-	// http://localhost:8080/challenge/adminconfirm
-	@GetMapping("/adminconfirm")
+	// http://localhost:8080/challenge/challengeListAll
+	@GetMapping("/challengeListAll")
 	public String adminconfirmGET(Model model) throws Exception {
 		mylog.debug("/adminconfirmGET 호출");
 		
@@ -482,13 +489,43 @@ public class ChallengeController {
 		return "/challenge/adminconfirm";
 	}
 	
-	@PostMapping(value="/adminconfirm")
-	public String adminconfirmPOST(ChallengeVO vo) throws Exception {
-		mylog.debug("adminconfirmPOST 호출"+vo.toString());
-		service.confirmChallenge(vo);
-		return "/challenge/adminconfirm";
+	@ResponseBody
+	@PostMapping(value="/confirm")
+	public String confirm(@RequestParam int status, @RequestParam int cno, RedirectAttributes rttr) throws Exception {
+		mylog.debug("status : "+status);
+		mylog.debug("cno : "+cno);
+		String result="";
+		
+		service.confirmChallenge(status, cno);
+
+		if(status==1) {
+			mylog.debug("챌린지 승인 완료");
+			result = "승인";
+		} else if(status==6) {
+			mylog.debug("챌린지 거절 완료");
+			result = "거절";
+		}
+		return result;
+	}
+	//
+	// 관리자 회원관리
+	@GetMapping("/memberManagement")
+	public String memberManagementGET(Model model) throws Exception {
+		mylog.debug("/memberManagementGET 호출");
+		
+		List<UserVO> user = uservice.getUserList();
+		
+		mylog.debug(user.toString());
+		
+		model.addAttribute("userlist", user);
+		
+		return "/challenge/memberManagement";
 	}
 	
+	
+	
+	
+	////////////////////// 관리자 페이지 ///////////////////////////
 	
 	
 	
