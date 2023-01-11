@@ -50,7 +50,7 @@
 				<td><a href = "/challenge/plusFeed?cno=${vo.cno }">${vo.c_title }</a></td>
 				</c:if>
 				<c:if test="${vo.c_sort eq 1 }">
-				<td><a href = "/challenge/minusFeed?cno=${vo.cno }">${vo.c_title }</a></td>
+				<td><a href = "/challenge/minusfeed?cno=${vo.cno }">${vo.c_title }</a></td>
 				</c:if>
 				<td>${vo.c_period }주</td>
 				<c:if test="${vo.c_status eq 0 }">

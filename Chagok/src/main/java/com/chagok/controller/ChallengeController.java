@@ -35,9 +35,11 @@ import com.chagok.domain.BoardVO;
 import com.chagok.domain.BusinessAccountVO;
 import com.chagok.domain.CategoryVO;
 import com.chagok.domain.ChallengeVO;
+import com.chagok.domain.Criteria;
 import com.chagok.domain.FeedDTO;
 import com.chagok.domain.MessageVO;
 import com.chagok.domain.MinusVO;
+import com.chagok.domain.PageMaker;
 import com.chagok.domain.PlusVO;
 import com.chagok.domain.SysLogVO;
 import com.chagok.domain.UserVO;
@@ -478,35 +480,42 @@ public class ChallengeController {
 	
 	
 	// 관리자 챌린지 승인
-	// http://localhost:8080/challenge/challengeListAll
-	@GetMapping("/challengeListAll")
-	public String adminconfirmGET(Model model) throws Exception {
+	// http://localhost:8080/challenge/chListAll
+	@GetMapping("/chListAll")
+	public String adminconfirmGET(Criteria cri, Model model) throws Exception {
 		mylog.debug("/adminconfirmGET 호출");
 		
-		List<ChallengeVO> challengeList = service.getChallengeList();
+		cri.setPerPageNum(10);
+		List<ChallengeVO> challengeList = service.chListAll(cri);
+		
+		// 페이징 처리
+	    PageMaker pagevo = new PageMaker();
+	    pagevo.setCri(cri);
+	    pagevo.setTotalCount(10000);
+		
+	    model.addAttribute("pagevo", pagevo);
 		model.addAttribute("challengeList", challengeList);
 		
 		return "/challenge/adminconfirm";
 	}
 	
 	@ResponseBody
-	@PostMapping(value="/confirm")
-	public String confirm(@RequestParam int status, @RequestParam int cno, RedirectAttributes rttr) throws Exception {
-		mylog.debug("status : "+status);
-		mylog.debug("cno : "+cno);
-		String result="";
+	@GetMapping(value="/confirm")
+	public int confirm(@RequestParam int status, @RequestParam int cno, RedirectAttributes rttr) throws Exception {
+		mylog.debug("status : "+status+", cno : "+cno);
+		int result=0;
 		
 		service.confirmChallenge(status, cno);
 
 		if(status==1) {
-			mylog.debug("챌린지 승인 완료");
-			result = "승인";
+			result = 1;
 		} else if(status==6) {
-			mylog.debug("챌린지 거절 완료");
-			result = "거절";
+			result = 6;
 		}
+		mylog.debug("결과"+result);
 		return result;
 	}
+
 	// http://localhost:8080/challenge/memberManagement
 	// 관리자 회원관리
 	@GetMapping("/memberManagement")

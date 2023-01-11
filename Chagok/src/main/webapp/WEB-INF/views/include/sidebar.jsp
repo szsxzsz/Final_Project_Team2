@@ -122,7 +122,7 @@
                 <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu active">
-                <li><a href="/challenge/challengeListAll"><i class="fa fa-circle-o"></i> 챌린지 관리</a></li>
+                <li><a href="/challenge/chListAll"><i class="fa fa-circle-o"></i> 챌린지 관리</a></li>
                 <li><a href="/#"><i class="fa fa-circle-o"></i> 회원 관리</a></li>
                 <li><a href="#"><i class="fa fa-circle-o"></i> 결제 관리</a></li>
 <!--                 <li><a href="../charts/flot.html"><i class="fa fa-circle-o"></i> Flot</a></li> -->

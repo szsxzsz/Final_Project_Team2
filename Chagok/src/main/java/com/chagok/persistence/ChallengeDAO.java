@@ -146,6 +146,8 @@ public interface ChallengeDAO {
 	
 	// 내 plus 테이블 정보 가져오기
 	public PlusVO getPlusOne(int mno, int cno) throws Exception;
-	
+
+	// 챌린지목록(페이징처리)
+	public List<ChallengeVO> chListAll(Criteria cri) throws Exception;
 
 }

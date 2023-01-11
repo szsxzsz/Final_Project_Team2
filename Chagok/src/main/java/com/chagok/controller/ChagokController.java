@@ -249,8 +249,8 @@ public class ChagokController {
 	   
    }
    
-   // 마이페이지
- //  http://localhost:8080/myPage
+	// 마이페이지
+	// http://localhost:8080/myPage
    @GetMapping(value="/myPage")
    public String myPage(Integer mno) {
 	   mylog.debug(" mypage 호출 ");
