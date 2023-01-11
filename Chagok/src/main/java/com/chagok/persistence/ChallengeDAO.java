@@ -134,4 +134,7 @@ public interface ChallengeDAO {
 	// 비지니스 계좌 송금시 플러스 테이블 업데이트 (pl_sum)
 	public void updatePlusSum(BusinessAccountVO vo) throws Exception;
 	
+	// 내 plus 테이블 정보 가져오기
+	public PlusVO getPlusOne(int mno, int cno) throws Exception;
+	
 }

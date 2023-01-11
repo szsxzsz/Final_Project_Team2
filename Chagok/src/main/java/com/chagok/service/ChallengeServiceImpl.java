@@ -302,6 +302,12 @@ public class ChallengeServiceImpl implements ChallengeService{
 		dao.updatePlusSum(vo);
 	}
 
+	// 내 plus 테이블 정보 가져오기
+	@Override
+	public PlusVO getPlusOne(int mno, int cno) throws Exception {
+		return dao.getPlusOne(mno, cno);
+	}
+
 	
 
 	

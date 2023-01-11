@@ -82,6 +82,11 @@ public class ChallengeController {
 		model.addAttribute("sessionId", sysLogVO.getUserId());
 		Integer mno = service.getChallengeInfo(cno).getMno();
 		
+		// 영민 추가 (plus 테이블에서 cno, mno로 내 정보만 호출)
+		PlusVO plusVO = service.getPlusOne((int)session.getAttribute("mno"), cno);
+		model.addAttribute("myPlusVO", plusVO);
+		// 영민 추가
+		
 		model.addAttribute("vo", service.getChallengeInfo(cno));
 		model.addAttribute("plusPeoList", plusPeoList);
 		model.addAttribute("c_end", service.getChallengeEndDate(cno));

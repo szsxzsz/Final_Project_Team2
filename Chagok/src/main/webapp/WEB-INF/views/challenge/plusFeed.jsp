@@ -121,33 +121,43 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		
-		$('#a_biz').click(function(){
-			if ($('#result').text() == "") {
-				alert('금액을 입력하세요 !');
-				
-				return false;
-				
-			} else {
-				
-				var biz_amount = $('#result').text().replace(/,/gi, "");
-				
-				if (${(vo.c_amount / vo.c_period)} == biz_amount) {
-					
-					var bizCheck = confirm("진짜 입금 할래?");
-					
-					if (bizCheck) {
-						$('#a_biz').attr('href', '/challenge/sendBiz?biz_amount='+biz_amount+'&cno='+${vo.cno});
-					} else {
-						return false;
-					}
-				
-				} else {
-					alert("입금 금액이 일치하지 않습니다.\n금액을 확인하세요.");
+			
+		$('#a_biz').click(function(){ // 입금하기 버튼 클릭
+			if(${vo.c_amount} > ${myPlusVO.pl_sum} ) { // 입금해야할 금액보다 현재 입금한 금액이 적을때 (더입금 가능)
+	
+				if ($('#result').text() == "") {
+					alert('금액을 입력하세요 !');
 					
 					return false;
+					
+				} else {
+					
+					var biz_amount = $('#result').text().replace(/,/gi, "");
+					
+					if (${(vo.c_amount / vo.c_period)} == biz_amount) {
+						
+						var bizCheck = confirm("진짜 입금 할래?");
+						
+						if (bizCheck) {
+							$('#a_biz').attr('href', '/challenge/sendBiz?biz_amount='+biz_amount+'&cno='+${vo.cno});
+						} else {
+							return false;
+						}
+					
+					} else {
+						alert("입금 금액이 일치하지 않습니다.\n금액을 확인하세요.");
+						
+						return false;
+					}
 				}
+			} else { // 더 입금 불가능
+				alert("더 이상 입금할 수 없습니다!");
 			}
-		});
+		}); // 입금하기 버튼 끝
+		
+		
+		
+		
 	});
 </script>
 
@@ -163,6 +173,9 @@
 
 
 <h1 style="padding: 0 15px 0 15px;"> 저축형 차곡 챌린지 </h1>
+
+${myPlusVO }
+
 <%-- ${msgList} --%>
 <%-- ${mno} --%>
 <%-- ${plusPeoList } --%>
@@ -252,9 +265,15 @@
     </div>
     
 <!-- 입금하기 기능용 모달창 -->
+<c:if test="${vo.c_amount > myPlusVO.pl_sum}">
     <button class="btn btn-success" data-toggle="modal" data-target="#modal-default" style="margin-left: 90%">
    			입금하기</button>
-    
+  </c:if>
+<c:if test="${vo.c_amount == myPlusVO.pl_sum}">
+	<button class="btn btn-success" data-toggle="modal" data-target="#modal-default" style="margin-left: 90%" disabled="disabled">
+   			입금완료</button>
+</c:if>
+
 <!-- 모달 css 파일 : resources -> plugins -> modal -> minusModal.css  -->
 	<div class="modal fade" id="modal-default" style="margin-top: 10%;">
 		<div class="modal-dialog" style=" height: 800px;">
@@ -289,9 +308,8 @@
 				<div class="modal-footer">
 					<!-- <button type="button" class="btn btn-default pull-left"
 						data-dismiss="modal">닫기</button> -->
-					
 					<a href="" id="a_biz">
-						<button type="button" class="btn btn-block btn-success btn-sm biz">입금하기</button>
+						<button type="button" class="btn btn-block btn-success btn-sm biz" disabled="disabled">입금하기</button>
 					</a>
 				</div>
 			</div>

@@ -388,6 +388,24 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 		sqlSession.update(NAMESPACE+".updatePlusSum", vo);
 	}
 	
+	// 내 plus 테이블 정보 가져오기
+	@Override
+	public PlusVO getPlusOne(int mno, int cno) throws Exception {
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("mno", mno);
+		map.put("cno", cno);
+		
+		mylog.debug("map : "+map);
+		
+		
+		PlusVO vo = sqlSession.selectOne(NAMESPACE+".getPlusOne", map);
+		
+		mylog.debug("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ vo : " + vo);
+		
+		return vo;
+	}
+	
 	
 	
 	

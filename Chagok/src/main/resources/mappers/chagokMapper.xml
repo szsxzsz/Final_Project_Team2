@@ -381,4 +381,9 @@
 		pl_cnt=(select pl_cnt where mno = #{mno} and cno = #{cno}) + 1 
 		where mno = #{mno} and cno = #{cno}
 	</update>
+	
+	<!-- plus 테이블 내 정보 가져오기 -->
+	<select id="getPlusOne" resultType="com.chagok.domain.PlusVO">
+		select * from plus where mno = #{mno} and cno = #{cno}
+	</select>
  </mapper>
