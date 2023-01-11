@@ -17,10 +17,10 @@
 				type : "get",
 				url : "/adminmodal",
 				data : mno,
-				dataType : "text",
+				dataType : "json",
 				success : function(data){
-					console.log("어드민 모달창 등장");
-					$.modal(data);
+					console.log("어드민 모달창 등장"+data);
+// 					$.modal(data);
 				}
 			});
 		})

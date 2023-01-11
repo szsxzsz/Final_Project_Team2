@@ -124,6 +124,9 @@ public interface ChallengeService {
 	
 	// 관리자 챌린지 승인
 	public void confirmChallenge(Integer status, Integer cno) throws Exception;
+	
+	// 관리자 모달창 회원mno
+	public List<UserVO> adminmodal(Integer mno) throws Exception;
 
 	// 후기글 정보 조회(페이징처리 cri)
 //	public List<BoardVO> getRBoardPage(Criteria cri) throws Exception;

@@ -127,6 +127,9 @@ public interface ChallengeDAO {
 	// 관리자 챌린지 승인
 	public void confirmChallenge(Integer c_status, Integer cno) throws Exception;
 	
+	// 관리자 모달창 회원mno
+	public List<UserVO> adminmodal(Integer mno) throws Exception;
+	
 	// 페이징 처리 구현된 후기리스트 조회
 //	public List<BoardVO> getRBoardPage(Integer page) throws Exception;
 	public List<Map<String, Object>> getRBoardPage(Integer page) throws Exception;

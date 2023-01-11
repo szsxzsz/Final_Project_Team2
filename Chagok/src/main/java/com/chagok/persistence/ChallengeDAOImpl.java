@@ -366,6 +366,13 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 		sqlSession.update(NAMESPACE+".confirmChallenge", map);
 		mylog.debug("status : "+status+", cno : "+cno);
 	}
+	
+	// 관리자 모달창 회원mno
+	@Override
+	public List<UserVO> adminmodal(Integer mno) throws Exception {
+		mylog.debug("daoimpl : 모달창 mno가져가기");
+		return sqlSession.selectOne(NAMESPACE+".adminmodal", mno);
+	}
 
 	// 비즈니스 계좌 송금
 	@Override

@@ -290,6 +290,13 @@ public class ChallengeServiceImpl implements ChallengeService{
 		dao.confirmChallenge(status, cno);
 	}
 
+	// 관리자 모달창 회원mno
+	@Override
+	public List<UserVO> adminmodal(Integer mno) throws Exception {
+		mylog.debug("service : "+mno);
+		return dao.adminmodal(mno);
+	}
+
 	// 후기글 정보 조회(페이징처리 cri)
 //	@Override
 //	public List<BoardVO> getRBoardPage(Criteria cri) throws Exception {

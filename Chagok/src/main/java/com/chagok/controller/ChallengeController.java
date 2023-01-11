@@ -531,12 +531,16 @@ public class ChallengeController {
 		return "/challenge/memberManagement";
 	}
 	
-	@GetMapping("/modal")
-	public String adminmodal() throws Exception {
+	@GetMapping("/adminmodal")
+	public String adminmodal(Model model,@RequestParam Integer mno) throws Exception {
+		mylog.debug("모달창에 넘길 mno : " + mno);
 		
-		return "";
+		List<UserVO> vo = service.adminmodal(mno);
+		
+		model.addAttribute("UserVO", vo);
+		
+		return "/adminmodal";
 	}
-	
 	
 	////////////////////// 관리자 페이지 ///////////////////////////
 	
