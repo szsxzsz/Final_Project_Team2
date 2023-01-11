@@ -125,6 +125,7 @@ public interface ChallengeService {
 	// 관리자 챌린지 승인
 	public void confirmChallenge(ChallengeVO vo) throws Exception;
 	
-	
+	// 관리자 챌린지 승인거절
+	public void rejectChallenge(ChallengeVO vo) throws Exception;
 }
 

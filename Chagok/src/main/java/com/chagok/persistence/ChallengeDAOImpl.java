@@ -359,8 +359,15 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 	// 관리자 챌린지 승인
 	@Override
 	public void confirmChallenge(ChallengeVO vo) throws Exception {
+		sqlSession.update(NAMESPACE+".confirmChallenge",vo);
 		mylog.debug("daoimpl: 챌린지 승인");
-		sqlSession.update(NAMESPACE+".confirmChallenge",vo.getC_status());
+	}
+
+	// 관리자 챌린지 승인거절
+	@Override
+	public void rejectChallenge(ChallengeVO vo) throws Exception {
+		sqlSession.update(NAMESPACE+".rejectChallenge", vo);
+		mylog.debug("dao:챌린지 승인거절" +vo.getC_status());
 	}
 	
 	

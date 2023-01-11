@@ -353,7 +353,13 @@
 	
 	<!-- 관리자 챌린지 승인 -->
 	<update id="confirmChallenge">
-		update challenge set c_status=#{c_status}
+		update challenge set c_status=1
+		where cno = #{cno}
+	</update>
+	
+	<!-- 관리자 챌린지 승인거절 -->
+	<update id="confirmChallenge">
+		update challenge set c_status=6
 		where cno = #{cno}
 	</update>
 	

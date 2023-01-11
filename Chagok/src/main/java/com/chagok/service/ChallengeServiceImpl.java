@@ -289,6 +289,13 @@ public class ChallengeServiceImpl implements ChallengeService{
 		dao.confirmChallenge(vo);
 	}
 
+	// 관리자 챌린지 승인거절
+	@Override
+	public void rejectChallenge(ChallengeVO vo) throws Exception {
+		mylog.debug("service : 관리자 챌린지 승인거절");
+		dao.rejectChallenge(vo);
+	}
+
 	
 
 	

@@ -248,5 +248,8 @@ public class ChagokController {
 //	   
 //   }
    
+   // http://localhost:8080/adminUser
+   
+//   public void adminUser
 	
 }
