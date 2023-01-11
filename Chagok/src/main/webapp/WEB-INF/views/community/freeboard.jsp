@@ -6,8 +6,6 @@
 <%@ include file="../include/header.jsp"%>
 <%@ include file="../include/sidebar.jsp"%>
 	
-	${boardList }
-
 <script>
 	$(document).ready(function() {
 		var formObj = $("form[role='form']");
@@ -58,15 +56,36 @@
 							${board.b_file }
 						</div>
 						<div class="timeline-footer">
-							<input type="submit" class="btn btn-primary btn-xs" value="수정" onclick="location.href='/freeboardupdate?bno=${board.bno}';">
-							<input type="submit" class="btn btn-danger btn-xs" value="삭제" onclick="location.href='/freedelete?bno=${board.bno}';">
+							<c:set var="writer" value="${boardChallenge.b_writer }"/>
+							<c:if test= "${nick == '관리자' || nick == writer}">
+								<input type="submit" class="btn btn-primary btn-xs" value="수정" onclick="location.href='/freeboardupdate?bno=${board.bno}';">
+								<input type="submit" class="btn btn-danger btn-xs" value="삭제" onclick="location.href='/freedelete?bno=${board.bno}';">
+							</c:if>
 						</div>
 					</div></li>
 
 				<li><i class="fa fa-clock-o bg-gray"></i></li>
 			</ul>
 		  </c:forEach>
-		  
+		  <div class="board_page">
+<!--                 <ul class= "pagination pagination-sm no-margin pull-right"> -->
+                <ul>
+<!--                 <a href="#" class="bt first"><<</a> -->
+                <c:if test="${pageMaker.prev }">
+					<li><a href="/freeboard?page=${pageMaker.startPage-1 }"class="bt prev"><</a></li>
+				</c:if>
+               <c:forEach var="idx" begin="${pageMaker.startPage }" end="${pageMaker.endPage }" step="1">
+					<li 
+						<c:out value="${idx == pageMaker.cri.page? 'class=active':'' }"/>
+					
+					><a href="/freeboard?page=${idx }" class="num">${idx }</a></li>
+				</c:forEach>
+                <c:if test="${pageMaker.next }">
+					<li><a href="/freeboard?page=${pageMaker.endPage+1 }" class="bt next">></a></li>
+				</c:if>
+<!--                 <a href="#" class="bt last">>></a> -->
+                </ul>
+                </div>
 		</div>
 
 	</div>

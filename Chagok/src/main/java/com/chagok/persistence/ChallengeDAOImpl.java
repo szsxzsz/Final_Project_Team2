@@ -450,7 +450,36 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 	    return sqlSession.selectList(NAMESPACE + ".chList", cri);
 	}
 
+	// 페이징 처리 구현된 자유게시판 조회
+	@Override
+	public List<BoardVO> getFBoardPage(Integer page) throws Exception {
+		mylog.debug(" BoardPage 호출 ");
+		
+		if(page < 0) {
+			page = 1;
+		}
+				
+		page = (page - 1) * 10;
+				
+		return sqlSession.selectList(NAMESPACE+".fboardPage", page);
+	}
+
+	// 자유게시판 조회
+	@Override
+	public List<BoardVO> getFBoardPage(Criteria cri) throws Exception {
+		mylog.debug("  getBoardPage(Criteria cri) 페이징처리 ");
+		mylog.debug(cri+"@@@@@@@@@@@@@@@@@@@@@@");
+		
+		return sqlSession.selectList(NAMESPACE + ".fboardPageNo",cri);
+	}
+
+	// 전체 자유게시판 글 개수 조회
+	@Override
+	public int FBoardCount() throws Exception {
+		
+		return sqlSession.selectOne(NAMESPACE+".fboardCount");
 	
+	}	
 	
 	
 	

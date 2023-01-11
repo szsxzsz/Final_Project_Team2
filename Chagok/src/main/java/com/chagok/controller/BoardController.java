@@ -315,16 +315,21 @@ public class BoardController {
 	// 자유 게시판 (b_sort = 3)
 	//  http://localhost:8080/freeboard
 	@GetMapping(value = "/freeboard")
-	public String FreeBoardGET(HttpSession session,Model model, @ModelAttribute("scri") SearchCriteria scri) throws Exception {
+	public String FreeBoardGET(HttpSession session,Model model,Criteria cri) throws Exception {
 		mylog.debug(" /freeboard 호출");
 			
-		List<BoardVO> boardList = service.getBoardList(3);
-			
+		List<BoardVO> boardList = service.getNBoardPage(cri);	
+		
 		mylog.debug(boardList+"");
 			
 		model.addAttribute("boardList", boardList);
 		
-		
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCri(cri);
+		pageMaker.setTotalCount(service.RboardCount());
+		mylog.debug("@@@@@@@@@@@@@@@@");
+		mylog.debug("totalCnt : "+service.RboardCount());
+		model.addAttribute("pageMaker", pageMaker);
 			
 		return "/community/freeboard";
 	}

@@ -1,12 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <%@ include file="../include/header.jsp" %>
 <%@ include file="../include/sidebar.jsp" %>
 
 <h1> 공지사항 수정 </h1>
-${board }
 
 <form role="form" method="post">
 	 <div class="row" style="width: 1200px; padding-left: 50px; padding-right: 20px; padding-top: 50px;">
@@ -18,11 +18,19 @@ ${board }
 							제목 | <input type="text" name="b_title" value="${board.b_title }"> 
 						</span>
 						&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+						&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+						&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+						&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+						&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+						
+						
 				    	<span style="color: #10A19D;"class = "text-right">글쓴이 | ${board.b_writer }</span>
-				    	<span style="color: #10A19D;"class = "text-right">작성일 | ${board.b_date }</span>
+				    	&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+				    	&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+				    	<span style="color: #10A19D;"class = "text-right">작성일 | <fmt:formatDate value="${board.b_date }" pattern="yyyy-MM-dd"/></span>
 				    	</h4>
 		    	</div>
-        <div class="form-group" style="padding-top: 50px; padding-left: 36px; width: 1166px; margin-bottom: 30px;">
+        <div class="form-group" style="padding-top: 50px; padding-left: 36px; width: 1100px; margin-bottom: 30px;">
            	<span style = "font-size: 16px; font-family: 'Pretendard','Source Sans Pro', sans-serif;">
            		<strong>
            		

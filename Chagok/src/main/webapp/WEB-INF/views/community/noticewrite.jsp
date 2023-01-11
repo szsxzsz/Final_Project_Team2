@@ -24,7 +24,7 @@
 <!-- 				    	 </span> -->
 				    	</h4>
 		    	</div>
-        <div class="form-group" style="padding-top: 50px; padding-left: 36px; width: 1166px; margin-bottom: 30px;">
+        <div class="form-group" style="padding-top: 50px; padding-left: 36px; width: 1200px; margin-bottom: 30px;">
            	<span style = "font-size: 16px; font-family: 'Pretendard','Source Sans Pro', sans-serif; text-align: right;">
            		<strong>
            		

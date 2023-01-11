@@ -331,9 +331,20 @@ public class ChallengeServiceImpl implements ChallengeService{
 	public List<ChallengeVO> chListAll(Criteria cri) throws Exception {
 		return dao.chListAll(cri);
 	}
-
 	
+	// 자유게시판 정보 조회(페이징처리 cri)
+	@Override
+	public List<BoardVO> getFBoardPage(Criteria cri) throws Exception {
+		mylog.debug(" getFBoardPage(Criteria cri) 호출 ");
+		return dao.getFBoardPage(cri);
+	}
 
+	// 전체 자유게시판 글 개수 조회
+	@Override
+	public int FboardCount() throws Exception {
+		mylog.debug("NboardCount() 호출");
+		return dao.FBoardCount();
+	}
 
 	
 	
