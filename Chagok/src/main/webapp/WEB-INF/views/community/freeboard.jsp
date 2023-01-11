@@ -37,16 +37,13 @@
 		<div class="col-md-12">
 		
 		
-		  <c:forEach var="i" start="0" end="${boardList.size() }" begin="1">
+		  <c:forEach var="board" items="${boardList }">
 			<ul class="timeline">
-				<c:if test="">
 					<li class="time-label">
 						<span class="bg-red"> 
 							<b><fmt:formatDate value="${board.b_date }" pattern="MMM.dd.yyyy"/></b>
 						</span>
 					</li>
-				</c:if>
-
 				<li><i class="fa fa-envelope bg-blue"></i>
 					<div class="timeline-item">
 						<span class="time">

@@ -242,7 +242,7 @@ public class ChallengeServiceImpl implements ChallengeService{
 
 	// 챌린지 + 게시판 리스트
 	@Override
-	public String getBoardChallenge(Integer cno) throws Exception {
+	public Map<String, Object> getBoardChallenge(Integer cno) throws Exception {
 		mylog.debug(" boardChallenge 호출 ");
 		return dao.getBoardChallenge(cno);
 	}
@@ -268,17 +268,17 @@ public class ChallengeServiceImpl implements ChallengeService{
 		dao.updateMoney(mno,ab_amount,cno);
 	}
 
-	// 글 정보 조회(페이징처리 cri)
+	// 공지글 정보 조회(페이징처리 cri)
 	@Override
 	public List<BoardVO> getNBoardPage(Criteria cri) throws Exception {
-		mylog.debug(" getBoardPage(Criteria cri) 호출 ");
+		mylog.debug(" getNBoardPage(Criteria cri) 호출 ");
 		return dao.getNBoardPage(cri);
 	}
 
-	// 전체 게시판 글 개수 조회
+	// 전체 공지게시판 글 개수 조회
 	@Override
 	public int NboardCount() throws Exception {
-		mylog.debug("boardCount() 호출");
+		mylog.debug("NboardCount() 호출");
 		return dao.NBoardCount();
 	}
 
@@ -289,7 +289,19 @@ public class ChallengeServiceImpl implements ChallengeService{
 		dao.confirmChallenge(vo);
 	}
 
-	
+	// 후기글 정보 조회(페이징처리 cri)
+	@Override
+	public List<BoardVO> getRBoardPage(Criteria cri) throws Exception {
+		mylog.debug(" getRBoardPage(Criteria cri) 호출 ");
+		return dao.getRBoardPage(cri);
+	}
+
+	// 전체 후기게시판 글 개수 조회
+	@Override
+	public int RboardCount() throws Exception {
+		mylog.debug("RboardCount() 호출");
+		return dao.RBoardCount();
+	}	
 
 	
 	

@@ -8,8 +8,8 @@
 <%@ include file="../include/sidebar.jsp" %>
 
 <h1>후기글 게시판</h1>
-${boardList}
-${result }
+<%-- ${boardList2} --%>
+
 ${review }
 <div class="col-xs-12 table-responsive">
 	<table class="table table-striped">
@@ -25,19 +25,19 @@ ${review }
 		</thead>
 		<tbody>
 
-			<c:set var="boardno" value="${boardList.size() }"></c:set>
+			<c:set var="boardno" value="${boardList2.size() }"></c:set>
 			<fmt:parseNumber var="boardno" value="${boardno }" type="number" />
-			<c:forEach items="${boardList }" var="boardList" varStatus="status">
+			<c:forEach items="${boardList2 }" var="boardList2" varStatus="status">
 
 			<tr>
- 				<td>>${boardno }</td>
+ 				<td>${boardno }</td>
 				<td>11</td>
 				<td>
-					<a href="/reviewcontent?cno=${boardList.cno }">${boardList.b_title } </a>
+					<a href="/reviewcontent?bno=${boardList2.bno }&cno=${boardList2.cno}">${boardList2.b_title } </a>
 				</td>
-				<td>${boardList.b_content }</td>
+				<td>${boardList2.b_content }</td>
 				<td>11</td>
-				<td>${boardList.b_writer }</td>
+				<td>${boardList2.b_writer }</td>
 					<c:set var="boardno" value="${boardno -1 }"></c:set>
 			</tr>
 			</c:forEach>
@@ -49,16 +49,16 @@ ${review }
 			<ul class="pagination pagination-sm no-margin pull-right">
                 
                 <c:if test="${pageMaker.prev }">
-					<li><a href="/notice?page=${pageMaker.startPage-1 }"class="bt prev"><</a></li>
+					<li><a href="/reviewboard?page=${pageMaker.startPage-1 }"class="bt prev"><</a></li>
 				</c:if>
 				<c:forEach var="idx" begin="${pageMaker.startPage }" end="${pageMaker.endPage }" step="1">
 					<li 
 						<c:out value="${idx == pageMaker.cri.page? 'class=active':'' }"/>
 					
-					><a href="/notice?page=${idx }">${idx }</a></li>
+					><a href="/reviewboard?page=${idx }">${idx }</a></li>
 				</c:forEach>
                 <c:if test="${pageMaker.next }">
-					<li><a href="/notice?page=${pageMaker.endPage+1 }" class="bt next">></a></li>
+					<li><a href="/revireboard?page=${pageMaker.endPage+1 }" class="bt next">></a></li>
 				</c:if>
                
 <!--                 <a href="#" class="bt last">>></a> -->

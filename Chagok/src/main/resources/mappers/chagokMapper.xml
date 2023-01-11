@@ -269,7 +269,7 @@
 
 
 	<!-- 게시판과 챌린지 -->
-	<select id="boardChallenge" resultType="string">
+	<select id="boardChallenge" resultType="map">
 		select *
 		from challenge c inner join board b
 		where bno = #{bno} and b.cno = c.cno
