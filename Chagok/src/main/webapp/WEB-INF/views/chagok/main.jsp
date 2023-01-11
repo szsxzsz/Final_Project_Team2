@@ -75,14 +75,13 @@
 						<dl class="btm">
 							<dt>차곡</dt>
 							<dd>
-								<span>한눈에 모아보는 자동화 자산관리, <b>무료사용</b>으로 <b>편리함</b>을 즐겨보세요.
+								<span>한눈에 모아보는 자동화 자산관리, <b>차곡</b>으로 <b>편리함</b>을 즐겨보세요.
 								</span>
 								<div class="btn_bx">
-									<a href="sample/main.html" class="btn_demo border"
-										target="_blank">둘러보기</a> <a href="login.aspx"
-										class="btn_free full">무료로 시작하기</a>
-									<button type="button" class="btn_inquiry border"
-										onclick="pop_inquiry_show();">제품 문의하기</button>
+									<a href="/assetmain" class="btn_demo border">자산관리</a>
+									<a href="/commumain" class="btn_free full">커뮤니티</a>
+<!-- 									<button type="button" class="btn_inquiry border" -->
+<!-- 										onclick="pop_inquiry_show();">제품 문의하기</button> -->
 								</div>
 							</dd>
 						</dl>
@@ -90,17 +89,17 @@
 					
 					<br><br><br>
 					
-					<hr>
+<!-- 					<hr> -->
 					
-					<br><br><br>
-						<h1>임시 링크 입니다 기능 만들어지기 전까진 요기로 이동하세요<br><br></h1>
+<!-- 					<br><br><br> -->
+<!-- 						<h1>임시 링크 입니다 기능 만들어지기 전까진 요기로 이동하세요<br><br></h1> -->
 						
-						<a href="/commumain">커뮤니티 메인 가기</a><br><br>
-						<a href="/assetmain">자산관리 메인 가기</a><br>
+<!-- 						<a href="/commumain">커뮤니티 메인 가기</a><br><br> -->
+<!-- 						<a href="/assetmain">자산관리 메인 가기</a><br> -->
 					
-					<br><br><br>
+<!-- 					<br><br><br> -->
 					
-					<hr>
+<!-- 					<hr> -->
 					
 					<br><br><br>
 					
@@ -111,28 +110,28 @@
 								<div class="wrap">
 									<div class="top_bx">
 										<div class="tit">
-											<p>재물조사 현황을</p>
+											<p>이 달의 수입지출을</p>
 											<p>알려드려요!</p>
 										</div>
 									</div>
 									<div class="mid_bx">
 										<div class="list_wrap">
 											<dl class="list">
-												<dt>재물조사 기간</dt>
-												<dd>2021-01-01 - 2021-01-07</dd>
+												<dt>수입지출 현황</dt>
+												<dd>2023-01-01-2023-01-16</dd>
 											</dl>
 											<dl class="list">
-												<dt>담당인원</dt>
-												<dd>5명</dd>
+												<dt>이 달의 소비</dt>
+												<dd>택시</dd>
 											</dl>
 											<dl class="list">
-												<dt>재고조사 진행품목</dt>
-												<dd>1000개</dd>
+												<dt>지난달 대비</dt>
+												<dd>60% 지출</dd>
 											</dl>
 											<div class="progress">
 												<dl class="p_item">
-													<dt class="dt">완료</dt>
-													<dd class="dd">600개/60%</dd>
+													<dt class="dt">현재</dt>
+													<dd class="dd">60%</dd>
 												</dl>
 												<div class="bar">
 													<p class="bg">
@@ -149,34 +148,34 @@
 								<div class="wrap">
 									<div class="top_bx">
 										<div class="tit">
-											<p>여기저기서 구매한</p>
-											<p>소프트웨어 한번에</p>
-											<p>보고싶으면 샘큐!</p>
+											<p>소비패턴 분석으로</p>
+											<p>금융상품 및 챌린지</p>
+											<p>추천 받아보세요!</p>
 										</div>
-										<div class="full">현황 조회하기</div>
+										<div class="full">조회하기</div>
 									</div>
 									<div class="mid_bx">
 										<div class="list_wrap">
 											<dl class="list">
 												<dt>
-													총 라이선스<i>(구독/구매)</i>
+													카드<i>(적립/할인)</i>
 												</dt>
-												<dd>100개</dd>
+												<dd>적립형</dd>
 											</dl>
 											<dl class="list subs">
-												<dt>구독형</dt>
-												<dd>75개</dd>
+												<dt>추천카드</dt>
+												<dd>핏(Fit)</dd>
 											</dl>
 											<dl class="list">
-												<dt>구매형</dt>
-												<dd>25개</dd>
+												<dt>절약형</dt>
+												<dd>교통비</dd>
 											</dl>
 										</div>
 										<div class="chart_wrap">
 											<div class="pie">
 												<div class="blank">
 													<div class="txt">
-														<p>구독형</p>
+														<p>택시비</p>
 														<p>
 															75<i>%</i>
 														</p>
@@ -192,18 +191,18 @@
 								<div class="wrap">
 									<div class="top_bx">
 										<div class="tit">
-											<p>소모품 운영현황을</p>
+											<p>참가 챌린지 현황을</p>
 											<p>알려드려요.</p>
 										</div>
 										<div class="mid_wrap">
 											<dl class="p_item">
-												<dt class="dt">금월 입고량</dt>
-												<dd class="dd">1200개</dd>
+												<dt class="dt">저축형</dt>
+												<dd class="dd">50만원 모으기</dd>
 											</dl>
 											<div class="progress">
 												<dl class="p_item">
-													<dt class="dt">금월 출고량</dt>
-													<dd class="dd">50%</dd>
+													<dt class="dt">현황</dt>
+													<dd class="dd">25만원</dd>
 												</dl>
 												<div class="bar">
 													<p class="bg">
@@ -215,24 +214,19 @@
 									</div>
 									<div class="mid_bx">
 										<div class="tit">
-											<p>사무 비품 현황을</p>
+											<p>참가 챌린지 현황을</p>
 											<p>알려드려요.</p>
 										</div>
 										<div class="mid_wrap">
 											<div class="progress new">
 												<dl class="p_item">
-													<dt class="dt">금월 신규등록</dt>
-													<dd class="dd">60%</dd>
+													<dt class="dt">절약형</dt>
+													<dd class="dd">식비 줄이기</dd>
 												</dl>
-												<div class="bar">
-													<p class="bg">
-														<i class="num" style="width: 60%"></i>
-													</p>
-												</div>
 											</div>
 											<div class="progress">
 												<dl class="p_item">
-													<dt class="dt">사무비품 미할당</dt>
+													<dt class="dt">현황</dt>
 													<dd class="dd">35%</dd>
 												</dl>
 												<div class="bar">
@@ -251,7 +245,7 @@
 			</section>
 			<section class="section_bubble">
 				<div class="cnt">
-					<h3 class="blind">샘큐</h3>
+					<h3 class="blind">차곡</h3>
 					<div class="cnt_bx">
 						<div class="top_bx">
 							<div class="left"
