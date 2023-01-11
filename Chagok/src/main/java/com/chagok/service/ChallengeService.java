@@ -6,6 +6,7 @@ import java.util.Map;
 
 import com.chagok.domain.AbookVO;
 import com.chagok.domain.BoardVO;
+import com.chagok.domain.BusinessAccountVO;
 import com.chagok.domain.ChallengeVO;
 import com.chagok.domain.Criteria;
 import com.chagok.domain.MinusVO;
@@ -109,7 +110,6 @@ public interface ChallengeService {
 	// 가계부 가져오기
 	public List<Map<String, Object>> getMinusAbook(Integer mno, Integer cno);
 	
-	
 	// 게시판 + 챌린지 리스트
 	public Map<String, Object> getBoardChallenge(Integer cno) throws Exception;
 	
@@ -130,6 +130,16 @@ public interface ChallengeService {
 		
 	// 전체 후기 게시판 글 개수 조회
 	public int RboardCount() throws Exception;	
+	
+	// 관리자 챌린지 승인거절
+	public void rejectChallenge(ChallengeVO vo) throws Exception;
+	
+	// 비즈니스 계좌 송금
+	public void sendBiz(BusinessAccountVO vo) throws Exception;
+	
+	// 비지니스 계좌 송금시 플러스 테이블 업데이트 (pl_sum)
+	public void updatePlusSum(BusinessAccountVO vo) throws Exception;
+
 	
 }
 
