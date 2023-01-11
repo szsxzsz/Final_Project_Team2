@@ -9,13 +9,13 @@
 <meta name="viewport"
 	content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=yes,viewport-fit=cover">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="description" content="스마트한 자산관리 솔루션, 회사의 자산관리가 쉬워진다.">
-<meta name="keywords" content="SAMQ,샘큐,노버스,노버스메이,자산관리">
-<meta name="author" content="Novusmay">
+<meta name="description" content="똑똑한 소비습관 기르기, 나의 자산관리가 쉬워진다.">
+<meta name="keywords" content="Chagok,차곡,가계부,챌린지,자산관리">
+<meta name="author" content="chagok">
 <meta property="og:title"
-	content="SAMQ - 스마트한 자산관리 솔루션, 회사의 자산관리가 쉬워진다.">
-<meta property="og:description" content="스마트한 자산관리 솔루션, 회사의 자산관리가 쉬워진다.">
-<meta property="og:site_name" content="SAMQ">
+	content="차곡 - 똑똑한 소비습관 기르기, 나의 자산관리가 쉬워진다.">
+<meta property="og:description" content="똑똑한 소비습관 기르기, 나의 자산관리가 쉬워진다.">
+<meta property="og:site_name" content="차곡">
 <meta property="og:url" content="https://www.novusmay.com/samq/">
 <meta property="og:image" content="https://i.imgur.com/syK7Oa0.jpg">
 <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.png">
