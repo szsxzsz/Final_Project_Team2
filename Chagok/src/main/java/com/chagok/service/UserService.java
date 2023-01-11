@@ -1,5 +1,6 @@
 package com.chagok.service;
 
+import java.util.List;
 import java.util.Map;
 
 import com.chagok.domain.UserVO;
@@ -26,4 +27,7 @@ public interface UserService {
 	
 	// 인증성공 isCheck N => Y
 	public void updateIsCheck(int mno) throws Exception;
+	
+	// 관리자 전체 회원 조회
+	public List<UserVO> getUserList() throws Exception;
 }

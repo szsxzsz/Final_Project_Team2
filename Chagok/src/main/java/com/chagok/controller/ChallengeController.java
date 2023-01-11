@@ -475,6 +475,9 @@ public class ChallengeController {
 		return "/challenge/resultdefeat";
 	}
 	
+	////////////////////// 관리자 페이지 ///////////////////////////
+	
+	
 	// 관리자 챌린지 승인
 	// http://localhost:8080/challenge/adminconfirm
 	@GetMapping("/adminconfirm")
@@ -494,6 +497,25 @@ public class ChallengeController {
 		return "/challenge/adminconfirm";
 	}
 	
+	//
+	// 관리자 회원관리
+	@GetMapping("/memberManagement")
+	public String memberManagementGET(Model model) throws Exception {
+		mylog.debug("/memberManagementGET 호출");
+		
+		List<UserVO> user = uservice.getUserList();
+		
+		mylog.debug(user.toString());
+		
+		model.addAttribute("userlist", user);
+		
+		return "/challenge/memberManagement";
+	}
+	
+	
+	
+	
+	////////////////////// 관리자 페이지 ///////////////////////////
 	
 	
 	
