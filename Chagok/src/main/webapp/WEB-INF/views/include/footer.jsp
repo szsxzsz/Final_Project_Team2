@@ -406,9 +406,5 @@ $(document).ready(function(){
 	
 });
 </script>
-
-	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-	<script type="text/javascript" src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
   </body>
 </html>
