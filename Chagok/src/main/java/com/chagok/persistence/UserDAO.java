@@ -32,5 +32,11 @@ public interface UserDAO {
 	
 	// user_seq_no 저장
 	public void updateSeqNo(Map<String, Object> map);
+	
+	// 유저 정보 업데이트
+	public void updateUserInfo(UserVO vo);
+	
+	// 회원 탈퇴
+	public int unregistUser(UserVO vo) throws Exception;
 
 }
