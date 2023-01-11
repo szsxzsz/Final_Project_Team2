@@ -158,8 +158,8 @@
 	
 	<!-- 챌린지 등록하기 --> 
   	<insert id="challengeRegist">
-     	insert into challenge (c_title,ctno,c_period,c_start,c_pcnt,c_deposit,c_freq,c_amount,c_content,c_status,c_sort,c_min,c_file,c_thumbFile,c_cnt) 
-     	values (#{c_title},#{ctno},#{c_period},#{c_start},#{c_pcnt},#{c_deposit},#{c_freq},#{c_amount},#{c_content},#{c_status},#{c_sort},#{c_min},#{c_file},#{c_thumbFile},#{c_cnt})  
+     	insert into challenge (cno,c_title,ctno,c_period,c_start,c_pcnt,c_deposit,c_freq,c_amount,c_content,c_status,c_sort,c_min,c_file,c_thumbFile,c_cnt,mno,c_person) 
+     	values (#{cno},#{c_title},#{ctno},#{c_period},#{c_start},#{c_pcnt},#{c_deposit},#{c_freq},#{c_amount},#{c_content},#{c_status},#{c_sort},#{c_min},#{c_file},#{c_thumbFile},#{c_cnt},#{mno},#{c_person})  
   	</insert>
   	
   	<!-- 챌린지 목록 -->
@@ -287,7 +287,7 @@
 		select * from feed where cno = #{cno}
 	</select>
 	
-	<!-- 알림  저장 -->
+	<!-- 알림 저장 -->
 	<insert id="alert">
 		insert into alert(cno, a_receive, a_content) values(#{cno}, #{a_receive}, #{a_content});
 	</insert>
@@ -297,6 +297,13 @@
 		insert into feed(contents, f_date, f_receive, cno) values(#{contents}, #{f_date}, #{f_receive}, #{cno});
 	</insert>
 	
+	<!-- 챌린지 등록하기 참여자 닉네임 추가-->
+	<update id="getchallengeNick" parameterType="com.chagok.domain.ChallengeVO">
+		update challenge set c_person = concat(c_person, ',', (select nick from user where mno=#{mno})),
+		c_cnt=c_cnt+1
+		where cno=#{cno};
+	</update>
+
 	<!-- 페이징처리 공지게시판 한 페이지당 최대갯수 -->
 	<select id="nboardPage" resultType="com.chagok.domain.BoardVO">
 	  <![CDATA[
@@ -374,4 +381,4 @@
 		pl_cnt=(select pl_cnt where mno = #{mno} and cno = #{cno}) + 1 
 		where mno = #{mno} and cno = #{cno}
 	</update>
-  </mapper>
+ </mapper>
