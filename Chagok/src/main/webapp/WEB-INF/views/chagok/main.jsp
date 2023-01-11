@@ -243,7 +243,7 @@
 					</div>
 				</div>
 			</section>
-			<section class="section_bubble" style="padding:15px;">
+			<section class="section_bubble" style="padding:0px;">
 				<div class="cnt">
 					<h3 class="blind">차곡</h3>
 					<div class="cnt_bx">
@@ -271,8 +271,8 @@
 								style="opacity: 1; transform: matrix(1, 0, 0, 1, 0, 0);">
 								<div class="txt">
 									<p>경제 뉴스</p>
-									<p>한번에 모아서..</p>
-									<p>정보 공유하도 하고..</p>
+									<p>한번에 모아보고..</p>
+									<p>정보 공유하고..</p>
 									<p>너무 좋을 것 같은데..</p>
 								</div>
 							</div>
@@ -1372,7 +1372,7 @@
 											차곡과 함께 <i class="mob">개인 자산</i>
 										</p>
 										<p>
-											<i class="pc">차곡차곡</i> 개인 자산
+											<i class="pc">개인 자산</i> 차곡차곡
 										</p>
 										<p>모아보세요!</p>
 									</div>
