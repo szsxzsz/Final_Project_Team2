@@ -153,7 +153,6 @@ public class ChallengeController {
 //		mylog.debug("cateList : "+cateList);
 		mylog.debug("minusFeedGET()에서 id : "+session.getId());
 		SysLogVO sysLogVO = new SysLogVO();
-		
 //		ObjectMapper mapper = new ObjectMapper();
 
 //		String jsonAbook = mapper.writeValueAsString(abookList);
