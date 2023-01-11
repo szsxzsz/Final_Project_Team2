@@ -29,4 +29,13 @@ public interface UserService {
 	
 	// user_seq_no 저장
 	public void updateSeqNo(Map<String, Object> map);
+	
+	// 유저정보 (전화번호, 계좌번호, 은행, 예금주) 업데이트
+	public void updateUserInfo(UserVO vo);
+	
+	// 닉네임 파라미터로 게시글 정보 조회
+	
+	// 회원 탈퇴
+	public int unregistUser(UserVO vo) throws Exception;
+	
 }

@@ -86,6 +86,19 @@ public class UserDAOImpl implements UserDAO {
 	public void updateSeqNo(Map<String, Object> map) {
 		sqlSession.update(NAMESPACE+".updateSeqNo", map);
 	}
+
+	@Override
+	public void updateUserInfo(UserVO vo) {
+		sqlSession.update(NAMESPACE+".updateUserInfo", vo);
+	}
+	
+	@Override
+	public int unregistUser(UserVO vo) throws Exception {
+		
+		int result = sqlSession.delete(NAMESPACE+".unregistUser", vo);
+		
+		return result;
+	}
 	
 	
 	

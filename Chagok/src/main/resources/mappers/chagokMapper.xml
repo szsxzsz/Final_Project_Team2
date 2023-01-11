@@ -109,9 +109,9 @@
 	</select>
 	
 	<!-- 성공/실패 -->
-	<select id="">
-		select * from challenge 
-	</select>
+<!-- 	<select id=""> -->
+<!-- 		select * from challenge  -->
+<!-- 	</select> -->
 <!-- 	<insert id="joinplus" parameterType="com.chagok.domain.PlusVO"> -->
 <!-- 		insert into plus(plcno,mno,cno,pl_finish,pl_cnt,pl_sum)  -->
 <!-- 		values(#{plcno},#{mno},#{cno},#{pl_finish},#{pl_cnt},#{pl_sum})  -->
@@ -136,12 +136,24 @@
 		where ch.ctno = c.ctno;
   	</select>
   	
+  	<!-- ischeck 업데이트 -->
 	<update id="updateIsCheck">
 		update user set isCheck = "Y" where mno = #{mno}
 	</update>
 	
+	<!-- userseqno 업데이트 -->
 	<update id="updateSeqNo">
 		update user set user_seq_no = #{user_seq_no} where mno = #{mno}
 	</update>
+	
+	<!-- 유저 정보 업데이트 -->
+	<update id="updateUserInfo">
+		update user set tel = #{tel}, rname = #{rname}, raccount = #{raccount}, rbank = #{rbank} where mno = #{mno}
+	</update>
+	
+	<!-- 회원 탈퇴 -->
+	<delete id="unregistUser">
+		delete from user where mno = #{mno} and pw = #{pw}
+	</delete>
 	
   </mapper>
