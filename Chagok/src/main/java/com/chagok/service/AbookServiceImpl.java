@@ -49,7 +49,6 @@ public class AbookServiceImpl implements AbookService{
 		
 		return dao.ctbottomList();
 	}
-
 	
 	
 	
