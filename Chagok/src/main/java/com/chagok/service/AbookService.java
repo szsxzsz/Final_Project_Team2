@@ -56,4 +56,8 @@ public interface AbookService {
 	
 	// 달력
 	public List<Map<String, Object>> calInout(Integer mno, Integer mm, Integer inout) throws Exception;
+
+	void insAbookList(AbookVO vo) throws Exception;
+
+	List<AbookVO> toCate(int ctno) throws Exception;
 }
