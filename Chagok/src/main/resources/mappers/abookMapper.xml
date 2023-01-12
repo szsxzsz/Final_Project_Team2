@@ -37,10 +37,10 @@
   </delete> 
   
   <!-- 가계부 적기 -->
-  <insert id="insAbookList" parameterType="AbookVO">
-  insert into account_book()
-  values(#{},)
-  </insert>
+<!--   <insert id="insAbookList" parameterType="AbookVO"> -->
+<!--   insert into account_book() -->
+<!--   values(#{},) -->
+<!--   </insert> -->
   
  	<!-- //////////////////// MJ //////////////////// -->
 	<!-- 해당월 예산 조회 -->
