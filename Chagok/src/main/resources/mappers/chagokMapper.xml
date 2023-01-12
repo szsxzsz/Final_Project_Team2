@@ -315,6 +315,11 @@
 		insert into alert(cno, a_receive, a_content) values(#{cno}, #{a_receive}, #{a_content});
 	</insert>
 	
+	<!-- 알림 가져옴  -->
+	<select id="getAlarm" resultType="com.chagok.domain.AlertVO">
+		select * from alert where cno=#{cno}
+	</select>
+	
 	<!-- 메시지 저장  -->
 	<insert id="saveMsg1">
 		insert into feed(contents, f_date, f_receive, cno) values(#{contents}, #{f_date}, #{f_receive}, #{cno});
