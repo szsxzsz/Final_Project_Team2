@@ -20,9 +20,6 @@
 						&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
 						&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
 						&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-						&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-						&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-						
 						
 				    	<span style="color: #10A19D;"class = "text-right">글쓴이 | ${board.b_writer }</span>
 				    	&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
@@ -41,8 +38,8 @@
 		    </div>
 		</div>
     </div>
-        <input class="btn btn-block btn-success btn-lg" type="submit" value="수정하기" onclick="location.href='/noticeupdate?bno=${board.bno}';" style="width:218px; margin-left: 950px;">
-        <input class="btn btn-block btn-success btn-lg" type="button" value="돌아가기" onclick="location.href='/notice';" style="width:218px; margin-left: 950px;">
+        <input class="btn btn-block btn-success btn-lg" type="submit" value="수정하기" onclick="location.href='/noticeupdate?bno=${board.bno}';" style="width:218px; margin-left: 950px; background-color:#66BB7A;">
+        <input class="btn btn-block btn-success btn-lg" type="button" value="돌아가기" onclick="location.href='/notice';" style="width:218px; margin-left: 950px; background-color:#66BB7A;">
 </form>
 
 <%@ include file="../include/footer.jsp"%>

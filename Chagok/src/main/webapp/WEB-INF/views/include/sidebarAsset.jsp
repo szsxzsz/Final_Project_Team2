@@ -37,81 +37,74 @@
   <body class="skin-blue sidebar-mini">
   
     <div class="wrapper">
-     
+
       <!-- Left side column. contains the logo and sidebar -->
       <aside class="main-sidebar">
         <!-- sidebar: style can be found in sidebar.less -->
         <section class="sidebar">
           <!-- Sidebar user panel -->
-
           <div class="user-panel">
             <div class="pull-left image">
               <img src="/resources/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image" />
             </div>
             <div class="pull-left info">
-              <p>${userVO.id }</p>
+            <c:if test="${nick != null }">
+              <p><a href="#" style="color: black;">${nick }</a></p>
+              <a href="#" ><i class="fa fa-circle text-success" ></i> Online</a>
+            </c:if>
+            <c:if test="${nick == null }">
+              <p><a href="/login">로그인을 해주세요</a></p>
+            </c:if>
 
-              <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
             </div>
           </div>
 
           <!-- sidebar menu: : style can be found in sidebar.less -->
           <ul class="sidebar-menu">
-            
-            <!-- 가계부 -->
-            <li class="treeview" style="background-color: #1e282c; font-size: 1.3em; padding: 10px 0 10px 0">
+            <li class="treeview active">
               <a href="#">
-                <i class="fa fa-calendar"></i> <span style="color: #fff; padding-left: 10px">가 계 부</span>
-                <i class="fa fa-angle-left pull-right"></i>
+                <i class="fa fa-calendar"></i> <span>가계부</span> <i class="fa fa-angle-left pull-right"></i>
               </a>
-              <ul class="treeview-menu">
-                <li class="active"><a href="/asset/abookList"><i class="fa fa-circle-o"></i> 목록형</a></li>
-                <li><a href="/asset/abookCal"><i class="fa fa-circle-o"></i> 달력형</a></li>
-                <li><a href="/asset/budget?mm=0"><i class="fa fa-circle-o"></i> 예 산</a></li>
+              <ul class="treeview-menu ">
+                <li><a href="/asset/abookList"></i> 목록형</a></li>
+                <li><a href="/asset/abookCal"></i> 달력형</a></li>
+                <li><a href="/asset/budget?mm=0"></i> 예 산</a></li>
               </ul>
             </li>
-            
-            <!-- 내자산 -->
-            <li class="treeview" style="background-color: #1e282c; font-size: 1.3em; padding: 10px 0 10px 0">
-              <a href="#">
-                <i class="fa fa-bank"></i> <span style="color: #fff; padding-left: 10px">자 산</span>
-                <i class="fa fa-angle-left pull-right"></i>
+            <li class="treeview active">
+              <a href="/asset/myAsset">
+                <i class="fa fa-bank"></i>
+                <span>내 자산</span>
               </a>
-              <ul class="treeview-menu">
-                <li class="active"><a href="/asset/myAsset"><i class="fa fa-circle-o"></i> 내 자산</a></li>
-                <li><a href="/asset/myCard"><i class="fa fa-circle-o"></i> 카드</a></li>
-                <li><a href="/asset/myAccount"><i class="fa fa-circle-o"></i> 계좌</a></li>
-                <li><a href="/asset/myCash"><i class="fa fa-circle-o"></i> 현금(보류)</a></li>
-              </ul>
+              
             </li>
             
-            <!-- 소비리포트 -->
-            <li class="treeview" style="background-color: #1e282c; font-size: 1.3em; padding: 10px 0 10px 0">
+            <li class="treeview active">
               <a href="#">
-                <i class="fa fa-pie-chart"></i> <span style="color: #fff; padding-left: 10px">소비 리포트</span>
+                <i class="fa fa-pie-chart"></i>
+                <span>소비 리포트</span>
                 <i class="fa fa-angle-left pull-right"></i>
               </a>
-              <ul class="treeview-menu">
-                <li class="active"><a href="/asset/dtRpt"><i class="fa fa-circle-o"></i> 날짜별 리포트</a></li>
-                <li><a href="/asset/ctRpt"><i class="fa fa-circle-o"></i> 카테고리별 리포트</a></li>
+              <ul class="treeview-menu active">
+                <li><a href="/asset/dtRpt"></i> 날짜별 리포트</a></li>
+                <li><a href="/asset/ctRpt"></i> 카테고리별 리포트</a></li>
               </ul>
             </li>
-          </ul>
+
         </section>
         <!-- /.sidebar -->
       </aside>
 
       <!-- Content Wrapper. Contains page content -->
-      <div class="content-wrapper" style="min-height:1010px";>
+      <div class="content-wrapper">
         <!-- Content Header (Page header) -->
-<!--         <section class="content-header"> -->
-<!--           <h1> -->
-<!--             General Form Elements -->
-<!--             <small>Preview</small> -->
-<!--           </h1> -->
-<!--           <ol class="breadcrumb"> -->
-<!--             <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li> -->
-<!--             <li><a href="#">Forms</a></li> -->
-<!--             <li class="active">General Elements</li> -->
-<!--           </ol> -->
-<!--         </section> -->
+        <section class="content-header">
+          <h1>
+           	<a href="/commumain"><img src="${pageContext.request.contextPath }/resources/plugins/img/double-arrow.png"><small> 메인</small></a>
+          </h1>
+          <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li><a href="#">Forms</a></li>
+            <li class="active">General Elements</li>
+          </ol>
+        </section>

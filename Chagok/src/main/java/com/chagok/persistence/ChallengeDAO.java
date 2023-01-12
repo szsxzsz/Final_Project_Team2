@@ -115,9 +115,6 @@ public interface ChallengeDAO {
 	// 가계부 값 연동하기
 	public void updateMoney(Integer mno, Integer ab_amount, Integer cno);
 	
-	// 페이징 처리 구현된 공지리스트 조회
-	public List<BoardVO> getNBoardPage(Integer page) throws Exception;
-		
 	// 공지리스트 조회 (페이징처리 cri)
 	public List<BoardVO> getNBoardPage(Criteria cri) throws Exception;
 	
@@ -128,14 +125,9 @@ public interface ChallengeDAO {
 	public void confirmChallenge(Integer c_status, Integer cno) throws Exception;
 	
 	// 관리자 모달창 회원mno
-	public List<UserVO> adminmodal(Integer mno) throws Exception;
-	
-	// 페이징 처리 구현된 후기리스트 조회
-//	public List<BoardVO> getRBoardPage(Integer page) throws Exception;
-	public List<Map<String, Object>> getRBoardPage(Integer page) throws Exception;
+	public List<UserVO> adminmodal(Map<String, Object> map) throws Exception;
 			
 	// 후기리스트 조회 (페이징처리 cri)
-//	public List<BoardVO> getRBoardPage(Criteria cri) throws Exception;
 	public List<Map<String, Object>> getRBoardPage(Criteria cri) throws Exception;
 		
 	// 전체 후기게시판 글 개수 조회
@@ -152,14 +144,17 @@ public interface ChallengeDAO {
 
 	// 챌린지목록(페이징처리)
 	public List<ChallengeVO> chListAll(Criteria cri) throws Exception;
-	
-	// 페이징 처리 구현된 자유게시판 조회
-	public List<BoardVO> getFBoardPage(Integer page) throws Exception;
-		
+			
 	// 자유게시판 조회 (페이징처리 cri)
 	public List<BoardVO> getFBoardPage(Criteria cri) throws Exception;
 	
 	// 전체 자유게시판 글 개수 조회
 	public int FBoardCount() throws Exception;
+		
+	// 경제게시판 조회 (페이징처리 cri)
+	public List<BoardVO> getEBoardPage(Criteria cri) throws Exception;
+		
+	// 경제 자유게시판 글 개수 조회
+	public int EBoardCount() throws Exception;	
 
 }

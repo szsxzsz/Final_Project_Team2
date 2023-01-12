@@ -224,7 +224,7 @@ color : rgba(255, 219, 131 / 80%);
 				<a href="/commumain"><p style="font-family: 'GmarketSans'">커뮤니티</p></a>
 			</div>
 			<div class="management">
-				<a href="/assetmain"><p style="font-family: 'GmarketSans'">자산관리</p></a>
+				<a href="/asset/aMain"><p style="font-family: 'GmarketSans'">자산관리</p></a>
 			</div>
 			<div class="notice">
 				<a href="/notice"><p style="font-family: 'GmarketSans'">공지사항</p></a>

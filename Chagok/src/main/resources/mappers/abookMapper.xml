@@ -6,7 +6,7 @@
   <mapper namespace="com.chagok.mapper.abookMapper">
   
   <!-- 가계부 목록 -->
-  <select id="getAbookList" resultType="AbookVO">
+  <select id="getAbookList" resultType="com.chagok.domain.AbookVO">
 	select * from account_book as ab inner join category as c on ab.ctno=c.ctno where mno=#{mno}
   </select>
   
@@ -37,10 +37,18 @@
   </delete> 
   
   <!-- 가계부 적기 -->
-<!--   <insert id="insAbookList" parameterType="AbookVO"> -->
-<!--   insert into account_book() -->
-<!--   values(#{},) -->
-<!--   </insert> -->
+  <insert id="insAbookList" parameterType="AbookVO">
+  insert into account_book(mno, ctno, ab_inout, ab_amount, ab_date, ab_content, ab_method, ab_memo)
+  values(#{mno}, #{ctno}, #{ab_inout}, #{ab_amount}, #{ab_date}, #{ab_content}, #{ab_method}, #{ab_memo})
+  </insert>
+  
+  <!-- ctno로 카테고리 이름 뽑기 -->
+    <select id="toCate" resultType="AbookVO">
+  	select ct_top, ct_bottom
+	from category
+	where ctno=#{ctno};
+  </select>
+  
   
  	<!-- //////////////////// MJ //////////////////// -->
 	<!-- 해당월 예산 조회 -->

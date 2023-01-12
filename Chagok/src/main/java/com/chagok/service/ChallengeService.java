@@ -126,7 +126,7 @@ public interface ChallengeService {
 	public void confirmChallenge(Integer status, Integer cno) throws Exception;
 	
 	// 관리자 모달창 회원mno
-	public List<UserVO> adminmodal(Integer mno) throws Exception;
+	public List<UserVO> adminmodal(Map<String, Object> map) throws Exception;
 
 	// 후기글 정보 조회(페이징처리 cri)
 //	public List<BoardVO> getRBoardPage(Criteria cri) throws Exception;
@@ -152,5 +152,11 @@ public interface ChallengeService {
 		
 	// 전체 자유 게시판 글 개수 조회
 	public int FboardCount() throws Exception;
+	
+	// 자유게시판 경제 조회(페이징처리 cri)
+	public List<BoardVO> getEBoardPage(Criteria cri) throws Exception;
+	
+	// 전체 경제 게시판 글 개수 조회
+	public int EboardCount() throws Exception;	
 }
 
