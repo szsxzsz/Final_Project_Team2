@@ -63,7 +63,7 @@
 					            <li
 								    <c:out value="${idx == pagevo.cri.page? 'class=active':'' }"/>
 								>
-								    <a href="/cbizAccount?page=${idx }">${idx }</a>
+								    <a href="/bizAccount?page=${idx }">${idx }</a>
 								</li>
 					        </c:forEach>
 					
