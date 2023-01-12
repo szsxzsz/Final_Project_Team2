@@ -136,8 +136,8 @@ public class ChallengeController {
 	public String minusFeed(Model model,@RequestParam("cno") int cno,HttpSession session,ChallengeVO cvo,MinusVO mvo) throws Exception {
 		mylog.debug(" 수 지 : minusFeed Get 호출 ");
 		
-		int mno = cvo.getMno();
-		
+//		int mno = cvo.getMno();
+		Integer mno = service.getChallengeInfo(cno).getMno();		
 		ChallengeVO vo = service.getChallengeInfo(cno);
 		List<Map<String, Object>> minusPeoList = service.getMinusPeople(cno);
 		mylog.debug(minusPeoList+"");
@@ -176,6 +176,7 @@ public class ChallengeController {
 //	   model.addAttribute("jsonAbook",jsonAbook);
 //		model.addAttribute("jsonCate",jsonCate);
 	   model.addAttribute("minusAbook", minusAbook);
+	   model.addAttribute("host",uservice.getUser(mno));
 	   
 	   return "/challenge/minusFeed";
 	}

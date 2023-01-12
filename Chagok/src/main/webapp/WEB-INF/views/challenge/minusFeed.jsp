@@ -52,7 +52,7 @@
 				<div class="col-lg-6" style="line-height: 180%">
 	             <div class="progress-group" style="width: 280px;" >
 	               <span class="progress-text">챌린지 장 </span>
-	               <span class="progress-number"><b>${vo.mno }</b>님</span>
+	               <span class="progress-number"><b>${host.nick }</b>님</span>
 	             </div>
 	             <div class="progress-group" style="width: 280px;">
 	               <span class="progress-text">챌린지 인원</span>
