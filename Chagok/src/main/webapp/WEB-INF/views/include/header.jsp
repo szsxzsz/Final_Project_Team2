@@ -45,6 +45,26 @@
 <script type="text/javascript" src="../resources/plugins/jqGrid_4.4.3/js/jquery.jqGrid.min.js" ></script>
 <!-- jQuery -->
 
+<!-- <link rel="stylesheet" type="text/css" media="screen" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css"> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
+<script type="text/javascript" src="../resources/plugins/datepicker/jquery.datetimepicker.min.js"></script>
+<script type="text/javascript" src="../resources/plugins/datepicker/jquery.datetimepicker.full.min.js"></script>
+<link rel="stylesheet" type="text/css" media="screen" href="../resources/plugins/datepicker/datepicker3.css" />
+<!-- <script type="text/javascript" src="../resources/plugins/datepicker/ko.js"></script> -->
+<!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script> -->
+
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.js"></script>          flatpicker ko -->
+<!-- <link rel="stylesheet" type="text/css" media="screen" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css"> -->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script> -->
+<!-- <script src="//code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script> -->
+
+<!-- date+time picker -->
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<link rel="stylesheet" type="text/css" href="https://npmcdn.com/flatpickr/dist/themes/confetti.css">
+<script src="https://npmcdn.com/flatpickr/dist/flatpickr.min.js"></script>    <!-- flatpicker min js -->
+<script src="https://npmcdn.com/flatpickr/dist/l10n/ko.js"></script>          <!-- flatpicker ko -->
+
+
 <!-- 결제 : iamport.payment.js -->
 <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
 
@@ -167,6 +187,19 @@ color : rgba(255, 219, 131 / 80%);
  background: rgb(176 224 229 / 5%);
  }   
 </style>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		var link = window.location.href;
+		var currentURL = link.substring(22);
+// 		alert(currentURL);
+		
+		$('#loginURL').click(function(){
+			$(this).attr('href', "/login?pageInfo="+currentURL)
+		});
+	});
+</script>
+
 </head>
 
 <body>
@@ -192,11 +225,11 @@ color : rgba(255, 219, 131 / 80%);
 		</div>
 		<div class="user_menu">
 		<c:if test="${nick == null}">
-			<a href="/login"><div class="login"><p style="font-family: 'GmarketSans'">로그인</p></div></a>
+			<a href="/login" id="loginURL"><div class="login"><p style="font-family: 'GmarketSans'">로그인</p></div></a>
 			<a href="/register"><div class="join"><p style="font-family: 'GmarketSans'">회원가입</p></div></a>
 		</c:if>
 		<c:if test="${nick != null}">
-			<a href="#"><div class="login"><p style="font-family: 'GmarketSans'"><small>${nick } 님 환영합니다.</small></p></div></a>
+			<a href="/myPage"><div class="login"><p style="font-family: 'GmarketSans'"><small>마이페이지</small></p></div></a>
 			<a href="/logout"><div class="join"><p style="font-family: 'GmarketSans'">로그아웃</p></div></a>
 		</c:if>
 		</div>

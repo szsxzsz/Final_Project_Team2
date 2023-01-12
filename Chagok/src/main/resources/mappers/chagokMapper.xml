@@ -148,6 +148,14 @@
 	<insert id="joinminusInsert" parameterType="map">
 		insert into minus(mno,cno) values(#{mno},#{cno});
 	</insert>
+	<!-- 성공/실패 -->
+<!-- 	<select id=""> -->
+<!-- 		select * from challenge  -->
+<!-- 	</select> -->
+<!-- 	<insert id="joinplus" parameterType="com.chagok.domain.PlusVO"> -->
+<!-- 		insert into plus(plcno,mno,cno,pl_finish,pl_cnt,pl_sum)  -->
+<!-- 		values(#{plcno},#{mno},#{cno},#{pl_finish},#{pl_cnt},#{pl_sum})  -->
+<!-- 	</insert> -->
 	
 	<!-- 챌린지 종료일자 정보 가져오기  -->
 	<select id="getChallengeEndDate" resultType="date">
@@ -168,6 +176,7 @@
 		where ch.ctno = c.ctno;
   	</select>
   	
+  	<!-- ischeck 업데이트 -->
 	<update id="updateIsCheck">
 		update user set isCheck = "Y" where mno = #{mno}
 	</update>
@@ -218,6 +227,20 @@
 		select * from user
 		order by success_cnt desc  
 	</select>
+	<!-- userseqno 업데이트 -->
+	<update id="updateSeqNo">
+		update user set user_seq_no = #{user_seq_no} where mno = #{mno}
+	</update>
+	
+	<!-- 유저 정보 업데이트 -->
+	<update id="updateUserInfo">
+		update user set tel = #{tel}, rname = #{rname}, raccount = #{raccount}, rbank = #{rbank} where mno = #{mno}
+	</update>
+	
+	<!-- 회원 탈퇴 -->
+	<delete id="unregistUser">
+		delete from user where mno = #{mno} and pw = #{pw}
+	</delete>
 	
 	<!-- 검색1 -->
 	<select id="cList" resultType="com.chagok.domain.ChallengeVO" parameterType="com.chagok.domain.SearchCriteria">

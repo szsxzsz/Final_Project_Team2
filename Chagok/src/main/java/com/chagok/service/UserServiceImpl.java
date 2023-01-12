@@ -72,6 +72,19 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public List<UserVO> getUserList() throws Exception {
 		return dao.getUserList();
+	@Override
+	public void updateSeqNo(Map<String, Object> map) {
+		dao.updateSeqNo(map);
+	}
+
+	@Override
+	public void updateUserInfo(UserVO vo) {
+		dao.updateUserInfo(vo);
+	}
+
+	@Override
+	public int unregistUser(UserVO vo) throws Exception {
+		return dao.unregistUser(vo);
 	}
 
 	

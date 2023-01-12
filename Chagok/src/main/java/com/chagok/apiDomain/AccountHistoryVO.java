@@ -8,8 +8,15 @@ public class AccountHistoryVO {
 	private String tran_type;
 	private String tran_amt;
 	private String after_balance_amt;
+	private String fintech_use_num;
 	private String branch_name;
 	
+	public String getFintech_use_num() {
+		return fintech_use_num;
+	}
+	public void setFintech_use_num(String fintech_use_num) {
+		this.fintech_use_num = fintech_use_num;
+	}
 	public String getBank_tran_id() {
 		return bank_tran_id;
 	}
@@ -60,9 +67,10 @@ public class AccountHistoryVO {
 	}
 	@Override
 	public String toString() {
-		return "AccountTradeVO [tran_date=" + tran_date + ", tran_time=" + tran_time + ", inout_type=" + inout_type
-				+ ", tran_type=" + tran_type + ", tran_amt=" + tran_amt + ", after_balance_amt=" + after_balance_amt
-				+ ", branch_name=" + branch_name + "]";
+		return "AccountHistoryVO [bank_tran_id=" + bank_tran_id + ", tran_date=" + tran_date + ", tran_time="
+				+ tran_time + ", inout_type=" + inout_type + ", tran_type=" + tran_type + ", tran_amt=" + tran_amt
+				+ ", after_balance_amt=" + after_balance_amt + ", fintech_use_num=" + fintech_use_num + ", branch_name="
+				+ branch_name + "]";
 	}
 	
 }

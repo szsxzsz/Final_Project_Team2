@@ -28,7 +28,7 @@
                   <i class="menu-icon fa fa-birthday-cake bg-red"></i>
                   <div class="menu-info">
                     <h4 class="control-sidebar-subheading">Langdon's Birthday</h4>
-                    <p>Will be 23 on April 24th</p>
+                    <p>Will be 23 on April 24th</p>z
                   </div>
                 </a>
               </li>
@@ -176,6 +176,9 @@
            immediately after the control sidebar -->
       <div class='control-sidebar-bg'></div>
     </div><!-- ./wrapper -->
+
+
+
 
 
     <!-- Bootstrap 3.3.2 JS -->

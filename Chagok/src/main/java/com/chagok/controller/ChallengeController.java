@@ -584,4 +584,16 @@ public class ChallengeController {
 	
 	
 	
+	
+	/////////////////// 영민 (news api 관련) ///////////////////////
+	
+	@GetMapping("/news/test")
+	public String newsGET() throws Exception{
+		
+		
+		return "/news/news";
+	}
+	
+	/////////////////// 영민 (news api 관련) ///////////////////////
+
 }
