@@ -531,17 +531,17 @@ public class ChallengeController {
 		return "/challenge/memberManagement";
 	}
 	// http://localhost:8080/challenge/adminmodal
-	@ResponseBody
-	@GetMapping("/adminmodal")
-	public String adminmodal(Model model,@RequestParam Integer mno) throws Exception {
-		mylog.debug("모달창에 넘길 mno : " + mno);
-		
-		List<UserVO> vo = service.adminmodal(mno);
-		
-		model.addAttribute("UserVO", vo);
-		
-		return "challenge/memberManagement";
-	}
+//	@ResponseBody
+//	@PostMapping("/adminmodal")
+//	public String adminmodal(Model model,@RequestParam Map<String,Object> map) throws Exception {
+//		mylog.debug("모달창에 넘길 mno : " + map);
+//		
+//		List<UserVO> vo = service.adminmodal(map);
+//		
+////		model.addAttribute("UserVO", vo);
+//		
+//		return null;
+//	}
 	
 	////////////////////// 관리자 페이지 ///////////////////////////
 	
