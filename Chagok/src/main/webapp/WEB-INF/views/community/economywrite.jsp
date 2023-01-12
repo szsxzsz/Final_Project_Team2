@@ -38,7 +38,7 @@
              <div class="top">
              	 <div class="title" style="width:100%;">게시글 내용</div>
 			    
-			     <textarea class="form-control" rows="3" style="margin-top:15px; display:block; margin: 0 auto; width: 600px; height: 280px;" name="b_content">${boardChallenge.b_content }</textarea>
+			     <textarea class="form-control" rows="3" style="margin-top:15px; display:block; margin: 0 auto; width: 600px; height: 280px; resize: none;" name="b_content">${boardChallenge.b_content }</textarea>
 			     <br>
 			     <br>
              	 <br>

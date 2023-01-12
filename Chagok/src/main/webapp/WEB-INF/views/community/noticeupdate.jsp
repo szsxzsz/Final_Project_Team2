@@ -33,7 +33,7 @@
            		
            		</strong>
            	</span>
-				 <textarea class="form-control" rows="3" name="b_content" style="margin-top:15px;">${board.b_content }</textarea>
+				 <textarea class="form-control" rows="3" name="b_content" style="margin-top:15px; resize: none;">${board.b_content }</textarea>
         		 </div>
 		    </div>
 		</div>

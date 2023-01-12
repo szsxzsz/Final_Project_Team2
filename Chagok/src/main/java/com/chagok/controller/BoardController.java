@@ -121,7 +121,7 @@ public class BoardController {
 		model.addAttribute("boardChallenge", boardChallenge);
 		mylog.debug("여기까진 출력되나?");
 		
-		return "/community/reviewupdate2";
+		return "/community/reviewupdate";
 					
 	}
 				

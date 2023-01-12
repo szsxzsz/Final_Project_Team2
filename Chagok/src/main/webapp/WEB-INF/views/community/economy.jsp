@@ -18,20 +18,20 @@
 // 		alert("성공");
 		
 		
-		$('#news_test').click(function(){
+// 		$('#news_test').click(function(){
 			
 			var query = { "query":"경제" };
 			
-			alert("클릭");
+// 			alert("클릭");
 			
 			$.ajax({
 				type: 'get',
-				url: '/news',
+				url: '/newstest',
 				contentType: "application/json; charset=UTF-8",
 				dataType: 'text',
 // 				data: JSON.stringify(query),
 				success: function(data){
-					alert("ajax 성공!");
+// 					alert("ajax 성공!");
 					var job = JSON.parse(data);
 					console.log(job);
 					
@@ -39,7 +39,7 @@
 					
 					$.each(job, function(index, item){
 						
-						$('#result').append("<a href="+item.link+">"+item.title+"</a><br>");
+						$('#result').append("<a href="+item.link+">"+item.title+"</a><br><br>");
 						$('#result').append(item.description+"<br>");
 						$('#result').append(item.pubDate+"<br>");
 						$('#result').append("<hr>");
@@ -50,7 +50,7 @@
 					console.log(data);
 				}
 			});
-		});
+// 		});
 		
 		
 	});
@@ -86,9 +86,11 @@
                  <div class="num" style="padding-right: 10px; width:155px; padding-left: 10px;">경제 뉴스 기사</div>
              </div>
              <div>
-             	<div class="num" style="padding-left: 65px; width: auto; padding-right: 65px;"></div>
-             </div>
-        </div>
+             	<div class="num" style="padding-left: 65px; width: auto; padding-right: 65px;">
+             			<a href="#" id="news_test"></a>
+						<div id="result"></div>
+             	</div>
+        	</div>
         </div>
         <div class="board_list_wrap">
         <div class="board_list">
@@ -113,24 +115,34 @@
                 </c:forEach>
          </div>
          
-           <div class="board_page">
+          <div class="board_page">
+                <ul class= "pagination pagination-sm no-margin pull-right">
 <!--                 <a href="#" class="bt first"><<</a> -->
-                <a href="#" class="bt prev"><</a>
-                <a href="#" class="num on">1</a>
-                <a href="#" class="num">2</a>
-                <a href="#" class="num">3</a>
-                <a href="#" class="num">4</a>
-                <a href="#" class="num">5</a>
-                <a href="#" class="bt next">></a>
+                <c:if test="${pageMaker.prev }">
+					<li><a href="/economy?page=${pageMaker.startPage-1 }"class="bt prev"><</a></li>
+				</c:if>
+               <c:forEach var="idx" begin="${pageMaker.startPage }" end="${pageMaker.endPage }" step="1">
+					<li 
+						<c:out value="${idx == pageMaker.cri.page? 'class=active':'' }"/>
+					
+					><a href="/economy?page=${idx }" class="num">${idx }</a></li>
+				</c:forEach>
+                <c:if test="${pageMaker.next }">
+					<li><a href="/economy?page=${pageMaker.endPage+1 }" class="bt next">></a></li>
+				</c:if>
 <!--                 <a href="#" class="bt last">>></a> -->
-            </div>
+                </ul>
+                </div>
             
             <div class="bt_wrap">
+            	<c:if test="${not empty nick }">
              	<input class="sbtn" type="button" value="작성하기" onclick="location.href='/economywrite';" >
+            	</c:if>
 			</div>
             
     </div>  
-</div>      
+</div>    
+</div>  
 </body>
 </html>
 

@@ -20,22 +20,21 @@
 						&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
 						&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
 						&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-						&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-						&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
 				    	&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
 						
 				    	<span style="color: #10A19D; text-align:right;">작성자 | ${vo.b_writer }</span>
 				    	&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+
 				    	<span style="color: #10A19D; text-align:right;">작성일 | <fmt:formatDate value="${vo.b_date }" pattern="yyyy-MM-dd"/></span>
 				    	</h4>
 		    	</div>
         <div class="form-group" style="padding-top: 50px; padding-left: 36px; width: 1100px; margin-bottom: 30px;">
-           	<span style = "font-size: 16px; font-family: 'Pretendard','Source Sans Pro', sans-serif;">
-           		<strong>
+<!--            	<SPAN STYLE = "FONT-SIZE: 16PX; FONT-FAMILY: 'PRETENDARD','SOURCE SANS PRO', SANS-SERIF;"> -->
+<!--            		<STRONG> -->
            		
-           		</strong>
-           	</span>
-				 <textarea class="form-control" rows="3" style="margin-top:15px;" readonly>${vo.b_content }</textarea>
+<!--            		</STRONG> -->
+<!--            	</SPAN> -->
+				 <textarea class="form-control" rows="3" style="margin-top:15px; font-size:15px; height: 280px; resize: none;" readonly>${vo.b_content }</textarea>
         </div>
 		    </div>
 		</div>

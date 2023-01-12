@@ -20,23 +20,27 @@
  	    <form role="form" action="/economyupdate" method="post">
          <div class="board_list">
              <div class="top">
-             	 <div class="title" >
+             	 <div class="title" style="width:333px;" >
              	 	뉴스 / 재태크 제목
              	 	<hr>
 				     <input type="text" class="form-control" name="b_title" value="${vo.b_title }" style="text-align:center; display:block; margin: 0 auto; width:300px;">
              	 </div>
              	 
-             	 <div class="title" >작성자
+             	 <div class="title" style="width:333px;" >작성자
              		 <hr>
 				     <input type="text" class="form-control" name="b_writer" value="${vo.b_writer }" style="text-align:center; display:block; margin: 0 auto; width:150px" readonly>
+             	 </div>
+             	 <div class="title" style="width:333px;" >작성일
+             		 <hr>
+				     <fmt:formatDate value="${vo.b_date }" pattern="yyyy-MM-dd"/>
              	 </div>
 			 </div>
          </div>
          <div class="board_list">
              <div class="top">
-             	 <div class="title" style="width:100%;">후기 내용</div>
+             	 <div class="title" style="width:500px;">내용</div>
 			    
-			     <textarea class="form-control" rows="3" style="margin-top:15px; display:block; margin: 0 auto; width: 600px; height: 280px;" name="b_content">${vo.b_content }</textarea>
+			     <textarea class="form-control" rows="3" style="margin-top:15px; display:block; margin: 0 auto; width: 600px; height: 280px; resize: none;" name="b_content">${vo.b_content }</textarea>
 			     <br>
 			     <br>
              	 <br>

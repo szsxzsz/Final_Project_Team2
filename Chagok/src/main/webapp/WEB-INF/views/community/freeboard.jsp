@@ -45,7 +45,9 @@
 </script>
 
 <section class="content" style="margin-left:100px;">
+<c:if test="${not empty nick }">
 <input type="button" class="btn btn-primary btn-xs" style="float:center; background-color:#66BB7A;" value="글 작성하기" onclick="location.href='/freeboardwrite';">
+</c:if>
 	<div class="row" >
 		<div class="col-md-12">
 		<br>
@@ -64,12 +66,12 @@
 								작성자 | ${board.b_writer }
 						</span>
 						<h3 class="timeline-header">
-							<i style="color: #66BB7A; font-weight: bold;"> 제목 </i>  ${board.b_title }
+							<i style="color: #66BB7A; font-weight: bold;"> Title </i> <br><br> ${board.b_title }
 						</h3>
 						<div class="timeline-body">
-							<i style="color: #66BB7A; font-weight: bold;"> 내용 </i> <br>
+							<i style="color: #66BB7A; font-weight: bold;"> Content </i> <br><br>
 							${board.b_content }
-							${board.b_file }
+							
 						</div>
 						<div class="timeline-footer">
 							<c:set var="writer" value="${board.b_writer }"/>

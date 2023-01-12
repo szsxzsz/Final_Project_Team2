@@ -28,7 +28,7 @@
 
 <div class="board_wrap">
         <div class="board_title">
-        <strong> 뉴스 / 재태크 게시글 작성</strong>
+        <strong> 뉴스 / 재태크 게시글 </strong>
         <p> 여러가지 정보를 공유합시다 </p>
     	</div>
  	    <div class="board_list_wrap">
@@ -37,20 +37,25 @@
  	    </form>
          <div class="board_list">
              <div class="top">
-             	 <div class="title" >
-             	 	<h3><span> 제목 | </span> ${vo.b_title }</h3>
-				     	<span> 작성자 | </span> ${vo.b_writer }
-             	 	<hr>
+             	 <div class="title" style="width:1000px;">
+             	 	<span style="text-align:left;"> 제목 | </span> ${vo.b_title }
+             	 	&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+					&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+					&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+				    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+				    <span style="text-align:right;"> 작성자 | </span> ${vo.b_writer }
+				    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+				    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+				    <span style="text-align:right;"> 작성일 | </span> <fmt:formatDate value="${vo.b_date }" pattern="yyyy-MM-dd"/>
+             	 	
              	 </div>
-				     <div class="title">
-				     </div>
 			 </div>
          </div>
          <div class="board_list">
              <div class="top">
-             	 <div class="title" style="width:20%;">게시글 내용</div>
-			    
-			     <textarea class="form-control" rows="3" style="margin-top:15px; display:block; margin: 0 auto; width: 600px; height: 280px;"readonly>${vo.b_content }</textarea>
+             	 <div class="title" style="width:500px;">게시글 내용</div>
+			     
+			     <textarea class="form-control" rows="3" style="margin-top:5px; display:block; margin: 0 auto; width: 600px; height: 280px; resize: none;"readonly>${vo.b_content }</textarea>
 			     <br>
 			     <br>
              	 <br>
@@ -59,10 +64,10 @@
 	       <div class="bt_wrap">
 	       <c:set var="writer" value="${vo.b_writer }"/>
 			<c:if test= "${nick == '관리자' || nick == writer}">
-      		    <input class="btn btn-danger" type="button" value="수정하기" onclick="location.href='/economyupdate?bno=${vo.bno}';" style="width:218px; margin-left: 950px; background-color: #66BB7A;">
-				<input class="btn btn-warning" type="button" value="삭제하기" style="width:218px; margin-left: 950px; background-color: #66BB7A;">
+      		    <input class="btn btn-danger" type="button" value="수정하기" onclick="location.href='/economyupdate?bno=${vo.bno}';" style="width:218px; margin-left: 950px; background-color: #000000;">
+				<input class="btn btn-warning" type="button" value="삭제하기" style="width:218px; margin-left: 950px; background-color: #000000;">
 			</c:if>
-        <input class="btn btn-block btn-success btn-lg" type="submit" value="돌아가기" onclick="location.href='/reviewboard'" style="width:218px; margin-left: 950px; background-color: #66BB7A;">
+        <input class="btn btn-block btn-success btn-lg" type="submit" value="돌아가기" onclick="location.href='/reviewboard'" style="width:218px; margin-left: 950px; background-color: #000000;">
 	     </div>
 	       
   
