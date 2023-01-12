@@ -71,7 +71,7 @@
   
 <%--   <c:if test="${startTime - nowfmtTime <= 0 && nowfmtTime - endTime <= 0}"> --%>
 <%--   </c:if> --%>
-  <c:if test="${startTime - nowfmtTime >= 0}">
+  <c:if test="${startTime - nowfmtTime >= 1}">
   <!-- 날짜 계산하기 : 조건에 만족하는 챌린지만 출력 -->
   
     <div class="col">
@@ -83,10 +83,22 @@
       	<c:if test="${vo.c_sort eq 1 }">
       		<p class="card-item-chevron card-item-chevron--sale">절약형</p>
       	</c:if>
-      	
+
+      	<c:if test="${startTime - nowfmtTime >= 2}">
       		<p class="card-item-chevron--new">D - <b>${startTime - nowfmtTime }</b></p>
+      	</c:if>
+      	<c:if test="${startTime - nowfmtTime == 1}">
+      		<p class="card-item-chevron--new-2"><b>오늘<br>마감</b></p>
+      	</c:if>
         <a class="card-item-link" href="/challenge/detail?cno=${vo.cno }">
-          <img class="card-img-top img-fluid" src="${vo.c_thumbFile }" alt="" aria-labelledby="title_1" id="c_img">
+        
+          <c:if test="${startTime - nowfmtTime >= 2}">
+      		 <img class="card-img-top img-fluid" src="${vo.c_thumbFile }" alt="" aria-labelledby="title_1" id="c_img">
+      	  </c:if>
+      	  <c:if test="${startTime - nowfmtTime == 1}">
+      		<img class="card-img-top img-fluid-2" src="${vo.c_thumbFile }" alt="" aria-labelledby="title_1" id="c_img">
+      	  </c:if>
+        
         </a>
         <div class="card-body">
         <div class="card-item-header">
@@ -187,6 +199,13 @@ body {
   height: 240px;
   object-fit: scale-down;
   background-color: #ffdb8333;
+}
+
+.img-fluid-2 {
+  width: 270px;
+  height: 240px;
+  object-fit: scale-down;
+  background-color: #dd4b3921;
 }
 
 main {
@@ -630,7 +649,7 @@ main .card .card-item-chevron--hit {
 }
 
 main .card .card-item-chevron--new {
-	background-color: #ff523d;
+	background-color: #ffb033;
     position: absolute;
     z-index: 2;
     top: 180px;
@@ -651,6 +670,27 @@ main .card .card-item-chevron--new {
     text-align: center;
 }
 
+main .card .card-item-chevron--new-2 {
+	background-color: #ff523d;
+    position: absolute;
+    z-index: 2;
+    top: 180px;
+    right: 15px;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 7px 0px;
+    -webkit-border-radius: 4px;
+    border-radius: 5rem;
+    color: #ffffff;
+    /* font-family: "Noto Sans", "Arial", sans-serif; */
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1.4;
+    width: 5rem;
+    height: 5rem;
+    text-align: center;
+}
 
 .btn-success {
 	height: 90px;
