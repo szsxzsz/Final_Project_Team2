@@ -6,7 +6,7 @@
 
 <h1> 자유게시판 수정 </h1>
 
-<section class="content">
+<section class="content" style="margin-left:100px;">
 
 	<div class="row">
 		<div class="col-md-12">

@@ -15,7 +15,7 @@
 
 <script type="text/javascript">
 	$(document).ready(function(){
-		alert("성공");
+// 		alert("성공");
 		
 		
 		$('#news_test').click(function(){
@@ -57,9 +57,25 @@
 
 </script>	
 	
+<script type="text/javascript">
+		var result = '${result}';
+		if(result == 'createOK'){
+			alert(" 글쓰기 완료! ");
+		}
+		
+		if(result == 'modOK'){
+			alert(' 글 수정 완료!');
+		}
+		
+		if(result == 'delOK'){
+			alert(' 글 삭제 완료!');
+		}
+		
+</script>	
 </head>	
 	<body>
 <%-- ${challengeList } --%>
+
     <div class="board_wrap">
         <div class="board_title">
         <strong>뉴스 / 재테크</strong>
@@ -70,31 +86,30 @@
                  <div class="num" style="padding-right: 10px; width:155px; padding-left: 10px;">경제 뉴스 기사</div>
              </div>
              <div>
-             	<div class="num" style="padding-left: 65px; width: auto; padding-right: 65px;">${cl.cno }</div>
+             	<div class="num" style="padding-left: 65px; width: auto; padding-right: 65px;"></div>
              </div>
         </div>
+        </div>
+        <div class="board_list_wrap">
         <div class="board_list">
          	<div class="top">
-                 <div class="num" style="padding-right: 10px; width:155px; padding-left: 10px;">글 번호</div>
-                 <div class="num" style="padding-right: 10px; width:155px; padding-left: 10px;">제목</div>
-                 <div class="num" style="padding-right: 10px; width:155px; padding-left: 10px;">작성자</div>
-                 <div class="num" style="padding-right: 10px; width:155px; padding-left: 10px;">작성일</div>
+                 <div class="num" style="padding-right: 10px; width:10%; padding-left: 10px;">글 번호</div>
+                 <div class="num" style="padding-right: 10px; width:40%; padding-left: 10px;">제목</div>
+                 <div class="num" style="padding-right: 10px; width:25%; padding-left: 10px;">작성자</div>
+                 <div class="num" style="padding-right: 10px; width:25%; padding-left: 10px;">작성일</div>
              </div>
-         <c:forEach items="${challengeList }" var="cl">
-                <div>
-                    <div class="num" style="padding-left: 65px; width: auto; padding-right: 65px;">${cl.cno }</div>
-                    <div class="num" style="padding-left: 65px; width: auto; padding-right: 10px;"><c:if test="${cl.c_sort eq 0 }">저축형 /</c:if></div>
-                    <div class="num" style="padding-left: 65px; width: auto; padding-right: 10px;"><c:if test="${cl.c_sort eq 1 }">/ 절약형</c:if></div>
-                    <div class="title" style="padding-left: 65px; width:auto;"><c:if test="${cl.c_sort eq 0 }"><a href="/challenge/plusFeed?cno=${cl.cno }">${cl.c_title }</a></c:if></div>
-                    <div class="title" style="padding-left: 65px; width:auto;"><c:if test="${cl.c_sort eq 1 }"><a href="/challenge/minusFeed?cno=${cl.cno }">${cl.c_title }</a></c:if></div>
-                    <div class="num" style="padding-left: auto; width: auto;">${cl.c_period }주</div>
-                    <div class="date" style="padding-left: auto; width: auto;"><b>${cl.c_min }</b>/ ${cl.c_cnt }</div>
-                    <div class="num">${cl.c_status }</div>
-                    <div>
-                    <button type="button" class="btn btn-block btn-info btn-xs" id="yess" style="width:auto;">승인</button>
-                    <button type="button" class="btn btn-block btn-danger btn-xs" id="noo" style="width:auto;">거절</button>
+             <c:set var="boardno" value="${boardList.size() }"></c:set>
+ 				<fmt:parseNumber var="boardno" value="${boardno }" type="number" />
+         		<c:forEach items="${boardList }" var="board">
+               	 <div>
+                    <div class="num" style="padding-left: 10px; width: 10%; padding-right: 10px;">${boardno }</div>
+                    <div class="num" style="padding-left: 10px; width: 40%; padding-right: 10px;">
+                    	<a href="/economycontent?bno=${board.bno }">${board.b_title }</a>	
                     </div>
-                </div>
+                    <div class="num" style="padding-left: 10px; width: 25%; padding-right: 10px;">${board.b_writer }</div>
+                    <div class="title" style="padding-left: 10px; width:25%; padding-right: 10px;"><fmt:formatDate value="${board.b_date }" pattern="yyyy-MM-dd"/></div>
+                 </div>
+                 <c:set var="boardno" value="${boardno -1 }"></c:set>
                 </c:forEach>
          </div>
          
@@ -109,6 +124,11 @@
                 <a href="#" class="bt next">></a>
 <!--                 <a href="#" class="bt last">>></a> -->
             </div>
+            
+            <div class="bt_wrap">
+             	<input class="sbtn" type="button" value="작성하기" onclick="location.href='/economywrite';" >
+			</div>
+            
     </div>  
 </div>      
 </body>

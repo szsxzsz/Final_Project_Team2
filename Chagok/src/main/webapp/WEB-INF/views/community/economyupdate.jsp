@@ -5,121 +5,53 @@
 
 <%@ include file="../include/header.jsp" %>
 <%@ include file="../include/sidebar.jsp" %>
-
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>관리자 챌린지 승인</title>
-    
-  <script type="text/javascript">
-		var result = '${result}';
-		if(result == 'createOK'){
-			alert(" 글쓰기 완료! ");
-		}
-		
-		if(result == 'modOK'){
-			alert(' 글 수정 완료!');
-		}
-		
-		if(result == 'delOK'){
-			alert(' 글 삭제 완료!');
-		}
-		
-</script>  
-    
-</head>
-
-<body>
-    <div class="board_wrap">
+	<title> 뉴스 / 재테크 </title>
+</head>	
+  <div class="board_wrap">
         <div class="board_title">
-            <strong>공지사항</strong>
-            <p>공지사항을 빠르고 정확하게 안내해드립니다.</p>
-        </div>
-        <div class="board_list_wrap">
-            <div class="board_list">
-                <div class="top">
-                    <div class="num">번호</div>
-                    <div class="title">제목</div>
-<!--                     <div class="writer">작성자</div> -->
-                    <div class="date">작성일</div>
-                </div>
-         	
- 				<c:set var="boardno" value="${boardList2.size() }"></c:set>
- 				<fmt:parseNumber var="boardno" value="${boardno }" type="number" />
-                <c:forEach items="${boardList2 }" var="boardList2" >
-                <div>
-                    <div class="num">${boardno }</div>
-                    <div class="title"><a href="/noticecontent?bno=${boardList2.bno }">${boardList2.b_title }</a></div>
-<%--                     <div class="writer">${boardList.b_writer }</div> --%>
-                    <div class="date"><fmt:formatDate value="${boardList2.b_date }" pattern="yyyy-MM-dd"/> </div>
-<!--                      <div class="count">33</div> -->
-                </div>
-                <c:set var="boardno" value="${boardno -1 }"></c:set>
-                </c:forEach>
-                
-             </div>
-             
-                <div class="board_page">
-                <ul class= "pagination pagination-sm no-margin pull-right">
-<!--                 <a href="#" class="bt first"><<</a> -->
-                <c:if test="${pageMaker.prev }">
-					<li><a href="/notice?page=${pageMaker.startPage-1 }"class="bt prev"><</a></li>
-				</c:if>
-               <c:forEach var="idx" begin="${pageMaker.startPage }" end="${pageMaker.endPage }" step="1">
-					<li 
-						<c:out value="${idx == pageMaker.cri.page? 'class=active':'' }"/>
-					
-					><a href="/notice?page=${idx }" class="num">${idx }</a></li>
-				</c:forEach>
-                <c:if test="${pageMaker.next }">
-					<li><a href="/notice?page=${pageMaker.endPage+1 }" class="bt next">></a></li>
-				</c:if>
-<!--                 <a href="#" class="bt last">>></a> -->
-                </ul>
-                </div>
-             
-           <div class="bt_wrap">
-             <c:if test="${nick.equals('관리자') }">
-				<input class="sbtn" type="button" value="공지 작성하기" onclick="location.href='/noticewrite';" >
-			  </c:if>
-				<input class="sbtn" type="button" value="메인가기" onclick="location.href='/commumain';" >
-<!--                 <a href="write.html" class="on">등록</a> -->
-                <!--<a href="#">수정</a>-->
-          </div>
-          
-          
-          
-          
-<!--            <div class="board_page"> -->
-<!--             <ul class="pagination pagination-sm no-margin pull-right"> -->
-<%--                 <c:if test="${pageMaker.prev }"> --%>
-<%-- 					<li><a href="/notice?page=${pageMaker.startPage-1 }"class="bt prev"><</a></li> --%>
-<%-- 				</c:if> --%>
-<%-- 				<c:forEach var="idx" begin="${pageMaker.startPage }" end="${pageMaker.endPage }" step="1"> --%>
-<!-- 					<li  -->
-<%-- 						<c:out value="${idx == pageMaker.cri.page? 'class=active':'' }"/> --%>
-					
-<%-- 					><a href="/notice?page=${idx }" class="num">${idx }</a></li> --%>
-<%-- 				</c:forEach> --%>
-<%--                 <c:if test="${pageMaker.next }"> --%>
-<%-- 					<li><a href="/notice?page=${pageMaker.endPage+1 }" class="bt next">></a></li> --%>
-<%-- 				</c:if> --%>
-               
-<!-- 			</ul> -->
-<!--             </div> -->
-            
-
-        </div>
-    </div>
+        <strong> 뉴스 / 재테크 </strong>
+        <p> 뉴스 / 재테크 글 수정</p>
+    	</div>
+ 	    <div class="board_list_wrap">
+ 	    <form role="form" action="/economyupdate" method="post">
+         <div class="board_list">
+             <div class="top">
+             	 <div class="title" >
+             	 	뉴스 / 재태크 제목
+             	 	<hr>
+				     <input type="text" class="form-control" name="b_title" value="${vo.b_title }" style="text-align:center; display:block; margin: 0 auto; width:300px;">
+             	 </div>
+             	 
+             	 <div class="title" >작성자
+             		 <hr>
+				     <input type="text" class="form-control" name="b_writer" value="${vo.b_writer }" style="text-align:center; display:block; margin: 0 auto; width:150px" readonly>
+             	 </div>
+			 </div>
+         </div>
+         <div class="board_list">
+             <div class="top">
+             	 <div class="title" style="width:100%;">후기 내용</div>
+			    
+			     <textarea class="form-control" rows="3" style="margin-top:15px; display:block; margin: 0 auto; width: 600px; height: 280px;" name="b_content">${vo.b_content }</textarea>
+			     <br>
+			     <br>
+             	 <br>
+			</div>
+         </div>
+       <div class="bt_wrap">
+       <input type="hidden" name="bno" value="${vo.bno }">
+       <input class="sbtn" type="submit" value="수정하기">
+       <input class="sbtn" type="button" value="목록으로 돌아가기" onclick="location.href='/economy';" >
+  </div>  
+  </form>
+</div> 
+</div>  
 </body>
-</html> 
-
-
-
-	
-<!-- <input class="btn btn-block btn-success btn-lg" type="button" value="메인가기" onclick="location.href='/commumain';" style="width:218px; margin-left: 950px;"> -->
-
+</html>
 
 <style>
 
@@ -499,5 +431,5 @@ a {
 
 </style>
 
-
+</div>
 <%@ include file="../include/footer.jsp"%>

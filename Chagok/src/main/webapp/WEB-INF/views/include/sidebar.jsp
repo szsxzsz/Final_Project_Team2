@@ -82,7 +82,7 @@
               </a>
               <ul class="treeview-menu active">
 <!--                 <li><a href="../community/canibuy"><i class="fa fa-circle-o"></i> 사도 돼?</a></li> -->
-                <li><a href="../community/news"></i> 뉴스 / 재테크</a></li>
+                <li><a href="/economy"></i> 뉴스 / 재테크</a></li>
                 <li><a href="../community/balancing"></i> 월말 결산</a></li>
                 <li><a href="/freeboard"></i> 자유 게시판</a></li>
               </ul>

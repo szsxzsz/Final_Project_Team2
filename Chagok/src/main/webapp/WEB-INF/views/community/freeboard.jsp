@@ -28,18 +28,33 @@
 
 	});
 </script>
+<script type="text/javascript">
+		var result = '${result}';
+		if(result == 'createOK'){
+			alert(" 글쓰기 완료! ");
+		}
+		
+		if(result == 'modOK'){
+			alert(' 글 수정 완료!');
+		}
+		
+		if(result == 'delOK'){
+			alert(' 글 삭제 완료!');
+		}
+		
+</script>
 
-<section class="content">
-<input type="button" class="btn btn-primary btn-xs" style="float:left;" value="글 작성하기" onclick="location.href='/freeboardwrite';">
-	<div class="row">
+<section class="content" style="margin-left:100px;">
+<input type="button" class="btn btn-primary btn-xs" style="float:center; background-color:#66BB7A;" value="글 작성하기" onclick="location.href='/freeboardwrite';">
+	<div class="row" >
 		<div class="col-md-12">
 		<br>
 		
 		  <c:forEach var="board" items="${boardList }">
-			<ul class="timeline">
-					<li class="time-label">
-						<span class="bg-red"> 
-							<b><fmt:formatDate value="${board.b_date }" pattern="MMM.dd.yyyy"/></b>
+			<ul class="timeline" >
+					<li class="time-label" >
+						<span class="bg-red" style="background-color:#FFDB83"> 
+							<b><fmt:formatDate value="${board.b_date }" pattern="yyyy-MM-dd" /></b>
 						</span>
 					</li>
 				<li><i class="fa fa-file-text-o bg-blue"></i>
@@ -49,9 +64,10 @@
 								작성자 | ${board.b_writer }
 						</span>
 						<h3 class="timeline-header">
-							${board.b_title }
+							<i style="color: #66BB7A; font-weight: bold;"> 제목 </i>  ${board.b_title }
 						</h3>
 						<div class="timeline-body">
+							<i style="color: #66BB7A; font-weight: bold;"> 내용 </i> <br>
 							${board.b_content }
 							${board.b_file }
 						</div>

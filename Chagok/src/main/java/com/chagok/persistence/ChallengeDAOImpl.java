@@ -326,20 +326,6 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 		sqlSession.update(NAMESPACE+".updateMoney", map);
 	}
 
-	// 페이징 처리 구현된 공지리스트 조회
-	@Override
-	public List<BoardVO> getNBoardPage(Integer page) throws Exception {
-		mylog.debug(" BoardPage 호출 ");
-		
-		if(page < 0) {
-			page = 1;
-		}
-				
-		page = (page - 1) * 10;
-				
-		return sqlSession.selectList(NAMESPACE+".nboardPage", page);
-	}
-
 	// 공지리스트 조회
 	@Override
 	public List<BoardVO> getNBoardPage(Criteria cri) throws Exception {
@@ -417,21 +403,6 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 	}
 	
 	
-	// 페이징 처리 구현된 후기리스트 조회
-	@Override
-//	public List<BoardVO> getRBoardPage(Integer page) throws Exception {
-	public List<Map<String, Object>> getRBoardPage(Integer page) throws Exception {
-		mylog.debug(" BoardPage 호출 ");
-			
-		if(page < 0) {
-			page = 1;
-		}
-					
-		page = (page - 1) * 10;
-					
-		return sqlSession.selectList(NAMESPACE+".rboardPage", page);
-	}
-
 	// 후기리스트 조회
 	@Override
 //	public List<BoardVO> getRBoardPage(Criteria cri) throws Exception {
@@ -457,20 +428,6 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 	    return sqlSession.selectList(NAMESPACE + ".chList", cri);
 	}
 
-	// 페이징 처리 구현된 자유게시판 조회
-	@Override
-	public List<BoardVO> getFBoardPage(Integer page) throws Exception {
-		mylog.debug(" BoardPage 호출 ");
-		
-		if(page < 0) {
-			page = 1;
-		}
-				
-		page = (page - 1) * 10;
-				
-		return sqlSession.selectList(NAMESPACE+".fboardPage", page);
-	}
-
 	// 자유게시판 조회
 	@Override
 	public List<BoardVO> getFBoardPage(Criteria cri) throws Exception {
@@ -487,20 +444,6 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 		return sqlSession.selectOne(NAMESPACE+".fboardCount");
 	
 	}	
-	
-	// 페이징 처리 구현된 경제게시판 조회
-	@Override
-	public List<BoardVO> getEBoardPage(Integer page) throws Exception {
-		mylog.debug(" BoardPage 호출 ");
-			
-		if(page < 0) {
-			page = 1;
-		}
-			
-		page = (page - 1) * 10;
-			
-		return sqlSession.selectList(NAMESPACE+".eboardPage", page);
-	}
 		
 	// 경제게시판 조회
 	@Override

@@ -327,24 +327,12 @@
 		where cno=#{cno};
 	</update>
 
-	<!-- 페이징처리 공지게시판 한 페이지당 최대갯수 -->
-	<select id="nboardPage" resultType="com.chagok.domain.BoardVO">
-	  <![CDATA[
-		select * from board
-		where b_sort = 2
-		order by bno desc, b_date desc
-		limit #{page},10
-		]]>
-	</select>
-	
 	<!-- 페이징처리 공지게시판 페이지 넘버 -->
 	<select id="nboardPageNo" resultType="com.chagok.domain.BoardVO">
-	  <![CDATA[
 		select * from board
 		where b_sort = 2
 		order by bno desc, b_date desc
 		limit #{pageStart},#{perPageNum}
-		]]>
 	</select>
 	
 	<!-- 공지게시판 글 전체 개수 -->
@@ -354,24 +342,12 @@
 		where b_sort= 2
 	</select>
 	
-	<!-- 페이징처리 후기게시판 한 페이지당 최대갯수 -->
-	<select id="rboardPage" resultType="com.chagok.domain.BoardVO">
-	  <![CDATA[
-		select * from board b inner join challenge c
-		where b_sort = 1 and b.cno = c.cno
-		order by bno desc, b_date desc
-		limit #{page},10;
-		]]>
-	</select>
-	
 	<!-- 페이징처리 후기게시판 페이지 넘버 -->
 	<select id="rboardPageNo" resultType="com.chagok.domain.BoardVO">
-	  <![CDATA[
-		select * from board b inner join challenge c
+	  	select * from board b inner join challenge c
 		where b_sort = 1 and b.cno = c.cno
 		order by bno desc, b_date desc
 		limit #{pageStart},#{perPageNum};
-		]]>
 	</select>
 	
 	<!-- 후기게시판 글 전체 개수 -->
@@ -443,24 +419,12 @@
 		limit #{pageStart}, #{perPageNum};
 	</select>
 
-	<!-- 페이징처리 자유게시판 한 페이지당 최대갯수 -->
-	<select id="fboardPage" resultType="com.chagok.domain.BoardVO">
-	  <![CDATA[
-		select * from board
-		where b_sort = 3
-		order by bno desc, b_date desc
-		limit #{page},10
-		]]>
-	</select>
-	
 	<!-- 페이징처리 자유게시판 페이지 넘버 -->
 	<select id="fboardPageNo" resultType="com.chagok.domain.BoardVO">
-	  <![CDATA[
 		select * from board
 		where b_sort = 3
 		order by bno desc, b_date desc
 		limit #{pageStart},#{perPageNum}
-		]]>
 	</select>	
 
 	<!-- 자유게시판 글 전체 개수 -->
@@ -470,24 +434,12 @@
 		where b_sort= 3
 	</select>	
 
-	<!-- 페이징처리 경제게시판 한 페이지당 최대갯수 -->
-	<select id="eboardPage" resultType="com.chagok.domain.BoardVO">
-	  <![CDATA[
-		select * from board
-		where b_sort = 4
-		order by bno desc, b_date desc
-		limit #{page},10
-		]]>
-	</select>
-	
 	<!-- 페이징처리 경제게시판 페이지 넘버 -->
 	<select id="eboardPageNo" resultType="com.chagok.domain.BoardVO">
-	  <![CDATA[
 		select * from board
 		where b_sort = 4
 		order by bno desc, b_date desc
 		limit #{pageStart},#{perPageNum}
-		]]>
 	</select>	
 
 	<!-- 경제게시판 글 전체 개수 -->

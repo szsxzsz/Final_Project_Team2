@@ -112,10 +112,9 @@
 
  	<c:set var="writer" value="${boardChallenge.b_writer }"/>
 	<c:if test= "${nick == '관리자' || nick == writer}">
-        <input class="btn btn-danger" type="submit" value="수정하기" onclick="location.href='/reviewupdate?bno=${boardChallenge.bno}&cno=${boardChallenge.cno }';" style="width:218px; margin-left: 950px;">
-<!--         <input class="btn btn-danger" type="submit" value="수정하기"  style="width:218px; margin-left: 950px;"> -->
-		<input class="btn btn-warning" type="submit" value="삭제하기" style="width:218px; margin-left: 950px;">
+        <input class="btn btn-danger" type="submit" value="수정하기" onclick="location.href='/reviewupdate?bno=${boardChallenge.bno}&cno=${boardChallenge.cno }';" style="width:218px; margin-left: 950px; background-color: #66BB7A;">
+		<input class="btn btn-warning" type="submit" value="삭제하기" style="width:218px; margin-left: 950px; background-color: #66BB7A;">
 	</c:if>
-        <input class="btn bg-purple" type="submit" value="돌아가기" onclick="location.href='/reviewboard'" style="width:218px; margin-left: 950px;">
+        <input class="btn bg-purple" type="submit" value="돌아가기" onclick="location.href='/reviewboard'" style="width:218px; margin-left: 950px; background-color: #66BB7A;">
 </section>
 <%@ include file="../include/footer.jsp"%>
