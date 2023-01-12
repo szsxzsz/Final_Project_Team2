@@ -568,13 +568,12 @@ public class AssetController {
 		}
 
 		return jArr;
-
 	}
 	
 	// ===========================================================
 	@RequestMapping("/catebottom")
 	 @ResponseBody
-	 public JSONArray ctbottomList(HttpServletRequest request,@RequestParam("ct_top") String ct_top) throws Exception {
+	 public JSONArray ctbottomList(HttpServletRequest request,/*@RequestParam("ct_top") String ct_top*/@RequestParam Map<String, Object> ct_top) throws Exception {
 	
 		mylog.debug("%%value"+ct_top);
 
@@ -595,13 +594,28 @@ public class AssetController {
 			}
 			jArrB.add(jsonobjb);
 		
-			
 		}
 		return jArrB;
 
 	}
 	
-
+	// insert 
+	@PostMapping(value = "/insGrid")
+	public String insGrid(AbookVO vo, RedirectAttributes rttr, HttpSession session) throws Exception{
+		mylog.debug(" cont- insGrid 호출 ");	
+		// 1. 전달된 정보 저장 (title,content,writer)
+		mylog.debug(vo.toString());
+		// 2. 서비스 -> DAO 접근 (mapper)
+//		abService.insGrid(vo);
+		
+		mylog.debug(" 쓰기 완료 ");
+		
+		//model.addAttribute("result", "createOK");
+//		rttr.addFlashAttribute("result", "createOK");
+		
+		return "redirect:/asset/abookList";
+//		return "redirect:/board/list";
+	}
 	
 	// ===============================================================
 	
@@ -681,6 +695,7 @@ public class AssetController {
 //			mylog.debug("수정 처리 완료!!");
 //		 
 //	}
+
 	
 	// ===================================================================================
 	
