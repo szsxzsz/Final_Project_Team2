@@ -1,9 +1,11 @@
 package com.chagok.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.servlet.ServletContext;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,16 +26,24 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.WebUtils;
 
+import com.chagok.apiDomain.AccountVO;
+import com.chagok.apiDomain.CardHistoryVO;
+import com.chagok.apiDomain.CardInfoVO;
+import com.chagok.apiDomain.CashVO;
 import com.chagok.domain.AlertVO;
+import com.chagok.domain.BusinessAccountVO;
 import com.chagok.domain.ChallengeVO;
 import com.chagok.domain.Criteria;
 import com.chagok.domain.PageMaker;
 import com.chagok.domain.SearchCriteria;
 import com.chagok.domain.UserVO;
 import com.chagok.interceptor.SessionNames;
+import com.chagok.service.AbookService;
+import com.chagok.service.AccountService;
 import com.chagok.service.AlertService;
 //import com.chagok.service.AlertService;
 import com.chagok.service.ChallengeService;
+import com.chagok.service.ReportService;
 import com.chagok.service.UserService;
 
 @Controller
@@ -50,6 +60,15 @@ public class ChagokController {
 	@Inject
 	private AlertService alertService;
 	
+	@Inject
+	private AccountService accountService; 
+	
+	@Inject
+	private AbookService abService;
+	
+	@Inject
+	private ReportService rptService;
+	
 	// 차곡 메인사이트 
 	// http://localhost:8080/main
 	@GetMapping(value = "/main")
@@ -60,7 +79,93 @@ public class ChagokController {
 
 	
 	// 자산관리 파트 메인
-//	// http://localhost:8080/assetmain
+	// http://localhost:8080/assetmain
+	@GetMapping(value="/assetmain")
+	public String assetmain(HttpSession session, Model model, RedirectAttributes rttr) throws Exception {
+		Integer mno = (Integer)session.getAttribute("mno");
+		
+		if (mno==null) {
+			return "redirect:/login?pageInfo=assetmain";
+		} else {
+			Integer mm = 0;
+			mylog.debug("@@@@mno"+mno);
+			UserVO userVO = service.getUser(mno);
+			Map<String, Object> map = new HashMap<String, Object>();
+			model.addAttribute("result", "loginY");
+			
+			int chkAb = abService.chkAb(mno, mm);
+			if(chkAb==0) {
+				model.addAttribute("chkAb", "abN");
+			}
+			
+			else {
+				model.addAttribute("chkAb", "abY");
+				Integer dtSum = rptService.dtSum(mno, mm);
+				Integer dtAvg = rptService.dtAvg(mno, mm);
+				Integer expSum = rptService.expSum(mno, mm);
+				List<Map<String, Object>> cateCntList = rptService.cateCnt(mno, mm);
+				List<Map<String, Object>> cateSumList = rptService.cateSum(mno, mm);
+				
+				String cateCntjson = rptService.listMapToJson(cateCntList);
+				String cateSumjson = rptService.listMapToJson(cateSumList);
+				
+				map.put("cateCntjson", cateCntjson);
+				map.put("cateSumjson", cateSumjson);
+				map.put("dtSum", dtSum);
+				map.put("dtAvg", dtAvg);
+				map.put("expSum", expSum);
+				model.addAttribute("map", map);
+			}
+		
+			// 예산
+			String pMonth = abService.getPMonth(mm);
+			int chkBud = abService.chkBud(mno, pMonth);
+			if(chkBud==0) {
+				model.addAttribute("chkBud", "budN");
+			}
+			else {
+				model.addAttribute("chkBud", "budY");
+				Integer totalBud = abService.totalBud(mno, pMonth);
+				Integer dtSum2 = rptService.dtSum(mno, mm);
+				
+				map.put("totalBud", totalBud);
+				map.put("dtSum2", dtSum2);
+				model.addAttribute("pMonth", pMonth);
+			}
+			
+			// 계좌 리스트 조회
+			List<AccountVO> accountList = accountService.getAccountInfo(mno);
+			model.addAttribute("accountList", accountList);
+			mylog.debug("accountList : "+accountList.toString());
+			// 카드 리스트 조회
+			List<CardInfoVO> cardList = accountService.getCardInfo(userVO.getUser_seq_no());
+			model.addAttribute("cardList", cardList);
+			mylog.debug("cardList : "+cardList.toString());
+			
+			// 카드 내역/금액 조회
+			List<List<CardHistoryVO>> cardHistoryList = accountService.getCardHistory(cardList);
+			model.addAttribute("cardHistoryList", cardHistoryList);
+			mylog.debug("cardHistoryList : "+cardHistoryList.toString());
+			
+			// 현금 내역 조회
+			CashVO cashVO = accountService.getCashInfo(mno);
+			if (cashVO != null) {
+				cashVO.setCash_amt(cashVO.getCash_amt().replaceAll(",", ""));
+				mylog.debug("cashVO : "+cashVO.toString());
+			}
+			model.addAttribute("cashVO", cashVO);
+			model.addAttribute("userVO", userVO);
+		
+			return "/chagok/assetmain";
+		
+		}
+	}	
+
+	
+	
+	
+	
+	
 //	@GetMapping(value = "/assetmain")
 //	public String assetmainGET() throws Exception {
 //
@@ -110,9 +215,14 @@ public class ChagokController {
 
 		mylog.debug(" 로그인 정보 : " +loginMap);
 		
+		ServletContext appliation = request.getSession().getServletContext();
+	    
+		
 		try {
 			UserVO =  service.loginUserCheck(loginMap);
 			mylog.debug("controller : "+UserVO);
+			
+			appliation.setAttribute("userInfo", UserVO.getMno());
 			
 			if (UserVO != null) { // 로그인 성공
 				model.addAttribute("UserVO", UserVO);
@@ -367,5 +477,25 @@ public class ChagokController {
 	   return "redirect:/unregist";
    }
    
-   
+   // http://localhost:8080/bizAccount
+   @GetMapping(value="/bizAccount")
+   public String businessAcc (Criteria cri, Model model) throws Exception {
+		mylog.debug("/businessAcc 호출");
+		
+		cri.setPerPageNum(10);
+		List<BusinessAccountVO> bizList = service.getBizAll(cri);
+		
+		// 페이징 처리
+	    PageMaker pagevo = new PageMaker();
+	    pagevo.setDisplayPageNum(5);
+	    pagevo.setCri(cri);
+	    pagevo.setTotalCount(10000);
+		
+//	    mylog.debug(pagevo.toString());
+	    
+	    model.addAttribute("pagevo", pagevo);
+		model.addAttribute("bizList", bizList);
+	   
+	   return "/chagok/businessAcc";
+   }
 }

@@ -9,6 +9,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import com.chagok.domain.BusinessAccountVO;
+import com.chagok.domain.Criteria;
 import com.chagok.domain.UserVO;
 import com.chagok.persistence.UserDAO;
 
@@ -90,6 +92,11 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public int unregistUser(UserVO vo) throws Exception {
 		return dao.unregistUser(vo);
+	}
+
+	@Override
+	public List<BusinessAccountVO> getBizAll(Criteria cri) throws Exception {
+		return dao.getBizAll(cri);
 	}
 
 	

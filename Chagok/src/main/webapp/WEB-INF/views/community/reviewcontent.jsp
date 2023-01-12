@@ -47,7 +47,7 @@
 		<h3><span style="color: #66BB7A; font-weight: bold;">[후기 제목]</span> ${boardChallenge.b_title }</h3>
 		<h4><span style="color: #66BB7A; font-weight: bold;">[작성자]</span> ${boardChallenge.b_writer }</h4>
 		<h4><span style="color: #66BB7A; font-weight: bold;">[후기 내용]</span></h4>
-	        <textarea class="form-control" rows="3" style="margin-top:15px; width: 600px; height: 280px" readonly>${boardChallenge.b_content }</textarea>
+	        <textarea class="form-control" rows="3" style="margin-top:15px; width: 600px; height: 280px; resize: none;" readonly>${boardChallenge.b_content }</textarea>
 		</div>
 		<div class="col-lg-6 pt-4 pt-lg-0 content aos-init aos-animate" data-aos="fade-left" >
 			<c:forEach var="vo" items="${challengeList }">
@@ -112,10 +112,9 @@
 
  	<c:set var="writer" value="${boardChallenge.b_writer }"/>
 	<c:if test= "${nick == '관리자' || nick == writer}">
-        <input class="btn btn-danger" type="submit" value="수정하기" onclick="location.href='/reviewupdate?bno=${boardChallenge.bno}&cno=${boardChallenge.cno }';" style="width:218px; margin-left: 950px;">
-<!--         <input class="btn btn-danger" type="submit" value="수정하기"  style="width:218px; margin-left: 950px;"> -->
-		<input class="btn btn-warning" type="submit" value="삭제하기" style="width:218px; margin-left: 950px;">
+        <input class="btn btn-danger" type="submit" value="수정하기" onclick="location.href='/reviewupdate?bno=${boardChallenge.bno}&cno=${boardChallenge.cno }';" style="width:218px; margin-left: 950px; background-color: #66BB7A;">
+		<input class="btn btn-warning" type="submit" value="삭제하기" style="width:218px; margin-left: 950px; background-color: #66BB7A;">
 	</c:if>
-        <input class="btn bg-purple" type="submit" value="돌아가기" onclick="location.href='/reviewboard'" style="width:218px; margin-left: 950px;">
+        <input class="btn bg-purple" type="submit" value="돌아가기" onclick="location.href='/reviewboard'" style="width:218px; margin-left: 950px; background-color: #66BB7A;">
 </section>
 <%@ include file="../include/footer.jsp"%>

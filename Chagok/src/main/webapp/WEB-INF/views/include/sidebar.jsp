@@ -82,7 +82,7 @@
               </a>
               <ul class="treeview-menu active">
 <!--                 <li><a href="../community/canibuy"><i class="fa fa-circle-o"></i> 사도 돼?</a></li> -->
-                <li><a href="../community/news"></i> 뉴스 / 재테크</a></li>
+                <li><a href="/economy"></i> 뉴스 / 재테크</a></li>
                 <li><a href="../community/balancing"></i> 월말 결산</a></li>
                 <li><a href="/freeboard"></i> 자유 게시판</a></li>
               </ul>
@@ -114,7 +114,7 @@
               <ul class="treeview-menu active">
                 <li><a href="/challenge/chListAll"></i> 챌린지 관리</a></li>
                 <li><a href="/#"></i> 회원 관리</a></li>
-                <li><a href="#"></i> 결제 관리</a></li>
+                <li><a href="/bizAccount"></i>차곡 계좌 관리</a></li>
 <!--                 <li><a href="../charts/flot.html"><i class="fa fa-circle-o"></i> Flot</a></li> -->
 <!--                 <li><a href="../charts/inline.html"><i class="fa fa-circle-o"></i> Inline charts</a></li> -->
               </ul>

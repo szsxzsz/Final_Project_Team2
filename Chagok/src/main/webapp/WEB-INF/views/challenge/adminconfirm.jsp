@@ -86,9 +86,9 @@
 						</div>
 						<div class="num" style="width: 250px;">
 							<c:choose>
-								<c:when test="${cl.c_sort eq 0 }"><a href="/challenge/plusFeed?cno=${cl.cno }">${cl.c_title }</a>
+								<c:when test="${cl.c_sort eq 0 }"><a href="/challenge/plusdetail?cno=${cl.cno }">${cl.c_title }</a>
 								</c:when>
-								<c:when test="${cl.c_sort eq 1 }"><a href="/challenge/minusFeed?cno=${cl.cno }">${cl.c_title }</a>
+								<c:when test="${cl.c_sort eq 1 }"><a href="/challenge/minusdetail?cno=${cl.cno }">${cl.c_title }</a>
 								</c:when>
 							</c:choose>
 						</div>

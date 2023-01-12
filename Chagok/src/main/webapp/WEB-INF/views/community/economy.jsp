@@ -15,23 +15,23 @@
 
 <script type="text/javascript">
 	$(document).ready(function(){
-		alert("성공");
+// 		alert("성공");
 		
 		
-		$('#news_test').click(function(){
+// 		$('#news_test').click(function(){
 			
 			var query = { "query":"경제" };
 			
-			alert("클릭");
+// 			alert("클릭");
 			
 			$.ajax({
 				type: 'get',
-				url: '/news',
+				url: '/newstest',
 				contentType: "application/json; charset=UTF-8",
 				dataType: 'text',
 // 				data: JSON.stringify(query),
 				success: function(data){
-					alert("ajax 성공!");
+// 					alert("ajax 성공!");
 					var job = JSON.parse(data);
 					console.log(job);
 					
@@ -39,7 +39,7 @@
 					
 					$.each(job, function(index, item){
 						
-						$('#result').append("<a href="+item.link+">"+item.title+"</a><br>");
+						$('#result').append("<a href="+item.link+">"+item.title+"</a><br><br>");
 						$('#result').append(item.description+"<br>");
 						$('#result').append(item.pubDate+"<br>");
 						$('#result').append("<hr>");
@@ -50,16 +50,32 @@
 					console.log(data);
 				}
 			});
-		});
+// 		});
 		
 		
 	});
 
 </script>	
 	
+<script type="text/javascript">
+		var result = '${result}';
+		if(result == 'createOK'){
+			alert(" 글쓰기 완료! ");
+		}
+		
+		if(result == 'modOK'){
+			alert(' 글 수정 완료!');
+		}
+		
+		if(result == 'delOK'){
+			alert(' 글 삭제 완료!');
+		}
+		
+</script>	
 </head>	
 	<body>
 <%-- ${challengeList } --%>
+
     <div class="board_wrap">
         <div class="board_title">
         <strong>뉴스 / 재테크</strong>
@@ -70,47 +86,63 @@
                  <div class="num" style="padding-right: 10px; width:155px; padding-left: 10px;">경제 뉴스 기사</div>
              </div>
              <div>
-             	<div class="num" style="padding-left: 65px; width: auto; padding-right: 65px;">${cl.cno }</div>
-             </div>
+             	<div class="num" style="padding-left: 65px; width: auto; padding-right: 65px;">
+             			<a href="#" id="news_test"></a>
+						<div id="result"></div>
+             	</div>
+        	</div>
         </div>
+        <div class="board_list_wrap">
         <div class="board_list">
          	<div class="top">
-                 <div class="num" style="padding-right: 10px; width:155px; padding-left: 10px;">글 번호</div>
-                 <div class="num" style="padding-right: 10px; width:155px; padding-left: 10px;">제목</div>
-                 <div class="num" style="padding-right: 10px; width:155px; padding-left: 10px;">작성자</div>
-                 <div class="num" style="padding-right: 10px; width:155px; padding-left: 10px;">작성일</div>
+                 <div class="num" style="padding-right: 10px; width:10%; padding-left: 10px;">글 번호</div>
+                 <div class="num" style="padding-right: 10px; width:40%; padding-left: 10px;">제목</div>
+                 <div class="num" style="padding-right: 10px; width:25%; padding-left: 10px;">작성자</div>
+                 <div class="num" style="padding-right: 10px; width:25%; padding-left: 10px;">작성일</div>
              </div>
-         <c:forEach items="${challengeList }" var="cl">
-                <div>
-                    <div class="num" style="padding-left: 65px; width: auto; padding-right: 65px;">${cl.cno }</div>
-                    <div class="num" style="padding-left: 65px; width: auto; padding-right: 10px;"><c:if test="${cl.c_sort eq 0 }">저축형 /</c:if></div>
-                    <div class="num" style="padding-left: 65px; width: auto; padding-right: 10px;"><c:if test="${cl.c_sort eq 1 }">/ 절약형</c:if></div>
-                    <div class="title" style="padding-left: 65px; width:auto;"><c:if test="${cl.c_sort eq 0 }"><a href="/challenge/plusFeed?cno=${cl.cno }">${cl.c_title }</a></c:if></div>
-                    <div class="title" style="padding-left: 65px; width:auto;"><c:if test="${cl.c_sort eq 1 }"><a href="/challenge/minusFeed?cno=${cl.cno }">${cl.c_title }</a></c:if></div>
-                    <div class="num" style="padding-left: auto; width: auto;">${cl.c_period }주</div>
-                    <div class="date" style="padding-left: auto; width: auto;"><b>${cl.c_min }</b>/ ${cl.c_cnt }</div>
-                    <div class="num">${cl.c_status }</div>
-                    <div>
-                    <button type="button" class="btn btn-block btn-info btn-xs" id="yess" style="width:auto;">승인</button>
-                    <button type="button" class="btn btn-block btn-danger btn-xs" id="noo" style="width:auto;">거절</button>
+             <c:set var="boardno" value="${boardList.size() }"></c:set>
+ 				<fmt:parseNumber var="boardno" value="${boardno }" type="number" />
+         		<c:forEach items="${boardList }" var="board">
+               	 <div>
+                    <div class="num" style="padding-left: 10px; width: 10%; padding-right: 10px;">${boardno }</div>
+                    <div class="num" style="padding-left: 10px; width: 40%; padding-right: 10px;">
+                    	<a href="/economycontent?bno=${board.bno }">${board.b_title }</a>	
                     </div>
-                </div>
+                    <div class="num" style="padding-left: 10px; width: 25%; padding-right: 10px;">${board.b_writer }</div>
+                    <div class="title" style="padding-left: 10px; width:25%; padding-right: 10px;"><fmt:formatDate value="${board.b_date }" pattern="yyyy-MM-dd"/></div>
+                 </div>
+                 <c:set var="boardno" value="${boardno -1 }"></c:set>
                 </c:forEach>
          </div>
          
-           <div class="board_page">
+          <div class="board_page">
+                <ul class= "pagination pagination-sm no-margin pull-right">
 <!--                 <a href="#" class="bt first"><<</a> -->
-                <a href="#" class="bt prev"><</a>
-                <a href="#" class="num on">1</a>
-                <a href="#" class="num">2</a>
-                <a href="#" class="num">3</a>
-                <a href="#" class="num">4</a>
-                <a href="#" class="num">5</a>
-                <a href="#" class="bt next">></a>
+                <c:if test="${pageMaker.prev }">
+					<li><a href="/economy?page=${pageMaker.startPage-1 }"class="bt prev"><</a></li>
+				</c:if>
+               <c:forEach var="idx" begin="${pageMaker.startPage }" end="${pageMaker.endPage }" step="1">
+					<li 
+						<c:out value="${idx == pageMaker.cri.page? 'class=active':'' }"/>
+					
+					><a href="/economy?page=${idx }" class="num">${idx }</a></li>
+				</c:forEach>
+                <c:if test="${pageMaker.next }">
+					<li><a href="/economy?page=${pageMaker.endPage+1 }" class="bt next">></a></li>
+				</c:if>
 <!--                 <a href="#" class="bt last">>></a> -->
-            </div>
+                </ul>
+                </div>
+            
+            <div class="bt_wrap">
+            	<c:if test="${not empty nick }">
+             	<input class="sbtn" type="button" value="작성하기" onclick="location.href='/economywrite';" >
+            	</c:if>
+			</div>
+            
     </div>  
-</div>      
+</div>    
+</div>  
 </body>
 </html>
 

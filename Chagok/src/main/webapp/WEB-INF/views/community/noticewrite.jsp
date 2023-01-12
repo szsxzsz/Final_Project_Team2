@@ -24,13 +24,9 @@
 <!-- 				    	 </span> -->
 				    	</h4>
 		    	</div>
-        <div class="form-group" style="padding-top: 50px; padding-left: 36px; width: 1200px; margin-bottom: 30px;">
-           	<span style = "font-size: 16px; font-family: 'Pretendard','Source Sans Pro', sans-serif; text-align: right;">
-           		<strong>
-           		
-           		</strong>
-           	</span>
-				 <textarea class="form-control" rows="3" style="margin-top:15px;" name="b_content" placeholder="내용을 작성해주세요"></textarea>
+        <div class="form-group" style="padding-top: 50px; padding-left: 36px; width: 1100px; margin-bottom: 30px;">
+           
+				 <textarea class="form-control" rows="3" style="margin-top:15px; font-size:15px; height: 280px; resize: none;" name="b_content" placeholder="내용을 작성해주세요"></textarea>
         		 </div>
 		    </div>
 		</div>
