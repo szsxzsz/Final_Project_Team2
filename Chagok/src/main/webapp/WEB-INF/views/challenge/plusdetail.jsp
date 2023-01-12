@@ -87,7 +87,7 @@
                   <textarea class="form-control" id="inputWarning" style="height: 180px; font-size: 15px;" readonly>
 ${vo.c_content }
         		  </textarea>
-        <a href="#" id="kakaotalk-sharing-btn"><i class="fa fa-share-alt" style="font-size:1.2em; padding-left:1068px; padding-top:11px;"><b> Share</b></i></a>   		  
+        <a id="kakaotalk-sharing-btn"><i class="fa fa-share-alt" style="font-size:1.2em; padding-left:1068px; padding-top:11px;"><b> Share</b></i></a>   		  
         </div>
         <div class="form-group has-error" style="border-left-width:3px; margin-left:36px; width:1133px;">
                   <label class="control-label" for="inputError"><i class="fa fa-times-circle-o"></i>유의사항</label>
@@ -156,6 +156,7 @@ ex) 저축형 챌린지 [교통] 카테고리 참여 중이라면 절약형 [교
 </script>
 
 <script type="text/javascript">   
+
 	$(document).ready(function(){
 		$('#kakaotalk-sharing-btn').click(function () {
 			Kakao.Share.createCustomButton({

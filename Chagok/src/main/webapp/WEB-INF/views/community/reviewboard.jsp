@@ -10,6 +10,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title> 챌린지 후기 게시판 </title>
+
+	<script type="text/javascript">
+		var result = '${result}';
+		if(result == 'createOK'){
+			alert(" 글쓰기 완료! ");
+		}
+		
+		if(result == 'modOK'){
+			alert(' 글 수정 완료!');
+		}
+		
+		if(result == 'delOK'){
+			alert(' 글 삭제 완료!');
+		}
+		
+</script>
+	
 </head>	
 	<body>
 
