@@ -292,9 +292,9 @@ public class ChallengeServiceImpl implements ChallengeService{
 
 	// 관리자 모달창 회원mno
 	@Override
-	public List<UserVO> adminmodal(Integer mno) throws Exception {
-		mylog.debug("service : "+mno);
-		return dao.adminmodal(mno);
+	public List<UserVO> adminmodal(Map<String, Object> map) throws Exception {
+		mylog.debug("service : "+map);
+		return dao.adminmodal(map);
 	}
 
 	// 후기글 정보 조회(페이징처리 cri)

@@ -355,9 +355,9 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 	
 	// 관리자 모달창 회원mno
 	@Override
-	public List<UserVO> adminmodal(Integer mno) throws Exception {
+	public List<UserVO> adminmodal(Map<String, Object> map) throws Exception {
 		mylog.debug("daoimpl : 모달창 mno가져가기");
-		return sqlSession.selectOne(NAMESPACE+".adminmodal", mno);
+		return sqlSession.selectOne(NAMESPACE+".adminmodal", map);
 	}
 
 	// 비즈니스 계좌 송금
@@ -424,7 +424,7 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 	@Override
 	public List<ChallengeVO> chListAll(Criteria cri) throws Exception {
 	    mylog.debug("chListAll 페이징처리 ");
-	    
+	    mylog.debug("cri : "+cri.toString());
 	    return sqlSession.selectList(NAMESPACE + ".chList", cri);
 	}
 

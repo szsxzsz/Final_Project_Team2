@@ -3,6 +3,8 @@ package com.chagok.service;
 import java.util.List;
 import java.util.Map;
 
+import com.chagok.domain.BusinessAccountVO;
+import com.chagok.domain.Criteria;
 import com.chagok.domain.UserVO;
 
 public interface UserService {
@@ -41,5 +43,8 @@ public interface UserService {
 	
 	// 회원 탈퇴
 	public int unregistUser(UserVO vo) throws Exception;
+	
+	// 차곡 계좌내역 조회
+	public List<BusinessAccountVO> getBizAll(Criteria cri) throws Exception;
 	
 }

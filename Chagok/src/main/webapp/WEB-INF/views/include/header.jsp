@@ -224,7 +224,7 @@ color : rgba(255, 219, 131 / 80%);
 				<a href="/commumain"><p style="font-family: 'GmarketSans'">커뮤니티</p></a>
 			</div>
 			<div class="management">
-				<a href="/asset/aMain"><p style="font-family: 'GmarketSans'">자산관리</p></a>
+				<a href="/assetmain"><p style="font-family: 'GmarketSans'">자산관리</p></a>
 			</div>
 			<div class="notice">
 				<a href="/notice"><p style="font-family: 'GmarketSans'">공지사항</p></a>
@@ -236,7 +236,7 @@ color : rgba(255, 219, 131 / 80%);
 			<a href="/register"><div class="join"><p style="font-family: 'GmarketSans'">회원가입</p></div></a>
 		</c:if>
 		<c:if test="${nick != null}">
-			<a href="/myPage"><div class="login"><p style="font-family: 'GmarketSans'"><small>마이페이지</small></p></div></a>
+			<a href="/myPage"><div class="login"><p style="font-family: 'GmarketSans'">마이페이지</p></div></a>
 			<a href="/logout"><div class="join"><p style="font-family: 'GmarketSans'">로그아웃</p></div></a>
 		</c:if>
 		</div>

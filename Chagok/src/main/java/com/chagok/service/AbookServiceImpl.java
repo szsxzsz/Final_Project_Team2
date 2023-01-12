@@ -49,19 +49,20 @@ public class AbookServiceImpl implements AbookService{
 		
 		return dao.ctbottomList();
 	}
-
+	
 	@Override
 	public void insAbookList(AbookVO vo) throws Exception {
-		
+
 		dao.insAbookList(vo);
-		
+
 	}
 
 	@Override
 	public List<AbookVO> toCate(int ctno) throws Exception {
 		return dao.toCate(ctno);
-		
+
 	}
+	
 	
 	
 	
@@ -118,6 +119,11 @@ public class AbookServiceImpl implements AbookService{
 	@Override
 	public List<Map<String, Object>> calInout(Integer mno, Integer mm, Integer inout) throws Exception {
 		return dao.calInout(mno, mm, inout);
+	}
+
+	@Override
+	public int chkAb(Integer mno, Integer mm) throws Exception {
+		return dao.chkAb(mno, mm);
 	}
 	
 	

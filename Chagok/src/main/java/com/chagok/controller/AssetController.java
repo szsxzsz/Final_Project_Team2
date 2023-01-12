@@ -425,14 +425,22 @@ public class AssetController {
 	    
 	} // ===========================================================================================================
 	
+	
+	
 	// 그리드 -> DB(서버 데이터)로 수정하고 저장하는 코드
 	@RequestMapping("/saveGrid")
 	 @ResponseBody
-	 public Object saveList(HttpServletRequest request,@RequestBody List<Map<String, Object>> list) throws Exception {
+	 public Object saveList(HttpServletRequest request,@RequestBody List<Map<String, Object>> list, HttpSession session) throws Exception {
+		
+		// 로그인 확인
+		int mno = (int)session.getAttribute("mno");
+		UserVO userVO = userService.getUser(mno);
+		
+		mylog.debug("mno@@@@@@@@:"+mno);
 		
 		mylog.debug("##그리드 뽑 리스트"+list);
 		 Map <String, String> resultMap =  new HashMap<String, String>();
-		
+		mylog.debug("배열 실험"+list.get(0).get("ab_date").toString());
 		  String result = "ok";
 		  String resultMsg = "";
 		  
@@ -440,7 +448,7 @@ public class AssetController {
 		  
 	   for(int i = 0; i < list.size(); i++) {
 		AbookVO vo = new AbookVO();
-//	    vo.setMno(Integer.parseInt(tList.get("mno").toString( )));
+	    vo.setMno(mno);
 	    vo.setAbno(Integer.parseInt(list.get(i).get("abno").toString()));
 	    vo.setAb_inout(Integer.parseInt(list.get(i).get("ab_inout").toString()));
 	    vo.setAb_amount(Integer.parseInt(list.get(i).get("ab_amount").toString()));
@@ -450,12 +458,9 @@ public class AssetController {
 	    vo.setAb_content(list.get(i).get("ab_content").toString());
 	    vo.setAb_memo(list.get(i).get("ab_memo").toString());
 	    vo.setAb_method(list.get(i).get("ab_method").toString());
-	    vo.setCt_top(list.get(i).get("ct_top").toString());
-	    vo.setCt_bottom(list.get(i).get("ct_bottom").toString());
 
-	    mylog.debug("!!!!!!!!!!!!!!!!!"+vo);
 	    abService.setAbookList(vo);
-//	    mylog.debug(vo+"%%%%%%%%%%cont");
+	    mylog.debug("!!!!!!!!!!!!!!!!!"+vo);
 	   }
 	    result = "success";
 	    resultMsg = "성공" ;
@@ -472,59 +477,7 @@ public class AssetController {
 	  return resultMap;
 	}
 	
-	// 그리드 -> DB(서버 데이터)로 수정하고 저장하는 코드
-	@RequestMapping(value = "/saveRows", method = {RequestMethod.GET})
-	@ResponseBody
-	 public Object saveRows(HttpServletRequest request, @RequestParam Map<String,Object> param, HttpSession session) throws Exception {
-		
-		int mno = (int)session.getAttribute("mno");
-		UserVO userVO = userService.getUser(mno);
-		
-//		mylog.debug("##그리드 뽑 리스트"+inlist);
-		mylog.debug("##param"+param);
-		mylog.debug(request.getParameter("abno")+"이게 되나");
-		
-		 Map <String, String> resultMap =  new HashMap<String, String>();
-		
-		  String result = "ok";
-		  String resultMsg = "";
-		  
-	  try {
-		  
-//	   for(int i = 0; i < inlist.size(); i++) {
-//		AbookVO vo = new AbookVO();
-//	    vo.setMno(mno);
-//	    vo.setAbno(Integer.parseInt(inlist.get(i).get("abno").toString()));
-//	    vo.setAb_inout(Integer.parseInt(inlist.get(i).get("ab_inout").toString()));
-//	    vo.setAb_amount(Integer.parseInt(inlist.get(i).get("ab_amount").toString()));
-//	    vo.setCtno(Integer.parseInt(inlist.get(i).get("ctno").toString()));
-//	    
-//	    vo.setAb_date(inlist.get(i).get("ab_date").toString());
-//	    vo.setAb_content(inlist.get(i).get("ab_content").toString());
-//	    vo.setAb_memo(inlist.get(i).get("ab_memo").toString());
-//	    vo.setAb_method(inlist.get(i).get("ab_method").toString());
-//	    vo.setCt_top(inlist.get(i).get("ct_top").toString());
-//	    vo.setCt_bottom(inlist.get(i).get("ct_bottom").toString());
-//	   
-//	    mylog.debug("insert -> vo 넣기"+vo);
-//	    abService.setAbookList(vo);
-//	    mylog.debug(vo+"%%%%%%%%%%cont");
-//	   }
-	    result = "success";
-	    resultMsg = "성공" ;
-	     
-	   }catch (Exception e) { 
-	    result = "failure";
-	    resultMsg = "실패" ;
-	   }
-	  
-	  resultMap.put("result", result);
-	  resultMap.put("resultMsg", resultMsg);
-	  mylog.debug("#######resultMap"+resultMap);
-	  
-	  return resultMap;
-	}
-	
+
 	// ===============================================================
 	@ResponseBody
 	@RequestMapping(value = "/cateSelect", method = {RequestMethod.GET,RequestMethod.POST})
@@ -602,12 +555,16 @@ public class AssetController {
 	// insert 
 	@PostMapping(value = "/insGrid")
 	public String insGrid(AbookVO vo, RedirectAttributes rttr, HttpSession session) throws Exception{
-		mylog.debug(" cont- insGrid 호출 ");	
-		// 1. 전달된 정보 저장 (title,content,writer)
-		mylog.debug(vo.toString());
-		// 2. 서비스 -> DAO 접근 (mapper)
-//		abService.insGrid(vo);
 		
+		// 로그인 확인
+		int mno = (int)session.getAttribute("mno");
+		UserVO userVO = userService.getUser(mno);
+		
+		mylog.debug(" cont- insGrid 호출 ");	
+		mylog.debug("인서트 실험 중 "+vo.toString());
+		vo.setMno(mno);
+		
+		abService.insAbookList(vo);
 		mylog.debug(" 쓰기 완료 ");
 		
 		//model.addAttribute("result", "createOK");
@@ -673,7 +630,57 @@ public class AssetController {
 	
 
 	// =====================================버려진 코드===============================================================
-
+//	// 그리드 -> DB(서버 데이터)로 수정하고 저장하는 코드
+//	@RequestMapping(value = "/saveRows", method = {RequestMethod.GET})
+//	@ResponseBody
+//	 public Object saveRows(HttpServletRequest request, @RequestParam Map<String,Object> param, HttpSession session) throws Exception {
+//		
+//		int mno = (int)session.getAttribute("mno");
+//		UserVO userVO = userService.getUser(mno);
+//		
+////		mylog.debug("##그리드 뽑 리스트"+inlist);
+//		mylog.debug("##param"+param);
+//		 Map <String, String> resultMap =  new HashMap<String, String>();
+//		
+//		  String result = "ok";
+//		  String resultMsg = "";
+		  
+//	  try {
+//		  
+//	   for(int i = 0; i < param.size(); i++) {
+//		AbookVO vo = new AbookVO();
+//	    vo.setMno(mno);
+//	    vo.setAbno(Integer.parseInt(param.get(i).get("abno").toString()));
+//	    vo.setAb_inout(Integer.parseInt(param.get(i).get("ab_inout").toString()));
+//	    vo.setAb_amount(Integer.parseInt(param.get(i).get("ab_amount").toString()));
+//	    vo.setCtno(Integer.parseInt(param.get(i).get("ctno").toString()));
+//	    
+//	    vo.setAb_date(param.get(i).get("ab_date").toString());
+//	    vo.setAb_content(param.get(i).get("ab_content").toString());
+//	    vo.setAb_memo(param.get(i).get("ab_memo").toString());
+//	    vo.setAb_method(param.get(i).get("ab_method").toString());
+//	    vo.setCt_top(param.get(i).get("ct_top").toString());
+//	    vo.setCt_bottom(param.get(i).get("ct_bottom").toString());
+//	   
+//	    mylog.debug("insert -> vo 넣기"+vo);
+//	    abService.setAbookList(vo);
+//	    mylog.debug(vo+"%%%%%%%%%%cont");
+//	   }
+//	    result = "success";
+//	    resultMsg = "성공" ;
+//	     
+//	   }catch (Exception e) { 
+//	    result = "failure";
+//	    resultMsg = "실패" ;
+//	   }
+//	  
+//	  resultMap.put("result", result);
+//	  resultMap.put("resultMsg", resultMsg);
+//	  mylog.debug("#######resultMap"+resultMap);
+//	  
+//	  return resultMap;
+//	}
+	
 	
 //	@RequestMapping(value="/getGrid", method = RequestMethod.POST, produces="application/json;charset=utf-8")
 //	@ResponseBody
@@ -1041,21 +1048,21 @@ public class AssetController {
 	@GetMapping(value="/aMain")
 	public String aMain(HttpSession session, Model model, RedirectAttributes rttr) throws Exception {
 		Integer mno = (Integer)session.getAttribute("mno");
-		mylog.debug("헉"+mno);
-		UserVO userVO = new UserVO();
 		Integer mm = 0;
+		mylog.debug("@@@@mno"+mno);
+		UserVO userVO = userService.getUser(mno);
 		Map<String, Object> map = new HashMap<String, Object>();
-		String a = "가계부데이터있음";
 		
 		if (mno!=null) {
 			model.addAttribute("result", "loginY");
-		
-			if(a=="가계부데이터없음") {
-				model.addAttribute("result2", "abN");
+			
+			int chkAb = abService.chkAb(mno, mm);
+			if(chkAb==0) {
+				model.addAttribute("chkAb", "abN");
 			}
 			
 			else {
-				model.addAttribute("result2", "abY");
+				model.addAttribute("chkAb", "abY");
 				Integer dtSum = rptService.dtSum(mno, mm);
 				Integer dtAvg = rptService.dtAvg(mno, mm);
 				Integer expSum = rptService.expSum(mno, mm);
@@ -1092,24 +1099,28 @@ public class AssetController {
 			// 계좌 리스트 조회
 			List<AccountVO> accountList = accountService.getAccountInfo(mno);
 			model.addAttribute("accountList", accountList);
-			
+			mylog.debug("accountList : "+accountList.toString());
 			// 카드 리스트 조회
 			List<CardInfoVO> cardList = accountService.getCardInfo(userVO.getUser_seq_no());
 			model.addAttribute("cardList", cardList);
+			mylog.debug("cardList : "+cardList.toString());
 			
 			// 카드 내역/금액 조회
 			List<List<CardHistoryVO>> cardHistoryList = accountService.getCardHistory(cardList);
 			model.addAttribute("cardHistoryList", cardHistoryList);
+			mylog.debug("cardHistoryList : "+cardHistoryList.toString());
 			
 			// 현금 내역 조회
 			CashVO cashVO = accountService.getCashInfo(mno);
 			if (cashVO != null) {
 				cashVO.setCash_amt(cashVO.getCash_amt().replaceAll(",", ""));
-			}	
+				mylog.debug("cashVO : "+cashVO.toString());
+			}
 			model.addAttribute("cashVO", cashVO);
+			model.addAttribute("userVO", userVO);
 		
-		model.addAttribute("userVO", userVO);	
 		return "/chagok/assetmain";
+		
 		} else {
 			return "redirect:/login";
 		}

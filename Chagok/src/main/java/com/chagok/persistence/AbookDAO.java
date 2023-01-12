@@ -60,4 +60,7 @@ public interface AbookDAO {
 
 
 	
+	// 가계부 유무
+	public int chkAb(Integer mno, Integer mm) throws Exception;
+	
 }

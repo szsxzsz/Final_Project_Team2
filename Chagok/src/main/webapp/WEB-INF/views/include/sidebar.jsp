@@ -114,7 +114,7 @@
               <ul class="treeview-menu active">
                 <li><a href="/challenge/chListAll"></i> 챌린지 관리</a></li>
                 <li><a href="/#"></i> 회원 관리</a></li>
-                <li><a href="#"></i> 결제 관리</a></li>
+                <li><a href="/bizAccount"></i>차곡 계좌 관리</a></li>
 <!--                 <li><a href="../charts/flot.html"><i class="fa fa-circle-o"></i> Flot</a></li> -->
 <!--                 <li><a href="../charts/inline.html"><i class="fa fa-circle-o"></i> Inline charts</a></li> -->
               </ul>
