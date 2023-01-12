@@ -1,6 +1,7 @@
 
 package com.chagok.persistence;
 
+import java.security.KeyStore.Entry;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -28,7 +29,6 @@ public class AbookDAOImpl implements AbookDAO{
 	
 	//NAMESPACE
 	private static final String NAMESPACE = "com.chagok.mapper.abookMapper";
-	private static final String NAMESPACE2 = "com.chagok.mapper.reportMapper";
 	
 	// 가계부 조회 map
 	@Override
@@ -41,22 +41,34 @@ public class AbookDAOImpl implements AbookDAO{
 	
 	// 카테고리 리스트 
 	@Override
-	public List<Map<String,Object>> cateList() throws Exception {
-		List<CategoryVO> cateList = sqlSession.selectList(NAMESPACE+".cateList");
-		List<Map<String,Object>> cttopList = new ArrayList<Map<String,Object>>();
+	public List<Map<String, Object>> cateList() throws Exception {
+		
+		List<Map<String, Object>> cttopList = sqlSession.selectList(NAMESPACE+".cttopList");
+		List<Map<Object,Object>> ctList = new ArrayList<Map<Object,Object>>();
+			
+		// TOP CATEGORY
+//			for (int i = 0; i < cttopList.size(); i++) {
+//
+//				Map<Object, Object> cttopmap = new HashMap<Object, Object>();
+//				CategoryVO cvo =(CategoryVO) cttopList.get(i);
+//				
+//				String ctno = String.valueOf(cvo.getCtno());
+//				cttopmap.put(ctno, cvo.getCt_top());
+//				ctList.add(cttopmap);
+//			}
+//			mylog.debug("***dao에서 topmap"+ctList);
+		return cttopList;
 
-			for (int i = 1; i < cateList.size(); i++) {
-
-				Map<String, Object> cateMap = new HashMap<String, Object>();
-				CategoryVO cvo =(CategoryVO) cateList.get(i);
-				cateMap.put("ct_top", cvo.getCt_top());
-				cateMap.put("ct_bottom", cvo.getCt_bottom());
-				
-				cttopList.add(cateMap);
-			}
-			return cttopList;
 	}
 	
+	// BOTTOM CATEGORY
+	@Override
+	public List<Map<String, Object>> ctbottomList() throws Exception {
+		
+		List<Map<String, Object>> ctbottomList = sqlSession.selectList(NAMESPACE+".ctbottomList");
+	
+	return ctbottomList;
+}	
 	// 가계부 수정 저장
 	@Override
 	public void setAbookList(AbookVO vo) throws Exception {
@@ -123,6 +135,22 @@ public class AbookDAOImpl implements AbookDAO{
 		map.put("mno", mno);
 		map.put("p_month", pMonth);
 		return sqlSession.selectOne(NAMESPACE+".totalBud", map);
+	}
+
+	@Override
+	public List<Map<String, Object>> calInout(Integer mno, Integer mm, Integer inout) throws Exception {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("mno", mno);
+		map.put("mm", mm);
+		
+		if(inout==0) {
+			mylog.debug("calAll");
+			return sqlSession.selectList(NAMESPACE+".calAll", map);
+		} else {
+			map.put("inout", inout);
+			mylog.debug("calInout");
+			return sqlSession.selectList(NAMESPACE+".calInout", map);
+		}
 	}
 	
 	

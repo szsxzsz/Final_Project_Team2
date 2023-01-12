@@ -4,6 +4,7 @@
 function f_loginCheck(){
 	var id = $('input[name=id]').val();
 	var pw = $('input[name=pw]').val();
+	var pageInfo = $('input[name=pageInfo]').val();
 	var saveIdCheck = $('#save_id:checked').val();
 	
 	if(saveIdCheck == 'on'){
@@ -12,13 +13,14 @@ function f_loginCheck(){
 		localStorage.setItem("saveId", "N");
 	}
 	
-	var loginData = {"id":id, "pw":pw};
+	var loginData = {"id":id, "pw":pw, "pageInfo":pageInfo};
 	
 	$.ajax({
 		type : "post",
-		url : "/login",
+		url : "/login", /* QQQ 테스트후 변경할 것*/
 		contentType : "application/json",
 		data : JSON.stringify(loginData),
+		timeout : 1000,
 		success : function(result){
 			if(result == 0){
 				Swal.fire({
@@ -34,7 +36,6 @@ function f_loginCheck(){
 					  showConfirmButton: false,
 					  timer: 1000
 					})
-				setTimeout('url()',1000);
 			}
 		},
 		error : function(jqXHR, status, error){
@@ -45,7 +46,13 @@ function f_loginCheck(){
 }
 
 function url(){
-	window.location.href="/main";
+	var pageInfo = $('input[name=pageInfo]').val();
+	
+	if (pageInfo == "" ) {
+		window.location.href="/main";
+	} else { 
+		window.location.href="/"+pageInfo;
+	}
 }
 
 $(document).ready(function(){

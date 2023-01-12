@@ -38,12 +38,17 @@ public class AbookServiceImpl implements AbookService{
 	
 
 	@Override
-	public List<Map<String,Object>> cateList() throws Exception {
+	public List<Map<String, Object>> cateList() throws Exception {
 //		mylog.debug("♡♡♡♡ Service -> DAO 호출 ");
 		
 		return dao.cateList();
 	}
 
+	@Override
+	public List<Map<String, Object>> ctbottomList() throws Exception {
+		
+		return dao.ctbottomList();
+	}
 
 	
 	
@@ -51,6 +56,7 @@ public class AbookServiceImpl implements AbookService{
 	
 	///////////////////MJ/////////////////////
 	
+
 
 	@Override
 	public String getPMonth(int mm) throws Exception {
@@ -96,6 +102,11 @@ public class AbookServiceImpl implements AbookService{
 	@Override
 	public Integer totalBud(Integer mno, String pMonth) throws Exception {
 		return dao.totalBud(mno, pMonth);
+	}
+
+	@Override
+	public List<Map<String, Object>> calInout(Integer mno, Integer mm, Integer inout) throws Exception {
+		return dao.calInout(mno, mm, inout);
 	}
 	
 	

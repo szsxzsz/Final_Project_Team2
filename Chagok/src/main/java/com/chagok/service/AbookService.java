@@ -12,7 +12,10 @@ public interface AbookService {
 	public List<Map<String, AbookVO>> getAbookList(int mno) throws Exception;
 		
 	// 카테고리 목록
-	public List<Map<String,Object>> cateList() throws Exception;
+	public List<Map<String, Object>> cateList() throws Exception;
+	
+	// 카테고리 bottom
+	public List<Map<String, Object>> ctbottomList() throws Exception;
 	
 	// 그리드 수정
 	public void setAbookList(AbookVO vo) throws Exception;
@@ -49,5 +52,8 @@ public interface AbookService {
 	public void delBud(Integer mno, String pMonth) throws Exception;
 
 	// 6. 총예산 조회
-	public Integer totalBud(Integer mno, String pMonth) throws Exception;
+	public Integer totalBud(Integer mno, String pMonth) throws Exception;	
+	
+	// 달력
+	public List<Map<String, Object>> calInout(Integer mno, Integer mm, Integer inout) throws Exception;
 }
