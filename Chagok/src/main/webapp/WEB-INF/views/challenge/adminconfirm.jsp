@@ -97,10 +97,10 @@
 						<div class="num" style="padding-left:25px; width:200px;">
 							<c:choose>
 								<c:when test="${cl.c_status eq 0 }">승인 대기
-									<button type="button" class="btn btn-block btn-info yes" style="width: auto; display: inline-block;">승인
+									<button type="button" class="btn btn-block btn-info yes" style="width: auto; display: inline-block; padding: 3px 10px 0 10px;">승인
 										<input type="hidden" value="${cl.cno }" class="test">
 									</button>
-									<button type="button" class="btn btn-block btn-danger no" style="width: auto; display: inline-block; margin-bottom: 6px;">거절
+									<button type="button" class="btn btn-block btn-danger no" style="width: auto; display: inline-block; margin-bottom: 6px; padding: 3px 10px 0 10px;">거절
 										<input type="hidden" value="${cl.cno }" class="test">
 									</button>
 								</c:when>

@@ -568,13 +568,12 @@ public class AssetController {
 		}
 
 		return jArr;
-
 	}
 	
 	// ===========================================================
 	@RequestMapping("/catebottom")
 	 @ResponseBody
-	 public JSONArray ctbottomList(HttpServletRequest request,@RequestParam("ct_top") String ct_top) throws Exception {
+	 public JSONArray ctbottomList(HttpServletRequest request,/*@RequestParam("ct_top") String ct_top*/@RequestParam Map<String, Object> ct_top) throws Exception {
 	
 		mylog.debug("%%value"+ct_top);
 
@@ -595,13 +594,28 @@ public class AssetController {
 			}
 			jArrB.add(jsonobjb);
 		
-			
 		}
 		return jArrB;
 
 	}
 	
-
+	// insert 
+	@PostMapping(value = "/insGrid")
+	public String insGrid(AbookVO vo, RedirectAttributes rttr, HttpSession session) throws Exception{
+		mylog.debug(" cont- insGrid 호출 ");	
+		// 1. 전달된 정보 저장 (title,content,writer)
+		mylog.debug(vo.toString());
+		// 2. 서비스 -> DAO 접근 (mapper)
+//		abService.insGrid(vo);
+		
+		mylog.debug(" 쓰기 완료 ");
+		
+		//model.addAttribute("result", "createOK");
+//		rttr.addFlashAttribute("result", "createOK");
+		
+		return "redirect:/asset/abookList";
+//		return "redirect:/board/list";
+	}
 	
 	// ===============================================================
 	
@@ -681,6 +695,7 @@ public class AssetController {
 //			mylog.debug("수정 처리 완료!!");
 //		 
 //	}
+
 	
 	// ===================================================================================
 	
@@ -1018,6 +1033,84 @@ public class AssetController {
 		}
 //		mylog.debug("jArr"+jArr.toString());
 		return jArr;
+	}
+	
+//	http://localhost:8080/asset/aMain
+	@GetMapping(value="/aMain")
+	public String aMain(HttpSession session, Model model, RedirectAttributes rttr) throws Exception {
+		Integer mno = (Integer)session.getAttribute("mno");
+		mylog.debug("헉"+mno);
+		UserVO userVO = new UserVO();
+		Integer mm = 0;
+		Map<String, Object> map = new HashMap<String, Object>();
+		String a = "가계부데이터있음";
+		
+		if (mno!=null) {
+			model.addAttribute("result", "loginY");
+		
+			if(a=="가계부데이터없음") {
+				model.addAttribute("result2", "abN");
+			}
+			
+			else {
+				model.addAttribute("result2", "abY");
+				Integer dtSum = rptService.dtSum(mno, mm);
+				Integer dtAvg = rptService.dtAvg(mno, mm);
+				Integer expSum = rptService.expSum(mno, mm);
+				List<Map<String, Object>> cateCntList = rptService.cateCnt(mno, mm);
+				List<Map<String, Object>> cateSumList = rptService.cateSum(mno, mm);
+				
+				String cateCntjson = rptService.listMapToJson(cateCntList);
+				String cateSumjson = rptService.listMapToJson(cateSumList);
+				
+				map.put("cateCntjson", cateCntjson);
+				map.put("cateSumjson", cateSumjson);
+				map.put("dtSum", dtSum);
+				map.put("dtAvg", dtAvg);
+				map.put("expSum", expSum);
+				model.addAttribute("map", map);
+			}
+		
+			// 예산
+			String pMonth = abService.getPMonth(mm);
+			int chkBud = abService.chkBud(mno, pMonth);
+			if(chkBud==0) {
+				model.addAttribute("chkBud", "budN");
+			}
+			else {
+				model.addAttribute("chkBud", "budY");
+				Integer totalBud = abService.totalBud(mno, pMonth);
+				Integer dtSum2 = rptService.dtSum(mno, mm);
+				
+				map.put("totalBud", totalBud);
+				map.put("dtSum2", dtSum2);
+				model.addAttribute("pMonth", pMonth);
+			}
+			
+			// 계좌 리스트 조회
+			List<AccountVO> accountList = accountService.getAccountInfo(mno);
+			model.addAttribute("accountList", accountList);
+			
+			// 카드 리스트 조회
+			List<CardInfoVO> cardList = accountService.getCardInfo(userVO.getUser_seq_no());
+			model.addAttribute("cardList", cardList);
+			
+			// 카드 내역/금액 조회
+			List<List<CardHistoryVO>> cardHistoryList = accountService.getCardHistory(cardList);
+			model.addAttribute("cardHistoryList", cardHistoryList);
+			
+			// 현금 내역 조회
+			CashVO cashVO = accountService.getCashInfo(mno);
+			if (cashVO != null) {
+				cashVO.setCash_amt(cashVO.getCash_amt().replaceAll(",", ""));
+			}	
+			model.addAttribute("cashVO", cashVO);
+		
+		model.addAttribute("userVO", userVO);	
+		return "/chagok/assetmain";
+		} else {
+			return "redirect:/login";
+		}
 	}
 	
 	///////////////////MJ////////////////////

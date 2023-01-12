@@ -30,7 +30,9 @@
 			<!-- 날짜 -->
 		</div>	
 	</div>
-
+	</div>
+	<div class="row"></div>
+	<div class="col-md-8">
 <table id="list"></table>
 <div id="pager"></div>	
 	
@@ -41,6 +43,92 @@
 <span><a href="#" onclick="javascript:gridFunc.addRow();">행 추가</a></span>
 <span><a href="#" onclick="javascript:gridFunc.clearGrid();">초기화</a></span>
 <span><a href="#" onclick="javascript:delRow();">삭제</a></span>
+
+
+</div>
+
+<div class="col-md-4">
+	<div class="box box-primary2">
+<div class="box-header with-border">
+<h3 class="box-title"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">insert</font></font></h3>
+</div>
+
+<form role="form" action="/asset/insGrid" method="post">
+<div class="box-body">
+
+<div class="form-group">
+<label for="exampleInputEmail1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">분류</font></font></label><br>
+ <input type="checkbox" id="out" name="ab_inout" value="1" checked>
+  <label for="out">지출</label>
+ <input type="checkbox" id="in" name="ab_inout" value="2" checked>
+  <label for="scales">수입</label>
+  </div>
+
+<div class="form-group">
+<label for="exampleInputPassword1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">날짜</font></font></label>
+<input type='text' class='datetimepicker' name='ab_date'>
+</div>
+
+<div class="form-group">
+<label for="exampleInputEmail1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">내용</font></font></label>
+<input type="text" class="form-control" id="exampleInputEmail1" name="ab_content">
+</div>
+
+<div class="form-group">
+<label for="exampleInputEmail1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">금액</font></font></label>
+<input type="text" class="form-control" id="exampleInputEmail1" name="ab_amount">
+</div>
+
+<div class="form-group">
+<label for="exampleInputEmail1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">거래수단</font></font></label>
+<input type="text" class="form-control" id="exampleInputEmail1" name="ab_method">
+</div>
+
+<div class="pl-lg-4">
+<div class="form-group">
+              <div class="form-group focused">
+                <label class="form-control-label" for="input-username" >카테고리</label>
+                <select name="b_ctno" id="input-address" class="form-control form-control-alternative" >
+                   <option>카테고리</option>
+                   <option value="1">식비</option>
+				   <option value="2">의복/미용</option>
+  				   <option value="3">문화/여가</option>
+  				   <option value="4">생활</option>
+				   <option value="5">주거/통신</option>
+  				   <option value="6">건강/운동</option>
+  				   <option value="7">교육/육아</option>
+  				   <option value="8">교통/차량</option>
+  				   <option value="9">경조사/회비</option>
+  				   <option value="10">금융</option>
+  				   <option value="11">저축/보험</option>
+  				   <option value="12">자산이동</option>
+                </select>
+              </div>
+</div>
+
+<div class="form-group">
+                      <div class="form-group">
+                        <label class="form-control-label" for="input-email">상세 카테고리</label>
+                         <select name="ctno" id="input-address" class="form-control form-control-alternative" >
+                           <option>상세 카테고리</option>
+                        </select>
+                      </div>
+</div>
+</div>
+
+<div class="form-group">
+<label for="exampleInputEmail1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">메모</font></font></label>
+<input type="text" class="form-control" id="exampleInputEmail1" name="ab_memo">
+</div>
+
+
+</div>
+
+<div class="box-footer">
+<button type="submit" class="btn btn-primary"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">제출하다</font></font></button>
+</div>
+</form>
+</div>
 
 <!-- <input type="BUTTON" id="btnC" value="Edit Selected" /> -->
 <!-- <input type="BUTTON" id="btnD" value="Edit Selected" /> -->
@@ -64,53 +152,13 @@ function grid_Datepicker(text, obj){
 </script>
 
 
-
-시작일시 : <input type='text' class='datetimepicker' name='start_dt'  style='width:140px;'>, 
-종료일시 : <input type='text' id="datepicker" class='' name='end_dt'   style='width:140px; padding-left:10px;'>
-<hr>
-                <div class="pl-lg-4"> 
-<!--                   <div class="col-lg-6"> -->
-<!--                       <div class="form-group focused"> -->
-<!--                         <label class="form-control-label" for="input-username" >카테고리</label> -->
-                        <select name="ct_top" id="input-address" class="form-control form-control-alternative" >
-                           <option>카테고리</option>
-                           <option value="1">식비</option>
-        				   <option value="2">의복/미용</option>
-          				   <option value="3">문화/여가</option>
-          				   <option value="4">생활</option>
-        				   <option value="5">주거/통신</option>
-          				   <option value="6">건강/운동</option>
-          				   <option value="7">교육/육아</option>
-          				   <option value="8">교통/차량</option>
-          				   <option value="9">경조사/회비</option>
-          				   <option value="10">금융</option>
-          				   <option value="11">저축/보험</option>
-          				   <option value="12">자산이동</option>
-                        </select>
-<!--                       </div> -->
-<!--                     </div> -->
-                    <div class="col-lg-6">
-                      <div class="form-group">
-                        <label class="form-control-label" for="input-email">상세 카테고리</label>
-                         <select name="ct_bottom" id="input-address" class="form-control form-control-alternative" >
-                           <option>상세 카테고리</option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-
-<script>
-
-jQuery(function($) {
-    $("#datepicker").datetimepicker();
-});
-
-$(function (){
-    $("#cate option:selected").on('change', function()  {
+<script type="text/javascript">
+$(function(){
+    $('select[name="b_ctno"] ').on('change', function()  {
         var arrType = getAgreeType();
-        var optionType = $(this).parents('.pl-lg-4').find($('select[name="ct_bottom"]'));
+        var optionType = $(this).parents('.pl-lg-4').find($('select[name="ctno"]'));
         optionType.empty();
- 
+
         if($(this).val() == '1'){ 
             for(prop in arrType['1']){
                 optionType.append('<option value='+prop+' >'+arrType['1'][prop]+'</option>');
@@ -163,15 +211,24 @@ $(function (){
     });
 });
 </script>
-
-
-
-
 <script type="text/javascript">
 function getAgreeType() {    
     var obj = {
-//         "1" : "1:식비;2:의복/미용;3:문화/여가;4:생활;5:주거/통신;6:건강/통신;7:교육/육아;8:교통/차량;9:경조사/회비;10:금융;11:저축/보험",
-        
+        "1" : {
+            '13' : '식사',
+            '14' : '간식',
+            '15' : '외식',
+            '16' : '카페',            
+            '17' : '술/유흥',            
+            '18' : '기타',                   
+        },
+        "2" : {
+            '19' : '의류',
+            '20' : '패션잡화',
+            '21' : '헤어',
+            '22' : '뷰티',
+            '23' : '기타',
+        },
         "3" : {
             '24' : '여행/숙박',
             '25' : '공연/전시',
@@ -242,17 +299,8 @@ function getAgreeType() {
             '72' : '기타',
         }
     }
-    
-    
-    
-//     var json = JSON.stringify(obj);
-    
-// 	console.log(JSON.stringify(obj));
-    
-//     return JSON.stringify(obj);
+    return obj;
 }
-</script>
-
 </script>
 
 <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" /> -->
@@ -289,7 +337,7 @@ $("#jqGrid").jqGrid({
 			},
 // 	alert("시작");
     height: 500, 
-    width: 1450,
+    width: 1000,
 
     colNames : ['num','분류','날짜','내용','금액','거래수단','카테고리','소분류','메모'], 
     colModel:[
@@ -495,7 +543,7 @@ $("#jqGrid").jqGrid({
 //     	  alert(""+content);
 //     	 } ,
     
-    autowidth: true,
+//     autowidth: true,
 	shrinkToFit: true, 
     loadtext: "조회 중..",
     caption: "가계부 내역 조회",
@@ -694,30 +742,6 @@ $("#jqGrid").jqGrid({
 }
 
 
- </script>   
- 
- <script type="text/javascript">
- $("#bedata").click(function(){ 
-     var gr = jQuery("#editgrid").jqGrid('getGridParam','selrow'); 
-     if( gr != null ) jQuery("#editgrid").jqGrid('editGridRow',gr{height:280,reloadAfterSubmit:false}); 
-     else alert("Please Select Row"); 
-});
- </script>
-
-<script type="text/javascript">
-	/* 설정 */
-	const config = {
-		dateFormat: 'yy-mm-dd',
-	    prevText: '이전 달',
-	    nextText: '다음 달',
-	    monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
-	    monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
-	    dayNames: ['일','월','화','수','목','금','토'],
-	    dayNamesShort: ['일','월','화','수','목','금','토'],
-	    dayNamesMin: ['일','월','화','수','목','금','토'],
-	    yearSuffix: '년',
-        changeMonth: true,
-        changeYear: true
 	///////////////////////////////////////아직 안 쓰는 코드 
     function search() {
     	
@@ -890,6 +914,11 @@ currentText: '현재시간적용',
 
 	
 <style>
+
+.box.box-primary2 {
+    border-top-color: #666;
+    margin: 0px 5px 0px 5px;
+
 
 #th-bg {
 	background-color: #FDEDBF;
