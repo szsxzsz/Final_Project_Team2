@@ -50,6 +50,19 @@ public class AbookServiceImpl implements AbookService{
 		return dao.ctbottomList();
 	}
 	
+	@Override
+	public void insAbookList(AbookVO vo) throws Exception {
+
+		dao.insAbookList(vo);
+
+	}
+
+	@Override
+	public List<AbookVO> toCate(int ctno) throws Exception {
+		return dao.toCate(ctno);
+
+	}
+	
 	
 	
 	

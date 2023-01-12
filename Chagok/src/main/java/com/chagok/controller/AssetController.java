@@ -555,12 +555,16 @@ public class AssetController {
 	// insert 
 	@PostMapping(value = "/insGrid")
 	public String insGrid(AbookVO vo, RedirectAttributes rttr, HttpSession session) throws Exception{
-		mylog.debug(" cont- insGrid 호출 ");	
-		// 1. 전달된 정보 저장 (title,content,writer)
-		mylog.debug(vo.toString());
-		// 2. 서비스 -> DAO 접근 (mapper)
-//		abService.insGrid(vo);
 		
+		// 로그인 확인
+		int mno = (int)session.getAttribute("mno");
+		UserVO userVO = userService.getUser(mno);
+		
+		mylog.debug(" cont- insGrid 호출 ");	
+		mylog.debug("인서트 실험 중 "+vo.toString());
+		vo.setMno(mno);
+		
+		abService.insAbookList(vo);
 		mylog.debug(" 쓰기 완료 ");
 		
 		//model.addAttribute("result", "createOK");
