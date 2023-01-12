@@ -187,6 +187,19 @@ border: 3px solid rgb(255 191 131 / 40%);
  background: rgb(176 224 229 / 5%);
  }   
 </style>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		var link = window.location.href;
+		var currentURL = link.substring(22);
+// 		alert(currentURL);
+		
+		$('#loginURL').click(function(){
+			$(this).attr('href', "/login?pageInfo="+currentURL)
+		});
+	});
+</script>
+
 </head>
 
 <body>
@@ -212,7 +225,7 @@ border: 3px solid rgb(255 191 131 / 40%);
 		</div>
 		<div class="user_menu">
 		<c:if test="${nick == null}">
-			<a href="/login"><div class="login"><p style="font-family: 'GmarketSans'">로그인</p></div></a>
+			<a href="/login" id="loginURL"><div class="login"><p style="font-family: 'GmarketSans'">로그인</p></div></a>
 			<a href="/register"><div class="join"><p style="font-family: 'GmarketSans'">회원가입</p></div></a>
 		</c:if>
 		<c:if test="${nick != null}">

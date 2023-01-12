@@ -695,7 +695,7 @@ public class AssetController {
 	public String dateReport(HttpSession session, Model model) throws Exception {
 		// 로그인 확인
 		if(session.getAttribute("mno")==null) {
-			return "/chagok/login";
+			return "redirect:/login?pageInfo=asset/dtRpt";
 		}
 		int mno = (int)session.getAttribute("mno");
 		String nick = userService.getUser(mno).getNick();

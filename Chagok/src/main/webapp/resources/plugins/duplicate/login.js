@@ -4,6 +4,7 @@
 function f_loginCheck(){
 	var id = $('input[name=id]').val();
 	var pw = $('input[name=pw]').val();
+	var pageInfo = $('input[name=pageInfo]').val();
 	var saveIdCheck = $('#save_id:checked').val();
 	
 	if(saveIdCheck == 'on'){
@@ -12,7 +13,7 @@ function f_loginCheck(){
 		localStorage.setItem("saveId", "N");
 	}
 	
-	var loginData = {"id":id, "pw":pw};
+	var loginData = {"id":id, "pw":pw, "pageInfo":pageInfo};
 	
 	$.ajax({
 		type : "post",
@@ -45,7 +46,13 @@ function f_loginCheck(){
 }
 
 function url(){
-	window.location.href="/main";
+	var pageInfo = $('input[name=pageInfo]').val();
+	
+	if (pageInfo == "" ) {
+		window.location.href="/main";
+	} else { 
+		window.location.href="/"+pageInfo;
+	}
 }
 
 $(document).ready(function(){
