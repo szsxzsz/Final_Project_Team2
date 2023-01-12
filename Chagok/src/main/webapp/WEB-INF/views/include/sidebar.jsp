@@ -119,7 +119,6 @@
 <!--                 <li><a href="../charts/inline.html"><i class="fa fa-circle-o"></i> Inline charts</a></li> -->
               </ul>
             </li>
-<<<<<<< HEAD
 <!--             <li class="treeview"> -->
 <!--               <a href="#"> -->
 <!--                 <i class="fa fa-laptop"></i> -->
@@ -211,14 +210,12 @@
 <!--             <li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>Important</span></a></li> -->
 <!--             <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>Warning</span></a></li> -->
 <!--             <li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>Information</span></a></li> -->
-=======
 
-            <li class="header">LABELS</li>
-            <li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>Important</span></a></li>
-            <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>Warning</span></a></li>
-            <li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>Information</span></a></li>
->>>>>>> branch 'develop_community' of https://github.com/Ju-Yeongmin/Final_Project_Team2.git
-          </ul>
+<!--             <li class="header">LABELS</li> -->
+<!--             <li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>Important</span></a></li> -->
+<!--             <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>Warning</span></a></li> -->
+<!--             <li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>Information</span></a></li> -->
+<!--           </ul> -->
         </section>
         <!-- /.sidebar -->
       </aside>
