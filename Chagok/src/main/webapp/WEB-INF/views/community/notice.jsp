@@ -6,84 +6,92 @@
 <%@ include file="../include/header.jsp"%>
 <%@ include file="../include/sidebar.jsp"%>
 
-
-
-
-
-					
+<!-- 전체 페이지 (밑부분 스타일까지) 긁어가야 합니다~ -->
+<!-- 전체 페이지 (밑부분 스타일까지) 긁어가야 합니다~ -->
+			
  <head>
  <meta charset="utf-8">
  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
  <link rel="stylesheet" href="../assets/css/theme.min.css">
-  </head>
+ </head>
+ 
  <body>
-    <script src="../assets/libs/jquery/dist/jquery.min.js"></script>
+ <script src="../assets/libs/jquery/dist/jquery.min.js"></script>
  <script src="../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
  <script src="../assets/js/theme.min.js"></script>
 
-
-				<div class="board_wrap">
-					<div class="board_title">
-						<strong>공지사항</strong>
-						<p>공지사항을 빠르고 정확하게 안내해드립니다.</p>
-					</div>
-				</div>
+<!-- 게시판 안내 -->
+	<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+		<div class="board_wrap">
+			<div class="board_title">
+				<strong>공지사항</strong>
+					<p>공지사항을 빠르고 정확하게 안내해드립니다.</p>
+			</div>
+		</div>
+	</div>
+<!-- 게시판 안내 -->			
 				
-				<table class="table table-hover" style="margin-left:10px; border-bottom: 1px solid #ddd;border-top: 2px solid #66BB7A;">
-					  <thead>
-					    <tr>
-					      <th scope="col" style="text-align:center; padding: 15px 0;">번호</th>
-					      <th scope="col" style="text-align:center; padding: 15px 0;">제목</th>
+
+<!-- 게시판 내용 -->				
+	<table class="table table-hover" style="margin-left:10px; border-bottom: 1px solid #ddd;border-top: 2px solid #66BB7A;">
+			  <thead style="background-color: #dddddd30;font-size: 16px;">
+			    <tr>
+			      <th scope="col" style="text-align:center; padding: 15px 0;">번호</th>
+			      <th scope="col" style="text-align:center; padding: 15px 0;">제목</th>
 <!-- 					      <th scope="col" style="text-align:center; padding: 15px 0;">Last</th> -->
-					      <th scope="col" style="text-align:center; padding: 15px 0;">작성일</th>
-					    </tr>
-					  </thead>
-					  <tbody>
-					  
+			      <th scope="col" style="text-align:center; padding: 15px 0;">작성일</th>
+			    </tr>
+			  </thead>
+			  
+			  
+			<tbody>
 				<c:set var="boardno" value="${boardList2.size() }"></c:set>
- 				<fmt:parseNumber var="boardno" value="${boardno }" type="number" />
-                <c:forEach items="${boardList2 }" var="boardList2" >
-					    <tr>
-					      <th scope="row" style="text-align:center; padding: 15px 0;">${boardno }</th>
-					      <td style="text-align:center; padding: 15px 0;"><a href="http://localhost:8080/noticecontent?bno=${boardList2.bno }">${boardList2.b_title }</a></td>
-<!-- 					      <td  style="text-align:center;">Otto</td> -->
-					      <td style="text-align:center; padding: 15px 0;"><fmt:formatDate value="${boardList2.b_date }" pattern="yyyy-MM-dd"/></td>
-					    </tr>
+				<fmt:parseNumber var="boardno" value="${boardno }" type="number" />
+		       	<c:forEach items="${boardList2 }" var="boardList2" >
+						    <tr>
+						      <th scope="row" style="text-align:center; padding: 15px 0;">${boardno }</th>
+						      <td style="text-align:center; padding: 15px 0;"><a href="http://localhost:8080/noticecontent?bno=${boardList2.bno }">${boardList2.b_title }</a></td>
+		<!-- 					      <td  style="text-align:center;">Otto</td> -->
+						      <td style="text-align:center; padding: 15px 0;"><fmt:formatDate value="${boardList2.b_date }" pattern="yyyy-MM-dd"/></td>
+						    </tr>
 				<c:set var="boardno" value="${boardno -1 }"></c:set>
-                </c:forEach>
-                
-					  </tbody>
-					</table>
+		    	</c:forEach>   
+			</tbody>
+	</table>
+<!-- 게시판 내용 -->
+
 					
-					
-				<div class="board_page">
-                <ul class= "pagination pagination-sm no-margin pull-right">
+<!-- 페이징 -->					
+		  <div class="board_page">
+                	<ul class= "pagination pagination-sm no-margin pull-right">
 <!--                 <a href="#" class="bt first"><<</a> -->
-                <c:if test="${pageMaker.prev }">
+                	<c:if test="${pageMaker.prev }">
 					<li><a href="/notice?page=${pageMaker.startPage-1 }"class="bt prev"><</a></li>
-				</c:if>
+					</c:if>
                <c:forEach var="idx" begin="${pageMaker.startPage }" end="${pageMaker.endPage }" step="1">
 					<li 
 						<c:out value="${idx == pageMaker.cri.page? 'class=active':'' }"/>
-					
-					><a href="/notice?page=${idx }" class="num">${idx }</a></li>
+						><a href="/notice?page=${idx }" class="num">${idx }</a></li>
 				</c:forEach>
                 <c:if test="${pageMaker.next }">
 					<li><a href="/notice?page=${pageMaker.endPage+1 }" class="bt next">></a></li>
 				</c:if>
 <!--                 <a href="#" class="bt last">>></a> -->
                 </ul>
-                </div>
-             
+           </div>
+ <!-- 페이징 -->
+ 
+ 
+ <!-- 버튼 -->            
            <div class="bt_wrap">
              <c:if test="${nick.equals('관리자') }">
 				<input class="sbtn" type="button" value="공지 작성하기" onclick="location.href='/noticewrite';" >
 			  </c:if>
 				<input class="sbtn" type="button" value="메인가기" onclick="location.href='/commumain';" >
           </div>
-          
-
+ <!-- 버튼 -->   		         
  </body>
+
 
 <style>
 .board_wrap {
@@ -131,9 +139,7 @@
     width: 30%;
     margin-bottom: 20px;
 }
-
 </style>
-
 
 
 </div>
