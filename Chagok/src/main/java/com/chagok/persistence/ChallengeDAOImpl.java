@@ -460,6 +460,13 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 			
 		return sqlSession.selectOne(NAMESPACE+".eboardCount");
 			
+	}
+
+	// 챌린지 성공/실패 여부 가져옴
+	@Override
+	public List<Map<String, Object>> challengeResult(Integer cno) throws Exception {
+		
+		return sqlSession.selectList(NAMESPACE+".challengeResult", cno);
 	}	
 	
 	

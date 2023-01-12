@@ -366,6 +366,14 @@ public class ChallengeServiceImpl implements ChallengeService{
 		mylog.debug("EboardCount() 호출");
 		return dao.EBoardCount();
 	}
+
+	// 챌린지 성공/실패 여부 가져옴
+	@Override
+	public List<Map<String, Object>> challengeResult(Integer cno) throws Exception {
+		mylog.debug("challengeResult() 호출");
+		
+		return dao.challengeResult(cno);
+	}
 	
 	
 	

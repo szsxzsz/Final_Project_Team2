@@ -461,5 +461,15 @@
 		limit #{pageStart}, #{perPageNum};
 	</select>
 	
+	<!-- 해당 챌린지의 성공,실패 여부 가져옴  -->
+  	<select id="challengeResult" resultType="map" >
+  		select coalesce(p.mno, m.mno) mno, coalesce(pl_finish, m_finish) finish, c.cno, coalesce(pl_sum, m_sum) sum, pl_cnt, c_status, c.mno, ctno 
+		from plus p 
+		right join challenge c 
+		on p.cno = c.cno 
+		left join minus m
+		on m.cno = c.cno 
+		where c.cno = #{c.cno};
+  	</select>
 		
  </mapper>

@@ -264,7 +264,7 @@ $(document).ready(function(){
 	
 	function connectSockJS(){
 		//STOMP Client
-		var sock = new SockJS("/plusFeed"); // endpoint
+		var sock = new SockJS("/plusFeed", null, { timeout: 15000 }); // endpoint
 		var client = Stomp.over(sock);
 		isStomp = true;
 		socket = client;

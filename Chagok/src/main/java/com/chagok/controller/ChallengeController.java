@@ -442,10 +442,27 @@ public class ChallengeController {
 		
 	}
 	
+	// 챌린지 결과 판단 메서드
+	public String challengeResult(Integer cno) throws Exception{
+		
+		List<Map<String, Object>> result = service.challengeResult(cno);
+		Map<String, Object> eachResult = null;
+		
+		for(int i=0;i<result.size();i++) {
+			eachResult.putAll(result.get(i));
+			
+			mylog.debug(eachResult.toString());
+		}
+		
+		mylog.debug(eachResult.toString());
+		
+		return null;
+	}
+	
 	// 챌린지 결과(성공)
 	// http://localhost:8080/challenge/success?cno=1
 	@GetMapping(value="/success")
-	public String victoryGET(Model model, @RequestParam("cno") int cno, HttpSession session) throws Exception{
+	public String victoryGET(Model model, @RequestParam("cno") int cno) throws Exception{
 		ChallengeVO vo = service.getChallengeInfo(cno);
 		List<ChallengeVO> challengeList = service.getChallengeList(cno);
 		
@@ -468,7 +485,7 @@ public class ChallengeController {
 	// 챌린지 결과(실패)
 	// http://localhost:8080/challenge/defeat?cno=1
 	@GetMapping(value="/defeat")
-	public String defeatGET(Model model, @RequestParam("cno") int cno, HttpSession session) throws Exception{
+	public String defeatGET(Model model, @RequestParam("cno") int cno) throws Exception{
 		ChallengeVO vo = service.getChallengeInfo(cno);
 		List<ChallengeVO> challengeList = service.getChallengeList(cno);
 				
