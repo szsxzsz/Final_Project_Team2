@@ -11,11 +11,19 @@
   </select>
   
   <!-- 카테고리 top -->
-  <select id="cateList" resultType="CategoryVO">
-	select * from category where ct_lev=0
+  <select id="cttopList" resultType="map">
+	select ctno, ct_top
+	from category
+	where ct_lev=0;
   </select>
   
-
+  <!-- 카테고리 bottom -->
+    <select id="ctbottomList" resultType="map">
+	select ctno, ct_top, ct_bottom
+	from category
+	where ct_lev=1;
+  </select>
+  
   <!-- 가계부 저장(수정) -->
     <update id="setAbookList">
 	update account_book set 
@@ -26,8 +34,13 @@
   <!-- 가계부 삭제 -->
   <delete id="delAbookList">
   	delete * from account_book where abno=#{abno};
-  </delete>
+  </delete> 
   
+  <!-- 가계부 적기 -->
+  <insert id="insAbookList" parameterType="AbookVO">
+  insert into account_book()
+  values(#{},)
+  </insert>
   
  	<!-- //////////////////// MJ //////////////////// -->
 	<!-- 해당월 예산 조회 -->
@@ -88,5 +101,37 @@
 		select sum(p_amount) 
 		<include refid="wh1"/>
 	</select>
+	
+	<!-- 달력 -->
+	<sql id="cal1">
+		select date_format(ab.ab_date, '%Y-%m-%d') date, sum(ab.ab_amount) sum, 
+			case 
+				when ab_inout='1' then 'out'
+				when ab_inout='2' then 'in'
+			end as sort
+		from account_book ab
+		where ab.mno=#{mno}	
+	</sql>
+	
+	<sql id="cal2">
+		and ab.ab_date between last_day(now() - interval #{mm}+1 month) + interval 1 day 
+			and last_day(now() - interval #{mm} month)
+		group by date, ab_inout 
+		order by date;	
+	</sql>
+	
+	<!-- 전체 -->
+	<select id="calAll" resultType="map">
+		<include refid="cal1"/>
+		<include refid="cal2"/>
+	</select>
+	
+	<!-- 수입, 지출 -->
+	<select id="calInout" resultType="map">
+		<include refid="cal1"/>
+		and ab.ab_inout=#{inout}
+		<include refid="cal2"/>
+	</select>
+	
 	
   </mapper>

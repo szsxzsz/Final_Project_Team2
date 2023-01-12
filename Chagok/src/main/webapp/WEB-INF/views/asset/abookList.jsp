@@ -68,7 +68,7 @@ function grid_Datepicker(text, obj){
 시작일시 : <input type='text' class='datetimepicker' name='start_dt'  style='width:140px;'>, 
 종료일시 : <input type='text' id="datepicker" class='' name='end_dt'   style='width:140px; padding-left:10px;'>
 <hr>
-                <div class="pl-lg-4">
+                <div class="pl-lg-4"> 
 <!--                   <div class="col-lg-6"> -->
 <!--                       <div class="form-group focused"> -->
 <!--                         <label class="form-control-label" for="input-username" >카테고리</label> -->
@@ -106,11 +106,11 @@ jQuery(function($) {
 });
 
 $(function (){
-    $('select[name="ct_top"] ').on('change', function()  {
+    $("#cate option:selected").on('change', function()  {
         var arrType = getAgreeType();
         var optionType = $(this).parents('.pl-lg-4').find($('select[name="ct_bottom"]'));
         optionType.empty();
-
+ 
         if($(this).val() == '1'){ 
             for(prop in arrType['1']){
                 optionType.append('<option value='+prop+' >'+arrType['1'][prop]+'</option>');
@@ -170,87 +170,86 @@ $(function (){
 <script type="text/javascript">
 function getAgreeType() {    
     var obj = {
-        "1" : "1:식비;2:의복/미용;3:문화/여가;4:생활;5:주거/통신;6:건강/통신;7:교육/육아;8:교통/차량;9:경조사/회비;10:금융;11:저축/보험"
-//         "2" : "1:식비;2:의복/미용;3:문화/여가;4:생활;5:주거/통신;6:건강/통신;7:교육/육아;8:교통/차량;9:경조사/회비;10:금융;11:저축/보험",
+//         "1" : "1:식비;2:의복/미용;3:문화/여가;4:생활;5:주거/통신;6:건강/통신;7:교육/육아;8:교통/차량;9:경조사/회비;10:금융;11:저축/보험",
         
-//         "3" : {
-//             '24' : '여행/숙박',
-//             '25' : '공연/전시',
-//             '26' : '도서/영화',
-//             '27' : '취미',
-//             '28' : '선물',
-//             '29' : '기타',
-//         },
-//         "4" : {
-//             '30' : '가전/가구',
-//             '31' : '주방/욕실',
-//             '32' : '잡화/소모',
-//             '33' : '반려동물',
-//             '34' : '기타',
-//         },
-//         "5" : {
-//             '35' : '관리비',
-//             '36' : '공과금',
-//             '37' : '통신',
-//             '38' : '월세',
-//             '39' : '기타',
-//         },
-//         "6" : {
-//             '40' : '운동',
-//             '41' : '운동용품',
-//             '42' : '병원',
-//             '43' : '약국',
-//             '44' : '기타',
-//         },
-//         "7" : {
-//             '45' : '등록금',
-//             '46' : '학원',
-//             '47' : '교재',
-//             '48' : '육아용품',
-//             '49' : '기타',
-//         },
-//         "8" : {
-//             '50' : '대중교통',
-//             '51' : '택시',
-//             '52' : '주유소',
-//             '53' : '장비/부품',
-//             '54' : '기타',
-//         },
-//         "9" : {
-//             '55' : '경조사',
-//             '56' : '회비',
-//             '57' : '용돈',
-//             '58' : '헌금',
-//             '59' : '기부',
-//             '60' : '기타',
-//         },
-//         "10" : {
-//             '61' : '세금',
-//             '62' : '은행',
-//             '63' : '이자',
-//             '64' : '투자',
-//             '65' : '기타',
-//         },
-//         "11" : {
-//             '66' : '예/적금',
-//             '67' : '보험',
-//             '68' : '기타',
-//         },
-//         "12" : {
-//             '69' : '출금',
-//             '70' : '이체',
-//             '71' : '카드대금',
-//             '72' : '기타',
-//         }
+        "3" : {
+            '24' : '여행/숙박',
+            '25' : '공연/전시',
+            '26' : '도서/영화',
+            '27' : '취미',
+            '28' : '선물',
+            '29' : '기타',
+        },
+        "4" : {
+            '30' : '가전/가구',
+            '31' : '주방/욕실',
+            '32' : '잡화/소모',
+            '33' : '반려동물',
+            '34' : '기타',
+        },
+        "5" : {
+            '35' : '관리비',
+            '36' : '공과금',
+            '37' : '통신',
+            '38' : '월세',
+            '39' : '기타',
+        },
+        "6" : {
+            '40' : '운동',
+            '41' : '운동용품',
+            '42' : '병원',
+            '43' : '약국',
+            '44' : '기타',
+        },
+        "7" : {
+            '45' : '등록금',
+            '46' : '학원',
+            '47' : '교재',
+            '48' : '육아용품',
+            '49' : '기타',
+        },
+        "8" : {
+            '50' : '대중교통',
+            '51' : '택시',
+            '52' : '주유소',
+            '53' : '장비/부품',
+            '54' : '기타',
+        },
+        "9" : {
+            '55' : '경조사',
+            '56' : '회비',
+            '57' : '용돈',
+            '58' : '헌금',
+            '59' : '기부',
+            '60' : '기타',
+        },
+        "10" : {
+            '61' : '세금',
+            '62' : '은행',
+            '63' : '이자',
+            '64' : '투자',
+            '65' : '기타',
+        },
+        "11" : {
+            '66' : '예/적금',
+            '67' : '보험',
+            '68' : '기타',
+        },
+        "12" : {
+            '69' : '출금',
+            '70' : '이체',
+            '71' : '카드대금',
+            '72' : '기타',
+        }
     }
     
     
     
-    var json = JSON.stringify(obj);
+//     var json = JSON.stringify(obj);
     
-	console.log(JSON.stringify(obj));
+// 	console.log(JSON.stringify(obj));
     
-    return JSON.stringify(obj);
+//     return JSON.stringify(obj);
 }
 </script>
 
@@ -282,11 +281,16 @@ $("#jqGrid").jqGrid({
 
 		jsonReader: {
 				repeatitems:false,
-				root:"rows"
+// 				id:'id', // 키 컬럼 명
+				root:'rows', // 그리드에 로드 할 Json 형태의 데이터
+				page:'page', // 현재 페이지
+				total:'total', // 총 페이지 Count
+				records:'records' // 총 Row Count
 			},
 // 	alert("시작");
     height: 500, 
     width: 1450,
+
     colNames : ['num','분류','날짜','내용','금액','거래수단','카테고리','소분류','메모'], 
     colModel:[
         {name : 'abno', index : 'abno',width : 0, align : 'left',hidden:true,key:true},    	
@@ -322,37 +326,160 @@ $("#jqGrid").jqGrid({
 // 	    {name:"ct_top",label:"ct_top",width:50,align:'center',edittype: "select", /* formatter: "select", */
 // 	    	editoptions:{value:"1:식비;2:의복/미용;3:문화/여가;4:생활;5:주거/통신;6:건강/통신;7:교육/육아;8:교통/차량;9:경조사/회비;10:금융;11:저축/보험"},
 // 	    	editable:true,
-		{name: "ctno", label: 'Customer ID', width: 150,
-		editable: true, edittype: "select",
+		{name: "ct_top", label: 'ct_top', width: 150, /* formatter: "select", */ 
+		editable: true, edittype: "select", 
 		editoptions:{  dataUrl: '/asset/cateSelect',
-//     		  			 postData: function(rowid){
-//             		return {data: data}
-//         		    },
-	          buildSelect:function (datas){
+// //     		  			 postData: function(rowid){
+// //             		return {data: data}
+// //         		    },
 
-	            if(typeof(datas)=='string') 
-            		datas = $.parseJSON(datas);
-					var data = datas.list;
-					var selrt = '<select name="cateSelect">';
+// 	          buildSelect:function setSelectCombo(data) {
+// 		 			let key = JSON.parse(data)
+// 		            console.log(key[10].ct_top);
+// 		            console.log(key[10].ctno);
+// 		            console.log(JSON.parse(data)[5].ctno);
+// // 	        			alert(key[0].ctno);
+		            
+// // 	        		value = jQuery.parseJSON(data).combo;
+// 	        		var result = '<select>';
+// 	        		for(var idx=0; idx < key[idx].length; idx++) {
+// 	        			alert(key[idx].ctno);
+// // 	        			result += '<option value="' + key[idx].ctno + '">' + key[idx].ct_top + '</option>';
+// 	        		}
+// 	        		result += '</select>';
+// 	        		return result;
+// 			} 
 
-						for ( var i = 0 ; i < data.length ; i ++) {
-								selrt +='<option value="'+data[i].VALUE+'">'+data[i].LABEL+'</option>';
-							}
-								selrt +='</select>';
+			buildSelect:function (data){
 
-						return selrt;
-		  									} 
-      				}
-      	},
+		 			let key = JSON.parse(data)
+// 		 			let key10 = key[10].ctno
+// 		            console.log(key);
+// 		            console.log(key[10].ctno);
+// 		            console.log(JSON.parse(data)[5].ctno);
+// 	        			alert(key[0].ctno);
+// 				if(typeof(data)=='string')
+	// 			data = $.parseJSON(data);
+				var rtSlt = '<select id="ct_top">';
+				for ( var idx = 0 ; idx < key.length ; idx ++) {
+				rtSlt +='<option value="'+key[idx].ctno+'">'+key[idx].ct_top+'</option>';
+				}
+				rtSlt +='</select>';
+				return rtSlt;
+
+// 		dataUrl : '/some/code/url.html?type=json'
+       dataEvents:[{ type:'change', fn: function(e){   
+
+
+//     detailChanged(grid, "DR_CR_DTIL",$(e.target).val()); 
+    }// dataevem    
+			}] // build
+	}	// edit
+		}}, //name
+//            	data = $.parseJSON({"rows":JSON.stringify(data)});
+// 				console.log(data[0]);	  
+
+// 	        	  var ctno = new Array(); 
+// 	        	  var ct_top = new Array();
+
+// 	        	  for(var i=0; i<data.length; i++){
+// 	        	  	var d = data[i];
+// 	        	  	ctno.push(d.ctno);
+// 	        	  	ct_top.push(d.ct_top);
+// 	        	  console.log(d.ct_top);
+// 	        	 }
+	        	  
+// 	 				let jsonData = JSON.parse(data)
+// 	 				let key1 = Object.keys(data);
+// 	 				let key2 = Object.values(jsonData);
+// 	        	  console.log(key1);
+// 	          	console.log(O)
+// 	            if(typeof(data)=='String') {
+// 	            	data = $.parseJSON({"rows":JSON.stringify(data)});
+// 					var selrt = '<select name="cateSelect">';
+// 				let jsonData = JSON.parse(data)
+// 				let key1 = Object.keys(jsonData);
+// 				let key2 = Object.values(jsonData);
+
+// 	            console.log(JSON.parse(data)[0]);       
+// 	            console.log(JSON.parse(data)[0].);       
+// 						for ( var i = 0 ; i < 85 ; i ++) {
+// 				 			let key = JSON.parse(data)
+// 								selrt +='<option value="'+key[i].ctno+'">'+key[i].ct_top+'</option>';
+// // 								console.log(data.[i]);
+// 							console.log(JSON.parse(data)[1]);
+// 							}
+// 								selrt +='</select>';
+
+// 						return selrt;
+
 // 	    {name : 'ct_top',index : 'ct_top',width : 70, alian: "center", hidden:false,editable:true},           
-		{name:"ct_bottom",index:"ctno2",width:50,align:'center',edittype: "select", /* formatter: "select", */
-		    	editoptions:{value:/* "13:간식;14:외식;18:의류" */getAgreeType}
-//      dataEvents: [{
-//      type : 'change',
-//      fn : function(e) {
-//      }] 
-//  }
-		    	,editable:true},
+		{name:"ct_bottom",index:"ct_bottom",width:50,align:'center', editable: true, edittype: "select", /* formatter: "select", */
+		    	editoptions:{dataUrl: '/asset/cateSelect',
+
+					buildSelect:function (data){
+			 			let key = JSON.parse(data)
+// 						alert("");
+					    var rowid = $( "#jqGrid" ).getGridParam( "selrow" );   
+					    console.log(rowid);
+
+					    var rowdata = jQuery("#jqGrid").getRowData(rowid);  
+					    console.log(rowdata);
+
+					     var ct_top= rowdata['ct_top'];
+					    console.log(ct_top);
+					    
+// 						var data =  $("#jqGrid").getRowData();
+// //				 		var data = $( "#jqGrid" ).getGridParam( "selrow" );    
+// 							console.log(data);
+				       test = {"ct_top":JSON.stringify(ct_top)};
+							$.ajax({
+								url : "/asset/catebottom",
+//					 			traditional: true ,
+								contentType:"application/json",
+								data : test,
+								success:function(val){alert("입력 성공!");
+								},error:function(err){
+								      console.log(err);
+								}
+							})
+// 				         $("#select_box > option[value='"+$(e.target).val()+"']").attr("selected", "true");
+// 				         detailChanged(jqGrid, "ct_bottom",$(e.target).val());
+// 					      var evalue = $(e.target).val();
+
+
+// 							$.ajax({
+// 								url : "/asset/catebottom2",
+// 								contentType:"application/json",
+// 								data : test,
+// 								success:function(val){alert("값 받기!");
+// 								},error:function(err){
+// 								      console.log(err);
+// 								}
+// 							})
+
+
+// 			 			let keyb = JSON.parse(test)
+			 			
+//	 		 			let key10 = key[10].ctno
+// 	 		            alert(keyb+"keyb");
+//	 		            console.log(key[10].ctno);
+//	 		            console.log(JSON.parse(data)[5].ctno);
+//	 	        			alert(key[0].ctno);
+//	 				if(typeof(data)=='string')
+		// 			data = $.parseJSON(data);
+					var rtSlt = '<select id="ct_bottom">';
+					for ( var idx = 0 ; idx < key.length ; idx ++) {
+					rtSlt +='<option value="'+key[idx].ctno+'">'+key[idx].ct_top+'</option>';
+					}
+					rtSlt +='</select>';
+					return rtSlt;
+
+					} // build
+				}	// edit
+		},    	
+
+	
         {name : 'ab_memo',index : 'ab_memo',width : 50, align : 'center',hidden:false,editable:true}
       ],
 //      gridComplete: function(){
@@ -364,7 +491,9 @@ $("#jqGrid").jqGrid({
 //    	    } 
 //    	},
 
-
+//       onCellSelect : function(rowid, iCell, content){
+//     	  alert(""+content);
+//     	 } ,
     
     autowidth: true,
 	shrinkToFit: true, 
@@ -380,16 +509,24 @@ $("#jqGrid").jqGrid({
     cellsubmit:'clientArray',
 //     cellurl:'/asset/updateGrid',
     onCellSelect: function(rowId, colId, val, e) { // e의 의미는 무엇인가요?
-        var seq = $("#jqGrid").getCell(rowId, "seq");
+        var seq = $("#jqGrid").getCell(rowId, "ct_bottom");
+        var rowid = $( "#jqGrid" ).getGridParam( "selrow" );   
+        console.log(rowid);
+
+        var rowdata = jQuery("#jqGrid").getRowData(rowid);  
+        console.log(rowdata);
+
+         var data= rowdata['ct_top'];
+        console.log(data);
         
-        if(colId == 4) {
-            if(CommonJsUtil.isEmpty(seq)) {
-                $("#jqGrid").setColProp('name', {editable:true});
-            } else {
-                $("#jqGrid").setColProp('name', {editable:false});
-            }
+        data ={"value":JSON.stringify(data)};
+        
+        if(colId == 'ct_bottom') {
+//           console.log("0");
         }
         
+    	
+ 
     },
     
     /* 수정 후 cell 다시 editable flase 로 변경 */
@@ -432,7 +569,7 @@ $("#jqGrid").jqGrid({
 //         jQuery("#jqGrid").jqGrid( 'setGridWidth', $(".main-panel").width() - 100 );
 //     },
     
-    
+
    
  	// 리로딩 처리
     function reload() {
@@ -457,12 +594,12 @@ $("#jqGrid").jqGrid({
 		var data =  $("#jqGrid").getRowData();
 // 		var data = $( "#jqGrid" ).getGridParam( "selrow" );    
 			console.log(data);
-        data ={"test":JSON.stringify(data)};
+        data ={"rows":JSON.stringify(data)};
 // 		data = JSON.stringify(data);
 		console.log(data);
 
 		$.ajax({
-			url : "/asset/cateSelect",
+			url : "/asset/saveGrid",
 // 			traditional: true ,
 			contentType:"application/json",
 			data : data,
@@ -484,13 +621,12 @@ $("#jqGrid").jqGrid({
 		var data =  $("#jqGrid").getRowData();
 // 		var data = $( "#jqGrid" ).getGridParam( "selrow" );    
 			console.log(data);
-        data ={"test":JSON.stringify(data)};
+	        data ={"rows":JSON.stringify(data)};
 // 		data = JSON.stringify(data);
 		console.log(data);
 
 		$.ajax({
 			url : "/asset/saveRows",
-// 			traditional: true ,
 			contentType:"application/json",
 			data : data,
 // 			dataType:'application/json',
@@ -506,7 +642,16 @@ $("#jqGrid").jqGrid({
 	
 	var gridFunc = {
 	        addRow : function() {
-	            
+	        	  const options = {
+	        		        modal : true,
+	        		        width : 400,
+	        		        url : '/asset/saveRows',
+	        		        mtype : 'get',
+	        		        addCaption : "MENUMAST 추가",
+	        		        closeAfterAdd : true,
+	        		        recreateForm : true, //대화상자가 활성화될 때 마다 form이 다시 생성된다 
+	        		        reloadAfterSubmit:true //서버 ajax후 그리드 데이터 다시 로드 
+	        		    }
 	            var totCnt = $("#jqGrid").getGridParam("records");
 	            var addData = {"abno":"", "ab_inout": "", "ab_date": "", "ab_content" : "", 
 				 "ab_amount" : "", "ctno":"", "ct_top" : "", "ct_bottom" : "", "ab_memo" : ""};
@@ -547,6 +692,7 @@ $("#jqGrid").jqGrid({
         $("#jqGrid").setColProp(gridColData[idx], {editable : param});
     }
 }
+
 
 	///////////////////////////////////////아직 안 쓰는 코드 
     function search() {

@@ -47,6 +47,7 @@
     <p class="login-box-msg" style="font-family: 'Gowun Dodum', sans-serif; font-size: 18px;"><b>로그인</b></p>
 	<!-- <p class="login-box-msg">Sign in to start your session</p> -->
 	
+	
     <form action="" method="post">
       <div class="form-group has-feedback">
         <input type="email" class="form-control" id="id" name="id" placeholder="이메일">
@@ -56,6 +57,7 @@
         <input type="password" class="form-control" id="pw" name="pw" placeholder="비밀번호">
         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
       </div>
+      <input type="hidden" value="${param.pageInfo }" class="form-control" id="pageInfo" name="pageInfo">
       <div class="row">
         <div class="col-xs-8">
           <div class="checkbox icheck">

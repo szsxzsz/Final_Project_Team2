@@ -82,6 +82,16 @@ public class UserServiceImpl implements UserService {
 		dao.updateSeqNo(map);
 	}
 
+	@Override
+	public void updateUserInfo(UserVO vo) {
+		dao.updateUserInfo(vo);
+	}
+
+	@Override
+	public int unregistUser(UserVO vo) throws Exception {
+		return dao.unregistUser(vo);
+	}
+
 	
 
 	

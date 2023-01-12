@@ -6,6 +6,7 @@ import java.util.Spliterator;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -15,8 +16,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -221,5 +224,100 @@ public class ChagokController {
 	   
 	   return "/iframe/iframeDateReport";
    }
+   
+   ////////////// ym 마이페이지 구현중 ////////////// 
+   @GetMapping("/myPage")
+   public String myPageGET(HttpSession session, Model model) throws Exception{
+	   
+	   if (session.getAttribute("mno") != null) {
+		   int mno = (int)session.getAttribute("mno");
+		   
+		   UserVO userVO = service.getUser(mno);
+		   model.addAttribute("userVO", userVO);
+	   }
+	   
+	   return "/chagok/myPage";
+   }
+   
+   // 마이페이지
+   @PostMapping("/myPage")
+   public String myPagePOST(UserVO vo) throws Exception{
+	   
+	   mylog.debug("@@@@@@@@ userVO : " + vo);
+	   service.updateUserInfo(vo);
+	   
+	   
+	   return "redirect:/myPage";
+   }
+   
+   // 내가 쓴 글 ( 브랜치 합치고 구현 )
+   @GetMapping("/myBoardWrite")
+   public String myBoardGET(HttpSession session, Model model) {
+	   
+	   String nick = (String)session.getAttribute("nick");
+//	   service.getBoardList(nick);
+	   
+	   return "/chagok/myBoard";
+   }
+   
+   // 회원 탈퇴
+   @GetMapping("/unregist")
+   public String unregistGET(HttpSession session, Model model) throws Exception{
+	   if (session.getAttribute("mno") != null) {
+		   
+		   int mno = (int)session.getAttribute("mno");
+		   
+		   UserVO userVO = service.getUser(mno);
+		   model.addAttribute("userVO", userVO);
+	   }
+	   
+	   return "/chagok/unregist";
+   }
+   
+   // ajax (비밀번호 체크)
+   @PostMapping(value = "/checkPW", produces = "application/text; charset=UTF-8")
+   @ResponseBody
+   public String checkPW(@RequestParam Map<String, String> map, HttpServletResponse response) {
+	   String result = "";
+	   
+	   mylog.debug(map+"");
+	   
+	   if ( map.get("pw").equals(map.get("pw2"))) {
+		   result = "1";
+	   } else {
+		   result = "2";
+	   }
+	   
+	   response.setCharacterEncoding("UTF-8");
+	   
+	   return result;
+   }
+   
+   @PostMapping(value = "/unregist")
+   public String unregistPOST(HttpSession session, Model model, UserVO vo, RedirectAttributes rttr) throws Exception{
+	   
+	   mylog.debug("vo : " + vo);
+	   
+	   int result = service.unregistUser(vo);
+	   
+	   String deleteOK = "";
+	   
+	   if (result == 1) { // 삭제 성공
+		   deleteOK = "OK";
+		   session.invalidate();
+		   
+		   return "redirect:/main";
+	   } else { // 삭제 실패
+		   deleteOK = "NO";
+	   }
+	   
+	   rttr.addFlashAttribute("deleteOK", deleteOK);
+	   
+	   return "redirect:/unregist";
+   }
+   
+   
+   ////////////// ym 마이페이지 구현중 ////////////// 
+   
    
 }
