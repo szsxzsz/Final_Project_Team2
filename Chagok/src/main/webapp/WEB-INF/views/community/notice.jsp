@@ -38,7 +38,7 @@
 			    <tr>
 			      <th scope="col" style="text-align:center; padding: 15px 0;">번호</th>
 			      <th scope="col" style="text-align:center; padding: 15px 0;">제목</th>
-<!-- 					      <th scope="col" style="text-align:center; padding: 15px 0;">Last</th> -->
+<!-- 				  <th scope="col" style="text-align:center; padding: 15px 0;">Last</th> -->
 			      <th scope="col" style="text-align:center; padding: 15px 0;">작성일</th>
 			    </tr>
 			  </thead>
@@ -51,7 +51,7 @@
 						    <tr>
 						      <th scope="row" style="text-align:center; padding: 15px 0;">${boardno }</th>
 						      <td style="text-align:center; padding: 15px 0;"><a href="http://localhost:8080/noticecontent?bno=${boardList2.bno }">${boardList2.b_title }</a></td>
-		<!-- 					      <td  style="text-align:center;">Otto</td> -->
+	<!-- 						  <td  style="text-align:center; padding: 15px 0;">Otto</td> -->
 						      <td style="text-align:center; padding: 15px 0;"><fmt:formatDate value="${boardList2.b_date }" pattern="yyyy-MM-dd"/></td>
 						    </tr>
 				<c:set var="boardno" value="${boardno -1 }"></c:set>
