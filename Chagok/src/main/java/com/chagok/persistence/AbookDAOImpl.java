@@ -69,12 +69,28 @@ public class AbookDAOImpl implements AbookDAO{
 	
 	return ctbottomList;
 }	
+	
 	// 가계부 수정 저장
 	@Override
 	public void setAbookList(AbookVO vo) throws Exception {
 		sqlSession.update(NAMESPACE+".setAbookList", vo);
 	
 	}
+
+	// 가계부 입력 
+	@Override
+	public void insAbookList(AbookVO vo) throws Exception {
+		sqlSession.insert(NAMESPACE+".insAbookList", vo);
+	}
+	
+	@Override
+	public List<AbookVO> toCate(int ctno) throws Exception {
+		List<AbookVO> toCateList = sqlSession.selectList(NAMESPACE+".toCate", ctno);
+		mylog.debug("DAO]toCateList"+toCateList);
+		return toCateList; 
+	}
+
+
 
 
 

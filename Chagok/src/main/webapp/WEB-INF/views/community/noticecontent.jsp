@@ -41,8 +41,8 @@
 		</div>
 		<div class="box-footer">
 	<c:if test="${nick.equals('관리자') }">
-        <input class="btn btn-block btn-success btn-lg" type="button" value="수정하기" onclick="location.href='/noticeupdate?bno=${vo.bno}';" style="width:218px; margin-left: 950px;">
-        <input class="btn btn-warning" type="submit" value="삭제하기" style="background-color: #1e282c; width:218px; margin-left: 950px;">
+        <input class="btn btn-block btn-success btn-lg" type="button" value="수정하기" onclick="location.href='/noticeupdate?bno=${vo.bno}';" style="width:218px; margin-left: 950px; background-color:#66BB7A;">
+        <input class="btn btn-warning" type="submit" value="삭제하기" style="background-color: #66BB7A; width:218px; margin-left: 950px;">
 	</c:if>
         <input class="btn btn-block btn-success btn-lg" type="button" value="돌아가기" onclick="location.href='/notice';" style="width:218px; margin-left: 950px;">
 		</div>

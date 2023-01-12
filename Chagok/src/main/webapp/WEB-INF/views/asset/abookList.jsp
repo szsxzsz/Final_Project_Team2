@@ -125,7 +125,7 @@
 </div>
 
 <div class="box-footer">
-<button type="submit" class="btn btn-primary"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">제출하다</font></font></button>
+<button type="submit" class="btn btn-primary"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">저장하기</font></font></button>
 </div>
 </form>
 </div>
@@ -142,7 +142,9 @@
 <script type="text/javascript">
 $(function() {
 	$(".datetimepicker").datetimepicker({ 
-		format: "Y-m-d H:i",
+		dateFormat:'yy-mm-dd',
+		autoclose: true,
+		todayHighlight: true
 	});
 });
 
@@ -303,21 +305,15 @@ function getAgreeType() {
 }
 </script>
 
+<!-- jQuary+grid -->
 <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" /> -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.css" />
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.js"></script>
 
-
-
-
-<script src="https://npmcdn.com/flatpickr/dist/flatpickr.min.js"></script>    <!-- flatpicker min js -->
-<script src="https://npmcdn.com/flatpickr/dist/l10n/ko.js"></script>          <!-- flatpicker ko -->
-
-
  <script>
-
+ 
 $("#jqGrid").jqGrid({
 //     url : '/asset/cateSelect',
     url : '/asset/reqGrid',
@@ -350,8 +346,8 @@ $("#jqGrid").jqGrid({
 //                 }
 	        hidden:false,editable:true},
 
-        {name:'ab_date', index:'ab_date', width:90, editable:true, editoptions:{size:20, 
-               dataInit:function(el){ 
+        {name:'ab_date', index:'ab_date', width:90, editable:true, formatoptions:{newformat: 'd-M-Y h:i:s'}, 
+	        	editoptions:{size:20, dataInit:function(el){ 
                      $(el).datetimepicker({dateFormat:'yy-mm-dd', onClose :grid_Datepicker}); 
                      
                }, 
@@ -550,7 +546,7 @@ $("#jqGrid").jqGrid({
     multiselect : true, // 그리드 왼쪽부분에 셀렉트 박스가 생겨 다중선택이 가능해진다
     emptyrecode : "작성된 내역이 없습니다!", // 뿌려줄 데이터가 없을 경우 보여줄 문자열 지정
     pager:"#gridpager",
-    rowNum:5,
+    rowNum:20,
     rownumbers : true, 
     
     cellEdit: true,

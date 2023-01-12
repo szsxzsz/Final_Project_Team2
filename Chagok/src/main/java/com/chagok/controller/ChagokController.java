@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.servlet.ServletContext;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -111,9 +112,14 @@ public class ChagokController {
 
 		mylog.debug(" 로그인 정보 : " +loginMap);
 		
+		ServletContext appliation = request.getSession().getServletContext();
+	    
+		
 		try {
 			UserVO =  service.loginUserCheck(loginMap);
 			mylog.debug("controller : "+UserVO);
+			
+			appliation.setAttribute("userInfo", UserVO.getMno());
 			
 			if (UserVO != null) { // 로그인 성공
 				model.addAttribute("UserVO", UserVO);
