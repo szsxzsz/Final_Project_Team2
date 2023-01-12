@@ -60,12 +60,12 @@ public class ChagokController {
 
 	
 	// 자산관리 파트 메인
-	// http://localhost:8080/assetmain
-	@GetMapping(value = "/assetmain")
-	public String assetmainGET() throws Exception {
-
-		return "/chagok/assetmain";
-	}
+//	// http://localhost:8080/assetmain
+//	@GetMapping(value = "/assetmain")
+//	public String assetmainGET() throws Exception {
+//
+//		return "/chagok/assetmain";
+//	}
 
 	// 챌린지 목록 불러오기 (커뮤메인)
 	// http://localhost:8080/commumain

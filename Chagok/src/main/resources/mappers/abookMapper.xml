@@ -6,7 +6,7 @@
   <mapper namespace="com.chagok.mapper.abookMapper">
   
   <!-- 가계부 목록 -->
-  <select id="getAbookList" resultType="AbookVO">
+  <select id="getAbookList" resultType="com.chagok.domain.AbookVO">
 	select * from account_book as ab inner join category as c on ab.ctno=c.ctno where mno=#{mno}
   </select>
   
