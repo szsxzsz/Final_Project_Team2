@@ -152,6 +152,14 @@ public class AbookDAOImpl implements AbookDAO{
 			return sqlSession.selectList(NAMESPACE+".calInout", map);
 		}
 	}
+
+	@Override
+	public int chkAb(Integer mno, Integer mm) throws Exception {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("mno", mno);
+		map.put("mm", mm);
+		return sqlSession.selectOne(NAMESPACE+".chkAb", map);
+	}
 	
 	
 	

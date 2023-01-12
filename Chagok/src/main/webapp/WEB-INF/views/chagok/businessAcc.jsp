@@ -8,110 +8,46 @@
 <html lang="ko">
 <head>
 <script>
-	$(function(){
-		$(".btn.btn-block.btn-info.yes").click(function(){
-			
-			var a = $(this).children().val();
-			
-			$.ajax({
-				type : "get",
-				url : "/challenge/confirm",
-				data : {
-					status : 1,
-					cno : a
-				},
-				dataType: "json",
-				success : function(data){
-					console.log(data);
-					if (data==1){
-						alert('승인 완료!');
-						document.location.reload();
-					}
-				}
-			});
-		});
-		
-		$(".btn.btn-block.btn-danger.no").click(function(){
-			
-			var a = $(this).children().val();
-			
-			$.ajax({
-				type : "get",
-				url : "/challenge/confirm",
-				data : {
-					status : 6,
-					cno : a
-				},
-				dataType: "json",
-				success : function(data){
-					console.log(data);
-					if (data==6){
-						alert('거절 완료!');
-						document.location.reload();
-					}
-				}
-			});
-		});
-	});
+// 	$(function(){
+
+	
+	
+// 	});
 	
 </script>
 
-     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>관리자 챌린지 승인</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>차곡 계좌 관리</title>
 </head>	
 <body>
-<%-- ${challengeList } --%>
 	<div class="board_wrap">
-		<div class="board_title"><strong>관리자 챌린지 승인</strong></div>
+		<div class="board_title"><strong>차곡 계좌 관리</strong></div>
 		<div class="board_list_wrap">
 			<div class="board_list">
 				<div class="top">
-					<div class="num" style="padding-right: 10px; width:155px; padding-left: 10px;">챌린지 번호</div>
-					<div class="num" style="padding-left:10px; width: 110px;">분류</div>
-					<div class="num" style="width: 250px;">챌린지 명</div>
-					<div class="num">참여기간</div>
-					<div class="num" style="width:130px;">최소 인원/총 인원</div>
-					<div class="num" style="padding-left:25px; width:200px;">상태</div>
+					<div class="num" style="width:100px;">no.</div>
+					<div class="num" style="width:200px;">거래일시</div>
+					<div class="num" style="width:200px;">입금자명</div>
+					<div class="num" style="width:150px;">출금</div>
+					<div class="num" style="width:150px;">입금</div>
+					<div class="num" style="width:200px;">잔액</div>
 				</div>
 				
 				<div>
-					<c:forEach items="${challengeList }" var="cl">
-						<div class="num" style="padding-right:10px; width:155px; padding-left: 10px;">${cl.cno }</div>
-						<div class="num" style="padding-left:10px; width: 110px;">
-							<c:choose>
-								<c:when test="${cl.c_sort eq 0 }">저축형</c:when>
-								<c:when test="${cl.c_sort eq 1 }">절약형</c:when>
-							</c:choose>
-						</div>
-						<div class="num" style="width: 250px;">
-							<c:choose>
-								<c:when test="${cl.c_sort eq 0 }"><a href="/challenge/plusdetail?cno=${cl.cno }">${cl.c_title }</a>
-								</c:when>
-								<c:when test="${cl.c_sort eq 1 }"><a href="/challenge/minusdetail?cno=${cl.cno }">${cl.c_title }</a>
-								</c:when>
-							</c:choose>
-						</div>
-						<div class="num">${cl.c_period }주</div>
-						<div class="num" style="width:130px;"><b>${cl.c_min }</b>/ ${cl.c_cnt }</div>
-						<div class="num" style="padding-left:25px; width:200px;">
-							<c:choose>
-								<c:when test="${cl.c_status eq 0 }">승인 대기
-									<button type="button" class="btn btn-block btn-info yes" style="width: auto; display: inline-block; padding: 3px 10px 0 10px;">승인
-										<input type="hidden" value="${cl.cno }" class="test">
-									</button>
-									<button type="button" class="btn btn-block btn-danger no" style="width: auto; display: inline-block; margin-bottom: 6px; padding: 3px 10px 0 10px;">거절
-										<input type="hidden" value="${cl.cno }" class="test">
-									</button>
-								</c:when>
-								<c:when test="${cl.c_status eq 1 }">모집중</c:when>
-								<c:when test="${cl.c_status eq 2 }">진행중</c:when>
-								<c:when test="${cl.c_status eq 3 }">챌린지 성공</c:when>
-								<c:when test="${cl.c_status eq 4 }">챌린지 실패</c:when>
-								<c:when test="${cl.c_status eq 5 }">모집 실패</c:when>
-								<c:when test="${cl.c_status eq 6 }">승인 거절</c:when>
-							</c:choose>                    
-						</div>
+					<c:forEach items="${bizList }" var="biz">
+						<div class="num" style="width:100px;">${biz.bizno }</div>
+						<div class="num" style="width:200px;"><fmt:formatDate value="${biz.biz_date }" pattern="yyyy-MM-dd hh:mm" type="both"/></div>
+						<div class="num" style="width:200px;">${biz.biz_holder_name }</div>
+						<c:if test="${biz.biz_inout==1 }">
+							<div class="num" style="width:150px;">-<fmt:formatNumber value="${biz.biz_amount }"/></div>
+							<div class="num" style="width:150px;"></div>
+						</c:if>
+						<c:if test="${biz.biz_inout==2 }">
+							<div class="num" style="width:150px;"></div>
+							<div class="num" style="width:150px;">+<fmt:formatNumber value="${biz.biz_amount }"/></div>
+						</c:if>
+						<div class="num" style="width:200px;"><fmt:formatNumber value="${biz.biz_balance }"/></div>
 					</c:forEach>
 				</div>
 		     
@@ -120,23 +56,24 @@
 					    <ul class="pagination pagination-sm no-margin pull-right">
 					
 					        <c:if test="${pagevo.prev }">
-					            <li><a href="/challenge/chListAll?page=${pagevo.startPage-1 }">«</a></li>
+					            <li><a href="/bizAccount?page=${pagevo.startPage-1 }">«</a></li>
 					        </c:if>
 					
 					        <c:forEach var="idx" begin="${pagevo.startPage }" end="${pagevo.endPage }" step="1">
 					            <li
 								    <c:out value="${idx == pagevo.cri.page? 'class=active':'' }"/>
 								>
-								    <a href="/challenge/chListAll?page=${idx }">${idx }</a>
+								    <a href="/cbizAccount?page=${idx }">${idx }</a>
 								</li>
 					        </c:forEach>
 					
 					        <c:if test="${pagevo.next }">
-					            <li><a href="/challenge/chListAll?page=${pagevo.endPage+1 }">»</a></li>
+					            <li><a href="/bizAccount?page=${pagevo.endPage+1 }">»</a></li>
 					        </c:if>
 					    </ul>
 					</div>
 				</div>
+			</div>  
 		</div>  
 	</div> 
 </body>

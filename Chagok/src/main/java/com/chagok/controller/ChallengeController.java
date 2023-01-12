@@ -490,9 +490,12 @@ public class ChallengeController {
 		
 		// 페이징 처리
 	    PageMaker pagevo = new PageMaker();
+	    pagevo.setDisplayPageNum(5);
 	    pagevo.setCri(cri);
 	    pagevo.setTotalCount(10000);
 		
+	    mylog.debug(pagevo.toString());
+	    
 	    model.addAttribute("pagevo", pagevo);
 		model.addAttribute("challengeList", challengeList);
 		

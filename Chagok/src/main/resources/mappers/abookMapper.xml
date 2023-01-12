@@ -132,6 +132,14 @@
 		and ab.ab_inout=#{inout}
 		<include refid="cal2"/>
 	</select>
-	
-	
+
+	<!-- 가계부 유무 -->
+	<select id="chkAb" resultType="int">
+		select count(abno)
+		from account_book
+		where mno=#{mno} and 
+		ab_date between last_day(now() - interval #{mm}+1 month) + interval 1 day 
+		and last_day(now() - interval #{mm} month);
+	</select>
+		
   </mapper>

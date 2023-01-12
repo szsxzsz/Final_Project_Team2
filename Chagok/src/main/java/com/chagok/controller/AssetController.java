@@ -1039,21 +1039,21 @@ public class AssetController {
 	@GetMapping(value="/aMain")
 	public String aMain(HttpSession session, Model model, RedirectAttributes rttr) throws Exception {
 		Integer mno = (Integer)session.getAttribute("mno");
-		mylog.debug("헉"+mno);
-		UserVO userVO = new UserVO();
 		Integer mm = 0;
+		mylog.debug("@@@@mno"+mno);
+		UserVO userVO = userService.getUser(mno);
 		Map<String, Object> map = new HashMap<String, Object>();
-		String a = "가계부데이터있음";
 		
 		if (mno!=null) {
 			model.addAttribute("result", "loginY");
-		
-			if(a=="가계부데이터없음") {
-				model.addAttribute("result2", "abN");
+			
+			int chkAb = abService.chkAb(mno, mm);
+			if(chkAb==0) {
+				model.addAttribute("chkAb", "abN");
 			}
 			
 			else {
-				model.addAttribute("result2", "abY");
+				model.addAttribute("chkAb", "abY");
 				Integer dtSum = rptService.dtSum(mno, mm);
 				Integer dtAvg = rptService.dtAvg(mno, mm);
 				Integer expSum = rptService.expSum(mno, mm);
@@ -1090,24 +1090,28 @@ public class AssetController {
 			// 계좌 리스트 조회
 			List<AccountVO> accountList = accountService.getAccountInfo(mno);
 			model.addAttribute("accountList", accountList);
-			
+			mylog.debug("accountList : "+accountList.toString());
 			// 카드 리스트 조회
 			List<CardInfoVO> cardList = accountService.getCardInfo(userVO.getUser_seq_no());
 			model.addAttribute("cardList", cardList);
+			mylog.debug("cardList : "+cardList.toString());
 			
 			// 카드 내역/금액 조회
 			List<List<CardHistoryVO>> cardHistoryList = accountService.getCardHistory(cardList);
 			model.addAttribute("cardHistoryList", cardHistoryList);
+			mylog.debug("cardHistoryList : "+cardHistoryList.toString());
 			
 			// 현금 내역 조회
 			CashVO cashVO = accountService.getCashInfo(mno);
 			if (cashVO != null) {
 				cashVO.setCash_amt(cashVO.getCash_amt().replaceAll(",", ""));
-			}	
+				mylog.debug("cashVO : "+cashVO.toString());
+			}
 			model.addAttribute("cashVO", cashVO);
+			model.addAttribute("userVO", userVO);
 		
-		model.addAttribute("userVO", userVO);	
 		return "/chagok/assetmain";
+		
 		} else {
 			return "redirect:/login";
 		}

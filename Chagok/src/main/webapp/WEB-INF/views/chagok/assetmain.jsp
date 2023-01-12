@@ -10,10 +10,20 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.css"/>
 </head>
 
+<style>
+.btn btn-block btn-success btn-lg{
+	width: 200px;
+	margin: 20px 40px;
+}
+</style>
+
 <section class="content-header">
 	<h1>
 		자산관리 메인 페이지
 	</h1>
+<%-- 	chkAb : ${chkAb }<br> --%>
+<%-- 	chkBud : ${chkBud }<br> --%>
+<%-- 	isCheck : ${userVO.isCheck }<br> --%>
 	<ol class="breadcrumb">
 		<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
 		<li class="active">Dashboard</li>
@@ -21,7 +31,7 @@
 </section>
 
 <section class="content">
-<c:if test="${result2.equals('abN') }">
+<c:if test="${chkAb.equals('abN') }">
 	<div class="row">
 			<div class="col-md-12">
 				<div class="box-body">
@@ -36,7 +46,7 @@
 	</div>
 </c:if>
 
-<c:if test="${result2.equals('abY') }">
+<c:if test="${chkAb.equals('abY') }">
 	<div class="row">
 		<div class="col-md-12">
 			<div class="box">
@@ -77,7 +87,7 @@
 
 	<div class="row">
 		<div class="col-md-12">
-			<div class="box">
+<!-- 			<div class="box"> -->
 					<div class="row">
 						<div class="col-md-6">
 							<div class="box box-primary">
@@ -103,14 +113,14 @@
 						</div>
 					</div>		
 			</div>
-		</div>
+<!-- 		</div> -->
 	</div>
 </c:if>
 
 
 <!-- 내자산 -->
 <div class="row">
-	<div class="col-md-8">
+	<div class="col-md-6">
 
 		<div class="box">
 			<div class="box-header with-border">
@@ -180,18 +190,18 @@
 	</div>
 
 	<c:if test="${userVO.isCheck.equals('N') }">
-		<div class="col-md-4">
+		<div class="col-md-6">
 			<h1>등록된 자산 정보가 없습니다.</h1>
 			<input type="button" id="setbud"
 				class="btn btn-block btn-success btn-lg"
-				style="width: 200px; margin: 20px 40px" value="내 자산 불러오기"
+				value="내 자산 불러오기"
 				onclick="location.href='/asset/myAsset';">	
 		</div>	
 	</c:if>
 	
 	
 	<c:if test="${userVO.isCheck.equals('Y') }">
-		<div class="col-md-4">
+		<div class="col-md-6">
 			<div class="box">
 				<div class="box-header with-border">
 					<h3 class="box-title">내 자산 요약</h3>

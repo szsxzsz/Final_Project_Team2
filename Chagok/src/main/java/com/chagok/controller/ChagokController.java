@@ -25,6 +25,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.WebUtils;
 
 import com.chagok.domain.AlertVO;
+import com.chagok.domain.BusinessAccountVO;
 import com.chagok.domain.ChallengeVO;
 import com.chagok.domain.Criteria;
 import com.chagok.domain.PageMaker;
@@ -367,5 +368,25 @@ public class ChagokController {
 	   return "redirect:/unregist";
    }
    
-   
+   // http://localhost:8080/bizAccount
+   @GetMapping(value="/bizAccount")
+   public String businessAcc (Criteria cri, Model model) throws Exception {
+		mylog.debug("/businessAcc 호출");
+		
+		cri.setPerPageNum(10);
+		List<BusinessAccountVO> bizList = service.getBizAll(cri);
+		
+		// 페이징 처리
+	    PageMaker pagevo = new PageMaker();
+	    pagevo.setDisplayPageNum(5);
+	    pagevo.setCri(cri);
+	    pagevo.setTotalCount(10000);
+		
+//	    mylog.debug(pagevo.toString());
+	    
+	    model.addAttribute("pagevo", pagevo);
+		model.addAttribute("bizList", bizList);
+	   
+	   return "/chagok/businessAcc";
+   }
 }

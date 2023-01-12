@@ -10,6 +10,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
+import com.chagok.domain.BusinessAccountVO;
+import com.chagok.domain.Criteria;
 import com.chagok.domain.UserVO;
 
 @Repository
@@ -107,6 +109,12 @@ public class UserDAOImpl implements UserDAO {
 		int result = sqlSession.delete(NAMESPACE+".unregistUser", vo);
 		
 		return result;
+	}
+
+	@Override
+	public List<BusinessAccountVO> getBizAll(Criteria cri) throws Exception {
+		mylog.debug("cri : "+cri.toString());
+		return sqlSession.selectList(NAMESPACE +".getBizAll", cri);
 	}
 
 	

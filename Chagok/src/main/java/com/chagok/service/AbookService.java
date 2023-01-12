@@ -56,4 +56,7 @@ public interface AbookService {
 	
 	// 달력
 	public List<Map<String, Object>> calInout(Integer mno, Integer mm, Integer inout) throws Exception;
+	
+	// 가계부 유무
+	public int chkAb(Integer mno, Integer mm) throws Exception;
 }

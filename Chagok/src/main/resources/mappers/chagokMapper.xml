@@ -495,5 +495,14 @@
 		select count(*) 
 		from board
 		where b_sort= 4
-	</select>	
+	</select>
+	
+	<!-- 차곡 계좌 조회 -->
+	<select id="getBizAll" resultType="com.chagok.domain.BusinessAccountVO">
+		select * from business_account
+		order by biz_date desc
+		limit #{pageStart}, #{perPageNum};
+	</select>
+	
+		
  </mapper>

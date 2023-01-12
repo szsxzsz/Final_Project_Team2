@@ -108,6 +108,11 @@ public class AbookServiceImpl implements AbookService{
 	public List<Map<String, Object>> calInout(Integer mno, Integer mm, Integer inout) throws Exception {
 		return dao.calInout(mno, mm, inout);
 	}
+
+	@Override
+	public int chkAb(Integer mno, Integer mm) throws Exception {
+		return dao.chkAb(mno, mm);
+	}
 	
 	
 	
