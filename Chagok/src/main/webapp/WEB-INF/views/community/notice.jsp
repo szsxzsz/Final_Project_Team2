@@ -22,7 +22,7 @@
         <div class="board_list_wrap">
             <div class="board_list">
                 <div class="top">
-                    <div class="num">번호</div>
+                    <div class="date">번호</div>
                     <div class="title">제목</div>
 <!--                     <div class="writer">작성자</div> -->
                     <div class="date">작성일</div>
@@ -32,7 +32,7 @@
  				<fmt:parseNumber var="boardno" value="${boardno }" type="number" />
                 <c:forEach items="${boardList2 }" var="boardList2" >
                 <div>
-                    <div class="num">${boardno }</div>
+                    <div class="date">${boardno }</div>
                     <div class="title"><a href="http://localhost:8080/noticecontent?bno=${boardList2.bno }">${boardList2.b_title }</a></div>
 <%--                     <div class="writer">${boardList.b_writer }</div> --%>
                     <div class="date"><fmt:formatDate value="${boardList2.b_date }" pattern="yyyy-MM-dd"/> </div>
@@ -497,4 +497,5 @@ a {
 </style>
 
 
+</div>
 <%@ include file="../include/footer.jsp"%>

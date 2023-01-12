@@ -271,6 +271,78 @@
 
 </div>
 
+
+
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+     	 viewBox="0 0 500 500" style="enable-background:new 0 0 500 500;" xml:space="preserve">
+     	 <g class="confetti-cone">
+     		 <path class="conf0" d="M131.5,172.6L196,343c2.3,6.1,11,6.1,13.4,0l65.5-170.7L131.5,172.6z"/>
+     		 <path class="conf1" d="M131.5,172.6L196,343c2.3,6.1,11,6.1,13.4,0l6.7-17.5l-53.6-152.9L131.5,172.6z"/>
+
+     			<path class="conf2" d="M274.2,184.2c-1.8,1.8-4.2,2.9-7,2.9l-129.5,0.4c-5.4,0-9.8-4.4-9.8-9.8c0-5.4,4.4-9.8,9.9-9.9l129.5-0.4
+     				c5.4,0,9.8,4.4,9.8,9.8C277,180,275.9,182.5,274.2,184.2z"/>
+     			<polygon class="conf3" points="231.5,285.4 174.2,285.5 143.8,205.1 262.7,204.7 			"/>
+     			<path class="conf4" d="M166.3,187.4l-28.6,0.1c-5.4,0-9.8-4.4-9.8-9.8c0-5.4,4.4-9.8,9.9-9.9l24.1-0.1c0,0-2.6,5-1.3,10.6
+     				C161.8,183.7,166.3,187.4,166.3,187.4z"/>
+     			<ellipse transform="matrix(0.7071 -0.7071 0.7071 0.7071 -89.8523 231.0278)" class="conf2" cx="233.9" cy="224" rx="5.6" ry="5.6"/>
+     			<path class="conf5" d="M143.8,205.1l5.4,14.3c6.8-2.1,14.4-0.5,19.7,4.8c7.7,7.7,7.6,20.1-0.1,27.8c-1.7,1.7-3.7,3-5.8,4l11.1,29.4
+     				l27.7,0l-28-80.5L143.8,205.1z"/>
+     			<path class="conf2" d="M169,224.2c-5.3-5.3-13-6.9-19.7-4.8l13.9,36.7c2.1-1,4.1-2.3,5.8-4C176.6,244.4,176.6,231.9,169,224.2z"/>
+     			<ellipse transform="matrix(0.7071 -0.7071 0.7071 0.7071 -119.0946 221.1253)" class="conf6" cx="207.4" cy="254.3" rx="11.3" ry="11.2"/>
+     	</g>
+
+     		<rect x="113.7" y="135.7" transform="matrix(0.7071 -0.7071 0.7071 0.7071 -99.5348 209.1582)" class="conf7" width="178" height="178"/>
+     	<line class="conf7" x1="76.8" y1="224.7" x2="328.6" y2="224.7"/>
+     	<polyline class="conf7" points="202.7,350.6 202.7,167.5 202.7,98.9 	"/>
+<!-- here comes the confettis-->
+
+      	<circle class="conf2" id="b1" cx="195.2" cy="232.6" r="5.1"/>
+      	<circle class="conf0" id="b2" cx="230.8" cy="219.8" r="5.4"/>
+      	<circle class="conf0" id="c2" cx="178.9" cy="160.4" r="4.2"/>
+      	<circle class="conf6" id="d2"cx="132.8" cy="123.6" r="5.4"/>
+      	<circle class="conf0" id="d3" cx="151.9" cy="105.1" r="5.4"/>
+
+      	<path class="conf0" id="d1" d="M129.9,176.1l-5.7,1.3c-1.6,0.4-2.2,2.3-1.1,3.5l3.8,4.2c1.1,1.2,3.1,0.8,3.6-0.7l1.9-5.5
+      		C132.9,177.3,131.5,175.7,129.9,176.1z"/>
+      	<path class="conf6" id="b5" d="M284.5,170.7l-5.4,1.2c-1.5,0.3-2.1,2.2-1,3.3l3.6,3.9c1,1.1,2.9,0.8,3.4-0.7l1.8-5.2
+      		C287.4,171.9,286.1,170.4,284.5,170.7z"/>
+      	<circle class="conf6" id="c3"cx="206.7" cy="144.4" r="4.5"/>
+        <path class="conf2" id="c1" d="M176.4,192.3h-3.2c-1.6,0-2.9-1.3-2.9-2.9v-3.2c0-1.6,1.3-2.9,2.9-2.9h3.2c1.6,0,2.9,1.3,2.9,2.9v3.2
+      		C179.3,191,178,192.3,176.4,192.3z"/>
+      	<path class="conf2" id="b4" d="M263.7,197.4h-3.2c-1.6,0-2.9-1.3-2.9-2.9v-3.2c0-1.6,1.3-2.9,2.9-2.9h3.2c1.6,0,2.9,1.3,2.9,2.9v3.2
+      		C266.5,196.1,265.2,197.4,263.7,197.4z"/>
+      	<!-- yellow-strip-1-->
+         <path id="yellow-strip" d="M179.7,102.4c0,0,6.6,15.3-2.3,25c-8.9,9.7-24.5,9.7-29.7,15.6c-5.2,5.9-0.7,18.6,3.7,28.2
+      		c4.5,9.7,2.2,23-10.4,28.2"/>
+      	<path class="conf8" id="yellow-strip" d="M252.2,156.1c0,0-16.9-3.5-28.8,2.4c-11.9,5.9-14.9,17.8-16.4,29c-1.5,11.1-4.3,28.8-31.5,33.4"/>
+      	<path class="conf0" id="a1" d="M277.5,254.8h-3.2c-1.6,0-2.9-1.3-2.9-2.9v-3.2c0-1.6,1.3-2.9,2.9-2.9h3.2c1.6,0,2.9,1.3,2.9,2.9v3.2
+      		C280.4,253.5,279.1,254.8,277.5,254.8z"/>
+      	<path class="conf3" id="c4" d="M215.2,121.3L215.2,121.3c0.3,0.6,0.8,1,1.5,1.1l0,0c1.6,0.2,2.2,2.2,1.1,3.3l0,0c-0.5,0.4-0.7,1.1-0.6,1.7v0
+      		c0.3,1.6-1.4,2.8-2.8,2l0,0c-0.6-0.3-1.2-0.3-1.8,0h0c-1.4,0.7-3.1-0.5-2.8-2v0c0.1-0.6-0.1-1.3-0.6-1.7l0,0
+      		c-1.1-1.1-0.5-3.1,1.1-3.3l0,0c0.6-0.1,1.2-0.5,1.5-1.1v0C212.5,119.8,214.5,119.8,215.2,121.3z"/>
+      	<path class="conf3" id="b3" d="M224.5,191.7L224.5,191.7c0.3,0.6,0.8,1,1.5,1.1l0,0c1.6,0.2,2.2,2.2,1.1,3.3v0c-0.5,0.4-0.7,1.1-0.6,1.7l0,0
+      		c0.3,1.6-1.4,2.8-2.8,2h0c-0.6-0.3-1.2-0.3-1.8,0l0,0c-1.4,0.7-3.1-0.5-2.8-2l0,0c0.1-0.6-0.1-1.3-0.6-1.7v0
+      		c-1.1-1.1-0.5-3.1,1.1-3.3l0,0c0.6-0.1,1.2-0.5,1.5-1.1l0,0C221.7,190.2,223.8,190.2,224.5,191.7z"/>
+      	<path class="conf3" id="a2" d="M312.6,242.1L312.6,242.1c0.3,0.6,0.8,1,1.5,1.1l0,0c1.6,0.2,2.2,2.2,1.1,3.3l0,0c-0.5,0.4-0.7,1.1-0.6,1.7v0
+      		c0.3,1.6-1.4,2.8-2.8,2l0,0c-0.6-0.3-1.2-0.3-1.8,0h0c-1.4,0.7-3.1-0.5-2.8-2v0c0.1-0.6-0.1-1.3-0.6-1.7l0,0
+      		c-1.1-1.1-0.5-3.1,1.1-3.3l0,0c0.6-0.1,1.2-0.5,1.5-1.1v0C309.9,240.6,311.9,240.6,312.6,242.1z"/>
+      	<path class="conf8" id="yellow-strip" d="M290.7,215.4c0,0-14.4-3.4-22.6,2.7c-8.2,6.2-8.2,23.3-17.1,29.4c-8.9,6.2-19.8-2.7-32.2-4.1
+      		c-12.3-1.4-19.2,5.5-20.5,10.9"/>
+      </g>
+</svg>
+
+
+
+
+
+
+
+
+
+
+
+
+
 <a href="https://dribbble.com/shots/2738907-PayPal-Email-Receipt"
 	target="_blank" class="link">Built from reference: Vladyslav
 	Tyzun's Dribbble shot, completed for Awesomed</a>
@@ -300,100 +372,100 @@
 
 
 
-<div class="receipt">
+<!-- <div class="receipt"> -->
 
-	<header class="receipt.header">
-		<div class="receipt.header__top">
-			<div class="receipt.header__logo">
-				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25.58 30.18">
-					<title>PayPal</title><path class="a"
-						d="M7.27,29.15l0.52-3.32-1.16,0H1.06L4.93,1.29A0.32,0.32,0,0,1,5,1.1,0.32,0.32,0,0,1,5.24,1h9.38C17.73,1,19.88,1.67,21,3a4.39,4.39,0,0,1,1,1.92,6.92,6.92,0,0,1,0,2.64V8.27l0.53,0.3a3.69,3.69,0,0,1,1.07.81,3.78,3.78,0,0,1,.86,1.94,8.2,8.2,0,0,1-.12,2.81,9.9,9.9,0,0,1-1.15,3.18,6.55,6.55,0,0,1-1.83,2,7.4,7.4,0,0,1-2.46,1.11,12.26,12.26,0,0,1-3.07.35H15.12a2.2,2.2,0,0,0-2.17,1.85l-0.06.3L12,28.78l0,0.22a0.18,0.18,0,0,1-.06.13,0.15,0.15,0,0,1-.1,0H7.27Z" />
-					<path class="b"
-						d="M23,7.67h0q0,0.27-.1.55c-1.24,6.35-5.47,8.55-10.87,8.55H9.33A1.34,1.34,0,0,0,8,17.89H8L6.6,26.83,6.2,29.36a0.7,0.7,0,0,0,.7.81h4.88a1.17,1.17,0,0,0,1.16-1l0-.25,0.92-5.83L14,22.79a1.17,1.17,0,0,1,1.16-1h0.73c4.73,0,8.43-1.92,9.51-7.48,0.45-2.32.22-4.26-1-5.62A4.67,4.67,0,0,0,23,7.67Z" />
-					<path class="c"
-						d="M21.75,7.15L21.17,7l-0.62-.12a15.28,15.28,0,0,0-2.43-.18H10.77a1.17,1.17,0,0,0-1.16,1L8,17.6l0,0.29a1.34,1.34,0,0,1,1.32-1.13h2.75c5.4,0,9.64-2.19,10.87-8.55C23,8,23,7.85,23,7.67a6.59,6.59,0,0,0-1-.43Z" />
-					<path class="a"
-						d="M9.61,7.7a1.17,1.17,0,0,1,1.16-1h7.35a15.28,15.28,0,0,1,2.43.18L21.17,7l0.58,0.15L22,7.24a6.69,6.69,0,0,1,1,.43c0.37-2.35,0-3.94-1.27-5.39S17.85,0,14.62,0H5.24A1.34,1.34,0,0,0,3.92,1.13L0,25.9a0.81,0.81,0,0,0,.8.93H6.6L8,17.6Z" /></svg>
-			</div>
-			<c:forEach var="vo" items="${challengeList }">
+<!-- 	<header class="receipt.header"> -->
+<!-- 		<div class="receipt.header__top"> -->
+<!-- 			<div class="receipt.header__logo"> -->
+<!-- 				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25.58 30.18"> -->
+<!-- 					<title>PayPal</title><path class="a" -->
+<!-- 						d="M7.27,29.15l0.52-3.32-1.16,0H1.06L4.93,1.29A0.32,0.32,0,0,1,5,1.1,0.32,0.32,0,0,1,5.24,1h9.38C17.73,1,19.88,1.67,21,3a4.39,4.39,0,0,1,1,1.92,6.92,6.92,0,0,1,0,2.64V8.27l0.53,0.3a3.69,3.69,0,0,1,1.07.81,3.78,3.78,0,0,1,.86,1.94,8.2,8.2,0,0,1-.12,2.81,9.9,9.9,0,0,1-1.15,3.18,6.55,6.55,0,0,1-1.83,2,7.4,7.4,0,0,1-2.46,1.11,12.26,12.26,0,0,1-3.07.35H15.12a2.2,2.2,0,0,0-2.17,1.85l-0.06.3L12,28.78l0,0.22a0.18,0.18,0,0,1-.06.13,0.15,0.15,0,0,1-.1,0H7.27Z" /> -->
+<!-- 					<path class="b" -->
+<!-- 						d="M23,7.67h0q0,0.27-.1.55c-1.24,6.35-5.47,8.55-10.87,8.55H9.33A1.34,1.34,0,0,0,8,17.89H8L6.6,26.83,6.2,29.36a0.7,0.7,0,0,0,.7.81h4.88a1.17,1.17,0,0,0,1.16-1l0-.25,0.92-5.83L14,22.79a1.17,1.17,0,0,1,1.16-1h0.73c4.73,0,8.43-1.92,9.51-7.48,0.45-2.32.22-4.26-1-5.62A4.67,4.67,0,0,0,23,7.67Z" /> -->
+<!-- 					<path class="c" -->
+<!-- 						d="M21.75,7.15L21.17,7l-0.62-.12a15.28,15.28,0,0,0-2.43-.18H10.77a1.17,1.17,0,0,0-1.16,1L8,17.6l0,0.29a1.34,1.34,0,0,1,1.32-1.13h2.75c5.4,0,9.64-2.19,10.87-8.55C23,8,23,7.85,23,7.67a6.59,6.59,0,0,0-1-.43Z" /> -->
+<!-- 					<path class="a" -->
+<!-- 						d="M9.61,7.7a1.17,1.17,0,0,1,1.16-1h7.35a15.28,15.28,0,0,1,2.43.18L21.17,7l0.58,0.15L22,7.24a6.69,6.69,0,0,1,1,.43c0.37-2.35,0-3.94-1.27-5.39S17.85,0,14.62,0H5.24A1.34,1.34,0,0,0,3.92,1.13L0,25.9a0.81,0.81,0,0,0,.8.93H6.6L8,17.6Z" /></svg> -->
+<!-- 			</div> -->
+<%-- 			<c:forEach var="vo" items="${challengeList }"> --%>
 
-				<c:if test="${vo.c_sort eq 0 }">
-					<c:set var="sort" value="저축형"/>
-				</c:if>
-				<c:if test="${vo.c_sort eq 1 }">
-					<c:set var="sort" value="절약형"/>
-				</c:if>
+<%-- 				<c:if test="${vo.c_sort eq 0 }"> --%>
+<%-- 					<c:set var="sort" value="저축형"/> --%>
+<%-- 				</c:if> --%>
+<%-- 				<c:if test="${vo.c_sort eq 1 }"> --%>
+<%-- 					<c:set var="sort" value="절약형"/> --%>
+<%-- 				</c:if> --%>
 
-			</c:forEach>
-			<div class="receipt.header__meta">
-				<span class="receipt.header__date">[${sort} : ${vo2.ct_top}]</span> 
-				<span class="receipt.header__serial">${vo.c_title }</span> 
-				<span class="receipt.header__number"> <b>
-				<fmt:formatDate value="${startDate }" pattern="YYYY-MM-dd" />
-					</b> / <b>
-				<fmt:formatDate value="${c_end }" pattern="YYYY-MM-dd" />
-					</b>
-				</span>
-			</div>
-		</div>
-		<div class="receipt.header__greeting">
-			<span class="receipt.header__name">${vo.c_title }</span> <span
-				class="receipt.header__count">🎉축하합니다! 성공적으로 챌린지를 마치셨습니다!</span> <span
-				class="receipt.header__border"></span>
-		</div>
-		<div class="receipt.header__spacing"></div>
-	</header>
+<%-- 			</c:forEach> --%>
+<!-- 			<div class="receipt.header__meta"> -->
+<%-- 				<span class="receipt.header__date">[${sort} : ${vo2.ct_top}]</span>  --%>
+<%-- 				<span class="receipt.header__serial">${vo.c_title }</span>  --%>
+<!-- 				<span class="receipt.header__number"> <b> -->
+<%-- 				<fmt:formatDate value="${startDate }" pattern="YYYY-MM-dd" /> --%>
+<!-- 					</b> / <b> -->
+<%-- 				<fmt:formatDate value="${c_end }" pattern="YYYY-MM-dd" /> --%>
+<!-- 					</b> -->
+<!-- 				</span> -->
+<!-- 			</div> -->
+<!-- 		</div> -->
+<!-- 		<div class="receipt.header__greeting"> -->
+<%-- 			<span class="receipt.header__name">${vo.c_title }</span> <span --%>
+<!-- 				class="receipt.header__count">🎉축하합니다! 성공적으로 챌린지를 마치셨습니다!</span> <span -->
+<!-- 				class="receipt.header__border"></span> -->
+<!-- 		</div> -->
+<!-- 		<div class="receipt.header__spacing"></div> -->
+<!-- 	</header> -->
 
-	<section class="cart">
-		<h2 class="cart__header">챌린지 결과</h2>
-		<ol class="list">
-			<li class="list__item">
-				<span class="list__name"> 
-					참여 인원 
-				</span> 
-				<span class="list__price">
-					${CList }	
-				</span>
-			</li>
-			<li class="list__item">
-				<span class="list__name"> 
-					성공 인원 
-				</span> 
-				<span class="list__price">
-					${Success }
-				</span>
-			</li>
-			<li class="list__item">
-				<span class="list__name"> 
-					모인 꿀머니 
-				</span>
-				<span class="list__price">
-					${ChallengeMoney }꿀
-				</span>
-			</li>
-		</ol>
-		<hr class="cart__hr" />
-		<footer class="cart__total">
-			<h3 class="cart__total-label">챌린지 환급 꿀 머니</h3>
-			<span class="cart__total-price"> 
-				${ChallengeMoney / Success}꿀 
-			</span>
-		</footer>
-	</section>
+<!-- 	<section class="cart"> -->
+<!-- 		<h2 class="cart__header">챌린지 결과</h2> -->
+<!-- 		<ol class="list"> -->
+<!-- 			<li class="list__item"> -->
+<!-- 				<span class="list__name">  -->
+<!-- 					참여 인원  -->
+<!-- 				</span>  -->
+<!-- 				<span class="list__price"> -->
+<%-- 					${CList }	 --%>
+<!-- 				</span> -->
+<!-- 			</li> -->
+<!-- 			<li class="list__item"> -->
+<!-- 				<span class="list__name">  -->
+<!-- 					성공 인원  -->
+<!-- 				</span>  -->
+<!-- 				<span class="list__price"> -->
+<%-- 					${Success } --%>
+<!-- 				</span> -->
+<!-- 			</li> -->
+<!-- 			<li class="list__item"> -->
+<!-- 				<span class="list__name">  -->
+<!-- 					모인 꿀머니  -->
+<!-- 				</span> -->
+<!-- 				<span class="list__price"> -->
+<%-- 					${ChallengeMoney }꿀 --%>
+<!-- 				</span> -->
+<!-- 			</li> -->
+<!-- 		</ol> -->
+<!-- 		<hr class="cart__hr" /> -->
+<!-- 		<footer class="cart__total"> -->
+<!-- 			<h3 class="cart__total-label">챌린지 환급 꿀 머니</h3> -->
+<!-- 			<span class="cart__total-price">  -->
+<%-- 				${ChallengeMoney / Success}꿀  --%>
+<!-- 			</span> -->
+<!-- 		</footer> -->
+<!-- 	</section> -->
 
 
-</div>
+<!-- </div> -->
 
-	<footer class="bar-code">
-		<div class="bar-code__code">
-			<svg id="d17ac603-1444-403c-9daf-1afe6b3ad839" data-name="Layer 1"
-				xmlns="http://www.w3.org/2000/svg" viewBox="0 0 575.2 93.16">
-				<defs>
+<!-- 	<footer class="bar-code"> -->
+<!-- 		<div class="bar-code__code"> -->
+<!-- 			<svg id="d17ac603-1444-403c-9daf-1afe6b3ad839" data-name="Layer 1" -->
+<!-- 				xmlns="http://www.w3.org/2000/svg" viewBox="0 0 575.2 93.16"> -->
+<!-- 				<defs> -->
 
-<button class="button" type="button" onclick="restart()">Replay</button>
+<!-- <button class="button" type="button" onclick="restart()">Replay</button> -->
 
-<button class="button" type="button"
-	onclick="location.href='/review';">후기 작성하기</button>
+<!-- <button class="button" type="button" -->
+<!-- 	onclick="location.href='/review';">후기 작성하기</button> -->
 
 
 
@@ -610,6 +682,237 @@ p:hover {
 	margin: 25px auto 15px auto;
 	text-align: center;
 }
+
+
+
+
+
+
+body{
+  background: #FFEFE9;
+padding-left:100px;
+}
+
+.conf0{fill:#FC6394;}
+.conf1{fill:#EF3C8A;}
+.conf2{fill:#5ADAEA;}
+.conf3{fill:#974CBE;}
+.conf4{fill:#3CBECD;}
+.conf5{fill:#813BBE;}
+.conf6{fill:#F9B732;}
+.conf7{display:none;fill:none;stroke:#000000;stroke-miterlimit:10;}
+.conf8{fill:none;stroke:#F9B732;stroke-width:9;stroke-linecap:round;stroke-miterlimit:10;}
+
+
+.confetti-cone{
+  transform-origin: 200px 50px;
+  animation:confetti-cone1 1.2s ease infinite;
+}
+@keyframes confetti-cone1{
+0%{
+   transform:translate(40px, 95px)  rotate(45deg) scale(1, 1);
+}
+15%{
+   transform:translate(10px, 145px)  rotate(45deg) scale(1.1, 0.85);
+
+}
+100%{
+  transform:translate(40px, 105px)  rotate(45deg) scale(1, 1);
+}
+  }
+
+#yellow-strip {
+  fill:none;
+  stroke:#F9B732;
+  stroke-width:9;
+  stroke-linecap:round;
+  stroke-miterlimit:10;
+  animation: confdash 1.2s ease infinite;
+}
+
+
+@keyframes confdash {
+0%{
+  stroke-dasharray:1000;
+  stroke-dashoffset:500;
+  transform:translate(-30px, 30px);
+  opacity:0;
+}
+2%{
+  stroke-dasharray:1000;
+  stroke-dashoffset:500;
+  transform:translate(-30px, 30px);
+  opacity:0;
+}
+35%{
+stroke-dasharray:1000;
+stroke-dashoffset:900;
+transform:translate(-2px, 0px);
+opacity:1;
+}
+
+85%{
+  stroke-dasharray:1000;
+  stroke-dashoffset:1000;
+  transform:translate(1px, -5px);
+  opacity:1;
+}
+  90%{
+  stroke-dashoffset:1000;
+   stroke-dashoffset:1000;
+  transform:translate(2px, -8px);
+  opacity:0;
+}
+  100%{
+  stroke-dashoffset:1000;
+   stroke-dashoffset:500;
+  transform:translate(2px, -8px);
+  opacity:0;
+}
+}
+
+
+
+#a2{
+  transform-origin: 310.9px 241px;
+  animation: confa 1.2s ease-out infinite;
+}
+
+#a1
+{transform-origin: 276px 246px;
+  animation: confa 1.2s ease-out infinite;
+}
+
+@keyframes confa {
+0%{
+  opacity:0;
+  transform: translate(-30px, 20px) rotate(0);
+}
+15%{
+  opacity:1;
+  transform: translate(25px, -10px) rotate(60deg);
+}
+80%{
+  opacity:1;
+  transform: translate(33px, -18px) rotate(180deg);
+}
+100%{
+  opacity:0;
+  transform: translate(37px, -23px) scale(0.5)rotate(230deg);
+}
+}
+
+
+#b1{
+  transform-origin: 195.2px 232.6px;
+  animation: confb 1.2s ease-out infinite;
+}
+
+#b2{
+  transform-origin: 230.8px 219.8px;
+  animation: confb 1.2s ease-out infinite;
+}
+#b3 {transform-origin: 222.8px 190.6px;
+  animation: confb 1.2s ease-out infinite;
+}
+
+#b4 {transform-origin: 262px 188.5px;
+  animation: confb 1.2s ease-out infinite;
+}
+
+#b5 {transform-origin: 282.3px 170.6px;
+  animation: confb 1.2s ease-out infinite;
+}
+
+
+@keyframes confb {
+0%{
+  opacity:0;
+  transform: translate(-30px, 20px) rotate(0);
+}
+12%{
+  opacity:1;
+  transform: translate(25px, -10px) rotate(60deg);
+}
+76%{
+  opacity:1;
+  transform: translate(33px, -18px) rotate(180deg);
+}
+100%{
+  opacity:0;
+  transform: translate(37px, -23px) scale(0.5) rotate(240deg);
+}
+}
+
+#c1 {transform-origin: 174.8px 183.4px;
+  animation: confc 1.2s ease-out infinite;
+}
+#c2{
+  transform-origin: 178.9px 156.2px;
+  animation: confc 1.2s ease-out infinite;
+}
+
+#c3{
+  transform-origin: 206.7px 140px;
+  animation: confc 1.2s ease-out infinite;
+}
+
+#c4{
+  transform-origin: 213.5px 120.2px;
+  animation: confc 1.2s ease-out infinite;
+}
+
+@keyframes confc {
+0%{
+  opacity:0.7;
+  transform: translate(-30px, 20px) rotate(0);
+}
+18%{
+  opacity:1;
+  transform: translate(5px, -10px) rotate(60deg);
+}
+76%{
+  opacity:1;
+  transform: translate(13px, -18px) rotate(180deg);
+}
+100%{
+  opacity:0;
+  transform: translate(17px, -23px) scale(0.5) rotate(230deg);
+}
+}
+
+#d1{
+  transform-origin: 127px 176px;
+  animation: confd 1.2s ease-out infinite;
+}
+#d2 {transform-origin: 133px 118px;
+  animation: confd 1.2s ease-out infinite;
+}
+#d3{ transform-origin: 152px 100px;
+  animation: confd 1.2s ease-out infinite;
+}
+
+@keyframes confd {
+0%{
+  opacity:0.7;
+  transform: translate(-20px, 20px) rotate(0);
+}
+18%{
+  opacity:1;
+  transform: translate(-5px, -10px) rotate(60deg);
+}
+76%{
+  opacity:1;
+  transform: translate(-8px, -18px) rotate(180deg);
+}
+100%{
+  opacity:0;
+  transform: translate(-10px, -23px) scale(0.5) rotate(230deg);
+}
+}
+
+
+
 </style>
 
 

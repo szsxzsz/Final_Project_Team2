@@ -69,6 +69,7 @@ public class ChallengeController {
 
 	@Inject
 	private FeedService feedservice;
+	
 
 	private static final Logger mylog = LoggerFactory.getLogger(ChallengeController.class);
 
