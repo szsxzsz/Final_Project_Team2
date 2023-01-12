@@ -17,11 +17,15 @@ public interface AbookDAO {
 	
 	// 카테고리 bottom
 	public List<Map<String, Object>> ctbottomList() throws Exception;
+	
 	// 그리드 수정
 	public void setAbookList(AbookVO vo) throws Exception;
 	
+	// 가계부 추가
+	public void insAbookList(AbookVO vo) throws Exception;
 	
-	
+	// 카테고리 ctno -> ctoop, bottom
+	public List<AbookVO> toCate(int ctno) throws Exception;
 	
 	
 	
@@ -53,5 +57,7 @@ public interface AbookDAO {
 	
 	// 달력
 	public List<Map<String, Object>> calInout(Integer mno, Integer mm, Integer inout) throws Exception;
+
+
 	
 }

@@ -616,6 +616,8 @@ public class AssetController {
 		return "redirect:/asset/abookList";
 //		return "redirect:/board/list";
 	}
+
+	
 	
 	// ===============================================================
 	
