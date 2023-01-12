@@ -353,6 +353,19 @@ public class ChallengeServiceImpl implements ChallengeService{
 		return dao.FBoardCount();
 	}
 
+	// 경제게시판 정보 조회(페이징처리 cri)
+	@Override
+	public List<BoardVO> getEBoardPage(Criteria cri) throws Exception {
+		mylog.debug(" getEBoardPage(Criteria cri) 호출 ");
+		return dao.getEBoardPage(cri);
+	}
+	
+	// 경제 자유게시판 글 개수 조회
+	@Override
+	public int EboardCount() throws Exception {
+		mylog.debug("EboardCount() 호출");
+		return dao.EBoardCount();
+	}
 	
 	
 	

@@ -6,6 +6,35 @@
 <%@ include file="../include/header.jsp" %>
 <%@ include file="../include/sidebar.jsp" %>
 
+<script>
+			$(document).ready(function(){
+				var formObj = $("form[role='form']");
+				
+// 				// 수정
+// 				$(".btn-danger").click(function(){
+					
+// 					formObj.attr("action","/reviewupdate"); 
+// 					formObj.attr("method","get"); 
+// 					formObj.submit();
+					
+// 				});
+			
+				// 삭제
+				$(".btn-warning").click(function(){
+					
+					formObj.attr("action","/reviewremove");
+					formObj.submit();
+				});
+				
+				// 목록가기
+				$(".bg-purple").click(function(){
+					location.href = "/reviewboard";
+				});
+				
+				
+			});
+</script> 
+
 <h1> 후기글 상세 </h1>
 
 	<section class="content" >
@@ -90,30 +119,3 @@
         <input class="btn bg-purple" type="submit" value="돌아가기" onclick="location.href='/reviewboard'" style="width:218px; margin-left: 950px;">
 </section>
 <%@ include file="../include/footer.jsp"%>
-<script>
-			$(document).ready(function(){
-				var formObj = $("form[role='form']");
-				
-// 				// 수정
-// 				$(".btn-danger").click(function(){
-					
-// 					formObj.attr("action","/reviewupdate"); 
-// 					formObj.attr("method","get"); 
-// 					formObj.submit();
-					
-// 				});
-			
-				// 삭제
-				$(".btn-warning").click(function(){
-					formObj.attr("action","/reviewremove");
-					formObj.submit();
-				});
-				
-				// 목록가기
-				$(".bg-purple").click(function(){
-					location.href = "/reviewboard";
-				});
-				
-				
-			});
-</script> 

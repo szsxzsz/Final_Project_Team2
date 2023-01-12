@@ -10,6 +10,53 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title> 뉴스 / 재테크 </title>
+	
+<script src="${pageContext.request.contextPath }/resources/plugins/jQuery/jQuery-2.1.4.min.js"></script>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		alert("성공");
+		
+		
+		$('#news_test').click(function(){
+			
+			var query = { "query":"경제" };
+			
+			alert("클릭");
+			
+			$.ajax({
+				type: 'get',
+				url: '/news',
+				contentType: "application/json; charset=UTF-8",
+				dataType: 'text',
+// 				data: JSON.stringify(query),
+				success: function(data){
+					alert("ajax 성공!");
+					var job = JSON.parse(data);
+					console.log(job);
+					
+					$('#result').empty();
+					
+					$.each(job, function(index, item){
+						
+						$('#result').append("<a href="+item.link+">"+item.title+"</a><br>");
+						$('#result').append(item.description+"<br>");
+						$('#result').append(item.pubDate+"<br>");
+						$('#result').append("<hr>");
+					});
+					
+				}, error: function(data){
+					alert("ajax 실패!");
+					console.log(data);
+				}
+			});
+		});
+		
+		
+	});
+
+</script>	
+	
 </head>	
 	<body>
 <%-- ${challengeList } --%>
@@ -20,14 +67,19 @@
  	    <div class="board_list_wrap">
          <div class="board_list">
              <div class="top">
-                 <div class="num" style="padding-right: 10px; width:155px; padding-left: 10px;">챌린지 번호</div>
-                 <div class="num" style="padding-left:10px; width: 200px;">절약형 / 저축형</div>
-                 <div class="title" style="width: 250px;">챌린지 명</div>
-                 <div class="num">참여기간</div>
-                 <div class="date" style="width:130px;">최소 인원/총 인원</div>
-                 <div class="num" style="padding-left:25px; width:110px;">챌린지 상태</div>
-         	</div>
-         
+                 <div class="num" style="padding-right: 10px; width:155px; padding-left: 10px;">경제 뉴스 기사</div>
+             </div>
+             <div>
+             	<div class="num" style="padding-left: 65px; width: auto; padding-right: 65px;">${cl.cno }</div>
+             </div>
+        </div>
+        <div class="board_list">
+         	<div class="top">
+                 <div class="num" style="padding-right: 10px; width:155px; padding-left: 10px;">글 번호</div>
+                 <div class="num" style="padding-right: 10px; width:155px; padding-left: 10px;">제목</div>
+                 <div class="num" style="padding-right: 10px; width:155px; padding-left: 10px;">작성자</div>
+                 <div class="num" style="padding-right: 10px; width:155px; padding-left: 10px;">작성일</div>
+             </div>
          <c:forEach items="${challengeList }" var="cl">
                 <div>
                     <div class="num" style="padding-left: 65px; width: auto; padding-right: 65px;">${cl.cno }</div>

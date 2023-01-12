@@ -152,5 +152,11 @@ public interface ChallengeService {
 		
 	// 전체 자유 게시판 글 개수 조회
 	public int FboardCount() throws Exception;
+	
+	// 자유게시판 경제 조회(페이징처리 cri)
+	public List<BoardVO> getEBoardPage(Criteria cri) throws Exception;
+	
+	// 전체 경제 게시판 글 개수 조회
+	public int EboardCount() throws Exception;	
 }
 

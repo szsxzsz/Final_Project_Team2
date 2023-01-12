@@ -488,7 +488,36 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 	
 	}	
 	
-	
+	// 페이징 처리 구현된 경제게시판 조회
+	@Override
+	public List<BoardVO> getEBoardPage(Integer page) throws Exception {
+		mylog.debug(" BoardPage 호출 ");
+			
+		if(page < 0) {
+			page = 1;
+		}
+			
+		page = (page - 1) * 10;
+			
+		return sqlSession.selectList(NAMESPACE+".eboardPage", page);
+	}
+		
+	// 경제게시판 조회
+	@Override
+	public List<BoardVO> getEBoardPage(Criteria cri) throws Exception {
+		mylog.debug("  getBoardPage(Criteria cri) 페이징처리 ");
+		mylog.debug(cri+"@@@@@@@@@@@@@@@@@@@@@@");
+			
+		return sqlSession.selectList(NAMESPACE + ".eboardPageNo",cri);
+	}
+		
+	// 경제 자유게시판 글 개수 조회
+	@Override
+	public int EBoardCount() throws Exception {
+			
+		return sqlSession.selectOne(NAMESPACE+".eboardCount");
+			
+	}	
 	
 	
 	

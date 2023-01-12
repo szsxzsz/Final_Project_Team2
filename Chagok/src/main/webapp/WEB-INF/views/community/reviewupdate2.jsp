@@ -20,6 +20,7 @@
         <p> 후기 글 수정</p>
     	</div>
  	    <div class="board_list_wrap">
+ 	    <form role="form" action="/reviewupdate" method="post">
          <div class="board_list">
              <div class="top">
              	 <div class="title" >
@@ -30,7 +31,7 @@
              	 
              	 <div class="title" >작성자
              		 <hr>
-				     <input type="text" class="form-control" name="b_writer" value="${boardChallenge.b_writer }" style="text-align:center; display:block; margin: 0 auto; width:150px">
+				     <input type="text" class="form-control" name="b_writer" value="${boardChallenge.b_writer }" style="text-align:center; display:block; margin: 0 auto; width:150px" readonly>
              	 </div>
 			 </div>
          </div>
@@ -38,16 +39,19 @@
              <div class="top">
              	 <div class="title" style="width:100%;">후기 내용</div>
 			    
-			     <textarea class="form-control" rows="3" style="margin-top:15px; display:block; margin: 0 auto; width: 600px; height: 280px;">${boardChallenge.b_content }</textarea>
+			     <textarea class="form-control" rows="3" style="margin-top:15px; display:block; margin: 0 auto; width: 600px; height: 280px;" name="b_content">${boardChallenge.b_content }</textarea>
 			     <br>
 			     <br>
              	 <br>
 			</div>
          </div>
        <div class="bt_wrap">
-       <input class="sbtn" type="button" value="작성하기" onclick="location.href='/';" >
+       <input type="hidden" name="bno" value="${boardChallenge.bno }">
+   	   <input type="hidden" name="cno" value="${boardChallenge.cno }">
+       <input class="sbtn" type="submit" value="수정하기">
        <input class="sbtn" type="button" value="목록으로 돌아가기" onclick="location.href='/reviewboard';" >
   </div>  
+  </form>
 </div> 
 </div>     
 </body>

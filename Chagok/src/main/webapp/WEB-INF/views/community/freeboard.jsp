@@ -30,10 +30,10 @@
 </script>
 
 <section class="content">
-<input type="button" class="btn btn-primary btn-xs" style="float:right;" value="글 작성하기" onclick="location.href='/freeboardwrite';">
+<input type="button" class="btn btn-primary btn-xs" style="float:left;" value="글 작성하기" onclick="location.href='/freeboardwrite';">
 	<div class="row">
 		<div class="col-md-12">
-		
+		<br>
 		
 		  <c:forEach var="board" items="${boardList }">
 			<ul class="timeline">
@@ -42,11 +42,11 @@
 							<b><fmt:formatDate value="${board.b_date }" pattern="MMM.dd.yyyy"/></b>
 						</span>
 					</li>
-				<li><i class="fa fa-envelope bg-blue"></i>
-					<div class="timeline-item">
+				<li><i class="fa fa-file-text-o bg-blue"></i>
+					<div class="timeline-item" style="float:center; width:700px;">
 						<span class="time">
-							<i class="fa fa-clock-o"></i>
-								${board.b_writer }
+							<i class="fa fa-user"></i>
+								작성자 | ${board.b_writer }
 						</span>
 						<h3 class="timeline-header">
 							${board.b_title }
@@ -56,7 +56,7 @@
 							${board.b_file }
 						</div>
 						<div class="timeline-footer">
-							<c:set var="writer" value="${boardChallenge.b_writer }"/>
+							<c:set var="writer" value="${board.b_writer }"/>
 							<c:if test= "${nick == '관리자' || nick == writer}">
 								<input type="submit" class="btn btn-primary btn-xs" value="수정" onclick="location.href='/freeboardupdate?bno=${board.bno}';">
 								<input type="submit" class="btn btn-danger btn-xs" value="삭제" onclick="location.href='/freedelete?bno=${board.bno}';">

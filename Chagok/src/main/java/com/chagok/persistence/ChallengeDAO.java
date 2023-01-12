@@ -161,5 +161,14 @@ public interface ChallengeDAO {
 	
 	// 전체 자유게시판 글 개수 조회
 	public int FBoardCount() throws Exception;
+	
+	// 페이징 처리 구현된 경제게시판 조회
+	public List<BoardVO> getEBoardPage(Integer page) throws Exception;
+		
+	// 경제게시판 조회 (페이징처리 cri)
+	public List<BoardVO> getEBoardPage(Criteria cri) throws Exception;
+		
+	// 경제 자유게시판 글 개수 조회
+	public int EBoardCount() throws Exception;	
 
 }
