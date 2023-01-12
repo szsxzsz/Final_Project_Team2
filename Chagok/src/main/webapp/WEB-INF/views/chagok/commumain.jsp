@@ -93,7 +93,7 @@
         <a class="card-item-link" href="/challenge/detail?cno=${vo.cno }">
         
           <c:if test="${startTime - nowfmtTime >= 2}">
-      		 <img class="card-img-top img-fluid" src="${vo.c_thumbFile }" alt="" aria-labelledby="title_1" id="c_img">
+      		<img class="card-img-top img-fluid" src="${vo.c_thumbFile }" alt="" aria-labelledby="title_1" id="c_img">
       	  </c:if>
       	  <c:if test="${startTime - nowfmtTime == 1}">
       		<img class="card-img-top img-fluid-2" src="${vo.c_thumbFile }" alt="" aria-labelledby="title_1" id="c_img">
