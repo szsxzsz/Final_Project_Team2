@@ -166,8 +166,8 @@
 	
 	<!-- 챌린지 등록하기 --> 
   	<insert id="challengeRegist">
-     	insert into challenge (cno,c_title,ctno,c_period,c_start,c_pcnt,c_deposit,c_freq,c_amount,c_content,c_status,c_sort,c_min,c_file,c_thumbFile,c_cnt,mno,c_person) 
-     	values (#{cno},#{c_title},#{ctno},#{c_period},#{c_start},#{c_pcnt},#{c_deposit},#{c_freq},#{c_amount},#{c_content},#{c_status},#{c_sort},#{c_min},#{c_file},#{c_thumbFile},#{c_cnt},#{mno},#{c_person})  
+     	insert into challenge (cno,c_title,ctno,c_period,c_start,c_pcnt,c_deposit,c_freq,c_amount,c_content,c_status,c_sort,c_min,c_file,c_thumbFile,c_cnt,mno,c_person,c_total) 
+     	values (#{cno},#{c_title},#{ctno},#{c_period},#{c_start},#{c_pcnt},#{c_deposit},#{c_freq},#{c_amount},#{c_content},#{c_status},#{c_sort},#{c_min},#{c_file},#{c_thumbFile},#{c_cnt},#{mno},#{c_person},#{c_total})  
   	</insert>
   	
   	<!-- 챌린지 목록 -->
