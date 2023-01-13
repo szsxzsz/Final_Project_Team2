@@ -40,9 +40,6 @@
 	width : 50%;
 	margin: 0 auto; 
 }
-/* .form-control { */
-/* 	width: 10ㅔ */
-/* } */
 </style>
 
 

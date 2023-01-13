@@ -40,6 +40,13 @@ table {
 td {
   padding-left: 10px;
 }
+h3 {
+	font-size: 22px;
+}
+.img1 {
+    width: 200px;
+    height: 200px;
+}
 </style>
 
 
@@ -48,7 +55,7 @@ td {
 			<div class="col-md-12">
 				<div class="box-body">
 					<h1>등록된 가계부 정보가 없습니다.</h1>
-					<h1>차곡이 사용자님의 소비 습관을 분석해드릴게요!</h1>
+					<h1>차곡이 ${nick }님의 소비 습관을 분석해드릴게요!</h1>
 					<input type="button" 
 						class="btn1" value="가계부 쓰기"
 						onclick="location.href='/asset/abookList';">			
@@ -62,7 +69,7 @@ td {
 			<section class="content-header" style="text-align: center;">
 				<c:set var="today" value="<%=new java.util.Date() %>"/><br><br>
 				<h1 style="font-size:33px;">${nick }님의
-					<fmt:formatDate value="${today }" pattern="MM"/>월 날짜별 리포트
+					<fmt:formatDate value="${today }" pattern="MM"/>월 카테고리별 리포트
 				</h1>
 			</section>
 		</div>
@@ -79,47 +86,51 @@ td {
 								<canvas id="donutchart" style="height: 330px; width: 661px;"></canvas>
 							</div>
 						</div>
-			
 					</div>
-			
-			
-					<div class="box box-danger">
-						<div class="box-header with-border">
-							<h3 class="box-title">이번달 최대 지출</h3>
-						</div>
-						<div class="box-body">
-								<canvas id="barchart" style="height: 330px; width: 661px;"></canvas>
-						</div>
-					</div>
-			
 				</div>
-			
+
 				<div class="col-md-6">
-			
 					<div class="box box-info">
 						<div class="box-header with-border">
 							<h3 class="box-title">최다 지출 카테고리 분석</h3>
 						</div>
 						<div class="box-body">
 							<div class="box-report" style="height: 330px; width: 661px;">
-							<div class="table-responsive">
-								<table class="table">
-									<thead>
-										<tr>
-											<th>순위</th>
-											<th>상위카테고리</th>
-											<th>지출횟수</th>
-										</tr>
-									</thead>
-									<tbody id="tbody1"></tbody>
-								</table>
-							</div>
+								<div class="table-responsive">
+									<table class="table">
+										<thead>
+											<tr>
+												<th>순위</th>
+												<th>상위카테고리</th>
+												<th>지출횟수</th>
+											</tr>
+										</thead>
+										<tbody id="tbody1"></tbody>
+									</table>
+								</div>
 							</div>
 						</div>
-			
 					</div>
+				</div>
+			</div>
+		</section>
+		
+		<section class="content1">	
+			<div class="row">		
+				<div class="col-md-6">
+					<div class="box box-danger">
+						<div class="box-header with-border">
+							<h3 class="box-title">이번달 최대 지출</h3>
+						</div>
+						<div class="box-body">
+							<div class="chart">
+								<canvas id="barchart" style="height: 330px; width: 661px;"></canvas>
+							</div>
+						</div>
+					</div>
+				</div>
 			
-			
+				<div class="col-md-6">		
 					<div class="box box-success">
 						<div class="box-header with-border">
 							<h3 class="box-title">최대 지출 카테고리 분석</h3>
@@ -127,17 +138,17 @@ td {
 						<div class="box-body">
 							<div class="box-report" style="height: 330px; width: 661px;">
 								<div class="table-responsive">
-								<table class="table">
-									<thead>
-										<tr>
-											<th>순위</th>
-											<th>상위카테고리</th>
-											<th>지출금액</th>
-										</tr>
-									</thead>
-									<tbody id="tbody2"></tbody>
-								</table>
-							</div>
+									<table class="table">
+										<thead>
+											<tr>
+												<th>순위</th>
+												<th>상위카테고리</th>
+												<th>지출금액</th>
+											</tr>
+										</thead>
+										<tbody id="tbody2"></tbody>
+									</table>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -147,88 +158,96 @@ td {
 
 		<c:if test="${not empty map.chRandList }">		
 		<section class="content1">
-			<div class="box box-danger">
-				<div class="box-header with-border">
-					<h3 class="box-title">${nick }님, 함께 절약하는 습관을 길러요</h3>
-				</div>
-	
-				<div class="box-body no-padding">
-				
-					<ul class="users-list clearfix">
-					<c:forEach var="ch" items="${map.chRandList }">
-						<li>
-							<a href="/challenge/detail?cno=${ch.cno }"><img src="" alt="User Image"></a>
-							<h5 class="description-header"><a href="/challenge/detail?cno=${ch.cno }">${ch.c_title }</a></h5>
-							<div class="box-footer">
-								<div class="row">
-									<div class="col-sm-4 border-right">
-										<div class="description-block">
-											<h5 class="description-header">진행기간</h5>
-											<span class="description-text">${ch.c_period }</span>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="box box-danger">
+						<div class="box-header with-border">
+							<h3 class="box-title">${nick }님, 함께 절약하는 습관을 길러요</h3>
+						</div>
+			
+						<div class="box-body no-padding">
+							<ul class="users-list clearfix">
+							<c:forEach var="ch" items="${map.chRandList }">
+								<li>
+									<a href="/challenge/detail?cno=${ch.cno }">
+										<img src="${pageContext.request.contextPath }/resources${ch.c_thumbFile }" alt="User Image" class="img1">
+									</a>
+									<h5 class="description-header"><a href="/challenge/detail?cno=${ch.cno }">${ch.c_title }</a></h5>
+									<div class="box-footer">
+										<div class="row">
+											<div class="col-sm-4 border-right">
+												<div class="description-block">
+													<h5 class="description-header">진행기간</h5>
+													<span class="description-text">${ch.c_period }</span>
+												</div>
+					
+											</div>
+					
+											<div class="col-sm-4 border-right">
+												<div class="description-block">
+													<h5 class="description-header">시작일</h5>
+													<span class="description-text">${ch.c_start }</span>
+												</div>
+					
+											</div>
+					
+											<div class="col-sm-4">
+												<div class="description-block">
+													<h5 class="description-header">모집인원</h5>
+													<span class="description-text">${ch.c_pcnt }명</span>
+												</div>
+											</div>
 										</div>
-			
 									</div>
+								</li>
+							</c:forEach>
+							</ul>
 			
-									<div class="col-sm-4 border-right">
-										<div class="description-block">
-											<h5 class="description-header">시작일</h5>
-											<span class="description-text">${ch.c_start }</span>
-										</div>
+						</div>
 			
-									</div>
-			
-									<div class="col-sm-4">
-										<div class="description-block">
-											<h5 class="description-header">모집인원</h5>
-											<span class="description-text">${ch.c_pcnt }명</span>
-										</div>
-									</div>
-								</div>
-							</div>
-						</li>
-					</c:forEach>
-					</ul>
-	
+						<div class="box-footer text-center">
+							<a href="/commumain" style="font-size: 18px;">챌린지 더보기</a>
+						</div>
+					</div>
 				</div>
-	
-				<div class="box-footer text-center">
-					<a href="/commumain" style="font-size: 18px;">챌린지 더보기</a>
-				</div>
-	
 			</div>
 		</section>
 		</c:if>
 
 		<c:if test="${not empty map.cardRandList }">
-		<section>
-			<div class="box box-warning">
-				<div class="box-header with-border">
-					<h3 class="box-title">${nick }님, 이런 카드는 어떠세요?</h3>
-				</div>
-	
-				<div class="box-body no-padding">
-					<ul class="users-list clearfix">
-					<c:forEach var="card" items="${map.cardRandList }">
-						<li>
-							<img src="" alt="User Image">
-							<h5 class="description-header">${card.prop_name }</h5>
-							<h5 class="description-header">${card.prop_info }</h5>
-							<div class="box-footer">
-								<div class="row">
-									<c:forEach var="cardInfo" items="${card.prop_content }">
-										<div class="col-sm-4 border-right">
-											<div class="description-block">
-												<span class="description-text">${cardInfo }</span>
-											</div>
+		<section class="content1">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="box box-warning">
+						<div class="box-header with-border">
+							<h3 class="box-title">${nick }님, 이런 카드는 어떠세요?</h3>
+						</div>
+			
+						<div class="box-body no-padding">
+							<ul class="users-list clearfix">
+							<c:forEach var="card" items="${map.cardRandList }">
+								<li>
+									<img src="${pageContext.request.contextPath }/resources${card.prop_img }" alt="User Image" class="img1">
+									<h5 class="description-header">${card.prop_name }</h5>
+									<h5 class="description-header">${card.prop_info }</h5>
+									<div class="box-footer">
+										<div class="row">
+											<c:forEach var="cardInfo" items="${card.prop_content }">
+												<div class="col-sm-4 border-right">
+													<div class="description-block">
+														<span class="description-text">${cardInfo }</span>
+													</div>
+												</div>
+											</c:forEach>		
 										</div>
-									</c:forEach>		
-								</div>
-							</div>
-						</li>
-					
-					</c:forEach>
-					</ul>
-	
+									</div>
+								</li>
+							
+							</c:forEach>
+							</ul>
+			
+						</div>
+					</div>
 				</div>
 			</div>
 		</section>

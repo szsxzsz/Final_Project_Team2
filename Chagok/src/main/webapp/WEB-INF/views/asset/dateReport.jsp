@@ -39,6 +39,9 @@ table {
 td {
   padding-left: 10px;
 }
+h3 {
+	font-size: 22px;
+}
 </style>
 
 	<c:if test="${chkAb.equals('abN') }">
@@ -46,7 +49,7 @@ td {
 			<div class="col-md-12">
 				<div class="box-body">
 					<h1>등록된 가계부 정보가 없습니다.</h1>
-					<h1>차곡이 사용자님의 소비 습관을 분석해드릴게요!</h1>
+					<h1>차곡이 ${nick }님의 소비 습관을 분석해드릴게요!</h1>
 					<input type="button" 
 						class="btn1" value="가계부 쓰기"
 						onclick="location.href='/asset/abookList';">			

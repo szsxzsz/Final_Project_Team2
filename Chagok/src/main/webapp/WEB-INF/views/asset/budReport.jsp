@@ -8,7 +8,10 @@
 
 <style>
 .row {
-	margin: 0 30px;
+	margin: 0 3% 3% 3%;
+}
+.row2 {
+	margin-left: 3%;
 }
 .btn {
     width: 140px;
@@ -22,7 +25,7 @@
 .a1 {
 	font-size: 20px;
 	text-align: left;
-	margin: 10px;
+	margin:5px;
 }
 h3 {
 	line-height:40px;
@@ -46,18 +49,19 @@ h4 {
     line-height:30px;
 }
 .info-box{
-	padding:20px;
+	padding:3%;
 	background-color:#FFDB83;
-	margin-top: 20px;
+    margin-right: auto;
+    margin-left: auto;
 }
 .box-title {
     font-size: 25px;
-    margin: 10px;
+    margin: 3%;
 }
 </style>
 
 
-<div class="row">
+<div class="row2">
 	<a class="a1" href="/asset/budget?mm=0">이번 달</a>
 	<a class="a1" href="/asset/budget?mm=1">지난 달</a>
 	<a class="a1" href="/asset/budget?mm=2">2개월 전</a>
@@ -128,62 +132,49 @@ h4 {
 								</div>
 							</div>
 						</div>
-
-
 					</div>
-
 				</div>
-
 			</div>
 
-
-			<div class="box-body">
-				<div class="row">
-					<div class="col-md-6">
-						<div>
-						<h3>
-							한 달 예산이 <span id="span1"><fmt:formatNumber value="${d2 }" /></span> 원 남았어요.<br>
-							이 추세로 소비한다면 이번달 예상 지출액은<br>
-							<span id="span1"><fmt:formatNumber value="${map.expSum }" /></span> 원 입니다.
-						</h3>
+			<div class="row">
+				<div class="col-md-6">
+					<div>
+					<h3>
+						한 달 예산이 <span id="span1"><fmt:formatNumber value="${d2 }" /></span> 원 남았어요.<br>
+						이 추세로 소비한다면 이번달 예상 지출액은<br>
+						<span id="span1"><fmt:formatNumber value="${map.expSum }" /></span> 원 입니다.
+					</h3>
+					</div>
+					<div class="row">
+						<div class="col-md-6">
+							<h4>하루 평균 지출</h4>
+							<h4><span id="dayAvg"></span></h4>
 						</div>
-						<div class="row">
-							<div class="col-md-6">
-								<h4>하루 평균 지출</h4>
-								<h4><span id="dayAvg"></span></h4>
-							</div>
-							<div class="col-md-6">
-								<h4>하루 평균 예산</h4>
-								<h4><span id="dayBud"></span></h4>
-							</div>
-						</div>
-						<div>
-							<div class="info-box">
-								<span class="info-box-number">지출 팁!</span>
-								<span class="info-box-text">이번달 예산에 맞추기 위해서는
-								하루에 <span id="expBud"></span>씩 써야 합니다.</span>
-							</div>
+						<div class="col-md-6">
+							<h4>하루 평균 예산</h4>
+							<h4><span id="dayBud"></span></h4>
 						</div>
 					</div>
-
-					<div class="col-md-6">
-						<p class="text-center">
-							<strong>일간 지출 추이</strong>
-						</p>
-						<div class="chart">
-							<canvas id="linechart"></canvas>
+					<div>
+						<div class="info-box">
+							<span class="info-box-number">지출 팁!</span>
+							<span class="info-box-text">이번달 예산에 맞추기 위해서는
+							하루에 <span id="expBud"></span>씩 써야 합니다.</span>
 						</div>
 					</div>
-
 				</div>
 
+				<div class="col-md-6">
+					<p class="text-center">
+						<strong>일간 지출 추이</strong>
+					</p>
+					<div class="chart">
+						<canvas id="linechart"></canvas>
+					</div>
+				</div>
 			</div>
-
-
 		</div>
-
 	</div>
-
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.4.11/d3.min.js"></script>
