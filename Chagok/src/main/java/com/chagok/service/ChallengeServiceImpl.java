@@ -334,11 +334,17 @@ public class ChallengeServiceImpl implements ChallengeService{
 		return dao.getPlusOne(mno, cno);
 	}
 
+	
 	@Override
 	public List<ChallengeVO> chListAll(Criteria cri) throws Exception {
 		return dao.chListAll(cri);
 	}
-	
+
+	@Override
+	public Integer chListCnt() throws Exception {
+		return dao.chListCnt();
+	}
+
 	// 자유게시판 정보 조회(페이징처리 cri)
 	@Override
 	public List<BoardVO> getFBoardPage(Criteria cri) throws Exception {

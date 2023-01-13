@@ -423,9 +423,14 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 
 	@Override
 	public List<ChallengeVO> chListAll(Criteria cri) throws Exception {
-	    mylog.debug("chListAll 페이징처리 ");
-	    mylog.debug("cri : "+cri.toString());
-	    return sqlSession.selectList(NAMESPACE + ".chList", cri);
+//	    mylog.debug("chListAll 페이징처리 ");
+//	    mylog.debug("cri : "+cri.toString());
+	    return sqlSession.selectList(NAMESPACE + ".chListAll", cri);
+	}
+
+	@Override
+	public Integer chListCnt() throws Exception {
+		return sqlSession.selectOne(NAMESPACE +".chListCnt");
 	}
 
 	// 자유게시판 조회

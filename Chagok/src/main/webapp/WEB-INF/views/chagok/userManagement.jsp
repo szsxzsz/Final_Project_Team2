@@ -37,11 +37,11 @@
 // 	});
 
 </script>
-<title>회원 관리</title>
+<title>관리자 회원 관리</title>
 
 </head>
 <body>
-	${userlist.size() }
+<%-- 	${userList } --%>
 	<div class="board_wrap">
 		<div class="board_title">
 			<strong>회원 관리</strong>
