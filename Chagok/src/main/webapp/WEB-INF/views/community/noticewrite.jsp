@@ -337,7 +337,7 @@ a {
     display: block;
     width: 100%;
     height: 300px;
-    padding: 15px;
+    padding: 30px;
     box-sizing: border-box;
     border: 0;
     resize: vertical;

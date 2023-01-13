@@ -301,7 +301,7 @@ a {
 }
 
 .board_view .cont {
-    padding: 15px;
+    padding: 30px;
     border-bottom: 1px solid #66BB7A;
     line-height: 160%;
     font-size: 1.4rem;
