@@ -78,11 +78,6 @@ public class UserServiceImpl implements UserService {
 	public void updateSeqNo(Map<String, Object> map) {
 		dao.updateSeqNo(map);
 	}
-	
-	@Override
-	public List<UserVO> getUserList() throws Exception {
-		return dao.getUserList();
-	}
 
 	@Override
 	public void updateUserInfo(UserVO vo) {
@@ -93,13 +88,26 @@ public class UserServiceImpl implements UserService {
 	public int unregistUser(UserVO vo) throws Exception {
 		return dao.unregistUser(vo);
 	}
-
+	
 	@Override
-	public List<BusinessAccountVO> getBizAll(Criteria cri) throws Exception {
-		return dao.getBizAll(cri);
+	public List<UserVO> getUserList(Criteria cri) throws Exception {
+		return dao.getUserList(cri);
+	}
+	
+	@Override
+	public Integer getUserCnt() throws Exception {
+		return dao.getUserCnt();
+	}
+	
+	@Override
+	public List<BusinessAccountVO> getBizList(Criteria cri) throws Exception {
+		return dao.getBizList(cri);
 	}
 
-	
+	@Override
+	public Integer getBizCnt() throws Exception {
+		return dao.getBizCnt();
+	}
 
 	
 }

@@ -191,6 +191,7 @@ public class ChagokController {
 		
 		// 페이징 처리
 		PageMaker pageMaker = new PageMaker();
+		pageMaker.setDisplayPageNum(9);
 		pageMaker.setCri(scri);
 		pageMaker.setTotalCount(service2.cListCount(scri));
 		
@@ -365,27 +366,6 @@ public class ChagokController {
    
    // http://localhost:8080/adminUser
    
-//   public void adminUser
-	
-	
-   @GetMapping("/iframeMyAsset")
-   public String iframeMyAsset() {
-	   
-	   return "/iframe/iframeMyAsset";
-   }
-   
-   @GetMapping("/iframeAbookList")
-   public String iframeAbookList() {
-	   
-	   return "/iframe/iframeAbookList";
-   }
-   
-   @GetMapping("/iframeDateReport")
-   public String iframeDateReport() {
-	   
-	   return "/iframe/iframeDateReport";
-   }
-   
    ////////////// ym 마이페이지 구현중 ////////////// 
    @GetMapping("/myPage")
    public String myPageGET(HttpSession session, Model model) throws Exception{
@@ -476,26 +456,102 @@ public class ChagokController {
 	   
 	   return "redirect:/unregist";
    }
+
    
-   // http://localhost:8080/bizAccount
-   @GetMapping(value="/bizAccount")
-   public String businessAcc (Criteria cri, Model model) throws Exception {
-		mylog.debug("/businessAcc 호출");
+   
+	////////////////////// 관리자 페이지 ///////////////////////////
+
+	// 관리자 챌린지 승인
+	// http://localhost:8080/chManagement
+	@GetMapping("/chManagement")
+	public String chManagement(Criteria cri, Model model) throws Exception {
+		mylog.debug("/chManagement 호출");
 		
 		cri.setPerPageNum(10);
-		List<BusinessAccountVO> bizList = service.getBizAll(cri);
+		List<ChallengeVO> chListAll = service2.chListAll(cri);
+		
+		// 페이징 처리
+	    PageMaker pagevo = new PageMaker();
+	    pagevo.setCri(cri);
+	    pagevo.setTotalCount(service2.chListCnt());
+		
+	    mylog.debug(pagevo.toString());
+	    mylog.debug(""+chListAll.size());
+	    
+	    model.addAttribute("pagevo", pagevo);
+		model.addAttribute("chListAll", chListAll);
+		
+		return "/chagok/adminconfirm";
+	}
+	
+	@ResponseBody
+	@GetMapping(value="/confirm")
+	public int confirm(@RequestParam int status, @RequestParam int cno, RedirectAttributes rttr) throws Exception {
+		mylog.debug("status : "+status+", cno : "+cno);
+		int result=0;
+		
+		service2.confirmChallenge(status, cno);
+
+		if(status==1) {
+			result = 1;
+		} else if(status==6) {
+			result = 6;
+		}
+		mylog.debug("결과"+result);
+		return result;
+	}
+	
+	// http://localhost:8080/bizAccount
+	@GetMapping(value="/bizAccount")
+	public String businessAcc (Criteria cri, Model model) throws Exception {
+		mylog.debug("/businessAcc 호출");
+		
+		List<BusinessAccountVO> bizList = service.getBizList(cri);
 		
 		// 페이징 처리
 	    PageMaker pagevo = new PageMaker();
 	    pagevo.setDisplayPageNum(5);
 	    pagevo.setCri(cri);
-	    pagevo.setTotalCount(10000);
+	    pagevo.setTotalCount(service.getBizCnt());
 		
-//	    mylog.debug(pagevo.toString());
-	    
 	    model.addAttribute("pagevo", pagevo);
 		model.addAttribute("bizList", bizList);
 	   
-	   return "/chagok/businessAcc";
-   }
+		return "/chagok/businessAcc";
+	}
+   
+	// http://localhost:8080/userManagement
+	// 관리자 회원관리
+	@GetMapping("/userManagement")
+	public String userManagementGET(Criteria cri, Model model) throws Exception {
+		mylog.debug("/userManagementGET 호출");
+		
+		List<UserVO> userList = service.getUserList(cri);
+		
+		// 페이징 처리
+	    PageMaker pagevo = new PageMaker();
+	    pagevo.setCri(cri);
+	    pagevo.setTotalCount(service.getUserCnt());
+		
+	    model.addAttribute("pagevo", pagevo);
+		model.addAttribute("userList", userList);
+		
+		return "/chagok/userManagement";
+	}
+
+	// http://localhost:8080/challenge/adminmodal
+//	@ResponseBody
+//	@PostMapping("/adminmodal")
+//	public String adminmodal(Model model,@RequestParam Map<String,Object> map) throws Exception {
+//		mylog.debug("모달창에 넘길 mno : " + map);
+//		
+//		List<UserVO> vo = service.adminmodal(map);
+//		
+////		model.addAttribute("UserVO", vo);
+//		
+//		return null;
+//	}
+	////////////////////// 관리자 페이지 ///////////////////////////	
+	
+	
 }

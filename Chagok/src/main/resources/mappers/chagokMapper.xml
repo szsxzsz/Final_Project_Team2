@@ -393,7 +393,6 @@
 		pl_cnt=(select pl_cnt where mno = #{mno} and cno = #{cno}) + 1 
 		where mno = #{mno} and cno = #{cno}
 	</update>
-	
 
 	<!-- 게시판과 챌린지 (후기보드리스트용) -->
 	<select id="rboardChallenge" resultType="map">
@@ -407,19 +406,6 @@
 		select * from plus where mno = #{mno} and cno = #{cno}
 	</select>
 	
-	<!-- 관리자 회원 정보  -->
-	<select id="getUserList" resultType="com.chagok.domain.UserVO">
-		select * from user
-	</select>
-	
-	<!-- 챌린지목록(페이징처리) -->
-	<select id="chList" resultType="com.chagok.domain.ChallengeVO">
-		select * from challenge ch join category c
-		on ch.ctno = c.ctno
-		order by cno desc
-		limit #{pageStart}, #{perPageNum};
-	</select>
-
 	<!-- 페이징처리 자유게시판 페이지 넘버 -->
 	<select id="fboardPageNo" resultType="com.chagok.domain.BoardVO">
 		select * from board
@@ -449,13 +435,40 @@
 		from board
 		where b_sort= 4
 	</select>
+
+
+	<!-- 관리자 - 전체 회원 조회  -->
+	<select id="getUserList" resultType="com.chagok.domain.UserVO">
+		select * from user
+	</select>
 	
-	<!-- 차곡 계좌 조회 -->
-	<select id="getBizAll" resultType="com.chagok.domain.BusinessAccountVO">
+	<!-- 관리자 - 전체 회원 수 -->
+	<select id="getUserCnt" resultType="Integer">
+		select count(cno) from challenge;
+	</select>	
+	
+	<!-- 관리자 - 챌린지 전체 목록 -->
+	<select id="chListAll" resultType="com.chagok.domain.ChallengeVO">
+		select * from challenge
+		order by cno desc
+		limit #{pageStart}, #{perPageNum};
+	</select>
+	
+	<!-- 관리자 - 챌린지 총 개수 -->
+	<select id="chListCnt" resultType="Integer">
+		select count(cno) from challenge;
+	</select>
+	
+	<!-- 관리자 - 차곡 계좌내역 조회 -->
+	<select id="getBizList" resultType="com.chagok.domain.BusinessAccountVO">
 		select * from business_account
 		order by biz_date desc
 		limit #{pageStart}, #{perPageNum};
 	</select>
 	
+	<!-- 관리자 - 차곡 계좌 전체 개수 -->
+	<select id="getBizCnt" resultType="Integer">
+		select count(bizno) from business_account;
+	</select>
 		
  </mapper>

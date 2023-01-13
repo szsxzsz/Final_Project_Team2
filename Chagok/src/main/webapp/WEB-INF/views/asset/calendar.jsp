@@ -17,6 +17,11 @@
 <!-- fmt --> 
 <script class="cssdesk" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.0/moment.min.js" type="text/javascript"></script>
 
+<style>
+.calendar{font-size: 30px !important;}
+</style>
+
+
 <div class="row" style="padding: 50px;">
 <input id="chk" class="chk" value="1" type="checkbox" checked>지출
 <input id="chk" class="chk" value="2" type="checkbox" checked>수입
@@ -140,6 +145,8 @@ $(document).ready(function (){
 			calendar.refetchEvents();
 		});
 	});
+	
+	
 });
 </script>
 

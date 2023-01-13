@@ -144,8 +144,11 @@ public interface ChallengeService {
 	// 내 plus 테이블 정보 가져오기
 	public PlusVO getPlusOne(int mno, int cno) throws Exception;
 	
-	// 챌린지목록(페이징처리)
+	// 관리자 챌린지 전체 목록
 	public List<ChallengeVO> chListAll(Criteria cri) throws Exception;
+	
+	// 관리자 챌린지 총 개수
+	public Integer chListCnt() throws Exception;
 
 	// 자유게시판 정보 조회(페이징처리 cri)
 	public List<BoardVO> getFBoardPage(Criteria cri) throws Exception;
