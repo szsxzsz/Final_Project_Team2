@@ -202,10 +202,10 @@ function requestPay2()
             </div>
         </div>
         <hr>
-        <div>
+<!--         <div> -->
 <!-- 		<button onclick="requestPay()" id="pay">결제하기</button>  -->
 <!-- 		결제하기 버튼 생성 -->
-		</div>
+<!-- 		</div> -->
 		<div style="border: 1px solid #FEFCF5;"></div>
 		<div class="pcard" style="clear:both;">
 			<h1 class="pcard__title">Option 1</h1>
