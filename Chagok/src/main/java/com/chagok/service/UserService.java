@@ -55,4 +55,8 @@ public interface UserService {
 	
 	// 구매 꿀 인서트
 	public void insertBuy(Integer mno, Integer buypoint);
+	
+	// 챌린지 성공시 포인트 지급
+	public void givePoint(Map<String, Object> map) throws Exception;
+		
 }

@@ -5,60 +5,57 @@
 
 <%@ include file="../include/header.jsp" %>
 <%@ include file="../include/sidebar.jsp" %>
-<html lang="ko">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title> 후기글 수정 </title>
-</head>	
+    <link rel="stylesheet" href="css/css.css">
+</head>
+
 	<body>
-
-
+<form role="form" method="post">
     <div class="board_wrap">
         <div class="board_title">
-        <strong>후기글 수정</strong>
-        <p> 후기 글 수정</p>
+	        <strong>챌린지 후기글 수정</strong>
+	        <p> 참여한 챌린지의 후기를 남기는 곳입니다</p>
     	</div>
- 	    <div class="board_list_wrap">
- 	    <form role="form" action="/reviewupdate" method="post">
-         <div class="board_list">
-             <div class="top">
-             	 <div class="title" >
-             	 	후기 제목
-             	 	<hr>
-				     <input type="text" class="form-control" name="b_title" value="${boardChallenge.b_title }" style="text-align:center; display:block; margin: 0 auto; width:300px;">
-             	 </div>
-             	 
-             	 <div class="title" >작성자
-             		 <hr>
-				     <input type="text" class="form-control" name="b_writer" value="${boardChallenge.b_writer }" style="text-align:center; display:block; margin: 0 auto; width:150px" readonly>
-             	 </div>
+ 	    <div class="board_write_wrap">
+ 	     <div class="board_write">
+             	<div class="title">
+             	<div class="title">             	
+                    <dl>
+                        <dt>제목</dt>
+                        <dd><input type="text" name="b_title" value="${vo.b_title }"></dd>
+                    </dl>
+                </div>
+             	 <div class="info">
+                    <dl>
+                        <dt>작성자</dt>
+                        <dd><input type="text" placeholder="${boardChallenge.b_writer }" readonly ></dd>
+                    </dl>
+                    <dl>
+                        <dt>작성일</dt>
+                        <dd><input type="text" placeholder="<fmt:formatDate value="${boardChallenge.b_date }" pattern="yyyy-MM-dd"/>" readonly ></dd>
+                    </dl>
+                </div>
 			 </div>
-         </div>
-         <div class="board_list">
-             <div class="top">
-             	 <div class="title" style="width:100%; resize: none;">후기 내용</div>
-			    
-			     <textarea class="form-control" rows="3" style="margin-top:15px; display:block; margin: 0 auto; width: 600px; height: 280px;" name="b_content">${boardChallenge.b_content }</textarea>
-			     <br>
-			     <br>
-             	 <br>
-			</div>
-         </div>
+         <div class="cont">
+              <textarea name="b_content">${boardChallenge.b_content }</textarea>
+		 </div>
+		</div>
        <div class="bt_wrap">
        <input type="hidden" name="bno" value="${boardChallenge.bno }">
    	   <input type="hidden" name="cno" value="${boardChallenge.cno }">
        <input class="sbtn" type="submit" value="수정하기">
-       <input class="sbtn" type="button" value="목록으로 돌아가기" onclick="location.href='/reviewboard';" >
+       <input class="sbtn2" type="button" value="목록으로 돌아가기" onclick="location.href='/reviewboard';" >
   </div>  
-  </form>
 </div> 
 </div>     
+  </form>
 </body>
 </html>
 
 <style>
-
 * {
     margin: 0;
     padding: 0;
@@ -79,7 +76,7 @@ a {
 
 .board_wrap {
     width: 1000px;
-    margin: 20px auto;
+    margin: 40px auto;
 }
 
 .board_title {
@@ -88,38 +85,35 @@ a {
 
 .board_title strong {
     font-size: 3rem;
-    font-weight: 1000;
 }
 
 .board_title p {
-    margin-top: 10px;
+    margin-top: 5px;
     font-size: 1.4rem;
 }
 
 .bt_wrap {
     margin-top: 30px;
     text-align: center;
-    font-size: 0;
 }
 
-.bt_wrap input {
+.bt_wrap a {
     display: inline-block;
     min-width: 80px;
     margin-left: 10px;
     padding: 10px;
-    border: 1px solid #000;
+    border: 1px solid #FFDB83;
     border-radius: 2px;
     font-size: 1.4rem;
 }
 
-.bt_wrap input:first-child {
+.bt_wrap a:first-child {
     margin-left: 0;
 }
 
-.bt_wrap input.sbtn {
-    background: #000;
+.bt_wrap a.on {
+    background: #FFDB83;
     color: #fff;
-    width: 30%;
 }
 
 .board_list {
@@ -148,9 +142,7 @@ a {
 }
 
 .board_list > div.top > div {
-    font-weight: 1000;
-    font-size: 15px;
-    
+    font-weight: 600;
 }
 
 .board_list .num {
@@ -158,13 +150,12 @@ a {
 }
 
 .board_list .title {
-	width: 50%;
-    text-align: center;
+    width: 60%;
+    text-align: left;
 }
 
 .board_list .top .title {
     text-align: center;
-    font-weight: 1000;
 }
 
 .board_list .writer {
@@ -172,7 +163,7 @@ a {
 }
 
 .board_list .date {
-    width: 20%;
+    width: 10%;
 }
 
 .board_list .count {
@@ -181,7 +172,7 @@ a {
 
 .board_page {
     margin-top: 30px;
-    text-align: right;
+    text-align: center;
     font-size: 0;
 }
 
@@ -194,7 +185,6 @@ a {
     border: 1px solid #ddd;
     border-left: 0;
     line-height: 100%;
-    text-align: center;
 }
 
 .board_page a.bt {
@@ -220,19 +210,22 @@ a {
 
 .board_view {
     width: 100%;
-    border-top: 2px solid #000;
+    border-top: 2px solid #66BB7A;
+    margin-left: 20px;
 }
 
 .board_view .title {
     padding: 20px 15px;
     border-bottom: 1px dashed #ddd;
-    font-size: 2rem;
+    font-size: 2.2rem;
 }
 
 .board_view .info {
-    padding: 15px;
-    border-bottom: 1px solid #999;
+	padding: 15px 0px 0px 20px;
+    border-bottom: 1px solid #66BB7A;
     font-size: 0;
+    display: flex;
+    justify-content: space-between;
 }
 
 .board_view .info dl {
@@ -271,29 +264,29 @@ a {
 }
 
 .board_view .info dl dd {
-    margin-left: 10px;
+    margin-left: 15px;
     color: #777;
 }
 
 .board_view .cont {
     padding: 15px;
-    border-bottom: 1px solid #000;
+    border-bottom: 1px solid #66BB7A;
     line-height: 160%;
     font-size: 1.4rem;
 }
 
 .board_write {
-    border-top: 2px solid #000;
+    border-top: 2px solid #66BB7A;
 }
 
 .board_write .title,
 .board_write .info {
-    padding: 15px;
+    padding: 15px 0px 0px 15px;
 }
 
 .board_write .info {
     border-top: 1px dashed #ddd;
-    border-bottom: 1px solid #000;
+    border-bottom: 1px solid #66BB7A;
     font-size: 0;
 }
 
@@ -337,18 +330,19 @@ a {
 }
 
 .board_write .cont {
-    border-bottom: 1px solid #000;
+    border-bottom: 1px solid #66BB7A;
 }
 
 .board_write .cont textarea {
     display: block;
     width: 100%;
     height: 300px;
-    padding: 15px;
+    padding: 30px;
     box-sizing: border-box;
     border: 0;
     resize: vertical;
 }
+
 
 @media (max-width: 1000px) {
     .board_wrap {
@@ -370,7 +364,6 @@ a {
 
     .board_list .title {
         text-indent: 10px;
-        
     }
 
     .board_list .top .title {
@@ -433,6 +426,29 @@ a {
     }
 }
 
+.bt_wrap input.sbtn {
+	display: inline-block;
+    min-width: 100px;
+    margin-left: 10px;
+    padding: 10px;
+    border: 1px solid #FFDB83;
+    border-radius: 2px;
+    font-size: 1.4rem;
+    background-color: #FFDB83;
+    color: #fff;
+}
+
+.bt_wrap input.sbtn2 {
+	display: inline-block;
+    min-width: 100px;
+    margin-left: 10px;
+    padding: 10px;
+    border: 1px solid #FFDB83;
+    border-radius: 2px;
+    font-size: 1.4rem;
+    background-color: #fff;
+    color: #FFDB83;
+}
 </style>
 
 

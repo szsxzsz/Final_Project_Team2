@@ -10,8 +10,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/css.css">
-    
-    <style>
+
+<style>
 * {
     margin: 0;
     padding: 0;
@@ -406,6 +406,7 @@ a {
     color: #FFDB83;
 }
 </style>
+
 </head>
 
 <body>
@@ -439,7 +440,7 @@ a {
             </div>
             <div class="bt_wrap">
             	<input class="sbtn" type="submit" value="수정하기" onclick="location.href='/noticeupdate?bno=${board.bno}';">
-            	<input class="sbtn2" type="button" value="돌아가기" onclick="location.href='/notice';" >
+            	<input class="sbtn2" type="button" value="목록가기" onclick="location.href='/notice';" >
 <!--                 <a href="view.html" class="on">수정</a> -->
 <!--                 <a href="view.html">취소</a> -->
             </div>
@@ -447,6 +448,47 @@ a {
     </div>
 </form>
 </body>
+
+
+<!-- <body> -->
+<!-- <form role="form" method="post"> -->
+<!--     <div class="board_wrap"> -->
+<!--         <div class="board_title"> -->
+<!--             <strong>공지사항</strong> -->
+<!--             <p>공지사항을 빠르고 정확하게 안내해드립니다.</p> -->
+<!--         </div> -->
+<!--         <div class="board_write_wrap"> -->
+<!--             <div class="board_write"> -->
+<!--                 <div class="title"> -->
+<!--                     <dl> -->
+<!--                         <dt>제목</dt> -->
+<%--                         <dd><input type="text" name="b_title" value="${board.b_title }"></dd> --%>
+<!--                     </dl> -->
+<!--                 </div> -->
+<!--                 <div class="info"> -->
+<!--                     <dl> -->
+<!--                         <dt>작성자</dt> -->
+<%--                         <dd><input type="text" placeholder="${board.b_writer }" readonly ></dd> --%>
+<!--                     </dl> -->
+<!--                     <dl> -->
+<!--                         <dt>작성일</dt> -->
+<%--                         <dd><input type="text" placeholder="<fmt:formatDate value="${board.b_date }" pattern="yyyy-MM-dd"/>" readonly ></dd> --%>
+<!--                     </dl> -->
+<!--                 </div> -->
+<!--                 <div class="cont"> -->
+<%--                     <textarea name="b_content">${board.b_content }</textarea> --%>
+<!--                 </div> -->
+<!--             </div> -->
+<!--             <div class="bt_wrap"> -->
+<%--             	<input class="sbtn" type="submit" value="수정하기" onclick="location.href='/noticeupdate?bno=${board.bno}';"> --%>
+<!--             	<input class="sbtn2" type="button" value="돌아가기" onclick="location.href='/notice';" > -->
+<!-- <!--                 <a href="view.html" class="on">수정</a> --> -->
+<!-- <!--                 <a href="view.html">취소</a> --> -->
+<!--             </div> -->
+<!--         </div> -->
+<!--     </div> -->
+<!-- </form> -->
+<!-- </body> -->
 
 
 

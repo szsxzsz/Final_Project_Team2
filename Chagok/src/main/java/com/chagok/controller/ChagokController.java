@@ -133,27 +133,27 @@ public class ChagokController {
 				model.addAttribute("pMonth", pMonth);
 			}
 			
-			// 계좌 리스트 조회
-			List<AccountVO> accountList = accountService.getAccountInfo(mno);
-			model.addAttribute("accountList", accountList);
-			mylog.debug("accountList : "+accountList.toString());
-			// 카드 리스트 조회
-			List<CardInfoVO> cardList = accountService.getCardInfo(userVO.getUser_seq_no());
-			model.addAttribute("cardList", cardList);
-			mylog.debug("cardList : "+cardList.toString());
-			
-			// 카드 내역/금액 조회
-			List<List<CardHistoryVO>> cardHistoryList = accountService.getCardHistory(cardList);
-			model.addAttribute("cardHistoryList", cardHistoryList);
-			mylog.debug("cardHistoryList : "+cardHistoryList.toString());
-			
-			// 현금 내역 조회
-			CashVO cashVO = accountService.getCashInfo(mno);
-			if (cashVO != null) {
-				cashVO.setCash_amt(cashVO.getCash_amt().replaceAll(",", ""));
-				mylog.debug("cashVO : "+cashVO.toString());
-			}
-			model.addAttribute("cashVO", cashVO);
+//			// 계좌 리스트 조회
+//			List<AccountVO> accountList = accountService.getAccountInfo(mno);
+//			model.addAttribute("accountList", accountList);
+//			mylog.debug("accountList : "+accountList.toString());
+//			// 카드 리스트 조회
+//			List<CardInfoVO> cardList = accountService.getCardInfo(userVO.getUser_seq_no());
+//			model.addAttribute("cardList", cardList);
+//			mylog.debug("cardList : "+cardList.toString());
+//			
+//			// 카드 내역/금액 조회
+//			List<List<CardHistoryVO>> cardHistoryList = accountService.getCardHistory(cardList);
+//			model.addAttribute("cardHistoryList", cardHistoryList);
+//			mylog.debug("cardHistoryList : "+cardHistoryList.toString());
+//			
+//			// 현금 내역 조회
+//			CashVO cashVO = accountService.getCashInfo(mno);
+//			if (cashVO != null) {
+//				cashVO.setCash_amt(cashVO.getCash_amt().replaceAll(",", ""));
+//				mylog.debug("cashVO : "+cashVO.toString());
+//			}
+//			model.addAttribute("cashVO", cashVO);
 			model.addAttribute("userVO", userVO);
 		
 			return "/chagok/assetmain";
@@ -234,7 +234,6 @@ public class ChagokController {
 				session.setAttribute("nick", UserVO.getNick());
 				
 			}else {
-				model.addAttribute("loginResult", "Login Fail!");
 				return "0";
 				
 			}
@@ -242,18 +241,6 @@ public class ChagokController {
 			e.printStackTrace();
 		}
 		return "chagok/main";
-//		// 세션 유지시간 30분
-//		session.setMaxInactiveInterval(60*30);
-//
-//		if(UserVO != null) {
-//			session.setAttribute("mno", UserVO.getMno());
-//			session.setAttribute("nick", UserVO.getNick());
-//			
-//			return UserVO;
-//		} else {
-//			
-//			return 0;
-//		}
 	}
 
 	 // http://localhost:8080/register
@@ -393,12 +380,12 @@ public class ChagokController {
    
    // 내가 쓴 글 ( 브랜치 합치고 구현 )
    @GetMapping("/myBoardWrite")
-   public String myBoardGET(HttpSession session, Model model) {
+   public String myBoardGET(HttpSession session, Model model,Criteria cri) {
 	   
 	   String nick = (String)session.getAttribute("nick");
 //	   service.getBoardList(nick);
 	   
-	   return "/chagok/myBoard";
+	   return "/chagok/myBoardWrite";
    }
    
    // 회원 탈퇴
@@ -467,10 +454,10 @@ public class ChagokController {
 	public String chManagement(Criteria cri, Model model) throws Exception {
 		mylog.debug("/chManagement 호출");
 		
-		cri.setPerPageNum(10);
 		List<ChallengeVO> chListAll = service2.chListAll(cri);
 		
 		// 페이징 처리
+		cri.setPerPageNum(10);
 	    PageMaker pagevo = new PageMaker();
 	    pagevo.setCri(cri);
 	    pagevo.setTotalCount(service2.chListCnt());
@@ -509,8 +496,9 @@ public class ChagokController {
 		List<BusinessAccountVO> bizList = service.getBizList(cri);
 		
 		// 페이징 처리
+		cri.setPerPageNum(10);
 	    PageMaker pagevo = new PageMaker();
-	    pagevo.setDisplayPageNum(5);
+//	    pagevo.setDisplayPageNum(5);
 	    pagevo.setCri(cri);
 	    pagevo.setTotalCount(service.getBizCnt());
 		
@@ -529,9 +517,12 @@ public class ChagokController {
 		List<UserVO> userList = service.getUserList(cri);
 		
 		// 페이징 처리
+		cri.setPerPageNum(10);
 	    PageMaker pagevo = new PageMaker();
 	    pagevo.setCri(cri);
 	    pagevo.setTotalCount(service.getUserCnt());
+		mylog.debug("@@@@"+pagevo.toString());
+		mylog.debug("@@@@"+userList.size());
 		
 	    model.addAttribute("pagevo", pagevo);
 		model.addAttribute("userList", userList);

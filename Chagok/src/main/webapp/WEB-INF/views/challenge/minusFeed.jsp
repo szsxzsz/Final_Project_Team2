@@ -119,6 +119,7 @@
 	<div class="box-body">
 		<div class="table-responsive">
 			<table class="table no-margin">
+			<c:if test="${minusAbook.size() > 0}">
 				<thead>
 					<tr>
 						<th>날짜</th>
@@ -129,6 +130,7 @@
 						<th>연동</th>
 					</tr>
 				</thead>
+				</c:if>
 				<c:choose>
 				<c:when test="${minusAbook.size() > 0}">
 				<c:forEach var="mAbook" begin="0" end="${minusAbook.size()}" items="${minusAbook}">

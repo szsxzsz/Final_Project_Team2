@@ -113,7 +113,14 @@ public class UserServiceImpl implements UserService {
 	public void insertBuy(Integer mno, Integer buypoint) {
 		dao.insertBuy(mno, buypoint);
 	}
-
+	
+	// 챌린지 성공시 포인트 지급
+	@Override
+	public void givePoint(Map<String, Object> map) throws Exception {
+		mylog.debug("givePoint() 호출");
+		
+		dao.givePoint(map);
+	}
 	
 
 	
