@@ -76,7 +76,7 @@ a {
 
 .board_wrap {
     width: 1000px;
-    margin: 40px auto;
+    margin: 40px;
 }
 
 .board_title {
