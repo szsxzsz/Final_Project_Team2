@@ -19,7 +19,7 @@ function requestPay()
   	    pay_method : 'card',
   	    merchant_uid: "order_no_0002"+ new Date().getTime(), // 상점에서 관리하는 주문 번호를 전달
   	    name : '꿀 충전',
-  	    amount : 500,
+  	    amount : 5000,
   	    buyer_email : 'param.userVO.id',
   	    buyer_name : 'param.userVO.rname',
   	    buyer_tel : '010-1234-5678',
@@ -152,6 +152,7 @@ function requestPay2()
 }
 </script>
 
+
     <main>
 <%--     ${userVO } --%>
         <div class="ptop">
@@ -178,10 +179,12 @@ function requestPay2()
 						<img src="https://cdn-icons-png.flaticon.com/512/650/650917.png">
                     	</div>
                     </a>
-                    <div class="pskill">
+                    <a href="#">
+                    <div class="pskill" onclick="alert('구독 서비스는 준비중입니다!');">
                     	<p>구독</p>
                         <img src="https://cdn-icons-png.flaticon.com/512/6165/6165272.png">
                     </div>
+                    </a>
                 </div>
             </div>
             

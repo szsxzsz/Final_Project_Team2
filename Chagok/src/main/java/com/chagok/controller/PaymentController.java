@@ -53,6 +53,8 @@ public class PaymentController {
 			   
 			   UserVO userVO = uService.getUser(mno);
 			   model.addAttribute("userVO", userVO);
+		   } else {
+			   return "/chagok/login";
 		   }
 		
 		return "/payment/payment";

@@ -12,7 +12,7 @@
       <div class="section-title">
          <h2>절약형 차곡 챌린지</h2>
       </div> 
-<%--      ${vo } --%>
+<%--      ${mno } --%>
 <%--       / http://localhost:8080/challenge/minusFeed?cno=1 // ${mvo } --%>
       
 <%--       <button type="button" class="btn btn-default" onclick="location.href='${pageContext.request.contextPath }/commumain';">메인으로 가기</button> --%>
@@ -96,10 +96,8 @@
    
 <!--    가계부 연동하기 모달 -->
 <!-- 모달 css 파일 : resources -> plugins -> modal -> minusModal.css  -->
-<%-- ${vo.cno} / ${vo.mno} --%>
 	<form action="/challenge/minusFeed?cno=${vo.cno}" method="post" id="frm">
-<!-- 		mno 수정필요 -->
-	<input type="hidden" value="${vo.mno }" id="mno" name="mno">
+	<input type="hidden" value="${mno }" id="mno" name="mno">
 	<input type="hidden" value="${vo.cno }" id="cno" name="cno">
 	<div class="modal fade" id="modal-default" style="margin-top: 10%;">
 		<div class="modal-dialog">
@@ -118,32 +116,43 @@
 <%-- 	cateList : ${cateList } // --%>
 <%-- 	jsonCate : ${jsonCate } --%>
 <%-- 				${minusAbook } --%>
-		<table border="1">
-		<tr>
-		 <td>날짜</td>
-		 <td>내용</td>
-		 <td>금액</td>
-		 <td>카테고리</td>
-		 <td>소분류</td>
-		 <td>연동</td>
-		</tr>
-		<c:forEach var="mAbook" begin="0" end="${minusAbook.size()}" items="${minusAbook}">
-		<tr>
-		 <td>${mAbook.ab_date }</td>
-		 <td>${mAbook.ab_content }</td>
-		 <td>${mAbook.ab_amount }</td>
-		 <td>${mAbook.ct_top }</td>
-		 <td>${mAbook.ct_bottom }</td>
-		<td><input type="checkbox" id="checkbox" name="ab_amount" value="${mAbook.ab_amount}"></td>
-		</tr>
-		</c:forEach>
-		</table>
+	<div class="box-body">
+		<div class="table-responsive">
+			<table class="table no-margin">
+				<thead>
+					<tr>
+						<th>날짜</th>
+						<th>내용</th>
+						<th>금액</th>
+						<th>카테고리</th>
+						<th>소분류</th>
+						<th>연동</th>
+					</tr>
+				</thead>
+				<c:forEach var="mAbook" begin="0" end="${minusAbook.size()}" items="${minusAbook}">
+				<tbody>
+					<tr>
+						<td>${mAbook.ab_date }</a></td>
+						<td>${mAbook.ab_content }</td>
+						<td>${mAbook.ab_amount }</td>
+						<td>${mAbook.ct_top }</td>
+						<td>${mAbook.ct_bottom }</td>
+						<td>
+							<input type="checkbox" id="checkbox" name="ab_amount" value="${mAbook.ab_amount}">
+						</td>
+					</tr>
+				</tbody>
+				</c:forEach>
+			</table>
+		</div>
+
+	</div>
 				</div>
+
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default pull-left" data-dismiss="modal">닫기</button>
 					<button type="submit" class="btn btn-primary" id="saveABook" onclick="document.getElementById('frm').submit();">
 					저장하기</button>
-<!-- 					mno 수정 필요!! -->
 				</div>
 			</div>
 

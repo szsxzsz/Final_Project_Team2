@@ -283,7 +283,7 @@
 	<select id="getMinusAbook" resultType="map">
 		select * from account_book a right join challenge c on a.mno = c.mno
 		left join category ca on a.ctno=ca.ctno
-		where c.cno=1 and a.ctno = c.ctno
+		where c.cno=#{cno} and a.mno=#{mno} and a.ctno=#{ctno}
 	</select>
 
 
@@ -475,5 +475,10 @@
 	<insert id="insertBuy">
 		update user set buypoint=#{buypoint} where mno=#{mno}
 	</insert>
+	
+	<!-- ctno만 가져오기 -->
+	<select id="getCtno" resultType="Integer">
+	select ctno from category where ctno=(select ctno from challenge where cno = #{cno})
+	</select>
 		
  </mapper>
