@@ -454,7 +454,7 @@ public class AssetController {
 	  try {
 		  
 	   for(int i = 0; i < list.size(); i++) {
-		AbookVO vo = new AbookVO();
+		AbookVO vo = new AbookVO(); 
 //	    vo.setMno(mno);
 	    vo.setAbno(Integer.parseInt(list.get(i).get("abno").toString()));
 	    vo.setAb_inout(Integer.parseInt(list.get(i).get("ab_inout").toString()));
