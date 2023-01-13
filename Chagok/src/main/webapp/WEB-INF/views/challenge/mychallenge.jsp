@@ -46,7 +46,16 @@
 				<td>절약형</td>
 				</c:if>
 				<td>${vo.ct_top }</td>
-				<c:if test="${!(vo.c_status eq 7) }">
+				<!-- 0: 승인대기, 1 : 모집중, 5: 모집실패 -->
+				<c:if test="${vo.c_status eq 0 || vo.c_status eq 1 || vo.c_status eq 3 || vo.c_status eq 4 || vo.c_status eq 5 || vo.c_status eq 6  }"> 
+					<c:if test="${vo.c_sort eq 0 }">
+						<td><a href = "/challenge/plusdetail?cno=${vo.cno }">${vo.c_title }</a></td>
+					</c:if>
+					<c:if test="${vo.c_sort eq 1 }">
+						<td><a href = "/challenge/minusdetail?cno=${vo.cno }">${vo.c_title }</a></td>
+					</c:if>
+				</c:if>
+				<c:if test="${vo.c_status eq 2 }">  <!-- 진행 중에만 피드 이동 -->
 					<c:if test="${vo.c_sort eq 0 }">
 						<td><a href = "/challenge/plusFeed?cno=${vo.cno }">${vo.c_title }</a></td>
 					</c:if>

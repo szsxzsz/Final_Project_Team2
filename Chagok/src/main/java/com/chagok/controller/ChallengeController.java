@@ -137,6 +137,8 @@ public class ChallengeController {
 		model.addAttribute("vo", vo); // plusdetail로 정보전달
 
 		model.addAttribute("vo2", vo2);
+		
+		model.addAttribute("c_end", service.getChallengeEndDate(cno));
 
 		return "/challenge/plusdetail";
 	}
@@ -233,6 +235,7 @@ public class ChallengeController {
 		
 		model.addAttribute("vo", vo); // minusdetail로 정보전달
 		model.addAttribute("vo2", vo2);
+		model.addAttribute("c_end", service.getChallengeEndDate(cno));
 
 		return "/challenge/minusdetail";
 	}

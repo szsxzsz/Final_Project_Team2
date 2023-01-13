@@ -49,7 +49,7 @@
                </div>
           	 <div class="progress-group" style="width: 280px;">
                <span class="progress-text">챌린지 기간</span>
-               <span class="progress-number"><b>${vo.c_period }</b></span>
+               <span class="progress-number"><b>${vo.c_period }</b>주</span>
               </div> 
              <div class="progress-group" style="width: 280px;">
                <span class="progress-text">챌린지 시작일</span>
