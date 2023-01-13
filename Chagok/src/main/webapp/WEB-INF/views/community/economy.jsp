@@ -26,7 +26,7 @@
 			
 			$.ajax({
 				type: 'get',
-				url: '/newstest',
+				url: '/news',
 				contentType: "application/json; charset=UTF-8",
 				dataType: 'text',
 // 				data: JSON.stringify(query),
