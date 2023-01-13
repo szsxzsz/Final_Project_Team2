@@ -6,53 +6,75 @@
 <%@ include file="../include/header.jsp" %>
 <%@ include file="../include/sidebar.jsp" %>
 
-<h1> 공지사항 상세 </h1>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/css.css">
+</head>
+
+<body>
 
 <form role="form" method="post">
 	<input type="hidden" name="bno" value="${vo.bno }">
 </form>
-	 <div class="row" style="width: 1200px; padding-left: 50px; padding-right: 20px; padding-top: 50px;">
-	    <div class="d-flex justify-content-center">
-		    <div class="box">
-		        <div class="col-md-12 text-center" style="background: #FAF8F1; height: 50px; text-align:left;">
-				    	<h4 style="marfin-top: 14px;">
-						<span style="color: #10A19D; text-align:left;">제목 | ${vo.b_title }</span>
-						&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-						&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-						&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-				    	&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-						
-				    	<span style="color: #10A19D; text-align:right;">작성자 | ${vo.b_writer }</span>
-				    	&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
 
-				    	<span style="color: #10A19D; text-align:right;">작성일 | <fmt:formatDate value="${vo.b_date }" pattern="yyyy-MM-dd"/></span>
-				    	</h4>
-		    	</div>
-        <div class="form-group" style="padding-top: 50px; padding-left: 36px; width: 1100px; margin-bottom: 30px;">
-<!--            	<SPAN STYLE = "FONT-SIZE: 16PX; FONT-FAMILY: 'PRETENDARD','SOURCE SANS PRO', SANS-SERIF;"> -->
-<!--            		<STRONG> -->
-           		
-<!--            		</STRONG> -->
-<!--            	</SPAN> -->
-				 <textarea class="form-control" rows="3" style="margin-top:15px; font-size:15px; height: 280px; resize: none;" readonly>${vo.b_content }</textarea>
+    <div class="board_wrap">
+        <div class="board_title">
+            <strong>공지사항</strong>
+            <p>공지사항을 빠르고 정확하게 안내해드립니다.</p>
         </div>
-		    </div>
-		</div>
-		<div class="box-footer">
-	<c:if test="${nick.equals('관리자') }">
-        <input class="btn btn-block btn-success btn-lg" type="button" value="수정하기" onclick="location.href='/noticeupdate?bno=${vo.bno}';" style="width:218px; margin-left: 950px; background-color:#66BB7A;">
-        <input class="btn btn-warning" type="submit" value="삭제하기" style="background-color: #66BB7A; width:218px; margin-left: 950px;">
-	</c:if>
-        <input class="btn btn-block btn-success btn-lg" type="button" value="돌아가기" onclick="location.href='/notice';" style="width:218px; margin-left: 950px;">
-		</div>
-    </div>
+	</div>
+	
+        <div class="board_view_wrap">
+            <div class="board_view">
+                <div class="title">
+                     ${vo.b_title }
+                </div>
+                <div class="info">
+                    <dl>
+                        <dt>글번호</dt>
+                        <dd>${vo.bno}</dd>
+                    </dl>
+                    <dl>
+                        <dt>작성자</dt>
+                        <dd>${vo.b_writer }</dd>
+                    </dl>
+                    <dl>
+                        <dt>작성일</dt>
+                        <dd><fmt:formatDate value="${vo.b_date }" pattern="yyyy-MM-dd"/></dd>
+                    </dl>
+<!--                     <dl> -->
+<!--                         <dt>조회수</dt> -->
+<!--                         <dd>33</dd> -->
+<!--                     </dl> -->
+                </div>
+                <div class="cont">
+                    ${vo.b_content }
+                </div>
+            </div>
+            
+            
+            
+            <div class="bt_wrap">
+                	<input class="sbtn" type="button" value="목록" onclick="location.href='/notice';" >
+<!--                 <a href="notice" class="on">목록</a> -->
+                <c:if test="${nick.equals('관리자') }">
+                	<input class="sbtn" type="button" value="수정하기" onclick="location.href='/noticeupdate?bno=${vo.bno}';" >
+            	    <input class="sbtn2" type="submit" value="삭제하기">
+                
+                
+<%--                     <a href="noticeupdate?bno=${vo.bno}">수정</a> --%>
+<!--                 	<a class="sbtn">삭제</a> -->
+                </c:if>
+            </div>
+        </div>
         
         <script>
 			$(document).ready(function(){
 				var formObj = $("form[role='form']");
 				
 				
-				$(".btn-warning").click(function(){
+				$(".sbtn2").click(function(){
 					formObj.attr("action","/noticedelete");
 					formObj.submit();
 				});
@@ -60,4 +82,408 @@
 			});
 		</script>
         
+        
+</body>
+
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-size: 10px;
+}
+
+ul, li {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.board_wrap {
+    width: 1000px;
+    margin: 40px auto;
+}
+
+.board_title {
+    margin-bottom: 30px;
+}
+
+.board_title strong {
+    font-size: 3rem;
+}
+
+.board_title p {
+    margin-top: 5px;
+    font-size: 1.4rem;
+}
+
+.bt_wrap {
+    margin-top: 30px;
+    text-align: center;
+    font-size: 0;
+}
+
+.bt_wrap a {
+    display: inline-block;
+    min-width: 80px;
+    margin-left: 10px;
+    padding: 10px;
+    border: 1px solid #FFDB83;
+    border-radius: 2px;
+    font-size: 1.4rem;
+}
+
+.bt_wrap a:first-child {
+    margin-left: 0;
+}
+
+.bt_wrap a.on {
+    background: #FFDB83;
+    color: #fff;
+}
+
+.board_list {
+    width: 100%;
+    border-top: 2px solid #000;
+}
+
+.board_list > div {
+    border-bottom: 1px solid #ddd;
+    font-size: 0;
+}
+
+.board_list > div.top {
+    border-bottom: 1px solid #999;
+}
+
+.board_list > div:last-child {
+    border-bottom: 1px solid #000;
+}
+
+.board_list > div > div {
+    display: inline-block;
+    padding: 15px 0;
+    text-align: center;
+    font-size: 1.4rem;
+}
+
+.board_list > div.top > div {
+    font-weight: 600;
+}
+
+.board_list .num {
+    width: 10%;
+}
+
+.board_list .title {
+    width: 60%;
+    text-align: left;
+}
+
+.board_list .top .title {
+    text-align: center;
+}
+
+.board_list .writer {
+    width: 10%;
+}
+
+.board_list .date {
+    width: 10%;
+}
+
+.board_list .count {
+    width: 10%;
+}
+
+.board_page {
+    margin-top: 30px;
+    text-align: center;
+    font-size: 0;
+}
+
+.board_page a {
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    box-sizing: border-box;
+    vertical-align: middle;
+    border: 1px solid #ddd;
+    border-left: 0;
+    line-height: 100%;
+}
+
+.board_page a.bt {
+    padding-top: 10px;
+    font-size: 1.2rem;
+    letter-spacing: -1px;
+}
+
+.board_page a.num {
+    padding-top: 9px;
+    font-size: 1.4rem;
+}
+
+.board_page a.num.on {
+    border-color: #000;
+    background: #000;
+    color: #fff;
+}
+
+.board_page a:first-child {
+    border-left: 1px solid #ddd;
+}
+
+.board_view {
+    width: 100%;
+    border-top: 2px solid #66BB7A;
+    margin-left: 20px;
+}
+
+.board_view .title {
+    padding: 20px 15px;
+    border-bottom: 1px dashed #ddd;
+    font-size: 2.2rem;
+}
+
+.board_view .info {
+	padding: 15px 0px 0px 20px;
+    border-bottom: 1px solid #66BB7A;
+    font-size: 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+.board_view .info dl {
+    position: relative;
+    display: inline-block;
+    padding: 0 20px;
+}
+
+.board_view .info dl:first-child {
+    padding-left: 0;
+}
+
+.board_view .info dl::before {
+    content: "";
+    position: absolute;
+    top: 1px;
+    left: 0;
+    display: block;
+    width: 1px;
+    height: 13px;
+    background: #ddd;
+}
+
+.board_view .info dl:first-child::before {
+    display: none;
+}
+
+.board_view .info dl dt,
+.board_view .info dl dd {
+    display: inline-block;
+    font-size: 1.4rem;
+}
+
+.board_view .info dl dt {
+
+}
+
+.board_view .info dl dd {
+    margin-left: 15px;
+    color: #777;
+}
+
+.board_view .cont {
+    padding: 15px;
+    border-bottom: 1px solid #66BB7A;
+    line-height: 160%;
+    font-size: 1.4rem;
+}
+
+.board_write {
+    border-top: 2px solid #000;
+}
+
+.board_write .title,
+.board_write .info {
+    padding: 15px;
+}
+
+.board_write .info {
+    border-top: 1px dashed #ddd;
+    border-bottom: 1px solid #000;
+    font-size: 0;
+}
+
+.board_write .title dl {
+    font-size: 0;
+}
+
+.board_write .info dl {
+    display: inline-block;
+    width: 50%;
+    vertical-align: middle;
+}
+
+.board_write .title dt,
+.board_write .title dd,
+.board_write .info dt,
+.board_write .info dd {
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 1.4rem;
+}
+
+.board_write .title dt,
+.board_write .info dt {
+    width: 100px;
+}
+
+.board_write .title dd {
+    width: calc(100% - 100px);
+}
+
+.board_write .title input[type="text"],
+.board_write .info input[type="text"],
+.board_write .info input[type="password"] {
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.board_write .title input[type="text"] {
+    width: 80%;
+}
+
+.board_write .cont {
+    border-bottom: 1px solid #000;
+}
+
+.board_write .cont textarea {
+    display: block;
+    width: 100%;
+    height: 300px;
+    padding: 15px;
+    box-sizing: border-box;
+    border: 0;
+    resize: vertical;
+}
+
+
+@media (max-width: 1000px) {
+    .board_wrap {
+        width: 100%;
+        min-width: 320px;
+        padding: 0 30px;
+        box-sizing: border-box;
+    }
+
+    .board_list .num,
+    .board_list .writer,
+    .board_list .count {
+        display: none;
+    }
+
+    .board_list .date {
+        width: 40%;
+    }
+
+    .board_list .title {
+        text-indent: 10px;
+    }
+
+    .board_list .top .title {
+        text-indent: 0;
+    }
+
+    .board_page a {
+        width: 26px;
+        height: 26px;
+    }
+
+    .board_page a.bt {
+        padding-top: 7px;
+    }
+    
+    .board_page a.num {
+        padding-top: 6px;
+    }
+
+    .board_view .info dl {
+        width: 50%;
+        padding: 0;
+    }
+
+    .board_view .info dl:nth-child(-n+2) {
+        margin-bottom: 5px;
+    }
+
+    .board_view .info dl::before {
+        display: none;
+    }
+
+    .board_view .info dl dt,
+    .board_view .info dl dd {
+        font-size: 1.2rem;
+    }
+
+    .board_write .info dl {
+        width: 49%;
+    }
+
+    .board_write .info dl:first-child {
+        margin-right: 2%;
+    }
+
+    .board_write .title dt,
+    .board_write .info dt {
+        display: none;
+    }
+
+    .board_write .title dd,
+    .board_write .info dd {
+        width: 100%;
+    }
+
+    .board_write .title input[type="text"],
+    .board_write .info input[type="text"],
+    .board_write .info input[type="password"] {
+        width: 100%;
+    }
+}
+
+.bt_wrap input.sbtn {
+	display: inline-block;
+    min-width: 100px;
+    margin-left: 10px;
+    padding: 10px;
+    border: 1px solid #FFDB83;
+    border-radius: 2px;
+    font-size: 1.4rem;
+    background-color: #FFDB83;
+    color: #fff;
+}
+
+.bt_wrap input.sbtn2 {
+    display: inline-block;
+    min-width: 100px;
+    margin-left: 10px;
+    padding: 10px;
+    border: 1px solid #FFDB83;
+    border-radius: 2px;
+    font-size: 1.4rem;
+    background-color: #fff;
+    color: #FFDB83;
+}
+
+</style>
+
+
+</div>
 <%@ include file="../include/footer.jsp"%>

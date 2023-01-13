@@ -134,9 +134,15 @@
 }
 
 .bt_wrap input.sbtn {
-    background: #FFDB83;
+	display: inline-block;
+    min-width: 100px;
+    margin-left: 10px;
+    padding: 10px;
+    border: 1px solid #FFDB83;
+    border-radius: 2px;
+    font-size: 1.4rem;
+    background-color: #FFDB83;
     color: #fff;
-    width: 30%;
     margin-bottom: 20px;
 }
 </style>
