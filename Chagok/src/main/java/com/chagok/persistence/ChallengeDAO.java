@@ -107,7 +107,7 @@ public interface ChallengeDAO {
 	public ChallengeVO getMoney(Integer mno);
 	
 	// 가계부 가져오기
-	public List<Map<String, Object>> getMinusAbook(Integer mno, Integer cno);
+	public List<Map<String, Object>> getMinusAbook(Integer mno, Integer cno, Integer ctno);
 	
 	// 게시판 글 + 챌린지
 	public Map<String, Object> getBoardChallenge(Integer cno) throws Exception;
@@ -160,4 +160,6 @@ public interface ChallengeDAO {
 	// 경제 자유게시판 글 개수 조회
 	public int EBoardCount() throws Exception;	
 
+	// ctno 가져오기
+	public int getCtno(Integer cno);
 }

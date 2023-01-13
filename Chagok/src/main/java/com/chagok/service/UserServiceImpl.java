@@ -109,5 +109,12 @@ public class UserServiceImpl implements UserService {
 		return dao.getBizCnt();
 	}
 
+	@Override
+	public void insertBuy(Integer mno, Integer buypoint) {
+		dao.insertBuy(mno, buypoint);
+	}
+
+	
+
 	
 }

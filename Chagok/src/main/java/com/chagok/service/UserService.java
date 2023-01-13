@@ -52,4 +52,7 @@ public interface UserService {
 	
 	// 관리자 - 차곡 계좌 전체 개수
 	public Integer getBizCnt() throws Exception;
+	
+	// 구매 꿀 인서트
+	public void insertBuy(Integer mno, Integer buypoint);
 }

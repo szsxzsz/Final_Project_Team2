@@ -257,9 +257,9 @@ public class ChallengeServiceImpl implements ChallengeService{
 
 	// 가계부 가져오기 
 	@Override
-	public List<Map<String, Object>> getMinusAbook(Integer mno, Integer cno) {
+	public List<Map<String, Object>> getMinusAbook(Integer mno, Integer cno, Integer ctno) {
 		mylog.debug(" getMinusAbook(mno,cno) 호출 ");
-		return dao.getMinusAbook(mno, cno);
+		return dao.getMinusAbook(mno, cno, ctno);
 	}
 
 	// 가계부 값 연동하기 
@@ -372,6 +372,14 @@ public class ChallengeServiceImpl implements ChallengeService{
 		mylog.debug("EboardCount() 호출");
 		return dao.EBoardCount();
 	}
+
+	@Override
+	public int getCtno(Integer cno) {
+		mylog.debug(" getCtno() 호출 ");
+		return dao.getCtno(cno);
+	}
+
+	
 	
 	
 	

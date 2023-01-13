@@ -1,5 +1,6 @@
 package com.chagok.persistence;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -123,6 +124,14 @@ public class UserDAOImpl implements UserDAO {
 	@Override
 	public Integer getBizCnt() throws Exception {
 		return sqlSession.selectOne(NAMESPACE +".getBizCnt");
+	}
+
+	@Override
+	public void insertBuy(Integer mno, Integer buypoint) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("mno", mno);
+		map.put("buypoint", buypoint);
+		sqlSession.insert(NAMESPACE+".insertBuy", map);
 	}
 	
 	
