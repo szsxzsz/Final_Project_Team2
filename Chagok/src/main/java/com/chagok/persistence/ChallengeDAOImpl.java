@@ -298,11 +298,12 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 
 	// 가계부 가져오기 
 	@Override
-	public List<Map<String, Object>> getMinusAbook(Integer mno, Integer cno) {
+	public List<Map<String, Object>> getMinusAbook(Integer mno, Integer cno, Integer ctno) {
 		mylog.debug(" getMinusAbook(mno,cno) 호출 ");
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("mno", mno);
 		map.put("cno", cno);
+		map.put("ctno", ctno);
 		List<Map<String, Object>> minusAbook = sqlSession.selectList(NAMESPACE+".getMinusAbook",map);
 		return minusAbook;
 	}
@@ -465,6 +466,12 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 			
 		return sqlSession.selectOne(NAMESPACE+".eboardCount");
 			
+	}
+
+	// ctno 가져오기
+	@Override
+	public int getCtno(Integer cno) {
+		return sqlSession.selectOne(NAMESPACE+".getCtno", cno);
 	}	
 	
 	

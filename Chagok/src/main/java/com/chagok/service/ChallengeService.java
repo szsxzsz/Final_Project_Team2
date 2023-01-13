@@ -108,7 +108,7 @@ public interface ChallengeService {
 	public ChallengeVO getMoney(Integer mno) throws Exception;
 	
 	// 가계부 가져오기
-	public List<Map<String, Object>> getMinusAbook(Integer mno, Integer cno);
+	public List<Map<String, Object>> getMinusAbook(Integer mno, Integer cno, Integer ctno);
 	
 	// 게시판 + 챌린지 리스트
 	public Map<String, Object> getBoardChallenge(Integer cno) throws Exception;
@@ -161,5 +161,8 @@ public interface ChallengeService {
 	
 	// 전체 경제 게시판 글 개수 조회
 	public int EboardCount() throws Exception;	
+	
+	// ctno 가져오기
+	public int getCtno(Integer cno);
 }
 
