@@ -107,7 +107,7 @@ public class UserDAOImpl implements UserDAO {
 	
 	@Override
 	public List<UserVO> getUserList(Criteria cri) throws Exception {
-		return sqlSession.selectList(NAMESPACE +".getUserList");
+		return sqlSession.selectList(NAMESPACE +".getUserList", cri);
 	}	
 	
 	@Override

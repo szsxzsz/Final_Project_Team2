@@ -81,7 +81,9 @@
 </style>
  
  </head>
+
  
+
  <body>
  <script src="../assets/libs/jquery/dist/jquery.min.js"></script>
  <script src="../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
@@ -98,16 +100,15 @@
 	</div>
 <!-- 게시판 안내 -->			
 				
-
 <!-- 게시판 내용 -->				
 	<table class="table table-hover" style="margin-left:10px; border-bottom: 1px solid #ddd;border-top: 2px solid #66BB7A;">
 			  <thead style="background-color: #dddddd30;font-size: 16px;">
 			    <tr>
-			      <th scope="col" style="text-align:center; padding: 15px 0;">번호</th>
+			      <th scope="col" style="text-align:center; padding: 15px 0; width: 10%;">번호</th>
 			      <th scope="col" style="text-align:center; padding: 15px 0;">제목</th>
 <!-- 				  <th scope="col" style="text-align:center; padding: 15px 0;">Last</th> -->
-			      <th scope="col" style="text-align:center; padding: 15px 0;">작성일</th>
-			    </tr>
+			      <th scope="col" style="text-align:center; padding: 15px 0; width: 20%;">작성일</th>
+		    	</tr>
 			  </thead>
 			  
 			  

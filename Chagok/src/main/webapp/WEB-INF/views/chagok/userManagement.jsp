@@ -4,177 +4,124 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ include file="../include/header.jsp"%>
 <%@ include file="../include/sidebar.jsp"%>
-<html lang="ko">
+<!-- <html lang="ko"> -->
 
 <head>
-<script src="modal.js"></script>
-<script>
-// 	$(function(){
-// 		$(".btn.btn-block.btn-success").click(function(){
-// // 			alert('아작스 힘내라');
-// 			var mno = $(this).children().val();
-// 			var json = { "mno":mno }
-// // 			alert(mno);
-
-			
-// 			$.ajax({
-// 				type : "post",
-// 				url : "/challenge/adminmodal",
-// 				data : json,
-// 				dataType : "text",
-// 				success : function(data){
-// 					console.log("어드민 모달창 등장"+data);
-					
-// 					$('.t-modal').css('visibility','visible');
-// 					alert(data);
-// // 					$.modal-default(data);
-// 				}, error : function(data){
-// 					console.log(data);
-// 				}
-// 			});
-// 		})
-
-// 	});
-
-</script>
-<title>관리자 회원 관리</title>
-
+	<title>관리자 회원 관리</title>
 </head>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		for(i=0;i<10;i++){
+			
+// 			// 펼치고 접기 관련
+			$('#showdetail'+i+'').click(function(){
+// 	// 			$('.board_list parent').children('.board_list_wrap_detail').css("display")=="block";
+// 	// 			$('.board_list_wrap_detail').slideDown();
+// 				if ($('.board_list_wrap_detail'+i+'').css("display") == "block") {
+// 					$('.board_list_wrap_detail'+i+'').slideUp();
+// 				} else {
+// 					$('.board_list_wrap_detail'+i+'').slideDown();
+// 				}			
+				
+				
+				alert('흑'+i+'');
+			});
+		}
+	});
+</script>
+
 <body>
 <%-- 	${userList } --%>
 	<div class="board_wrap">
-		<div class="board_title">
-			<strong>회원 관리</strong>
-		</div>
+		<div class="board_title"><strong>관리자 회원 관리</strong></div>
 		<div class="board_list_wrap">
-			<div class="board_list">
+			<div class="board_list parent">
 				<div class="top">
-					<div class="num"
-						style="padding-right: 10px; width: auto; padding-left: 10px;">회원
-						번호</div>
-					<div class="num" style="padding-left: 10px; width: auto;">아이디</div>
-					<div class="title" style="width: auto;">닉네임</div>
-					<div class="num">포인트</div>
-					<div class="date" style="width: auto;">가입일자</div>
-					<div class="num" style="padding-left: 25px; width: auto;">가계부
-						인증</div>
-					<div class="num" style="width: auto; padding-left: 25px;">구독상태</div>
-					<div class="num" style="padding-left: 25px; width: auto;">관리</div>
+					<div class="num" style="width:100px;">회원번호</div>
+					<div class="num" style="width:150px;">아이디</div>
+					<div class="num" style="width:100px;">닉네임</div>
+					<div class="num" style="width:100px;">포인트</div>
+					<div class="num" style="width:200px;">가입일자</div>
+					<div class="num" style="width:75px;">가계부인증</div>
+					<div class="num" style="width:75px;">구독상태</div>
+					<div class="num" style="width:200px;">관리</div>
 				</div>
-
-				<c:forEach items="${userlist }" var="user">
+				
+				<c:forEach items="${userList }" var="user" varStatus="status">
+				<c:set var="i" value="${status.index}"/>
 					<div>
-						<div class="num"
-							style="padding-left: 65px; width: auto; padding-right: 65px;">${user.mno }</div>
-						<div class="num"
-							style="padding-left: 65px; width: auto; padding-right: 10px;">${user.id }</div>
-						<div class="title" style="padding-left: 65px; width: auto;">${user.nick }</div>
-						<div class="num" style="padding-left: auto;">${user.buypoint }</div>
-						<div class="date" style="padding-left: auto; width: auto;">${user.regdate }</div>
-						<div class="num" style="padding-left: 25px; width: auto;">${user.isCheck }</div>
-						<div class="num" style="padding-left: 25px; width: auto;">${user.isSub }</div>
-						<div class="num" style="padding-left: 25px; width: auto;">
-							<button id="modal-on" class="btn btn-block btn-success" data-toggle="modal" data-target="#modal-default">
-								상세정보
-							 <input type="hidden" value="${user.mno }">
-							</button>
+						<div class="num" style="width:100px;">${user.mno }</div>
+						<div class="num" style="width:150px;">${user.id }</div>
+						<div class="num" style="width:100px;">${user.nick }</div>
+						<div class="num" style="width:100px;">${user.buypoint }</div>
+						<div class="num" style="width:200px;"><fmt:formatDate value="${user.regdate }" pattern="yyyy-MM-dd hh:mm" type="both"/></div>
+						<div class="num" style="width:75px;">${user.isCheck }</div>
+						<div class="num" style="width:75px;">${user.isSub }</div>
+						<div class="num" style="width:200px;" class="nodetail">
+							<button id="showdetail${i }">▼ 상세정보</button>
 						</div>
-<!-- 						모달 -->
-<!-- 						<div class="t-modal"> -->
-<!-- 							<div class="modal-body"> -->
-<!-- 								<div class="modal-info"> -->
-<%-- 									<p class="user-nick">${user.nick }님의 상세 정보</p> --%>
-<!-- 								</div> -->
-<!-- 								<div class="user-detail"> -->
-<!-- 									<div class="detail-1"> -->
-<!-- 										<ul> -->
-<!-- 											<li>생년월일&nbsp;:</li> -->
-<!-- 											<li>전화번호&nbsp;:</li> -->
-<!-- 											<li>예금주명&nbsp;:</li> -->
-<!-- 											<li><strong>은</strong>행&nbsp;:</li> -->
-<!-- 											<li>환급계좌&nbsp;:</li> -->
-<!-- 										</ul> -->
-<!-- 									</div> -->
-<!-- 									<div class="detail-2"> -->
-<!-- 										<ul> -->
-<%-- 											<li>${user.year }</li> --%>
-<%-- 											<li>${user.tel }</li> --%>
-<%-- 											<li>${user.rname }</li> --%>
-<%-- 											<li>${user.rbank }</li> --%>
-<%-- 											<li>${user.raccount }</li> --%>
-<!-- 										</ul> -->
-<!-- 									</div> -->
-<!-- 								</div> -->
-<!-- 							</div> -->
-<!-- 						</div> -->
-
 					</div>
 				</c:forEach>
-			</div>
-
-
-
-
-			<!-- 모달 css 파일 : resources -> plugins -> modal -> minusModal.css  -->
-				<div class="modal fade" id="modal-default" style="margin-top: 10%;">
-					<div class="modal-dialog" style=" height: 800px;">
-						<div class="modal-content">
-							<div class="modal-header">
-								<button type="button" class="close" data-dismiss="modal"
-									aria-label="Close">
-									<span aria-hidden="true"><b>&times;</b></span>
-								</button>
-								<h4 class="modal-title">상세정보</h4>
+				
+				<c:forEach items="${userList }" var="user" varStatus="status">
+				<c:set var="i" value="${status.index}"/>				
+					<div class="board_list_wrap_detail${i }" style="display: none;">
+						<div class="board_list">						
+							<div class="top">
+								<div class="num" style="width:150px;">전화번호</div>
+								<div class="num" style="width:100px;">예금주명</div>
+								<div class="num" style="width:100px;">은행</div>
+								<div class="num" style="width:200px;">환급계좌번호</div>
 							</div>
-							<div class="modal-body" >
-							<div class="frame2">
-			  					<div class="calculator2">
-			  					<table>
-									<div class="whitespace" id="whitespace">
-			  						<c:forEach items="${userlist }" var="user">
-										<tr><div>생년 : ${user.year }</div></tr>
-										<tr><div>전화번호 : ${user.tel }</div></tr>
-										<tr><div>예금주명 : ${user.rname }</div></tr>
-										<tr><div>은행 : ${user.rbank }</div></tr>
-										<tr><div>환급계좌 : ${user.raccount }</div></tr>
-									</div>
-<!-- 									<tr> -->
-<%-- 									<c:forEach items="${userlist }" var="user"> --%>
-<%-- 										<td>${user.year }</td> --%>
-<%-- 										<td>${user.tel }</td> --%>
-<%-- 										<td>${user.rname }</td> --%>
-<%-- 										<td>${user.rbank }</td> --%>
-<%-- 										<td>${user.raccount }</td> --%>
-<!-- 									</tr> -->
-								</table>
-									</c:forEach>
-			  						</div>
-<!-- 								    <div class="content2"> -->
-<!-- 								      <div class="key-wrap" id="key-wrap"></div> -->
-<!-- 								      <div class="calc-wrap" id="calc-wrap"></div> -->
-<!-- 								    </div> -->
-							    </div>
-						    </div>
+							<div>
+								<div class="num" style="width:150px;">
+									<c:if test="${user.tel == null}">정보 없음</c:if>
+									${user.tel }
+								</div>
+								<div class="num" style="width:100px;">
+									<c:if test="${user.rname == null}">정보 없음</c:if>											
+									${user.rname }
+								</div>
+								<div class="num" style="width:100px;">
+									<c:if test="${user.rbank == null}">정보 없음</c:if>										
+									${user.rbank }
+								</div>
+								<div class="num" style="width:200px;">
+									<c:if test="${user.raccount == null}">정보 없음</c:if>											
+									${user.raccount }
+								</div>									
 							</div>
-							<div class="modal-footer">
-						<button type="button" class="btn btn-default pull-left" data-dismiss="modal">닫기</button>
-		
-							</div>
-						</div>
+				    	</div>	
 			    	</div>
-			   	</div>
-			<!-- 입금하기 기능용 모달창 -->
+				</c:forEach>
 
-			<div class="board_page">
-				<!--                 <a href="#" class="bt first"><<</a> -->
-				<a href="#" class="bt prev"></a> <a href="#" class="num on">1</a> <a
-					href="#" class="num">2</a> <a href="#" class="num">3</a> <a
-					href="#" class="num">4</a> <a href="#" class="num">5</a> <a
-					href="#" class="bt next">></a>
-				<!--                 <a href="#" class="bt last">>></a> -->
-			</div>
+				<div class="board_page">
+					<div class="box-footer clearfix">
+					    <ul class="pagination pagination-sm no-margin pull-right">
+					
+					        <c:if test="${pagevo.prev }">
+					            <li><a href="/userManagement?page=${pagevo.startPage-1 }">«</a></li>
+					        </c:if>
+					
+					        <c:forEach var="idx" begin="${pagevo.startPage }" end="${pagevo.endPage }" step="1">
+					            <li
+								    <c:out value="${idx == pagevo.cri.page? 'class=active':'' }"/>
+								>
+								    <a href="/userManagement?page=${idx }">${idx }</a>
+								</li>
+					        </c:forEach>
+					
+					        <c:if test="${pagevo.next }">
+					            <li><a href="/userManagement?page=${pagevo.endPage+1 }">»</a></li>
+					        </c:if>
+					    </ul>
+					</div>
+				</div>
 		</div>
 	</div>
+	
+	
 </body>
 </html>
 
