@@ -85,7 +85,7 @@
  <!-- 버튼 -->            
            <div class="bt_wrap">
              <c:if test="${nick.equals('관리자') }">
-				<input class="sbtn" type="button" value="공지 작성하기" onclick="location.href='/noticewrite';" >
+				<input class="sbtn2" type="button" value="공지 작성하기" onclick="location.href='/noticewrite';" >
 			  </c:if>
 				<input class="sbtn" type="button" value="메인가기" onclick="location.href='/commumain';" >
           </div>
@@ -144,6 +144,18 @@
     background-color: #FFDB83;
     color: #fff;
     margin-bottom: 20px;
+}
+
+.bt_wrap input.sbtn2 {
+	display: inline-block;
+    min-width: 100px;
+    margin-left: 10px;
+    padding: 10px;
+    border: 1px solid #FFDB83;
+    border-radius: 2px;
+    font-size: 1.4rem;
+    background-color: #fff;
+    color: #FFDB83;
 }
 </style>
 

@@ -43,8 +43,8 @@
                 </div>
             </div>
             <div class="bt_wrap">
-            	<input class="sbtn" type="submit" value="작성하기" >
             	<input class="sbtn2" type="button" value="돌아가기" onclick="location.href='/notice';">
+            	<input class="sbtn" type="submit" value="작성하기" >
 <!--                 <a href="view.html" class="on">등록</a> -->
 <!--                 <a href="list.html">취소</a> -->
             </div>
@@ -446,8 +446,8 @@ a {
     border: 1px solid #FFDB83;
     border-radius: 2px;
     font-size: 1.4rem;
-    background-color: #FFDB83;
-    color: #fff;
+    background-color: #fff;
+    color: #FFDB83;
 }
 
 </style>
