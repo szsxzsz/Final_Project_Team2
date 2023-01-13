@@ -440,6 +440,8 @@
 	<!-- 관리자 - 전체 회원 조회  -->
 	<select id="getUserList" resultType="com.chagok.domain.UserVO">
 		select * from user
+		order by mno desc
+		limit #{pageStart}, #{perPageNum};
 	</select>
 	
 	<!-- 관리자 - 전체 회원 수 -->
