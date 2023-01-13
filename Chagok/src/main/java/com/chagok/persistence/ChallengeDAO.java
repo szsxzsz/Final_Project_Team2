@@ -107,7 +107,7 @@ public interface ChallengeDAO {
 	public ChallengeVO getMoney(Integer mno);
 	
 	// 가계부 가져오기
-	public List<Map<String, Object>> getMinusAbook(Integer mno, Integer cno);
+	public List<Map<String, Object>> getMinusAbook(Integer mno, Integer cno, Integer ctno);
 	
 	// 게시판 글 + 챌린지
 	public Map<String, Object> getBoardChallenge(Integer cno) throws Exception;
@@ -142,9 +142,12 @@ public interface ChallengeDAO {
 	// 내 plus 테이블 정보 가져오기
 	public PlusVO getPlusOne(int mno, int cno) throws Exception;
 
-	// 챌린지목록(페이징처리)
+	// 관리자 - 챌린지 전체 목록
 	public List<ChallengeVO> chListAll(Criteria cri) throws Exception;
-			
+	
+	// 관리자 - 챌린지 총 개수
+	public Integer chListCnt() throws Exception;
+	
 	// 자유게시판 조회 (페이징처리 cri)
 	public List<BoardVO> getFBoardPage(Criteria cri) throws Exception;
 	
@@ -163,4 +166,6 @@ public interface ChallengeDAO {
 	// 챌린지 성공/실패 여부 가져옴(한 명만)
 	public Map<String, Object> challengeResult(Integer cno, Integer mno) throws Exception;
 
+	// ctno 가져오기
+	public int getCtno(Integer cno);
 }

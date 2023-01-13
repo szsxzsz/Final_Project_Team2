@@ -30,9 +30,6 @@ public interface UserService {
 	// 인증성공 isCheck N => Y
 	public void updateIsCheck(int mno) throws Exception;
 	
-	// 관리자 전체 회원 조회
-	public List<UserVO> getUserList() throws Exception;
-	
 	// user_seq_no 저장
 	public void updateSeqNo(Map<String, Object> map);
 	
@@ -44,10 +41,22 @@ public interface UserService {
 	// 회원 탈퇴
 	public int unregistUser(UserVO vo) throws Exception;
 	
-	// 차곡 계좌내역 조회
-	public List<BusinessAccountVO> getBizAll(Criteria cri) throws Exception;
+	// 관리자 - 전체 회원 조회
+	public List<UserVO> getUserList(Criteria cri) throws Exception;
+	
+	// 관리자 - 전체 회원 수
+	public Integer getUserCnt() throws Exception;
+	
+	// 관리자 - 차곡 계좌내역 조회
+	public List<BusinessAccountVO> getBizList(Criteria cri) throws Exception;
+	
+	// 관리자 - 차곡 계좌 전체 개수
+	public Integer getBizCnt() throws Exception;
+	
+	// 구매 꿀 인서트
+	public void insertBuy(Integer mno, Integer buypoint);
 	
 	// 챌린지 성공시 포인트 지급
 	public void givePoint(Map<String, Object> map) throws Exception;
-	
+		
 }

@@ -150,48 +150,40 @@ public class ChallengeController {
 	public String minusFeed(Model model,@RequestParam("cno") int cno,HttpSession session,ChallengeVO cvo,MinusVO mvo) throws Exception {
 		mylog.debug(" 수 지 : minusFeed Get 호출 ");
 		
-		int mno = cvo.getMno();
-		
+		Integer mmno = service.getChallengeInfo(cno).getMno();
 		ChallengeVO vo = service.getChallengeInfo(cno);
 		List<Map<String, Object>> minusPeoList = service.getMinusPeople(cno);
 		mylog.debug(minusPeoList+"");
 		ChallengeVO vo2 = service.getCt_top(cno);
-		ChallengeVO vo3 = service.getMoney(mno);
 		
-		// 서비스 -> DAO 게시판 리스트 가져오기
-		// getAbookList(1) -> getAbookList(mno) 수정 필요 !!!!!
-//		List<AbookVO> abookList = aService.getAbookList(mno);
-		List<Map<String, Object>> minusAbook = service.getMinusAbook(mno, cno);
-		mylog.debug(minusAbook+"");
-//		mylog.debug("abookList : "+abookList);
-		
-//		List<CategoryVO> cateList = aService.CateList();
-//		mylog.debug("cateList : "+cateList);
 		mylog.debug("minusFeedGET()에서 id : "+session.getId());
 		SysLogVO sysLogVO = new SysLogVO();
-//		ObjectMapper mapper = new ObjectMapper();
 
-//		String jsonAbook = mapper.writeValueAsString(abookList);
-//		mylog.debug("jsonAbook : "+jsonAbook);
-//		String jsonCate = mapper.writeValueAsString(cateList);
-//		mylog.debug("jsonCate : "+jsonCate);
-
-	   // 연결된 뷰페이지로 정보 전달(model)
+		// 회원정보 저장
+		int mno = (Integer)session.getAttribute("mno");
+		mylog.debug("mno : " +mno);
+					
+		ChallengeVO vo3 = service.getMoney(mno);
+		
+		// 서비스 -> DAO 가계부 리스트 가져오기
+		int ctno = service.getCtno(cno);
+		List<Map<String, Object>> minusAbook = service.getMinusAbook(mno, cno, ctno);
+		mylog.debug(minusAbook+"");
+				
+		// 연결된 뷰페이지로 정보 전달(model)
+		model.addAttribute("mno", mno);
 		model.addAttribute("sessionId", sysLogVO.getUserId());
-	   model.addAttribute("vo", vo);
-	   model.addAttribute("minusPeoList", minusPeoList);
-	   model.addAttribute("vo2", vo2);
-	   model.addAttribute("c_end", service.getChallengeEndDate(cno));
-	   model.addAttribute("mvo",mvo);
-	   model.addAttribute("vo3", vo3);
-	   
-//	   model.addAttribute("abookList", abookList);
-//	   model.addAttribute("cateList", cateList);
-//	   model.addAttribute("jsonAbook",jsonAbook);
-//		model.addAttribute("jsonCate",jsonCate);
-	   model.addAttribute("minusAbook", minusAbook);
-	   
-	   return "/challenge/minusFeed";
+		model.addAttribute("vo", vo);
+		model.addAttribute("minusPeoList", minusPeoList);
+		model.addAttribute("vo2", vo2);
+		model.addAttribute("c_end", service.getChallengeEndDate(cno));
+		model.addAttribute("mvo",mvo);
+		model.addAttribute("vo3", vo3);
+		   
+		model.addAttribute("minusAbook", minusAbook);
+		model.addAttribute("host",uservice.getUser(mmno));
+		   
+		return "/challenge/minusFeed";
 	}
 	
 	@PostMapping(value = "/minusFeed")
@@ -384,7 +376,8 @@ public class ChallengeController {
 		String fileName = null;
 
 		if(file != null) {
-		   fileName =  UploadFileUtils.fileUpload(imgUploadPath, file.getOriginalFilename(), file.getBytes(), ymdPath);   
+		   fileName =  UploadFileUtils.fileUpload(imgUploadPath, file.getOriginalFilename(), file.getBytes(), ymdPath);
+		   
 		} else {
 		   fileName = uploadPath + File.separator + "images" + File.separator + "none.png";
 		}
@@ -502,83 +495,6 @@ public class ChallengeController {
 				
 		return "/challenge/resultdefeat";
 	}
-	
-	////////////////////// 관리자 페이지 ///////////////////////////
-	
-	
-	// 관리자 챌린지 승인
-	// http://localhost:8080/challenge/chListAll
-	@GetMapping("/chListAll")
-	public String adminconfirmGET(Criteria cri, Model model) throws Exception {
-		mylog.debug("/adminconfirmGET 호출");
-		
-		cri.setPerPageNum(10);
-		List<ChallengeVO> challengeList = service.chListAll(cri);
-		
-		// 페이징 처리
-	    PageMaker pagevo = new PageMaker();
-	    pagevo.setDisplayPageNum(5);
-	    pagevo.setCri(cri);
-	    pagevo.setTotalCount(10000);
-		
-	    mylog.debug(pagevo.toString());
-	    
-	    model.addAttribute("pagevo", pagevo);
-		model.addAttribute("challengeList", challengeList);
-		
-		return "/challenge/adminconfirm";
-	}
-	
-	@ResponseBody
-	@GetMapping(value="/confirm")
-	public int confirm(@RequestParam int status, @RequestParam int cno, RedirectAttributes rttr) throws Exception {
-		mylog.debug("status : "+status+", cno : "+cno);
-		int result=0;
-		
-		service.confirmChallenge(status, cno);
-
-		if(status==1) {
-			result = 1;
-		} else if(status==6) {
-			result = 6;
-		}
-		mylog.debug("결과"+result);
-		return result;
-	}
-
-	// http://localhost:8080/challenge/memberManagement
-	// 관리자 회원관리
-	@GetMapping("/memberManagement")
-	public String memberManagementGET(Model model) throws Exception {
-		mylog.debug("/memberManagementGET 호출");
-		
-		List<UserVO> user = uservice.getUserList();
-		
-		mylog.debug(user.toString());
-		
-		model.addAttribute("userlist", user);
-		
-		return "/challenge/memberManagement";
-	}
-	// http://localhost:8080/challenge/adminmodal
-//	@ResponseBody
-//	@PostMapping("/adminmodal")
-//	public String adminmodal(Model model,@RequestParam Map<String,Object> map) throws Exception {
-//		mylog.debug("모달창에 넘길 mno : " + map);
-//		
-//		List<UserVO> vo = service.adminmodal(map);
-//		
-////		model.addAttribute("UserVO", vo);
-//		
-//		return null;
-//	}
-	
-	////////////////////// 관리자 페이지 ///////////////////////////
-	
-	
-	
-	
-	
 	
 	
 	/////////////////////////// 영민 비지니스 계좌 송금 ///////////////////////////////////

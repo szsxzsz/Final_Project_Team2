@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Locale;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.chagok.domain.PayVO;
 import com.chagok.domain.UserVO;
 import com.chagok.service.PayService;
+import com.chagok.service.UserService;
 import com.siot.IamportRestClient.IamportClient;
 import com.siot.IamportRestClient.exception.IamportResponseException;
 import com.siot.IamportRestClient.response.IamportResponse;
@@ -35,54 +37,42 @@ public class PaymentController {
 
 	@Inject
 	private PayService service;
-	// 결제하기
-	// http://localhost:8080/pay
-//	@GetMapping(value="/pay")
-//	public String payGET() {
-//		
-//		return "/challenge/pay";
-//	}
-//	
 	
-//	private IamportClient api;
-//	public PaymentController() {
-//		// REST API 키와 REST API secret 를 아래처럼 순서대로 입력한다.
-//		this.api = new IamportClient("5615632670260363","a4x93RXR27aEPQ3s7WSqhacyrdZNUzK0S3J1UQtqU1FfhC9D5urwfaSrlAkjtyFzsoSZsYXVWCliOsPN");
-//	}
-//	// 결제정보 확인(검증)
-//	
-//	@ResponseBody
-//	@RequestMapping(value="/payCallback", method=RequestMethod.POST)
-//	public IamportResponse<Payment> paymentByImpUid(
-//			Model model
-//			, Locale locale
-//			, HttpSession session
-//			, @PathVariable(value= "imp_uid") String imp_uid) throws IamportResponseException, IOException
-//	{	
-//			return api.paymentByImpUid(imp_uid);
-//	}
-
-	// 결제페이지 - GET
+	@Inject
+	private UserService uService;
+	
+	
+	
 	// http://localhost:8080/payment
 	@GetMapping(value="/payment")
-	public String paymentGET(UserVO uvo, Model model) throws Exception{
+	public String paymentGET(Model model, HttpSession session) throws Exception{
 		mylog.debug(" /payment 호출 -> 페이지 이동 ");
-		mylog.debug(uvo.getMno()+"");
-		int mno = uvo.getMno();
 		
-		model.addAttribute("mno", mno);
+		if (session.getAttribute("mno") != null) {
+			   int mno = (int)session.getAttribute("mno");
+			   
+			   UserVO userVO = uService.getUser(mno);
+			   model.addAttribute("userVO", userVO);
+		   } else {
+			   return "/chagok/login";
+		   }
+		
 		return "/payment/payment";
 	}
 	
 	@PostMapping(value="/paymentPOST")
-	public String paymentPOST(@RequestBody PayVO vo) {
+	public String paymentPOST(@RequestBody PayVO vo,HttpSession session) {
 		mylog.debug(" /paymentPOST 호출 !! ");
-		mylog.debug("mno : "+vo.getMno());
+		int mno = 0;
+		if (session.getAttribute("mno") != null) {
+			   mno = (int)session.getAttribute("mno");
+		   }
+		mylog.debug("mno : "+mno);
 		mylog.debug("pay_cash : "+vo.getPay_cash());
 		mylog.debug("pay_mean : "+vo.getPay_mean());
-		mylog.debug("pay_regdate : "+vo.getPay_regdate());
 		
-		service.insertPay(vo.getMno(), vo.getPay_cash(), vo.getPay_mean(), vo.getPay_regdate());
+		service.insertPay(mno, vo.getPay_cash(), vo.getPay_mean());
+		uService.insertBuy(mno, vo.getPay_cash());
 		
 		return "/payment/payment";
 	}

@@ -87,7 +87,7 @@
               </a>
               <ul class="treeview-menu active">
                 <li><a href="/myPage"><i class="fa fa-circle-o"></i> 회원정보 관리</a></li>
-                <li><a href="/challenge/challengeListAll"><i class="fa fa-circle-o"></i> 내 챌린지</a></li>
+                <li><a href="/challenge/mychallenge"><i class="fa fa-circle-o"></i> 내 챌린지</a></li>
                 <li><a href="/myBoardWrite"><i class="fa fa-circle-o"></i> 내가 쓴 글</a></li>
                 <li><a href="/unregist"><i class="fa fa-circle-o"></i> 회원탈퇴</a></li>
 <!--                 <li><a href="../charts/flot.html"><i class="fa fa-circle-o"></i> Flot</a></li> -->

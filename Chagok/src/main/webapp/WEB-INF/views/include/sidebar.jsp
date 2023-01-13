@@ -71,6 +71,7 @@
                 <li><a href="/commumain"></i> 모집 중 챌린지</a></li>
                 <li><a href="/challenge/mychallenge"></i> 내 챌린지</a></li>
                 <li><a href="/reviewboard"></i> 후기 게시판</a></li>
+                <li><a href="/payment"></i> 꿀 충전</a></li>
               </ul>
             </li>
             <li class="treeview active">
@@ -112,8 +113,8 @@
                 <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu active">
-                <li><a href="/challenge/chListAll"></i> 챌린지 관리</a></li>
-                <li><a href="/#"></i> 회원 관리</a></li>
+                <li><a href="/chManagement"></i>챌린지 관리</a></li>
+                <li><a href="/userManagement"></i>회원 관리</a></li>
                 <li><a href="/bizAccount"></i>차곡 계좌 관리</a></li>
 <!--                 <li><a href="../charts/flot.html"><i class="fa fa-circle-o"></i> Flot</a></li> -->
 <!--                 <li><a href="../charts/inline.html"><i class="fa fa-circle-o"></i> Inline charts</a></li> -->

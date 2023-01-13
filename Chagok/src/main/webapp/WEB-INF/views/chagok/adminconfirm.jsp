@@ -15,7 +15,7 @@
 			
 			$.ajax({
 				type : "get",
-				url : "/challenge/confirm",
+				url : "/confirm",
 				data : {
 					status : 1,
 					cno : a
@@ -61,7 +61,7 @@
 	<title>관리자 챌린지 승인</title>
 </head>	
 <body>
-<%-- ${challengeList } --%>
+<%-- ${chListAll } --%>
 	<div class="board_wrap">
 		<div class="board_title"><strong>관리자 챌린지 승인</strong></div>
 		<div class="board_list_wrap">
@@ -76,7 +76,7 @@
 				</div>
 				
 				<div>
-					<c:forEach items="${challengeList }" var="cl">
+					<c:forEach items="${chListAll }" var="cl">
 						<div class="num" style="padding-right:10px; width:155px; padding-left: 10px;">${cl.cno }</div>
 						<div class="num" style="padding-left:10px; width: 110px;">
 							<c:choose>
@@ -120,19 +120,19 @@
 					    <ul class="pagination pagination-sm no-margin pull-right">
 					
 					        <c:if test="${pagevo.prev }">
-					            <li><a href="/challenge/chListAll?page=${pagevo.startPage-1 }">«</a></li>
+					            <li><a href="/chManagement?page=${pagevo.startPage-1 }">«</a></li>
 					        </c:if>
 					
 					        <c:forEach var="idx" begin="${pagevo.startPage }" end="${pagevo.endPage }" step="1">
 					            <li
 								    <c:out value="${idx == pagevo.cri.page? 'class=active':'' }"/>
 								>
-								    <a href="/challenge/chListAll?page=${idx }">${idx }</a>
+								    <a href="/chManagement?page=${idx }">${idx }</a>
 								</li>
 					        </c:forEach>
 					
 					        <c:if test="${pagevo.next }">
-					            <li><a href="/challenge/chListAll?page=${pagevo.endPage+1 }">»</a></li>
+					            <li><a href="/chManagement?page=${pagevo.endPage+1 }">»</a></li>
 					        </c:if>
 					    </ul>
 					</div>

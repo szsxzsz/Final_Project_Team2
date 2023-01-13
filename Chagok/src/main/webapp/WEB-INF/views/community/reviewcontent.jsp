@@ -20,23 +20,23 @@
 // 				});
 			
 				// 삭제
-				$(".btn-warning").click(function(){
+				$(".sbtn2").click(function(){
 					
 					formObj.attr("action","/reviewremove");
 					formObj.submit();
 				});
 				
-				// 목록가기
-				$(".bg-purple").click(function(){
-					location.href = "/reviewboard";
-				});
+// 				// 목록가기
+// 				$(".bg-purple").click(function(){
+// 					location.href = "/reviewboard";
+// 				});
 				
 				
 			});
 </script> 
 
-<h1> 후기글 상세 </h1>
-
+<h1> 챌린지 후기 글 </h1>
+${startDate }
 	<section class="content" >
 	 <form role="form" method="post">
 		<input type="hidden" name="bno" value="${boardChallenge.bno }">
@@ -110,11 +110,64 @@
 	</div>
 	<br>
 
+     <div class="bt_wrap">       
  	<c:set var="writer" value="${boardChallenge.b_writer }"/>
 	<c:if test= "${nick == '관리자' || nick == writer}">
-        <input class="btn btn-danger" type="submit" value="수정하기" onclick="location.href='/reviewupdate?bno=${boardChallenge.bno}&cno=${boardChallenge.cno }';" style="width:218px; margin-left: 950px; background-color: #66BB7A;">
-		<input class="btn btn-warning" type="submit" value="삭제하기" style="width:218px; margin-left: 950px; background-color: #66BB7A;">
+        <input class="sbtn" type="button" value="수정하기" onclick="location.href='/reviewupdate?bno=${boardChallenge.bno}&cno=${boardChallenge.cno }';">
+		<input class="sbtn2" type="submit" value="삭제하기">
 	</c:if>
-        <input class="btn bg-purple" type="submit" value="돌아가기" onclick="location.href='/reviewboard'" style="width:218px; margin-left: 950px; background-color: #66BB7A;">
+        <input class="sbtn" type="submit" value="돌아가기" onclick="location.href='/reviewboard';">
+     </div>
 </section>
+
+<style>
+.bt_wrap {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.bt_wrap a {
+    display: inline-block;
+    min-width: 80px;
+    margin-left: 10px;
+    padding: 10px;
+    border: 1px solid #FFDB83;
+    border-radius: 2px;
+    font-size: 1.4rem;
+}
+
+.bt_wrap a:first-child {
+    margin-left: 0;
+}
+
+.bt_wrap a.on {
+    background: #FFDB83;
+    color: #fff;
+}   
+.bt_wrap input.sbtn {
+	display: inline-block;
+    min-width: 100px;
+    margin-left: 10px;
+    padding: 10px;
+    border: 1px solid #FFDB83;
+    border-radius: 2px;
+    font-size: 1.4rem;
+    background-color: #FFDB83;
+    color: #fff;
+}
+
+.bt_wrap input.sbtn2 {
+	display: inline-block;
+    min-width: 100px;
+    margin-left: 10px;
+    padding: 10px;
+    border: 1px solid #FFDB83;
+    border-radius: 2px;
+    font-size: 1.4rem;
+    background-color: #fff;
+    color: #FFDB83;
+}
+
+</style>    
+
 <%@ include file="../include/footer.jsp"%>

@@ -718,104 +718,110 @@ public class AssetController {
 	@GetMapping(value = "/dtRpt")
 	public String dateReport(HttpSession session, Model model) throws Exception {
 		// 로그인 확인
-		if(session.getAttribute("mno")==null) {
-			return "redirect:/login?pageInfo=asset/dtRpt";
-		}
-		int mno = (int)session.getAttribute("mno");
-		String nick = userService.getUser(mno).getNick();
-		
-		/////////////// 1. service에서 DB 가져오기 ///////////////
+		Integer mno = (Integer)session.getAttribute("mno");
 		int mm = 0;
 		int mm2 = 1;
-		// 1. 이번달 총 지출
-		Integer dtSum1 = rptService.dtSum(mno, mm);
-		mylog.debug("dtSum1 : "+dtSum1);
+		if (mno==null) {
+			return "redirect:/login?pageInfo=assetmain";
+		}
 		
-		// 2. 지난달 총 지출
-		Integer dtSum2 = rptService.dtSum(mno, mm2);
-		mylog.debug("dtSum2 : "+dtSum2);
-		
-		// 3. 이번달 평균 지출
-		Integer dtAvg1 = rptService.dtAvg(mno, mm);
-		mylog.debug("dtAvg1 : "+dtAvg1);
-		
-		// 4. 지난달 평균 지출
-		Integer dtAvg2 = rptService.dtAvg(mno, mm2);
-		mylog.debug("dtAvg2 : "+dtAvg2);
-		
-		// 최근 3개월 평균 지출
-		Integer dtAvg3 = rptService.dtAvg3(mno);
-		mylog.debug("dtAvg3 : "+dtAvg3);
-		
-		// 5. 이번달 예상 지출
-		Integer expSum = rptService.expSum(mno, mm);
-		mylog.debug("expSum : "+expSum);
-		
-		// 6. 이번달 총 수입
-		Integer dtSumIn = rptService.dtSumIn(mno, mm);
-		mylog.debug("dtSumIn : "+dtSumIn);
-		
-		// 7. 이번달 무지출 일수
-		Integer noOut = rptService.noOut(mno, mm);
-		mylog.debug("noOut : "+noOut);
-		
-		// 8. 이번달 결제 건수(지출 횟수)
-		Integer outCnt = rptService.outCnt(mno, mm);
-		mylog.debug("outCnt : "+outCnt);
-		
-		// 9. 이번달 누적 지출
-		List<Map<String, Object>> outCum = rptService.outCum(mno, mm);
-		mylog.debug("outCum : "+outCum.size());
-		
-		// 10. 일간 통계
-		List<Map<String, Object>> day = rptService.day(mno, mm);
-		mylog.debug("day : "+day.size());
-		
-		// 11. 주간 통계
-		List<Map<String, Object>> week = rptService.week(mno);
-		mylog.debug("week : "+week.size());
-		
-		// 12. 월간 통계
-		List<Map<String, Object>> month = rptService.month(mno);
-		mylog.debug("month : "+month.size());
-		
-		// 13. 지출액 TOP 4
-		List<Map<String, Object>> amtTop = rptService.amtTop(mno, mm);
-		mylog.debug("amtTop : "+amtTop.size());
-		
-		// 14. 지출횟수 TOP 4
-		List<Map<String, Object>> cntTop = rptService.cntTop(mno, mm);
-		mylog.debug("cntTop : "+cntTop.size());		
-		
-		/////////////// 2. List<Map> -> JsonArray ///////////////
-		String outCumjson = rptService.listMapToJson(outCum);
-		String dayjson = rptService.listMapToJson(day);
-		String weekjson = rptService.listMapToJson(week);
-		String monthjson = rptService.listMapToJson(month);
-		String amtTopjson = rptService.listMapToJson(amtTop);
-		String cntTopjson = rptService.listMapToJson(cntTop);
-		
-		/////////////// 3. model로 전달 ///////////////
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("dtSum1", dtSum1);
-		map.put("dtSum2", dtSum2);
-		map.put("dtAvg1", dtAvg1);
-		map.put("dtAvg2", dtAvg2);
-		map.put("dtAvg3", dtAvg3);
-		map.put("expSum", expSum);
-		map.put("dtSumIn", dtSumIn);
-		map.put("noOut", noOut);
-		map.put("outCnt", outCnt);
-		map.put("outCumjson", outCumjson);
-		map.put("dayjson", dayjson);
-		map.put("weekjson", weekjson);
-		map.put("monthjson", monthjson);
-		map.put("amtTopjson", amtTopjson);
-		map.put("cntTopjson", cntTopjson);
-		model.addAttribute("map", map);
-		model.addAttribute("nick", nick);
-		
-		return "/asset/dateReport";
+		if(abService.chkAb(mno, mm)==0) {
+			model.addAttribute("chkAb", "abN");
+		}
+		else {		
+			model.addAttribute("chkAb", "abY");
+			String nick = userService.getUser(mno).getNick();
+			
+			/////////////// 1. service에서 DB 가져오기 ///////////////
+			// 1. 이번달 총 지출
+			Integer dtSum1 = rptService.dtSum(mno, mm);
+			mylog.debug("dtSum1 : "+dtSum1);
+			
+			// 2. 지난달 총 지출
+			Integer dtSum2 = rptService.dtSum(mno, mm2);
+			mylog.debug("dtSum2 : "+dtSum2);
+			
+			// 3. 이번달 평균 지출
+			Integer dtAvg1 = rptService.dtAvg(mno, mm);
+			mylog.debug("dtAvg1 : "+dtAvg1);
+			
+			// 4. 지난달 평균 지출
+			Integer dtAvg2 = rptService.dtAvg(mno, mm2);
+			mylog.debug("dtAvg2 : "+dtAvg2);
+			
+			// 최근 3개월 평균 지출
+			Integer dtAvg3 = rptService.dtAvg3(mno);
+			mylog.debug("dtAvg3 : "+dtAvg3);
+			
+			// 5. 이번달 예상 지출
+			Integer expSum = rptService.expSum(mno, mm);
+			mylog.debug("expSum : "+expSum);
+			
+			// 6. 이번달 총 수입
+			Integer dtSumIn = rptService.dtSumIn(mno, mm);
+			mylog.debug("dtSumIn : "+dtSumIn);
+			
+			// 7. 이번달 무지출 일수
+			Integer noOut = rptService.noOut(mno, mm);
+			mylog.debug("noOut : "+noOut);
+			
+			// 8. 이번달 결제 건수(지출 횟수)
+			Integer outCnt = rptService.outCnt(mno, mm);
+			mylog.debug("outCnt : "+outCnt);
+			
+			// 9. 이번달 누적 지출
+			List<Map<String, Object>> outCum = rptService.outCum(mno, mm);
+			mylog.debug("outCum : "+outCum.size());
+			
+			// 10. 일간 통계
+			List<Map<String, Object>> day = rptService.day(mno, mm);
+			mylog.debug("day : "+day.size());
+			
+			// 11. 주간 통계
+			List<Map<String, Object>> week = rptService.week(mno);
+			mylog.debug("week : "+week.size());
+			
+			// 12. 월간 통계
+			List<Map<String, Object>> month = rptService.month(mno);
+			mylog.debug("month : "+month.size());
+			
+			// 13. 지출액 TOP 4
+			List<Map<String, Object>> amtTop = rptService.amtTop(mno, mm);
+			mylog.debug("amtTop : "+amtTop.size());
+			
+			// 14. 지출횟수 TOP 4
+			List<Map<String, Object>> cntTop = rptService.cntTop(mno, mm);
+			mylog.debug("cntTop : "+cntTop.size());		
+			
+			/////////////// 2. List<Map> -> JsonArray ///////////////
+			String outCumjson = rptService.listMapToJson(outCum);
+			String dayjson = rptService.listMapToJson(day);
+			String weekjson = rptService.listMapToJson(week);
+			String monthjson = rptService.listMapToJson(month);
+			String amtTopjson = rptService.listMapToJson(amtTop);
+			String cntTopjson = rptService.listMapToJson(cntTop);
+			
+			/////////////// 3. model로 전달 ///////////////
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("dtSum1", dtSum1);
+			map.put("dtSum2", dtSum2);
+			map.put("dtAvg1", dtAvg1);
+			map.put("dtAvg2", dtAvg2);
+			map.put("dtAvg3", dtAvg3);
+			map.put("expSum", expSum);
+			map.put("dtSumIn", dtSumIn);
+			map.put("noOut", noOut);
+			map.put("outCnt", outCnt);
+			map.put("outCumjson", outCumjson);
+			map.put("dayjson", dayjson);
+			map.put("weekjson", weekjson);
+			map.put("monthjson", monthjson);
+			map.put("amtTopjson", amtTopjson);
+			map.put("cntTopjson", cntTopjson);
+			model.addAttribute("map", map);
+			model.addAttribute("nick", nick);
+		}
+			return "/asset/dateReport";
 	}	
 	
 	
@@ -823,43 +829,49 @@ public class AssetController {
 	@GetMapping(value = "/ctRpt")
 	public String cateReport(HttpSession session, Model model) throws Exception {
 		// 로그인 확인
-		int mno = (int)session.getAttribute("mno");
-		String nick = userService.getUser(mno).getNick();
-		if(mno==0) {
-			return "/chagok/login";
-		}
-		mylog.debug("mno : "+mno);
-
-		/////////////// 1. service에서 DB 가져오기 ///////////////
+		Integer mno = (Integer)session.getAttribute("mno");
 		int mm = 0;
-		// 1. 최다 지출 카테고리
-		List<Map<String, Object>> cateCntList = rptService.cateCnt(mno, mm);
-		mylog.debug("cateCntList : "+cateCntList.size());
-//		
-		// 2. 최대 지출 카테고리
-		List<Map<String, Object>> cateSumList = rptService.cateSum(mno, mm);
-		mylog.debug("cateSumList : "+cateSumList.size());
+		if (mno==null) {
+			return "redirect:/login?pageInfo=assetmain";
+		}
 		
-		// 3. 챌린지 추천
-		List<ChallengeVO> chRandList = rptService.chRand(mno, mm);
-		mylog.debug("chRandList : "+chRandList.size());
+		if(abService.chkAb(mno, mm)==0) {
+			model.addAttribute("chkAb", "abN");
+		}
+		else {		
+			model.addAttribute("chkAb", "abY");
+			String nick = userService.getUser(mno).getNick();
+			
+			/////////////// 1. service에서 DB 가져오기 ///////////////
+			// 1. 최다 지출 카테고리
+			List<Map<String, Object>> cateCntList = rptService.cateCnt(mno, mm);
+			mylog.debug("cateCntList : "+cateCntList.size());
 		
-		// 4. 카드 추천
-		List<PropCardVO> cardRandList = rptService.cardRand(mno, mm);
-		mylog.debug("cardRandList : "+cardRandList.size());
-		
-		/////////////// 2. List<Map> -> JsonArray ///////////////
-		String cateCntjson = rptService.listMapToJson(cateCntList);
-		String cateSumjson = rptService.listMapToJson(cateSumList);
-		
-		/////////////// 3. model로 전달 ///////////////
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("cateCntjson", cateCntjson);
-		map.put("cateSumjson", cateSumjson);
-		map.put("chRandList", chRandList);
-		map.put("cardRandList", cardRandList);
-		model.addAttribute("map", map);
-		model.addAttribute("nick", nick);
+			// 2. 최대 지출 카테고리
+			List<Map<String, Object>> cateSumList = rptService.cateSum(mno, mm);
+			mylog.debug("cateSumList : "+cateSumList.size());
+			
+			// 3. 챌린지 추천
+			List<ChallengeVO> chRandList = rptService.chRand(mno, mm);
+			mylog.debug("chRandList : "+chRandList.size());
+			
+			// 4. 카드 추천
+			List<PropCardVO> cardRandList = rptService.cardRand(mno, mm);
+			mylog.debug("cardRandList : "+cardRandList.size());
+			
+			/////////////// 2. List<Map> -> JsonArray ///////////////
+			String cateCntjson = rptService.listMapToJson(cateCntList);
+			String cateSumjson = rptService.listMapToJson(cateSumList);
+			
+			/////////////// 3. model로 전달 ///////////////
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("cateCntjson", cateCntjson);
+			map.put("cateSumjson", cateSumjson);
+			map.put("chRandList", chRandList);
+			map.put("cardRandList", cardRandList);
+			model.addAttribute("map", map);
+			model.addAttribute("nick", nick);
+		}
 		return "/asset/cateReport";
 	}
 	
