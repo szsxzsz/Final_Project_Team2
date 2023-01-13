@@ -153,7 +153,7 @@ function requestPay2()
 </script>
 
     <main>
-    ${userVO }
+<%--     ${userVO } --%>
         <div class="ptop">
             <div class="pimg">
               <a href="https://imgbb.com/"><img src="https://i.ibb.co/tbSR7Ch/hero.png" alt="hero" border="0"></a>
@@ -203,8 +203,8 @@ function requestPay2()
 <!-- 		<button onclick="requestPay()" id="pay">결제하기</button>  -->
 <!-- 		결제하기 버튼 생성 -->
 		</div>
-		<br>
-		<div class="pcard">
+		<div style="border: 1px solid #FEFCF5;"></div>
+		<div class="pcard" style="clear:both;">
 			<h1 class="pcard__title">Option 1</h1>
 			<h2 class="pcard__price">
 				<sup></sup>5,000<sup>꿀</sup>

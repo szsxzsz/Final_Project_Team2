@@ -149,7 +149,6 @@ public class ChallengeController {
 	public String minusFeed(Model model,@RequestParam("cno") int cno,HttpSession session,ChallengeVO cvo,MinusVO mvo) throws Exception {
 		mylog.debug(" 수 지 : minusFeed Get 호출 ");
 		
-//		int mno = cvo.getMno();
 		Integer mno = service.getChallengeInfo(cno).getMno();		
 		ChallengeVO vo = service.getChallengeInfo(cno);
 		List<Map<String, Object>> minusPeoList = service.getMinusPeople(cno);
@@ -158,25 +157,14 @@ public class ChallengeController {
 		ChallengeVO vo3 = service.getMoney(mno);
 		
 		// 서비스 -> DAO 게시판 리스트 가져오기
-		// getAbookList(1) -> getAbookList(mno) 수정 필요 !!!!!
-//		List<AbookVO> abookList = aService.getAbookList(mno);
 		List<Map<String, Object>> minusAbook = service.getMinusAbook(mno, cno);
 		mylog.debug(minusAbook+"");
-//		mylog.debug("abookList : "+abookList);
 		
-//		List<CategoryVO> cateList = aService.CateList();
-//		mylog.debug("cateList : "+cateList);
 		mylog.debug("minusFeedGET()에서 id : "+session.getId());
 		SysLogVO sysLogVO = new SysLogVO();
-//		ObjectMapper mapper = new ObjectMapper();
-
-//		String jsonAbook = mapper.writeValueAsString(abookList);
-//		mylog.debug("jsonAbook : "+jsonAbook);
-//		String jsonCate = mapper.writeValueAsString(cateList);
-//		mylog.debug("jsonCate : "+jsonCate);
 
 	   // 연결된 뷰페이지로 정보 전달(model)
-		model.addAttribute("sessionId", sysLogVO.getUserId());
+	   model.addAttribute("sessionId", sysLogVO.getUserId());
 	   model.addAttribute("vo", vo);
 	   model.addAttribute("minusPeoList", minusPeoList);
 	   model.addAttribute("vo2", vo2);
@@ -184,10 +172,6 @@ public class ChallengeController {
 	   model.addAttribute("mvo",mvo);
 	   model.addAttribute("vo3", vo3);
 	   
-//	   model.addAttribute("abookList", abookList);
-//	   model.addAttribute("cateList", cateList);
-//	   model.addAttribute("jsonAbook",jsonAbook);
-//		model.addAttribute("jsonCate",jsonCate);
 	   model.addAttribute("minusAbook", minusAbook);
 	   model.addAttribute("host",uservice.getUser(mno));
 	   
