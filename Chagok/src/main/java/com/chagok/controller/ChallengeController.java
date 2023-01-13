@@ -11,6 +11,8 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.inject.Inject;
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -44,6 +46,7 @@ import com.chagok.domain.PlusVO;
 import com.chagok.domain.SysLogVO;
 import com.chagok.domain.UserVO;
 import com.chagok.service.AbookService;
+import com.chagok.service.AlertService;
 import com.chagok.service.ChallengeService;
 import com.chagok.service.FeedService;
 import com.chagok.service.UserService;
@@ -64,18 +67,28 @@ public class ChallengeController {
 	@Inject
 	private UserService uservice;
 	
+	@Inject
+	private AlertService alertService;
+	
 	@Resource(name="uploadPath")
 	private String uploadPath;
 
 	@Inject
 	private FeedService feedservice;
+	
 
 	private static final Logger mylog = LoggerFactory.getLogger(ChallengeController.class);
 
 	// http://localhost:8080/challenge/plusFeed?cno=2
 	@GetMapping(value = "/plusFeed")
-	public String plusfeedGET(Model model, @RequestParam("cno") int cno, HttpSession session, UserVO vo) throws Exception {
+	public String plusfeedGET(Model model, @RequestParam("cno") int cno, HttpSession session, UserVO vo,
+			HttpServletRequest req
+			) throws Exception {
 		mylog.debug("plusfeedGET() 호출");
+		
+	    ServletContext appliation = req.getSession().getServletContext();
+	    
+	    appliation.setAttribute("alertAPP", "test");
 
 		List<Map<String, Object>> plusPeoList = service.getPlusPeople(cno);
 		mylog.debug("plusFeedGET()에서 id : "+session.getId());
@@ -491,9 +504,12 @@ public class ChallengeController {
 		
 		// 페이징 처리
 	    PageMaker pagevo = new PageMaker();
+	    pagevo.setDisplayPageNum(5);
 	    pagevo.setCri(cri);
 	    pagevo.setTotalCount(10000);
 		
+	    mylog.debug(pagevo.toString());
+	    
 	    model.addAttribute("pagevo", pagevo);
 		model.addAttribute("challengeList", challengeList);
 		
@@ -532,17 +548,17 @@ public class ChallengeController {
 		return "/challenge/memberManagement";
 	}
 	// http://localhost:8080/challenge/adminmodal
-	@ResponseBody
-	@GetMapping("/adminmodal")
-	public String adminmodal(Model model,@RequestParam Integer mno) throws Exception {
-		mylog.debug("모달창에 넘길 mno : " + mno);
-		
-		List<UserVO> vo = service.adminmodal(mno);
-		
-		model.addAttribute("UserVO", vo);
-		
-		return "challenge/memberManagement";
-	}
+//	@ResponseBody
+//	@PostMapping("/adminmodal")
+//	public String adminmodal(Model model,@RequestParam Map<String,Object> map) throws Exception {
+//		mylog.debug("모달창에 넘길 mno : " + map);
+//		
+//		List<UserVO> vo = service.adminmodal(map);
+//		
+////		model.addAttribute("UserVO", vo);
+//		
+//		return null;
+//	}
 	
 	////////////////////// 관리자 페이지 ///////////////////////////
 	

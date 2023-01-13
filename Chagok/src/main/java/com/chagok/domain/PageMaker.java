@@ -13,8 +13,17 @@ public class PageMaker {
 	private int endPage;
 	private boolean prev;
 	private boolean next;
-	private int displayPageNum = 9;
+	private int displayPageNum;
 	private Criteria cri;
+	
+	
+	public PageMaker() {
+	    this.displayPageNum=10;
+	}
+	
+	public void setDisplayPageNum(int displayPageNum) {
+		this.displayPageNum = displayPageNum;
+	}
 	
 	public void setCri(Criteria cri) {
 		this.cri = cri;

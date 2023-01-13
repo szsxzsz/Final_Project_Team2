@@ -7,49 +7,75 @@
 <%@ include file="../include/sidebar.jsp" %>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title> 후기글 수정 </title>
+<script>
+// 	$(function(){
+
+	
+	
+// 	});
+	
+</script>
+
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>차곡 계좌 관리</title>
 </head>	
-	<body>
-
-
-    <div class="board_wrap">
-        <div class="board_title">
-        <strong>후기글 수정</strong>
-        <p> 후기 글 수정</p>
-    	</div>
- 	    <div class="board_list_wrap">
-         <div class="board_list">
-             <div class="top">
-             	 <div class="title" >
-             	 	후기 제목
-             	 	<hr>
-				     <input type="text" class="form-control" name="b_title" value="${boardChallenge.b_title }" style="text-align:center; display:block; margin: 0 auto; width:300px;">
-             	 </div>
-             	 
-             	 <div class="title" >작성자
-             		 <hr>
-				     <input type="text" class="form-control" name="b_writer" value="${boardChallenge.b_writer }" style="text-align:center; display:block; margin: 0 auto; width:150px">
-             	 </div>
-			 </div>
-         </div>
-         <div class="board_list">
-             <div class="top">
-             	 <div class="title" style="width:100%;">후기 내용</div>
-			    
-			     <textarea class="form-control" rows="3" style="margin-top:15px; display:block; margin: 0 auto; width: 600px; height: 280px;">${boardChallenge.b_content }</textarea>
-			     <br>
-			     <br>
-             	 <br>
-			</div>
-         </div>
-       <div class="bt_wrap">
-       <input class="sbtn" type="button" value="작성하기" onclick="location.href='/';" >
-       <input class="sbtn" type="button" value="목록으로 돌아가기" onclick="location.href='/reviewboard';" >
-  </div>  
-</div> 
-</div>     
+<body>
+	<div class="board_wrap">
+		<div class="board_title"><strong>차곡 계좌 관리</strong></div>
+		<div class="board_list_wrap">
+			<div class="board_list">
+				<div class="top">
+					<div class="num" style="width:100px;">no.</div>
+					<div class="num" style="width:200px;">거래일시</div>
+					<div class="num" style="width:200px;">입금자명</div>
+					<div class="num" style="width:150px;">출금</div>
+					<div class="num" style="width:150px;">입금</div>
+					<div class="num" style="width:200px;">잔액</div>
+				</div>
+				
+				<div>
+					<c:forEach items="${bizList }" var="biz">
+						<div class="num" style="width:100px;">${biz.bizno }</div>
+						<div class="num" style="width:200px;"><fmt:formatDate value="${biz.biz_date }" pattern="yyyy-MM-dd hh:mm" type="both"/></div>
+						<div class="num" style="width:200px;">${biz.biz_holder_name }</div>
+						<c:if test="${biz.biz_inout==1 }">
+							<div class="num" style="width:150px;">-<fmt:formatNumber value="${biz.biz_amount }"/></div>
+							<div class="num" style="width:150px;"></div>
+						</c:if>
+						<c:if test="${biz.biz_inout==2 }">
+							<div class="num" style="width:150px;"></div>
+							<div class="num" style="width:150px;">+<fmt:formatNumber value="${biz.biz_amount }"/></div>
+						</c:if>
+						<div class="num" style="width:200px;"><fmt:formatNumber value="${biz.biz_balance }"/></div>
+					</c:forEach>
+				</div>
+		     
+				<div class="board_page">
+					<div class="box-footer clearfix">
+					    <ul class="pagination pagination-sm no-margin pull-right">
+					
+					        <c:if test="${pagevo.prev }">
+					            <li><a href="/bizAccount?page=${pagevo.startPage-1 }">«</a></li>
+					        </c:if>
+					
+					        <c:forEach var="idx" begin="${pagevo.startPage }" end="${pagevo.endPage }" step="1">
+					            <li
+								    <c:out value="${idx == pagevo.cri.page? 'class=active':'' }"/>
+								>
+								    <a href="/bizAccount?page=${idx }">${idx }</a>
+								</li>
+					        </c:forEach>
+					
+					        <c:if test="${pagevo.next }">
+					            <li><a href="/bizAccount?page=${pagevo.endPage+1 }">»</a></li>
+					        </c:if>
+					    </ul>
+					</div>
+				</div>
+			</div>  
+		</div>  
+	</div> 
 </body>
 </html>
 
@@ -154,7 +180,7 @@ a {
 }
 
 .board_list .title {
-	width: 50%;
+	width: 70%;
     text-align: center;
 }
 
@@ -431,5 +457,5 @@ a {
 
 </style>
 
-
+</div>
 <%@ include file="../include/footer.jsp"%>

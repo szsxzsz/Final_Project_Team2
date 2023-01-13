@@ -166,8 +166,8 @@
 	
 	<!-- 챌린지 등록하기 --> 
   	<insert id="challengeRegist">
-     	insert into challenge (cno,c_title,ctno,c_period,c_start,c_pcnt,c_deposit,c_freq,c_amount,c_content,c_status,c_sort,c_min,c_file,c_thumbFile,c_cnt,mno,c_person) 
-     	values (#{cno},#{c_title},#{ctno},#{c_period},#{c_start},#{c_pcnt},#{c_deposit},#{c_freq},#{c_amount},#{c_content},#{c_status},#{c_sort},#{c_min},#{c_file},#{c_thumbFile},#{c_cnt},#{mno},#{c_person})  
+     	insert into challenge (cno,c_title,ctno,c_period,c_start,c_pcnt,c_deposit,c_freq,c_amount,c_content,c_status,c_sort,c_min,c_file,c_thumbFile,c_cnt,mno,c_person,c_total) 
+     	values (#{cno},#{c_title},#{ctno},#{c_period},#{c_start},#{c_pcnt},#{c_deposit},#{c_freq},#{c_amount},#{c_content},#{c_status},#{c_sort},#{c_min},#{c_file},#{c_thumbFile},#{c_cnt},#{mno},#{c_person},#{c_total})  
   	</insert>
   	
   	<!-- 챌린지 목록 -->
@@ -244,16 +244,12 @@
 	
 	<!-- 검색1 -->
 	<select id="cList" resultType="com.chagok.domain.ChallengeVO" parameterType="com.chagok.domain.SearchCriteria">
-		SELECT  *
-		 	FROM ( 
-		      	  SELECT *
-               		FROM  ( select cno, ch.ctno ctno, c_title, c_file, c_pcnt, c_period, c_start, c_deposit, c_content, c_person, mno, c_freq, c_sort, c_amount, c_total, c_min, c_status, c_thumbFile, c_cnt, ct_top, ct_bottom, 
-		            	   ROW_NUMBER() OVER(ORDER BY cno) AS RNUM
-							from challenge ch join category c
-							where ch.ctno = c.ctno) AP
-		         	WHERE 1=1 
+	SELECT  *
+		 FROM (
+				select *, @rownum := @rownum + 1 AS RNUM from chl 
+				JOIN ( SELECT @rownum := 0) R
+													) MP
 		         		<include refid="search"></include>
-		           							            ) MP
 		WHERE RNUM BETWEEN #{rowStart} AND #{rowEnd}
 		ORDER BY cno
 	</select>
@@ -315,6 +311,11 @@
 		insert into alert(cno, a_receive, a_content) values(#{cno}, #{a_receive}, #{a_content});
 	</insert>
 	
+	<!-- 알림 가져옴  -->
+	<select id="getAlarm" resultType="com.chagok.domain.AlertVO">
+		select * from alert where cno=#{cno}
+	</select>
+	
 	<!-- 메시지 저장  -->
 	<insert id="saveMsg1">
 		insert into feed(contents, f_date, f_receive, cno) values(#{contents}, #{f_date}, #{f_receive}, #{cno});
@@ -327,24 +328,12 @@
 		where cno=#{cno};
 	</update>
 
-	<!-- 페이징처리 공지게시판 한 페이지당 최대갯수 -->
-	<select id="nboardPage" resultType="com.chagok.domain.BoardVO">
-	  <![CDATA[
-		select * from board
-		where b_sort = 2
-		order by bno desc, b_date desc
-		limit #{page},10
-		]]>
-	</select>
-	
 	<!-- 페이징처리 공지게시판 페이지 넘버 -->
 	<select id="nboardPageNo" resultType="com.chagok.domain.BoardVO">
-	  <![CDATA[
 		select * from board
 		where b_sort = 2
 		order by bno desc, b_date desc
 		limit #{pageStart},#{perPageNum}
-		]]>
 	</select>
 	
 	<!-- 공지게시판 글 전체 개수 -->
@@ -354,24 +343,12 @@
 		where b_sort= 2
 	</select>
 	
-	<!-- 페이징처리 후기게시판 한 페이지당 최대갯수 -->
-	<select id="rboardPage" resultType="com.chagok.domain.BoardVO">
-	  <![CDATA[
-		select * from board b inner join challenge c
-		where b_sort = 1 and b.cno = c.cno
-		order by bno desc, b_date desc
-		limit #{page},10;
-		]]>
-	</select>
-	
 	<!-- 페이징처리 후기게시판 페이지 넘버 -->
 	<select id="rboardPageNo" resultType="com.chagok.domain.BoardVO">
-	  <![CDATA[
-		select * from board b inner join challenge c
+	  	select * from board b inner join challenge c
 		where b_sort = 1 and b.cno = c.cno
 		order by bno desc, b_date desc
 		limit #{pageStart},#{perPageNum};
-		]]>
 	</select>
 	
 	<!-- 후기게시판 글 전체 개수 -->
@@ -443,30 +420,42 @@
 		limit #{pageStart}, #{perPageNum};
 	</select>
 
-	<!-- 페이징처리 자유게시판 한 페이지당 최대갯수 -->
-	<select id="fboardPage" resultType="com.chagok.domain.BoardVO">
-	  <![CDATA[
-		select * from board
-		where b_sort = 3
-		order by bno desc, b_date desc
-		limit #{page},10
-		]]>
-	</select>
-	
-	<!-- 페이징처리 공지게시판 페이지 넘버 -->
+	<!-- 페이징처리 자유게시판 페이지 넘버 -->
 	<select id="fboardPageNo" resultType="com.chagok.domain.BoardVO">
-	  <![CDATA[
 		select * from board
 		where b_sort = 3
 		order by bno desc, b_date desc
 		limit #{pageStart},#{perPageNum}
-		]]>
 	</select>	
 
-	<!-- 공지게시판 글 전체 개수 -->
+	<!-- 자유게시판 글 전체 개수 -->
 	<select id="fboardCount" resultType="int">
 		select count(*) 
 		from board
 		where b_sort= 3
 	</select>	
+
+	<!-- 페이징처리 경제게시판 페이지 넘버 -->
+	<select id="eboardPageNo" resultType="com.chagok.domain.BoardVO">
+		select * from board
+		where b_sort = 4
+		order by bno desc, b_date desc
+		limit #{pageStart},#{perPageNum}
+	</select>	
+
+	<!-- 경제게시판 글 전체 개수 -->
+	<select id="eboardCount" resultType="int">
+		select count(*) 
+		from board
+		where b_sort= 4
+	</select>
+	
+	<!-- 차곡 계좌 조회 -->
+	<select id="getBizAll" resultType="com.chagok.domain.BusinessAccountVO">
+		select * from business_account
+		order by biz_date desc
+		limit #{pageStart}, #{perPageNum};
+	</select>
+	
+		
  </mapper>

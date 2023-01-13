@@ -5,56 +5,79 @@
 
 <%@ include file="../include/header.jsp" %>
 <%@ include file="../include/sidebar.jsp" %>
-
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/css.css">
-</head>
+	<title> 뉴스 / 재테크 </title>
+	
+<script>
+			$(document).ready(function(){
+				var formObj = $("form[role='form']");
+					
+				$(".btn-warning").click(function(){				
+					formObj.attr("action","/economydelete");
+					formObj.submit();
+				});
+						
+			});
+</script> 	
+	
+</head>	
+	<body>
 
-<body>
-<form role="form" method="post">
-    <div class="board_wrap">
+<div class="board_wrap">
         <div class="board_title">
-            <strong>공지사항</strong>
-            <p>공지사항을 빠르고 정확하게 안내해드립니다.</p>
-        </div>
-        <div class="board_write_wrap">
-            <div class="board_write">
-                <div class="title">
-                    <dl>
-                        <dt>제목</dt>
-                        <dd><input type="text" name="b_title" value="${board.b_title }"></dd>
-                    </dl>
-                </div>
-                <div class="info">
-                    <dl>
-                        <dt>작성자</dt>
-                        <dd><input type="text" placeholder="${board.b_writer }" readonly ></dd>
-                    </dl>
-                    <dl>
-                        <dt>작성일</dt>
-                        <dd><input type="text" placeholder="<fmt:formatDate value="${board.b_date }" pattern="yyyy-MM-dd"/>" readonly ></dd>
-                    </dl>
-                </div>
-                <div class="cont">
-                    <textarea name="b_content">${board.b_content }</textarea>
-                </div>
-            </div>
-            <div class="bt_wrap">
-            	<input class="sbtn" type="submit" value="수정하기" onclick="location.href='/noticeupdate?bno=${board.bno}';">
-            	<input class="sbtn2" type="button" value="돌아가기" onclick="location.href='/notice';" >
-<!--                 <a href="view.html" class="on">수정</a> -->
-<!--                 <a href="view.html">취소</a> -->
-            </div>
-        </div>
-    </div>
-</form>
+        <strong> 뉴스 / 재태크 게시글 </strong>
+        <p> 여러가지 정보를 공유합시다 </p>
+    	</div>
+ 	    <div class="board_list_wrap">
+ 	    <form role="form" method="post">
+ 	    	<input type="hidden" name="bno" value="${vo.bno }">
+ 	    </form>
+         <div class="board_list">
+             <div class="top">
+             	 <div class="title" style="width:1000px;">
+             	 	<span style="text-align:left;"> 제목 | </span> ${vo.b_title }
+             	 	&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+					&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+					&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+				    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+				    <span style="text-align:right;"> 작성자 | </span> ${vo.b_writer }
+				    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+				    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+				    <span style="text-align:right;"> 작성일 | </span> <fmt:formatDate value="${vo.b_date }" pattern="yyyy-MM-dd"/>
+             	 	
+             	 </div>
+			 </div>
+         </div>
+         <div class="board_list">
+             <div class="top">
+             	 <div class="title" style="width:500px;">게시글 내용</div>
+			     
+			     <textarea class="form-control" rows="3" style="margin-top:5px; display:block; margin: 0 auto; width: 600px; height: 280px; resize: none;"readonly>${vo.b_content }</textarea>
+			     <br>
+			     <br>
+             	 <br>
+			</div>
+         </div>
+	       <div class="bt_wrap">
+	       <c:set var="writer" value="${vo.b_writer }"/>
+			<c:if test= "${nick == '관리자' || nick == writer}">
+      		    <input class="btn btn-danger" type="button" value="수정하기" onclick="location.href='/economyupdate?bno=${vo.bno}';" style="width:218px; margin-left: 950px; background-color: #000000;">
+				<input class="btn btn-warning" type="button" value="삭제하기" style="width:218px; margin-left: 950px; background-color: #000000;">
+			</c:if>
+        <input class="btn btn-block btn-success btn-lg" type="submit" value="돌아가기" onclick="location.href='/reviewboard'" style="width:218px; margin-left: 950px; background-color: #000000;">
+	     </div>
+	       
+  
+</div> 
+</div>
 </body>
-
-
+</html>
 
 <style>
+
 * {
     margin: 0;
     padding: 0;
@@ -75,7 +98,7 @@ a {
 
 .board_wrap {
     width: 1000px;
-    margin: 40px auto;
+    margin: 20px auto;
 }
 
 .board_title {
@@ -84,35 +107,38 @@ a {
 
 .board_title strong {
     font-size: 3rem;
+    font-weight: 1000;
 }
 
 .board_title p {
-    margin-top: 5px;
+    margin-top: 10px;
     font-size: 1.4rem;
 }
 
 .bt_wrap {
     margin-top: 30px;
     text-align: center;
+    font-size: 0;
 }
 
-.bt_wrap a {
+.bt_wrap input {
     display: inline-block;
     min-width: 80px;
     margin-left: 10px;
     padding: 10px;
-    border: 1px solid #FFDB83;
+    border: 1px solid #000;
     border-radius: 2px;
     font-size: 1.4rem;
 }
 
-.bt_wrap a:first-child {
+.bt_wrap input:first-child {
     margin-left: 0;
 }
 
-.bt_wrap a.on {
-    background: #FFDB83;
+.bt_wrap input.sbtn {
+    background: #000;
     color: #fff;
+    width: 30%;
 }
 
 .board_list {
@@ -141,7 +167,9 @@ a {
 }
 
 .board_list > div.top > div {
-    font-weight: 600;
+    font-weight: 1000;
+    font-size: 15px;
+    
 }
 
 .board_list .num {
@@ -149,12 +177,13 @@ a {
 }
 
 .board_list .title {
-    width: 60%;
-    text-align: left;
+	width: 70%;
+    text-align: center;
 }
 
 .board_list .top .title {
     text-align: center;
+    font-weight: 1000;
 }
 
 .board_list .writer {
@@ -162,7 +191,7 @@ a {
 }
 
 .board_list .date {
-    width: 10%;
+    width: 20%;
 }
 
 .board_list .count {
@@ -171,7 +200,7 @@ a {
 
 .board_page {
     margin-top: 30px;
-    text-align: center;
+    text-align: right;
     font-size: 0;
 }
 
@@ -184,6 +213,7 @@ a {
     border: 1px solid #ddd;
     border-left: 0;
     line-height: 100%;
+    text-align: center;
 }
 
 .board_page a.bt {
@@ -209,22 +239,19 @@ a {
 
 .board_view {
     width: 100%;
-    border-top: 2px solid #66BB7A;
-    margin-left: 20px;
+    border-top: 2px solid #000;
 }
 
 .board_view .title {
     padding: 20px 15px;
     border-bottom: 1px dashed #ddd;
-    font-size: 2.2rem;
+    font-size: 2rem;
 }
 
 .board_view .info {
-	padding: 15px 0px 0px 20px;
-    border-bottom: 1px solid #66BB7A;
+    padding: 15px;
+    border-bottom: 1px solid #999;
     font-size: 0;
-    display: flex;
-    justify-content: space-between;
 }
 
 .board_view .info dl {
@@ -263,29 +290,29 @@ a {
 }
 
 .board_view .info dl dd {
-    margin-left: 15px;
+    margin-left: 10px;
     color: #777;
 }
 
 .board_view .cont {
     padding: 15px;
-    border-bottom: 1px solid #66BB7A;
+    border-bottom: 1px solid #000;
     line-height: 160%;
     font-size: 1.4rem;
 }
 
 .board_write {
-    border-top: 2px solid #66BB7A;
+    border-top: 2px solid #000;
 }
 
 .board_write .title,
 .board_write .info {
-    padding: 15px 0px 0px 15px;
+    padding: 15px;
 }
 
 .board_write .info {
     border-top: 1px dashed #ddd;
-    border-bottom: 1px solid #66BB7A;
+    border-bottom: 1px solid #000;
     font-size: 0;
 }
 
@@ -329,19 +356,18 @@ a {
 }
 
 .board_write .cont {
-    border-bottom: 1px solid #66BB7A;
+    border-bottom: 1px solid #000;
 }
 
 .board_write .cont textarea {
     display: block;
     width: 100%;
     height: 300px;
-    padding: 30px;
+    padding: 15px;
     box-sizing: border-box;
     border: 0;
     resize: vertical;
 }
-
 
 @media (max-width: 1000px) {
     .board_wrap {
@@ -363,6 +389,7 @@ a {
 
     .board_list .title {
         text-indent: 10px;
+        
     }
 
     .board_list .top .title {
@@ -425,29 +452,6 @@ a {
     }
 }
 
-.bt_wrap input.sbtn {
-	display: inline-block;
-    min-width: 100px;
-    margin-left: 10px;
-    padding: 10px;
-    border: 1px solid #FFDB83;
-    border-radius: 2px;
-    font-size: 1.4rem;
-    background-color: #FFDB83;
-    color: #fff;
-}
-
-.bt_wrap input.sbtn2 {
-	display: inline-block;
-    min-width: 100px;
-    margin-left: 10px;
-    padding: 10px;
-    border: 1px solid #FFDB83;
-    border-radius: 2px;
-    font-size: 1.4rem;
-    background-color: #fff;
-    color: #FFDB83;
-}
 </style>
 
 </div>
