@@ -470,5 +470,10 @@
 	<select id="getBizCnt" resultType="Integer">
 		select count(bizno) from business_account;
 	</select>
+	
+	<!-- 	insert buypoint -->
+	<insert id="insertBuy">
+		update user set buypoint=#{buypoint} where mno=#{mno}
+	</insert>
 		
  </mapper>

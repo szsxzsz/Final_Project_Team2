@@ -19,7 +19,7 @@ function requestPay()
   	    pay_method : 'card',
   	    merchant_uid: "order_no_0002"+ new Date().getTime(), // 상점에서 관리하는 주문 번호를 전달
   	    name : '꿀 충전',
-  	    amount : 5000,
+  	    amount : 500,
   	    buyer_email : 'param.userVO.id',
   	    buyer_name : 'param.userVO.rname',
   	    buyer_tel : '010-1234-5678',
@@ -41,40 +41,12 @@ function requestPay()
         	    url : '/paymentPOST',           // 요청할 서버url
         	    async : true,            // 비동기화 여부 (default : true)
         	    contentType : "application/json",
-//         	    headers : {              // Http header
-//         	      "Content-Type" : "application/json",
-//         	      "X-HTTP-Method-Override" : "POST"
-//         	    },
-        	   // dataType : 'json',       // 데이터 타입 (html, xml, json, text 등등)
         	    data : JSON.stringify({  // 보낼 데이터 (Object , String, Array)
-//         	      "mno" : userVO.mno,
         	      "pay_cash" : rsp.paid_amount,
         	      "pay_mean" : rsp.pay_method,
         	      "pay_regdate" : new Date().getTime()
         	    })
-//         	    ,
-//         	    success : function(result) { // 결과 성공 콜백함수
-//         	        console.log(result);
-//         	    	alert('성공!');
-//         	    },
-//         	    error : function(request, status, error) { // 결과 에러 콜백함수
-//         	        console.log(error)
-//         	    }
         	});
-        
-        
-//         $.ajax({
-//         	type : 'POST',
-//         	url : "/verifyIamport", 
-//         	dataType: 'json',
-//         	data: {
-//         		imp_uid : "ab"
-        		
-//         	}
-//         	success:function(){location.href="http://localhost:8080/refund"},
-//         	error:function(){alert("AAA")}
-//         });
-
     } else {
     	 var msg = '결제에 실패하였습니다.\n';
          msg += '에러내용 : ' + rsp.error_msg;
@@ -187,7 +159,7 @@ function requestPay2()
               <a href="https://imgbb.com/"><img src="https://i.ibb.co/tbSR7Ch/hero.png" alt="hero" border="0"></a>
             </div>
             <div class="pinfo">
-                <h1>차곡 결제 페이지</h1>
+                <h1>꿀 충전 페이지</h1>
                 <h4>
                     <strong>닉네임: </strong>${userVO.nick } <br>
                     <strong>꿀머니: </strong>${userVO.buypoint+userVO.getpoint} 꿀 <br>
@@ -237,21 +209,21 @@ function requestPay2()
 			<h2 class="pcard__price">
 				<sup></sup>5,000<sup>꿀</sup>
 			</h2>
-			<button class="pcard__btn" onclick="requestPay()" id="pay">결제하기</button> 
+			<button class="pcard__btn" onclick="requestPay()" id="pay">충전하기</button> 
 		</div>
 		<div class="pcard">
 			<h1 class="pcard__title">Option 2</h1>
 			<h2 class="pcard__price">
 				<sup></sup>10,000<sup>꿀</sup>
 			</h2>
-			<button class="pcard__btn" onclick="requestPay1()" id="pay10000">결제하기</button> 
+			<button class="pcard__btn" onclick="requestPay1()" id="pay10000">충전하기</button> 
 		</div>
 		<div class="pcard">
 			<h1 class="pcard__title">Option 3</h1>
 			<h2 class="pcard__price">
 				<sup></sup>50,000<sup>꿀</sup>
 			</h2>
-			<button class="pcard__btn" onclick="requestPay2()" id="pay50000">결제하기</button> 
+			<button class="pcard__btn" onclick="requestPay2()" id="pay50000">충전하기</button> 
 		</div>
 		
 </main>

@@ -71,6 +71,7 @@
                 <li><a href="/commumain"></i> 모집 중 챌린지</a></li>
                 <li><a href="/challenge/mychallenge"></i> 내 챌린지</a></li>
                 <li><a href="/reviewboard"></i> 후기 게시판</a></li>
+                <li><a href="/payment"></i> 꿀 충전</a></li>
               </ul>
             </li>
             <li class="treeview active">
