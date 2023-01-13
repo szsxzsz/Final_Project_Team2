@@ -32,9 +32,13 @@ public class AbookDAOImpl implements AbookDAO{
 	
 	// 가계부 조회 map
 	@Override
-	public List<Map<String, AbookVO>> getAbookList(int mno) throws Exception {
+	public List<Map<String, AbookVO>> getAbookList(int mno, int mm) throws Exception {
 //		mylog.debug("Mapper♡♡♡♡♡♡♡♡♡♡♡♡♡AbookList");
-		List<Map<String, AbookVO>> AbookList2 = sqlSession.selectList(NAMESPACE+".getAbookList", mno); 
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("mno", mno);
+		map.put("mm", mm);
+		List<Map<String, AbookVO>> AbookList2 = sqlSession.selectList(NAMESPACE+".getAbookList", map); 
 		
 		return AbookList2;
 	}
@@ -63,10 +67,14 @@ public class AbookDAOImpl implements AbookDAO{
 	
 	// BOTTOM CATEGORY
 	@Override
-	public List<Map<String, Object>> ctbottomList() throws Exception {
+	public List<Map<String, Object>> ctbottomList(String ct_top) throws Exception {
+		mylog.debug("DAOIM처리전"+ct_top);
 		
-		List<Map<String, Object>> ctbottomList = sqlSession.selectList(NAMESPACE+".ctbottomList");
-	
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("ct_top", ct_top);
+		mylog.debug(" cancelMinus(map) 호출"+map);
+		List<Map<String, Object>> ctbottomList = sqlSession.selectList(NAMESPACE+".ctbottomList", map);
+		mylog.debug("DAOIM"+ctbottomList);
 	return ctbottomList;
 }	
 	
@@ -74,7 +82,6 @@ public class AbookDAOImpl implements AbookDAO{
 	@Override
 	public void setAbookList(AbookVO vo) throws Exception {
 		sqlSession.update(NAMESPACE+".setAbookList", vo);
-	
 	}
 
 	// 가계부 입력 
@@ -86,10 +93,13 @@ public class AbookDAOImpl implements AbookDAO{
 	@Override
 	public List<AbookVO> toCate(int ctno) throws Exception {
 		List<AbookVO> toCateList = sqlSession.selectList(NAMESPACE+".toCate", ctno);
-		mylog.debug("DAO]toCateList"+toCateList);
 		return toCateList; 
 	}
 
+	@Override
+	public void delAbookList(int abno) throws Exception {
+		sqlSession.delete(NAMESPACE+".delAbookList", abno);
+	}
 
 
 
@@ -99,6 +109,7 @@ public class AbookDAOImpl implements AbookDAO{
 	
 	
 	///////////////////MJ/////////////////////
+
 
 	@Override
 	public List<String> getctTop() throws Exception {
