@@ -75,7 +75,7 @@ textarea, select, input, button, input[type="text"] {
 
 .header .logo {
 	float: left;
-	margin-top: 21px;
+/* 	margin-top: 21px; */
 	font-size: 25px;
 	font-weight: 500
 }
