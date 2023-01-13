@@ -19,7 +19,7 @@
      
      <div class="row">
 		<div class="col-lg-5 mx-6 aos-init aos-animate" data-aos="fade-right" >
-		<img class="img-responsive" src="${vo.c_file}" alt="Photo" >
+		<img class="img-responsive" src="${pageContext.request.contextPath }/resources${vo.c_file}" alt="Photo" >
 		</div>
 		<div class="col-lg-6 pt-4 pt-lg-0 content aos-init aos-animate" data-aos="fade-left" >
 			 <h3><span style="color: #66BB7A; font-weight: bold;">[${vo2.ct_top }]</span> ${vo.c_title }</h3>
@@ -129,10 +129,12 @@
 						<th>연동</th>
 					</tr>
 				</thead>
+				<c:choose>
+				<c:when test="${minusAbook.size() > 0}">
 				<c:forEach var="mAbook" begin="0" end="${minusAbook.size()}" items="${minusAbook}">
 				<tbody>
 					<tr>
-						<td>${mAbook.ab_date }</a></td>
+						<td>${mAbook.ab_date }</td>
 						<td>${mAbook.ab_content }</td>
 						<td>${mAbook.ab_amount }</td>
 						<td>${mAbook.ct_top }</td>
@@ -143,6 +145,11 @@
 					</tr>
 				</tbody>
 				</c:forEach>
+				</c:when>
+				<c:otherwise>
+				연동할 가계부 정보가 없습니다.
+				</c:otherwise>
+				</c:choose>
 			</table>
 		</div>
 
@@ -253,7 +260,7 @@
 	              <div class="chat_people">
 	                <div class="chat_img"> 
 	                <c:if test="${minusPeoList.profile != null }">
-	                	<img src="/${minusPeoList.profile }" alt="sunil"> 
+	                	<img src="${pageContext.request.contextPath }/resources${minusPeoList.profile }" alt="sunil"> 
 	                </c:if>
 	                <c:if test="${minusPeoList.profile == null }">
 	                	<img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> 

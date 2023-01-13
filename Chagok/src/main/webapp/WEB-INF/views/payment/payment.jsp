@@ -157,7 +157,7 @@ function requestPay2()
 <%--     ${userVO } --%>
         <div class="ptop">
             <div class="pimg">
-              <a href="https://imgbb.com/"><img src="https://i.ibb.co/tbSR7Ch/hero.png" alt="hero" border="0"></a>
+              <a href="https://imgbb.com/"><img src="${pageContext.request.contextPath }/resources${userVO.profile}" alt="hero" border="0"></a>
             </div>
             <div class="pinfo">
                 <h1>꿀 충전 페이지</h1>
