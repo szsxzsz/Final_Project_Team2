@@ -393,12 +393,12 @@ public class ChagokController {
    
    // 내가 쓴 글 ( 브랜치 합치고 구현 )
    @GetMapping("/myBoardWrite")
-   public String myBoardGET(HttpSession session, Model model) {
+   public String myBoardGET(HttpSession session, Model model,Criteria cri) {
 	   
 	   String nick = (String)session.getAttribute("nick");
 //	   service.getBoardList(nick);
 	   
-	   return "/chagok/myBoard";
+	   return "/chagok/myBoardWrite";
    }
    
    // 회원 탈퇴

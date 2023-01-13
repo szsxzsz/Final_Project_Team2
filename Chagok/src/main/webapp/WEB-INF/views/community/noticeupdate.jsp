@@ -43,7 +43,7 @@
             </div>
             <div class="bt_wrap">
             	<input class="sbtn" type="submit" value="수정하기" onclick="location.href='/noticeupdate?bno=${board.bno}';">
-            	<input class="sbtn2" type="button" value="돌아가기" onclick="location.href='/notice';" >
+            	<input class="sbtn2" type="button" value="목록가기" onclick="location.href='/notice';" >
 <!--                 <a href="view.html" class="on">수정</a> -->
 <!--                 <a href="view.html">취소</a> -->
             </div>

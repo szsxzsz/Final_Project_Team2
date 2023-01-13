@@ -13,6 +13,73 @@
  <meta charset="utf-8">
  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
  <link rel="stylesheet" href="../assets/css/theme.min.css">
+ 
+ <style>
+.board_wrap {
+	width: 1000px;
+	margin: 20px auto;
+}
+
+.board_title {
+	margin-bottom: 30px;
+}
+
+.board_title strong {
+	font-size: 3rem;
+	font-weight: 1000;
+}
+
+.board_title p {
+	margin-top: 10px;
+	font-size: 1.4rem;
+}
+
+.bt_wrap {
+    margin-top: 30px;
+    text-align: center;
+    font-size: 0;
+}
+
+.bt_wrap input {
+    display: inline-block;
+    min-width: 80px;
+    margin-left: 10px;
+    padding: 10px;
+    border: 1px solid #FFDB83;
+    border-radius: 2px;
+    font-size: 1.4rem;
+}
+
+.bt_wrap input:first-child {
+    margin-left: 0;
+}
+
+.bt_wrap input.sbtn {
+	display: inline-block;
+    min-width: 100px;
+    margin-left: 10px;
+    padding: 10px;
+    border: 1px solid #FFDB83;
+    border-radius: 2px;
+    font-size: 1.4rem;
+    background-color: #FFDB83;
+    color: #fff;
+    margin-bottom: 20px;
+}
+
+.bt_wrap input.sbtn2 {
+	display: inline-block;
+    min-width: 100px;
+    margin-left: 10px;
+    padding: 10px;
+    border: 1px solid #FFDB83;
+    border-radius: 2px;
+    font-size: 1.4rem;
+    background-color: #fff;
+    color: #FFDB83;
+}
+</style>
+ 
  </head>
  
  <body>
@@ -93,71 +160,6 @@
  </body>
 
 
-<style>
-.board_wrap {
-	width: 1000px;
-	margin: 20px auto;
-}
-
-.board_title {
-	margin-bottom: 30px;
-}
-
-.board_title strong {
-	font-size: 3rem;
-	font-weight: 1000;
-}
-
-.board_title p {
-	margin-top: 10px;
-	font-size: 1.4rem;
-}
-
-.bt_wrap {
-    margin-top: 30px;
-    text-align: center;
-    font-size: 0;
-}
-
-.bt_wrap input {
-    display: inline-block;
-    min-width: 80px;
-    margin-left: 10px;
-    padding: 10px;
-    border: 1px solid #FFDB83;
-    border-radius: 2px;
-    font-size: 1.4rem;
-}
-
-.bt_wrap input:first-child {
-    margin-left: 0;
-}
-
-.bt_wrap input.sbtn {
-	display: inline-block;
-    min-width: 100px;
-    margin-left: 10px;
-    padding: 10px;
-    border: 1px solid #FFDB83;
-    border-radius: 2px;
-    font-size: 1.4rem;
-    background-color: #FFDB83;
-    color: #fff;
-    margin-bottom: 20px;
-}
-
-.bt_wrap input.sbtn2 {
-	display: inline-block;
-    min-width: 100px;
-    margin-left: 10px;
-    padding: 10px;
-    border: 1px solid #FFDB83;
-    border-radius: 2px;
-    font-size: 1.4rem;
-    background-color: #fff;
-    color: #FFDB83;
-}
-</style>
 
 
 </div>

@@ -475,5 +475,12 @@
 	<insert id="insertBuy">
 		update user set buypoint=#{buypoint} where mno=#{mno}
 	</insert>
-		
+	
+	<!-- 내 글 보기 -->
+	<select id ="myBoardWrite" resultType="com.chagok.domain.BoardVO">
+		select * 
+		from board
+		where b_sort = 1 and b.b_writer = u.nick	
+	</select>
+
  </mapper>

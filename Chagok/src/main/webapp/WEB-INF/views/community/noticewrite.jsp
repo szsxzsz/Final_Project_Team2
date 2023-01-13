@@ -20,6 +20,7 @@
             <strong>공지사항</strong>
             <p>공지사항을 빠르고 정확하게 안내해드립니다.</p>
         </div>
+     </div>
         <div class="board_write_wrap">
             <div class="board_write">
                 <div class="title">
@@ -49,7 +50,6 @@
 <!--                 <a href="list.html">취소</a> -->
             </div>
         </div>
-    </div>
     
     <input type="hidden" value="2" name="b_sort" >
 </form>
