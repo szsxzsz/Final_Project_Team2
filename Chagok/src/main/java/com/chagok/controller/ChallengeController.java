@@ -374,7 +374,8 @@ public class ChallengeController {
 		String fileName = null;
 
 		if(file != null) {
-		   fileName =  UploadFileUtils.fileUpload(imgUploadPath, file.getOriginalFilename(), file.getBytes(), ymdPath);   
+		   fileName =  UploadFileUtils.fileUpload(imgUploadPath, file.getOriginalFilename(), file.getBytes(), ymdPath);
+		   
 		} else {
 		   fileName = uploadPath + File.separator + "images" + File.separator + "none.png";
 		}
