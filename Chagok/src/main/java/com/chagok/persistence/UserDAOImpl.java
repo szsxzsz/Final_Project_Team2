@@ -117,6 +117,15 @@ public class UserDAOImpl implements UserDAO {
 		return sqlSession.selectList(NAMESPACE +".getBizAll", cri);
 	}
 
+	// 성공 회원 포인트 입력
+	@Override
+	public void givePoint(Map<String, Object> map) throws Exception {
+		mylog.debug("포인트/회원번호 : "+map.entrySet());
+		
+		sqlSession.update(NAMESPACE+".givePoint", map);
+	}
+
+	
 	
 	
 	

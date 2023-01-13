@@ -17,6 +17,7 @@ import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.messaging.handler.annotation.Payload;
 //import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -300,13 +301,23 @@ public class ChallengeController {
 		public String mychallengeGET(Model model, HttpSession session) throws Exception {
 			
 			String nick = (String)session.getAttribute("nick");
+			Integer mno	= (Integer)session.getAttribute("mno");
+			List<Map<String, Object>> challengeResultList = new ArrayList<Map<String,Object>>();
 			
 			if(nick != null) {
 				List<ChallengeVO> mychallengeList = service.getmyChallenge(nick);
 				model.addAttribute("mychallengeList", mychallengeList);
 				mylog.debug(mychallengeList+"");
+				
+				for(int i = 0;i< mychallengeList.size();i++) {
+					Integer cno = mychallengeList.get(i).getCno();
+					Map<String, Object> result = service.challengeResult(cno, mno);
+					
+					challengeResultList.add(result);
+					
+				}
+				model.addAttribute("challengeResultList", challengeResultList);
 			}
-			
 			
 			return "/challenge/mychallenge";
 		}
@@ -365,7 +376,7 @@ public class ChallengeController {
 		UserVO userVO = uservice.getUser(mno);
 		model.addAttribute("userVO", userVO);
 		vo.setMno(mno);
-		vo.setC_person(userVO.getNick()+",");
+		vo.setC_person(userVO.getNick());
 		
 		// 사진등록
 		String imgUploadPath = uploadPath + File.separator + "imgUpload";
@@ -414,7 +425,7 @@ public class ChallengeController {
 		UserVO userVO = uservice.getUser(mno);
 		model.addAttribute("userVO", userVO);
 		vo.setMno(mno);
-		vo.setC_person(userVO.getNick()+",");
+		vo.setC_person(userVO.getNick());
 		
 		// 사진등록
 		String imgUploadPath = uploadPath + File.separator + "imgUpload";
@@ -443,48 +454,34 @@ public class ChallengeController {
 		
 	}
 	
-	// 챌린지 결과 판단 메서드
-	public String challengeResult(Integer cno) throws Exception{
-		
-		List<Map<String, Object>> result = service.challengeResult(cno);
-		Map<String, Object> eachResult = null;
-		
-		for(int i=0;i<result.size();i++) {
-			eachResult.putAll(result.get(i));
-			
-			mylog.debug(eachResult.toString());
-		}
-		
-		mylog.debug(eachResult.toString());
-		
-		return null;
-	}
-	
 	// 챌린지 결과(성공)
 	// http://localhost:8080/challenge/success?cno=1
 	@GetMapping(value="/success")
-	public String victoryGET(Model model, @RequestParam("cno") int cno) throws Exception{
+	public String victoryGET(Model model, @RequestParam("cno") int cno, HttpSession session) throws Exception{
+		Integer mno = (Integer) session.getAttribute("mno");
+		
 		ChallengeVO vo = service.getChallengeInfo(cno);
 		List<ChallengeVO> challengeList = service.getChallengeList(cno);
+		int CList = service.getCList(cno); 
 		
-		ChallengeVO vo2 = service.getCt_top(cno);
-		int CList = service.getCList(cno);
-		int ChallengeMoney = service.getChallengeMoney(cno);
-		Integer Success = service.getSuccess(cno);
 		
-		model.addAttribute("vo", vo);
-		model.addAttribute("CList", CList);
-		model.addAttribute("challengeList", challengeList);
-		model.addAttribute("vo2", vo2);
-		model.addAttribute("c_end", service.getChallengeEndDate(cno));
-		model.addAttribute("ChallengeMoney", ChallengeMoney);
-		model.addAttribute("Success", Success);
+		
+		int ChallengeMoney = service.getChallengeMoney(cno); 
+		Integer Success = service.getSuccess(cno); 
+		Map<String, Object> result = service.challengeResult(cno, mno);
+		
+		model.addAttribute("vo", vo); // 해당 챌린지 정보
+		model.addAttribute("CList", CList); // 참여인원
+		model.addAttribute("c_end", service.getChallengeEndDate(cno)); // 종료일자
+		model.addAttribute("ChallengeMoney", ChallengeMoney); // 총 예치금
+		model.addAttribute("Success", Success); // 성공인원
+		model.addAttribute("result", result);
 		
 		return "/challenge/resultsuccess";
 	}
 
 	// 챌린지 결과(실패)
-	// http://localhost:8080/challenge/defeat?cno=1
+	// http://localhost:8080/challenge/defeat?cno=2
 	@GetMapping(value="/defeat")
 	public String defeatGET(Model model, @RequestParam("cno") int cno) throws Exception{
 		ChallengeVO vo = service.getChallengeInfo(cno);

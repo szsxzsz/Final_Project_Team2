@@ -66,7 +66,7 @@
 
   <!-- 웹소켓(채팅용) /sockjs, sweetalert, stomp -->
    	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-	<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+	<script src="${pageContext.request.contextPath }/resources/dist/sockjs.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js" integrity="sha512-iKDtgDyTHjAitUDdLljGhenhPwrbBfqTKWO1mkhSFH3A7blITC9MhYon6SjnMhp4o0rADGw9yAC6EW4t5a4K3g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <!-- 웹소켓(채팅용)  -->
 
@@ -213,7 +213,7 @@ color : rgba(255, 219, 131 / 80%);
 	<div class="custom_inner">
 		<div class="logo">
 <!-- 			<img id="logo" src="../resources/dist/img/credit/chagoklogo.png" -->
-			<a href="/main"><img id="logo" src="../resources/dist/img/credit/pre-logo4.png" class="logo_img" ></a>
+			<a href="/main"><img id="logo" src="../resources/dist/img/credit/pre-logo4.png" class="logo_img"></a>
 <!-- 			<p id="a">차곡</p> -->
 		</div>
 		<div class="category">

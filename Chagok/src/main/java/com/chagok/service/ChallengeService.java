@@ -159,7 +159,11 @@ public interface ChallengeService {
 	// 전체 경제 게시판 글 개수 조회
 	public int EboardCount() throws Exception;	
 	
-	// 챌린지 성공/실패 여부 가져옴
-	public List<Map<String, Object>> challengeResult(Integer cno) throws Exception;
+	// 챌린지 성공/실패 여부 가져옴(모든 회원)
+	public List<Map<String, Object>> challengeResultList(Integer cno) throws Exception;
+	
+	// 챌린지 성공/실패 여부 가져옴(한 명만)
+	public Map<String, Object> challengeResult(Integer cno, Integer mno) throws Exception;
+	
 }
 

@@ -89,7 +89,9 @@
 					모인 꿀머니 
 				</span>
 				<span class="list__price">
-					${ChallengeMoney }꿀
+				${vo.c_deposit * (CList - Success) }꿀
+						<!-- 총 예치금  -->
+					<%-- ${ChallengeMoney }꿀  --%>
 				</span>
 			</li>
 		</ol>

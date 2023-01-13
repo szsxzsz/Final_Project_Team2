@@ -43,7 +43,7 @@
             <websocket:handshake-interceptors>
             	<beans:bean class="com.chagok.interceptor.HttpHandshakeInterceptor"/>
             </websocket:handshake-interceptors>
-            <websocket:sockjs websocket-enabled="true"/>
+            <websocket:sockjs websocket-enabled="true" client-library-url="../resources/dist/sockjs.min.js"/>
         </websocket:stomp-endpoint>
         <websocket:simple-broker prefix="/topic, /queue"/>
     </websocket:message-broker>

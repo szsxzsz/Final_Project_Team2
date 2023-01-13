@@ -98,7 +98,14 @@ public class UserServiceImpl implements UserService {
 	public List<BusinessAccountVO> getBizAll(Criteria cri) throws Exception {
 		return dao.getBizAll(cri);
 	}
-
+	
+	// 챌린지 성공시 포인트 지급
+	@Override
+	public void givePoint(Map<String, Object> map) throws Exception {
+		mylog.debug("givePoint() 호출");
+		
+		dao.givePoint(map);
+	}
 	
 
 	

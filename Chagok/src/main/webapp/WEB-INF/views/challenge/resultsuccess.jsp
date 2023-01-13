@@ -129,7 +129,7 @@
 		</div>
 	</div>
 	<div class="header__greeting">
-		<span class="header__name">Hi, Carlin</span> <span
+		<span class="header__name">챌린지 결과</span> <span
 			class="header__count">You've purchased three (3) items in our
 			store.</span> <span class="header__border"></span>
 	</div>
@@ -138,17 +138,19 @@
 	<section class="cart">
 		<h2 class="cart__header">Cart:</h2>
 		<ol class="list">
-			<li class="list__item"><span class="list__name">Lacoste
-					t-shirt</span> <span class="list__price">$48.00</span></li>
-			<li class="list__item"><span class="list__name">Nike
-					sweatpants</span> <span class="list__price">$125.00</span></li>
-			<li class="list__item"><span class="list__name">Converse
-					All-Stars</span> <span class="list__price">$95.00</span></li>
+			<li class="list__item"><span class="list__name">성공/참여</span> 
+				<span class="list__price">${Success } / ${CList } 명</span></li>
+			<li class="list__item"><span class="list__name">모인 꿀머니</span> 
+				<span class="list__price">${vo.c_deposit * (CList - Success) } 꿀</span></li>
+<!-- 			<li class="list__item"><span class="list__name">상금 꿀머니</span>  -->
+<!-- 				<span class="list__price">꿀</span></li> -->
 		</ol>
 		<hr class="cart__hr" />
 		<footer class="cart__total">
 			<h3 class="cart__total-label">Total</h3>
-			<span class="cart__total-price">$268.00</span>
+			<span class="cart__total-price">
+				 <fmt:formatNumber type="number" pattern="#,##0" value="${(vo.c_deposit * (CList - Success))/CList }" /> 꿀
+			</span>
 		</footer>
 	</section>
 

@@ -233,7 +233,6 @@ public class ChagokController {
 				session.setAttribute("nick", UserVO.getNick());
 				
 			}else {
-				model.addAttribute("loginResult", "Login Fail!");
 				return "0";
 				
 			}
@@ -241,18 +240,6 @@ public class ChagokController {
 			e.printStackTrace();
 		}
 		return "chagok/main";
-//		// 세션 유지시간 30분
-//		session.setMaxInactiveInterval(60*30);
-//
-//		if(UserVO != null) {
-//			session.setAttribute("mno", UserVO.getMno());
-//			session.setAttribute("nick", UserVO.getNick());
-//			
-//			return UserVO;
-//		} else {
-//			
-//			return 0;
-//		}
 	}
 
 	 // http://localhost:8080/register

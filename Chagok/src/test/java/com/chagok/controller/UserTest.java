@@ -89,12 +89,9 @@ public class UserTest {
 		@Test
 		public void 챌린지_성공여부() throws Exception {
 			
-			List<Map<String, Object>> list = chdao.challengeResult(1);
+			Map<String, Object> map = chdao.challengeResult(72,46);
 			
-			for(int i = 0; i < list.size(); i++) {
-				
-				System.out.println(list.get(i));
-			}
+				System.out.println(map.entrySet());
 			
 		}
 		

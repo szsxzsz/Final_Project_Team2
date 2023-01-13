@@ -47,4 +47,7 @@ public interface UserService {
 	// 차곡 계좌내역 조회
 	public List<BusinessAccountVO> getBizAll(Criteria cri) throws Exception;
 	
+	// 챌린지 성공시 포인트 지급
+	public void givePoint(Map<String, Object> map) throws Exception;
+	
 }

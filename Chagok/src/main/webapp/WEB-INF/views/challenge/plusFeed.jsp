@@ -62,7 +62,6 @@
 <h1 style="padding: 0 15px 0 15px;"> 저축형 차곡 챌린지 </h1>
 
  <!-- Main content -->
-<button class="btn btn-success pull-right" id="alertStart" >알림테스트용 </button>
 <section class="content">
 	<div class="row">
 		<div class="col-lg-5 mx-6 aos-init aos-animate" data-aos="fade-right" >

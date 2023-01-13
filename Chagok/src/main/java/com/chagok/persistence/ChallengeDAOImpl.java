@@ -464,10 +464,22 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 
 	// 챌린지 성공/실패 여부 가져옴
 	@Override
-	public List<Map<String, Object>> challengeResult(Integer cno) throws Exception {
+	public List<Map<String, Object>> challengeResultList(Integer cno) throws Exception{
 		
-		return sqlSession.selectList(NAMESPACE+".challengeResult", cno);
+		return sqlSession.selectList(NAMESPACE+".challengeResultList", cno);
+	}
+
+	@Override
+	public Map<String, Object> challengeResult(Integer cno, Integer mno) throws Exception {
+
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("cno", cno);
+		map.put("mno", mno);
+		
+		return sqlSession.selectOne(NAMESPACE+".challengeResult", map);
 	}	
+	
+	
 	
 	
 	
