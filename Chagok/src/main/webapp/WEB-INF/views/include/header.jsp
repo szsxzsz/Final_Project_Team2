@@ -71,7 +71,6 @@
   <!-- 웹소켓(채팅용)  -->
 
 
-
 <!-- 결제 : iamport.payment.js -->
 <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
 
@@ -236,7 +235,7 @@ color : rgba(255, 219, 131 / 80%);
 			<a href="/register"><div class="join"><p style="font-family: 'GmarketSans'">회원가입</p></div></a>
 		</c:if>
 		<c:if test="${nick != null}">
-			<a href="/myPage"><div class="login"><p style="font-family: 'GmarketSans'">마이페이지</p></div></a>
+			<a href="/myPage"><div class="login"><p style="font-family: 'GmarketSans'"><small>마이페이지</small></p></div></a>
 			<a href="/logout"><div class="join"><p style="font-family: 'GmarketSans'">로그아웃</p></div></a>
 		</c:if>
 		</div>
