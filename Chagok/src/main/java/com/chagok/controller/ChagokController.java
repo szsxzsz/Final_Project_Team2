@@ -213,6 +213,8 @@ public class ChagokController {
 		return "/chagok/login";
 	}
 
+	
+	
 	@PostMapping(value = "/login")
 	@ResponseBody
 	public String loginPOST(@RequestBody Map<String, String> loginMap, HttpServletRequest request, HttpServletResponse response, UserVO UserVO, Model model) throws Exception {
