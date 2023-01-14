@@ -170,15 +170,14 @@ public class ChagokController {
 	}	
 
 	
-	
-	
-	
-	
 //	@GetMapping(value = "/assetmain")
 //	public String assetmainGET() throws Exception {
 //
 //		return "/chagok/assetmain";
 //	}
+	
+
+	
 
 	// 챌린지 목록 불러오기 (커뮤메인)
 	// http://localhost:8080/commumain
@@ -190,6 +189,7 @@ public class ChagokController {
 		List<ChallengeVO> challengeList = service2.getChallengeList();
 		List<UserVO> ranking = service2.ranking();
 //		List<ChallengeVO> cList = service2.cList(scri);
+		
 		
 		// 연결되어 있는 뷰페이지로 정보 전달 (Model 객체)
 		model.addAttribute("challengeList", challengeList);
@@ -215,6 +215,8 @@ public class ChagokController {
 		return "/chagok/login";
 	}
 
+	
+	
 	@PostMapping(value = "/login")
 	@ResponseBody
 	public String loginPOST(@RequestBody Map<String, String> loginMap, HttpServletRequest request, HttpServletResponse response, UserVO UserVO, Model model) throws Exception {
