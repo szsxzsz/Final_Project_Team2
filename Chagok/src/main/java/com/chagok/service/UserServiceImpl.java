@@ -121,7 +121,15 @@ public class UserServiceImpl implements UserService {
 		
 		dao.givePoint(map);
 	}
-	
 
+	// 포인트 차감
+	@Override
+	public void usePoint(Map<String, Object> map) throws Exception {
+		mylog.debug("usePoint() 호출");
+		
+		dao.usePoint(map);
+	}
+	
+	
 	
 }
