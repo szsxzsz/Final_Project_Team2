@@ -191,7 +191,6 @@ public class ChagokController {
 		
 		// 페이징 처리
 		PageMaker pageMaker = new PageMaker();
-		pageMaker.setDisplayPageNum(9);
 		pageMaker.setCri(scri);
 		pageMaker.setTotalCount(service2.cListCount(scri));
 		
@@ -459,6 +458,7 @@ public class ChagokController {
 		// 페이징 처리
 		cri.setPerPageNum(10);
 	    PageMaker pagevo = new PageMaker();
+	    pagevo.setDisplayPageNum(10);
 	    pagevo.setCri(cri);
 	    pagevo.setTotalCount(service2.chListCnt());
 		
@@ -498,7 +498,7 @@ public class ChagokController {
 		// 페이징 처리
 		cri.setPerPageNum(10);
 	    PageMaker pagevo = new PageMaker();
-//	    pagevo.setDisplayPageNum(5);
+	    pagevo.setDisplayPageNum(10);
 	    pagevo.setCri(cri);
 	    pagevo.setTotalCount(service.getBizCnt());
 		
@@ -519,6 +519,7 @@ public class ChagokController {
 		// 페이징 처리
 		cri.setPerPageNum(10);
 	    PageMaker pagevo = new PageMaker();
+	    pagevo.setDisplayPageNum(10);
 	    pagevo.setCri(cri);
 	    pagevo.setTotalCount(service.getUserCnt());
 		mylog.debug("@@@@"+pagevo.toString());
@@ -530,18 +531,6 @@ public class ChagokController {
 		return "/chagok/userManagement";
 	}
 
-	// http://localhost:8080/challenge/adminmodal
-//	@ResponseBody
-//	@PostMapping("/adminmodal")
-//	public String adminmodal(Model model,@RequestParam Map<String,Object> map) throws Exception {
-//		mylog.debug("모달창에 넘길 mno : " + map);
-//		
-//		List<UserVO> vo = service.adminmodal(map);
-//		
-////		model.addAttribute("UserVO", vo);
-//		
-//		return null;
-//	}
 	////////////////////// 관리자 페이지 ///////////////////////////	
 	
 	

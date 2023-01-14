@@ -220,6 +220,8 @@
 		where c.cno = #{cno} and (pl_finish = 'Y' or m_finish = 'Y')
 	</select>
 	
+	
+	
 	<!-- 명예의 전당 순위 -->
 	<select id="ranking" resultType="com.chagok.domain.UserVO">
 		select * from user
@@ -444,7 +446,7 @@
 	
 	<!-- 관리자 - 전체 회원 수 -->
 	<select id="getUserCnt" resultType="Integer">
-		select count(cno) from challenge;
+		select count(mno) from user;
 	</select>	
 	
 	<!-- 관리자 - 챌린지 전체 목록 -->
