@@ -89,11 +89,11 @@ public class ChagokController {
 	// 자산관리 파트 메인
 	// http://localhost:8080/assetmain
 	@GetMapping(value="/assetmain")
-	public String assetmain(HttpSession session, Model model, RedirectAttributes rttr) throws Exception {
+	public String assetmain(HttpSession session, Model model) throws Exception {
 		Integer mno = (Integer)session.getAttribute("mno");
-		
 		if (mno==null) {
-			return "redirect:/login?pageInfo=assetmain";
+			model.addAttribute("chkLogin", "loginN");
+			return "/chagok/assetmain";
 		} else {
 			Integer mm = 0;
 			mylog.debug("@@@@mno"+mno);
@@ -170,16 +170,6 @@ public class ChagokController {
 	}	
 
 	
-	
-	
-	
-	
-//	@GetMapping(value = "/assetmain")
-//	public String assetmainGET() throws Exception {
-//
-//		return "/chagok/assetmain";
-//	}
-
 	// 챌린지 목록 불러오기 (커뮤메인)
 	// http://localhost:8080/commumain
 	@GetMapping(value="/commumain")

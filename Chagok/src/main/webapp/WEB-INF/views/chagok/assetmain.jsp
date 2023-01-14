@@ -29,7 +29,7 @@
 <section class="content">
 	<div class="row">
 		<div class="col-md-6">
-				<c:if test="${chkBud.equals('budN') }">
+				<c:if test="${chkLogin.equals('loginN') || chkBud.equals('budN') }">
 					<div class="box-body" style="text-align: center;">
 						<h3>설정된 예산이 없어요!</h3>
 						<h3>예산은 효율적이고 계획적인 소비 습관 생성에 도움이 됩니다.</h3>
@@ -85,16 +85,14 @@
 				</c:if>	
 		</div>
 	
-		<c:if test="${userVO.isCheck.equals('N') }">
+		<c:if test="${chkLogin.equals('loginN') || userVO.isCheck.equals('N') }">
 			<div class="col-md-6">
-	<!-- 			<div class="box"> -->
-					<div class="box-body" style="text-align: center;">
-						<h3>등록된 자산 정보가 없습니다!</h3>
-						<h3>${userVO.nick }님의 자산을 간편하게 조회해보세요.</h3>
-						<input type="button" id="setbud" class="btn1" value="내 자산 불러오기"
-							onclick="location.href='/asset/myAsset';">	
-					</div>	
-	<!-- 			</div>	 -->
+				<div class="box-body" style="text-align: center;">
+					<h3>등록된 자산 정보가 없습니다!</h3>
+					<h3>사용자님의 자산을 간편하게 조회해보세요.</h3>
+					<input type="button" id="setbud" class="btn1" value="내 자산 불러오기"
+						onclick="location.href='/asset/myAsset';">	
+				</div>	
 			</div>	
 		</c:if>
 		
@@ -124,12 +122,12 @@
 		</c:if>
 	</div>
 	
-	<c:if test="${chkAb.equals('abN') }">
+	<c:if test="${chkLogin.equals('loginN') || chkAb.equals('abN') }">
 		<div class="row">
 			<div class="col-md-12">
 				<div class="box-body" style="text-align: center;">
 					<h3>등록된 가계부 정보가 없습니다.</h3>
-					<h3>차곡이 ${uservo.nick }님의 소비 습관을 분석해드릴게요!</h3>
+					<h3>차곡이 사용자님의 소비 습관을 분석해드릴게요!</h3>
 					<input type="button" 
 						class="btn1" value="가계부 쓰기"
 						onclick="location.href='/asset/abookList';">			
