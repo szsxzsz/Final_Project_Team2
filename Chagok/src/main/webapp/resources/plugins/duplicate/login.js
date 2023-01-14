@@ -34,9 +34,9 @@ function f_loginCheck(){
 					  title: '환영합니다!',
 					  icon: 'success',
 					  showConfirmButton: false,
-					  timer: 1000
+					  timer: 3000
 					});
-				url();
+				setTime(url(), 3000);
 			}
 		},
 		error : function(jqXHR, status, error){

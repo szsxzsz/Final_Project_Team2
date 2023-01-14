@@ -170,6 +170,13 @@ public interface ChallengeService {
 	
 	// 챌린지 성공/실패 여부 가져옴(한 명만)
 	public Map<String, Object> challengeResult(Integer cno, Integer mno) throws Exception;
+
+	// 내가 쓴 글(페이징처리 cri)
+	public List<BoardVO> getMyBoardWrite(Criteria cri) throws Exception;
+//	public List<BoardVO> getMyBoardWrite(String nick) throws Exception;
+		
+	// 내가 쓴 글 개수 조회
+	public int MyBoardWriteCnt() throws Exception;
 	
 }
 
