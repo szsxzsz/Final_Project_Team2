@@ -383,6 +383,7 @@ public class ChallengeController {
 		// 2. 서비스 -> DAO 접근 (mapper)
 		service.challengeRegist(vo);
 		//mylog.debug(cno.toString());
+		
 		mylog.debug(" 챌린지 등록(저축형) 완료! ");
 		
 		// 3. 페이지로 이동(모집중 챌린지)
@@ -503,7 +504,7 @@ public class ChallengeController {
 			int mno = (int)session.getAttribute("mno");
 			UserVO userVO = uservice.getUser(mno);
 			vo.setBiz_holder_name(userVO.getNick());
-			vo.setBiz_inout(1);
+			vo.setBiz_inout(2);
 			vo.setMno(mno);
 		}
 		

@@ -587,6 +587,30 @@ public class ChagokController {
 		
 		return "/chagok/userManagement";
 	}
+	
+	
+	// http://localhost:8080/refundManagement
+	// 저축형 환불관리
+	@GetMapping("/refundManagement")
+	public String refundManagementGET(Criteria cri, Model model) throws Exception {
+		mylog.debug("/userManagementGET 호출");
+		
+		List<UserVO> userList = service.getUserList(cri);
+		
+		// 페이징 처리
+		cri.setPerPageNum(10);
+		PageMaker pagevo = new PageMaker();
+		pagevo.setDisplayPageNum(10);
+		pagevo.setCri(cri);
+		pagevo.setTotalCount(service.getUserCnt());
+		mylog.debug("@@@@"+pagevo.toString());
+		mylog.debug("@@@@"+userList.size());
+		
+		model.addAttribute("pagevo", pagevo);
+		model.addAttribute("userList", userList);
+		
+		return "/chagok/refundManagement";
+	}
 
 	////////////////////// 관리자 페이지 ///////////////////////////	
 	

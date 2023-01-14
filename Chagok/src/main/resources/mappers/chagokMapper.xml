@@ -379,12 +379,12 @@
 
 	<!-- 비지니스 계좌 입금(송금) -->
 	<insert id="sendBiz">
-		insert into business_account(biz_inout, biz_amount, mno, biz_holder_name, biz_balance, cno) 
-		<if test="biz_inout == 1">
-		values(#{biz_inout}, #{biz_amount}, #{mno}, #{biz_holder_name}, #{biz_balance}-#{biz_amount}, #{cno})
+		insert into business_account(biz_inout, biz_amount, mno, biz_holder_name, biz_balance, cno, biz_status) 
+		<if test="biz_inout == 1"> <!-- 출금  -->
+		values(#{biz_inout}, #{biz_amount}, #{mno}, #{biz_holder_name}, #{biz_balance}-#{biz_amount}, #{cno}, 1)
 		</if>
-		<if test="biz_inout == 2">
-		values(#{biz_inout}, #{biz_amount}, #{mno}, #{biz_holder_name}, #{biz_balance}+#{biz_amount}, #{cno})
+		<if test="biz_inout == 2"> <!-- 입금  -->
+		values(#{biz_inout}, #{biz_amount}, #{mno}, #{biz_holder_name}, #{biz_balance}+#{biz_amount}, #{cno}, 0)
 		</if>
 	</insert>
 	
