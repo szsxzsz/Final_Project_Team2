@@ -107,7 +107,7 @@
 		       	<c:forEach items="${boardList }" var="boardList" >
 						    <tr>
 						      <th scope="row" style="text-align:center; padding: 15px 0;">${boardno }</th>
-						      <td style="text-align:center; padding: 15px 0;"><a href="http://localhost:8080/economycontent?bno=${boardList.bno }">${boardList.b_title }</a></td>
+						      <td style="text-align:center; padding: 15px 0;"><a href="/economycontent?bno=${boardList.bno }">${boardList.b_title }</a></td>
 	<!-- 						  <td  style="text-align:center; padding: 15px 0;">Otto</td> -->
 						      <td style="text-align:center; padding: 15px 0;"><fmt:formatDate value="${boardList.b_date }" pattern="yyyy-MM-dd"/></td>
 						    </tr>

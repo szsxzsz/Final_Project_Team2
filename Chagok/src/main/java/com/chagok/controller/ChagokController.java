@@ -421,8 +421,14 @@ public class ChagokController {
    // 내가 쓴 글 ( 브랜치 합치고 구현 )
    @GetMapping("/myBoardWrite")
    public String myBoardGET(HttpSession session, Model model,Criteria cri) throws Exception {
-	 
-		   List<BoardVO> boardList = service2.getMyBoardWrite(cri);
+	   String nick = (String)session.getAttribute("nick");
+	    
+	    mylog.debug(nick+"닉네임뜨는거냐");
+	  
+//		   List<BoardVO> boardList = service2.getMyBoardWrite(cri);
+	  
+//		   List<BoardVO> boardList = service2.getMyBoardWrite(cri,nick);
+		   List<BoardVO> boardList = service2.getMyBoardWrite(nick);
 		   mylog.debug(boardList+"@@@@@@@@@@@@@@@@@@@@");
 		   
 		   model.addAttribute("boardList", boardList);
@@ -434,6 +440,7 @@ public class ChagokController {
 			pageMaker.setTotalCount(service2.MyBoardWriteCnt());
 			model.addAttribute("pageMaker", pageMaker);
 	   
+	 
 	   return "/chagok/myBoardWrite";
    }
    
