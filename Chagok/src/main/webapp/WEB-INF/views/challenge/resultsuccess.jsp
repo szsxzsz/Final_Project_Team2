@@ -539,7 +539,7 @@ opacity:1;
 
 <div class="receipt">
   <h1>챌린지 결과</h1>
-  ${vo}
+
 	<c:forEach var="vo" items="${challengeList }">
 		<c:if test="${vo.c_sort eq 0 }">
 		<c:set var="sort" value="저축형"/>
