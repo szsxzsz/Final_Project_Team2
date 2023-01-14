@@ -36,7 +36,7 @@ function f_loginCheck(){
 					  showConfirmButton: false,
 					  timer: 3000
 					});
-				setTime(url(), 3000);
+				url();
 			}
 		},
 		error : function(jqXHR, status, error){

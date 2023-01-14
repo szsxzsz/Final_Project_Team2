@@ -110,6 +110,7 @@
 
 	
 	
+	
 	<c:if test="${userVO == null}">
 		<h1>로그인이 필요합니다 !</h1>
 	</c:if>
@@ -178,31 +179,31 @@
 		
 		
 			<!-- 계좌 -->
-			<div class="info-box bg-yellow" style="cursor:pointer; margin-bottom: 1px;" id="account_pa">
-				<span class="info-box-icon">
+			<div class="info-box bg-yellow" style="cursor:pointer; margin-bottom: 1px; min-height:70px; height: 70px;" id="account_pa">
+				<span class="info-box-icon" style="width: 70px; height: 70px; line-height: 80px;">
 					<i class="fa fa-bank"></i>
 				</span>
 				<div class="info-box-content" style="padding-top: 15px">
-					<span class="info-box-text" style="font-size: 3em; margin-left: 20px; display: inline;">계 좌</span> 
-					<span class="info-box-text" style="font-size: 3em; margin-left: 200px; display: inline;">총 <fmt:formatNumber value="${accountSum }"/>  원</span> 
+					<span class="info-box-text" style="font-size: 2em; margin-left: 20px; display: inline;">계 좌</span> 
+					<span class="info-box-text" style="font-size: 2em; margin-left: 200px; display: inline;">총 <fmt:formatNumber value="${accountSum }"/>  원</span> 
 				</div>
 			</div>
 			
 			<!-- 계좌목록 -->
 			<div id="account_ch" style="display: none;">
 			<c:forEach var="vo" items="${accountList }">
-				<div class="info-box" style="margin: 0 0 1px 30px; width: 95%;">
+				<div class="info-box" style="margin: 0 0 1px 0; width: 95%;">
 					<a href="#" class="startModal_account">
 						<input type="hidden" value="${vo.fintech_use_num }" class="fintech_use_num_account">
 						<input type="hidden" value="${vo.account_alias }" class="account_alias_account">
 						<input type="hidden" value="${vo.bank_name} ${vo.account_num_masked }" class="account_num_masked_account">
-						<span class="info-box-icon">
+						<span class="info-box-icon" style="width: 70px; height: 70px; line-height: 80px;">
 							<i class="fa fa-bank"></i>
 						</span>
 						<div class="info-box-content" style="padding-top: 15px; display: flex;">
-							<span class="info-box-text" style="font-size: 3em; margin-left: 20px; display: inline;">${vo.account_alias }</span> 
-							<span class="info-box-text" style="font-size: 3em; margin-left: 200px; display: inline;">총 <fmt:formatNumber value="${vo.balance_amt }"/> 원</span> 
-							<span class="info-box-text" style="font-size: 3em; margin-left: 200px; display: inline;">${vo.account_num_masked }</span> 
+							<span class="info-box-text" style="font-size: 2em; margin-left: 20px; display: inline-block; width: 15%;">${vo.account_alias }</span> 
+							<span class="info-box-text" style="font-size: 2em; margin-left: 50px; display: inline-block; width: 35%;">총 <fmt:formatNumber value="${vo.balance_amt }"/> 원</span> 
+							<span class="info-box-text" style="font-size: 2em; margin-left: 50px; display: inline-block;">${vo.account_num_masked }</span> 
 						</div>
 					</a>
 				</div>
@@ -211,12 +212,12 @@
 			
 			<!-- 카드 -->
 			<div class="info-box bg-yellow" style="cursor:pointer; margin-top: 50px; margin-bottom: 1px;" id="card_pa">
-				<span class="info-box-icon">
+				<span class="info-box-icon" style="width: 70px; height: 70px; line-height: 80px;">
 					<i class="fa fa-credit-card"></i>
 				</span>
 				<div class="info-box-content" style="padding-top: 15px">
-					<span class="info-box-text" style="font-size: 3em; margin-left: 20px; display: inline;">카 드</span> 
-					<span class="info-box-text" style="font-size: 3em; margin-left: 200px; display: inline;">이번달 카드 값 : <fmt:formatNumber value="${cardSum }"/> 원</span> 
+					<span class="info-box-text" style="font-size: 2em; margin-left: 20px; display: inline;">카 드</span> 
+					<span class="info-box-text" style="font-size: 2em; margin-left: 200px; display: inline;">이번달 카드 값 : <fmt:formatNumber value="${cardSum }"/> 원</span> 
 				</div>
 			</div>
 			
@@ -234,19 +235,19 @@
 					</c:if>
 				</c:forEach>
 				
-					<div class="info-box" style="margin: 0 0 1px 30px; width: 95%">
+					<div class="info-box" style="margin: 0 0 1px 0; width: 95%">
 						<a href="#" class="startModal_card">
 							<input type="hidden" value="${cardVO.card_id }" class="card_id_card">
 							<input type="hidden" value="${cardVO.card_name }" class="card_name_card">
 							<input type="hidden" value="${cardVO.card_num_masked }" class="card_num_masked_card">
 							<input type="hidden" value="${cardPartSum}" class="card_part_sum_card">
-							<span class="info-box-icon">
+							<span class="info-box-icon" style="width: 70px; height: 70px; line-height: 80px;">
 								<i class="fa fa-credit-card"></i>
 							</span>
 							<div class="info-box-content" style="padding-top: 15px;">
-								<span class="info-box-text" style="font-size: 3em; margin-left: 20px; display: inline;">${cardVO.card_name }</span> 
-								<span class="info-box-text" style="font-size: 3em; margin-left: 200px; display: inline;">총 ${cardPartSum } 원</span> 
-								<span class="info-box-text" style="font-size: 3em; margin-left: 200px; display: inline;">${cardVO.card_num_masked }</span> 
+								<span class="info-box-text" style="font-size: 2em; margin-left: 20px; display: inline-block; width: 20%">${cardVO.card_name }</span> 
+								<span class="info-box-text" style="font-size: 2em; margin-left: 50px; display: inline-block; width: 35%">총 ${cardPartSum } 원</span> 
+								<span class="info-box-text" style="font-size: 2em; margin-left: 50px; display: inline-block;">${cardVO.card_num_masked }</span> 
 							</div>
 						</a>
 					</div>
@@ -261,8 +262,8 @@
 					<i class="fa fa-database"></i>
 				</span>
 				<div class="info-box-content" style="padding-top: 15px">
-					<span class="info-box-text" style="font-size: 3em; margin-left: 20px; display: inline;">현 금</span> 
-					<span class="info-box-text" style="font-size: 3em; margin-left: 200px; display: inline;">
+					<span class="info-box-text" style="font-size: 2em; margin-left: 20px; display: inline;">현 금</span> 
+					<span class="info-box-text" style="font-size: 2em; margin-left: 200px; display: inline;">
 						총
 						<c:if test="${cashVO == null }">
 						 	0 
@@ -277,13 +278,13 @@
 			
 			<!-- 현금목록 -->
 			<div id="cash_ch" style="display: none;">
-				<div class="info-box" style="margin: 0 0 1px 30px; width: 95%">
+				<div class="info-box" style="margin: 0 0 1px 0; width: 95%">
 					<a href="#" class="startModal_cash">
 						<span class="info-box-icon">
 							<i class="fa fa-database"></i>
 						</span>
 						<div class="info-box-content" style="padding-top: 15px;">
-							<span class="info-box-text" style="font-size: 3em; margin-left: 20px; display: inline;">
+							<span class="info-box-text" style="font-size: 2em; margin-left: 20px; display: inline-block; width: 15%;">
 								<c:if test="${cashVO == null }">
 									현금 내역이 없습니다.
 								</c:if>
@@ -291,7 +292,7 @@
 									${cashVO.cash_inout }
 								</c:if>
 							</span> 
-							<span class="info-box-text" style="font-size: 3em; margin-left: 200px; display: inline;">
+							<span class="info-box-text" style="font-size: 2em; margin-left: 50px; display: inline-block;">
 								<c:if test="${cashVO != null }">
 									총  <fmt:formatNumber value="${cashVO.cash_amt }"/> 원
 								</c:if>

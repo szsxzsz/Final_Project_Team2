@@ -70,13 +70,26 @@ public class AbookDAOImpl implements AbookDAO{
 	public List<Map<String, Object>> ctbottomList(String ct_top) throws Exception {
 		mylog.debug("DAOIM처리전"+ct_top);
 		
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("ct_top", ct_top);
-		mylog.debug(" cancelMinus(map) 호출"+map);
-		List<Map<String, Object>> ctbottomList = sqlSession.selectList(NAMESPACE+".ctbottomList", map);
-		mylog.debug("DAOIM"+ctbottomList);
+		List<Map<String, Object>> ctbottomList = null;
+		
+		mylog.debug("ct_top####"+ct_top);
+		ctbottomList = sqlSession.selectList(NAMESPACE+".ctbottomList", ct_top);
+//
+//		if("식비".equals(ct_top)) {
+//			mylog.debug("if문");
+//			ctbottomList = sqlSession.selectList(NAMESPACE+".ctbottomList", ct_top);
+//
+//		}else {
+//			mylog.debug("else");
+//			ctbottomList = sqlSession.selectList(NAMESPACE+".ctbottomList2", ct_top);
+//		}
+//		
 	return ctbottomList;
 }	
+	
+	
+	
+	
 	
 	// 가계부 수정 저장
 	@Override

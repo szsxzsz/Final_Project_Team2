@@ -11,11 +11,12 @@
 
 <style>
 body {
-  font-family: 'GmarketSans';
-  position: relative;
-  background: #304352;
-  background: -webkit-linear-gradient(to bottom, #304352, #d7d2cc);
-  background: linear-gradient(to bottom, #304352, #d7d2cc);
+    font-family: 'GmarketSans';
+    position: relative;
+    background: #304352;
+    background: -webkit-linear-gradient(to bottom, #304352, #d7d2cc);
+    /* background: linear-gradient(to bottom, #304352, #d7d2cc); */
+    background-color: #52595a;
 }
 body .wrapper {
   width: 100vw;
@@ -31,7 +32,7 @@ body .wrapper .receipt {
   max-width: 700px;
   padding: 1.5em;
   border: 2px solid #231f20;
-  z-index: -2;
+  z-index: -1;
 }
 body .wrapper .receipt h1 {
   text-align: center;
@@ -228,9 +229,10 @@ body .wrapper .footer .address p span {
 
 
 .scene {
-  font-size: 40vw;
-  position: relative;
-  margin-left: 32vw;
+    font-size: 30vw;
+    position: relative;
+    margin-top: 10vw;
+    margin-left: 5vw;
 }
 
 .cloud {
@@ -481,7 +483,7 @@ body .wrapper .footer .address p span {
 <div class="wrapper"> 
 <!-- 구름 -->
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-     	 viewBox="800 400 0 0" style="enable-background:0 0 800 800;" xml:space="preserve" >
+     	 viewBox="800 400 100 0" style="enable-background:0 0 800 800;" xml:space="preserve" >
   <div class="scene">
   <div class="cloud">
     <div class="eye"></div>
@@ -527,7 +529,7 @@ body .wrapper .footer .address p span {
       <li>참여 인원 <span>${CList }<b>명</b></span></li>
       <li>성공 인원  <span>${Success }<b>명</b></span></li>
       <li>모인 꿀머니  <span>${ChallengeMoney }<b>꿀</b></span></li>
-      <li style="background-color: #FFDB83;">환급 꿀머니 <span>${ChallengeMoney / Success}<b>꿀</b></span></li>
+      <li style="background-color: #b4bfd3;">&nbsp;<span>도전 실패로 환급받으실 꿀이 없습니다.<b></b></span></li>
     </ul>
     
   </div>
@@ -538,7 +540,7 @@ body .wrapper .footer .address p span {
       <button class="button" type="button" onclick="location.href='/review?cno=${vo.cno}';">후기 작성하기</button>
     </div>
         <div class="address">
-          <p><b>🎉축하합니다! 성공적으로 챌린지를 마치셨습니다!</b> <span></span></p>
+          <p><b>😥아쉽습니다! 챌린지 완주에 실패하셨습니다.</b> <span></span></p>
       </div>
   </div>
   </div>

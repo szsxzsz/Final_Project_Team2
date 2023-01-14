@@ -234,7 +234,7 @@
 	
 	<!-- 유저 정보 업데이트 -->
 	<update id="updateUserInfo">
-		update user set tel = #{tel}, rname = #{rname}, raccount = #{raccount}, rbank = #{rbank} where mno = #{mno}
+		update user set tel = #{tel}, rname = #{rname}, raccount = #{raccount}, rbank = #{rbank}, profile = #{profile} where mno = #{mno}
 	</update>
 	
 	<!-- 회원 탈퇴 -->
@@ -394,9 +394,9 @@
 
 	<!-- 비즈니스 계좌 입금시 plus 테이블 pl_sum 업데이트 -->
 	<update id="updatePlusSum">
-		update plus set pl_sum=(select pl_sum where mno = #{mno} and cno = #{cno})+#{biz_amount}, 
-		pl_cnt=(select pl_cnt where mno = #{mno} and cno = #{cno}) + 1 
-		where mno = #{mno} and cno = #{cno}
+		update plus 
+		set pl_sum=pl_sum+#{biz_amount}, pl_cnt=pl_cnt+1 
+		where mno = #{mno} and cno = #{cno};
 	</update>
 
 	<!-- 게시판과 챌린지 (후기보드리스트용) -->
@@ -539,5 +539,13 @@
 	  	set getpoint = getpoint-#{getpoint}
 	  	where mno = #{mno};
   	</update>
+  	
+<!--   	챌린지 참여시 예치금 처리  -->
+	<update id="buyChallenge">
+  		update user 
+	  	set buypoint = buypoint-#{buypoint}
+	  	where mno = #{mno}
+  	</update>
+  	
   	
  </mapper>
