@@ -25,14 +25,14 @@ public class AbookServiceImpl implements AbookService{
 	private AbookDAO dao;
 	
 	@Override
-	public List<Map<String, AbookVO>> getAbookList(int mno) throws Exception {
+	public List<Map<String, AbookVO>> getAbookList(int mno, int mm) throws Exception {
 //		mylog.debug("♡♡♡♡ Service -> DAO 호출");
-		return dao.getAbookList(mno);
+		return dao.getAbookList(mno, mm);
 	}
 
 	@Override
 	public void setAbookList(AbookVO vo) throws Exception {
-//		mylog.debug("♡♡♡♡ Service -> DAO 호출");
+		mylog.debug("♡♡♡♡ Service -> DAO 호출");
 		dao.setAbookList(vo);
 	}
 	
@@ -45,9 +45,9 @@ public class AbookServiceImpl implements AbookService{
 	}
 
 	@Override
-	public List<Map<String, Object>> ctbottomList() throws Exception {
-		
-		return dao.ctbottomList();
+	public List<Map<String, Object>> ctbottomList(String ct_top) throws Exception {
+		mylog.debug("service에서 받은 newstr:"+ct_top);
+		return dao.ctbottomList(ct_top);
 	}
 	
 	@Override
@@ -63,11 +63,16 @@ public class AbookServiceImpl implements AbookService{
 
 	}
 	
+	@Override
+	public void delAbookList(int abno) throws Exception {
+		dao.delAbookList(abno);
+	}
 	
 	
 	
 	///////////////////MJ/////////////////////
 	
+
 
 
 	@Override

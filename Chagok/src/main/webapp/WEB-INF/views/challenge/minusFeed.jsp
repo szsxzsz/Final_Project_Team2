@@ -270,8 +270,9 @@
 	                </div>
 	                <div class="chat_ib">
 <%-- 	                  <h5>${plusPeoList.nick} <span class="chat_date"><fmt:formatDate value="${now }" pattern="MMM DD일"/></span></h5><!-- 최근 접속일자로 바꿀 것 --> --%>
-	                  <h5>${minusPeoList.nick} <span class="chat_date"><a href="#"><i class="fa fa-circle text-success"></i> Online</a></span></h5><!-- 최근 접속일자로 바꿀 것 -->
-	                  <a href="#"><i class="fa fa-circle text-gray"></i> Offline</a>
+	                  <h5>${minusPeoList.nick} <span class="chat_date"></h5>
+<!-- 	                  <a href="#"><i class="fa fa-circle text-success"></i> Online</a></span> -->
+<!-- 	                  <a href="#"><i class="fa fa-circle text-gray"></i> Offline</a> -->
 	                </div>
 	              </div>
 	            </div>

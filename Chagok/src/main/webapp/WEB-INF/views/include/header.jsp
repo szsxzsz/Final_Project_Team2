@@ -66,7 +66,7 @@
 
   <!-- 웹소켓(채팅용) /sockjs, sweetalert, stomp -->
    	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-	<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+	<script src="${pageContext.request.contextPath }/resources/dist/sockjs.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js" integrity="sha512-iKDtgDyTHjAitUDdLljGhenhPwrbBfqTKWO1mkhSFH3A7blITC9MhYon6SjnMhp4o0rADGw9yAC6EW4t5a4K3g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <!-- 웹소켓(채팅용)  -->
 
@@ -96,19 +96,25 @@
 
 
 <style type="text/css">
+.header{ 
+/* width: 1920px; */
+height: 75px;
+}
+
+
 .custom_inner {
 	display: flex;
     height: 75px;
     background: rgba(255, 255, 255,1);
-    padding: 0 0 0 100px;
+/*     padding: 0 0 0 100px; */
     align-items: center;
     border-bottom: 1px solid #bfb7b773;
-    flex-direction: row;
-    justify-content: space-between;
-    box-shadow: 0 0 3px 0 rgb(156, 170, 171,70%);
+     justify-content: space-around; 
+/*     box-shadow: 0 0 3px 0 rgb(156, 170, 171,70%); */
 /* 	position: fixed;  */
     z-index: 99999;
     width: 100%;
+    margin: 0 auto;
     top: 0px;
     transition-property : height;
     transition-duration : 1s;  
@@ -145,7 +151,7 @@
 	margin: 0px;
 }
 .custom_inner .category div{
-	width: 86px;
+/* 	width: 86px; */
     height: auto;
     text-align: center;
     margin: 0 10px 0 10px; 
@@ -167,9 +173,9 @@ color : rgba(255, 219, 131 / 80%);
 .custom_inner .user_menu {
     display: flex;
     flex-direction: row;
-    justify-content: flex-end;
-    width: 240px;
-    margin-left: 120px;
+/*     justify-content: flex-end; */
+    width: 170px;
+/*     margin-left: 120px; */
 }
 
 .custom_inner .user_menu div {
@@ -210,10 +216,11 @@ color : rgba(255, 219, 131 / 80%);
 </head>
 
 <body>
+	<div class="header">
 	<div class="custom_inner">
 		<div class="logo">
 <!-- 			<img id="logo" src="../resources/dist/img/credit/chagoklogo.png" -->
-			<a href="/main"><img id="logo" src="../resources/dist/img/credit/pre-logo4.png" class="logo_img" ></a>
+			<a href="/main"><img id="logo" src="../resources/dist/img/credit/pre-logo4.png" class="logo_img"></a>
 <!-- 			<p id="a">차곡</p> -->
 		</div>
 		<div class="category">
@@ -240,9 +247,8 @@ color : rgba(255, 219, 131 / 80%);
 			<a href="/logout"><div class="join"><p style="font-family: 'GmarketSans'">로그아웃</p></div></a>
 		</c:if>
 		</div>
-		<br><br><br><br><br><br>
 	</div>
-	
+	</div>
 <!-- Channel Plugin Scripts -->
 <script>
   (function() {

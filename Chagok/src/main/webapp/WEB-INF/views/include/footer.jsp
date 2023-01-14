@@ -74,7 +74,7 @@ $(document).ready(function(){
 					// send(path, header, message(cno, writer, message, time))형태
 					socket.send('/send/'+cno , {cno}, JSON.stringify({"cno": cno, "writer": nick, "message" : msg, "time": currT}));
 
-					alert('application : '+${alertAPP});
+					//alert('application : '+${alertAPP});
 				}else
 					socket.send(msg);
 			
@@ -95,7 +95,7 @@ $(document).ready(function(){
 	
 	function connectSockJS(){
 		//STOMP Client
-		var sock = new SockJS("/plusFeed"); // endpoint
+		var sock = new SockJS("/plusFeed", null, { timeout: 15000 }); // endpoint
 		var client = Stomp.over(sock);
 		isStomp = true;
 		socket = client;
