@@ -231,17 +231,20 @@ public class ChallengeController {
 		UserVO userVO = uservice.getUser(mno);
 		
 		// 챌린지 정보 저장
-		int deposit = service.getChallengeInfo(cno).getC_deposit();
-		
-		if(userVO.getBuypoint()+userVO.getGetpoint() >= deposit) {
-			if(userVO.getBuypoint() >= userVO.getGetpoint()) {
-				uservice.buyChallenge(mno,cno,deposit);
-			} else {
-				uservice.usePoint(map);
-			}
-		} else {
-			return "/payment/payment";
-		}
+//		int deposit = service.getChallengeInfo(cno).getC_deposit();
+//		
+//		if(userVO.getBuypoint()+userVO.getGetpoint() >= deposit) {
+//			if(userVO.getBuypoint() >= userVO.getGetpoint()) {
+//				uservice.buyChallenge(mno,cno,deposit);
+//				
+//				return "/challenge/minusdetail";
+//			} else {
+//				uservice.usePoint(map);
+//				return "/challenge/minusdetail";
+//			}
+//		} else {
+//			return "/payment/payment";
+//		}
 		
 		String result="";
 		
@@ -258,6 +261,7 @@ public class ChallengeController {
 		}
 	
 		mylog.debug(result);
+		
 		return result;
 }
 	

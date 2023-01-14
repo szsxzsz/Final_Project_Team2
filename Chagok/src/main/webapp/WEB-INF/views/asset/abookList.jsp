@@ -127,7 +127,7 @@
 			<div class="form-group">
 			              <div class="form-group focused">
 			                <label class="form-control-label" for="input-username" >지출 카테고리</label>
-			                <select name="b_ctno_out" id="input-address" class="form-control form-control-alternative" >
+			                <select name="b_ctno_out" id="input-address" class="form-control2 form-control-alternative" >
 			                   <option>--선택--</option>
 			                   <option value="1">식비</option>
 							   <option value="2">의복/미용</option>
@@ -149,7 +149,7 @@
 						<div class="form-group">
 			              <div class="form-group focused">
 			                <label class="form-control-label" for="input-username" >수입 카테고리</label>
-			                <select name="b_ctno_in" id="input-address" class="form-control form-control-alternative" >
+			                <select name="b_ctno_in" id="input-address" class="form-control2 form-control-alternative" >
 			                   <option>--선택--</option>
 			                   <option value="72">주수입</option>
 							   <option value="73">부수입</option>
@@ -445,13 +445,8 @@ $("#jqGrid").jqGrid({
 //                 }
 	        hidden:false,editable:true},
 
-<<<<<<< HEAD
-        {name:'ab_date', index:'ab_date', width:90, editable:true, editoptions:{size:20, 
-               dataInit:function(el){ 
-=======
         {name:'ab_date', index:'ab_date', width:90, align:'center',editable:true, formatoptions:{newformat: 'Y-M-d h:i'}, 
 	        	editoptions:{size:20, dataInit:function(el){ 
->>>>>>> branch 'develop' of https://github.com/Ju-Yeongmin/Final_Project_Team2.git
                      $(el).datetimepicker({dateFormat:'yy-mm-dd', onClose :grid_Datepicker}); 
                      
                }, 
@@ -467,7 +462,6 @@ $("#jqGrid").jqGrid({
 
            }},
         {name : 'ab_content',index : 'ab_content',width : 100, align : 'center',hidden:false,editable:true},
-<<<<<<< HEAD
         {name : 'ab_amount',index : 'ab_amount',width : 70, resizable : true,align : 'right',editrules:{number:true},hidden:false,editable:true},
 	    {name : 'ab_method',index : 'ab_method',width : 70, align : 'center',hidden:false,editable:true},	
 // 	    {name:"ct_top",label:"ct_top",width:50,align:'center',edittype: "select", /* formatter: "select", */
@@ -612,24 +606,13 @@ $("#jqGrid").jqGrid({
 										alert("입력 성공!");
 									console.log(val);							
 									},error:function(err){
-									      console.log(err);
+									      console.log(err); 
 									}
 								})
 
 						return rtSlt;
 						}, // build
-			            dataEvents: [
-	                          { type: 'change',
-	                              fn: function (e) {
-	                                  slcd = this.value.substr(0, this.value.indexOf(' '));
-	                                  $.get('@Url.Action("GetSelect", "Set")' + '?slcd=' + slcd, function (data) {
-	                                      var res = $(data).html();
-	                                      var selectedCol = lastsel2 + "_ITEM_CD";
-	                                      $("select#0_ITEM_CD").html(res);
-	                                  });
-	                              }
-	                          }
-	                       ] //dataeve
+
 					}	// edit
 			},    	
 
@@ -1181,7 +1164,15 @@ function getintype() {
 <style>
 
 <<<<<<< HEAD
+.col-md-4 {
+    width: 31.333333%;
+}
+
+
 =======
+<<<<<<< HEAD
+=======
+>>>>>>> branch 'develop' of https://github.com/Ju-Yeongmin/Final_Project_Team2.git
 .box-body2 {
     border-top-left-radius: 0;
     border-top-right-radius: 0;
@@ -1195,6 +1186,32 @@ function getintype() {
     justify-content: space-between;
 /*     	overflow-x: hidden;	 */
 }
+
+
+.form-control2 {
+    display: block;
+    width: 45%;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%);
+    box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%);
+    -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}
+
+
+
+
+
+
 
 .abbtn-name{
 display: inline-flex;
