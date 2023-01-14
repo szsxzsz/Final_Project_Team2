@@ -55,6 +55,8 @@ public class BoardController {
 			
 		// 페이징 처리
 		PageMaker pageMaker = new PageMaker();
+		cri.setPerPageNum(10);
+		pageMaker.setDisplayPageNum(10);
 		pageMaker.setCri(cri);
 		pageMaker.setTotalCount(service.RboardCount());
 		mylog.debug("@@@@@@@@@@@@@@@@");
@@ -203,9 +205,11 @@ public class BoardController {
 		
 		// 페이징 처리
 		PageMaker pageMaker = new PageMaker();
+		cri.setPerPageNum(10);
+		pageMaker.setDisplayPageNum(10);
 		pageMaker.setCri(cri);
 		pageMaker.setTotalCount(service.NboardCount());
-		mylog.debug("@@@@@@@@@@@@@@@@");
+		mylog.debug(pageMaker+"@@@@@@@@@@@@@@@@");
 		mylog.debug("totalCnt : "+service.NboardCount());
 		model.addAttribute("pageMaker", pageMaker);
 			
@@ -323,6 +327,8 @@ public class BoardController {
 		model.addAttribute("boardList", boardList);
 		
 		PageMaker pageMaker = new PageMaker();
+		cri.setPerPageNum(10);
+		pageMaker.setDisplayPageNum(10);
 		pageMaker.setCri(cri);
 		pageMaker.setTotalCount(service.RboardCount());
 		mylog.debug("@@@@@@@@@@@@@@@@");
@@ -422,9 +428,11 @@ public class BoardController {
 		model.addAttribute("boardList", boardList);
 		
 		PageMaker pageMaker = new PageMaker();
+		cri.setPerPageNum(10);
+		pageMaker.setDisplayPageNum(10);
 		pageMaker.setCri(cri);
 		pageMaker.setTotalCount(service.EboardCount());
-		mylog.debug("@@@@@@@@@@@@@@@@ economy");
+		mylog.debug(pageMaker+"@@@@@@@@@@@@@@@@ economy");
 		mylog.debug("totalCnt : "+service.EboardCount());
 		model.addAttribute("pageMaker", pageMaker);
 			
