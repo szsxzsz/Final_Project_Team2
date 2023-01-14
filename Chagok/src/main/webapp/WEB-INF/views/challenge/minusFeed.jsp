@@ -84,7 +84,7 @@
 	</div>
    </div>
 </section>
-<section class="content">
+<section class="content" style="min-height:10%;">
    <div class="box box-default">
       <div class="box-header with-border">
       	<div class="text-center">
