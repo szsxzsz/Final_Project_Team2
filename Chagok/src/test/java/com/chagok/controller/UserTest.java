@@ -109,6 +109,6 @@ public class UserTest {
 			
 			//chdao.challengeRegist(vo);
 			
-			System.out.println(chdao.challengeRegist(vo));
+			//System.out.println(chdao.challengeRegist(vo));
 		}
 }
