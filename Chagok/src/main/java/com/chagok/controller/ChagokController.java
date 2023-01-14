@@ -1,6 +1,8 @@
 package com.chagok.controller;
 
 import java.io.File;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -141,27 +143,32 @@ public class ChagokController {
 				model.addAttribute("pMonth", pMonth);
 			}
 			
-//			// 계좌 리스트 조회
-//			List<AccountVO> accountList = accountService.getAccountInfo(mno);
-//			model.addAttribute("accountList", accountList);
-//			mylog.debug("accountList : "+accountList.toString());
-//			// 카드 리스트 조회
-//			List<CardInfoVO> cardList = accountService.getCardInfo(userVO.getUser_seq_no());
-//			model.addAttribute("cardList", cardList);
-//			mylog.debug("cardList : "+cardList.toString());
-//			
-//			// 카드 내역/금액 조회
-//			List<List<CardHistoryVO>> cardHistoryList = accountService.getCardHistory(cardList);
-//			model.addAttribute("cardHistoryList", cardHistoryList);
-//			mylog.debug("cardHistoryList : "+cardHistoryList.toString());
-//			
-//			// 현금 내역 조회
-//			CashVO cashVO = accountService.getCashInfo(mno);
-//			if (cashVO != null) {
-//				cashVO.setCash_amt(cashVO.getCash_amt().replaceAll(",", ""));
-//				mylog.debug("cashVO : "+cashVO.toString());
-//			}
-//			model.addAttribute("cashVO", cashVO);
+			// 현재 년월
+			LocalDate now = LocalDate.now();
+			String now_date = now.format(DateTimeFormatter.ofPattern("yyyyMM"));
+			model.addAttribute("now_date", now_date);
+			
+			// 계좌 리스트 조회
+			List<AccountVO> accountList = accountService.getAccountInfo(mno);
+			model.addAttribute("accountList", accountList);
+			mylog.debug("accountList : "+accountList.toString());
+			// 카드 리스트 조회
+			List<CardInfoVO> cardList = accountService.getCardInfo(userVO.getUser_seq_no());
+			model.addAttribute("cardList", cardList);
+			mylog.debug("cardList : "+cardList.toString());
+			
+			// 카드 내역/금액 조회
+			List<List<CardHistoryVO>> cardHistoryList = accountService.getCardHistory(cardList);
+			model.addAttribute("cardHistoryList", cardHistoryList);
+			mylog.debug("cardHistoryList : "+cardHistoryList.toString());
+			
+			// 현금 내역 조회
+			CashVO cashVO = accountService.getCashInfo(mno);
+			if (cashVO != null) {
+				cashVO.setCash_amt(cashVO.getCash_amt().replaceAll(",", ""));
+				mylog.debug("cashVO : "+cashVO.toString());
+			}
+			model.addAttribute("cashVO", cashVO);
 			model.addAttribute("userVO", userVO);
 		
 			return "/chagok/assetmain";
@@ -418,8 +425,14 @@ public class ChagokController {
    // 내가 쓴 글 ( 브랜치 합치고 구현 )
    @GetMapping("/myBoardWrite")
    public String myBoardGET(HttpSession session, Model model,Criteria cri) throws Exception {
-	 
-		   List<BoardVO> boardList = service2.getMyBoardWrite(cri);
+	   String nick = (String)session.getAttribute("nick");
+	    
+	    mylog.debug(nick+"닉네임뜨는거냐");
+	  
+//		   List<BoardVO> boardList = service2.getMyBoardWrite(cri);
+	  
+//		   List<BoardVO> boardList = service2.getMyBoardWrite(cri,nick);
+		   List<BoardVO> boardList = service2.getMyBoardWrite(nick);
 		   mylog.debug(boardList+"@@@@@@@@@@@@@@@@@@@@");
 		   
 		   model.addAttribute("boardList", boardList);
@@ -431,6 +444,7 @@ public class ChagokController {
 			pageMaker.setTotalCount(service2.MyBoardWriteCnt());
 			model.addAttribute("pageMaker", pageMaker);
 	   
+	 
 	   return "/chagok/myBoardWrite";
    }
    

@@ -288,6 +288,7 @@ public class ChallengeController {
 					Map<String, Object> result = service.challengeResult(cno, mno);
 					
 					challengeResultList.add(result);
+					//model.addAttribute("result", result);
 					
 				}
 				model.addAttribute("challengeResultList", challengeResultList);
@@ -392,6 +393,7 @@ public class ChallengeController {
 		// 챌린지 등록
 		mylog.debug(vo.toString());
 		service.challengeRegist(vo);
+		//mylog.debug(cno.toString());
 		mylog.debug(" 챌린지 등록(저축형) 완료! ");
 		
 		// plus 테이블에 정보 추가
