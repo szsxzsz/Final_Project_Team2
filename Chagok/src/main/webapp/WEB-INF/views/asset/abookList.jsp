@@ -110,7 +110,7 @@
 			<div class="form-group">
 			              <div class="form-group focused">
 			                <label class="form-control-label" for="input-username" >지출 카테고리</label>
-			                <select name="b_ctno_out" id="input-address" class="form-control form-control-alternative" >
+			                <select name="b_ctno_out" id="input-address" class="form-control2 form-control-alternative" >
 			                   <option>--선택--</option>
 			                   <option value="1">식비</option>
 							   <option value="2">의복/미용</option>
@@ -132,7 +132,7 @@
 						<div class="form-group">
 			              <div class="form-group focused">
 			                <label class="form-control-label" for="input-username" >수입 카테고리</label>
-			                <select name="b_ctno_in" id="input-address" class="form-control form-control-alternative" >
+			                <select name="b_ctno_in" id="input-address" class="form-control2 form-control-alternative" >
 			                   <option>--선택--</option>
 			                   <option value="72">주수입</option>
 							   <option value="73">부수입</option>
@@ -814,6 +814,11 @@ function getintype() {
 	
 <style>
 
+.col-md-4 {
+    width: 31.333333%;
+}
+
+
 .box-body2 {
     border-top-left-radius: 0;
     border-top-right-radius: 0;
@@ -827,6 +832,32 @@ function getintype() {
     justify-content: space-between;
 /*     	overflow-x: hidden;	 */
 }
+
+
+.form-control2 {
+    display: block;
+    width: 45%;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%);
+    box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%);
+    -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}
+
+
+
+
+
+
 
 .abbtn-name{
 display: inline-flex;
