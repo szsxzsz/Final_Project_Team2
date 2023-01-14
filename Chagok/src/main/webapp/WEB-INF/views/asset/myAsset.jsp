@@ -284,7 +284,7 @@
 							<i class="fa fa-database"></i>
 						</span>
 						<div class="info-box-content" style="padding-top: 15px;">
-							<span class="info-box-text" style="font-size: 2em; margin-left: 20px; display: inline-block; width: 25%;">
+							<span class="info-box-text" style="font-size: 2em; margin-left: 20px; display: inline-block; width: 30%;">
 								<c:if test="${cashVO == null }">
 									현금 내역이 없습니다.
 								</c:if>
