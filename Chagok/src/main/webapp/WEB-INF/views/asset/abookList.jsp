@@ -304,7 +304,7 @@ $("#jqGrid").jqGrid({
 		{name:"ct_bottom",index:"ct_bottom",width:50,align:'center', editable: true, edittype: "select", /* formatter: "select", */
 	
 			    	editoptions:{
-			    		dataUrl: '/asset/catebottom',
+			    		dataUrl: '/asset/catebottom', 
 						buildSelect:function (data){
 							console.log(data);							
 				 			let key = JSON.parse(data)
