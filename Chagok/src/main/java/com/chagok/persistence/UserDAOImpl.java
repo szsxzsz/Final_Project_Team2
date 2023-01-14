@@ -1,5 +1,6 @@
 package com.chagok.persistence;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -85,13 +86,6 @@ public class UserDAOImpl implements UserDAO {
 	public void updateIsCheck(int mno) throws Exception {
 		sqlSession.update(NAMESPACE+".updateIsCheck", mno);
 	}
-
-	// 관리자 전체 회원 조회
-	@Override
-	public List<UserVO> getUserList() throws Exception {
-		
-		return sqlSession.selectList(NAMESPACE +".getUserList");
-	}
 	
 	@Override
 	public void updateSeqNo(Map<String, Object> map) {
@@ -110,14 +104,59 @@ public class UserDAOImpl implements UserDAO {
 		
 		return result;
 	}
-
+	
 	@Override
-	public List<BusinessAccountVO> getBizAll(Criteria cri) throws Exception {
-		mylog.debug("cri : "+cri.toString());
-		return sqlSession.selectList(NAMESPACE +".getBizAll", cri);
+	public List<UserVO> getUserList(Criteria cri) throws Exception {
+		return sqlSession.selectList(NAMESPACE +".getUserList", cri);
+	}	
+	
+	@Override
+	public Integer getUserCnt() throws Exception {
+		return sqlSession.selectOne(NAMESPACE +".getUserCnt");
 	}
 
+	@Override
+	public List<BusinessAccountVO> getBizList(Criteria cri) throws Exception {
+//		mylog.debug("cri : "+cri.toString());
+		return sqlSession.selectList(NAMESPACE +".getBizList", cri);
+	}
+
+	@Override
+	public Integer getBizCnt() throws Exception {
+		return sqlSession.selectOne(NAMESPACE +".getBizCnt");
+	}
+
+	@Override
+	public void insertBuy(Integer mno, Integer buypoint) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("mno", mno);
+		map.put("buypoint", buypoint);
+		sqlSession.insert(NAMESPACE+".insertBuy", map);
+	}
 	
+	// 성공 회원 포인트 입력
+	@Override
+	public void givePoint(Map<String, Object> map) throws Exception {
+		mylog.debug("포인트/회원번호 : "+map.entrySet());
+		
+		sqlSession.update(NAMESPACE+".givePoint", map);
+	}
+
+	// 포인트 차감
+	public void usePoint(Map<String, Object> map) throws Exception{
+		
+		sqlSession.update(NAMESPACE+".usePoint", map);
+	}
+
+	@Override
+	public void buyChallenge(Integer mno, Integer cno, Integer deposit) {
+		mylog.debug("buyChallenge() 호출 ");
+		Map<String,Object> map = new HashMap<String, Object>();
+		map.put("mno", mno);
+		map.put("cno", cno);
+		map.put("deposit", deposit);
+		sqlSession.update(NAMESPACE+".buyChallenge",map);
+	}
 	
 	
 }

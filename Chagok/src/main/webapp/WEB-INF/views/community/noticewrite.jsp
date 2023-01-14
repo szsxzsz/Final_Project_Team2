@@ -10,50 +10,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/css.css">
-</head>
 
-
-<body>
-<form role="form" action="/noticewrite" method="post">
-    <div class="board_wrap">
-        <div class="board_title">
-            <strong>공지사항</strong>
-            <p>공지사항을 빠르고 정확하게 안내해드립니다.</p>
-        </div>
-        <div class="board_write_wrap">
-            <div class="board_write">
-                <div class="title">
-                    <dl>
-                        <dt>제목</dt>
-                        <dd><input type="text" name="b_title" placeholder="제목을 입력해주세요."></dd>
-                    </dl>
-                </div>
-                <div class="info">
-                    <dl>
-                        <dt>작성자</dt>
-                        <dd><input type="text" name="b_writer" value="${nick }" readonly></dd>
-                    </dl>
-<!--                     <dl> -->
-<!--                         <dt>작성일</dt> -->
-<!--                         <dd><input type="text" placeholder=""></dd> -->
-<!--                     </dl> -->
-                </div>
-                <div class="cont">
-                    <textarea name="b_content" placeholder="내용을 작성해주세요"></textarea>
-                </div>
-            </div>
-            <div class="bt_wrap">
-            	<input class="sbtn2" type="button" value="돌아가기" onclick="location.href='/notice';">
-            	<input class="sbtn" type="submit" value="작성하기" >
-<!--                 <a href="view.html" class="on">등록</a> -->
-<!--                 <a href="list.html">취소</a> -->
-            </div>
-        </div>
-    </div>
-    
-    <input type="hidden" value="2" name="b_sort" >
-</form>
-</body>
 
 <style>
 * {
@@ -76,7 +33,7 @@ a {
 
 .board_wrap {
     width: 1000px;
-    margin: 40px auto;
+    margin: 40px;
 }
 
 .board_title {
@@ -449,8 +406,50 @@ a {
     background-color: #fff;
     color: #FFDB83;
 }
-
 </style>
+</head>
+
+<body>
+<form role="form" action="/noticewrite" method="post">
+    <div class="board_wrap">
+        <div class="board_title">
+            <strong>공지사항</strong>
+            <p>공지사항을 빠르고 정확하게 안내해드립니다.</p>
+        </div>
+        <div class="board_write_wrap">
+            <div class="board_write">
+                <div class="title">
+                    <dl>
+                        <dt>제목</dt>
+                        <dd><input type="text" name="b_title" placeholder="제목을 입력해주세요."></dd>
+                    </dl>
+                </div>
+                <div class="info">
+                    <dl>
+                        <dt>작성자</dt>
+                        <dd><input type="text" name="b_writer" value="${nick }" readonly></dd>
+                    </dl>
+<!--                     <dl> -->
+<!--                         <dt>작성일</dt> -->
+<!--                         <dd><input type="text" placeholder=""></dd> -->
+<!--                     </dl> -->
+                </div>
+                <div class="cont">
+                    <textarea name="b_content" placeholder="내용을 작성해주세요"></textarea>
+                </div>
+            </div>
+            <div class="bt_wrap">
+            	<input class="sbtn2" type="button" value="돌아가기" onclick="location.href='/notice';">
+            	<input class="sbtn" type="submit" value="작성하기" >
+<!--                 <a href="view.html" class="on">등록</a> -->
+<!--                 <a href="list.html">취소</a> -->
+            </div>
+        </div>
+    </div>
+    
+    <input type="hidden" value="2" name="b_sort" >
+</form>
+</body>
 
 
 

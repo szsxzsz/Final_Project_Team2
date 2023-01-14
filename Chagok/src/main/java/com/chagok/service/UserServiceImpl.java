@@ -78,11 +78,6 @@ public class UserServiceImpl implements UserService {
 	public void updateSeqNo(Map<String, Object> map) {
 		dao.updateSeqNo(map);
 	}
-	
-	@Override
-	public List<UserVO> getUserList() throws Exception {
-		return dao.getUserList();
-	}
 
 	@Override
 	public void updateUserInfo(UserVO vo) {
@@ -93,13 +88,54 @@ public class UserServiceImpl implements UserService {
 	public int unregistUser(UserVO vo) throws Exception {
 		return dao.unregistUser(vo);
 	}
-
+	
 	@Override
-	public List<BusinessAccountVO> getBizAll(Criteria cri) throws Exception {
-		return dao.getBizAll(cri);
+	public List<UserVO> getUserList(Criteria cri) throws Exception {
+		return dao.getUserList(cri);
+	}
+	
+	@Override
+	public Integer getUserCnt() throws Exception {
+		return dao.getUserCnt();
+	}
+	
+	@Override
+	public List<BusinessAccountVO> getBizList(Criteria cri) throws Exception {
+		return dao.getBizList(cri);
 	}
 
-	
+	@Override
+	public Integer getBizCnt() throws Exception {
+		return dao.getBizCnt();
+	}
 
+	@Override
+	public void insertBuy(Integer mno, Integer buypoint) {
+		dao.insertBuy(mno, buypoint);
+	}
+	
+	// 챌린지 성공시 포인트 지급
+	@Override
+	public void givePoint(Map<String, Object> map) throws Exception {
+		mylog.debug("givePoint() 호출");
+		
+		dao.givePoint(map);
+	}
+
+	// 포인트 차감
+	@Override
+	public void usePoint(Map<String, Object> map) throws Exception {
+		mylog.debug("usePoint() 호출");
+		
+		dao.usePoint(map);
+	}
+
+	@Override
+	public void buyChallenge(Integer mno, Integer cno, Integer deposit) {
+		mylog.debug("buyChallenge() 호출 ");
+		dao.buyChallenge(mno, cno, deposit);
+	}
+	
+	
 	
 }

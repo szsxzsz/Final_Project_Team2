@@ -14,7 +14,7 @@
 <div class="row" style="margin-left:30px; margin-top:30px;">
 	<div class="col-lg-4 aos-init aos-animate" data-aos="fade-right">
 <!--        아래 이미지 주소는 디비에서 꺼내오는걸로 바꿔야해요 -->
-     <img class="card-img-top img-fluid" src="${vo.c_thumbFile }" alt="" aria-labelledby="title_1" id="c_img">
+     <img class="card-img-top img-fluid" src="${pageContext.request.contextPath }/resources${vo.c_thumbFile }" alt="" aria-labelledby="title_1" id="c_img">
 	</div>
 	<div class="col-lg-8 pt-4 pt-lg-0 content aos-init aos-animate" data-aos="fade-left" style="padding-left: 50px; width: 600;">
 		<h3><span style="color: #66BB7A; font-weight: bold;">[${vo2.ct_top}]</span> ${vo.c_title }</h3>
@@ -23,6 +23,7 @@
 			 <fmt:parseDate value="${vo.c_start}" var="startDate" pattern="yyyy-MM-dd"/>
 			 <fmt:parseNumber value="${(startDate.time + 1000*60*60*24)/ (1000*60*60*24)}" integerOnly="true" var="startTime" scope="request"/>
 			 <fmt:parseNumber value="${c_end.time / (1000*60*60*24)}" integerOnly="true" var="endTime" scope="request" />
+			
 			<c:if test="${startTime - nowfmtTime <= 0 && nowfmtTime - endTime <= 0}">
 				<p class="fst-italic">챌린지가 <b>시작</b>되었습니다!</p>
 			</c:if>
@@ -37,7 +38,7 @@
 			<div class="col-lg-6">
              <div class="progress-group" style="width: 280px;">
                <span class="progress-text">챌린지 장 </span>
-               <span class="progress-number"><b>${vo.mno }</b>님</span>
+               <span class="progress-number"><b>${host.nick }</b>님</span>
              </div>
              <div class="progress-group" style="width: 280px;">
                <span class="progress-text">챌린지 인원</span>
@@ -53,7 +54,7 @@
              </div>
           	 <div class="progress-group" style="width: 280px;">
                <span class="progress-text">챌린지 기간</span>
-               <span class="progress-number"><b>${vo.c_period }</b></span>
+               <span class="progress-number"><b>${vo.c_period }</b>주</span>
               </div> 
              <div class="progress-group" style="width: 280px;">
                <span class="progress-text">챌린지 시작일</span>
@@ -102,6 +103,7 @@ ex) 저축형 챌린지 [교통] 카테고리 참여 중이라면 절약형 [교
         </div>
         
         <div>
+<!--        성공시 onclick="location.href='/minusdetailPOST';" 변경 -->
         <button class="btn btn-block btn-success btn-lg" type="button" id="samechallenge" style="width:218px; margin-left: 950px;">참여하기</button>
 		<div id="result_samechallenge"></div>
 		</div>

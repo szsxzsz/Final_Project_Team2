@@ -14,7 +14,7 @@
 <div class="row" style="margin-left:30px; margin-top:30px;">
 	<div class="col-lg-4 aos-init aos-animate" data-aos="fade-right">
 <!--        아래 이미지 주소는 디비에서 꺼내오는걸로 바꿔야해요 -->
-     <img class="card-img-top img-fluid" src="${vo.c_thumbFile }" alt="" aria-labelledby="title_1" id="c_img">
+     <img class="card-img-top img-fluid" src="${pageContext.request.contextPath }/resources${vo.c_thumbFile }" alt="" aria-labelledby="title_1" id="c_img">
 	</div>
 	<div class="col-lg-8 pt-4 pt-lg-0 content aos-init aos-animate" data-aos="fade-left" style="padding-left: 50px; width: 600;">
 		<h3><span style="color: #66BB7A; font-weight: bold;">[${vo2.ct_top}]</span> ${vo.c_title }</h3>
@@ -37,8 +37,8 @@
 			<div class="col-lg-6">
              <div class="progress-group" style="width: 280px;">
                <span class="progress-text">챌린지 장 </span>
-<%--                <span class="progress-number"><b>${vo.mno }</b>님</span> --%>
-             </div>
+               <span class="progress-number"><b>${host.nick }</b>님</span>
+            </div>
              <div class="progress-group" style="width: 280px;">
                <span class="progress-text">챌린지 인원</span>
                <span class="progress-number"><b>${vo.c_cnt }</b>/ ${vo.c_pcnt }</span>
@@ -49,7 +49,7 @@
                </div>
           	 <div class="progress-group" style="width: 280px;">
                <span class="progress-text">챌린지 기간</span>
-               <span class="progress-number"><b>${vo.c_period }</b></span>
+               <span class="progress-number"><b>${vo.c_period }</b>주</span>
               </div> 
              <div class="progress-group" style="width: 280px;">
                <span class="progress-text">챌린지 시작일</span>

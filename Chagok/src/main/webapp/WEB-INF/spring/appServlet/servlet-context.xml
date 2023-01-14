@@ -43,7 +43,7 @@
             <websocket:handshake-interceptors>
             	<beans:bean class="com.chagok.interceptor.HttpHandshakeInterceptor"/>
             </websocket:handshake-interceptors>
-            <websocket:sockjs websocket-enabled="true"/>
+            <websocket:sockjs websocket-enabled="true" client-library-url="../resources/dist/sockjs.min.js"/>
         </websocket:stomp-endpoint>
         <websocket:simple-broker prefix="/topic, /queue"/>
     </websocket:message-broker>
@@ -51,7 +51,7 @@
     
     <!-- 사진 업로드 기능 업로드 패스 설정 --> 
 	<beans:bean class="java.lang.String" id="uploadPath">
-	 <beans:constructor-arg value="classpath:/resources/" />
+	 <beans:constructor-arg value="c:/resources/" />
 	</beans:bean>
 	
 	<!-- 일반 파일 업로드 경로 -->

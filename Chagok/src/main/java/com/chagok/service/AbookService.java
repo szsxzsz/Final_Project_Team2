@@ -9,13 +9,13 @@ import com.chagok.domain.CategoryVO;
 public interface AbookService {
 	
 	// 가계부 목록
-	public List<Map<String, AbookVO>> getAbookList(int mno) throws Exception;
+	public List<Map<String, AbookVO>> getAbookList(int mno, int mm) throws Exception;
 		
 	// 카테고리 목록
 	public List<Map<String, Object>> cateList() throws Exception;
 	
 	// 카테고리 bottom
-	public List<Map<String, Object>> ctbottomList() throws Exception;
+	public List<Map<String, Object>> ctbottomList(String ct_top) throws Exception;
 	
 	// 가계부 수정
 	public void setAbookList(AbookVO vo) throws Exception;
@@ -25,7 +25,8 @@ public interface AbookService {
 
 	public List<AbookVO> toCate(int ctno) throws Exception;
 	
-	
+	// 가계부 삭제
+	public void delAbookList(int abno) throws Exception;
 	
 	
 	
