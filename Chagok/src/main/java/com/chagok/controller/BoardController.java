@@ -74,11 +74,9 @@ public class BoardController {
 	public String reviewGET(@RequestParam("cno") int cno, Model model, HttpSession session) throws Exception {
 	
 		mylog.debug(cno + "reviewGET 호출");
-		Integer Success = service.getSuccess(cno);
 		ChallengeVO vo2 = service.getCt_top(cno);
 		
 		model.addAttribute("review", service.getChallengeInfo(cno));
-		model.addAttribute("Success",Success);
 		model.addAttribute("vo2", vo2);
 		model.addAttribute("c_end", service.getChallengeEndDate(cno));
 
