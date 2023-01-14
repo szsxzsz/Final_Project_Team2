@@ -157,7 +157,14 @@ function requestPay2()
 <%--     ${userVO } --%>
         <div class="ptop">
             <div class="pimg">
-              <a href="https://imgbb.com/"><img src="${pageContext.request.contextPath }/resources${userVO.profile}" alt="hero" border="0"></a>
+              <a href="https://imgbb.com/">
+              <c:if test="${minusPeoList.profile != null }">
+               	<img src="${pageContext.request.contextPath }/resources${minusPeoList.profile }" alt="sunil"> 
+               </c:if>
+               <c:if test="${minusPeoList.profile == null }">
+               	<img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> 
+               </c:if>
+              </a>
             </div>
             <div class="pinfo">
                 <h1>꿀 충전 페이지</h1>
@@ -202,10 +209,10 @@ function requestPay2()
             </div>
         </div>
         <hr>
-        <div>
+<!--         <div> -->
 <!-- 		<button onclick="requestPay()" id="pay">결제하기</button>  -->
 <!-- 		결제하기 버튼 생성 -->
-		</div>
+<!-- 		</div> -->
 		<div style="border: 1px solid #FEFCF5;"></div>
 		<div class="pcard" style="clear:both;">
 			<h1 class="pcard__title">Option 1</h1>

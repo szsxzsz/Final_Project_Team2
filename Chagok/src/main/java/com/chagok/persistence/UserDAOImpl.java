@@ -107,7 +107,7 @@ public class UserDAOImpl implements UserDAO {
 	
 	@Override
 	public List<UserVO> getUserList(Criteria cri) throws Exception {
-		return sqlSession.selectList(NAMESPACE +".getUserList");
+		return sqlSession.selectList(NAMESPACE +".getUserList", cri);
 	}	
 	
 	@Override
@@ -134,5 +134,18 @@ public class UserDAOImpl implements UserDAO {
 		sqlSession.insert(NAMESPACE+".insertBuy", map);
 	}
 	
+	// 성공 회원 포인트 입력
+	@Override
+	public void givePoint(Map<String, Object> map) throws Exception {
+		mylog.debug("포인트/회원번호 : "+map.entrySet());
+		
+		sqlSession.update(NAMESPACE+".givePoint", map);
+	}
+
+	// 포인트 차감
+	public void usePoint(Map<String, Object> map) throws Exception{
+		
+		sqlSession.update(NAMESPACE+".usePoint", map);
+	}
 	
 }

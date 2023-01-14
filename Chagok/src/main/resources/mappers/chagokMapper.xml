@@ -234,7 +234,7 @@
 	
 	<!-- 유저 정보 업데이트 -->
 	<update id="updateUserInfo">
-		update user set tel = #{tel}, rname = #{rname}, raccount = #{raccount}, rbank = #{rbank} where mno = #{mno}
+		update user set tel = #{tel}, rname = #{rname}, raccount = #{raccount}, rbank = #{rbank}, profile = #{profile} where mno = #{mno}
 	</update>
 	
 	<!-- 회원 탈퇴 -->
@@ -379,7 +379,12 @@
 	<!-- 비지니스 계좌 입금(송금) -->
 	<insert id="sendBiz">
 		insert into business_account(biz_inout, biz_amount, mno, biz_holder_name, biz_balance, cno) 
+		<if test="biz_inout == 1">
+		values(#{biz_inout}, #{biz_amount}, #{mno}, #{biz_holder_name}, #{biz_balance}-#{biz_amount}, #{cno})
+		</if>
+		<if test="biz_inout == 2">
 		values(#{biz_inout}, #{biz_amount}, #{mno}, #{biz_holder_name}, #{biz_balance}+#{biz_amount}, #{cno})
+		</if>
 	</insert>
 	
 	<!-- 가장 최근 비즈니스 계좌 1개 조회 -->
@@ -389,9 +394,9 @@
 
 	<!-- 비즈니스 계좌 입금시 plus 테이블 pl_sum 업데이트 -->
 	<update id="updatePlusSum">
-		update plus set pl_sum=(select pl_sum where mno = #{mno} and cno = #{cno})+#{biz_amount}, 
-		pl_cnt=(select pl_cnt where mno = #{mno} and cno = #{cno}) + 1 
-		where mno = #{mno} and cno = #{cno}
+		update plus 
+		set pl_sum=pl_sum+#{biz_amount}, pl_cnt=pl_cnt+1 
+		where mno = #{mno} and cno = #{cno};
 	</update>
 
 	<!-- 게시판과 챌린지 (후기보드리스트용) -->
@@ -440,11 +445,13 @@
 	<!-- 관리자 - 전체 회원 조회  -->
 	<select id="getUserList" resultType="com.chagok.domain.UserVO">
 		select * from user
+		order by mno desc
+		limit #{pageStart}, #{perPageNum};
 	</select>
 	
 	<!-- 관리자 - 전체 회원 수 -->
 	<select id="getUserCnt" resultType="Integer">
-		select count(cno) from challenge;
+		select count(mno) from user;
 	</select>	
 	
 	<!-- 관리자 - 챌린지 전체 목록 -->
@@ -476,9 +483,67 @@
 		update user set buypoint=#{buypoint} where mno=#{mno}
 	</insert>
 	
+	<!-- 내가 쓴 글 보기 -->
+<!-- 	<select id ="myBoardWrite" resultType="com.chagok.domain.BoardVO"> -->
+<!-- 		select * from board -->
+<!-- 		where b_writer = #{nick} -->
+<!-- 		order by bno desc, b_date desc -->
+<!-- 		limit #{pageStart},10 -->
+<!-- 	</select> -->
+	<select id ="myBoardWrite" resultType="com.chagok.domain.BoardVO">
+		select * from board b inner join user u
+		where b.b_writer = u.nick
+		order by bno desc, b_date desc
+		limit #{pageStart},10;
+	</select>
+	
+	<!-- 내가 쓴 글 전체 개수 -->
+	<select id="myBoardWriteCnt" resultType="int">
+		select count(*) 
+		from board
+		where b_writer = #{nick}
+	</select>
+
 	<!-- ctno만 가져오기 -->
 	<select id="getCtno" resultType="Integer">
 	select ctno from category where ctno=(select ctno from challenge where cno = #{cno})
 	</select>
-		
+	<!-- 해당 챌린지내의 모든 참가자 성공,실패 여부 가져옴(리스트)  -->
+  	<select id="challengeResultList" resultType="map" >
+  		select coalesce(p.mno, m.mno) mno, coalesce(pl_finish, m_finish) finish, c.cno, coalesce(pl_sum, m_sum) sum, pl_cnt, c_status, c.mno, ctno 
+		from plus p 
+		right join challenge c 
+		on p.cno = c.cno 
+		left join minus m
+		on m.cno = c.cno 
+		where c.cno = #{cno};
+  	</select>
+	
+	<!-- 해당 챌린지내의 모든 참가자 성공,실패 여부 가져옴(한명만)  -->
+  	<select id="challengeResult" resultType="map">
+  		select distinct(chall.mno) dis, chall.*
+		from user u, (select coalesce(p.mno, m.mno) mno, coalesce(pl_finish, m_finish) finish, c.cno, coalesce(pl_sum, m_sum) sum, pl_cnt, c_status, ctno 
+						from plus p 
+						right join challenge c 
+						on p.cno = c.cno 
+						left join minus m
+						on m.cno = c.cno 
+						where c.cno = #{cno}) chall
+		where chall.mno = #{mno};
+  	</select>
+  	
+  	<!-- 포인트 입금  -->
+  	<update id="givePoint">
+	  	update user 
+	  	set getpoint = getpoint+#{getpoint}, success_cnt = success_cnt+1 
+	  	where mno = #{mno};
+  	</update>
+  	
+  	<!-- 포인트 차감 -->
+  	<update id="usePoint">
+  		update user 
+	  	set getpoint = getpoint-#{getpoint}
+	  	where mno = #{mno};
+  	</update>
+  	
  </mapper>

@@ -380,15 +380,41 @@ public class ChallengeServiceImpl implements ChallengeService{
 	}
 
 	
-	
-	
-	
-	
-	
 
-	
-	
+	// 챌린지 성공/실패 여부 가져옴(모든 회원)
+	@Override
+	public List<Map<String, Object>> challengeResultList(Integer cno) throws Exception {
+		mylog.debug("challengeResultList() 호출");
+		
+		return dao.challengeResultList(cno);
+	}
 
+	// 챌린지 성공/실패 여부 가져옴(한 명만)
+	@Override
+	public Map<String, Object> challengeResult(Integer cno, Integer mno) throws Exception {
+		mylog.debug("challengeResult() 호출");
+		
+		return dao.challengeResult(cno, mno);
+	}
+	
+	// 내가 쓴 글 조회(페이징처리 cri)
+	@Override
+	public List<BoardVO> getMyBoardWrite(Criteria cri) throws Exception {
+		mylog.debug(" getMyBoardWrite(Criteria cri) 호출 ");
+		return dao.getMyBoardWrite(cri);
+	}
+//	@Override
+//	public List<BoardVO> getMyBoardWrite(String nick) throws Exception {
+//		mylog.debug(" getMyBoardWrite(Criteria cri) 호출 ");
+//		return dao.getMyBoardWrite(nick);
+//	}
+		
+	// 내가 쓴 글 개수 조회
+	@Override
+	public int MyBoardWriteCnt() throws Exception {
+		mylog.debug(" MyBoardWriteCnt() 호출");
+		return dao.MyBoardWriteCnt();
+	}
 	
 	
 }

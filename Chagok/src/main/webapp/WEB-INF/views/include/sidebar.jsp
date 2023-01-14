@@ -84,7 +84,7 @@
               <ul class="treeview-menu active">
 <!--                 <li><a href="../community/canibuy"><i class="fa fa-circle-o"></i> 사도 돼?</a></li> -->
                 <li><a href="/economy"></i> 뉴스 / 재테크</a></li>
-                <li><a href="../community/balancing"></i> 월말 결산</a></li>
+<!--                 <li><a href="../community/balancing"></i> 월말 결산</a></li> -->
                 <li><a href="/freeboard"></i> 자유 게시판</a></li>
               </ul>
             </li>
@@ -101,11 +101,13 @@
               </a>
               <ul class="treeview-menu active">
                 <li><a href="/notice"></i> 공지 게시판</a></li>
-                <li><a href="/community/report"></i> 신고 게시판</a></li>
+<!--                 <li><a href="/community/report"></i> 신고 게시판</a></li> -->
 <!--                 <li><a href="../charts/flot.html"><i class="fa fa-circle-o"></i> Flot</a></li> -->
 <!--                 <li><a href="../charts/inline.html"><i class="fa fa-circle-o"></i> Inline charts</a></li> -->
               </ul>
             </li>
+
+            <c:if test="${nick eq '관리자' }">
             <li class="treeview active">
               <a href="#">
                 <i class="fa fa-asterisk"></i>
@@ -120,6 +122,7 @@
 <!--                 <li><a href="../charts/inline.html"><i class="fa fa-circle-o"></i> Inline charts</a></li> -->
               </ul>
             </li>
+            </c:if>
 <!--             <li class="treeview"> -->
 <!--               <a href="#"> -->
 <!--                 <i class="fa fa-laptop"></i> -->

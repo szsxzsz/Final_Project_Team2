@@ -11,220 +11,203 @@
 </head>
 
 <style>
-.btn btn-block btn-success btn-lg{
-	width: 200px;
-	margin: 20px 40px;
+.row{
+	padding: 20px 50px;
+}
+.btn1 {
+    width: 250px;
+    background-color: #66bb7a;
+    height: 50px;
+    font-size: 22px;
+    color: #fff;
+    margin:20px;
+	border: none;
+	border-radius: 5px;
 }
 </style>
 
-<section class="content-header">
-	<h1>
-		자산관리 메인 페이지
-	</h1>
-<%-- 	chkAb : ${chkAb }<br> --%>
-<%-- 	chkBud : ${chkBud }<br> --%>
-<%-- 	isCheck : ${userVO.isCheck }<br> --%>
-	<ol class="breadcrumb">
-		<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-		<li class="active">Dashboard</li>
-	</ol>
-</section>
-
 <section class="content">
-<c:if test="${chkAb.equals('abN') }">
 	<div class="row">
-			<div class="col-md-12">
-				<div class="box-body">
-					<h1>등록된 가계부 정보가 없습니다.</h1>
-					<h1>가계부를 쓰면 차곡이 리포트도 써줘요요8ㅅ8</h1>
-					<input type="button" 
-						class="btn btn-block btn-success btn-lg"
-						style="width: 200px; margin: 20px 40px" value="가계부 쓰기"
-						onclick="location.href='/asset/abookList';">			
-				</div>
-			</div>
-	</div>
-</c:if>
-
-<c:if test="${chkAb.equals('abY') }">
-	<div class="row">
-		<div class="col-md-12">
-			<div class="box">
-				<div class="box-header with-border">
-					<h3 class="box-title">날짜별 리포트 요약</h3>
-				</div>
-
-				<div class="box-body">
-					<div class="col-sm-4 border-right">
-						<div class="description-block">
-							<h4>이번달 평균 소비금액은</h4>
-							<h3><fmt:formatNumber value="${map.dtAvg }"/>원 입니다.</h3>
-						</div>
-			
+		<div class="col-md-6">
+				<c:if test="${chkBud.equals('budN') }">
+					<div class="box-body" style="text-align: center;">
+						<h3>설정된 예산이 없어요!</h3>
+						<h3>예산은 효율적이고 계획적인 소비 습관 생성에 도움이 됩니다.</h3>
+						<input type="button" id="setbud" class="btn1" value="한 달 예산 세우기"
+							onclick="location.href='/asset/budget?mm=0';">	
 					</div>
-			
-					<div class="col-sm-4 border-right">
-						<div class="description-block">
-							<h4>이번달 총 소비금액은</h4>
-							<h3><fmt:formatNumber value="${map.dtSum }"/>원 입니다.</h3>
-						</div>
-			
-					</div>
-			
-					<div class="col-sm-4">
-						<div class="description-block">
-							<h4>이번달 예상 지출금액은</h4>
-							<h3><fmt:formatNumber value="${map.expSum }"/>원 입니다.</h3>
-						</div>
-					</div>
-					
-				</div>
-
-			</div>
-		</div>
-	</div>
-
-
-	<div class="row">
-		<div class="col-md-12">
-<!-- 			<div class="box"> -->
-					<div class="row">
-						<div class="col-md-6">
-							<div class="box box-primary">
-								<div class="box-header with-border">
-									<h3 class="box-title">이번달 최다 지출</h3>
+				</c:if>
+				
+				<c:if test="${chkBud.equals('budY') }">
+					<c:set var="dtSum2" value="${map.dtSum2 }" />
+					<c:set var="totalBud" value="${map.totalBud }" />
+					<c:set var="d" value="${dtSum2 div totalBud }" />
+					<c:set var="d2" value="${totalBud - dtSum2 }"/>
+					<div class="box-body">
+						<div class="col-md-6" style="text-align: center;">
+							<section ng-click="pageLink({menu:'report', subMenu:'budget'})">
+								<div class="data-section-title">
+									<h4>예산 소진율</h4>
 								</div>
-								<div class="box-body">
-									<div class="chart">
-										<canvas id="donutchart" style="height: 330px; width: 661px;"></canvas>
+								<div id="radialprogress"></div>
+								
+							</section>
+						</div>
+		
+						<div class="col-md-6">
+							<p class="text-center">
+							<h3>
+								이번달 예산의
+								<fmt:formatNumber value="${d }" type="percent" /><br>
+								를 소진했어요.
+							</h3>
+							<h4>이번달 예산 :
+								<fmt:formatNumber value="${totalBud }" />원
+							</h4>
+							<h4>
+								오늘까지 지출 : <fmt:formatNumber value="${dtSum2 }" />원
+							</h4>
+							</p>
+							<div class="progress-group">
+								<span class="progress-text">예산 소진율</span>
+								<span class="progress-number">
+								<fmt:formatNumber value="${dtSum2 }" /> / <fmt:formatNumber value="${totalBud }" />
+								</span>
+								<div class="progress">
+									<div class="progress-bar progress-bar-green" role="progressbar"
+										aria-valuemin="0" aria-valuemax="100"
+										style="width:<fmt:formatNumber value="${d }" type="percent"/>">
 									</div>
 								</div>
 							</div>
 						</div>
-						<div class="col-md-6">
-							<div class="box box-danger">
-								<div class="box-header with-border">
-									<h3 class="box-title">이번달 최대 지출</h3>
-								</div>
-								<div class="box-body">
-										<canvas id="barchart" style="height: 330px; width: 661px;"></canvas>
-								</div>
-							</div>	
-						</div>
-					</div>		
-			</div>
-<!-- 		</div> -->
-	</div>
-</c:if>
-
-
-<!-- 내자산 -->
-<div class="row">
-	<div class="col-md-6">
-
-		<div class="box">
-			<div class="box-header with-border">
-				<h3 class="box-title">예산 요약</h3>
-			</div>
-			
-		<c:if test="${chkBud.equals('budN') }">
-			<div class="box-body">
-				<h1>등록된 예산 정보가 없습니다.</h1>
-				<h1>예산을 설정해서 돈을 절약해요!</h1>		
-					<input type="button" 
-						class="btn btn-block btn-success btn-lg"
-						style="width: 200px; margin: 20px 40px" value="예산 설정하기"
-						onclick="location.href='/asset/budget?mm=0';">	
-			</div>
+					</div>
+				</c:if>	
+		</div>
+	
+		<c:if test="${userVO.isCheck.equals('N') }">
+			<div class="col-md-6">
+	<!-- 			<div class="box"> -->
+					<div class="box-body" style="text-align: center;">
+						<h3>등록된 자산 정보가 없습니다!</h3>
+						<h3>${userVO.nick }님의 자산을 간편하게 조회해보세요.</h3>
+						<input type="button" id="setbud" class="btn1" value="내 자산 불러오기"
+							onclick="location.href='/asset/myAsset';">	
+					</div>	
+	<!-- 			</div>	 -->
+			</div>	
 		</c:if>
 		
-		<c:if test="${chkBud.equals('budY') }">
-			<div class="box-body">
-			<c:set var="dtSum2" value="${map.dtSum2 }" />
-			<c:set var="totalBud" value="${map.totalBud }" />
-			<c:set var="d" value="${dtSum2 div totalBud }" />
-			<c:set var="d2" value="${totalBud - dtSum2 }"/>
-				<div class="col-md-6" style="text-align: center;">
-					<section ng-click="pageLink({menu:'report', subMenu:'budget'})">
-						<div class="data-section-title">
-							<h4>예산 소진율</h4>
-						</div>
-						<div id="radialprogress"></div>
-						
-					</section>
-				</div>
-
-				<div class="col-md-6">
-					<p class="text-center">
-					<h3>
-						이번달 예산의
-						<fmt:formatNumber value="${d }" type="percent" />
-						를 소진했어요.
-					</h3>
-					<h4>${pMonth }
-						예산 :
-						<fmt:formatNumber value="${totalBud }" />
-					</h4>
-					<h4>
-						오늘까지 지출
-						<fmt:formatNumber value="${dtSum2 }" />
-					</h4>
-					</p>
-					<div class="progress-group">
-						<span class="progress-text">예산 소진율</span>
-						<span class="progress-number">
-						<fmt:formatNumber value="${dtSum2 }" /> / <fmt:formatNumber value="${totalBud }" />
-						</span>
-						<div class="progress">
-							<div class="progress-bar progress-bar-green" role="progressbar"
-								aria-valuemin="0" aria-valuemax="100"
-								style="width:<fmt:formatNumber value="${d }" type="percent"/>">
-							</div>
-						</div>
+		
+		<c:if test="${userVO.isCheck.equals('Y') }">
+			<div class="col-md-6">
+				<div class="box">
+					<div class="box-header with-border">
+						<h3 class="box-title">내 자산 요약</h3>
 					</div>
 				</div>
-			</div>
-		</c:if>	
-		</div>
+				<div class="info-box bg-green">
+					<span style="font-size: 30px; padding-left: 20px;">계좌</span>
+					<span style="font-size: 30px; padding-left: 20px;">92,050원</span>
+				</div>
 		
-	</div>
-
-	<c:if test="${userVO.isCheck.equals('N') }">
-		<div class="col-md-6">
-			<h1>등록된 자산 정보가 없습니다.</h1>
-			<input type="button" id="setbud"
-				class="btn btn-block btn-success btn-lg"
-				value="내 자산 불러오기"
-				onclick="location.href='/asset/myAsset';">	
-		</div>	
-	</c:if>
-	
-	
-	<c:if test="${userVO.isCheck.equals('Y') }">
-		<div class="col-md-6">
-			<div class="box">
-				<div class="box-header with-border">
-					<h3 class="box-title">내 자산 요약</h3>
+				<div class="info-box bg-red">
+					<span style="font-size: 30px; padding-left: 20px;">카드</span>
+					<span style="font-size: 30px; padding-left: 20px;">92,050원</span>
+				</div>
+		
+				<div class="info-box bg-aqua">
+					<span style="font-size: 30px; padding-left: 20px;">현금</span>
+					<span style="font-size: 30px; padding-left: 20px;">92,050원</span>
 				</div>
 			</div>
-			<div class="info-box bg-green">
-				<span style="font-size: 30px; padding-left: 20px;">계좌</span>
-				<span style="font-size: 30px; padding-left: 20px;">92,050원</span>
-			</div>
+		</c:if>
+	</div>
 	
-			<div class="info-box bg-red">
-				<span style="font-size: 30px; padding-left: 20px;">카드</span>
-				<span style="font-size: 30px; padding-left: 20px;">92,050원</span>
-			</div>
-	
-			<div class="info-box bg-aqua">
-				<span style="font-size: 30px; padding-left: 20px;">현금</span>
-				<span style="font-size: 30px; padding-left: 20px;">92,050원</span>
+	<c:if test="${chkAb.equals('abN') }">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="box-body" style="text-align: center;">
+					<h3>등록된 가계부 정보가 없습니다.</h3>
+					<h3>차곡이 ${uservo.nick }님의 소비 습관을 분석해드릴게요!</h3>
+					<input type="button" 
+						class="btn1" value="가계부 쓰기"
+						onclick="location.href='/asset/abookList';">			
+				</div>
 			</div>
 		</div>
 	</c:if>
-</div>
-
+	
+	<c:if test="${chkAb.equals('abY') }">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="box">
+					<div class="box-header with-border">
+						<h3 class="box-title">날짜별 리포트 요약</h3>
+					</div>
+	
+					<div class="box-body">
+						<div class="col-sm-4 border-right">
+							<div class="description-block">
+								<h4>이번달 평균 소비금액은</h4>
+								<h3><fmt:formatNumber value="${map.dtAvg }"/>원 입니다.</h3>
+							</div>
+				
+						</div>
+				
+						<div class="col-sm-4 border-right">
+							<div class="description-block">
+								<h4>이번달 총 소비금액은</h4>
+								<h3><fmt:formatNumber value="${map.dtSum }"/>원 입니다.</h3>
+							</div>
+				
+						</div>
+				
+						<div class="col-sm-4">
+							<div class="description-block">
+								<h4>이번달 예상 지출금액은</h4>
+								<h3><fmt:formatNumber value="${map.expSum }"/>원 입니다.</h3>
+							</div>
+						</div>
+						
+					</div>
+	
+				</div>
+			</div>
+		</div>
+	
+	
+		<div class="row">
+			<div class="col-md-12">
+	<!-- 			<div class="box"> -->
+						<div class="row">
+							<div class="col-md-6">
+								<div class="box box-primary">
+									<div class="box-header with-border">
+										<h3 class="box-title">이번달 최다 지출</h3>
+									</div>
+									<div class="box-body">
+										<div class="chart">
+											<canvas id="donutchart" style="height: 330px; width: 661px;"></canvas>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="box box-danger">
+									<div class="box-header with-border">
+										<h3 class="box-title">이번달 최대 지출</h3>
+									</div>
+									<div class="box-body">
+											<canvas id="barchart" style="height: 330px; width: 661px;"></canvas>
+									</div>
+								</div>	
+							</div>
+						</div>		
+				</div>
+	<!-- 		</div> -->
+		</div>
+	</c:if>
 </section>
 
 <!-- jQuery -->
@@ -413,7 +396,8 @@ $(document).ready(function(){
 		var numberText = track.append('text')
 		  .attr('fill', colours.text)
 		  .attr('text-anchor', 'middle')
-		  .attr('dy', '.5rem'); 
+		  .attr('dy', '.5rem')
+			.attr('font-size', '30px')
 	
 		  //update position of endAngle
 		  value.attr('d', circle.endAngle(endAngle * end));

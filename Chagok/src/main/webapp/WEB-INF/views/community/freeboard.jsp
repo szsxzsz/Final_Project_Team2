@@ -10,20 +10,12 @@
 	$(document).ready(function() {
 		var formObj = $("form[role='form']");
 
-		// 수정
-		$(".btn-primary").click(function() {
-
-			formObj.attr("action", "/community/freeboardupdate");
-			formObj.attr("method", "get");
-			formObj.submit();
-
-		});
-
 		// 삭제
 		$(".btn-danger").click(function() {
-
+		
 			formObj.attr("action", "/community/freedelete");
 			formObj.submit();
+			
 		});
 
 	});
@@ -70,13 +62,14 @@
 						</h3>
 						<div class="timeline-body">
 							<i style="color: #66BB7A; font-weight: bold;"> Content </i> <br><br>
-							${board.b_content }
+							<textarea style="width:30%; height:200px; resize: none; border: none;" readonly  name="b_content" placeholder="내용을 작성해주세요">${board.b_content }</textarea>
 							
 						</div>
 						<div class="timeline-footer">
 							<c:set var="writer" value="${board.b_writer }"/>
 							<c:if test= "${nick == '관리자' || nick == writer}">
 								<input type="submit" class="btn btn-primary btn-xs" value="수정" onclick="location.href='/freeboardupdate?bno=${board.bno}';">
+								<input type="hidden" name="bno" value="${board.bno }">
 								<input type="submit" class="btn btn-danger btn-xs" value="삭제" onclick="location.href='/freedelete?bno=${board.bno}';">
 							</c:if>
 						</div>
@@ -109,5 +102,6 @@
 	</div>
 
 </section>
+
 
 <%@ include file="../include/footer.jsp"%>

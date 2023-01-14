@@ -1,12 +1,10 @@
 package com.chagok.controller;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.io.File;
-import java.io.IOException;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -21,8 +19,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,16 +28,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.chagok.domain.AbookVO;
-import com.chagok.domain.BoardVO;
 import com.chagok.domain.BusinessAccountVO;
-import com.chagok.domain.CategoryVO;
 import com.chagok.domain.ChallengeVO;
-import com.chagok.domain.Criteria;
-import com.chagok.domain.FeedDTO;
 import com.chagok.domain.MessageVO;
 import com.chagok.domain.MinusVO;
-import com.chagok.domain.PageMaker;
 import com.chagok.domain.PlusVO;
 import com.chagok.domain.SysLogVO;
 import com.chagok.domain.UserVO;
@@ -51,11 +41,6 @@ import com.chagok.service.ChallengeService;
 import com.chagok.service.FeedService;
 import com.chagok.service.UserService;
 import com.chagok.utils.UploadFileUtils;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.siot.IamportRestClient.IamportClient;
-import com.siot.IamportRestClient.exception.IamportResponseException;
-import com.siot.IamportRestClient.response.IamportResponse;
-import com.siot.IamportRestClient.response.Payment;
 
 @Controller
 @RequestMapping("/challenge/*")
@@ -82,19 +67,13 @@ public class ChallengeController {
 	// http://localhost:8080/challenge/plusFeed?cno=2
 	@GetMapping(value = "/plusFeed")
 	public String plusfeedGET(Model model, @RequestParam("cno") int cno, HttpSession session, UserVO vo,
-			HttpServletRequest req
-			) throws Exception {
+			HttpServletRequest req ) throws Exception {
 		mylog.debug("plusfeedGET() 호출");
 		
-	    ServletContext appliation = req.getSession().getServletContext();
-	    
-	    appliation.setAttribute("alertAPP", "test");
+		// ServletContext appliation = req.getSession().getServletContext();
+	    // appliation.setAttribute("alertAPP", "test"); >> 알림용
 
 		List<Map<String, Object>> plusPeoList = service.getPlusPeople(cno);
-		mylog.debug("plusFeedGET()에서 id : "+session.getId());
-		SysLogVO sysLogVO = new SysLogVO();
-
-		model.addAttribute("sessionId", sysLogVO.getUserId());
 		Integer mno = service.getChallengeInfo(cno).getMno();
 		
 		// 영민 추가 (plus 테이블에서 cno, mno로 내 정보만 호출)
@@ -126,7 +105,7 @@ public class ChallengeController {
 		mylog.debug("plusdetailGET 호출");
 		mylog.debug(cno + "");
 		
-	
+		Integer mno = service.getChallengeInfo(cno).getMno();
 		ChallengeVO vo = service.getChallengeInfo(cno);
 		// mno에 해당하는 user의 nick을 받아옴
 		model.addAttribute("user", uservice.getUser(vo.getMno())); 
@@ -134,9 +113,10 @@ public class ChallengeController {
 		ChallengeVO vo2 = service.getCt_top(cno);
 
 		model.addAttribute("vo", vo); // plusdetail로 정보전달
-
 		model.addAttribute("vo2", vo2);
-
+		model.addAttribute("c_end", service.getChallengeEndDate(cno));
+		model.addAttribute("host",uservice.getUser(mno));
+		
 		return "/challenge/plusdetail";
 	}
 
@@ -229,10 +209,13 @@ public class ChallengeController {
 		ChallengeVO vo = service.getChallengeInfo(cno);
 		model.addAttribute("user", uservice.getUser(vo.getMno())); 
 		ChallengeVO vo2 = service.getCt_top(cno);
+		Integer mno = service.getChallengeInfo(cno).getMno();
 		
 		model.addAttribute("vo", vo); // minusdetail로 정보전달
 		model.addAttribute("vo2", vo2);
-
+		model.addAttribute("c_end", service.getChallengeEndDate(cno));
+		model.addAttribute("host",uservice.getUser(mno));
+		
 		return "/challenge/minusdetail";
 	}
 	
@@ -292,13 +275,23 @@ public class ChallengeController {
 		public String mychallengeGET(Model model, HttpSession session) throws Exception {
 			
 			String nick = (String)session.getAttribute("nick");
+			Integer mno	= (Integer)session.getAttribute("mno");
+			List<Map<String, Object>> challengeResultList = new ArrayList<Map<String,Object>>();
 			
 			if(nick != null) {
 				List<ChallengeVO> mychallengeList = service.getmyChallenge(nick);
 				model.addAttribute("mychallengeList", mychallengeList);
 				mylog.debug(mychallengeList+"");
+				
+				for(int i = 0;i< mychallengeList.size();i++) {
+					Integer cno = mychallengeList.get(i).getCno();
+					Map<String, Object> result = service.challengeResult(cno, mno);
+					
+					challengeResultList.add(result);
+					
+				}
+				model.addAttribute("challengeResultList", challengeResultList);
 			}
-			
 			
 			return "/challenge/mychallenge";
 		}
@@ -357,7 +350,7 @@ public class ChallengeController {
 		UserVO userVO = uservice.getUser(mno);
 		model.addAttribute("userVO", userVO);
 		vo.setMno(mno);
-		vo.setC_person(userVO.getNick()+",");
+		vo.setC_person(userVO.getNick());
 		
 		// 사진등록
 		String imgUploadPath = uploadPath + File.separator + "imgUpload";
@@ -407,7 +400,7 @@ public class ChallengeController {
 		UserVO userVO = uservice.getUser(mno);
 		model.addAttribute("userVO", userVO);
 		vo.setMno(mno);
-		vo.setC_person(userVO.getNick()+",");
+		vo.setC_person(userVO.getNick());
 		
 		// 사진등록
 		String imgUploadPath = uploadPath + File.separator + "imgUpload";
@@ -440,29 +433,37 @@ public class ChallengeController {
 	// http://localhost:8080/challenge/success?cno=1
 	@GetMapping(value="/success")
 	public String victoryGET(Model model, @RequestParam("cno") int cno, HttpSession session) throws Exception{
+		Integer mno = (Integer) session.getAttribute("mno");
+		
 		ChallengeVO vo = service.getChallengeInfo(cno);
 		List<ChallengeVO> challengeList = service.getChallengeList(cno);
+		int CList = service.getCList(cno); 
 		
-		ChallengeVO vo2 = service.getCt_top(cno);
-		int CList = service.getCList(cno);
-		int ChallengeMoney = service.getChallengeMoney(cno);
-		Integer Success = service.getSuccess(cno);
+		int ChallengeMoney = service.getChallengeMoney(cno); 
+		Integer Success = service.getSuccess(cno); 
+		Map<String, Object> result = service.challengeResult(cno, mno);
+		Date c_end = service.getChallengeEndDate(cno);
 		
-		model.addAttribute("vo", vo);
-		model.addAttribute("CList", CList);
-		model.addAttribute("challengeList", challengeList);
-		model.addAttribute("vo2", vo2);
-		model.addAttribute("c_end", service.getChallengeEndDate(cno));
-		model.addAttribute("ChallengeMoney", ChallengeMoney);
-		model.addAttribute("Success", Success);
+		model.addAttribute("vo", vo); // 해당 챌린지 정보
+		model.addAttribute("CList", CList); // 참여인원
+		model.addAttribute("c_end", c_end); // 종료일자
+		model.addAttribute("ChallengeMoney", ChallengeMoney); // 총 예치금
+		model.addAttribute("Success", Success); // 성공인원
+		model.addAttribute("result", result);
+		
+		Map<String, Object> giveInfo = new HashMap<String, Object>();
+	    giveInfo.put("mno", mno);
+	    giveInfo.put("getpoint", (ChallengeMoney/Success));
+	    
+		uservice.givePoint(giveInfo);
 		
 		return "/challenge/resultsuccess";
 	}
 
 	// 챌린지 결과(실패)
-	// http://localhost:8080/challenge/defeat?cno=1
+	// http://localhost:8080/challenge/defeat?cno=2
 	@GetMapping(value="/defeat")
-	public String defeatGET(Model model, @RequestParam("cno") int cno, HttpSession session) throws Exception{
+	public String defeatGET(Model model, @RequestParam("cno") int cno) throws Exception{
 		ChallengeVO vo = service.getChallengeInfo(cno);
 		List<ChallengeVO> challengeList = service.getChallengeList(cno);
 				

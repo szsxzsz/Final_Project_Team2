@@ -10,8 +10,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/css.css">
+
+ <script>
+			$(document).ready(function(){
+				var formObj = $("form[role='form']");
+				
+				
+				$(".sbtn2").click(function(){
+					formObj.attr("action","/noticedelete");
+					formObj.submit();
+				});
+				
+			});
+		</script>  
+  
     
-    <style>
+<style>
+
 * {
     margin: 0;
     padding: 0;
@@ -51,7 +66,6 @@ a {
 .bt_wrap {
     margin-top: 30px;
     text-align: center;
-    font-size: 0;
 }
 
 .bt_wrap a {
@@ -226,24 +240,24 @@ a {
 }
 
 .board_view .cont {
-    padding: 30px;
+    padding: 15px;
     border-bottom: 1px solid #66BB7A;
     line-height: 160%;
     font-size: 1.4rem;
 }
 
 .board_write {
-    border-top: 2px solid #000;
+    border-top: 2px solid #66BB7A;
 }
 
 .board_write .title,
 .board_write .info {
-    padding: 15px;
+    padding: 15px 0px 0px 15px;
 }
 
 .board_write .info {
     border-top: 1px dashed #ddd;
-    border-bottom: 1px solid #000;
+    border-bottom: 1px solid #66BB7A;
     font-size: 0;
 }
 
@@ -253,7 +267,7 @@ a {
 
 .board_write .info dl {
     display: inline-block;
-    width: 50%;
+    width: 33.3%;
     vertical-align: middle;
 }
 
@@ -287,14 +301,14 @@ a {
 }
 
 .board_write .cont {
-    border-bottom: 1px solid #000;
+    border-bottom: 1px solid #66BB7A;
 }
 
 .board_write .cont textarea {
     display: block;
     width: 100%;
     height: 300px;
-    padding: 15px;
+    padding: 30px;
     box-sizing: border-box;
     border: 0;
     resize: vertical;
@@ -396,7 +410,7 @@ a {
 }
 
 .bt_wrap input.sbtn2 {
-    display: inline-block;
+	display: inline-block;
     min-width: 100px;
     margin-left: 10px;
     padding: 10px;
@@ -408,6 +422,7 @@ a {
 }
 
 </style>
+   
 </head>
 
 <body>
@@ -423,10 +438,13 @@ a {
         </div>
 	</div>
 	
-        <div class="board_view_wrap">
-            <div class="board_view">
+        <div class="board_wrap">
+            <div class="board_write">
                 <div class="title">
-                     ${vo.b_title }
+            		<dl>
+            			<dt>제목</dt>
+            			<dd>${vo.b_title }<dd>
+                	</dl>
                 </div>
                 <div class="info">
                     <dl>
@@ -447,7 +465,7 @@ a {
 <!--                     </dl> -->
                 </div>
                 <div class="cont">
-                    ${vo.b_content }
+                    <textarea name="b_content" placeholder="내용을 작성해주세요">${vo.b_content }</textarea>
                 </div>
             </div>
             
@@ -466,24 +484,8 @@ a {
                 </c:if>
             </div>
         </div>
-        
-        <script>
-			$(document).ready(function(){
-				var formObj = $("form[role='form']");
-				
-				
-				$(".sbtn2").click(function(){
-					formObj.attr("action","/noticedelete");
-					formObj.submit();
-				});
-				
-			});
-		</script>
-        
-        
+  
 </body>
-
-
 
 </div>
 <%@ include file="../include/footer.jsp"%>
