@@ -606,7 +606,7 @@ $("#jqGrid").jqGrid({
 										alert("입력 성공!");
 									console.log(val);							
 									},error:function(err){
-									      console.log(err);
+									      console.log(err); 
 									}
 								})
 
