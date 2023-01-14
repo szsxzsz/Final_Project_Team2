@@ -288,6 +288,7 @@ public class ChallengeController {
 					Map<String, Object> result = service.challengeResult(cno, mno);
 					
 					challengeResultList.add(result);
+					//model.addAttribute("result", result);
 					
 				}
 				model.addAttribute("challengeResultList", challengeResultList);
@@ -381,6 +382,7 @@ public class ChallengeController {
 		
 		// 2. 서비스 -> DAO 접근 (mapper)
 		service.challengeRegist(vo);
+		//mylog.debug(cno.toString());
 		mylog.debug(" 챌린지 등록(저축형) 완료! ");
 		
 		// 3. 페이지로 이동(모집중 챌린지)
