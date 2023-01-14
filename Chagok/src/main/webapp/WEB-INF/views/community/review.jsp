@@ -431,7 +431,7 @@ a {
 							<c:set var="sort" value="절약형"/>
 						</c:if>
                         <dt>챌린지 유형</dt>
-                        <dd>${sort }</dd>
+                        <dd>${sort } : ${vo2.ct_top }</dd>
                     </dl>
                      <dl>
                         <dt>챌린지 제목</dt>
@@ -470,6 +470,7 @@ a {
     </div>
     
     <input type="hidden" value="1" name="b_sort" >
+    <input type="hidden" value="${review.cno }" name="cno">
 </form>
 </body>
 
