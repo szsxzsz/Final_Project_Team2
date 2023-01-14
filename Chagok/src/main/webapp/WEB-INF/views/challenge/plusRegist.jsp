@@ -201,6 +201,7 @@ $(document).ready(function(){
 		     $('#c_content').focus();
 		     return false;
 	}
+	
 });
 });
 </script>
@@ -414,7 +415,6 @@ $(document).ready(function() {
                 <input type="hidden" name="c_sort" value="0">
                 <input type="hidden" name="c_min" value="2">
                 <input type="hidden" name="c_cnt" value="1">
-                <input type="hidden" name="c_total" value="1">
                 
                 
             </div>
@@ -426,10 +426,6 @@ $(document).ready(function() {
 </form>
 </body>
 
-                    
-     
-        
-        
 
 
 </div>

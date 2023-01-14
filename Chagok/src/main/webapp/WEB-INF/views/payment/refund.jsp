@@ -2,8 +2,12 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-  <link href="//cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet">
-  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+
+<link rel="stylesheet" type="text/css" href="../resources/mainpagecss/css/font.css">
+<link href="//cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet">
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+  
+  
 <!-- jQuery -->
 <script src="../resources/plugins/jQuery/jQuery-2.1.4.min.js"></script>
 
@@ -182,7 +186,7 @@ $(document).ready(function(){
 
 body {
   background-color: #070606;
-  font-family: "Roboto", sans-serif;
+  font-family: 'GmarketSans';
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -203,7 +207,8 @@ body {
 }
 
 h1 {
-  color: var(--primary-color);
+	color: var(--primary-color);
+    text-align: center;
 }
 
 p {
