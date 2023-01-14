@@ -27,7 +27,7 @@
 
 <div class="row" style="padding: 50px;">
 <input id="chk" class="chk" value="1" type="checkbox" checked>지출
-<input id="chk" class="chk" value="2" type="checkbox" checked>수입
+<input id="chk" class="chk" value="2" type="checkbox" >수입
 <div id="calendar"></div>
 </div>
 
