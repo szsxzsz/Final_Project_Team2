@@ -80,7 +80,7 @@ h3 {
 </style>
 
 
-	<c:if test="${chkAb.equals('abN') }">
+	<c:if test="${chkLogin.equals('loginN') || chkAb.equals('abN') }">
 		<div class="row" style="text-align: center;">
 			<div class="col-md-12">
 				<div class="box-body">
@@ -194,8 +194,14 @@ h3 {
 									<div class="img1-title">
 										<div class="img1-div">
 											<a href="/challenge/detail?cno=${ch.cno }">
+											<c:if test="${ch.c_thumbFile != null}">
 												<img src="${pageContext.request.contextPath }/resources${ch.c_thumbFile }"
 													class="img1">
+											</c:if>
+											<c:if test="${ch.c_thumbFile == null}">
+												<img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"
+													class="img1"> 
+											</c:if>
 											</a>
 										</div>
 									</div>
@@ -250,10 +256,14 @@ h3 {
 								<li>
 									<div class="img1-title">
 										<div class="img1-div">
-											<a href="/challenge/detail?cno=${ch.cno }">
+											<c:if test="${card.prop_img != null}">
 												<img src="${pageContext.request.contextPath }/resources${card.prop_img }"
 													class="img1">
-											</a>
+											</c:if>
+											<c:if test="${card.prop_img == null}">
+												<img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"
+													class="img1"> 
+											</c:if>
 										</div>
 									</div>
 									<div class="box-footer">
