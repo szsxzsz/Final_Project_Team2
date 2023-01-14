@@ -103,7 +103,7 @@ ex) 저축형 챌린지 [교통] 카테고리 참여 중이라면 절약형 [교
         </div>
         
         <div>
-<!--         onclick="location.href='/minusdetailPOST';" 수정후 넣기! -->
+<!--        성공시 onclick="location.href='/minusdetailPOST';" 변경 -->
         <button class="btn btn-block btn-success btn-lg" type="button" id="samechallenge" style="width:218px; margin-left: 950px;">참여하기</button>
 		<div id="result_samechallenge"></div>
 		</div>
