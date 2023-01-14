@@ -271,7 +271,7 @@ public class ChallengeController {
 
 	// http://localhost:8080/challenge/mychallenge
 		@GetMapping("/mychallenge")
-		public String mychallengeGET(Model model, HttpSession session) throws Exception {
+		public String mychallengeGET(Model model, HttpSession session, RedirectAttributes rttr) throws Exception {
 			
 			String nick = (String)session.getAttribute("nick");
 			mylog.debug("nick : "+nick);
@@ -292,7 +292,7 @@ public class ChallengeController {
 				}
 				model.addAttribute("challengeResultList", challengeResultList);
 			}
-			
+
 			return "/challenge/mychallenge";
 		}
 		
@@ -350,7 +350,7 @@ public class ChallengeController {
 		
 	// 챌린지 등록 (저축형) - POST
 	@RequestMapping(value = "/plusregist", method=RequestMethod.POST)
-	public String plusRegistPOST(ChallengeVO vo, MultipartFile file, HttpSession session, Model model) throws Exception{
+	public String plusRegistPOST(ChallengeVO vo, MultipartFile file, HttpSession session, Model model, Map<String, Object> map, RedirectAttributes rttr) throws Exception{
 		mylog.debug(" /challenge/plusRegist(POST) 호출 ");	
 		
 		// 회원정보 저장
@@ -361,6 +361,19 @@ public class ChallengeController {
 		vo.setMno(mno);
 		vo.setC_person(userVO.getNick());
 		
+		// 중복참여 제어
+		map.put("mno", mno);
+		map.put("ctno", vo.getCtno());
+		
+		Integer result = service.samechallenge(map);
+		
+		if(result != null) {
+			rttr.addFlashAttribute("result", "overlap");
+			
+			return "redirect:/commumain";
+		}
+		rttr.addFlashAttribute("result", "Noverlap");
+			
 		// 사진등록
 		String imgUploadPath = uploadPath + File.separator + "imgUpload";
 		String ymdPath = UploadFileUtils.calcPath(imgUploadPath);
@@ -376,19 +389,21 @@ public class ChallengeController {
 		vo.setC_file(File.separator + "imgUpload" + ymdPath + File.separator + fileName);
 		vo.setC_thumbFile(File.separator + "imgUpload" + ymdPath + File.separator + "s" + File.separator + "s_" + fileName);
 		
-//		// 1. 전달된 정보 저장
+		// 챌린지 등록
 		mylog.debug(vo.toString());
-		
-		// 2. 서비스 -> DAO 접근 (mapper)
 		service.challengeRegist(vo);
 		mylog.debug(" 챌린지 등록(저축형) 완료! ");
 		
-		// 3. 페이지로 이동(모집중 챌린지)
-//		rttr.addFlashAttribute("result", "plusRegistOK");
-		return "redirect:/commumain";
+		// plus 테이블에 정보 추가
+		Map<String, Object> plus = new HashMap<String, Object>();
+		plus.put("mno", mno);
+		plus.put("cno", vo.getCno());
+		service.joinplusInsert(plus);
 		
+		return "redirect:/challenge/mychallenge";
 	}
 		
+	
 	// 챌린지 등록 (절약형) - GET
 	// http://localhost:8080/challenge/minusregist
 	@GetMapping(value="/minusregist")
@@ -400,7 +415,7 @@ public class ChallengeController {
 	
 	// 챌린지 등록 (절약형) - POST
 	@RequestMapping(value = "/minusregist", method=RequestMethod.POST)
-	public String minusRegistPOST(ChallengeVO vo, MultipartFile file, HttpSession session, Model model) throws Exception{
+	public String minusRegistPOST(ChallengeVO vo, MultipartFile file, HttpSession session, Model model, Map<String, Object> map, RedirectAttributes rttr) throws Exception{
 		mylog.debug(" /challenge/minusRegist(POST) 호출 ");	
 		
 		// 회원정보 저장
@@ -410,6 +425,19 @@ public class ChallengeController {
 		model.addAttribute("userVO", userVO);
 		vo.setMno(mno);
 		vo.setC_person(userVO.getNick());
+		
+		// 중복참여 제어
+		map.put("mno", mno);
+		map.put("ctno", vo.getCtno());
+		
+		Integer result = service.samechallenge(map);
+		
+		if(result != null) {
+			rttr.addFlashAttribute("result", "overlap");
+			
+			return "redirect:/commumain";
+		}
+		rttr.addFlashAttribute("result", "Noverlap");
 		
 		// 사진등록
 		String imgUploadPath = uploadPath + File.separator + "imgUpload";
@@ -425,17 +453,18 @@ public class ChallengeController {
 		vo.setC_file(File.separator + "imgUpload" + ymdPath + File.separator + fileName);
 		vo.setC_thumbFile(File.separator + "imgUpload" + ymdPath + File.separator + "s" + File.separator + "s_" + fileName);
 		
-		// 1. 전달된 정보 저장
+		// 챌린지 등록
 		mylog.debug(vo.toString());
-		
-		// 2. 서비스 -> DAO 접근 (mapper)
 		service.challengeRegist(vo);
 		mylog.debug(" 챌린지 등록(절약형) 완료! ");
 		
-		// 3. 페이지로 이동(모집중 챌린지)
-//		rttr.addFlashAttribute("result", "plusRegistOK");
-		return "redirect:/commumain";
+		// minus 테이블에 정보 추가
+		Map<String, Object> minus = new HashMap<String, Object>();
+		minus.put("mno", mno);
+		minus.put("cno", vo.getCno());
+		service.joinminusInsert(minus);
 		
+		return "redirect:/challenge/mychallenge";
 	}
 	
 	// 챌린지 결과(성공)

@@ -106,7 +106,8 @@
 }
 </style>
 
- </head>
+</head>
+
 
 <script type="text/javascript">
 	$(document).ready(function(){
@@ -148,7 +149,14 @@
  <script src="../assets/libs/jquery/dist/jquery.min.js"></script>
  <script src="../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
  <script src="../assets/js/theme.min.js"></script>
-
+ 
+<script type="text/javascript">
+   var result = '${result}';
+   if(result == 'Noverlap'){
+  	 alert(" 1일 이내로 승인이 완료된 후 챌린지가 등록되니 잠시만 기다려주세요. ");
+   }
+</script>
+ 
 <!-- 게시판 안내 -->
 	<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 		<div class="board_wrap">

@@ -14,8 +14,17 @@
 <%-- ${challengeList} --%>
 <%-- ${ranking } --%>
 
+
 <h1 class="visually-hidden"></h1>
 <main>
+
+<script type="text/javascript">
+   var result = '${result}';
+   if(result == 'overlap'){
+  	 alert(" 중복 챌린지는 개설 불가능합니다. ");
+   }
+</script>
+
 <form method="get">
 <!--  <div class="search">
     <select name="searchType">
