@@ -396,7 +396,7 @@ public class BoardController {
 	}
 	
 	// 자유 게시판 삭제
-	@PostMapping(value = "/freedelete")
+	@GetMapping(value = "/freedelete")
 	public String freedeleteGET(int bno,RedirectAttributes rttr,HttpSession session) throws Exception {
 		mylog.debug(bno+"");
 		

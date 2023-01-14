@@ -476,11 +476,25 @@
 		update user set buypoint=#{buypoint} where mno=#{mno}
 	</insert>
 	
-	<!-- 내 글 보기 -->
+	<!-- 내가 쓴 글 보기 -->
+<!-- 	<select id ="myBoardWrite" resultType="com.chagok.domain.BoardVO"> -->
+<!-- 		select * from board -->
+<!-- 		where b_writer = #{nick} -->
+<!-- 		order by bno desc, b_date desc -->
+<!-- 		limit #{pageStart},10 -->
+<!-- 	</select> -->
 	<select id ="myBoardWrite" resultType="com.chagok.domain.BoardVO">
-		select * 
+		select * from board b inner join user u
+		where b.b_writer = u.nick
+		order by bno desc, b_date desc
+		limit #{pageStart},10;
+	</select>
+	
+	<!-- 내가 쓴 글 전체 개수 -->
+	<select id="myBoardWriteCnt" resultType="int">
+		select count(*) 
 		from board
-		where b_sort = 1 and b.b_writer = u.nick	
+		where b_writer = #{nick}
 	</select>
 
 	<!-- ctno만 가져오기 -->

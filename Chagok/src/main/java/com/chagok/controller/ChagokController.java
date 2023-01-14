@@ -31,6 +31,7 @@ import com.chagok.apiDomain.CardHistoryVO;
 import com.chagok.apiDomain.CardInfoVO;
 import com.chagok.apiDomain.CashVO;
 import com.chagok.domain.AlertVO;
+import com.chagok.domain.BoardVO;
 import com.chagok.domain.BusinessAccountVO;
 import com.chagok.domain.ChallengeVO;
 import com.chagok.domain.Criteria;
@@ -380,10 +381,15 @@ public class ChagokController {
    
    // 내가 쓴 글 ( 브랜치 합치고 구현 )
    @GetMapping("/myBoardWrite")
-   public String myBoardGET(HttpSession session, Model model,Criteria cri) {
-	   
+   public String myBoardGET(HttpSession session, Model model,Criteria cri) throws Exception {
 	   String nick = (String)session.getAttribute("nick");
-//	   service.getBoardList(nick);
+	   
+	   
+		   List<BoardVO> boardList = service2.getMyBoardWrite(cri);
+		   mylog.debug(boardList+"@@@@@@@@@@@@@@@@@@@@");
+		   
+		   model.addAttribute("boardList", boardList);
+		   
 	   
 	   return "/chagok/myBoardWrite";
    }

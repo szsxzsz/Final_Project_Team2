@@ -491,7 +491,29 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 		return sqlSession.selectOne(NAMESPACE+".challengeResult", map);
 	}	
 	
-	
+	// 내가 쓴 글 조회
+	@Override
+	public List<BoardVO> getMyBoardWrite(Criteria cri) throws Exception {
+		mylog.debug("  getMyBoardWrite(Criteria cri) 페이징처리 ");
+		mylog.debug(cri+"@@@@@@@@@@@@@@@@@@@@@@");
+				
+		return sqlSession.selectList(NAMESPACE + ".myBoardWrite",cri);
+	}
+//	@Override
+//	public List<BoardVO> getMyBoardWrite(String nick) throws Exception {
+//		mylog.debug("  getMyBoardWrite(String nick) 페이징처리 ");
+//		mylog.debug(nick+"@@@@@@@@@@@@@@@@@@@@@@");
+//		
+//		return sqlSession.selectList(NAMESPACE + ".myBoardWrite",nick);
+//	}
+
+	// 내가 쓴 글 개수 조회
+	@Override
+	public int MyBoardWriteCnt() throws Exception {
+				
+		return sqlSession.selectOne(NAMESPACE+".myBoardWriteCnt");
+			
+	}
 	
 	
 	
