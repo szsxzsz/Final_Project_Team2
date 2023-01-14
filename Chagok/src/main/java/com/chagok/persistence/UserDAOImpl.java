@@ -142,4 +142,10 @@ public class UserDAOImpl implements UserDAO {
 		sqlSession.update(NAMESPACE+".givePoint", map);
 	}
 
+	// 포인트 차감
+	public void usePoint(Map<String, Object> map) throws Exception{
+		
+		sqlSession.update(NAMESPACE+".usePoint", map);
+	}
+	
 }

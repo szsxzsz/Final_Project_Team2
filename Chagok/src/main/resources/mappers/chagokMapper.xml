@@ -220,6 +220,8 @@
 		where c.cno = #{cno} and (pl_finish = 'Y' or m_finish = 'Y')
 	</select>
 	
+	
+	
 	<!-- 명예의 전당 순위 -->
 	<select id="ranking" resultType="com.chagok.domain.UserVO">
 		select * from user
@@ -377,7 +379,12 @@
 	<!-- 비지니스 계좌 입금(송금) -->
 	<insert id="sendBiz">
 		insert into business_account(biz_inout, biz_amount, mno, biz_holder_name, biz_balance, cno) 
+		<if test="biz_inout == 1">
+		values(#{biz_inout}, #{biz_amount}, #{mno}, #{biz_holder_name}, #{biz_balance}-#{biz_amount}, #{cno})
+		</if>
+		<if test="biz_inout == 2">
 		values(#{biz_inout}, #{biz_amount}, #{mno}, #{biz_holder_name}, #{biz_balance}+#{biz_amount}, #{cno})
+		</if>
 	</insert>
 	
 	<!-- 가장 최근 비즈니스 계좌 1개 조회 -->
@@ -444,7 +451,7 @@
 	
 	<!-- 관리자 - 전체 회원 수 -->
 	<select id="getUserCnt" resultType="Integer">
-		select count(cno) from challenge;
+		select count(mno) from user;
 	</select>	
 	
 	<!-- 관리자 - 챌린지 전체 목록 -->
@@ -528,7 +535,14 @@
   	<!-- 포인트 입금  -->
   	<update id="givePoint">
 	  	update user 
-	  	set getpoint = #{getpoint}, success_cnt = success_cnt+1 
+	  	set getpoint = getpoint+#{getpoint}, success_cnt = success_cnt+1 
+	  	where mno = #{mno};
+  	</update>
+  	
+  	<!-- 포인트 차감 -->
+  	<update id="usePoint">
+  		update user 
+	  	set getpoint = getpoint-#{getpoint}
 	  	where mno = #{mno};
   	</update>
   	

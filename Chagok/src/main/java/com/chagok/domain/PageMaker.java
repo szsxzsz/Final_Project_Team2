@@ -18,7 +18,7 @@ public class PageMaker {
 	
 	
 	public PageMaker() {
-	    this.displayPageNum=10;
+	    this.displayPageNum=9;
 	}
 	
 	public void setDisplayPageNum(int displayPageNum) {
