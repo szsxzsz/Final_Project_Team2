@@ -2,6 +2,7 @@ package com.chagok.controller;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
@@ -22,6 +23,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -366,20 +368,27 @@ public class AssetController {
 			@RequestParam(value = "sord", required=false) String sord,
 			HttpSession session) throws Exception {//sord : 내림차순 또는 오름차순
 	    	
-		mylog.debug("json controller 실행 시작");
+		mylog.debug("cont - reqGrid");
 		
 		// 로그인 확인
 		int mno = (int)session.getAttribute("mno");
 		UserVO userVO = userService.getUser(mno);
 		
-		mylog.debug("mno@@@@@@@@:"+mno);
+		mylog.debug("mno@@@:"+mno);
+		int mm=0;
+		
+		String formatDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+		
+//		System.out.println("ddddd"+formatDate);
+		
+		
 		
 		// list: 그리드 구성할 때 필요한 데이터(page,sidx,sord) 리스트 
 		// list2: 서버 데이터(VO) 리스트
 		JsonObj obj = new JsonObj();
 		
 		List<Map<String,Object>> list = new ArrayList<Map<String,Object>>();
-		List<?> list2 = abService.getAbookList(mno);
+		List<?> list2 = abService.getAbookList(mno, mm);
 		mylog.debug("vo -> list "+list2);
 		
 		int int_page = Integer.parseInt(page);// 1 2 3
@@ -428,10 +437,9 @@ public class AssetController {
 	
 	
 	// 그리드 -> DB(서버 데이터)로 수정하고 저장하는 코드
-	@RequestMapping("/saveGrid")
+	@RequestMapping(value = "/saveGrid", method = RequestMethod.POST)
 	 @ResponseBody
-	 public Object saveList(HttpServletRequest request,@RequestBody List<Map<String, Object>> list, HttpSession session) throws Exception {
-		
+	 public Object saveList(HttpServletRequest request,@RequestBody List<Map<String, Object>> list, HttpSession session) throws Exception {		
 		// 로그인 확인
 		int mno = (int)session.getAttribute("mno");
 		UserVO userVO = userService.getUser(mno);
@@ -440,15 +448,14 @@ public class AssetController {
 		
 		mylog.debug("##그리드 뽑 리스트"+list);
 		 Map <String, String> resultMap =  new HashMap<String, String>();
-		mylog.debug("배열 실험"+list.get(0).get("ab_date").toString());
 		  String result = "ok";
 		  String resultMsg = "";
 		  
 	  try {
 		  
 	   for(int i = 0; i < list.size(); i++) {
-		AbookVO vo = new AbookVO();
-	    vo.setMno(mno);
+		AbookVO vo = new AbookVO(); 
+//	    vo.setMno(mno);
 	    vo.setAbno(Integer.parseInt(list.get(i).get("abno").toString()));
 	    vo.setAb_inout(Integer.parseInt(list.get(i).get("ab_inout").toString()));
 	    vo.setAb_amount(Integer.parseInt(list.get(i).get("ab_amount").toString()));
@@ -459,8 +466,8 @@ public class AssetController {
 	    vo.setAb_memo(list.get(i).get("ab_memo").toString());
 	    vo.setAb_method(list.get(i).get("ab_method").toString());
 
+//	    mylog.debug("!!!!!!!!!!!!!!!!!"+vo);
 	    abService.setAbookList(vo);
-	    mylog.debug("!!!!!!!!!!!!!!!!!"+vo);
 	   }
 	    result = "success";
 	    resultMsg = "성공" ;
@@ -509,6 +516,7 @@ public class AssetController {
 		JSONArray jArr = new JSONArray();
 		for(Map<String, Object> map : ctList) {
 			JSONObject jsonobj2 = new JSONObject();
+			
 			for(Map.Entry<String, Object> entry : map.entrySet()) {
 				String key = entry.getKey();
 				Object value = entry.getValue();
@@ -526,32 +534,59 @@ public class AssetController {
 	// ===========================================================
 	@RequestMapping("/catebottom")
 	 @ResponseBody
-	 public JSONArray ctbottomList(HttpServletRequest request,/*@RequestParam("ct_top") String ct_top*/@RequestParam Map<String, Object> ct_top) throws Exception {
-	
-		mylog.debug("%%value"+ct_top);
-
+	 public JSONArray ctbottomList(HttpServletRequest request,/*@RequestParam("ct_top") String ct_top*/@RequestParam Map<String, Object> pre_ct_top) throws Exception {
+		mylog.debug("pre_ct_top"+pre_ct_top.values());		 
+		String ctname = String.valueOf(pre_ct_top.values());
+		String ct_top1 = ctname.replace("[", "");				
+		String ct_top = ct_top1.replace("]", "");				
+//		String ct_top = ct_top2.substring(1, ct_top2.length() - 1);
 		
-		List<Map<String, Object>> ctbottomList = abService.ctbottomList();
-		mylog.debug("****vo -> list "+ctbottomList);
+		mylog.debug("[]떼기"+ct_top);		 
+		
+//		List<Map<String, Object>> ctbottomList = abService.ctbottomList(ct_top);
+//		mylog.debug("****vo -> list "+ctbottomList);
 		
 		JSONArray jArrB = new JSONArray();
-		for(Map<String, Object> map : ctbottomList) {
+//		for(Map<String, Object> map : ctbottomList) {
 			JSONObject jsonobjb = new JSONObject();
-			for(Map.Entry<String, Object> entry : map.entrySet()) {
-				String key = entry.getKey();
-				Object value = entry.getValue();
-				jsonobjb.put(key, value);
-//				if(ct_top == "식비") {
-//			}
-//				mylog.debug("&&&"+jsonobjb);
-			}
-			jArrB.add(jsonobjb);
-		
-		}
-		return jArrB;
+//			for(Map.Entry<String, Object> entry : map.entrySet()) {
+//				String key = entry.getKey();
+//				Object value = entry.getValue();
+//				jsonobjb.put(key, value);
 
+//			}
+//			jArrB.add(jsonobjb);
+//		}
+		mylog.debug("&&&"+jArrB);
+		return jArrB;
+		
 	}
+//	
+//	@ResponseBody
+//	@RequestMapping(value = "/catebottom2", method = {RequestMethod.GET,RequestMethod.POST})
+//	public JSONArray cateBottom (@RequestParam(value = "cateB", required=false) String cateB,		
+//			HttpSession session) throws Exception {
+//		
+//		List<Map<String, Object>> ctbottomList = abService.ctbottomList();
+//		mylog.debug("****vo -> list "+ctbottomList);
+//		
+//		JSONArray jArrB = new JSONArray();
+//		for(Map<String, Object> map : ctbottomList) {
+//			JSONObject jsonobjb = new JSONObject();
+//			for(Map.Entry<String, Object> entry : map.entrySet()) {
+//				String key = entry.getKey();
+//				Object value = entry.getValue();
+//				jsonobjb.put(key, value);
+//
+//			}
+//			jArrB.add(jsonobjb);
+//		}
+////		mylog.debug("&&&"+jArrB);
+//		return jArrB;
+//	}
 	
+	
+	// =======================================================================================================
 	// insert 
 	@PostMapping(value = "/insGrid")
 	public String insGrid(AbookVO vo, RedirectAttributes rttr, HttpSession session) throws Exception{
@@ -578,14 +613,14 @@ public class AssetController {
 	
 	// ===============================================================
 	
-	@GetMapping("/delGrid")
+@RequestMapping(value="/delGrid", method = {RequestMethod.POST, RequestMethod.GET})
 	 @ResponseBody
-	 public Object delList(HttpServletRequest request,@RequestParam("test") String obj) throws Exception {
-		mylog.debug("#그리드에서 선택한 abno"+obj);
+	 public Object delList(HttpServletRequest request,@RequestParam(value="test[]") List<String> list)  throws Exception {
+		mylog.debug("#그리드에서 선택한 abno"+list);
 //		 Map <String, String> resultMap =  new HashMap<String, String>();
 		List<AbookVO> delRow = new ArrayList<AbookVO>();
-		
-//		mylog.debug("0번째 인덱스@@@"+delRow[0]);
+//		  int abno = Integer.parseInt(list.get(0));
+//		mylog.debug("abno란다"+abno);
 		  String result = "ok";
 		  String resultMsg = "";
 		  
@@ -593,25 +628,10 @@ public class AssetController {
 
 	  try {
 		  
-//	   for(int i = 0; i < list.size(); i++) {
-		AbookVO vo = new AbookVO();
-//	    vo.setMno(Integer.parseInt(tList.get("mno").toString( )));
-//	    vo.setAbno(Integer.parseInt(list.get(i).get("abno").toString()));
-//	    vo.setAb_inout(Integer.parseInt(list.get(i).get("ab_inout").toString()));
-//	    vo.setAb_amount(Integer.parseInt(list.get(i).get("ab_amount").toString()));
-//	    vo.setCtno(Integer.parseInt(list.get(i).get("ctno").toString()));
-//	    
-//	    vo.setAb_date(list.get(i).get("ab_date").toString());
-//	    vo.setAb_content(list.get(i).get("ab_content").toString());
-//	    vo.setAb_memo(list.get(i).get("ab_memo").toString());
-//	    vo.setAb_method(list.get(i).get("ab_method").toString());
-//	    vo.setCt_top(list.get(i).get("ct_top").toString());
-//	    vo.setCt_bottom(list.get(i).get("ct_bottom").toString());
-//	   
-	    mylog.debug("!!!!!!!!!!!!!!!!!"+vo);
-//	    abService.setAbookList(vo);
-//	    mylog.debug(vo+"%%%%%%%%%%cont");
-//	   }
+	   for(int i = 0; i < list.size(); i++) {
+		  int abno = Integer.parseInt(list.get(i));
+		    abService.delAbookList(abno);
+	   }
 	    result = "success";
 	    resultMsg = "성공" ;
 	     
