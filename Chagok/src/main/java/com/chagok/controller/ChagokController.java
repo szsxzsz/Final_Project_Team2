@@ -1,9 +1,11 @@
 package com.chagok.controller;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
 import javax.inject.Inject;
 import javax.servlet.ServletContext;
 import javax.servlet.http.Cookie;
@@ -23,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.WebUtils;
 
@@ -45,6 +48,7 @@ import com.chagok.service.AlertService;
 import com.chagok.service.ChallengeService;
 import com.chagok.service.ReportService;
 import com.chagok.service.UserService;
+import com.chagok.utils.UploadFileUtils;
 
 @Controller
 public class ChagokController {
@@ -68,6 +72,9 @@ public class ChagokController {
 	
 	@Inject
 	private ReportService rptService;
+	
+	@Resource(name="uploadPath")
+	private String uploadPath;
 	
 	// 차곡 메인사이트 
 	// http://localhost:8080/main
@@ -367,14 +374,47 @@ public class ChagokController {
 	   return "/chagok/myPage";
    }
    
-   // 마이페이지
-   @PostMapping("/myPage")
-   public String myPagePOST(UserVO vo) throws Exception{
+   // 마이페이지 수정폼
+   @GetMapping("/myPageUpdate")
+   public String myPageUpdateGET(HttpSession session, Model model) throws Exception{
 	   
-	   mylog.debug("@@@@@@@@ userVO : " + vo);
-	   service.updateUserInfo(vo);
+	   if (session.getAttribute("mno") != null) {	
+		   int mno = (int)session.getAttribute("mno");
+		   
+		   UserVO userVO = service.getUser(mno);
+		   model.addAttribute("userVO", userVO);
+	   }
+	   
+	   return "/chagok/myPageUpdate";
+   }
+   
+   // 마이페이지 수정
+   @PostMapping("/myPageUpdate")
+   public String myPageUpdatePOST(HttpSession session, Model model, UserVO vo, MultipartFile file) throws Exception{
+	   
+	   mylog.debug(" myPageUpdatePOST 호출 ");
+	   mylog.debug("file : " + file);
+	   mylog.debug("vo : "+vo);
 	   
 	   
+	   // 사진등록
+//		String imgUploadPath = uploadPath + File.separator + "imgUpload";
+//		String ymdPath = UploadFileUtils.calcPath(imgUploadPath);
+//		String fileName = null;
+//		
+//		if(file != null) {
+//		   fileName =  UploadFileUtils.fileUpload(imgUploadPath, file.getOriginalFilename(), file.getBytes(), ymdPath);
+//		   
+//		} else {
+//		   fileName = uploadPath + File.separator + "images" + File.separator + "none.png";
+//		}
+//		
+//		vo.setProfile(File.separator + "imgUpload" + ymdPath + File.separator + "s" + File.separator + "s_" + fileName);
+
+	   service.updateUserInfo(vo);		
+		
+		mylog.debug("new vo : " + vo);
+		
 	   return "redirect:/myPage";
    }
    
