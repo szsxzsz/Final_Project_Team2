@@ -587,7 +587,7 @@ public class AssetController {
 	  resultMap.put("resultMsg", resultMsg);
 	  mylog.debug("##삭제resultMap"+resultMap);
 	  
-	  return resultMap;
+	  return resultMap; 
 	}
 	
 	
