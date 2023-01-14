@@ -15,7 +15,7 @@
 		
 			formObj.attr("action", "/community/freedelete");
 			formObj.submit();
-			alert("삭제완료");
+			
 		});
 
 	});
@@ -70,7 +70,7 @@
 							<c:if test= "${nick == '관리자' || nick == writer}">
 								<input type="submit" class="btn btn-primary btn-xs" value="수정" onclick="location.href='/freeboardupdate?bno=${board.bno}';">
 								<input type="hidden" name="bno" value="${board.bno }">
-								<input type="submit" class="btn btn-danger btn-xs" value="삭제">
+								<input type="submit" class="btn btn-danger btn-xs" value="삭제" onclick="location.href='/freedelete?bno=${board.bno}';">
 							</c:if>
 						</div>
 					</div></li>

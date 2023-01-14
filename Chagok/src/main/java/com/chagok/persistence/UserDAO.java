@@ -59,4 +59,7 @@ public interface UserDAO {
 	
 	// 챌린지 성공시 포인트 지급
 	public void givePoint(Map<String, Object> map) throws Exception;
+	
+	// 포인트 차감
+	public void usePoint(Map<String, Object> map) throws Exception;
 }

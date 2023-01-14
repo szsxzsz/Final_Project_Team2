@@ -1,9 +1,11 @@
 package com.chagok.controller;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
 import javax.inject.Inject;
 import javax.servlet.ServletContext;
 import javax.servlet.http.Cookie;
@@ -23,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.WebUtils;
 
@@ -31,6 +34,7 @@ import com.chagok.apiDomain.CardHistoryVO;
 import com.chagok.apiDomain.CardInfoVO;
 import com.chagok.apiDomain.CashVO;
 import com.chagok.domain.AlertVO;
+import com.chagok.domain.BoardVO;
 import com.chagok.domain.BusinessAccountVO;
 import com.chagok.domain.ChallengeVO;
 import com.chagok.domain.Criteria;
@@ -45,6 +49,7 @@ import com.chagok.service.AlertService;
 import com.chagok.service.ChallengeService;
 import com.chagok.service.ReportService;
 import com.chagok.service.UserService;
+import com.chagok.utils.UploadFileUtils;
 
 @Controller
 public class ChagokController {
@@ -68,6 +73,9 @@ public class ChagokController {
 	
 	@Inject
 	private ReportService rptService;
+	
+	@Resource(name="uploadPath")
+	private String uploadPath;
 	
 	// 차곡 메인사이트 
 	// http://localhost:8080/main
@@ -191,7 +199,6 @@ public class ChagokController {
 		
 		// 페이징 처리
 		PageMaker pageMaker = new PageMaker();
-		pageMaker.setDisplayPageNum(9);
 		pageMaker.setCri(scri);
 		pageMaker.setTotalCount(service2.cListCount(scri));
 		
@@ -367,23 +374,61 @@ public class ChagokController {
 	   return "/chagok/myPage";
    }
    
-   // 마이페이지
-   @PostMapping("/myPage")
-   public String myPagePOST(UserVO vo) throws Exception{
+   // 마이페이지 수정폼
+   @GetMapping("/myPageUpdate")
+   public String myPageUpdateGET(HttpSession session, Model model) throws Exception{
 	   
-	   mylog.debug("@@@@@@@@ userVO : " + vo);
-	   service.updateUserInfo(vo);
+	   if (session.getAttribute("mno") != null) {	
+		   int mno = (int)session.getAttribute("mno");
+		   
+		   UserVO userVO = service.getUser(mno);
+		   model.addAttribute("userVO", userVO);
+	   }
+	   
+	   return "/chagok/myPageUpdate";
+   }
+   
+   // 마이페이지 수정
+   @PostMapping("/myPageUpdate")
+   public String myPageUpdatePOST(HttpSession session, Model model, UserVO vo, MultipartFile file) throws Exception{
+	   
+	   mylog.debug(" myPageUpdatePOST 호출 ");
+	   mylog.debug("file : " + file);
+	   mylog.debug("vo : "+vo);
 	   
 	   
+	   // 사진등록
+//		String imgUploadPath = uploadPath + File.separator + "imgUpload";
+//		String ymdPath = UploadFileUtils.calcPath(imgUploadPath);
+//		String fileName = null;
+//		
+//		if(file != null) {
+//		   fileName =  UploadFileUtils.fileUpload(imgUploadPath, file.getOriginalFilename(), file.getBytes(), ymdPath);
+//		   
+//		} else {
+//		   fileName = uploadPath + File.separator + "images" + File.separator + "none.png";
+//		}
+//		
+//		vo.setProfile(File.separator + "imgUpload" + ymdPath + File.separator + "s" + File.separator + "s_" + fileName);
+
+	   service.updateUserInfo(vo);		
+		
+		mylog.debug("new vo : " + vo);
+		
 	   return "redirect:/myPage";
    }
    
    // 내가 쓴 글 ( 브랜치 합치고 구현 )
    @GetMapping("/myBoardWrite")
-   public String myBoardGET(HttpSession session, Model model,Criteria cri) {
-	   
+   public String myBoardGET(HttpSession session, Model model,Criteria cri) throws Exception {
 	   String nick = (String)session.getAttribute("nick");
-//	   service.getBoardList(nick);
+	   
+	   
+		   List<BoardVO> boardList = service2.getMyBoardWrite(cri);
+		   mylog.debug(boardList+"@@@@@@@@@@@@@@@@@@@@");
+		   
+		   model.addAttribute("boardList", boardList);
+		   
 	   
 	   return "/chagok/myBoardWrite";
    }
@@ -459,6 +504,7 @@ public class ChagokController {
 		// 페이징 처리
 		cri.setPerPageNum(10);
 	    PageMaker pagevo = new PageMaker();
+	    pagevo.setDisplayPageNum(10);
 	    pagevo.setCri(cri);
 	    pagevo.setTotalCount(service2.chListCnt());
 		
@@ -498,7 +544,7 @@ public class ChagokController {
 		// 페이징 처리
 		cri.setPerPageNum(10);
 	    PageMaker pagevo = new PageMaker();
-//	    pagevo.setDisplayPageNum(5);
+	    pagevo.setDisplayPageNum(10);
 	    pagevo.setCri(cri);
 	    pagevo.setTotalCount(service.getBizCnt());
 		
@@ -519,6 +565,7 @@ public class ChagokController {
 		// 페이징 처리
 		cri.setPerPageNum(10);
 	    PageMaker pagevo = new PageMaker();
+	    pagevo.setDisplayPageNum(10);
 	    pagevo.setCri(cri);
 	    pagevo.setTotalCount(service.getUserCnt());
 		mylog.debug("@@@@"+pagevo.toString());
@@ -530,18 +577,6 @@ public class ChagokController {
 		return "/chagok/userManagement";
 	}
 
-	// http://localhost:8080/challenge/adminmodal
-//	@ResponseBody
-//	@PostMapping("/adminmodal")
-//	public String adminmodal(Model model,@RequestParam Map<String,Object> map) throws Exception {
-//		mylog.debug("모달창에 넘길 mno : " + map);
-//		
-//		List<UserVO> vo = service.adminmodal(map);
-//		
-////		model.addAttribute("UserVO", vo);
-//		
-//		return null;
-//	}
 	////////////////////// 관리자 페이지 ///////////////////////////	
 	
 	
