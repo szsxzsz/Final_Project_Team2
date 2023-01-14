@@ -396,14 +396,25 @@ public class ChallengeServiceImpl implements ChallengeService{
 		
 		return dao.challengeResult(cno, mno);
 	}
-
 	
-
+	// 내가 쓴 글 조회(페이징처리 cri)
+	@Override
+	public List<BoardVO> getMyBoardWrite(Criteria cri) throws Exception {
+		mylog.debug(" getMyBoardWrite(Criteria cri) 호출 ");
+		return dao.getMyBoardWrite(cri);
+	}
+//	@Override
+//	public List<BoardVO> getMyBoardWrite(String nick) throws Exception {
+//		mylog.debug(" getMyBoardWrite(Criteria cri) 호출 ");
+//		return dao.getMyBoardWrite(nick);
+//	}
+		
+	// 내가 쓴 글 개수 조회
+	@Override
+	public int MyBoardWriteCnt() throws Exception {
+		mylog.debug(" MyBoardWriteCnt() 호출");
+		return dao.MyBoardWriteCnt();
+	}
 	
-	
-	
-
-	
-
 	
 }

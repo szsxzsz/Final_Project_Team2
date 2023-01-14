@@ -340,7 +340,7 @@ public class AssetController {
 	
 	// 0. abokkList페이지 get으로 호출 ============================================================
 //	http://localhost:8080/asset/abookList
-	@GetMapping("/abookList")
+	@GetMapping(value="/abookList", produces = "application/json; charset=utf8")
 //	@ResponseBody
 	public String abookList(HttpSession session,Model model, HttpServletRequest req, HttpServletResponse res) throws Exception {
 		
@@ -534,30 +534,45 @@ public class AssetController {
 	// ===========================================================
 	@RequestMapping("/catebottom")
 	 @ResponseBody
-	 public JSONArray ctbottomList(HttpServletRequest request,/*@RequestParam("ct_top") String ct_top*/@RequestParam Map<String, Object> pre_ct_top) throws Exception {
-		mylog.debug("pre_ct_top"+pre_ct_top.values());		 
-		String ctname = String.valueOf(pre_ct_top.values());
-		String ct_top1 = ctname.replace("[", "");				
-		String ct_top = ct_top1.replace("]", "");				
-//		String ct_top = ct_top2.substring(1, ct_top2.length() - 1);
+	 public JSONArray ctbottomList(HttpServletRequest request,/*@RequestParam("ct_top") String ct_top*/@RequestParam Map<String, String> pre_ct_top) throws Exception {
+		mylog.debug("처음"+pre_ct_top);		 
 		
-		mylog.debug("[]떼기"+ct_top);		 
+		mylog.debug(pre_ct_top.get("ct_top"));
+		String ct_top = pre_ct_top.get("ct_top");
 		
-//		List<Map<String, Object>> ctbottomList = abService.ctbottomList(ct_top);
-//		mylog.debug("****vo -> list "+ctbottomList);
+//		String ct_top2 = ct_top3.substring(0,1);				
+//		String ct_top = ct_top2.substring(0,-1);				
+		
+//		String ct_top = ct_top0.replaceAll("\"", "");
+//		mylog.debug("ct_top 가공 버전@"+ct_top);		 
+
+		
+//		mylog.debug("pre_ct_top"+pre_ct_top.values());		 
+//		String ctname = String.valueOf(pre_ct_top.values());
+//		String ct_top1 = ctname.replace("[", "");				
+//		String ct_top2 = ct_top1.replace("]", "");				
+//		String ct_top = ct_top2.replaceAll("\"", "");				
+		
+//		mylog.debug("[]떼기"+ct_top);		 
+		
+		List<Map<String, Object>> ctbottomList = abService.ctbottomList(ct_top);
+		mylog.debug("****vo -> list "+ctbottomList);
 		
 		JSONArray jArrB = new JSONArray();
-//		for(Map<String, Object> map : ctbottomList) {
+		
+		for(Map<String, Object> map : ctbottomList) {
 			JSONObject jsonobjb = new JSONObject();
-//			for(Map.Entry<String, Object> entry : map.entrySet()) {
-//				String key = entry.getKey();
-//				Object value = entry.getValue();
-//				jsonobjb.put(key, value);
+			
+			for(Map.Entry<String, Object> entry : map.entrySet()) {
+				String key = entry.getKey();
+				Object value = entry.getValue();
+				jsonobjb.put(key, value);
 
-//			}
-//			jArrB.add(jsonobjb);
-//		}
+			}
+			jArrB.add(jsonobjb);
+		}
 		mylog.debug("&&&"+jArrB);
+		
 		return jArrB;
 		
 	}

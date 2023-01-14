@@ -302,66 +302,57 @@ $("#jqGrid").jqGrid({
 
 // 	    {name : 'ct_top',index : 'ct_top',width : 70, alian: "center", hidden:false,editable:true},           
 		{name:"ct_bottom",index:"ct_bottom",width:50,align:'center', editable: true, edittype: "select", /* formatter: "select", */
-		    	editoptions:{dataUrl: '/asset/catebottom',
+	
+			    	editoptions:{
+			    		dataUrl: '/asset/catebottom', 
+						buildSelect:function (data){
+							console.log(data);							
+				 			let key = JSON.parse(data)
+							console.log(key);							
 
-					buildSelect:function (data){
-			 			let key = JSON.parse(data)
-// 						alert("");
-					    var rowid = $( "#jqGrid" ).getGridParam( "selrow" );   
-					    console.log(rowid);
+						    var rowid = $( "#jqGrid" ).getGridParam( "selrow" );   
+						    var rowdata = jQuery("#jqGrid").getRowData(rowid);  
+						     var ct_top= rowdata['ct_top'];
+						     var rtslt = ""; 
+// 						    console.log(ct_top);
+						    
+					       test = {"ct_top":ct_top};
+								$.ajax({
+									url : "/asset/catebottom",
+//	 					 			traditional: true ,
+									contentType:"application/json",
+									data : test,
+									success:function(val){
+										
+										rtSlt = '<select id="ct_bottom">';
+										for ( var idx = 0 ; idx < val.length ; idx ++) {
+										rtSlt +='<option value="'+val[idx].ctno+'">'+val[idx].ct_bottom+'</option>';
+										}
+										rtSlt +='</select>';
+										
+										alert("입력 성공!");
+									console.log(val);							
+									},error:function(err){
+									      console.log(err);
+									}
+								})
 
-					    var rowdata = jQuery("#jqGrid").getRowData(rowid);  
-					    console.log(rowdata);
-
-					     var ct_top= rowdata['ct_top'];
-					    console.log(ct_top);
-					    
-// 						var data =  $("#jqGrid").getRowData();
-// //				 		var data = $( "#jqGrid" ).getGridParam( "selrow" );    
-// 							console.log(data);
-				       test = {"ct_top":JSON.stringify(ct_top)};
-							$.ajax({
-								url : "/asset/catebottom",
-// 					 			traditional: true ,
-								contentType:"application/json",
-								data : test,
-								success:function(val){alert("입력 성공!");
-								},error:function(err){
-								      console.log(err);
-								}
-							})
-
-
-// 							$.ajax({
-// 								url : "/asset/catebottom2",
-// 								contentType:"application/json",
-// 								data : test,
-// 								success:function(val){alert("cateB!");
-// 								},error:function(err){
-// 								      console.log(err);
-// 								}
-// 							})
-
-
-// 			 			let keyb = JSON.parse(test)
-			 			
-//	 		 			let key10 = key[10].ctno
-// 	 		            alert(keyb+"keyb");
-//	 		            console.log(key[10].ctno);
-//	 		            console.log(JSON.parse(data)[5].ctno);
-//	 	        			alert(key[0].ctno);
-//	 				if(typeof(data)=='string')
-		// 			data = $.parseJSON(data);
-					var rtSlt = '<select id="ct_bottom">';
-					for ( var idx = 0 ; idx < key.length ; idx ++) {
-					rtSlt +='<option value="'+key[idx].ctno+'">'+key[idx].ct_bottom+'</option>';
-					}
-					rtSlt +='</select>';
-					return rtSlt;
-
-					} // build
-				}	// edit
-		},    	
+						return rtSlt;
+						}, // build
+			            dataEvents: [
+	                          { type: 'change',
+	                              fn: function (e) {
+	                                  slcd = this.value.substr(0, this.value.indexOf(' '));
+	                                  $.get('@Url.Action("GetSelect", "Set")' + '?slcd=' + slcd, function (data) {
+	                                      var res = $(data).html();
+	                                      var selectedCol = lastsel2 + "_ITEM_CD";
+	                                      $("select#0_ITEM_CD").html(res);
+	                                  });
+	                              }
+	                          }
+	                       ] //dataeve
+					}	// edit
+			},    	
 
 	
         {name : 'ab_memo',index : 'ab_memo', align: "center", width : 50, align : 'center',hidden:false,editable:true}

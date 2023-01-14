@@ -43,9 +43,39 @@ td {
 h3 {
 	font-size: 22px;
 }
+.img-div {
+    height: 150px;
+    width: 150px;
+    object-fit: contain;
+    margin: auto;
+}
+.col-sm-4.a {
+	margin:auto;
+}
+
+.img1-title {
+    text-align:center;
+    display:table;
+    width:280px;
+    height:250px;
+}
+
+.img1-div {
+    display:table-cell;
+    vertical-align:middle;
+}
+
 .img1 {
-    width: 200px;
-    height: 200px;
+    max-width:180px;
+    max-height:180px;
+    border-radius: 0px;
+}
+.col-sm-4 a {
+	padding:0;
+	margin:0;
+}
+.rowa {
+	padding:0;
 }
 </style>
 
@@ -95,20 +125,16 @@ h3 {
 							<h3 class="box-title">최다 지출 카테고리 분석</h3>
 						</div>
 						<div class="box-body">
-							<div class="box-report" style="height: 330px; width: 661px;">
-								<div class="table-responsive">
-									<table class="table">
-										<thead>
-											<tr>
-												<th>순위</th>
-												<th>상위카테고리</th>
-												<th>지출횟수</th>
-											</tr>
-										</thead>
-										<tbody id="tbody1"></tbody>
-									</table>
-								</div>
-							</div>
+							<table class="table">
+								<thead>
+									<tr>
+										<th>순위</th>
+										<th>상위카테고리</th>
+										<th>지출횟수</th>
+									</tr>
+								</thead>
+								<tbody id="tbody1"></tbody>
+							</table>
 						</div>
 					</div>
 				</div>
@@ -136,20 +162,16 @@ h3 {
 							<h3 class="box-title">최대 지출 카테고리 분석</h3>
 						</div>
 						<div class="box-body">
-							<div class="box-report" style="height: 330px; width: 661px;">
-								<div class="table-responsive">
-									<table class="table">
-										<thead>
-											<tr>
-												<th>순위</th>
-												<th>상위카테고리</th>
-												<th>지출금액</th>
-											</tr>
-										</thead>
-										<tbody id="tbody2"></tbody>
-									</table>
-								</div>
-							</div>
+							<table class="table">
+								<thead>
+									<tr>
+										<th>순위</th>
+										<th>상위카테고리</th>
+										<th>지출금액</th>
+									</tr>
+								</thead>
+								<tbody id="tbody2"></tbody>
+							</table>
 						</div>
 					</div>
 				</div>
@@ -169,33 +191,32 @@ h3 {
 							<ul class="users-list clearfix">
 							<c:forEach var="ch" items="${map.chRandList }">
 								<li>
-									<a href="/challenge/detail?cno=${ch.cno }">
-										<img src="${pageContext.request.contextPath }/resources${ch.c_thumbFile }" alt="User Image" class="img1">
-									</a>
-									<h5 class="description-header"><a href="/challenge/detail?cno=${ch.cno }">${ch.c_title }</a></h5>
+									<div class="img1-title">
+										<div class="img1-div">
+											<a href="/challenge/detail?cno=${ch.cno }">
+												<img src="${pageContext.request.contextPath }/resources${ch.c_thumbFile }"
+													class="img1">
+											</a>
+										</div>
+									</div>
 									<div class="box-footer">
-										<div class="row">
-											<div class="col-sm-4 border-right">
-												<div class="description-block">
-													<h5 class="description-header">진행기간</h5>
-													<span class="description-text">${ch.c_period }</span>
-												</div>
-					
-											</div>
-					
-											<div class="col-sm-4 border-right">
-												<div class="description-block">
-													<h5 class="description-header">시작일</h5>
-													<span class="description-text">${ch.c_start }</span>
-												</div>
-					
+										<h4>
+											<a href="/challenge/detail?cno=${ch.cno }">${ch.c_title }</a>
+										</h4>
+										<div class="rowa">
+											<div class="col-sm-4">
+												<span class="description-text">진행기간</span><br>
+												<span class="description-text">${ch.c_period }</span>
 											</div>
 					
 											<div class="col-sm-4">
-												<div class="description-block">
-													<h5 class="description-header">모집인원</h5>
-													<span class="description-text">${ch.c_pcnt }명</span>
-												</div>
+												<span class="description-header">시작일</span><br>
+												<span class="description-text">${ch.c_start }</span>
+											</div>
+					
+											<div class="col-sm-4">
+												<span class="description-header">모집인원</span><br>
+												<span class="description-text">${ch.c_pcnt }명</span>
 											</div>
 										</div>
 									</div>
@@ -222,15 +243,22 @@ h3 {
 						<div class="box-header with-border">
 							<h3 class="box-title">${nick }님, 이런 카드는 어떠세요?</h3>
 						</div>
-			
+						
 						<div class="box-body no-padding">
 							<ul class="users-list clearfix">
 							<c:forEach var="card" items="${map.cardRandList }">
 								<li>
-									<img src="${pageContext.request.contextPath }/resources${card.prop_img }" alt="User Image" class="img1">
-									<h5 class="description-header">${card.prop_name }</h5>
-									<h5 class="description-header">${card.prop_info }</h5>
+									<div class="img1-title">
+										<div class="img1-div">
+											<a href="/challenge/detail?cno=${ch.cno }">
+												<img src="${pageContext.request.contextPath }/resources${card.prop_img }"
+													class="img1">
+											</a>
+										</div>
+									</div>
 									<div class="box-footer">
+										<h5 class="description-header">${card.prop_name }</h5>
+										<h5 class="description-header">${card.prop_info }</h5>
 										<div class="row">
 											<c:forEach var="cardInfo" items="${card.prop_content }">
 												<div class="col-sm-4 border-right">
@@ -242,10 +270,8 @@ h3 {
 										</div>
 									</div>
 								</li>
-							
 							</c:forEach>
 							</ul>
-			
 						</div>
 					</div>
 				</div>
