@@ -168,4 +168,5 @@ public interface ChallengeDAO {
 
 	// ctno 가져오기
 	public int getCtno(Integer cno);
+	
 }

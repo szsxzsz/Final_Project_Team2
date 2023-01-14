@@ -171,5 +171,6 @@ public interface ChallengeService {
 	// 챌린지 성공/실패 여부 가져옴(한 명만)
 	public Map<String, Object> challengeResult(Integer cno, Integer mno) throws Exception;
 	
+	
 }
 

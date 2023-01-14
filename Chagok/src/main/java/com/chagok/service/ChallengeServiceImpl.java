@@ -397,4 +397,13 @@ public class ChallengeServiceImpl implements ChallengeService{
 		return dao.challengeResult(cno, mno);
 	}
 
+	
+
+	
+	
+	
+
+	
+
+	
 }
