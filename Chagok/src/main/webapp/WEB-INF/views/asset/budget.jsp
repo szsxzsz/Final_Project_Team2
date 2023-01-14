@@ -7,11 +7,6 @@
 <%@ include file="../include/sidebarAsset.jsp" %>
 
 <style>
-.a1 {
-	font-size: 20px;
-	text-align: left;
-	margin:5px;
-}
 .row {
 	margin: 3%;
 }
@@ -36,11 +31,9 @@
 	border-radius: 5px;
 	float: right;
 }
-.box.box-info {
-	width : 50%;
-	margin: 0 auto; 
-}
 </style>
+
+
 
 
 <div class="row">
