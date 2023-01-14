@@ -21,11 +21,24 @@
   </select>
   
   <!-- 카테고리 bottom -->
-    <select id="ctbottomList" resultType="map" parameterType="map">
+    <select id="ctbottomList" resultType="map" parameterType="string">
 	select ctno, ct_bottom
 	from category
-	where ct_top=#{value} and ct_lev=1
+	where ct_top=#{ct_top} and ct_lev=1
   	</select>
+  	
+  	
+  	  <!-- 카테고리 bottom -->
+    <select id="ctbottomList2" resultType="map" parameterType="string">
+	select ctno, ct_bottom
+	from category
+	where ct_top="건강/운동" and ct_lev=1
+  	</select>
+  
+  	
+  	
+  	
+  	
   
   <!-- 가계부 저장(수정) -->
     <update id="setAbookList">

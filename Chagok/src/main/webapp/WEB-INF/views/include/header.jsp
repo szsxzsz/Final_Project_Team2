@@ -173,7 +173,7 @@ color : rgba(255, 219, 131 / 80%);
 .custom_inner .user_menu {
     display: flex;
     flex-direction: row;
-/*     justify-content: flex-end; */
+    justify-content: center;
     width: 170px;
 /*     margin-left: 120px; */
 }
@@ -190,7 +190,7 @@ color : rgba(255, 219, 131 / 80%);
 /*     width: 180px;   */
     height: auto;
     text-align: right;
-    font-size: 14px;
+    font-size: 16px;
     padding: 5px;
     margin-right: 5px;
     }
@@ -247,7 +247,7 @@ color : rgba(255, 219, 131 / 80%);
 				<a href="/notice"><p style="font-family: 'GmarketSans'">공지사항</p></a>
 			</div>
 		</div>
-		<div class="user_menu">
+		<div class="user_menu" style="font-size: 20px;">
 		<c:if test="${nick == null}">
 			<a href="/login" id="loginURL"><div class="login"><p style="font-family: 'GmarketSans'">로그인</p></div></a>
 			<a href="/register"><div class="join"><p style="font-family: 'GmarketSans'">회원가입</p></div></a>

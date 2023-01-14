@@ -31,6 +31,23 @@
 					<!-- 날짜 -->
 				</div>	
 			</div>
+<<<<<<< HEAD
+			<!-- 날짜 -->
+		</div>	
+	</div>
+
+<table id="list"></table>
+<div id="pager"></div>	
+	
+<table id="jqGrid"></table>
+<div id="gridpager"></div>
+ <span><a href="#" onclick="javascript:save();">저장</a></span>
+ <span><a href="#" onclick="javascript:insert();">insert저장</a></span>
+<span><a href="#" onclick="javascript:gridFunc.addRow();">행 추가</a></span>
+<span><a href="#" onclick="javascript:gridFunc.clearGrid();">초기화</a></span>
+<span><a href="#" onclick="javascript:delRow();">삭제</a></span>
+
+=======
 		</div>
 		
 	<!-- 여기까지 위쪽  -->	
@@ -167,6 +184,7 @@
 			</div>
 			</div>
          </div>
+>>>>>>> branch 'develop' of https://github.com/Ju-Yeongmin/Final_Project_Team2.git
 <!-- <input type="BUTTON" id="btnC" value="Edit Selected" /> -->
 <!-- <input type="BUTTON" id="btnD" value="Edit Selected" /> -->
 <%-- ${jsonAbook} --%>
@@ -179,9 +197,7 @@
 <script type="text/javascript">
 $(function() {
 	$(".datetimepicker").datetimepicker({ 
-		dateFormat:'yy-mm-dd',
-		autoclose: true,
-		todayHighlight: true
+		format: "Y-m-d H:i",
 	});
 });
 
@@ -192,32 +208,233 @@ function grid_Datepicker(text, obj){
 
 
 
+시작일시 : <input type='text' class='datetimepicker' name='start_dt'  style='width:140px;'>, 
+종료일시 : <input type='text' id="datepicker" class='' name='end_dt'   style='width:140px; padding-left:10px;'>
+<hr>
+                <div class="pl-lg-4"> 
+<!--                   <div class="col-lg-6"> -->
+<!--                       <div class="form-group focused"> -->
+<!--                         <label class="form-control-label" for="input-username" >카테고리</label> -->
+                        <select name="ct_top" id="input-address" class="form-control form-control-alternative" >
+                           <option>카테고리</option>
+                           <option value="1">식비</option>
+        				   <option value="2">의복/미용</option>
+          				   <option value="3">문화/여가</option>
+          				   <option value="4">생활</option>
+        				   <option value="5">주거/통신</option>
+          				   <option value="6">건강/운동</option>
+          				   <option value="7">교육/육아</option>
+          				   <option value="8">교통/차량</option>
+          				   <option value="9">경조사/회비</option>
+          				   <option value="10">금융</option>
+          				   <option value="11">저축/보험</option>
+          				   <option value="12">자산이동</option>
+                        </select>
+<!--                       </div> -->
+<!--                     </div> -->
+                    <div class="col-lg-6">
+                      <div class="form-group">
+                        <label class="form-control-label" for="input-email">상세 카테고리</label>
+                         <select name="ct_bottom" id="input-address" class="form-control form-control-alternative" >
+                           <option>상세 카테고리</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
 
-<!-- jQuary+grid -->
+<script>
+
+jQuery(function($) {
+    $("#datepicker").datetimepicker();
+});
+
+$(function (){
+    $("#cate option:selected").on('change', function()  {
+        var arrType = getAgreeType();
+        var optionType = $(this).parents('.pl-lg-4').find($('select[name="ct_bottom"]'));
+        optionType.empty();
+ 
+        if($(this).val() == '1'){ 
+            for(prop in arrType['1']){
+                optionType.append('<option value='+prop+' >'+arrType['1'][prop]+'</option>');
+            }
+        }else if($(this).val() == '2'){                            
+            for(prop in arrType['2']){
+                optionType.append('<option value='+prop+' >'+arrType['2'][prop]+'</option>');
+            }                  
+        }else if($(this).val() == '3'){                            
+            for(prop in arrType['3']){
+                optionType.append('<option value='+prop+' >'+arrType['3'][prop]+'</option>');
+            }                  
+        }else if($(this).val() == '4'){                            
+            for(prop in arrType['4']){
+                optionType.append('<option value='+prop+' >'+arrType['4'][prop]+'</option>');
+            }     
+        }else if($(this).val() == '5'){                            
+            for(prop in arrType['5']){
+                optionType.append('<option value='+prop+' >'+arrType['5'][prop]+'</option>');
+            }  
+        }else if($(this).val() == '6'){                            
+            for(prop in arrType['6']){
+                optionType.append('<option value='+prop+' >'+arrType['6'][prop]+'</option>');
+            }  
+        }else if($(this).val() == '7'){                            
+            for(prop in arrType['7']){
+                optionType.append('<option value='+prop+' >'+arrType['7'][prop]+'</option>');
+            }  
+        }else if($(this).val() == '8'){                            
+            for(prop in arrType['8']){
+                optionType.append('<option value='+prop+' >'+arrType['8'][prop]+'</option>');
+            }  
+        }else if($(this).val() == '9'){                            
+            for(prop in arrType['9']){
+                optionType.append('<option value='+prop+' >'+arrType['9'][prop]+'</option>');
+            }  
+        }else if($(this).val() == '10'){                            
+            for(prop in arrType['10']){
+                optionType.append('<option value='+prop+' >'+arrType['10'][prop]+'</option>');
+            }  
+        }else if($(this).val() == '11'){                            
+            for(prop in arrType['11']){
+                optionType.append('<option value='+prop+' >'+arrType['11'][prop]+'</option>');
+            } 
+        }else if($(this).val() == '12'){                            
+            for(prop in arrType['12']){
+                optionType.append('<option value='+prop+' >'+arrType['12'][prop]+'</option>');
+            } 
+        }
+    });
+});
+</script>
+
+
+
+
+<script type="text/javascript">
+function getAgreeType() {    
+    var obj = {
+//         "1" : "1:식비;2:의복/미용;3:문화/여가;4:생활;5:주거/통신;6:건강/통신;7:교육/육아;8:교통/차량;9:경조사/회비;10:금융;11:저축/보험",
+        
+        "3" : {
+            '24' : '여행/숙박',
+            '25' : '공연/전시',
+            '26' : '도서/영화',
+            '27' : '취미',
+            '28' : '선물',
+            '29' : '기타',
+        },
+        "4" : {
+            '30' : '가전/가구',
+            '31' : '주방/욕실',
+            '32' : '잡화/소모',
+            '33' : '반려동물',
+            '34' : '기타',
+        },
+        "5" : {
+            '35' : '관리비',
+            '36' : '공과금',
+            '37' : '통신',
+            '38' : '월세',
+            '39' : '기타',
+        },
+        "6" : {
+            '40' : '운동',
+            '41' : '운동용품',
+            '42' : '병원',
+            '43' : '약국',
+            '44' : '기타',
+        },
+        "7" : {
+            '45' : '등록금',
+            '46' : '학원',
+            '47' : '교재',
+            '48' : '육아용품',
+            '49' : '기타',
+        },
+        "8" : {
+            '50' : '대중교통',
+            '51' : '택시',
+            '52' : '주유소',
+            '53' : '장비/부품',
+            '54' : '기타',
+        },
+        "9" : {
+            '55' : '경조사',
+            '56' : '회비',
+            '57' : '용돈',
+            '58' : '헌금',
+            '59' : '기부',
+            '60' : '기타',
+        },
+        "10" : {
+            '61' : '세금',
+            '62' : '은행',
+            '63' : '이자',
+            '64' : '투자',
+            '65' : '기타',
+        },
+        "11" : {
+            '66' : '예/적금',
+            '67' : '보험',
+            '68' : '기타',
+        },
+        "12" : {
+            '69' : '출금',
+            '70' : '이체',
+            '71' : '카드대금',
+            '72' : '기타',
+        }
+    }
+    
+    
+    
+//     var json = JSON.stringify(obj);
+    
+// 	console.log(JSON.stringify(obj));
+    
+//     return JSON.stringify(obj);
+}
+</script>
+
+</script>
+
 <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" /> -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.css" />
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.js"></script>
 
+
+
+
+<script src="https://npmcdn.com/flatpickr/dist/flatpickr.min.js"></script>    <!-- flatpicker min js -->
+<script src="https://npmcdn.com/flatpickr/dist/l10n/ko.js"></script>          <!-- flatpicker ko -->
+
+
  <script>
- 
+
 $("#jqGrid").jqGrid({
+//     url : '/asset/cateSelect',
     url : '/asset/reqGrid',
     datatype : "json",
 	mtype: 'get',
-	jsonReader: {
+// 	ajaxGridOptions: { contentType: "application/json; charset=UTF-8" },
+// 	ajaxRowOptions: { contentType: "application/json; charset=UTF-8", async: true },
+// 	ajaxSelectOptions: { contentType: "application/json; charset=UTF-8", dataType: "JSON" },
+
+		jsonReader: {
 				repeatitems:false,
 // 				id:'id', // 키 컬럼 명
 				root:'rows', // 그리드에 로드 할 Json 형태의 데이터
 				page:'page', // 현재 페이지
 				total:'total', // 총 페이지 Count
 				records:'records' // 총 Row Count
-				},
+			},
+// 	alert("시작");
     height: 500, 
-    width: 1000,
+    width: 1450,
 
-    colNames : ['num','분류','날짜','내용','금액','거래수단','ctno','카테고리','소분류','메모'], 
+    colNames : ['num','분류','날짜','내용','금액','거래수단','카테고리','소분류','메모'], 
     colModel:[
         {name : 'abno', index : 'abno',width : 0, align : 'left',hidden:true,key:true},    	
         {name:"ab_inout",index:"ab_inout",width:30,align:'center',edittype: "select", formatter: "select",editoptions:{value:"1:지출;2:수입;3:이체;"},editable:true,
@@ -228,8 +445,13 @@ $("#jqGrid").jqGrid({
 //                 }
 	        hidden:false,editable:true},
 
+<<<<<<< HEAD
+        {name:'ab_date', index:'ab_date', width:90, editable:true, editoptions:{size:20, 
+               dataInit:function(el){ 
+=======
         {name:'ab_date', index:'ab_date', width:90, align:'center',editable:true, formatoptions:{newformat: 'Y-M-d h:i'}, 
 	        	editoptions:{size:20, dataInit:function(el){ 
+>>>>>>> branch 'develop' of https://github.com/Ju-Yeongmin/Final_Project_Team2.git
                      $(el).datetimepicker({dateFormat:'yy-mm-dd', onClose :grid_Datepicker}); 
                      
                }, 
@@ -245,6 +467,62 @@ $("#jqGrid").jqGrid({
 
            }},
         {name : 'ab_content',index : 'ab_content',width : 100, align : 'center',hidden:false,editable:true},
+<<<<<<< HEAD
+        {name : 'ab_amount',index : 'ab_amount',width : 70, resizable : true,align : 'right',editrules:{number:true},hidden:false,editable:true},
+	    {name : 'ab_method',index : 'ab_method',width : 70, align : 'center',hidden:false,editable:true},	
+// 	    {name:"ct_top",label:"ct_top",width:50,align:'center',edittype: "select", /* formatter: "select", */
+// 	    	editoptions:{value:"1:식비;2:의복/미용;3:문화/여가;4:생활;5:주거/통신;6:건강/통신;7:교육/육아;8:교통/차량;9:경조사/회비;10:금융;11:저축/보험"},
+// 	    	editable:true,
+		{name: "ct_top", label: 'ct_top', width: 150, /* formatter: "select", */ 
+		editable: true, edittype: "select", 
+		editoptions:{  dataUrl: '/asset/cateSelect',
+// //     		  			 postData: function(rowid){
+// //             		return {data: data}
+// //         		    },
+
+// 	          buildSelect:function setSelectCombo(data) {
+// 		 			let key = JSON.parse(data)
+// 		            console.log(key[10].ct_top);
+// 		            console.log(key[10].ctno);
+// 		            console.log(JSON.parse(data)[5].ctno);
+// // 	        			alert(key[0].ctno);
+		            
+// // 	        		value = jQuery.parseJSON(data).combo;
+// 	        		var result = '<select>';
+// 	        		for(var idx=0; idx < key[idx].length; idx++) {
+// 	        			alert(key[idx].ctno);
+// // 	        			result += '<option value="' + key[idx].ctno + '">' + key[idx].ct_top + '</option>';
+// 	        		}
+// 	        		result += '</select>';
+// 	        		return result;
+// 			} 
+
+			buildSelect:function (data){
+
+		 			let key = JSON.parse(data)
+// 		 			let key10 = key[10].ctno
+// 		            console.log(key);
+// 		            console.log(key[10].ctno);
+// 		            console.log(JSON.parse(data)[5].ctno);
+// 	        			alert(key[0].ctno);
+// 				if(typeof(data)=='string')
+	// 			data = $.parseJSON(data);
+				var rtSlt = '<select id="ct_top">';
+				for ( var idx = 0 ; idx < key.length ; idx ++) {
+				rtSlt +='<option value="'+key[idx].ctno+'">'+key[idx].ct_top+'</option>';
+				}
+				rtSlt +='</select>';
+				return rtSlt;
+
+// 		dataUrl : '/some/code/url.html?type=json'
+       dataEvents:[{ type:'change', fn: function(e){   
+
+
+//     detailChanged(grid, "DR_CR_DTIL",$(e.target).val()); 
+    }// dataevem    
+			}] // build
+	}	// edit
+=======
         {name : 'ab_amount',index : 'ab_amount',width : 50, align: 'center', resizable : true,align : 'right',editrules:{number:true},hidden:false,editable:true},
         {name:"ab_method",index:"ab_method",width:30,align:'center',edittype: "select", formatter: "select",editoptions:{value:"1:카드;2:현금;3:계좌;"},hidden:false,editable:true},
 	    {name : 'ctno', index : 'ctno',width : 0, align : 'center',hidden:true}, 
@@ -262,6 +540,7 @@ $("#jqGrid").jqGrid({
 		      	 dataEvents:[{ type:'change', fn: function(e){ }// dataevem    
 							}] 
 				}	// edit
+>>>>>>> branch 'develop' of https://github.com/Ju-Yeongmin/Final_Project_Team2.git
 		}}, //name
 		//            	data = $.parseJSON({"rows":JSON.stringify(data)});
 		// 				console.log(data[0]);	  
@@ -302,66 +581,57 @@ $("#jqGrid").jqGrid({
 
 // 	    {name : 'ct_top',index : 'ct_top',width : 70, alian: "center", hidden:false,editable:true},           
 		{name:"ct_bottom",index:"ct_bottom",width:50,align:'center', editable: true, edittype: "select", /* formatter: "select", */
-		    	editoptions:{dataUrl: '/asset/catebottom',
+	
+			    	editoptions:{
+			    		dataUrl: '/asset/catebottom', 
+						buildSelect:function (data){
+							console.log(data);							
+				 			let key = JSON.parse(data)
+							console.log(key);							
 
-					buildSelect:function (data){
-			 			let key = JSON.parse(data)
-// 						alert("");
-					    var rowid = $( "#jqGrid" ).getGridParam( "selrow" );   
-					    console.log(rowid);
+						    var rowid = $( "#jqGrid" ).getGridParam( "selrow" );   
+						    var rowdata = jQuery("#jqGrid").getRowData(rowid);  
+						     var ct_top= rowdata['ct_top'];
+						     var rtslt = ""; 
+// 						    console.log(ct_top);
+						    
+					       test = {"ct_top":ct_top};
+								$.ajax({
+									url : "/asset/catebottom",
+//	 					 			traditional: true ,
+									contentType:"application/json",
+									data : test,
+									success:function(val){
+										
+										rtSlt = '<select id="ct_bottom">';
+										for ( var idx = 0 ; idx < val.length ; idx ++) {
+										rtSlt +='<option value="'+val[idx].ctno+'">'+val[idx].ct_bottom+'</option>';
+										}
+										rtSlt +='</select>';
+										
+										alert("입력 성공!");
+									console.log(val);							
+									},error:function(err){
+									      console.log(err);
+									}
+								})
 
-					    var rowdata = jQuery("#jqGrid").getRowData(rowid);  
-					    console.log(rowdata);
-
-					     var ct_top= rowdata['ct_top'];
-					    console.log(ct_top);
-					    
-// 						var data =  $("#jqGrid").getRowData();
-// //				 		var data = $( "#jqGrid" ).getGridParam( "selrow" );    
-// 							console.log(data);
-				       test = {"ct_top":JSON.stringify(ct_top)};
-							$.ajax({
-								url : "/asset/catebottom",
-// 					 			traditional: true ,
-								contentType:"application/json",
-								data : test,
-								success:function(val){alert("입력 성공!");
-								},error:function(err){
-								      console.log(err);
-								}
-							})
-
-
-// 							$.ajax({
-// 								url : "/asset/catebottom2",
-// 								contentType:"application/json",
-// 								data : test,
-// 								success:function(val){alert("cateB!");
-// 								},error:function(err){
-// 								      console.log(err);
-// 								}
-// 							})
-
-
-// 			 			let keyb = JSON.parse(test)
-			 			
-//	 		 			let key10 = key[10].ctno
-// 	 		            alert(keyb+"keyb");
-//	 		            console.log(key[10].ctno);
-//	 		            console.log(JSON.parse(data)[5].ctno);
-//	 	        			alert(key[0].ctno);
-//	 				if(typeof(data)=='string')
-		// 			data = $.parseJSON(data);
-					var rtSlt = '<select id="ct_bottom">';
-					for ( var idx = 0 ; idx < key.length ; idx ++) {
-					rtSlt +='<option value="'+key[idx].ctno+'">'+key[idx].ct_bottom+'</option>';
-					}
-					rtSlt +='</select>';
-					return rtSlt;
-
-					} // build
-				}	// edit
-		},    	
+						return rtSlt;
+						}, // build
+			            dataEvents: [
+	                          { type: 'change',
+	                              fn: function (e) {
+	                                  slcd = this.value.substr(0, this.value.indexOf(' '));
+	                                  $.get('@Url.Action("GetSelect", "Set")' + '?slcd=' + slcd, function (data) {
+	                                      var res = $(data).html();
+	                                      var selectedCol = lastsel2 + "_ITEM_CD";
+	                                      $("select#0_ITEM_CD").html(res);
+	                                  });
+	                              }
+	                          }
+	                       ] //dataeve
+					}	// edit
+			},    	
 
 	
         {name : 'ab_memo',index : 'ab_memo', align: "center", width : 50, align : 'center',hidden:false,editable:true}
@@ -380,14 +650,22 @@ $("#jqGrid").jqGrid({
 //     	 } ,
     
     autowidth: true,
+<<<<<<< HEAD
+	shrinkToFit: true, 
+=======
 // 	shrinkToFit: true, 
+>>>>>>> branch 'develop' of https://github.com/Ju-Yeongmin/Final_Project_Team2.git
     loadtext: "조회 중..",
     caption: "　",
     multiselect : true, // 그리드 왼쪽부분에 셀렉트 박스가 생겨 다중선택이 가능해진다
     emptyrecode : "작성된 내역이 없습니다!", // 뿌려줄 데이터가 없을 경우 보여줄 문자열 지정
     pager:"#gridpager",
+<<<<<<< HEAD
+    rowNum:5,
+=======
 // 	scroll:true,
     rowNum:20,
+>>>>>>> branch 'develop' of https://github.com/Ju-Yeongmin/Final_Project_Team2.git
     rownumbers : true, 
     
     cellEdit: true,
@@ -447,23 +725,29 @@ $("#jqGrid").jqGrid({
 	 
 	// 저장하고 컨트롤러로 보내는 코드 
 	function save(){
-		alert("");
+		alert("저장 시작");
+// 		var data =  $("#jqGrid").jqGrid('getGridParam', 'selarrrow'); 
+// 		alert("");
 		var data =  $("#jqGrid").getRowData();
-		data = JSON.stringify(data);
-		
+// 		var data = $( "#jqGrid" ).getGridParam( "selrow" );    
+			console.log(data);
+        data ={"rows":JSON.stringify(data)};
+// 		data = JSON.stringify(data);
+		console.log(data);
+
 		$.ajax({
 			url : "/asset/saveGrid",
-			data : data,
-			traditional: true ,
+// 			traditional: true ,
 			contentType:"application/json",
-			type : 'POST',
-			dataType:'JSON',
+			data : data,
+// 			dataType:'application/json',
 //             postData : {"rows" : JSON.stringify(data)},
-			success:function(data){
-			alert("입력 성공!");
+			success:function(val){alert("입력 성공!");
+			},error:function(err){
+			      console.log(err);
 			}
-			})
-	jQuery("#jqGrid").trigger('reloadGrid');	
+		})
+				jQuery("#jqGrid").trigger('reloadGrid');	
 	}
 	// update
 	
@@ -475,6 +759,24 @@ $("#jqGrid").jqGrid({
     }
 }
 
+<<<<<<< HEAD
+		$.ajax({
+			url : "/asset/saveRows",
+			contentType:"application/json",
+			data : data,
+// 			dataType:'application/json',
+//             postData : {"rows" : JSON.stringify(data)},
+			success:function(val){alert("입력 성공!");
+			},error:function(err){
+			      console.log(err);
+			}
+		})
+				jQuery("#jqGrid").trigger('reloadGrid');	
+	}	
+	
+	
+=======
+>>>>>>> branch 'develop' of https://github.com/Ju-Yeongmin/Final_Project_Team2.git
 	var gridFunc = {
 	        addRow : function() {
 	        	  const options = {
@@ -529,6 +831,30 @@ $("#jqGrid").jqGrid({
 }
 
 
+ </script>   
+ 
+ <script type="text/javascript">
+ $("#bedata").click(function(){ 
+     var gr = jQuery("#editgrid").jqGrid('getGridParam','selrow'); 
+     if( gr != null ) jQuery("#editgrid").jqGrid('editGridRow',gr{height:280,reloadAfterSubmit:false}); 
+     else alert("Please Select Row"); 
+});
+ </script>
+
+<script type="text/javascript">
+	/* 설정 */
+	const config = {
+		dateFormat: 'yy-mm-dd',
+	    prevText: '이전 달',
+	    nextText: '다음 달',
+	    monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+	    monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+	    dayNames: ['일','월','화','수','목','금','토'],
+	    dayNamesShort: ['일','월','화','수','목','금','토'],
+	    dayNamesMin: ['일','월','화','수','목','금','토'],
+	    yearSuffix: '년',
+        changeMonth: true,
+        changeYear: true
 	///////////////////////////////////////아직 안 쓰는 코드 
     function search() {
     	
@@ -610,6 +936,67 @@ $("#jqGrid").jqGrid({
 </script>	 
 
 
+<<<<<<< HEAD
+
+  <script type="text/javascript">
+$(document).ready(function()
+{
+//	$.datetimepicker.setLocale('kr');  
+
+	$('#start_date').datetimepicker({
+  showSecond: true,
+currentText: '현재시간적용',
+			closeText: '확인',
+			amNames: ['AM', 'A'],
+			pmNames: ['PM', 'P'],
+			timeFormat: 'HH:mm',
+			timeSuffix: '',
+			timeOnlyTitle: 'Choose Time',
+			timeText: '시간선택',
+			hourText: '시',
+			minuteText: '분',
+			secondText: '초',
+  dateFormat: 'yy-mm-dd',
+  timeFormat: 'hh:mm:ss'
+	});
+
+	$('#end_date').datetimepicker({
+  showSecond: true,
+currentText: '현재시간적용',
+			closeText: '확인',
+			amNames: ['AM', 'A'],
+			pmNames: ['PM', 'P'],
+			timeFormat: 'HH:mm',
+			timeSuffix: '',
+			timeOnlyTitle: 'Choose Time',
+			timeText: '시간선택',
+			hourText: '시',
+			minuteText: '분',
+			secondText: '초',
+  dateFormat: 'yy-mm-dd',
+  timeFormat: 'hh:mm:ss'
+	});
+});
+</script>
+
+
+ <script>
+ $("#date-time-picker").flatpickr({
+ enableTime: true,            // 시간 선택 여부
+ altInput: true,              // 기존 입력을 숨기고 새 입력을 만듦
+ altFormat: 'Y-m-d H:i',      // 날짜 선택 후 표시 형태
+ dateFormat: 'Y-m-d H:i',     // date format 형식
+ defaultDate: new Date(),     // 기본 선택 시간
+ minDate: new Date(),         // 최소 선택 시간
+ locale: 'ko',                // 한국어
+ time_24hr: true,             // 24시간 형태
+ disableMobile: true          // 모바일 지원 
+});
+</script>
+
+
+<!-- Datepicker -->
+=======
 <!-- 지출 카테고리  -->
 <script type="text/javascript">
 $(function(){
@@ -617,56 +1004,27 @@ $(function(){
         var arrType = getAgreeType();
         var optionType = $(this).parents('.pl-lg-4').find($('select[name="ctno"]'));
         optionType.empty();
+>>>>>>> branch 'develop' of https://github.com/Ju-Yeongmin/Final_Project_Team2.git
 
-        if($(this).val() == '1'){ 
-            for(prop in arrType['1']){
-                optionType.append('<option value='+prop+' >'+arrType['1'][prop]+'</option>');
-            }
-        }else if($(this).val() == '2'){                            
-            for(prop in arrType['2']){
-                optionType.append('<option value='+prop+' >'+arrType['2'][prop]+'</option>');
-            }                  
-        }else if($(this).val() == '3'){                            
-            for(prop in arrType['3']){
-                optionType.append('<option value='+prop+' >'+arrType['3'][prop]+'</option>');
-            }                  
-        }else if($(this).val() == '4'){                            
-            for(prop in arrType['4']){
-                optionType.append('<option value='+prop+' >'+arrType['4'][prop]+'</option>');
-            }     
-        }else if($(this).val() == '5'){                            
-            for(prop in arrType['5']){
-                optionType.append('<option value='+prop+' >'+arrType['5'][prop]+'</option>');
-            }  
-        }else if($(this).val() == '6'){                            
-            for(prop in arrType['6']){
-                optionType.append('<option value='+prop+' >'+arrType['6'][prop]+'</option>');
-            }  
-        }else if($(this).val() == '7'){                            
-            for(prop in arrType['7']){
-                optionType.append('<option value='+prop+' >'+arrType['7'][prop]+'</option>');
-            }  
-        }else if($(this).val() == '8'){                            
-            for(prop in arrType['8']){
-                optionType.append('<option value='+prop+' >'+arrType['8'][prop]+'</option>');
-            }  
-        }else if($(this).val() == '9'){                            
-            for(prop in arrType['9']){
-                optionType.append('<option value='+prop+' >'+arrType['9'][prop]+'</option>');
-            }  
-        }else if($(this).val() == '10'){                            
-            for(prop in arrType['10']){
-                optionType.append('<option value='+prop+' >'+arrType['10'][prop]+'</option>');
-            }  
-        }else if($(this).val() == '11'){                            
-            for(prop in arrType['11']){
-                optionType.append('<option value='+prop+' >'+arrType['11'][prop]+'</option>');
-            } 
-        }else if($(this).val() == '12'){                            
-            for(prop in arrType['12']){
-                optionType.append('<option value='+prop+' >'+arrType['12'][prop]+'</option>');
-            } 
+   <script>
+      function optionChange() {
+        var a = ['식비-1','식비-2','식비-3'];
+        var b = ['의복/미용-1','의복/미용-2','의복/미용-3'];
+        var v = $( '#s1' ).val();
+        var o;
+        if ( v == 'a' ) {
+          o = a;
+        } else if ( v == 'b' ) {
+          o = b;
+        } else {
+          o = [];
         }
+<<<<<<< HEAD
+        $( '#s2' ).empty();
+        $( '#s2' ).append( '<option>클릭</option>' );
+        for ( var i = 0; i < o.length; i++ ) {
+          $( '#s2' ).append( '<option>' + o[ i ] + '</option>' );
+=======
     });
 });
 
@@ -759,11 +1117,10 @@ function getAgreeType() {
             '70' : '이체',
             '71' : '카드대금',
             '72' : '기타',
+>>>>>>> branch 'develop' of https://github.com/Ju-Yeongmin/Final_Project_Team2.git
         }
-    }
-    return obj;
-}
-</script>
+      }
+    </script> 
 
 
 
@@ -823,6 +1180,8 @@ function getintype() {
 	
 <style>
 
+<<<<<<< HEAD
+=======
 .box-body2 {
     border-top-left-radius: 0;
     border-top-right-radius: 0;
@@ -907,6 +1266,7 @@ display: inline-flex;
     margin: 0px 5px 0px 5px;
 
 
+>>>>>>> branch 'develop' of https://github.com/Ju-Yeongmin/Final_Project_Team2.git
 #th-bg {
 	background-color: #FDEDBF;
 	font-style: inherit;
@@ -986,8 +1346,12 @@ th {
     <!-- AdminLTE for demo purposes -->
     <script src="${pageContext.request.contextPath }/resources/dist/js/demo.js" type="text/javascript"></script>
   </body>
+<<<<<<< HEAD
+</html>
+=======
 </html>
 
 
 
 
+>>>>>>> branch 'develop' of https://github.com/Ju-Yeongmin/Final_Project_Team2.git
