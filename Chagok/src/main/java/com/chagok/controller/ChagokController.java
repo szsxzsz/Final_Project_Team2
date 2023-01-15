@@ -179,17 +179,17 @@ public class ChagokController {
 	}	
 
 	
-	public void ingChallenge() throws Exception {
-		
-		List<ChallengeVO> result =  service2.getChallengeList();
-		LocalDate now = LocalDate.now();
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-		String formatedNow = now.format(formatter);
-		for(int i=0; i<result.size(); i++) {
-			String start = result.get(i).getC_start(); 
-		}
-		 
-	}
+//	public void ingChallenge() throws Exception {
+//		
+//		List<ChallengeVO> result =  service2.getChallengeList();
+//		LocalDate now = LocalDate.now();
+//		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+//		String formatedNow = now.format(formatter);
+//		for(int i=0; i<result.size(); i++) {
+//			String start = result.get(i).getC_start(); 
+//		}
+//		 
+//	}
 
 
 	// 챌린지 목록 불러오기 (커뮤메인)
