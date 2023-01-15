@@ -151,7 +151,7 @@ public class BoardController {
 		
 	// 후기 글 삭제하기
 	// http://localhost:8080/reviewremove?bno=4
-	@PostMapping(value = "/reviewremove")
+	@GetMapping(value = "/reviewremove")
 	public String reviewremovePOST(int bno,RedirectAttributes rttr) throws Exception{
 		mylog.debug(bno+"");
 					
