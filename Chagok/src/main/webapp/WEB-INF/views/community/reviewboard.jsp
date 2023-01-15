@@ -75,9 +75,9 @@
 						    <tr>
 						      <th scope="row" style="text-align:center; padding: 15px 0;">${boardno }</th>
 						      <th scope="row" style="text-align:center; padding: 15px 0;">[${sort }]</th>
-						      <th scope="row" style="text-align:center; padding: 15px 0;"> ${boardList2.c_period } 주</th>
 						      <td style="text-align:center; padding: 15px 0;"><a href="/reviewcontent?bno=${boardList2.bno }&cno=${boardList2.cno}">${boardList2.c_title }</a></td>
 						      <th scope="row" style="text-align:center; padding: 15px 0;"> ${boardList2.b_writer}</th>
+						      <th scope="row" style="text-align:center; padding: 15px 0;"> ${boardList2.c_period } 주</th>
 							  <td style="text-align:center; padding: 15px 0;"><fmt:formatDate value="${boardList2.b_date }" pattern="yyyy-MM-dd"/></td>
 						    </tr>
 				<c:set var="boardno" value="${boardno -1 }"></c:set>
@@ -101,6 +101,12 @@
 <!--                 <a href="#" class="bt last">>></a> -->
                 </ul>
            </div>
+          <div class="bt_wrap">
+             <c:if test= "${not empty nick}">
+				<input class="sbtn2" type="button" value="후기 작성하기" onclick="location.href='/challenge/mychallenge';" >
+			  </c:if>
+				
+          </div>  
           
 <!--            <div class="bt_wrap"> -->
 <%--              <input class="sbtn2" type="button" value="후기작성하기" onclick="location.href='/review?cno=${boardList.cno}';" > --%>

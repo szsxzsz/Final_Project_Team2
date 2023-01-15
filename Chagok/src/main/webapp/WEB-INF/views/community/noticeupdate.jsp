@@ -435,7 +435,7 @@ a {
                     </dl>
                 </div>
                 <div class="cont">
-                    <textarea name="b_content">${board.b_content }</textarea>
+                    <textarea name="b_content"  style="resize: none;">${board.b_content }</textarea>
                 </div>
             </div>
             <div class="bt_wrap">
