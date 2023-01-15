@@ -527,10 +527,8 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 
 	// update minus m_sum
 	@Override
-	public void updateMsum(Integer cno, Integer camount) throws Exception {
-		Map<String,Object> map = new HashMap<String, Object>();
-		map.put("cno", cno);
-		map.put("camount", camount);
+	public void updateMsum(Map<String, Object> map) throws Exception {
+		
 		sqlSession.update(NAMESPACE+".updateMsum", map);
 	}
 

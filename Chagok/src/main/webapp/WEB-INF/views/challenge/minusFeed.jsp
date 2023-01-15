@@ -195,6 +195,7 @@
 <!--                    String[] colorArr = {"progress-bar-danger","progress-bar-yellow","progress-bar-primary", "progress-bar-success"}; -->
 
 <!-- minusPeople.m_sum 이 숫자로 변환안됨 vo.c_amount -> minusPeoList.m_sum 으로 변환 필요! -->
+${minusPeoList }
                 <c:forEach var="minusPeople" begin="0" end="${minusPeoList.size()}" items="${minusPeoList}">
 <%--                  <fmt:formatNumber value="${minusPeoList.m_sum}" pattern=",000" var="money" /> --%>
                 <c:set var="i" value="${i+1 }"/>

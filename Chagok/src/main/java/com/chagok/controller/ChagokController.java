@@ -563,7 +563,6 @@ public class ChagokController {
 		}
 		mylog.debug("결과"+result);
 		
-		service2.updateMsum(cno,camount);
 		return result;
 	}
 	

@@ -425,9 +425,9 @@ public class ChallengeServiceImpl implements ChallengeService{
 
 	// update minus m_sum
 	@Override
-	public void updateMsum(Integer cno, Integer camount) throws Exception {
+	public void updateMsum(Map<String, Object> map) throws Exception {
 		mylog.debug(" updateMsum() 호출 ");
-		dao.updateMsum(cno,camount);
+		dao.updateMsum(map);
 	}
 
 	
