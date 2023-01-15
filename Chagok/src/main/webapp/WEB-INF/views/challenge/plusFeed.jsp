@@ -126,7 +126,7 @@
 			  	총 <span style="color: #3e6c49;"><fmt:formatNumber pattern="0" value="${vo.c_period*7 /vo.c_freq }" /> </span>번을
 		    	<span style="color: #3e6c49;">${vo.c_freq }</span> 일 마다 
 		    	<span style="color: #3e6c49;"><fmt:formatNumber pattern=",000" value="${vo.c_amount }"/></span>원씩 저축하는 조건이 있습니다.<br>
-			  		${vo.c_start} ~ ${startDate }
+<%-- 			  		${vo.c_start} ~ ${vo.c_start  } --%>
 			  </h3>
 			</div>
 		</div>
