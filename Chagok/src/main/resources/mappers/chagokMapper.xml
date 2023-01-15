@@ -552,5 +552,11 @@
 	  	where mno = #{mno}
   	</update>
   	
+<!--   	updateMsum -->
+	<update id="updateMsum">
+	update minus m set m_sum =
+ 	(select #{camount} from challenge c where m.cno=#{cno})
+	</update>
+  	
   	
  </mapper>
