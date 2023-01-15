@@ -127,8 +127,9 @@ $(function(){
    		var ctno = ${vo.ctno};
    		var mno = ${mno};
    		var cno = ${vo.cno};
+   		var camount = ${vo.c_amount};
    		
-   		var test = {"ctno":ctno,"mno":mno, "cno":cno};
+   		var test = {"ctno":ctno,"mno":mno, "cno":cno,"camount":camount};
    		var confirmm = confirm("참여 가능한 챌린지입니다! \n 단, 저축형 챌린지는 하나만 참여 가능합니다. \n 참여하시겠습니까?");
    		
    		if (confirmm) {
@@ -161,6 +162,48 @@ $(function(){
  	});
 });
 </script>
+	
+        <script>
+        $(function(){
+        	$("#samechallenge").click(function(){
+        		
+        		var ctno = ${vo.ctno};
+        		var mno = ${mno};
+        		var cno = ${vo.cno};
+        		
+        		var test = {"ctno":ctno,"mno":mno, "cno":cno};
+        		var confirmm = confirm("참여 가능한 챌린지입니다! \n 단, 저축형 챌린지는 하나만 참여 가능합니다. \n 참여하시겠습니까?");
+        		
+        		if (confirmm) {
+					$.ajax({
+	        			type : "post",
+	        			url : "/challenge/plusregist",
+	        			contentType : "application/json",
+	        			dataType :'text',
+	        			data : JSON.stringify(test),
+	        			timeout : 3000,
+	        			async : false,
+	        			success : function(data){
+							console.log('통신 성공! ' + data);
+	        				if(data == "N"){ // 중복된 카테고리num이 아닐 때
+			        			alert('챌린지 참여완료!');
+	        					location.href="/commumain";
+	        				}else if(data == "Y"){ // 중복된 챌린지 or 중복된 상세카테고리 챌린지 
+	        					alert("해당 카테고리로 참여 중인 챌린지가 있습니다.");
+	        					return false;
+	        				}
+	        			},
+	        				error : function(error, data){
+	        					console.log(error);
+	        					console.log(data);
+	        					}
+	        			});
+        		} else {
+        			alert('챌린지 참여를 취소하였습니다.');
+        		}
+        		});
+        	});
+        </script>
 
 <script type="text/javascript">   
 	$(document).ready(function(){
