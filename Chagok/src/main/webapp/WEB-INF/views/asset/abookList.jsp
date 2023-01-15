@@ -738,7 +738,7 @@ function getintype() {
 }
 </script>
 	
-<script type="text/javascript">
+<script type="text/javascript"> 
 var result = '${result}';
 if(result == 'createOK'){
 	Swal.fire({
