@@ -11,7 +11,7 @@
 			</div>
 
 <!-- jQuery.number -->
-<script src="/resources/js/jquery.number.min.js"></script>
+<script src="/resources/js/jquery.number.min.js"></script> 
 <!-- fullcalendar CDN -->
 <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.min.css' rel='stylesheet' />
 <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.min.js'></script>
