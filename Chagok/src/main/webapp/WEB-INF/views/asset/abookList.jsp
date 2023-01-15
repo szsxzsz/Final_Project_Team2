@@ -428,7 +428,7 @@ $("#jqGrid").jqGrid({
 				  timer: 3000
 				});	
 			
-		$.ajax({
+		$.ajax({ 
 			url : "/asset/delGrid",
 			type:"post",    
 			data : {test:data},
