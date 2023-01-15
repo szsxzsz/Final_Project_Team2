@@ -203,7 +203,7 @@
 		values (#{b_title},#{b_content},#{b_writer},#{b_sort},#{b_file})	
 	</insert>
 	
-		<!-- 챌린지 모인 꿀머니 -->
+	<!-- 챌린지 모인 꿀머니 -->
 	<select id="challengemoney" resultType="int">
 		select c_deposit * c_cnt 
 		from challenge

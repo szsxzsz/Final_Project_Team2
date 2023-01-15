@@ -346,7 +346,6 @@ public class ChallengeController {
 		mylog.debug(" /challenge/plusRegistGET 호출 -> 페이지 이동 ");
 		
 		return "/challenge/plusRegist";
-		
 	}
 		
 	// 챌린지 등록 (저축형) - POST
