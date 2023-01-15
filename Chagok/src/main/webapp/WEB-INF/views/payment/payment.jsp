@@ -13,7 +13,7 @@ $(document).ready(function () {
 	    swal.fire({
 	        title: "구독서비스는 준비 중입니다!",
 	        type: "info"
-	        });
+        });
 // 	    ,
 // 	     function (isConfirm) {
 // 	        if (isConfirm) {
@@ -334,7 +334,10 @@ function requestPay()
         msg += '결제 금액 : ' + rsp.paid_amount;
         msg += '카드 승인번호 : ' + rsp.apply_num;
         console.log(msg+"AAAA"); 
-        alert('결제가 완료되었습니다');
+        Swal.fire({
+        	title: '결제가 완료되었습니다!', 
+        	icon: 'success'
+        });
         
         	$.ajax({
         	    type : 'post',           // 타입 (get, post, put 등등)
@@ -382,7 +385,10 @@ function requestPay1()
         msg += '결제 금액 : ' + rsp.paid_amount;
         msg += '카드 승인번호 : ' + rsp.apply_num;
         console.log(msg+"AAAA"); 
-        alert('결제가 완료되었습니다');
+        Swal.fire({
+        	title: '결제가 완료되었습니다!', 
+        	icon: 'success'
+        });
         
         	$.ajax({
         	    type : 'post',           // 타입 (get, post, put 등등)
@@ -430,7 +436,10 @@ function requestPay2()
         msg += '결제 금액 : ' + rsp.paid_amount;
         msg += '카드 승인번호 : ' + rsp.apply_num;
         console.log(msg+"AAAA"); 
-        alert('결제가 완료되었습니다');
+        Swal.fire({
+        	title: '결제가 완료되었습니다!', 
+        	icon: 'success'
+        });
         
         	$.ajax({
         	    type : 'post',           // 타입 (get, post, put 등등)

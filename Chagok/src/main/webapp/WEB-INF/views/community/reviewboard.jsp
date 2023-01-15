@@ -12,18 +12,31 @@
  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
  <link rel="stylesheet" href="../assets/css/theme.min.css">
 
+<!-- sweetalert -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
+
 	<script type="text/javascript">
 		var result = '${result}';
 		if(result == 'createOK'){
-			alert(" 글쓰기 완료! ");
+			Swal.fire({
+				title: '글쓰기 완료!', 
+				icon: 'success'
+			});
 		}
 		
 		if(result == 'modOK'){
-			alert(' 글 수정 완료!');
+			Swal.fire({
+				title: '수정 완료!', 
+				icon: 'success'
+			});
 		}
 		
 		if(result == 'delOK'){
-			alert(' 글 삭제 완료!');
+			Swal.fire({
+				title: '삭제 완료!', 
+				icon: 'success'
+			});
 		}
 		
 </script>

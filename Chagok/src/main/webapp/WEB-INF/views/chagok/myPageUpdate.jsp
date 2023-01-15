@@ -36,13 +36,22 @@
 			        icon: 'warning'
 		   	   });				
 			} else {
-				var check = confirm("회원정보를 수정하시겠습니까?");
-				
-				if (check) {
-					$('#form').submit();
-				}
+				Swal.fire({
+					title: '회원정보를 수정하시겠습니까?',
+					icon: 'warning',
+					showCancelButton: true,
+					confirmButtonColor: '#00A65A',
+					cancelButtonColor: '#DD4B39',
+					confirmButtonText: '수정하기',
+					cancelButtonText: '취소'
+				}).then((result) => {
+					if (result.isConfirmed) {
+						document.querySelector('#form').submit();
+					} else {
+						return false;
+					}
+				})			
 			}
-			
 			
 		});
 	});
