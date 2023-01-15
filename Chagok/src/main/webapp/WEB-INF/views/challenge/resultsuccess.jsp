@@ -571,18 +571,17 @@ opacity:1;
    <p><i class="fa fa-credit-card" aria-hidden="true"></i></p>
     <p><i class="fa fa-truck" aria-hidden="true"></i></p>
     <div class="qr">
-      <button class="button" type="button" onclick="location.href='/review?cno=${vo.cno}';">후기 작성하기</button>
     </div>
         <div class="address">
           <p><b>🎉축하합니다! 성공적으로 챌린지를 마치셨습니다!</b> <span></span></p>
       </div>
   </div>
   </div>
+      <button class="button" style="z-index: 5; position: absolute; left: 910px; margin-top: 10px; "type="button" onclick="location.href='/review?cno=${vo.cno}';">후기 작성하기</button>
 </div>
 
 </body>
 </html>
-
 
 
 <!-- </div> -->

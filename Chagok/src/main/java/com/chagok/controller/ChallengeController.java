@@ -171,7 +171,7 @@ public class ChallengeController {
 	public String minusFeedPOST(@RequestParam("cno") int cno,@RequestParam("mno") int mno,Model model,@RequestParam("ab_amount") int ab_amount) throws Exception {
 		mylog.debug("minusFeedPOST 호출 ");
 	
-		
+		Integer camount = service.getChallengeInfo(cno).getC_amount();
 		service.updateMoney(mno,ab_amount,cno);
 
 		model.addAttribute("cno", cno);
