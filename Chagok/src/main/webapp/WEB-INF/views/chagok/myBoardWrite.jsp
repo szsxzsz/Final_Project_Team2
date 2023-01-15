@@ -99,6 +99,7 @@
 			      <th scope="col" style="text-align:center; padding: 15px 0;"> 게시판 종류 </th>
 			      <th scope="col" style="text-align:center; padding: 15px 0;"> 제목 </th>
 				  <th scope="col" style="text-align:center; padding: 15px 0;"> 작성일 </th>
+				  <th scope="col" style="text-align:center; padding: 15px 0;"> 수정 / 삭제 </th>
 			    </tr>
 			  </thead>
 			<tbody>
@@ -109,21 +110,48 @@
 					<th scope="row" style="text-align:center; padding: 15px 0;">후기</th>
 					<td style="text-align:center; padding: 15px 0;"><a href="/reviewcontent?bno=${boardList.bno }&cno=${boardList.cno}">${boardList.b_title }</a></td>
 					<td style="text-align:center; padding: 15px 0;"><fmt:formatDate value="${boardList.b_date }" pattern="yyyy-MM-dd"/></td>
+					<td style="text-align:center; padding: 15px 0;">
+						<button type="submit" class="btn" style="background-color:#66BB7A;"
+								onclick="location.href='/reviewupdate?bno=${boardList.bno}&cno=${boardList.cno }';">수정
+						</button>
+						/
+						<button type="submit" class="btn" style="background-color:#dd4b39;"
+								onclick="location.href='/reviewboard?bno=${boardList.bno}&cno=${boardList.cno }';">삭제
+						</button>
+					</td>
 				</c:if>	
 				<c:if test="${boardList.b_sort eq 3 }">
 					<th scope="row" style="text-align:center; padding: 15px 0;">자유</th>
 					<td style="text-align:center; padding: 15px 0;"><a href="/freeboard">${boardList.b_title }</a></td>
 					<td style="text-align:center; padding: 15px 0;"><fmt:formatDate value="${boardList.b_date }" pattern="yyyy-MM-dd"/></td>
+					<td style="text-align:center; padding: 15px 0;">
+						<button type="submit" class="btn" style="background-color:#66BB7A;"
+								onclick="location.href='/freeboardupdate?bno=${boardList.bno}';">수정
+						</button>
+						/
+						<button type="submit" class="btn" style="background-color:#dd4b39;"
+								onclick="location.href='/freedelete?bno=${boardList.bno}';"	>삭제
+						</button>
+					</td>
 				</c:if>
 				<c:if test="${boardList.b_sort eq 4 }">
 					<th scope="row" style="text-align:center; padding: 15px 0;">뉴스 / 재테크</th>
 					<td style="text-align:center; padding: 15px 0;"><a href="/economycontent?bno=${boardList.bno }">${boardList.b_title }</a></td>
 					<td style="text-align:center; padding: 15px 0;"><fmt:formatDate value="${boardList.b_date }" pattern="yyyy-MM-dd"/></td>
+					<td style="text-align:center; padding: 15px 0;">
+						<button type="submit" class="btn" style="background-color:#66BB7A;"
+								onclick="location.href='/economyupdate?bno=${boardList.bno}';">수정
+						</button>
+						/
+						<button type="submit" class="btn" style="background-color:#dd4b39;"
+								onclick="location.href='/economydelete?bno=${boardList.bno}';"	>삭제
+						</button>
+					</td>
 				</c:if>
 					
 				</tr>
 			</c:forEach>
-								
+					
 			</tbody>
 	</table>
 	

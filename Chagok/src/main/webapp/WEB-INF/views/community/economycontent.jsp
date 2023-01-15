@@ -28,9 +28,9 @@
 </head>	
 <body>
 
-<form role="form" method="post">
-	<input type="hidden" name="bno" value="${vo.bno }">
-</form>
+<!-- <form role="form" method="post"> -->
+<%-- 	<input type="hidden" name="bno" value="${vo.bno }"> --%>
+<!-- </form> -->
 
     <div class="board_wrap">
         <div class="board_title">
@@ -50,7 +50,7 @@
                 <div class="info">
                     <dl>
                         <dt>글번호</dt>
-                        <dd>${vo.b_title }</dd>
+                        <dd>${vo.bno }</dd>
                     </dl>
                     <dl>
                         <dt>작성자</dt>
@@ -76,7 +76,7 @@
 				<c:set var="writer" value="${vo.b_writer }"/>
                 <c:if test="${nick == '관리자' || nick == writer}">
                 	<input class="sbtn" type="button" value="수정하기" onclick="location.href='/economyupdate?bno=${vo.bno}';" >
-            	    <input class="sbtn2" type="submit" value="삭제하기">
+            	    <input class="sbtn2" type="submit" value="삭제하기" onclick="location.href='/economydelete?bno=${vo.bno}';">
                 </c:if>
             </div>
         </div>
