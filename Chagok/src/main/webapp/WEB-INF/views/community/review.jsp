@@ -406,7 +406,6 @@ a {
 
 </style>
 </head>
-${result }
 <body>
 <form role="form" action="/review" method="post">
     <div class="board_wrap">
