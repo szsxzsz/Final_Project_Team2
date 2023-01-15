@@ -222,7 +222,10 @@ $(document).ready(function() {
     $('#c_pcnt').change(function() {
        var val= $('#c_pcnt').val();
    	   if(val < 3 || val > 10) {
-   		  alert("3명~10명까지만 모집가능합니다.");
+		   Swal.fire({
+		        title: '3명~10명까지만 모집가능합니다.', 
+		        icon: 'warning'
+		      });
    		  $(this).val('');
 	   }
   	});
@@ -232,7 +235,10 @@ $(document).ready(function() {
     $('#c_deposit').change(function() {
        var val= $('#c_deposit').val();
        if(val < 1000 || val > 200000) {
-           alert("1,000원~200,000원내로 입력해주세요.");
+		   Swal.fire({
+		        title: '1,000원~200,000원내로 입력해주세요.', 
+		        icon: 'warning'
+		      });
    		  $(this).val('');
 	   }
   	});
@@ -303,88 +309,87 @@ $(function(){
 function getAgreeType() {    
     var obj = {
         "1" : {
-            '13' : '식사',
-            '14' : '간식',
-            '15' : '외식',
-            '16' : '카페',            
-            '17' : '술/유흥',            
-            '18' : '기타',                   
+            '13' : '간식',
+            '14' : '외식',
+            '15' : '카페',            
+            '16' : '술/유흥',            
+            '17' : '기타',                   
         },
         "2" : {
-            '19' : '의류',
-            '20' : '패션잡화',
-            '21' : '헤어',
-            '22' : '뷰티',
-            '23' : '기타',
+            '18' : '의류',
+            '19' : '패션잡화',
+            '20' : '헤어',
+            '21' : '뷰티',
+            '22' : '기타',
         },
         "3" : {
-            '24' : '여행/숙박',
-            '25' : '공연/전시',
-            '26' : '도서/영화',
-            '27' : '취미',
-            '28' : '선물',
-            '29' : '기타',
+            '23' : '여행/숙박',
+            '24' : '공연/전시',
+            '25' : '도서/영화',
+            '26' : '취미',
+            '27' : '선물',
+            '28' : '기타',
         },
         "4" : {
-            '30' : '가전/가구',
-            '31' : '주방/욕실',
-            '32' : '잡화/소모',
-            '33' : '반려동물',
-            '34' : '기타',
+            '29' : '가전/가구',
+            '30' : '주방/욕실',
+            '31' : '잡화/소모',
+            '32' : '반려동물',
+            '33' : '기타',
         },
         "5" : {
-            '35' : '관리비',
-            '36' : '공과금',
-            '37' : '통신',
-            '38' : '월세',
-            '39' : '기타',
+            '34' : '관리비',
+            '35' : '공과금',
+            '36' : '통신',
+            '37' : '월세',
+            '38' : '기타',
         },
         "6" : {
-            '40' : '운동',
-            '41' : '운동용품',
-            '42' : '병원',
-            '43' : '약국',
-            '44' : '기타',
+            '39' : '운동',
+            '40' : '운동용품',
+            '41' : '병원',
+            '42' : '약국',
+            '43' : '기타',
         },
         "7" : {
-            '45' : '등록금',
-            '46' : '학원',
-            '47' : '교재',
-            '48' : '육아용품',
-            '49' : '기타',
+            '44' : '등록금',
+            '45' : '학원',
+            '46' : '교재',
+            '47' : '육아용품',
+            '48' : '기타',
         },
         "8" : {
-            '50' : '대중교통',
-            '51' : '택시',
-            '52' : '주유소',
-            '53' : '장비/부품',
-            '54' : '기타',
+            '49' : '대중교통',
+            '50' : '택시',
+            '51' : '주유소',
+            '52' : '장비/부품',
+            '53' : '기타',
         },
         "9" : {
-            '55' : '경조사',
-            '56' : '회비',
-            '57' : '용돈',
-            '58' : '헌금',
-            '59' : '기부',
-            '60' : '기타',
+            '54' : '경조사',
+            '55' : '회비',
+            '56' : '용돈',
+            '57' : '헌금',
+            '58' : '기부',
+            '59' : '기타',
         },
         "10" : {
-            '61' : '세금',
-            '62' : '은행',
-            '63' : '이자',
-            '64' : '투자',
-            '65' : '기타',
+            '60' : '세금',
+            '61' : '은행',
+            '62' : '이자',
+            '63' : '투자',
+            '64' : '기타',
         },
         "11" : {
-            '66' : '예/적금',
-            '67' : '보험',
-            '68' : '기타',
+            '65' : '예/적금',
+            '66' : '보험',
+            '67' : '기타',
         },
         "12" : {
-            '69' : '출금',
-            '70' : '이체',
-            '71' : '카드대금',
-            '72' : '기타',
+            '68' : '출금',
+            '69' : '이체',
+            '70' : '카드대금',
+            '71' : '기타',
         }
     }
     return obj;
@@ -393,7 +398,7 @@ function getAgreeType() {
 </head>
 
 <body>
-<h1>차곡 챌린지 등록 (절약형)</h1>
+<h2 style="margin-left: 35px;">절약형 챌린지 등록</h2>
 <form action=""  method="post" enctype="multipart/form-data">
   <div class="main-content">
   
@@ -566,7 +571,6 @@ function getAgreeType() {
                 <input type="hidden" name="c_sort" value="1">
                 <input type="hidden" name="c_min" value="2">
                 <input type="hidden" name="c_cnt" value="1">
-                <input type="hidden" name="c_total" value="1">
                 
             </div>
           </div>
@@ -589,6 +593,11 @@ body{
 	color: #9b9ca1;
 	min-height: 100% !important;
 }
+
+.content-wrapper{
+	min-height: 780px !IMPORTANT;
+}
+
 .bg-secondary-soft {
     background-color: rgba(208, 212, 217, 0.1) !important;
 }
@@ -727,7 +736,7 @@ body {
   line-height: 1.5;
   margin: 0;
   text-align: left;
-  color: #525f7f;
+  color: #333;
   background-color: #f8f9fe;
   min-height: 100% !important;
 }
@@ -781,7 +790,7 @@ strong {
 
 a {
   text-decoration: none;
-  color: #5e72e4;
+  color: #333;
   background-color: transparent;
   -webkit-text-decoration-skip: objects;
 }
@@ -1182,7 +1191,7 @@ a>code {
 
 .form-control:focus {
   color: #8898aa;
-  border-color: rgba(50, 151, 211, .25);
+/*   border-color: rgba(50, 151, 211, .25); */
   outline: 0;
   background-color: #fff;
   box-shadow: none, none;
@@ -1424,7 +1433,7 @@ textarea.form-control {
   padding: .5rem 0;
   list-style: none;
   text-align: left;
-  color: #525f7f;
+  color: #333;
   border: 0 solid rgba(0, 0, 0, .15);
   border-radius: .4375rem;
   background-color: #fff;
@@ -2318,7 +2327,7 @@ a.text-white:focus {
 }
 
 .footer .nav .nav-item .nav-link:hover {
-  color: #525f7f !important;
+  color: #333 !important;
 }
 
 .footer .copyright {
@@ -2328,7 +2337,7 @@ a.text-white:focus {
 .form-control-label {
   font-size: .875rem;
   font-weight: 600;
-  color: #525f7f;
+  color: #333;
 }
 
 .form-control {
@@ -2423,12 +2432,12 @@ textarea[resize='horizontal'] {
 
 .focused .input-group-text {
   color: #8898aa;
-  border-color: rgba(50, 151, 211, .25);
+/*   border-color: rgba(50, 151, 211, .25); */
   background-color: #fff;
 }
 
 .focused .form-control {
-  border-color: rgba(50, 151, 211, .25);
+/*   border-color: rgba(50, 151, 211, .25); */
 }
 
 .header {
@@ -2485,12 +2494,12 @@ textarea[resize='horizontal'] {
 
 .focused .input-group-text {
   color: #8898aa;
-  border-color: rgba(50, 151, 211, .25);
+/*   border-color: rgba(50, 151, 211, .25); */
   background-color: #fff;
 }
 
 .focused .form-control {
-  border-color: rgba(50, 151, 211, .25);
+/*   border-color: rgba(50, 151, 211, .25); */
 }
 
 .mask {
@@ -2509,11 +2518,11 @@ textarea[resize='horizontal'] {
 }
 
 .nav-link {
-  color: #525f7f;
+  color: #333;
 }
 
 .nav-link:hover {
-  color: #5e72e4;
+  color: #333;
 }
 
 .nav-link i.ni {
@@ -2706,9 +2715,19 @@ p {
 .textstyle {
 	font-size: 1.3rem;
     font-weight: 600;
-    color: #525f7f;
+    color: #333;
     margin-top: 30px;
     margin-left: -8px;
     margin-right: 10px;
 }
+
+
+.custom_inner .category p:hover {
+    color: #FFDB83;
+}
+
+.custom_inner .user_menu p:hover {
+	color: #FFDB83;
+}
+
 </style>

@@ -9,7 +9,6 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.inject.Inject;
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -228,28 +227,6 @@ public class ChallengeController {
 		mylog.debug("minusdetailPOST 호출");
 		mylog.debug(map+"");
 		
-		// 회원정보 저장
-//		int mno = (Integer)session.getAttribute("mno");
-//		mylog.debug("mno : " +mno);
-//		UserVO userVO = uservice.getUser(mno);
-//		
-//		 // 챌린지 정보 저장
-//		int deposit = service.getChallengeInfo((int)map.get("cno")).getC_deposit();
-//		int cno = (int)map.get("cno");
-//		
-//		if(userVO.getBuypoint()+userVO.getGetpoint() >= deposit) {
-//			if(userVO.getBuypoint() >= userVO.getGetpoint()) {
-//				uservice.buyChallenge(mno,cno,deposit);
-//				
-//				return "/challenge/minusdetail";
-//			} else {
-//				uservice.usePoint(map);
-//				return "/challenge/minusdetail";
-//			}
-//		} else {
-//			return "/payment/payment";
-//		}
-		
 		String result="";
 		
 		Integer gctno = service.samechallenge(map);	
@@ -265,7 +242,6 @@ public class ChallengeController {
 		}
 	
 		mylog.debug(result);
-		
 		return result;
 }
 	
@@ -298,9 +274,10 @@ public class ChallengeController {
 
 	// http://localhost:8080/challenge/mychallenge
 		@GetMapping("/mychallenge")
-		public String mychallengeGET(Model model, HttpSession session) throws Exception {
+		public String mychallengeGET(Model model, HttpSession session, RedirectAttributes rttr) throws Exception {
 			
 			String nick = (String)session.getAttribute("nick");
+			mylog.debug("nick : "+nick);
 			Integer mno	= (Integer)session.getAttribute("mno");
 			List<Map<String, Object>> challengeResultList = new ArrayList<Map<String,Object>>();
 			
@@ -314,33 +291,43 @@ public class ChallengeController {
 					Map<String, Object> result = service.challengeResult(cno, mno);
 					
 					challengeResultList.add(result);
+					//model.addAttribute("result", result);
 					
 				}
 				model.addAttribute("challengeResultList", challengeResultList);
 			}
-			
+
 			return "/challenge/mychallenge";
 		}
 		
 		// mychallenge에서 신청취소 했을 때
+		@ResponseBody
 		@GetMapping("/cancelChallenge")
-		public String cancelChallengeGET(@RequestParam("cno") Integer cno, @RequestParam("c_sort") Integer c_sort,HttpSession session) throws Exception {
+		public int cancelChallengeGET(@RequestParam int cno, @RequestParam int c_sort, HttpSession session) throws Exception {
 			
 			Integer mno = (Integer)session.getAttribute("mno");
 			mylog.debug(cno+" : cno , "+mno+" : mno, "+c_sort+" : c_sort");
 			String a = ",";
 			String b = uservice.getUser(mno).getNick();
 			String nick = a+b;
-			service.cancelChallenge(nick,cno);
+			int chCancelResult = 0;
+			int feedCancelResult = 0;
+			int result = 0;
+			chCancelResult = service.cancelChallenge(nick,cno);
 			
 			if(c_sort == 0) {
-				service.cancelPlus(mno, cno);
+				feedCancelResult = service.cancelPlus(mno, cno);
 			}else if(c_sort == 1){
-				service.cancelMinus(mno, cno);
+				feedCancelResult = service.cancelMinus(mno, cno);
 			}
 //			cno, mno로챌린지 조회
-			
-			return "redirect:/challenge/mychallenge";
+			mylog.debug("chCancelResult : "+chCancelResult);
+			mylog.debug("feedCancelResult : "+feedCancelResult);
+			if(chCancelResult!=0 && feedCancelResult!=0) {
+				result = 1;
+			}
+			mylog.debug("result"+result);
+			return result;
 		}
 		
 		
@@ -362,12 +349,11 @@ public class ChallengeController {
 		mylog.debug(" /challenge/plusRegistGET 호출 -> 페이지 이동 ");
 		
 		return "/challenge/plusRegist";
-		
 	}
 		
 	// 챌린지 등록 (저축형) - POST
 	@RequestMapping(value = "/plusregist", method=RequestMethod.POST)
-	public String plusRegistPOST(ChallengeVO vo, MultipartFile file, HttpSession session, Model model) throws Exception{
+	public String plusRegistPOST(ChallengeVO vo, MultipartFile file, HttpSession session, Model model, Map<String, Object> map, RedirectAttributes rttr) throws Exception{
 		mylog.debug(" /challenge/plusRegist(POST) 호출 ");	
 		
 		// 회원정보 저장
@@ -378,6 +364,19 @@ public class ChallengeController {
 		vo.setMno(mno);
 		vo.setC_person(userVO.getNick());
 		
+		// 중복참여 제어
+		map.put("mno", mno);
+		map.put("ctno", vo.getCtno());
+		
+		Integer result = service.samechallenge(map);
+		
+		if(result != null) {
+			rttr.addFlashAttribute("result", "overlap");
+			
+			return "redirect:/commumain";
+		}
+		rttr.addFlashAttribute("result", "Noverlap");
+			
 		// 사진등록
 		String imgUploadPath = uploadPath + File.separator + "imgUpload";
 		String ymdPath = UploadFileUtils.calcPath(imgUploadPath);
@@ -393,19 +392,23 @@ public class ChallengeController {
 		vo.setC_file(File.separator + "imgUpload" + ymdPath + File.separator + fileName);
 		vo.setC_thumbFile(File.separator + "imgUpload" + ymdPath + File.separator + "s" + File.separator + "s_" + fileName);
 		
-//		// 1. 전달된 정보 저장
+		// 챌린지 등록
 		mylog.debug(vo.toString());
-		
-		// 2. 서비스 -> DAO 접근 (mapper)
 		service.challengeRegist(vo);
+		//mylog.debug(cno.toString());
+		
 		mylog.debug(" 챌린지 등록(저축형) 완료! ");
 		
-		// 3. 페이지로 이동(모집중 챌린지)
-//		rttr.addFlashAttribute("result", "plusRegistOK");
-		return "redirect:/commumain";
+		// plus 테이블에 정보 추가
+		Map<String, Object> plus = new HashMap<String, Object>();
+		plus.put("mno", mno);
+		plus.put("cno", vo.getCno());
+		service.joinplusInsert(plus);
 		
+		return "redirect:/challenge/mychallenge";
 	}
 		
+	
 	// 챌린지 등록 (절약형) - GET
 	// http://localhost:8080/challenge/minusregist
 	@GetMapping(value="/minusregist")
@@ -417,7 +420,7 @@ public class ChallengeController {
 	
 	// 챌린지 등록 (절약형) - POST
 	@RequestMapping(value = "/minusregist", method=RequestMethod.POST)
-	public String minusRegistPOST(ChallengeVO vo, MultipartFile file, HttpSession session, Model model) throws Exception{
+	public String minusRegistPOST(ChallengeVO vo, MultipartFile file, HttpSession session, Model model, Map<String, Object> map, RedirectAttributes rttr) throws Exception{
 		mylog.debug(" /challenge/minusRegist(POST) 호출 ");	
 		
 		// 회원정보 저장
@@ -427,6 +430,19 @@ public class ChallengeController {
 		model.addAttribute("userVO", userVO);
 		vo.setMno(mno);
 		vo.setC_person(userVO.getNick());
+		
+		// 중복참여 제어
+		map.put("mno", mno);
+		map.put("ctno", vo.getCtno());
+		
+		Integer result = service.samechallenge(map);
+		
+		if(result != null) {
+			rttr.addFlashAttribute("result", "overlap");
+			
+			return "redirect:/commumain";
+		}
+		rttr.addFlashAttribute("result", "Noverlap");
 		
 		// 사진등록
 		String imgUploadPath = uploadPath + File.separator + "imgUpload";
@@ -442,17 +458,18 @@ public class ChallengeController {
 		vo.setC_file(File.separator + "imgUpload" + ymdPath + File.separator + fileName);
 		vo.setC_thumbFile(File.separator + "imgUpload" + ymdPath + File.separator + "s" + File.separator + "s_" + fileName);
 		
-		// 1. 전달된 정보 저장
+		// 챌린지 등록
 		mylog.debug(vo.toString());
-		
-		// 2. 서비스 -> DAO 접근 (mapper)
 		service.challengeRegist(vo);
 		mylog.debug(" 챌린지 등록(절약형) 완료! ");
 		
-		// 3. 페이지로 이동(모집중 챌린지)
-//		rttr.addFlashAttribute("result", "plusRegistOK");
-		return "redirect:/commumain";
+		// minus 테이블에 정보 추가
+		Map<String, Object> minus = new HashMap<String, Object>();
+		minus.put("mno", mno);
+		minus.put("cno", vo.getCno());
+		service.joinminusInsert(minus);
 		
+		return "redirect:/challenge/mychallenge";
 	}
 	
 	// 챌린지 결과(성공)
@@ -518,7 +535,7 @@ public class ChallengeController {
 			int mno = (int)session.getAttribute("mno");
 			UserVO userVO = uservice.getUser(mno);
 			vo.setBiz_holder_name(userVO.getNick());
-			vo.setBiz_inout(1);
+			vo.setBiz_inout(2);
 			vo.setMno(mno);
 		}
 		

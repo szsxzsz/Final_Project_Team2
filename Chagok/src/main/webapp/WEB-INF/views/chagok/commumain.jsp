@@ -10,19 +10,30 @@
 <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
 <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 
-<!-- <h1> 커뮤니티 메인 </h1> -->
-<%-- ${challengeList} --%>
-<%-- ${ranking } --%>
+<!-- sweetalert -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
 
 <h1 class="visually-hidden"></h1>
 <main>
+
+<script type="text/javascript">
+   var result = '${result}';
+   if(result == 'overlap'){
+	   Swal.fire({
+	        title: '중복 챌린지는 개설 불가능합니다.', 
+	        icon: 'error'
+	      });
+   }
+</script>
+
 <form method="get">
-  <div class="search">
+<!--  <div class="search">
     <select name="searchType">
       <option value="n"<c:out value="${scri.searchType == null ? 'selected' : ''}"/>>-----</option>
       <option value="c_title"<c:out value="${scri.searchType eq 'c_title' ? 'selected' : ''}"/>>제목</option>
       <option value="c_content"<c:out value="${scri.searchType eq 'c_content' ? 'selected' : ''}"/>>내용</option>
-<%--       <option value="c_host"<c:out value="${scri.searchType eq 'c_host' ? 'selected' : ''}"/>>작성자</option> --%>
+      <option value="c_host"<c:out value="${scri.searchType eq 'c_host' ? 'selected' : ''}"/>>작성자</option>
       <option value="c_titlec_content"<c:out value="${scri.searchType eq 'c_titlec_content' ? 'selected' : ''}"/>>제목+내용</option>
     </select>
 
@@ -36,14 +47,15 @@
         });
       });   
     </script>
-  </div>
+  </div> --> 
 
-	<!-- 명예의 전당 -->
-<h1>명예의 전당</h1>
+<!-- 명예의 전당 -->
+<h2 style="margin-left: 30px;">명예의 전당</h2>
 
 <div class="clprofile-container">
 <c:forEach var="uvo" items="${ranking }" begin="0" end="2">
       <div class="clprofile-card">
+<%--       <c:if test="${uvo.f != null}"> --%>
         <img src="https://i.imgur.com/bZBG9PE.jpg" alt="image1" class="clprofile-icon" />
         <div class="clprofile-name">${uvo.nick }</div>
         <div class="clprofile-position"><b>${uvo.success_cnt }</b> 번 도전에 성공하셨습니다.</div>
@@ -66,13 +78,13 @@
 		<jsp:useBean id="now" class="java.util.Date" />
 			 <fmt:parseNumber value="${now.time / (1000*60*60*24)}" integerOnly="true" var="nowfmtTime" scope="request"/>
 			 <fmt:parseDate value="${vo.c_start}" var="startDate" pattern="yyyy-MM-dd"/>
-			  <fmt:parseNumber value="${(startDate.time + 1000*60*60*24)/ (1000*60*60*24)}" integerOnly="true" var="startTime" scope="request"/>
+			 <fmt:parseNumber value="${(startDate.time + 1000*60*60*24)/ (1000*60*60*24)}" integerOnly="true" var="startTime" scope="request"/>
 			 <fmt:parseNumber value="${c_end.time / (1000*60*60*24)}" integerOnly="true" var="endTime" scope="request" />
   
-<%--   <c:if test="${startTime - nowfmtTime <= 0 && nowfmtTime - endTime <= 0}"> --%>
-<%--   </c:if> --%>
-  <c:if test="${startTime - nowfmtTime >= 1}">
+  
   <!-- 날짜 계산하기 : 조건에 만족하는 챌린지만 출력 -->
+  <c:if test="${startTime - nowfmtTime >= 1}">
+
   
     <div class="col">
       <div class="card">
@@ -739,6 +751,13 @@ main .card .card-item-chevron--new-2 {
     font-weight: bold;
     margin: 25px 0 10px 0;
 }
+
+.clprofile-rank {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 10px 0 10px 0;
+}
+
 
 .clprofile-position {
     font-size: 14px;

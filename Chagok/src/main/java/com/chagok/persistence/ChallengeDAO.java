@@ -35,13 +35,13 @@ public interface ChallengeDAO {
 	public List<ChallengeVO> getmyChallenge(String nick);
 	
 	// 챌린지 신청 취소 (챌린지 테이블에 닉네임 잘라주기)
-	public void cancelChallenge(String nick, Integer cno);
+	public int cancelChallenge(String nick, Integer cno);
 	
 	// 저축형 챌린지 신청 취소 (플러스테이블에 mno랑 cno 없애주기)
-	public void cancelPlus(Integer mno, Integer cno);
+	public int cancelPlus(Integer mno, Integer cno);
 	
 	// 절약형 챌린지 신청 취소 (마이너스 테이블에 mno랑 cno 없애주기)
-	public void cancelMinus(Integer mno, Integer cno);
+	public int cancelMinus(Integer mno, Integer cno);
 	
 	// [절약형]챌린지 참가자 조회 
 	public List<Map<String, Object>> getMinusPeople(Integer cno);
@@ -68,7 +68,7 @@ public interface ChallengeDAO {
 	public BoardVO getBoardContent(Integer bno);
 
 	// 챌린지 등록
-	public void challengeRegist(ChallengeVO vo) throws Exception;
+	public Integer challengeRegist(ChallengeVO vo) throws Exception;
 		
 	// 챌린지 목록
 	public List<ChallengeVO> getChallengeList() throws Exception;
@@ -170,8 +170,9 @@ public interface ChallengeDAO {
 	public int getCtno(Integer cno);
 	
 	// 내가 쓴 글 보기
-	public List<BoardVO> getMyBoardWrite(Criteria cri) throws Exception;
-//	public List<BoardVO> getMyBoardWrite(String nick) throws Exception;
+//	public List<BoardVO> getMyBoardWrite(Criteria cri,String nick) throws Exception;
+	public List<BoardVO> getMyBoardWrite(String nick) throws Exception;
+//	public List<BoardVO> getMyBoardWrite(Criteria cri) throws Exception;
 	
 	// 내가 쓴 글 개수 조회
 	public int MyBoardWriteCnt() throws Exception;
