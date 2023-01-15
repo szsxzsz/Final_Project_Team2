@@ -72,14 +72,18 @@ public class BoardController {
 	// http://localhost:8080/review?cno=1
 	@GetMapping(value = "/review")
 	public String reviewGET(@RequestParam("cno") int cno, Model model, HttpSession session) throws Exception {
-	
+		Integer mno = (Integer) session.getAttribute("mno");
+		
 		mylog.debug(cno + "reviewGET 호출");
 		ChallengeVO vo2 = service.getCt_top(cno);
+		
+		Map<String, Object> result = service.challengeResult(cno, mno);
 		
 		model.addAttribute("review", service.getChallengeInfo(cno));
 		model.addAttribute("vo2", vo2);
 		model.addAttribute("c_end", service.getChallengeEndDate(cno));
-
+		model.addAttribute("result", result);
+		
 		return "/community/review";
 	}
 	
