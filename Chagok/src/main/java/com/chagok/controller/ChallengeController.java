@@ -147,6 +147,9 @@ public class ChallengeController {
 		int ctno = service.getCtno(cno);
 		List<Map<String, Object>> minusAbook = service.getMinusAbook(mno, cno, ctno);
 		mylog.debug(minusAbook+"");
+		mylog.debug(mno+"");
+		mylog.debug(cno+"");
+		mylog.debug(ctno+"");
 				
 		// 연결된 뷰페이지로 정보 전달(model)
 		model.addAttribute("mno", mno);
@@ -167,7 +170,7 @@ public class ChallengeController {
 	@PostMapping(value = "/minusFeed")
 	public String minusFeedPOST(@RequestParam("cno") int cno,@RequestParam("mno") int mno,Model model,@RequestParam("ab_amount") int ab_amount) throws Exception {
 		mylog.debug("minusFeedPOST 호출 ");
-		
+	
 		
 		service.updateMoney(mno,ab_amount,cno);
 
@@ -346,7 +349,6 @@ public class ChallengeController {
 		mylog.debug(" /challenge/plusRegistGET 호출 -> 페이지 이동 ");
 		
 		return "/challenge/plusRegist";
-		
 	}
 		
 	// 챌린지 등록 (저축형) - POST
