@@ -185,8 +185,14 @@ public class ChagokController {
 //		LocalDate now = LocalDate.now();
 //		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 //		String formatedNow = now.format(formatter);
+//		
 //		for(int i=0; i<result.size(); i++) {
 //			String start = result.get(i).getC_start(); 
+//			int a = start.compareTo(formatedNow);
+//			if(a>=0) {
+//				mylog.debug("@@@@@@@@@@@@@@2테스트");
+//			}
+//			mylog.debug("ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ테스트");
 //		}
 //		 
 //	}
@@ -544,7 +550,7 @@ public class ChagokController {
 	
 	@ResponseBody
 	@GetMapping(value="/confirm")
-	public int confirm(@RequestParam int status, @RequestParam int cno, RedirectAttributes rttr) throws Exception {
+	public int confirm(@RequestParam int status, @RequestParam int cno, RedirectAttributes rttr, @RequestParam int camount) throws Exception {
 		mylog.debug("status : "+status+", cno : "+cno);
 		int result=0;
 		
@@ -556,6 +562,8 @@ public class ChagokController {
 			result = 6;
 		}
 		mylog.debug("결과"+result);
+		
+		service2.updateMsum(cno,camount);
 		return result;
 	}
 	

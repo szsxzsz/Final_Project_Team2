@@ -7,11 +7,7 @@
 <%@ include file="../include/header.jsp" %>
 <%@ include file="../include/sidebarMyPage.jsp" %>
 
-<!-- sweetalert -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
-
-<script type="text/javascript">
+ <script type="text/javascript">
 	$(document).ready(function(){
 		$('.btn.btn-primary.btn-block.ym').click(function(){
 			
