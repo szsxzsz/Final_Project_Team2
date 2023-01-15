@@ -80,26 +80,12 @@
 								<div class="btn_bx">
 									<a href="/assetmain" class="btn_demo border">자산관리</a>
 									<a href="/commumain" class="btn_free full">커뮤니티</a>
-<!-- 									<button type="button" class="btn_inquiry border" -->
-<!-- 										onclick="pop_inquiry_show();">제품 문의하기</button> -->
 								</div>
 							</dd>
 						</dl>
 					</div>
 					
 					<br><br><br>
-					
-<!-- 					<hr> -->
-					
-<!-- 					<br><br><br> -->
-<!-- 						<h1>임시 링크 입니다 기능 만들어지기 전까진 요기로 이동하세요<br><br></h1> -->
-						
-<!-- 						<a href="/commumain">커뮤니티 메인 가기</a><br><br> -->
-<!-- 						<a href="/assetmain">자산관리 메인 가기</a><br> -->
-					
-<!-- 					<br><br><br> -->
-					
-<!-- 					<hr> -->
 					
 					<br><br><br>
 					
@@ -331,16 +317,11 @@
 										<p>모아보세요!</p>
 									</div>
 								</div>
-								<!-- <div class="icon"></div>  -->
 							</dt>
 							<dd>
-							<!-- 	<a href="/files/Samq_Proposal.pdf" class="btn_download"
-									download="">제안서 다운받기</a>  -->
 									<button type="button" class="btn_demo border" onclick="location.href='/register';"
 									style="margin:10px 150px 50px 50px;">
 									지금 가입하기</button>
-							<!-- 	<button type="button" class="btn_inquiry"
-									onclick="location.href='/register';">지금 가입하기</button>  -->
 							</dd>
 						</dl>
 					</div>
