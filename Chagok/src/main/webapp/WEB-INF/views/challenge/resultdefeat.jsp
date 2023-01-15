@@ -464,13 +464,13 @@ body .wrapper .footer .address p span {
    <p><i class="fa fa-credit-card" aria-hidden="true"></i></p>
     <p><i class="fa fa-truck" aria-hidden="true"></i></p>
     <div class="qr">
-      <button class="button" type="button" onclick="location.href='/review?cno=${vo.cno}';">후기 작성하기</button>
     </div>
         <div class="address">
           <p><b>😥아쉽습니다! 챌린지 완주에 실패하셨습니다.</b> <span></span></p>
       </div>
   </div>
   </div>
+  <button class="button" style="z-index: 5; position: absolute; left: 910px; margin-top: 10px;" type="button" onclick="location.href='/review?cno=${vo.cno}';">후기 작성하기</button>
 </div>
 
 </body>
