@@ -544,7 +544,7 @@ ${startDate }
                     </dl>
                 </div>
                 <div class="cont">
-                    <textarea name="b_content" readonly>${boardChallenge.b_content }</textarea>
+                    <textarea name="b_content" style="resize: none;" readonly>${boardChallenge.b_content }</textarea>
                 </div>
             </div>
             

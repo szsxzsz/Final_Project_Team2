@@ -21,11 +21,10 @@
     	</div>
  	    <div class="board_write_wrap">
  	     <div class="board_write">
-             	<div class="title">
              	<div class="title">             	
                     <dl>
                         <dt>제목</dt>
-                        <dd><input type="text" name="b_title" value="${vo.b_title }"></dd>
+                        <dd><input type="text" name="b_title" value="${boardChallenge.b_title }"></dd>
                     </dl>
                 </div>
              	 <div class="info">
@@ -38,10 +37,10 @@
                         <dd><input type="text" placeholder="<fmt:formatDate value="${boardChallenge.b_date }" pattern="yyyy-MM-dd"/>" readonly ></dd>
                     </dl>
                 </div>
+		         <div class="cont">
+		              <textarea name="b_content"  style="resize: none;" placeholder="내용을 작성해주세요">${boardChallenge.b_content }</textarea>
+				 </div>
 			 </div>
-         <div class="cont">
-              <textarea name="b_content">${boardChallenge.b_content }</textarea>
-		 </div>
 		</div>
        <div class="bt_wrap">
        <input type="hidden" name="bno" value="${boardChallenge.bno }">

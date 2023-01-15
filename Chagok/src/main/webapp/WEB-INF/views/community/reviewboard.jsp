@@ -101,6 +101,12 @@
 <!--                 <a href="#" class="bt last">>></a> -->
                 </ul>
            </div>
+          <div class="bt_wrap">
+             <c:if test= "${not empty nick}">
+				<input class="sbtn2" type="button" value="후기 작성하기" onclick="location.href='/challenge/mychallenge';" >
+			  </c:if>
+				
+          </div>  
           
 <!--            <div class="bt_wrap"> -->
 <%--              <input class="sbtn2" type="button" value="후기작성하기" onclick="location.href='/review?cno=${boardList.cno}';" > --%>
