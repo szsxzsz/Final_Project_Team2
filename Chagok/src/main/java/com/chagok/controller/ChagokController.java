@@ -182,11 +182,17 @@ public class ChagokController {
 //	public void ingChallenge() throws Exception {
 //		
 //		List<ChallengeVO> result =  service2.getChallengeList();
-////		LocalDate now = LocalDate.now();
-////		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-////		String formatedNow = now.format(formatter);
+//		LocalDate now = LocalDate.now();
+//		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+//		String formatedNow = now.format(formatter);
+//		
 //		for(int i=0; i<result.size(); i++) {
 //			String start = result.get(i).getC_start(); 
+//			int a = start.compareTo(formatedNow);
+//			if(a>=0) {
+//				mylog.debug("@@@@@@@@@@@@@@2테스트");
+//			}
+//			mylog.debug("ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ테스트");
 //		}
 //		 
 //	}

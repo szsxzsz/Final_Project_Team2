@@ -20,7 +20,7 @@
  <style>
 .board_wrap {
 	width: 1000px;
-	margin: 20px auto;
+	margin: 50px;
 }
 
 .board_title {
@@ -260,7 +260,8 @@
 	 								onclick="location.href='/challenge/defeat?cno=${vo.cno }';">결과 보기</button>
 								</c:if>		
 							</c:forEach>						
-							<button type="button" class="btn" style="background-color:#dd4b39;">
+							<button type="button" class="btn" style="background-color:#dd4b39;"
+									onclick="location.href='/review?cno=${vo.cno}';">
 								후기 쓰기
 							</button>
 						</c:if>			
