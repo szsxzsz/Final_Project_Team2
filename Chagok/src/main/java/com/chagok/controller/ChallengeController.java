@@ -393,6 +393,7 @@ public class ChallengeController {
 		mylog.debug(vo.toString());
 		service.challengeRegist(vo);
 		//mylog.debug(cno.toString());
+		
 		mylog.debug(" 챌린지 등록(저축형) 완료! ");
 		
 		// plus 테이블에 정보 추가
@@ -531,7 +532,7 @@ public class ChallengeController {
 			int mno = (int)session.getAttribute("mno");
 			UserVO userVO = uservice.getUser(mno);
 			vo.setBiz_holder_name(userVO.getNick());
-			vo.setBiz_inout(1);
+			vo.setBiz_inout(2);
 			vo.setMno(mno);
 		}
 		

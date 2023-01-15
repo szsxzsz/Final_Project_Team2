@@ -172,7 +172,7 @@
 		</div>
 	</div>
 <!-- 게시판 안내 -->			
-				
+
 <!-- 게시판 내용 -->				
 	<table class="table table-hover">
 	  <thead style="background-color: #dddddd30;font-size: 16px;">
@@ -186,6 +186,13 @@
 	    	</tr>
 	  </thead>
 		<tbody>
+		<c:if test="${mychallengeList.size() == 0}">
+			 <tr>
+			 	<td colspan="6" align="center">현재 참여중인 챌린지가 없습니다!</td>
+			 <tr>
+		</c:if> 
+		
+		
 			<c:forEach var="vo" items="${mychallengeList }">
 			    <tr>
 					<td style="text-align:center; padding: 15px 0;">
@@ -286,5 +293,5 @@
  <!-- 페이징 -->
  
  </body>
-
+</div>
 <%@ include file="../include/footer.jsp"%>
