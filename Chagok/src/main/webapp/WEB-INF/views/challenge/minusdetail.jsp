@@ -127,8 +127,9 @@ $(function(){
    		var ctno = ${vo.ctno};
    		var mno = ${mno};
    		var cno = ${vo.cno};
+   		var camount = ${vo.c_amount};
    		
-   		var test = {"ctno":ctno,"mno":mno, "cno":cno};
+   		var test = {"ctno":ctno,"mno":mno, "cno":cno,"camount":camount};
    		var confirmm = confirm("참여 가능한 챌린지입니다! \n 단, 저축형 챌린지는 하나만 참여 가능합니다. \n 참여하시겠습니까?");
    		
    		if (confirmm) {
