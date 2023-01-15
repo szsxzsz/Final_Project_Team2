@@ -28,18 +28,18 @@
 </script>
 
 <form method="get">
-<!--  <div class="search">
-    <select name="searchType">
-      <option value="n"<c:out value="${scri.searchType == null ? 'selected' : ''}"/>>-----</option>
-      <option value="c_title"<c:out value="${scri.searchType eq 'c_title' ? 'selected' : ''}"/>>제목</option>
-      <option value="c_content"<c:out value="${scri.searchType eq 'c_content' ? 'selected' : ''}"/>>내용</option>
-      <option value="c_host"<c:out value="${scri.searchType eq 'c_host' ? 'selected' : ''}"/>>작성자</option>
-      <option value="c_titlec_content"<c:out value="${scri.searchType eq 'c_titlec_content' ? 'selected' : ''}"/>>제목+내용</option>
-    </select>
+  <div class="search">
+<!--     <select name="searchType"> -->
+<%--       <option value="n"<c:out value="${scri.searchType == null ? 'selected' : ''}"/>>-----</option> --%>
+<%--       <option value="c_title"<c:out value="${scri.searchType eq 'c_title' ? 'selected' : ''}"/>>제목</option> --%>
+<%--       <option value="c_content"<c:out value="${scri.searchType eq 'c_content' ? 'selected' : ''}"/>>내용</option> --%>
+<%--       <option value="c_host"<c:out value="${scri.searchType eq 'c_host' ? 'selected' : ''}"/>>작성자</option> --%>
+<%--       <option value="c_titlec_content"<c:out value="${scri.searchType eq 'c_titlec_content' ? 'selected' : ''}"/>>제목+내용</option> --%>
+<!--     </select> -->
 
-    <input type="text" name="keyword" id="keywordInput" value="${scri.keyword}"/>
+<%--     <input type="text" name="keyword" id="keywordInput" value="${scri.keyword}"/> --%>
 
-    <button id="searchBtn" type="button">검색</button>
+<!--     <button id="searchBtn" type="button">검색</button> -->
     <script>
       $(function(){
         $('#searchBtn').click(function() {
@@ -47,7 +47,7 @@
         });
       });   
     </script>
-  </div> --> 
+  </div> 
 
 <!-- 명예의 전당 -->
 <h2 style="margin-left: 30px;">명예의 전당</h2>

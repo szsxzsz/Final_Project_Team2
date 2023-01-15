@@ -182,11 +182,18 @@ public class ChagokController {
 //	public void ingChallenge() throws Exception {
 //		
 //		List<ChallengeVO> result =  service2.getChallengeList();
-////		LocalDate now = LocalDate.now();
-////		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-////		String formatedNow = now.format(formatter);
+//		
+//		LocalDate now = LocalDate.now();
+//		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+//		String formatedNow = now.format(formatter);
+//		
 //		for(int i=0; i<result.size(); i++) {
 //			String start = result.get(i).getC_start(); 
+//			int a = start.compareTo(formatedNow);
+//			if(a>=0) {
+//				mylog.debug("");
+//			}
+//			mylog.debug("");
 //		}
 //		 
 //	}
@@ -544,7 +551,7 @@ public class ChagokController {
 	
 	@ResponseBody
 	@GetMapping(value="/confirm")
-	public int confirm(@RequestParam int status, @RequestParam int cno, RedirectAttributes rttr) throws Exception {
+	public int confirm(@RequestParam int status, @RequestParam int cno, RedirectAttributes rttr, @RequestParam int camount) throws Exception {
 		mylog.debug("status : "+status+", cno : "+cno);
 		int result=0;
 		
@@ -556,6 +563,7 @@ public class ChagokController {
 			result = 6;
 		}
 		mylog.debug("결과"+result);
+		
 		return result;
 	}
 	
@@ -604,26 +612,45 @@ public class ChagokController {
 	
 	
 	// http://localhost:8080/refundManagement
-	// 저축형 환불관리
+	// 환불관리
 	@GetMapping("/refundManagement")
-	public String refundManagementGET(Criteria cri, Model model) throws Exception {
+	public String refundManagementGET(Criteria cri, Model model, RedirectAttributes rttr) throws Exception {
 		mylog.debug("/userManagementGET 호출");
 		
-		List<UserVO> userList = service.getUserList(cri);
+		List<Map<String, Object>> bizList = service.getBizRefundList(cri);
+		
+		rttr.addFlashAttribute("Msg", "환급 완료!");
 		
 		// 페이징 처리
 		cri.setPerPageNum(10);
 		PageMaker pagevo = new PageMaker();
 		pagevo.setDisplayPageNum(10);
 		pagevo.setCri(cri);
-		pagevo.setTotalCount(service.getUserCnt());
+		pagevo.setTotalCount(service.getBizCnt());
 		mylog.debug("@@@@"+pagevo.toString());
-		mylog.debug("@@@@"+userList.size());
+		mylog.debug("@@@@"+bizList.size());
 		
 		model.addAttribute("pagevo", pagevo);
-		model.addAttribute("userList", userList);
+		model.addAttribute("bizList", bizList);
 		
 		return "/chagok/refundManagement";
+	}
+
+	// http://localhost:8080/refundManagement
+	// 환불관리
+	@PostMapping("/refundManagement")
+	@ResponseBody
+	public String refundManagementPOST(@RequestBody String param) throws Exception {
+		mylog.debug("/refundManagementPOST 호출");
+		
+		mylog.debug(param.toString());
+		
+		Integer tmp = Integer.parseInt(param);
+//		
+		service.updateBizAccount(tmp);
+		
+		
+		return "/refundManagement";
 	}
 
 	////////////////////// 관리자 페이지 ///////////////////////////	

@@ -5,6 +5,10 @@
 <%@ include file="../include/header.jsp" %>
 <%@ include file="../include/sidebarAsset.jsp" %>
 
+<!-- sweetalert -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
+
 <style>
 .btn1 {
     width: 250px;
@@ -22,15 +26,29 @@
 <script src="${pageContext.request.contextPath }/resources/plugins/jQuery/jQuery-2.1.4.min.js"></script>
 	
 <script>
-	function userCheck() {
-		var cfm = confirm(" 사용자 인증이 필요한 서비스입니다.\n 인증 서비스로 이동 하시겠습니까? ");
-		if (cfm) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-</script>
+
+$(document).ready(function(){
+	$('#assetCheck').click(function(){
+		Swal.fire({
+			title: '사용자 인증이 필요한 서비스입니다.',
+			text: '인증 서비스로 이동하시겠습니까?',
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#00A65A',
+			cancelButtonColor: '#DD4B39',
+			confirmButtonText: '인증하기',
+			cancelButtonText: '취소'
+		}).then((result) => {
+			if (result.isConfirmed) {
+				document.querySelector('#assetForm').submit();
+			} else {
+				return false;
+			}
+		})			
+	});
+});
+		
+</script>	
 
 <script type="text/javascript">
 	$(document).ready(function(){
@@ -139,7 +157,8 @@
 						<h3>등록된 자산정보가 없습니다!</h3>
 						<h3>자산 정보를 불러오시겠습니까?</h3>
 					</div>
-					<form action="https://testapi.openbanking.or.kr/oauth/2.0/authorize" method="get" onsubmit="return userCheck();">
+					<form action="https://testapi.openbanking.or.kr/oauth/2.0/authorize" method="get"  id="assetForm">
+<!-- 					 onsubmit="return userCheck();"> -->
 						<!-- 고정값 : code -->
 						<input type="hidden" name="response_type" value="code">
 						<!-- 오픈뱅킹에서 발급한 이용기관 앱의 Client ID -->
@@ -153,7 +172,8 @@
 						<!-- 사용자인증타입 구분주 2) (0:최초인증, 1:재인증, 2:인증생략) -->
 						<input type="hidden" name="auth_type" value="0">
 						
-						<input type="submit" class="btn1" id="assetCheck" value="내 자산 불러오기">	
+<!-- 						<input type="submit" class="btn1" id="assetCheck" value="내 자산 불러오기">	 -->
+						<input type="button" class="btn1" id="assetCheck" value="내 자산 불러오기">	
 					</form>
 				</div>
 			</div>

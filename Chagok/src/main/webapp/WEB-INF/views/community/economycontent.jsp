@@ -34,7 +34,7 @@
 
     <div class="board_wrap">
         <div class="board_title">
-            <strong> 뉴스 / 재테크 게시글 </strong>
+            <strong> 뉴스 / 재테크 </strong>
             <p>여러가지 정보를 공유합시다.</p>
         </div>
 	</div>
@@ -66,7 +66,7 @@
 <!--                     </dl> -->
                 </div>
                 <div class="cont">
-                    <textarea name="b_content"  style="resize: none;" placeholder="내용을 작성해주세요">${vo.b_content }</textarea>
+                    <textarea name="b_content"  style="resize: none;" readonly placeholder="내용을 작성해주세요">${vo.b_content }</textarea>
                 </div>
             </div>
             

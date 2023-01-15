@@ -20,7 +20,7 @@
  <style>
 .board_wrap {
 	width: 1000px;
-	margin: 20px auto;
+	margin: 50px;
 }
 
 .board_title {
