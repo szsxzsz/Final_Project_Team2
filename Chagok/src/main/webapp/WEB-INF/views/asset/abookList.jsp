@@ -17,7 +17,7 @@
 	<button onclick="javascript:delRow();" class="btn btn-info" id="btnyel"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">삭제하기</font></font></button>
 	
 </div>
-<!--   <div class="main-content"> -->
+<!--   <div class="main-content"> --> 
   <div class="container-fluid">
   <!-- <section class="content"> -->
 			
