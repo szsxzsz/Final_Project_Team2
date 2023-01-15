@@ -578,7 +578,7 @@
   	</select> -->
   	
 <!--   	updateMsum -->
-	<update id="updateMsum">
+	<update id="updateMsum" parameterType="hashMap">
 	update minus m set m_sum =
  	(select #{camount} from challenge c where m.cno=#{cno})
 	</update>

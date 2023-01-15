@@ -184,7 +184,7 @@ $(function(){
  	});
 });
 </script>
-	
+
 <script type="text/javascript">   
 	$(document).ready(function(){
 		$('#kakaotalk-sharing-btn').click(function () {
