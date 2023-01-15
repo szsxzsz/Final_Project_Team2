@@ -40,7 +40,7 @@
 
          <div class="col-md-4">
 			<div class="box box-primary2" >
-			<div class="box-header with-border">
+			<div class="box-header with-border"> 
 			
 			<div class="box-body2">
 				<h3 class="box-title"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">수입·지출 등록</font></font></h3>
