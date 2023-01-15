@@ -450,7 +450,7 @@ body .wrapper .footer .address p span {
   <div class="right">
     <ul>
       <li style="font-size: 24px;"><span></span>${vo.c_title }</li>
-      <li><span style="margin-top: -8px; font-size: 12px;"><fmt:formatDate value="${startDate }" pattern="YYYY-MM-dd" /> ~ <fmt:formatDate value="${c_end }" pattern="YYYY-MM-dd" /></span></li>
+      <li><span style="margin-top: -8px; font-size: 12px;">${vo.c_start} ~ <fmt:formatDate value="${c_end }" pattern="YYYY-MM-dd" /></span></li>
     </ul>
         <ul>
       <li>참여 인원 <span>${CList }<b>명</b></span></li>
