@@ -103,17 +103,33 @@
 			  
 			  
 			<tbody>
+			<c:if test="${param.page.equals('1')}">
 				<c:set var="boardno" value="${boardList.size() }"></c:set>
 				<fmt:parseNumber var="boardno" value="${boardno }" type="number" />
-		       	<c:forEach items="${boardList }" var="boardList" >
+		       	<c:forEach items="${boardList }" var="boardList"  begin="0" end="10" step="1" >
 						    <tr>
-						      <th scope="row" style="text-align:center; padding: 15px 0;">${boardno }</th>
+						      <th scope="row" style="text-align:center; padding: 15px 0;">${boardno+10 }</th>
 						      <td style="text-align:center; padding: 15px 0;"><a href="/economycontent?bno=${boardList.bno }">${boardList.b_title }</a></td>
 						      <td style="text-align:center; padding: 15px 0;">${boardList.b_writer }</td>
 						      <td style="text-align:center; padding: 15px 0;"><fmt:formatDate value="${boardList.b_date }" pattern="yyyy-MM-dd"/></td>
 						    </tr>
 				<c:set var="boardno" value="${boardno -1 }"></c:set>
 		    	</c:forEach>   
+		    </c:if>
+
+			<c:if test="${param.page.equals('2')}">
+				<c:set var="boardno" value="${boardList.size() }"></c:set>
+				<fmt:parseNumber var="boardno" value="${boardno }" type="number" />
+		       	<c:forEach items="${boardList }" var="boardList"  begin="0" end="10" step="1" >
+						    <tr>
+						      <th scope="row" style="text-align:center; padding: 15px 0;">${boardno}</th>
+						      <td style="text-align:center; padding: 15px 0;"><a href="/economycontent?bno=${boardList.bno }">${boardList.b_title }</a></td>
+						      <td style="text-align:center; padding: 15px 0;">${boardList.b_writer }</td>
+						      <td style="text-align:center; padding: 15px 0;"><fmt:formatDate value="${boardList.b_date }" pattern="yyyy-MM-dd"/></td>
+						    </tr>
+				<c:set var="boardno" value="${boardno -1 }"></c:set>
+		    	</c:forEach>   
+		    </c:if>
 			</tbody>
 	</table>
 	
