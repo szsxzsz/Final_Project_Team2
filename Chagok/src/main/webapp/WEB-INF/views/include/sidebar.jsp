@@ -47,10 +47,10 @@
           <div class="user-panel">
             <div class="pull-left image">
               <img 
-              	<c:if test="${userVO.profile != null }">
+              	<c:if test="${uprofile != null }">
 					src="${pageContext.request.contextPath }/resources${userVO.profile }" alt="User profile picture"
 				</c:if>
-				<c:if test="${userVO.profile == null }">
+				<c:if test="${uprofile == null }">
 					src="https://ptetutorials.com/images/user-profile.png" alt="User profile picture"
 				</c:if>
               class="img-circle" alt="User Image" />
