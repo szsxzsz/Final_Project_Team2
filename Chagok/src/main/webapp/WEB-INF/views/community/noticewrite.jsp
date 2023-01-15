@@ -32,7 +32,7 @@ a {
 }
 
 .board_wrap {
-    width: 1000px;
+/*     width: 1000px; */
     margin: 40px;
 }
 

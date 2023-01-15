@@ -30,7 +30,7 @@ a {
 
 .board_wrap {
     width: 1000px;
-    margin: 40px;
+    margin: 40px auto;
 }
 
 .board_title {
@@ -475,5 +475,5 @@ a {
 </body>
 
 
-
+</div>
 <%@ include file="../include/footer.jsp"%>

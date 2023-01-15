@@ -48,12 +48,12 @@
  			<table class="table table-hover" style="margin-left:10px; border-bottom: 1px solid #ddd;border-top: 2px solid #66BB7A;">
 			  <thead style="background-color: #dddddd30;font-size: 16px;">
 			    <tr>
-			      <th scope="col" style="text-align:center; padding: 15px 0;">글 번호</th>
-			      <th scope="col" style="text-align:center; padding: 15px 0;">카테고리</th>
-			      <th scope="col" style="text-align:center; padding: 15px 0;">챌린지 기간</th>
+			      <th scope="col" style="text-align:center; padding: 15px 0; width: 10%;">글 번호</th>
+			      <th scope="col" style="text-align:center; padding: 15px 0; width: 10%;">카테고리</th>
 			      <th scope="col" style="text-align:center; padding: 15px 0;">챌린지 제목</th>
-			      <th scope="col" style="text-align:center; padding: 15px 0;">작성자</th>
-			      <th scope="col" style="text-align:center; padding: 15px 0;">작성일</th>
+			      <th scope="col" style="text-align:center; padding: 15px 0; width: 10%;">작성자</th>
+			      <th scope="col" style="text-align:center; padding: 15px 0; width: 10%;">챌린지 기간</th>
+			      <th scope="col" style="text-align:center; padding: 15px 0; width: 10%;">작성일</th>
 			    </tr>
 			  </thead>
 			  
@@ -111,8 +111,9 @@
 <style>
 .board_wrap {
 	width: 1000px;
-	margin: 20px auto;
+	margin-top: 30px;
 }
+
 
 .board_title {
 	margin-bottom: 30px;
@@ -172,6 +173,7 @@
     background-color: #fff;
     color: #FFDB83;
 }
+
 </style>
 
 </div>
