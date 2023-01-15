@@ -11,8 +11,13 @@
 
 </script>
 
+<style>
+.content-wrapper{
+ 	min-height: 0px !important; 
+}
+</style>
 
-<div class="box box-primary" style="margin: 15px 0 0 100px; width: 50%; border-top-color: #FFDB83;">
+<div class="box box-primary" style="margin: 0% 25% 0% 25%; width: 50%; border-top-color: #FFDB83;">
 <h2 class="profile-username text-center">마 이 페 이 지</h2><br>
 	<div class="box-body box-profile">
 	
@@ -20,7 +25,7 @@
 			<c:if test="${userVO.profile != null }">
 	        	src="${pageContext.request.contextPath }/resources${userVO.profile }" alt="User profile picture"
 	        </c:if>
-	        <c:if test="${minusPeoList.profile == null }">
+	        <c:if test="${userVO.profile == null }">
 	        	src="https://ptetutorials.com/images/user-profile.png" alt="User profile picture"
 	        </c:if>
 				style="margin: 0 auto;" width="200px" height="200px">
@@ -33,6 +38,9 @@
 		<ul class="list-group list-group-unbordered">
 			<li class="list-group-item"><b>아이디</b> 
 				<a class="pull-right">${userVO.id } </a>
+			</li>
+			<li class="list-group-item"><b>꿀머니</b> 
+				<a class="pull-right">${userVO.buypoint + userVO.getpoint} 꿀</a>
 			</li>
 			<!-- <li class="list-group-item"><b>비밀번호</b> 
 				<a class="pull-right">

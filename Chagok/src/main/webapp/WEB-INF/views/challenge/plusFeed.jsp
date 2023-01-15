@@ -5,17 +5,22 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
+<!-- sweetalert -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
+
 <!-- 영민 입금하기 (비지니스계좌 구현중) -->
 <script type="text/javascript">
 	$(document).ready(function(){
 		
-			
 		$('#a_biz').click(function(){ // 입금하기 버튼 클릭
 			if(${vo.c_amount} > ${myPlusVO.pl_sum} ) { // 입금해야할 금액보다 현재 입금한 금액이 적을때 (더입금 가능)
 	
 				if ($('#result').text() == "") {
-					alert('금액을 입력하세요 !');
-					
+				   Swal.fire({
+				        title: '금액을 입력하세요!', 
+				        icon: 'warning'
+			   	   });
 					return false;
 					
 				} else {
@@ -33,13 +38,18 @@
 						}
 					
 					} else {
-						alert("입금 금액이 일치하지 않습니다.\n금액을 확인하세요.");
-						
+					   Swal.fire({
+					        title: '입금 금액이 일치하지 않습니다.\n금액을 확인하세요.', 
+					        icon: 'warning'
+				   	   });						
 						return false;
 					}
 				}
 			} else { // 더 입금 불가능
-				alert("더 이상 입금할 수 없습니다!");
+			   Swal.fire({
+			        title: '더 이상 입금할 수 없습니다!', 
+			        icon: 'warning'
+		   	   });				
 			}
 		}); // 입금하기 버튼 끝
 		
@@ -51,7 +61,10 @@
 
 <script>
 	if (${sendOK == "OK"}) {
-		alert("송금 완료!");
+		   Swal.fire({
+		        title: '송금 완료!', 
+		        icon: 'success'
+	   	   });	
 	}
 </script>
 
@@ -135,7 +148,8 @@
 <!-- 입금하기 기능용 모달창 -->
 <div class="box-header with-border">
 <c:if test="${vo.c_amount > myPlusVO.pl_sum}">
-    <button class="btn btn-success" data-toggle="modal" data-target="#modal-default" style="margin-left: 90%;">
+    <button class="btn btn-success" data-toggle="modal" data-target="#modal-default" 
+    style="margin-left: 90%; border: none;">
    			입금하기</button>
   </c:if>
 <c:if test="${vo.c_amount == myPlusVO.pl_sum}">

@@ -481,7 +481,7 @@
 	<select id="getBizCnt" resultType="Integer">
 		select count(bizno) from business_account;
 	</select>
-	
+
 	<!-- 관리자 - 차곡 계좌내역 조회(환급용) -->
 	<select id="getBizRefundList" resultType="map">
 		select * from business_account ba inner join user u
@@ -576,6 +576,12 @@
 	    where dd.cno=2 and
 	    	<foreach item=""
   	</select> -->
+  	
+<!--   	updateMsum -->
+	<update id="updateMsum">
+	update minus m set m_sum =
+ 	(select #{camount} from challenge c where m.cno=#{cno})
+	</update>
   	
   	
  </mapper>

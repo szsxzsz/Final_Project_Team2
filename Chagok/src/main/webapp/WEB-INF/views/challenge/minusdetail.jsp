@@ -203,7 +203,6 @@ $(function(){
         		});
         	});
         </script>
->>>>>>> branch 'develop' of https://github.com/Ju-Yeongmin/Final_Project_Team2.git
 
 <script type="text/javascript">   
 	$(document).ready(function(){

@@ -1,8 +1,10 @@
 package com.chagok.controller;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -177,20 +179,35 @@ public class ChagokController {
 	}	
 
 	
-	
+//	public void ingChallenge() throws Exception {
+//		
+//		List<ChallengeVO> result =  service2.getChallengeList();
+//		
+//		LocalDate now = LocalDate.now();
+//		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+//		String formatedNow = now.format(formatter);
+//		
+//		for(int i=0; i<result.size(); i++) {
+//			String start = result.get(i).getC_start(); 
+//			int a = start.compareTo(formatedNow);
+//			if(a>=0) {
+//				mylog.debug("");
+//			}
+//			mylog.debug("");
+//		}
+//		 
+//	}
+
+
 	// 챌린지 목록 불러오기 (커뮤메인)
 	// http://localhost:8080/commumain
 	@GetMapping(value="/commumain")
-	public String getChallengeList(Model model, @ModelAttribute("scri") SearchCriteria scri, RedirectAttributes rttr) throws Exception {
+	public String getChallengeList(Model model, HttpSession session, @ModelAttribute("scri") SearchCriteria scri, RedirectAttributes rttr) throws Exception {
 		mylog.debug(" /commumain 호출 ");
-		
-		// 
 				
 		List<ChallengeVO> challengeList = service2.getChallengeList();
 		List<UserVO> ranking = service2.ranking();
 //		List<ChallengeVO> cList = service2.cList(scri);
-		
-		rttr.addFlashAttribute("message", "");
 		
 		model.addAttribute("challengeList", challengeList);
 		model.addAttribute("ranking", ranking);
@@ -534,7 +551,7 @@ public class ChagokController {
 	
 	@ResponseBody
 	@GetMapping(value="/confirm")
-	public int confirm(@RequestParam int status, @RequestParam int cno, RedirectAttributes rttr) throws Exception {
+	public int confirm(@RequestParam int status, @RequestParam int cno, RedirectAttributes rttr, @RequestParam int camount) throws Exception {
 		mylog.debug("status : "+status+", cno : "+cno);
 		int result=0;
 		
@@ -546,6 +563,8 @@ public class ChagokController {
 			result = 6;
 		}
 		mylog.debug("결과"+result);
+		
+		service2.updateMsum(cno,camount);
 		return result;
 	}
 	

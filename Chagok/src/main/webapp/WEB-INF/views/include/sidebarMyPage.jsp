@@ -46,7 +46,14 @@
           <!-- Sidebar user panel -->
           <div class="user-panel">
             <div class="pull-left image">
-              <img src="/resources/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image" />
+              <img 
+              	<c:if test="${userVO.profile != null }">
+					src="${pageContext.request.contextPath }/resources${userVO.profile }" alt="User profile picture"
+				</c:if>
+				<c:if test="${userVO.profile == null }">
+					src="https://ptetutorials.com/images/user-profile.png" alt="User profile picture"
+				</c:if>
+              class="img-circle" alt="User Image" />
             </div>
             <div class="pull-left info">
             <c:if test="${nick != null }">
@@ -72,6 +79,7 @@
                 <li><a href="/myPage"></i> 회원정보 관리</a></li>
                 <li><a href="/challenge/mychallenge"></i> 내 챌린지</a></li>
                 <li><a href="/myBoardWrite"></i> 내가 쓴 글</a></li>
+                <li><a href="/payment"></i> 꿀 충전</a></li>
                 <li><a href="/unregist"></i> 회원탈퇴</a></li>
               </ul>
             </li>
