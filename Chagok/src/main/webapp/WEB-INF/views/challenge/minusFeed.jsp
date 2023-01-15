@@ -12,11 +12,6 @@
       <div class="section-title">
          <h2>절약형 차곡 챌린지</h2>
       </div> 
-<%--      ${mno } --%>
-<%--       / http://localhost:8080/challenge/minusFeed?cno=1 // ${mvo } --%>
-      
-<%--       <button type="button" class="btn btn-default" onclick="location.href='${pageContext.request.contextPath }/commumain';">메인으로 가기</button> --%>
-     
      <div class="row">
 		<div class="col-lg-5 mx-6 aos-init aos-animate" data-aos="fade-right" >
 		<img class="img-responsive" src="${pageContext.request.contextPath }/resources${vo.c_thumbFile }" alt="Photo" >
@@ -28,9 +23,8 @@
 			 <fmt:parseDate value="${vo.c_start}" var="startDate" pattern="yyyy-MM-dd"/>
 			 <fmt:parseNumber value="${(startDate.time + 1000*60*60*24)/ (1000*60*60*24)}" integerOnly="true" var="startTime" scope="request"/>
 			 <fmt:parseNumber value="${c_end.time / (1000*60*60*24)}" integerOnly="true" var="endTime" scope="request" />
-<%-- 			 <fmt:formatNumber value="${minusPeoList.m_sum}" pattern=",000" var="money" /> --%>
-			 
 			<c:if test="${startTime - nowfmtTime <= 0 && nowfmtTime - endTime <= 0}">
+
 				<p class="fst-italic">챌린지가 <b>시작</b>되었습니다!</p>
 			</c:if>
 			<c:if test="${startTime - nowfmtTime > 0}">
@@ -109,13 +103,6 @@
 					<h4 class="modal-title">나의 가계부 연동</h4>
 				</div>
 				<div class="modal-body">
-<!-- 					<iframe src="/asset/abookList?mno=1" width="300" height="300"> -->
-<!-- 					</iframe> -->
-
-<%--    abookList : ${abookList } // --%>
-<%-- 	cateList : ${cateList } // --%>
-<%-- 	jsonCate : ${jsonCate } --%>
-<%-- 				${minusAbook } --%>
 	<div class="box-body">
 		<div class="table-responsive">
 			<table class="table no-margin">
@@ -176,7 +163,6 @@
 
 
 <!-- Main content -->
-<%-- ${minusPeoList } --%>
 <section class="content">
    <div class="row">
       <div class="col-md-12">
@@ -192,12 +178,7 @@
                      <th class="col-md-1">달성 여부</th>
                   </tr>
                   
-<!--                    String[] colorArr = {"progress-bar-danger","progress-bar-yellow","progress-bar-primary", "progress-bar-success"}; -->
-
-<!-- minusPeople.m_sum 이 숫자로 변환안됨 vo.c_amount -> minusPeoList.m_sum 으로 변환 필요! -->
-${minusPeoList }
                 <c:forEach var="minusPeople" begin="0" end="${minusPeoList.size()}" items="${minusPeoList}">
-<%--                  <fmt:formatNumber value="${minusPeoList.m_sum}" pattern=",000" var="money" /> --%>
                 <c:set var="i" value="${i+1 }"/>
                   <tr>
                      <td>${i }.</td>
@@ -234,15 +215,10 @@ ${minusPeoList }
                   </c:forEach>
                </table>
             </div>
-            <!-- /.box-body -->
          </div>
-         <!-- /.box -->
       </div>
-      <!-- /.col -->
    </div>
-   <!-- /.row -->
 </section>
-<!-- /.content -->
 
  <!-- 칭찬하기/주시하기  @@@@@@@@@@@@@@@@@@@@@@@@@ -->
     <div class="col-xs-12" style="margin-left: 10px; ">
