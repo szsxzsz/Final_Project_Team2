@@ -48,7 +48,7 @@ public class BoardController {
 	@GetMapping(value = "/reviewboard")
 	public String reviewboardGET(HttpSession session,Model model,Criteria cri) throws Exception {
 		mylog.debug(" /reviewboard 호출");
-	
+		
 		List<Map<String, Object>> boardList2 = service.getRBoardPage(cri);	
 		
 		mylog.debug(boardList2+"");
@@ -100,7 +100,7 @@ public class BoardController {
 
 		rttr.addFlashAttribute("result", "createOK");
 
-		return "redirect:/reviewboard";
+		return "redirect:/reviewboard?page=1";
 	}
 	
 	
@@ -145,13 +145,13 @@ public class BoardController {
 						
 		}
 							
-		return "redirect:/reviewboard";
+		return "redirect:/reviewboard?page=1";
 							
 	}
 		
 	// 후기 글 삭제하기
 	// http://localhost:8080/reviewremove?bno=4
-	@PostMapping(value = "/reviewremove")
+	@GetMapping(value = "/reviewremove")
 	public String reviewremovePOST(int bno,RedirectAttributes rttr) throws Exception{
 		mylog.debug(bno+"");
 					
@@ -159,7 +159,7 @@ public class BoardController {
 					
 		rttr.addFlashAttribute("result", "delOK");
 					
-		return "redirect:/reviewboard";
+		return "redirect:/reviewboard?page=1";
 					
 	}
 	
@@ -264,7 +264,7 @@ public class BoardController {
 			mylog.debug("@@@@@@@@@@@@@@");
 		rttr.addFlashAttribute("result", "createOK");
 			mylog.debug("!!!!!!!!!!!");
-		return "redirect:/notice";
+		return "redirect:/notice?page=1";
 	}	
 	
 	// 공지 글 수정하기 GET
@@ -296,13 +296,13 @@ public class BoardController {
 						
 		}
 							
-		return "redirect:/notice";
+		return "redirect:/notice?page=1";
 			
 	}
 	
 	// 공지 글 삭제하기
 	// http://localhost:8080/noticedelete
-	@GetMapping(value = "/noticedelete")
+	@PostMapping(value = "/noticedelete")
 	public String noticedeleteGET(int bno,RedirectAttributes rttr,HttpSession session) throws Exception {
 		mylog.debug(bno+"");
 			
@@ -310,7 +310,7 @@ public class BoardController {
 					
 		rttr.addFlashAttribute("result", "delOK");
 					
-		return "redirect:/notice";
+		return "redirect:/notice?page=1";
 	}
 	
 	// =================================================================================
@@ -466,7 +466,7 @@ public class BoardController {
 			mylog.debug("@@@@@@@@@@@@@@ economyPost");
 		rttr.addFlashAttribute("result", "createOK");
 			mylog.debug("!!!!!!!!!!!");
-		return "redirect:/economy";
+		return "redirect:/economy?page=1";
 	}	
 	
 	// 경제 글 상세
@@ -515,7 +515,7 @@ public class BoardController {
 								
 		}
 									
-		return "redirect:/economy";
+		return "redirect:/economy?page=1";
 					
 	}
 		
@@ -528,6 +528,6 @@ public class BoardController {
 					
 		rttr.addFlashAttribute("result", "delOK");
 					
-		return "redirect:/economy";
+		return "redirect:/economy?page=1";
 	}	
 }

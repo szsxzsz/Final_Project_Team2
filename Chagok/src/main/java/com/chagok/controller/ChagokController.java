@@ -273,15 +273,15 @@ public class ChagokController {
 				
 				session.setAttribute("mno", UserVO.getMno());
 				session.setAttribute("nick", UserVO.getNick());
+				session.setAttribute("uprofile", UserVO.getProfile());
 				
-			}else {
-				return "0";
-				
+				return "chagok/main";
 			}
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "chagok/main";
+		return "0";
 	}
 
 	 // http://localhost:8080/register
