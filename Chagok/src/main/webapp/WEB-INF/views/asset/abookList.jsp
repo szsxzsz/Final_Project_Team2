@@ -721,7 +721,7 @@ function clickCheck(target) {
 </script>
 	
 <style>
-.form-group2 {
+.form-group2 { 
      margin-bottom: 0px; 
 }
 
