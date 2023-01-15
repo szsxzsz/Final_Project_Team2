@@ -7,7 +7,89 @@
 <%@ include file="../include/header.jsp" %>
 <%@ include file="../include/sidebarMyPage.jsp" %>
 
+<!-- sweetalert -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
 <script type="text/javascript">
+$(document).ready(function(){
+	   
+   $('.btn.btn-primary.btn-block.ym').click(function(){
+   
+	var tel =  $('#tel').val();   
+    var rname = $('#rname').val();   
+    var rbank = $('#rbank').val();
+    var raccount = $('#raccount').val();
+    
+    
+    if (tel == "" || tel == null) {
+ 	   Swal.fire({
+ 	        title: '전화번호를 입력하세요.', 
+ 	        icon: 'warning'
+ 	      });
+ 	     $('#tel').focus();
+ 	     return false;
+ 	}
+    
+	if (rname == "" || rname == null) {
+	   Swal.fire({
+	        title: '환불계좌 예금주명을 입력하세요.', 
+	        icon: 'warning'
+	      });
+	     $('#rname').focus();
+	     return false;
+	}
+	
+	if (rbank == "" || rbank == null) {
+		   Swal.fire({
+		        title: '환불계좌 은행을 입력하세요.', 
+		        icon: 'warning'
+		      });
+		     $('#rbank').focus();
+		     return false;
+	}
+	
+	if (raccount == "" || raccount == null) {
+		   Swal.fire({
+		        title: '환불 계좌번호를 입력하세요.', 
+		        icon: 'warning'
+		      });
+		     $('#raccount').focus();
+		     return false;
+	}
+	
+	Swal.fire({
+		   title: "회원정보를 수정하시겠습니까?",
+		   icon: 'success',
+		   
+		   showCancelButton: true, // cancel버튼 보이기. 기본은 원래 없음
+		   confirmButtonColor: '#3085d6', // confrim 버튼 색깔 지정
+		   cancelButtonColor: '#d33', // cancel 버튼 색깔 지정
+		   confirmButtonText: '네', // confirm 버튼 텍스트 지정
+		   cancelButtonText: '아니오', // cancel 버튼 텍스트 지정
+		   
+		   reverseButtons: true, // 버튼 순서 거꾸로
+		   
+		}).then(result => {
+		   // 만약 Promise리턴을 받으면,
+		   if (result.isConfirmed) { // 만약 모달창에서 confirm 버튼을 눌렀다면
+		   
+		      Swal.fire('수정이 완료되었습니다.', 'success');
+		   
+		      $('#form').submit();
+		   }
+		});
+	
+// 	function (isConfirm) {
+//         if (isConfirm) {
+//             swal("회원정보를 수정하시겠습니까?", "success");
+            
+//             $('#form').submit();
+//             }
+//         });
+	});
+});
+</script>
+<!-- <script type="text/javascript">
 	$(document).ready(function(){
 		$('.btn.btn-primary.btn-block.ym').click(function(){
 			
@@ -30,7 +112,7 @@
 			
 		});
 	});
-</script>
+</script>  -->
 
 <form action="/myPageUpdate"  method="post" enctype="multipart/form-data" id="form">
 	<div class="box box-primary" style="margin: 15px 0 0 100px; width: 50%; border-top-color: #FFDB83;">

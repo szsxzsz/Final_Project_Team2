@@ -118,7 +118,8 @@
 				url : "/confirm",
 				data : {
 					status : status,
-					cno : cno
+					cno : cno,
+					camount : c_amount
 				},
 				dataType: "json",
 				success : function(data){
@@ -154,7 +155,7 @@
 	</div>
 <!-- 게시판 안내 -->			
 				
-<!-- 게시판 내용 -->				
+<!-- 게시판 내용 -->			
 	<table class="table table-hover">
 	  <thead style="background-color: #dddddd30;font-size: 16px;">
 		    <tr>

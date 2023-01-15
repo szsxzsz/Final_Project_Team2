@@ -16,7 +16,7 @@
 	content="차곡 - 똑똑한 소비습관 기르기, 나의 자산관리가 쉬워진다.">
 <meta property="og:description" content="똑똑한 소비습관 기르기, 나의 자산관리가 쉬워진다.">
 <meta property="og:site_name" content="차곡">
-<meta property="og:url" content="https://www.novusmay.com/samq/">
+<meta property="og:url" content="http://chagok.ga/main">
 <meta property="og:image" content="https://i.imgur.com/syK7Oa0.jpg">
 <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.png">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/resources/mainpagecss/css/vendor/slick.css">
