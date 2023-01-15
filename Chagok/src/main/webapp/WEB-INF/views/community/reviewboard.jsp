@@ -12,24 +12,36 @@
  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
  <link rel="stylesheet" href="../assets/css/theme.min.css">
 
+<!-- sweetalert -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
+
 	<script type="text/javascript">
 		var result = '${result}';
 		if(result == 'createOK'){
-			alert(" 글쓰기 완료! ");
+			Swal.fire({
+				title: '글쓰기 완료!', 
+				icon: 'success'
+			});
 		}
 		
 		if(result == 'modOK'){
-			alert(' 글 수정 완료!');
+			Swal.fire({
+				title: '수정 완료!', 
+				icon: 'success'
+			});
 		}
 		
 		if(result == 'delOK'){
-			alert(' 글 삭제 완료!');
+			Swal.fire({
+				title: '삭제 완료!', 
+				icon: 'success'
+			});
 		}
 		
 </script>
 	
 </head>
-
 <body>
  <script src="../assets/libs/jquery/dist/jquery.min.js"></script>
  <script src="../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
@@ -48,12 +60,12 @@
  			<table class="table table-hover" style="margin-left:10px; border-bottom: 1px solid #ddd;border-top: 2px solid #66BB7A;">
 			  <thead style="background-color: #dddddd30;font-size: 16px;">
 			    <tr>
-			      <th scope="col" style="text-align:center; padding: 15px 0; width: 10%;">글 번호</th>
+			      <th scope="col" style="text-align:center; padding: 15px 0; width: 15%;">글 번호</th>
 			      <th scope="col" style="text-align:center; padding: 15px 0; width: 10%;">카테고리</th>
 			      <th scope="col" style="text-align:center; padding: 15px 0;">챌린지 제목</th>
-			      <th scope="col" style="text-align:center; padding: 15px 0; width: 10%;">작성자</th>
-			      <th scope="col" style="text-align:center; padding: 15px 0; width: 10%;">챌린지 기간</th>
-			      <th scope="col" style="text-align:center; padding: 15px 0; width: 10%;">작성일</th>
+			      <th scope="col" style="text-align:center; padding: 15px 0; width: 15%;">작성자</th>
+			      <th scope="col" style="text-align:center; padding: 15px 0; width: 15%;">챌린지 기간</th>
+			      <th scope="col" style="text-align:center; padding: 15px 0; width: 15%;">작성일</th>
 			    </tr>
 			  </thead>
 			  

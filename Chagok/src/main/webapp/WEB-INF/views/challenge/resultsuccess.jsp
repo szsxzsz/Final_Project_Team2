@@ -548,6 +548,8 @@ opacity:1;
 		<c:set var="sort" value="절약형"/>
 		</c:if>
 	</c:forEach>
+   
+   <fmt:formatNumber value="${ChallengeMoney / Success}" pattern="0" var="refund" />
 
   <div class="left">
     <div>
@@ -563,7 +565,8 @@ opacity:1;
       <li>참여 인원 <span>${CList }<b>명</b></span></li>
       <li>성공 인원  <span>${Success }<b>명</b></span></li>
       <li>모인 꿀머니  <span>${ChallengeMoney }<b>꿀</b></span></li>
-      <li style="background-color: #FFDB83;">환급 꿀머니 <span>${ChallengeMoney / Success}<b>꿀</b></span></li>
+      <li style="background-color: #FFDB83;">환급 꿀머니 <span>${refund}<b>꿀</b></span></li>
+      
     </ul>
     
   </div>
