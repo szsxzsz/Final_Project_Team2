@@ -15,7 +15,7 @@
 		
 		$('#a_biz').click(function(){ // 입금하기 버튼 클릭
 			if(${vo.c_amount} > ${myPlusVO.pl_sum} ) { // 입금해야할 금액보다 현재 입금한 금액이 적을때 (더입금 가능)
-	
+				
 				if ($('#result').text() == "") {
 				   Swal.fire({
 				        title: '금액을 입력하세요!', 
@@ -28,14 +28,32 @@
 					var biz_amount = $('#result').text().replace(/,/gi, "");
 					
 					if (${(vo.c_amount / vo.c_period)} == biz_amount) {
+
+						Swal.fire({
+							title: '입금하시겠습니까?',
+							text: '입금이후 취소할 수 없습니다.',
+							icon: 'warning',
+							showCancelButton: true,
+							confirmButtonColor: '#00A65A',
+							cancelButtonColor: '#DD4B39',
+							confirmButtonText: '입금하기',
+							cancelButtonText: '취소'
+						}).then((result) => {
+							if (result.isConfirmed) {
+// 								$('#a_biz').attr('href', '/challenge/sendBiz?biz_amount='+biz_amount+'&cno='+${vo.cno});
+								var link='/challenge/sendBiz?biz_amount='+biz_amount+'&cno='+${vo.cno};
+								location.href=link;
+							} else {
+								return false;
+							}
+						});					
 						
-						var bizCheck = confirm("진짜 입금 할래?");
-						
-						if (bizCheck) {
-							$('#a_biz').attr('href', '/challenge/sendBiz?biz_amount='+biz_amount+'&cno='+${vo.cno});
-						} else {
-							return false;
-						}
+// 						var bizCheck = confirm("진짜 입금 할래?");
+// 						if (bizCheck) {
+// 							$('#a_biz').attr('href', '/challenge/sendBiz?biz_amount='+biz_amount+'&cno='+${vo.cno});
+// 						} else {
+// 							return false;
+// 						}
 					
 					} else {
 					   Swal.fire({
@@ -45,17 +63,13 @@
 						return false;
 					}
 				}
-			} else { // 더 입금 불가능
+			} else { // 더 입금 불가능 (입금해야할 금액보다 현재 입금한 금액이 많을 때)
 			   Swal.fire({
 			        title: '더 이상 입금할 수 없습니다!', 
 			        icon: 'warning'
 		   	   });				
 			}
 		}); // 입금하기 버튼 끝
-		
-		
-		
-		
 	});
 </script>
 
@@ -188,7 +202,7 @@
 			    </div>
 				</div>
 				<div class="modal-footer">
-					<a href="" id="a_biz">
+					<a id="a_biz">
 						<button type="button" class="btn btn-block btn-success btn-sm biz" disabled="disabled">입금하기</button>
 					</a>
 				</div>
