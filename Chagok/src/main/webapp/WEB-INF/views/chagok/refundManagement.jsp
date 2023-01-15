@@ -211,6 +211,24 @@
  <!-- 페이징 -->
  
  </body>
+ 
+ <script>
+$(document).ready(function(){
+	$('.detail').click(function(){
+		  var obj = $(this);
+		  if( obj.hasClass("plus") ){
+		    obj.hide();
+		    obj.next().show();            
+		    obj.parent().parent().next().show();
+		  }else{
+		     obj.hide();
+		     obj.prev().show();
+		     obj.parent().parent().next().hide();
+		  }
+	})
+})
+</script>
+ 
 
  <script>
 $(function(){

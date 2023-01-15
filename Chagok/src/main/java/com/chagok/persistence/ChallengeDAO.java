@@ -178,7 +178,7 @@ public interface ChallengeDAO {
 	public int MyBoardWriteCnt() throws Exception;
 
 	// update minus m_sum
-	public void updateMsum(Integer cno, Integer camount) throws Exception;
+	public void updateMsum(Map<String, Object> map) throws Exception;
 	
 	
 }
