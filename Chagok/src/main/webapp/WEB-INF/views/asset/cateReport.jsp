@@ -77,6 +77,9 @@ h3 {
 .rowa {
 	padding:0;
 }
+.users-list>li img {
+    border-radius: 0px;
+}
 </style>
 
 
@@ -313,7 +316,9 @@ colorList = [
 	'rgba(255, 206, 86, 1)',
 	'rgba(75, 192, 192, 1)',
 	'rgba(153, 102, 255, 1)',
-	'rgba(255, 159, 64, 1)'
+	'rgba(255, 159, 64, 1)',
+	'rgba(229, 103, 254, 1)',
+	'rgba(103, 186, 254, 1)'
 ];
 
 for(var i=0; i<jData.length; i++) {

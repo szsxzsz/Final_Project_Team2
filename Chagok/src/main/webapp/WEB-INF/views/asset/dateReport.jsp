@@ -144,7 +144,7 @@ h3 {
 		<section class="content1">
 		<div class="row">	
 			<div class="col-md-6">
-				<div class="box box-warnn">
+				<div class="box box-primary">
 					<div class="box-header with-border">
 						<h3 class="box-title">한 주 요약</h3>
 					</div>
@@ -189,7 +189,7 @@ h3 {
 		<section class="content1">
 		<div class="row">
 			<div class="col-md-6">
-				<div class="box box-primary">
+				<div class="box box-info">
 					<div class="box-header with-border">
 						<h3 class="box-title">일간 지출 추이</h3>
 					</div>
@@ -330,9 +330,6 @@ for(var i=0; i<outCum.length; i++) {
 </script>
 
 <script type="text/javascript">
-var a = $.number(5000000);
-console.log(a);
-
 
 $(document).ready(function(){
 	var arr = ${map.amtTopjson};
@@ -379,7 +376,7 @@ $(document).ready(function(){
 		$('#tbody3').append("/<tr>");
 	});
 
-	$('#cnttop').append("<h3>"+bottom2[0]+"을 자주 소비했어요</h3>");
+	$('#cnttop').append("<h3>"+bottom2[0]+"에 자주 소비했어요</h3>");
 	$('#cnttop').append("<h3>한 달 간 "+cnt[0]+"회 소비</h3>");
 	$.each (top2, function (i, el) {
 		$('#tbody4').append("<tr>");
@@ -398,7 +395,7 @@ var dataline1 = {
 	datasets: [{
 		data: value1,
 	    fill: false,
-	    borderColor: '#66BB7A',
+	    borderColor: '#00c0ef',
 	    tension: 0.1
 	}]
 };
