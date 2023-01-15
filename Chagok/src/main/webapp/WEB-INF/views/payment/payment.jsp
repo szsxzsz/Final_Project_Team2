@@ -2,6 +2,32 @@
     pageEncoding="UTF-8"%>
 <%@ include file="../include/header.jsp"%>
 <%@ include file="../include/sidebar.jsp"%>
+<head>
+<!-- sweetalert -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function () {
+	$('#subsc').click(function(){
+	    swal.fire({
+	        title: "구독서비스는 준비 중입니다!",
+	        type: "info"
+	        });
+// 	    ,
+// 	     function (isConfirm) {
+// 	        if (isConfirm) {
+// 	            swal("Deleted!", "Your imaginary file has been deleted!", "success");
+// 	            } else {
+// 	                swal("Cancelled", "Your imaginary file is safe :)", "error");
+// 	            }
+// 	        }
+			
+	    });
+
+	});
+
+</script>
 <script type="text/javascript">
 // const IMP = window.IMP; // 생략 가능
 IMP.init("imp44431277"); // 예: imp00000000a (가맹점 식별코드)
@@ -152,6 +178,8 @@ function requestPay2()
 }
 </script>
 
+</head>
+
 
     <main>
 <%--     ${userVO } --%>
@@ -187,7 +215,7 @@ function requestPay2()
                     	</div>
                     </a>
                     <a href="#">
-                    <div class="pskill" onclick="alert('구독 서비스는 준비중입니다!');">
+                    <div class="pskill" id="subsc" onclick="subAlert();">
                     	<p>구독</p>
                         <img src="https://cdn-icons-png.flaticon.com/512/6165/6165272.png">
                     </div>

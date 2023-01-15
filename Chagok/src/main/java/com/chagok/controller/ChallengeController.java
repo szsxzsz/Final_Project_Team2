@@ -148,6 +148,9 @@ public class ChallengeController {
 		int ctno = service.getCtno(cno);
 		List<Map<String, Object>> minusAbook = service.getMinusAbook(mno, cno, ctno);
 		mylog.debug(minusAbook+"");
+		mylog.debug(mno+"");
+		mylog.debug(cno+"");
+		mylog.debug(ctno+"");
 				
 		// 연결된 뷰페이지로 정보 전달(model)
 		model.addAttribute("mno", mno);
@@ -168,7 +171,7 @@ public class ChallengeController {
 	@PostMapping(value = "/minusFeed")
 	public String minusFeedPOST(@RequestParam("cno") int cno,@RequestParam("mno") int mno,Model model,@RequestParam("ab_amount") int ab_amount) throws Exception {
 		mylog.debug("minusFeedPOST 호출 ");
-		
+	
 		
 		service.updateMoney(mno,ab_amount,cno);
 
@@ -221,17 +224,18 @@ public class ChallengeController {
 	
 	@PostMapping(value = "/minusdetailPOST")
 	@ResponseBody // ajax 값을 바로 jsp에 보내기 위해 사용@RequestParam("ctno") int ctno, 
-	public String minusdetailPOST(@RequestBody Map<String, Object> map,HttpSession session,@RequestParam("cno") int cno) throws Exception {
+	public String minusdetailPOST(@RequestBody Map<String, Object> map,HttpSession session) throws Exception {
 		mylog.debug("minusdetailPOST 호출");
 		mylog.debug(map+"");
 		
 		// 회원정보 저장
-		int mno = (Integer)session.getAttribute("mno");
-		mylog.debug("mno : " +mno);
-		UserVO userVO = uservice.getUser(mno);
-		
-		// 챌린지 정보 저장
-//		int deposit = service.getChallengeInfo(cno).getC_deposit();
+//		int mno = (Integer)session.getAttribute("mno");
+//		mylog.debug("mno : " +mno);
+//		UserVO userVO = uservice.getUser(mno);
+//		
+//		 // 챌린지 정보 저장
+//		int deposit = service.getChallengeInfo((int)map.get("cno")).getC_deposit();
+//		int cno = (int)map.get("cno");
 //		
 //		if(userVO.getBuypoint()+userVO.getGetpoint() >= deposit) {
 //			if(userVO.getBuypoint() >= userVO.getGetpoint()) {
