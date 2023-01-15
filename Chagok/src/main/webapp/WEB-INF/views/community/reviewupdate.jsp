@@ -16,7 +16,7 @@
 <form role="form" method="post">
     <div class="board_wrap">
         <div class="board_title">
-	        <strong>챌린지 후기글 수정</strong>
+	        <strong> 후기</strong>
 	        <p> 참여한 챌린지의 후기를 남기는 곳입니다</p>
     	</div>
  	    <div class="board_write_wrap">

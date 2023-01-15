@@ -39,7 +39,7 @@
 	 	<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 			<div class="board_wrap">
 				<div class="board_title">
-					<strong>챌린지 후기 게시판 </strong>
+					<strong> 후기 </strong>
 		     	   <p> 참여한 챌린지에 남긴 후기를 보는 곳입니다</p>
 				</div>
 			</div>

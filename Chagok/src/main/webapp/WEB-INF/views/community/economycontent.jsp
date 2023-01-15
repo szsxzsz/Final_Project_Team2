@@ -34,7 +34,7 @@
 
     <div class="board_wrap">
         <div class="board_title">
-            <strong> 뉴스 / 재테크 게시글 </strong>
+            <strong> 뉴스 / 재테크 </strong>
             <p>여러가지 정보를 공유합시다.</p>
         </div>
 	</div>

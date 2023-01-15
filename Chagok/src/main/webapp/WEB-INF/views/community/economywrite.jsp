@@ -16,7 +16,7 @@
 <form role="form" action="/economywrite" method="post">
  <div class="board_wrap">
         <div class="board_title">
-        <strong> 뉴스 / 재태크 게시글 작성</strong>
+        <strong> 뉴스 / 재태크 </strong>
         <p> 여러가지 정보를 공유합시다 </p>
     	</div>
  	    <div class="board_write_wrap">
