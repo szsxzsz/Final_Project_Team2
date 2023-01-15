@@ -62,18 +62,17 @@
       </div>
 </c:forEach>
       <div class="ranking-button">
-		<button type="button" class="btn btn-success btn-lg" onclick="location.href='/challenge/plusregist';">저축형</button>
-		<button type="button" class="btn btn-warning btn-lg" onclick="location.href='/challenge/minusregist';">절약형</button>
+		<button type="button" class="btn btn-success btn-lg" onclick="location.href='/challenge/plusregist';">저축형 등록</button>
+		<button type="button" class="btn btn-warning btn-lg" onclick="location.href='/challenge/minusregist';">절약형 등록</button>
 	  </div>
 </div>
 <!-- 명예의 전당 -->
-
+<%-- ${cList } --%>
 
 <!-- 챌린지 리스트 -->
   <h2 class="visually-hidden"></h2>
   <div class="row row-cols-lg-4 g-2">
   <c:forEach var="vo" items="${cList }">
-  
   <!-- 날짜 계산하기 -->
 		<jsp:useBean id="now" class="java.util.Date" />
 			 <fmt:parseNumber value="${now.time / (1000*60*60*24)}" integerOnly="true" var="nowfmtTime" scope="request"/>
@@ -768,7 +767,7 @@ main .card .card-item-chevron--new-2 {
     display: flex;
     flex-direction: column;
     width: 14%;
-    margin-left: 20px;
+    margin-left: 60px;
 }
 
 @media screen and (max-width: 1000px) {
