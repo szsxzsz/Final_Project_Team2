@@ -28,7 +28,7 @@
 </script>
 
 <form method="get">
-<!-- <div class="search"> -->
+  <div class="search">
 <!--     <select name="searchType"> -->
 <%--       <option value="n"<c:out value="${scri.searchType == null ? 'selected' : ''}"/>>-----</option> --%>
 <%--       <option value="c_title"<c:out value="${scri.searchType eq 'c_title' ? 'selected' : ''}"/>>제목</option> --%>
