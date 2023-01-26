@@ -49,6 +49,7 @@ import com.chagok.interceptor.SessionNames;
 import com.chagok.service.AbookService;
 import com.chagok.service.AccountService;
 import com.chagok.service.AlertService;
+import com.chagok.service.BoardService;
 //import com.chagok.service.AlertService;
 import com.chagok.service.ChallengeService;
 import com.chagok.service.ReportService;
@@ -65,6 +66,9 @@ public class ChagokController {
 	
 	@Inject
 	private ChallengeService service2;
+	
+	@Inject
+	private BoardService service3;
 	
 	@Inject
 	private AlertService alertService;
@@ -478,7 +482,7 @@ public class ChagokController {
 //		   List<BoardVO> boardList = service2.getMyBoardWrite(cri);
 	  
 //		   List<BoardVO> boardList = service2.getMyBoardWrite(cri,nick);
-		   List<BoardVO> boardList = service2.getMyBoardWrite(nick);
+		   List<BoardVO> boardList = service3.getMyBoardWrite(nick);
 		   mylog.debug(boardList+"@@@@@@@@@@@@@@@@@@@@");
 		   
 		   model.addAttribute("boardList", boardList);
@@ -487,7 +491,7 @@ public class ChagokController {
 			cri.setPerPageNum(10);
 			pageMaker.setDisplayPageNum(10);
 			pageMaker.setCri(cri);
-			pageMaker.setTotalCount(service2.MyBoardWriteCnt());
+			pageMaker.setTotalCount(service3.MyBoardWriteCnt());
 			model.addAttribute("pageMaker", pageMaker);
 	   
 	 
