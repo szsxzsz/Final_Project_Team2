@@ -609,5 +609,7 @@ order by c_status limit 9;
  	(select #{camount} from challenge c where m.cno=#{cno})
 	</update>
   	
+  	<!-- 댓글 리스트 조회 -->
+  	
   	
  </mapper>

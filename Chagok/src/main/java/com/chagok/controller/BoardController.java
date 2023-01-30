@@ -15,7 +15,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.chagok.domain.BoardVO;
@@ -534,4 +536,25 @@ public class BoardController {
 					
 		return "redirect:/economy?page=1";
 	}	
+	
+//	 @RequestMapping("/selectcmt")
+//	 @ResponseBody
+//	 public List<Map<String,Object>> selectcmt(@RequestParam Map<String,Object> commandMap){
+//	        mylog.debug("request: /selectcmt");
+//	        List<Map<String,Object>> resultMap = null;
+//	        int totalCmt = 0;
+//	        try {
+//	            int bbsidx = Integer.parseInt(commandMap.get("bbscmtidx").toString());
+//	            
+//	            resultMap = service.selectcmt(commandMap);
+//	            totalCmt = service.getTotalCmt(bbsidx);//전체 댓글 개수
+//	            resultMap.get(0).put("totalCmt", totalCmt);
+//	        } catch (Exception e) {
+//	            mylog.debug(e.getMessage());
+//	        }
+//	        return resultMap;
+//	    }
+
+	
+	
 }
