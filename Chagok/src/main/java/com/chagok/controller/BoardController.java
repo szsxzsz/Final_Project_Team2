@@ -15,7 +15,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.chagok.domain.BoardVO;
@@ -25,6 +27,7 @@ import com.chagok.domain.PageMaker;
 import com.chagok.domain.SearchCriteria;
 import com.chagok.domain.SysLogVO;
 import com.chagok.domain.UserVO;
+import com.chagok.service.BoardService;
 import com.chagok.service.ChallengeService;
 import com.chagok.service.UserService;
 
@@ -35,6 +38,9 @@ public class BoardController {
 	
 	@Inject
 	private ChallengeService service;
+	
+	@Inject
+	private BoardService Bservice;
 	
 	@Inject
 	private UserService uservice;
@@ -49,7 +55,7 @@ public class BoardController {
 	public String reviewboardGET(HttpSession session,Model model,Criteria cri) throws Exception {
 		mylog.debug(" /reviewboard 호출");
 		
-		List<Map<String, Object>> boardList2 = service.getRBoardPage(cri);	
+		List<Map<String, Object>> boardList2 = Bservice.getRBoardPage(cri);	
 		
 		mylog.debug(boardList2+"");
 			
@@ -58,9 +64,9 @@ public class BoardController {
 		cri.setPerPageNum(10);
 		pageMaker.setDisplayPageNum(10);
 		pageMaker.setCri(cri);
-		pageMaker.setTotalCount(service.RboardCount());
+		pageMaker.setTotalCount(Bservice.RboardCount());
 		mylog.debug("@@@@@@@@@@@@@@@@");
-		mylog.debug("totalCnt : "+service.RboardCount());
+		mylog.debug("totalCnt : "+Bservice.RboardCount());
 		model.addAttribute("pageMaker", pageMaker);
 					
 		model.addAttribute("boardList2", boardList2);
@@ -94,7 +100,7 @@ public class BoardController {
 
 		mylog.debug(vo + "");
 
-		service.createReview(vo);
+		Bservice.createReview(vo);
 
 		mylog.debug("게시판 글쓰기 완료");
 
@@ -112,7 +118,7 @@ public class BoardController {
 		mylog.debug(" reviewupdateGET 호출");
 			
 		mylog.debug(bno+"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-		Map<String, Object> boardChallenge = service.getBoardChallenge(bno);
+		Map<String, Object> boardChallenge = Bservice.getBoardChallenge(bno);
 		
 		Integer Success = service.getSuccess(cno);
 		ChallengeVO vo2 = service.getCt_top(cno);
@@ -137,7 +143,7 @@ public class BoardController {
 		mylog.debug(vo+"");
 			
 			
-		Integer result = service.updateBoard(vo);
+		Integer result = Bservice.updateBoard(vo);
 					
 		if(result > 0) {
 				
@@ -155,7 +161,7 @@ public class BoardController {
 	public String reviewremovePOST(int bno,RedirectAttributes rttr) throws Exception{
 		mylog.debug(bno+"");
 					
-		service.deleteBoard(bno);
+		Bservice.deleteBoard(bno);
 					
 		rttr.addFlashAttribute("result", "delOK");
 					
@@ -168,7 +174,7 @@ public class BoardController {
 	@GetMapping(value = "/reviewcontent")
 	public String reviewcontentGET(HttpSession session,Model model,@RequestParam("cno") int cno,Integer bno) throws Exception {
 		mylog.debug("reviewcontent 호출");	
-		Map<String, Object> boardChallenge = service.getBoardChallenge(bno);
+		Map<String, Object> boardChallenge = Bservice.getBoardChallenge(bno);
 		Integer Success = service.getSuccess(cno);
 
 		ChallengeVO vo = service.getChallengeInfo(cno);
@@ -201,7 +207,7 @@ public class BoardController {
 	@GetMapping(value = "/notice")
 	public String noticeGET(Model model,HttpSession session,Criteria cri) throws Exception {
 			
-		List<BoardVO> boardList2 = service.getNBoardPage(cri);
+		List<BoardVO> boardList2 = Bservice.getNBoardPage(cri);
 		mylog.debug(boardList2+"");
 			
 		
@@ -210,9 +216,9 @@ public class BoardController {
 		cri.setPerPageNum(10);
 		pageMaker.setDisplayPageNum(10);
 		pageMaker.setCri(cri);
-		pageMaker.setTotalCount(service.NboardCount());
+		pageMaker.setTotalCount(Bservice.NboardCount());
 		mylog.debug(pageMaker+"@@@@@@@@@@@@@@@@");
-		mylog.debug("totalCnt : "+service.NboardCount());
+		mylog.debug("totalCnt : "+Bservice.NboardCount());
 		model.addAttribute("pageMaker", pageMaker);
 			
 		model.addAttribute("boardList2", boardList2);
@@ -225,12 +231,12 @@ public class BoardController {
 	@GetMapping(value = "/noticecontent")
 	public String noticecontentGET(HttpSession session,Model model,@RequestParam("bno") int bno) throws Exception {
 			
-		BoardVO vo = service.getBoardContent(bno);
+		BoardVO vo = Bservice.getBoardContent(bno);
 		
 		String nick = (String)session.getAttribute("nick");
 		
 		if(nick == "admin") {
-			BoardVO vo2 = service.getBoardContent(bno);
+			BoardVO vo2 = Bservice.getBoardContent(bno);
 			model.addAttribute("vo2", vo2);
 			mylog.debug(vo2+"");
 		}
@@ -260,7 +266,7 @@ public class BoardController {
 			
 		mylog.debug(vo+"");
 			
-		service.insertBoard(vo);
+		Bservice.insertBoard(vo);
 			mylog.debug("@@@@@@@@@@@@@@");
 		rttr.addFlashAttribute("result", "createOK");
 			mylog.debug("!!!!!!!!!!!");
@@ -275,7 +281,7 @@ public class BoardController {
 			
 		mylog.debug(bno+"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 			
-		model.addAttribute("board", service.getBoardContent(bno));
+		model.addAttribute("board", Bservice.getBoardContent(bno));
 		
 		return "/community/noticeupdate";
 			
@@ -288,7 +294,7 @@ public class BoardController {
 		
 		mylog.debug(vo+"수정하기 post 호출");
 					
-		Integer result = service.updateBoard(vo);
+		Integer result = Bservice.updateBoard(vo);
 					
 		if(result > 0) {
 				
@@ -306,7 +312,7 @@ public class BoardController {
 	public String noticedeleteGET(int bno,RedirectAttributes rttr,HttpSession session) throws Exception {
 		mylog.debug(bno+"");
 			
-		service.deleteBoard(bno);
+		Bservice.deleteBoard(bno);
 					
 		rttr.addFlashAttribute("result", "delOK");
 					
@@ -322,7 +328,7 @@ public class BoardController {
 	public String FreeBoardGET(HttpSession session,Model model,Criteria cri) throws Exception {
 		mylog.debug(" /freeboard 호출");
 			
-		List<BoardVO> boardList = service.getFBoardPage(cri);	
+		List<BoardVO> boardList = Bservice.getFBoardPage(cri);	
 		
 		mylog.debug(boardList+"");
 			
@@ -332,9 +338,9 @@ public class BoardController {
 		cri.setPerPageNum(10);
 		pageMaker.setDisplayPageNum(10);
 		pageMaker.setCri(cri);
-		pageMaker.setTotalCount(service.RboardCount());
+		pageMaker.setTotalCount(Bservice.RboardCount());
 		mylog.debug("@@@@@@@@@@@@@@@@");
-		mylog.debug("totalCnt : "+service.RboardCount());
+		mylog.debug("totalCnt : "+Bservice.RboardCount());
 		model.addAttribute("pageMaker", pageMaker);
 			
 		return "/community/freeboard";
@@ -357,7 +363,7 @@ public class BoardController {
 
 		mylog.debug(vo + "");
 
-		service.createReview(vo);
+		Bservice.createReview(vo);
 
 		mylog.debug("자유게시판 글쓰기 완료");
 
@@ -373,7 +379,7 @@ public class BoardController {
 		mylog.debug(" freeboardupdateGET 호출");
 				
 		mylog.debug(bno+"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-		BoardVO board = service.getBoardContent(bno);
+		BoardVO board = Bservice.getBoardContent(bno);
 				
 		mylog.debug(board+"");
 				
@@ -391,7 +397,7 @@ public class BoardController {
 		mylog.debug(vo+"");
 				
 				
-		Integer result = service.updateBoard(vo);
+		Integer result = Bservice.updateBoard(vo);
 						
 		if(result > 0) {
 					
@@ -408,7 +414,7 @@ public class BoardController {
 	public String freedeleteGET(int bno,RedirectAttributes rttr,HttpSession session) throws Exception {
 		mylog.debug(bno+"");
 		
-		service.deleteBoard(bno);
+		Bservice.deleteBoard(bno);
 				
 		rttr.addFlashAttribute("result", "delOK");
 				
@@ -423,7 +429,7 @@ public class BoardController {
 	public String EconomyGET(HttpSession session,Model model,Criteria cri) throws Exception {
 		mylog.debug(" /economy 호출");
 			
-		List<BoardVO> boardList = service.getEBoardPage(cri);	
+		List<BoardVO> boardList = Bservice.getEBoardPage(cri);	
 		
 		mylog.debug(boardList+"");
 			
@@ -433,9 +439,9 @@ public class BoardController {
 		cri.setPerPageNum(10);
 		pageMaker.setDisplayPageNum(10);
 		pageMaker.setCri(cri);
-		pageMaker.setTotalCount(service.EboardCount());
+		pageMaker.setTotalCount(Bservice.EboardCount());
 		mylog.debug(pageMaker+"@@@@@@@@@@@@@@@@ economy");
-		mylog.debug("totalCnt : "+service.EboardCount());
+		mylog.debug("totalCnt : "+Bservice.EboardCount());
 		model.addAttribute("pageMaker", pageMaker);
 			
 		return "/community/economy";
@@ -462,7 +468,7 @@ public class BoardController {
 				
 		mylog.debug(vo+"");
 				
-		service.insertBoard(vo);
+		Bservice.insertBoard(vo);
 			mylog.debug("@@@@@@@@@@@@@@ economyPost");
 		rttr.addFlashAttribute("result", "createOK");
 			mylog.debug("!!!!!!!!!!!");
@@ -474,7 +480,7 @@ public class BoardController {
 	@GetMapping(value = "/economycontent")
 	public String economycontentGET(HttpSession session,Model model,@RequestParam("bno") int bno,Integer cno) throws Exception {
 				
-		BoardVO vo = service.getBoardContent(bno);
+		BoardVO vo = Bservice.getBoardContent(bno);
 		
 		model.addAttribute("vo",vo);
 		
@@ -489,7 +495,7 @@ public class BoardController {
 		mylog.debug(" economyupdateGET 호출");
 					
 		mylog.debug(bno+"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ economyupdateGET");
-		BoardVO vo = service.getBoardContent(bno);
+		BoardVO vo = Bservice.getBoardContent(bno);
 					
 		mylog.debug(vo+"");
 					
@@ -507,7 +513,7 @@ public class BoardController {
 		mylog.debug(vo+"");
 					
 					
-		Integer result = service.updateBoard(vo);
+		Integer result = Bservice.updateBoard(vo);
 							
 		if(result > 0) {
 						
@@ -524,10 +530,31 @@ public class BoardController {
 	public String economydeleteGET(int bno,RedirectAttributes rttr,HttpSession session) throws Exception {
 		mylog.debug(bno+"");
 			
-		service.deleteBoard(bno);
+		Bservice.deleteBoard(bno);
 					
 		rttr.addFlashAttribute("result", "delOK");
 					
 		return "redirect:/economy?page=1";
 	}	
+	
+//	 @RequestMapping("/selectcmt")
+//	 @ResponseBody
+//	 public List<Map<String,Object>> selectcmt(@RequestParam Map<String,Object> commandMap){
+//	        mylog.debug("request: /selectcmt");
+//	        List<Map<String,Object>> resultMap = null;
+//	        int totalCmt = 0;
+//	        try {
+//	            int bbsidx = Integer.parseInt(commandMap.get("bbscmtidx").toString());
+//	            
+//	            resultMap = service.selectcmt(commandMap);
+//	            totalCmt = service.getTotalCmt(bbsidx);//전체 댓글 개수
+//	            resultMap.get(0).put("totalCmt", totalCmt);
+//	        } catch (Exception e) {
+//	            mylog.debug(e.getMessage());
+//	        }
+//	        return resultMap;
+//	    }
+
+	
+	
 }
