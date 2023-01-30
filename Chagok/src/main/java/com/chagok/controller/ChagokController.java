@@ -205,7 +205,7 @@ public class ChagokController {
 			Integer status = st.get(i).getC_status();
 			
 			
-			if(join >= max) {
+			if(join == max) {
 				status = 2;
 			}
 			
@@ -222,7 +222,7 @@ public class ChagokController {
 				if(join <= 2) {
 					status = 5;
 				}else {
-					status = 2;		
+					status = 7;		
 				}
 			}
 			
