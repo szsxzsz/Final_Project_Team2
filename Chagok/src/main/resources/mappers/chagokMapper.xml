@@ -603,13 +603,15 @@ order by c_status limit 9;
 	    	<foreach item=""
   	</select> -->
   	
-<!--   	updateMsum -->
+	<!-- updateMsum -->
 	<update id="updateMsum" parameterType="hashMap">
 	update minus m set m_sum =
  	(select #{camount} from challenge c where m.cno=#{cno})
 	</update>
   	
   	<!-- 댓글 리스트 조회 -->
+  	<select id="">
   	
+  	</select>
   	
  </mapper>

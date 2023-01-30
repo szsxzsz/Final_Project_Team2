@@ -57,8 +57,6 @@ public class BoardController {
 		
 		List<Map<String, Object>> boardList2 = Bservice.getRBoardPage(cri);	
 		
-		mylog.debug(boardList2+"");
-			
 		// 페이징 처리
 		PageMaker pageMaker = new PageMaker();
 		cri.setPerPageNum(10);
@@ -98,8 +96,6 @@ public class BoardController {
 	public String reviewPOST(BoardVO vo, RedirectAttributes rttr) throws Exception {
 		mylog.debug(" reviewPOST 호출");
 
-		mylog.debug(vo + "");
-
 		Bservice.createReview(vo);
 
 		mylog.debug("게시판 글쓰기 완료");
@@ -129,7 +125,6 @@ public class BoardController {
 		model.addAttribute("c_end", service.getChallengeEndDate(cno));
 		
 		model.addAttribute("boardChallenge", boardChallenge);
-		mylog.debug("여기까진 출력되나?");
 		
 		return "/community/reviewupdate";
 					
@@ -140,8 +135,6 @@ public class BoardController {
 	public String reviewupdatePOST(BoardVO vo,RedirectAttributes rttr,HttpSession session) throws Exception{
 			
 		mylog.debug("reviewupdatePOST 호출");
-		mylog.debug(vo+"");
-			
 			
 		Integer result = Bservice.updateBoard(vo);
 					
@@ -194,9 +187,6 @@ public class BoardController {
 		model.addAttribute("boardChallenge", boardChallenge);
 		model.addAttribute("Success", Success);
 		
-		mylog.debug(boardChallenge+" boardChallenge + @@@@@@@@@@@@@@@@@@@@@@@@@@@");
-		
-		
 		return "/community/reviewcontent";
 	}
 	// =================================================================================
@@ -208,8 +198,6 @@ public class BoardController {
 	public String noticeGET(Model model,HttpSession session,Criteria cri) throws Exception {
 			
 		List<BoardVO> boardList2 = Bservice.getNBoardPage(cri);
-		mylog.debug(boardList2+"");
-			
 		
 		// 페이징 처리
 		PageMaker pageMaker = new PageMaker();
@@ -217,7 +205,7 @@ public class BoardController {
 		pageMaker.setDisplayPageNum(10);
 		pageMaker.setCri(cri);
 		pageMaker.setTotalCount(Bservice.NboardCount());
-		mylog.debug(pageMaker+"@@@@@@@@@@@@@@@@");
+		mylog.debug(pageMaker+"");
 		mylog.debug("totalCnt : "+Bservice.NboardCount());
 		model.addAttribute("pageMaker", pageMaker);
 			
@@ -238,7 +226,7 @@ public class BoardController {
 		if(nick == "admin") {
 			BoardVO vo2 = Bservice.getBoardContent(bno);
 			model.addAttribute("vo2", vo2);
-			mylog.debug(vo2+"");
+			
 		}
 		
 		model.addAttribute("vo",vo);
@@ -263,13 +251,11 @@ public class BoardController {
 	public String registPOST(BoardVO vo, RedirectAttributes rttr,HttpSession session) throws Exception {
 			
 		mylog.debug(" noticewriteGET -> noticewritePOST 호출 ");
-			
-		mylog.debug(vo+"");
-			
+				
 		Bservice.insertBoard(vo);
-			mylog.debug("@@@@@@@@@@@@@@");
+			
 		rttr.addFlashAttribute("result", "createOK");
-			mylog.debug("!!!!!!!!!!!");
+			
 		return "redirect:/notice?page=1";
 	}	
 	
@@ -279,7 +265,7 @@ public class BoardController {
 	public String noticeupdateGET(@RequestParam("bno") int bno, Model model, HttpSession session) throws Exception{
 		mylog.debug("noticeupdate GET 호출");
 			
-		mylog.debug(bno+"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+		mylog.debug(bno+"");
 			
 		model.addAttribute("board", Bservice.getBoardContent(bno));
 		
@@ -291,9 +277,7 @@ public class BoardController {
 	@PostMapping(value = "/noticeupdate")
 	public String noticeupdatePOST(BoardVO vo,RedirectAttributes rttr,HttpSession session) throws Exception {
 		mylog.debug("noticeupdate POST 호출");
-		
-		mylog.debug(vo+"수정하기 post 호출");
-					
+				
 		Integer result = Bservice.updateBoard(vo);
 					
 		if(result > 0) {
@@ -330,8 +314,6 @@ public class BoardController {
 			
 		List<BoardVO> boardList = Bservice.getFBoardPage(cri);	
 		
-		mylog.debug(boardList+"");
-			
 		model.addAttribute("boardList", boardList);
 		
 		PageMaker pageMaker = new PageMaker();
@@ -339,7 +321,6 @@ public class BoardController {
 		pageMaker.setDisplayPageNum(10);
 		pageMaker.setCri(cri);
 		pageMaker.setTotalCount(Bservice.RboardCount());
-		mylog.debug("@@@@@@@@@@@@@@@@");
 		mylog.debug("totalCnt : "+Bservice.RboardCount());
 		model.addAttribute("pageMaker", pageMaker);
 			
@@ -361,8 +342,6 @@ public class BoardController {
 	public String freeboardwritePOST(BoardVO vo, RedirectAttributes rttr,HttpSession session) throws Exception {
 		mylog.debug(" freeboardwritePOST 호출");
 
-		mylog.debug(vo + "");
-
 		Bservice.createReview(vo);
 
 		mylog.debug("자유게시판 글쓰기 완료");
@@ -378,10 +357,8 @@ public class BoardController {
 	public String freeboardupdateGET(@RequestParam("bno") int bno, Model model, HttpSession session) throws Exception{
 		mylog.debug(" freeboardupdateGET 호출");
 				
-		mylog.debug(bno+"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+		mylog.debug(bno+"");
 		BoardVO board = Bservice.getBoardContent(bno);
-				
-		mylog.debug(board+"");
 				
 		model.addAttribute("board", board);
 			
@@ -394,9 +371,6 @@ public class BoardController {
 	public String freeboardupdatePOST(BoardVO vo,RedirectAttributes rttr,HttpSession session) throws Exception {
 		mylog.debug(" freeboardupdatePOST 호출 ");
 		
-		mylog.debug(vo+"");
-				
-				
 		Integer result = Bservice.updateBoard(vo);
 						
 		if(result > 0) {
@@ -431,8 +405,6 @@ public class BoardController {
 			
 		List<BoardVO> boardList = Bservice.getEBoardPage(cri);	
 		
-		mylog.debug(boardList+"");
-			
 		model.addAttribute("boardList", boardList);
 		
 		PageMaker pageMaker = new PageMaker();
@@ -440,7 +412,7 @@ public class BoardController {
 		pageMaker.setDisplayPageNum(10);
 		pageMaker.setCri(cri);
 		pageMaker.setTotalCount(Bservice.EboardCount());
-		mylog.debug(pageMaker+"@@@@@@@@@@@@@@@@ economy");
+		mylog.debug(pageMaker+"economy");
 		mylog.debug("totalCnt : "+Bservice.EboardCount());
 		model.addAttribute("pageMaker", pageMaker);
 			
@@ -466,12 +438,10 @@ public class BoardController {
 				
 		mylog.debug(" economywritePOST 호출 ");
 				
-		mylog.debug(vo+"");
-				
 		Bservice.insertBoard(vo);
-			mylog.debug("@@@@@@@@@@@@@@ economyPost");
+			
 		rttr.addFlashAttribute("result", "createOK");
-			mylog.debug("!!!!!!!!!!!");
+		
 		return "redirect:/economy?page=1";
 	}	
 	
@@ -494,13 +464,11 @@ public class BoardController {
 	public String economyupdateGET(@RequestParam("bno") int bno, Model model, HttpSession session) throws Exception{
 		mylog.debug(" economyupdateGET 호출");
 					
-		mylog.debug(bno+"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ economyupdateGET");
+		mylog.debug(bno+"economyupdateGET");
 		BoardVO vo = Bservice.getBoardContent(bno);
 					
-		mylog.debug(vo+"");
-					
 		model.addAttribute("vo", vo);
-		mylog.debug("post 갈준비됐니?");
+		
 		return "/community/economyupdate";
 					
 	}
@@ -510,9 +478,6 @@ public class BoardController {
 	public String economyupdatePOST(BoardVO vo,RedirectAttributes rttr,HttpSession session) throws Exception {
 		mylog.debug(" economyupdatePOST 호출 ");
 			
-		mylog.debug(vo+"");
-					
-					
 		Integer result = Bservice.updateBoard(vo);
 							
 		if(result > 0) {
