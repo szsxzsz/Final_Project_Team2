@@ -183,5 +183,14 @@ public class BoardDAOImpl implements BoardDAO{
 		return sqlSession.selectOne(NAMESPACE+".myBoardWriteCnt");
 				
 	}
+
+	// 모든 게시판 글 조회
+	@Override
+	public List<BoardVO> getAllboardList(Criteria cri) throws Exception {
+		
+		return sqlSession.selectList(NAMESPACE+".AllboardList");
+	}
+	
+	
 	
 }

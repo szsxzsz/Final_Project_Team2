@@ -612,4 +612,11 @@
   	
   	</select>
   	
+  	<!-- 모든 게시판 작성물 확인 -->
+  	<select id="AllboardList" resultType="com.chagok.domain.BoardVO">
+		select * from board
+		order by b_date desc
+		limit 0,5
+	</select>
+  	
  </mapper>

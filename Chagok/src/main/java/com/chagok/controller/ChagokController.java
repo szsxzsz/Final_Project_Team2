@@ -684,7 +684,38 @@ public class ChagokController {
 		return "/refundManagement";
 	}
 
-	////////////////////// 관리자 페이지 ///////////////////////////	
+	////////////////////// 관리자 페이지 ///////////////////////////
+	
+	
+	////////////////////// 커뮤 메인 페이지 ///////////////////////////	
+	@GetMapping("/boardMain")
+	public String AllBoardList(HttpSession session, Model model,Criteria cri) throws Exception {
+		
+		List<BoardVO> NboardList = service3.getNBoardPage(cri);
+		List<BoardVO> FboardList = service3.getFBoardPage(cri);
+		List<BoardVO> EboardList = service3.getEBoardPage(cri);
+		List<Map<String, Object>> RboardList = service3.getRBoardPage(cri);
+		   
+		model.addAttribute("NboardList", NboardList);
+		model.addAttribute("FboardList", FboardList);
+		model.addAttribute("EboardList", EboardList);
+		model.addAttribute("RboardList", RboardList);
+		   
+		PageMaker pageMaker = new PageMaker();
+		cri.setPerPageNum(5);
+		pageMaker.setDisplayPageNum(5);
+//		pageMaker.setTotalCount(service3.NboardCount());
+//		pageMaker.setTotalCount(service3.FboardCount());
+//		pageMaker.setTotalCount(service3.EboardCount());
+//		pageMaker.setTotalCount(service3.RboardCount());
+		model.addAttribute("pageMaker", pageMaker);
+		return "/chagok/boardMain";
+	}
+	
+	
+	
+	////////////////////// 커뮤 메인 페이지 ///////////////////////////	
+	
 	
 	
 }

@@ -238,7 +238,7 @@ color : rgba(255, 219, 131 / 80%);
 				<a href="/commumain"><p style="font-family: 'GmarketSans'">챌린지</p></a>
 			</div>
 			<div class="community">
-				<a href="/commumain"><p style="font-family: 'GmarketSans'">커뮤니티</p></a>
+				<a href="/boardMain"><p style="font-family: 'GmarketSans'">커뮤니티</p></a>
 			</div>
 			<div class="management">
 				<a href="/assetmain"><p style="font-family: 'GmarketSans'">자산관리</p></a>

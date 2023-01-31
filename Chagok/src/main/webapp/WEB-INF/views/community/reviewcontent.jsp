@@ -502,12 +502,7 @@ a {
             			<dd style="width: calc(100% - 120px); font-size: 20px; background-color: #66bb7a3b; color: #333;">${boardChallenge.b_title }<dd>
                 	</dl>
                 </div>
-<!--             	<div class="title"> -->
-<!--             		<dl> -->
-<!--             			<dt style="width: 120px; ">참여 챌린지 제목</dt> -->
-<%--             			<dd style="width: calc(100% - 120px);">${vo.c_title }<dd> --%>
-<!--                 	</dl> -->
-<!--                 </div> -->
+
 				<div class="info">
                     <dl>
                         <dt style="width: 120px;">참여 챌린지 제목</dt>
