@@ -251,7 +251,7 @@
 		 FROM (
 				SELECT *, @rownum := @rownum + 1 AS RNUM FROM chl 
 				JOIN ( SELECT @rownum := 0) R
-				WHERE c_status=1
+				WHERE c_status=1 OR c_status=7
 													) MP
 		         		<include refid="search"></include>
       WHERE RNUM BETWEEN #{rowStart} AND #{rowEnd}
@@ -260,9 +260,9 @@
 	
 	<!-- 메인 검색2 -->
 	<select id="cListCountM" resultType="Integer" parameterType="com.chagok.domain.SearchCriteria">
-		SELECT COUNT(c_status=1)
+		SELECT COUNT(c_status=1 OR c_status=7) AS c_status
 		   FROM challenge
-		   WHERE c_status=1
+		   WHERE  c_status=1 OR c_status=7
 		<include refid="search"></include>	
 		   AND cno > 0
 	</select>
