@@ -22,7 +22,13 @@
 				});
 				
 			});
-		</script>  
+</script>  
+<script type="text/javascript">
+	function back(){
+		window.history.back();
+	}
+	
+</script>
   
     
 <style>
@@ -472,7 +478,8 @@ a {
             
             
             <div class="bt_wrap">
-                	<input class="sbtn" type="button" value="목록" onclick="location.href='/notice';" >
+<!--                 	<input class="sbtn" type="button" value="목록" onclick="location.href='/notice;" > -->
+                	<input class="sbtn" type="button" value="목록" onclick="back()" >
 <!--                 <a href="notice" class="on">목록</a> -->
                 <c:if test="${nick.equals('관리자') }">
                 	<input class="sbtn" type="button" value="수정하기" onclick="location.href='/noticeupdate?bno=${vo.bno}';" >

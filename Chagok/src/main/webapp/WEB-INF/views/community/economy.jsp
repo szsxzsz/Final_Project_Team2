@@ -137,8 +137,8 @@
 			</tbody>
 	</table>
 	
-	<div class="board_page">
-                	<ul class= "pagination pagination-sm no-margin pull-right">
+	<div class="board_page" style="text-align:center;">
+                	<ul class= "pagination pagination-sm no-margin pull-center">
 <!--                 <a href="#" class="bt first"><<</a> -->
                 	<c:if test="${pageMaker.prev }">
 					<li><a href="/economy?page=${pageMaker.startPage-1 }"class="bt prev"><</a></li>

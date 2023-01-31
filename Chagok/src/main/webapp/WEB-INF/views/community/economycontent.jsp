@@ -23,7 +23,12 @@
 			});
 </script> 	
 
-
+<script type="text/javascript">
+	function back(){
+		window.history.back();
+	}
+	
+</script>
 	
 </head>	
 <body>
@@ -71,7 +76,7 @@
             </div>
             
             <div class="bt_wrap">
-                	<input class="sbtn" type="button" value="목록" onclick="location.href='/economy';" >
+                	<input class="sbtn" type="button" value="목록" onclick="back()" >
 <!--                 <a href="notice" class="on">목록</a> -->
 				<c:set var="writer" value="${vo.b_writer }"/>
                 <c:if test="${nick == '관리자' || nick == writer}">

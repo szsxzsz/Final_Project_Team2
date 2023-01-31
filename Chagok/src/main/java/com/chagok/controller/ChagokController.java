@@ -477,13 +477,11 @@ public class ChagokController {
    public String myBoardGET(HttpSession session, Model model,Criteria cri) throws Exception {
 	   String nick = (String)session.getAttribute("nick");
 	    
-	    mylog.debug(nick+"닉네임뜨는거냐");
+	    mylog.debug(nick+"");
 	  
-//		   List<BoardVO> boardList = service2.getMyBoardWrite(cri);
-	  
+//		   List<BoardVO> boardList = service2.getMyBoardWrite(cri);	  
 //		   List<BoardVO> boardList = service2.getMyBoardWrite(cri,nick);
 		   List<BoardVO> boardList = service3.getMyBoardWrite(nick);
-		   mylog.debug(boardList+"@@@@@@@@@@@@@@@@@@@@");
 		   
 		   model.addAttribute("boardList", boardList);
 		   

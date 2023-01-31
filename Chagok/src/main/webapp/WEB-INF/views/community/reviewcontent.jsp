@@ -26,6 +26,12 @@
 			});
 </script> 
 
+<script type="text/javascript">
+	function back(){
+		window.history.back();
+	}
+	
+</script>
 
 <style>
 * {
@@ -551,7 +557,7 @@ a {
 		        <input class="sbtn" type="button" value="수정하기" onclick="location.href='/reviewupdate?bno=${boardChallenge.bno}&cno=${boardChallenge.cno }';">
 				<input class="sbtn2" type="button" value="삭제하기" onclick="location.href='/reviewremove?bno=${boardChallenge.bno}&cno=${boardChallenge.cno }';">
 			</c:if>
-		        <input class="sbtn" type="submit" value="돌아가기" onclick="location.href='/reviewboard';">
+		        <input class="sbtn" type="submit" value="돌아가기" onclick="back()">
 		     </div>
         </div>
      
