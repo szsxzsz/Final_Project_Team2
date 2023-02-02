@@ -13,8 +13,8 @@
 <%-- ${vo } --%>
 <div class="row" style="margin-left:30px; margin-top:30px;">
 	<div class="col-lg-4 aos-init aos-animate" data-aos="fade-right">
-<!--        아래 이미지 주소는 디비에서 꺼내오는걸로 바꿔야해요 -->
-     <img class="card-img-top img-fluid" src="${pageContext.request.contextPath }/resources${vo.c_thumbFile }" alt="" aria-labelledby="title_1" id="c_img">
+     <img class="card-img-top img-fluid" src="${pageContext.request.contextPath }/resources${vo.c_thumbFile }" alt="" aria-labelledby="title_1" id="c_img"
+     	  style="margin-top:30px;">
 	</div>
 	<div class="col-lg-8 pt-4 pt-lg-0 content aos-init aos-animate" data-aos="fade-left" style="padding-left: 50px; width: 600;">
 		<h3><span style="color: #66BB7A; font-weight: bold;">[${vo2.ct_top}]</span> ${vo.c_title }</h3>
@@ -73,8 +73,8 @@
 		</div>
 	</div>
 
-	<div class="box box-default">
-		<div class="box-header with-border" style="background: #66BB7A; height: 50px; opacity: 85%; color: #fff;">
+	<div class="box box-default" style="margin-top:30px; border-top-width: 0px; margin-left: 45px;">
+		<div class="box-header with-border" style="background: #66BB7A; height: 50px; opacity: 85%; color: #fff; width: 1127px;">
 			<div class="text-center">
 			  <h3 class="box-title" style="margin-top: 1%;">
 			  	<span style="color: #3e6c49;">${vo.c_period }</span>주 동안 
@@ -87,14 +87,14 @@
 		    	
         <div class="form-group has-warning" style="padding-top: 50px; border-left-width:3px; margin-left:36px; width:1133px;">
                   <label class="control-label" for="inputWarning"><i class="fa fa-bell-o"></i>챌린지 설명</label>
-                  <textarea class="form-control" id="inputWarning" style="height: 180px; font-size: 15px;" readonly>
+                  <textarea class="form-control" id="inputWarning" style="height: auto; font-size: 15px; resize: none;" readonly>
 ${vo.c_content }
         		  </textarea>
         <a href="#" id="kakaotalk-sharing-btn"><i class="fa fa-share-alt" style="font-size:1.2em; padding-left:1068px; padding-top:11px;"><b> Share</b></i></a>   		  
         </div>
         <div class="form-group has-error" style="border-left-width:3px; margin-left:36px; width:1133px;">
                   <label class="control-label" for="inputError"><i class="fa fa-times-circle-o"></i>주의사항</label>
-                  <textarea class="form-control" id="inputError" style="height: 70px; font-size: 15px;" readonly>
+                  <textarea class="form-control" id="inputError" style="height: auto; font-size: 15px; resize: none; overflow: hidden;" readonly>
 저축형과 절약형 챌린지 모두 가계부 하나의 상세 카테고리로만 참여 가능합니다.
 ex) 저축형 챌린지 [교통] 카테고리 참여 중이라면 절약형 [교통] 카테고리 챌린지 참여 불가!
         		  </textarea>

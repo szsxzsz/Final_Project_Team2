@@ -241,7 +241,7 @@
                   <th class="col-md-2" style="text-align: center;">저축 금액</th>
                   <th class="col-md-1">Status</th>
                 </tr>
-                <c:forEach var="plusPeoList" begin="0" end="${plusPeoList.size()-1}" items="${plusPeoList}">
+                <c:forEach var="plusPeoList" items="${plusPeoList}">
            		<fmt:formatNumber value="${plusPeoList.pl_sum}" pattern="00" var="saveMoney" />
                 <c:set var="i" value="${i+1 }"/>
                 <tr>
@@ -379,7 +379,7 @@
 	          </div>
          <!-- <div class="chat_list active_chat"> 어두운색 배경으로 비활성화 가능 -->
 	          <div class="inbox_chat">
-          <c:forEach var="plusPeoList" begin="0" end="${plusPeoList.size()-1}" items="${plusPeoList}">
+          <c:forEach var="plusPeoList" items="${plusPeoList}">
 	            <div class="chat_list">
 	              <div class="chat_people">
 	                <div class="chat_img"> 
