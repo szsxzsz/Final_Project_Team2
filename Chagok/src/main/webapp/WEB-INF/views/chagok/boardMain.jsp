@@ -88,8 +88,12 @@
 	<table class="table table-hover" style="float:left; margin-left:30px; border-bottom: 1px solid #ddd;border-top: 2px solid #66BB7A; width:45%;">
 			  <thead style="background-color: #dddddd30;font-size: 16px;">
 <!-- 			   <th scope="col" style="width:300px; padding: 15px 0;">후기게시판</th> -->
+				<tr>
+					<td colspan='2'> 챌린지 후기 게시판</td>
+					<td colspan='2' align=right> <a href="/reviewboard?page=1">더 보기</a></td>
+				</tr>
 			    <tr>
-			      <th scope="col" style="text-align:center; padding: 15px 0; width: 20%;">분류</th>
+			      <th scope="col" style="text-align:center; padding: 15px 0; width: 20%;">번호</th>
 			      <th scope="col" style="text-align:center; padding: 15px 0;">제목</th>
 <!-- 				  <th scope="col" style="text-align:center; padding: 15px 0;">Last</th> -->
 			      <th scope="col" style="text-align:center; padding: 15px 0; width: 15%;">작성자</th>
@@ -101,16 +105,14 @@
 				<c:forEach var="RboardList" items="${RboardList }" >
 					
 						    <tr>
-						   	 <th scope="row" style="text-align:center; padding: 15px 0;">후기 </th>
+						   	 <th scope="row" style="text-align:center; padding: 15px 0;">${RboardList.bno } </th>
 						   	 <td style="text-align:center; padding: 15px 0;"><a href="/reviewcontent?bno=${RboardList.bno }&cno=${RboardList.cno}">${RboardList.b_title }</a></td>
 						  	 <td style="text-align:center; padding: 15px 0;">${RboardList.b_writer }</td>
 						  	 <td style="text-align:center; padding: 15px 0;"><fmt:formatDate value="${RboardList.b_date }" pattern="yyyy-MM-dd"/></td>
 						    </tr>
 					
 				</c:forEach>  
-				<tr>
-				  <th style=""><a href="/reviewboard?page=1">더 보기</a></th>
-				</tr>
+				
 		</tbody>
 	</table>
 <!-- 게시판 내용 -->
@@ -119,8 +121,12 @@
 	<table class="table table-hover" style="float:right; margin-left:10px; margin-right:30px; border-bottom: 1px solid #ddd;border-top: 2px solid #66BB7A; width:45%;">
 			  <thead style="background-color: #dddddd30;font-size: 16px;">
 <!-- 			   <th scope="col" style="width:300px; padding: 15px 0;">공지사항</th> -->
+				<tr>
+					<td colspan='2'> 공지사항</td>
+					<td colspan='2' align=right> <a href="/notice?page=1">더 보기</a></td>
+				</tr>
 			    <tr>
-			      <th scope="col" style="text-align:center; padding: 15px 0; width: 20%;">분류</th>
+			      <th scope="col" style="text-align:center; padding: 15px 0; width: 20%;">번호</th>
 			      <th scope="col" style="text-align:center; padding: 15px 0;">제목</th>
 <!-- 				  <th scope="col" style="text-align:center; padding: 15px 0;">Last</th> -->
 			      <th scope="col" style="text-align:center; padding: 15px 0; width: 15%;">작성자</th>
@@ -132,16 +138,14 @@
 				<c:forEach var="NboardList" items="${NboardList }" >
 <%-- 					<c:if test="${boardList.b_sort eq '2'}"> --%>
 						    <tr>
-						   	 <th scope="row" style="text-align:center; padding: 15px 0;">공지사항 </th>
+						   	 <th scope="row" style="text-align:center; padding: 15px 0;">${NboardList.bno } </th>
 						   	 <td style="text-align:center; padding: 15px 0;"><a href="/noticecontent?bno=${NboardList.bno }">${NboardList.b_title }</a></td>
 						  	 <td style="text-align:center; padding: 15px 0;">${NboardList.b_writer }</td>
 						  	 <td style="text-align:center; padding: 15px 0;"><fmt:formatDate value="${NboardList.b_date }" pattern="yyyy-MM-dd"/></td>
 						    </tr>
 <%-- 					</c:if> --%>
 				</c:forEach>  
-			  <tr>
-			  	 <th style=""><a href="/notice?page=1">더 보기</a></th>
-			  </tr>
+			  
 		</tbody>
 	</table>
 <!-- 게시판 내용 -->
@@ -150,8 +154,12 @@
 	<table class="table table-hover" style="float:left; margin-left:30px; border-bottom: 1px solid #ddd;border-top: 2px solid #66BB7A; width:45%;">
 			  <thead style="background-color: #dddddd30;font-size: 16px;">
 <!-- 			   <th scope="col" style="width:300px; padding: 15px 0;">자유게시판</th> -->
+				<tr>
+					<td colspan='2'> 자유 게시판 </td>
+					<td colspan='2' align=right> <a href="/freeboard?page=1">더 보기</a></td>
+				</tr>
 			    <tr>
-			      <th scope="col" style="text-align:center; padding: 15px 0; width: 20%;">분류</th>
+			      <th scope="col" style="text-align:center; padding: 15px 0; width: 20%;">번호</th>
 			      <th scope="col" style="text-align:center; padding: 15px 0;">제목</th>
 <!-- 				  <th scope="col" style="text-align:center; padding: 15px 0;">Last</th> -->
 			      <th scope="col" style="text-align:center; padding: 15px 0; width: 15%;">작성자</th>
@@ -163,16 +171,14 @@
 				<c:forEach var="FboardList" items="${FboardList }" >
 <%-- 					<c:if test="${boardList.b_sort eq '3'}"> --%>
 						    <tr>
-						   	 <th scope="row" style="text-align:center; padding: 15px 0;">자유 </th>
+						   	 <th scope="row" style="text-align:center; padding: 15px 0;">${FboardList.bno } </th>
 						   	 <td style="text-align:center; padding: 15px 0;"><a href="/freeboard?page=1">${FboardList.b_title }</a></td>
 						  	 <td style="text-align:center; padding: 15px 0;">${FboardList.b_writer }</td>
 						  	 <td style="text-align:center; padding: 15px 0;"><fmt:formatDate value="${FboardList.b_date }" pattern="yyyy-MM-dd"/></td>
 						    </tr>
 <%-- 					</c:if> --%>
 				</c:forEach>  
-				<tr>
-					<th style=""><a href="/freeboard?page=1">더 보기</a></th>
-				</tr>
+			
 		</tbody>
 	</table>
 <!-- 게시판 내용 -->
@@ -185,8 +191,12 @@
 <!-- 				   <th style="text-align:left;">뉴스 / 재테크</th> -->
 <!-- 				   <th style="text-align:right;"> 더 보기 </th> -->
 <!-- 				<tr> -->
+				<tr>
+					<td colspan='2'> 뉴스 / 재테크 게시판</td>
+					<td colspan='2' align=right> <a href="/economy?page=1">더 보기</a></td>
+				</tr> 
 			    <tr>
-			      <th scope="col" style="text-align:center; padding: 15px 0; width: 20%;">분류</th>
+			      <th scope="col" style="text-align:center; padding: 15px 0; width: 20%;">번호</th>
 			      <th scope="col" style="text-align:center; padding: 15px 0; width: 50%;">제목</th>
 <!-- 				  <th scope="col" style="text-align:center; padding: 15px 0;">Last</th> -->
 			      <th scope="col" style="text-align:center; padding: 15px 0; width: 15%;">작성자</th>
@@ -195,37 +205,19 @@
 			  </thead>
 			<tbody>
 	
-				<c:forEach var="EboardList" items="${EboardList }" >
+				<c:forEach var="EboardList" items="${EboardList }" begin="0" end="5" step="1">
+					
 <%-- 					<c:if test="${boardList.b_sort eq '4'}"> --%>
 						    <tr>
-						   	 <th scope="row" style="text-align:center; padding: 15px 0;">뉴스 / 재테크 </th>
+						   	 <th scope="row" style="text-align:center; padding: 15px 0;">${EboardList.bno } </th>
 						   	 <td style="text-align:center; padding: 15px 0;"><a href="/economycontent?bno=${EboardList.bno }">${EboardList.b_title }</a></td>
 						  	 <td style="text-align:center; padding: 15px 0;">${EboardList.b_writer }</td>
 						  	 <td style="text-align:center; padding: 15px 0;"><fmt:formatDate value="${EboardList.b_date }" pattern="yyyy-MM-dd"/></td>
 						    </tr>
 <%-- 					</c:if> --%>
 				</c:forEach> 
-				<tr style="float:center;">
-					<th> <a href="/economy?page=1">더 보기</a></th>
-				</tr> 
 		</tbody>
 		
 	</table>
-<!-- 게시판 내용 -->
-<!-- <table class="table table-hover" style=" margin-left:30px; border-bottom: 1px solid #ddd;border-top: 2px solid #66BB7A; width:45%;"> -->
-<!-- </table> -->
-<!-- <table class="table table-hover" style=" margin-left:30px; border-bottom: 1px solid #ddd;border-top: 2px solid #66BB7A; width:45%;"> -->
-<!-- </table> -->
-<!-- </body> -->
-<!-- <table class="table table-hover" style=" margin-left:30px; border-bottom: 1px solid #ddd;border-top: 2px solid #66BB7A; width:45%;"> -->
-<!-- </table> -->
-<!-- <table class="table table-hover" style=" margin-left:30px; border-bottom: 1px solid #ddd;border-top: 2px solid #66BB7A; width:45%;"> -->
-<!-- </table> -->
-<!-- </body> -->
-<!-- <table class="table table-hover" style=" margin-left:30px; border-bottom: 1px solid #ddd;border-top: 2px solid #66BB7A; width:45%;"> -->
-<!-- </table> -->
-<!-- <table class="table table-hover" style=" margin-left:30px; border-bottom: 1px solid #ddd;border-top: 2px solid #66BB7A; width:45%;"> -->
-<!-- </table> -->
-<!-- </body> -->
 
 <%@ include file="../include/footer.jsp" %>

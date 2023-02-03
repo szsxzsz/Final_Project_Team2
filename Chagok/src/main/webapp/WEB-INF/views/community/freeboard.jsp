@@ -9,7 +9,8 @@
 <!-- sweetalert -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
-	
+
+
 <script>
 	$(document).ready(function() {
 		var formObj = $("form[role='form']");
@@ -49,9 +50,14 @@
 		
 </script>
 
+
+
+
+
+
 <section class="content" style="margin-left:100px;">
 <c:if test="${not empty nick }">
-<input type="button" class="btn btn-primary btn-xs" style="float:center; background-color:#66BB7A;" value="글 작성하기" onclick="location.href='/freeboardwrite';">
+<input type="button" class="btn btn-block btn-success" style="float:right; background-color:#66BB7A; width:10%;" value="글 작성하기" onclick="location.href='/freeboardwrite';">
 </c:if>
 	<div class="row" >
 		<div class="col-md-12">
@@ -73,11 +79,12 @@
 						<h3 class="timeline-header">
 							<i style="color: #66BB7A; font-weight: bold;"> Title </i> <br><br> ${board.b_title }
 						</h3>
-						<div class="timeline-body">
+					
+						<div id="wrapper" class="timeline-body" style="width:100%; height:100%;">
 							<i style="color: #66BB7A; font-weight: bold;"> Content </i> <br><br>
-							<textarea style="width:100%; height:100%; resize: none; border: none;" readonly  name="b_content" placeholder="내용을 작성해주세요">${board.b_content }</textarea>
-							
-						</div>
+							<div style="white-space:pre; rows:10;">${board.b_content }</div>
+						
+					</div>
 						<div class="timeline-footer">
 							<c:set var="writer" value="${board.b_writer }"/>
 							<c:if test= "${nick == '관리자' || nick == writer}">
@@ -86,6 +93,7 @@
 								<input type="submit" class="btn btn-danger btn-xs" value="삭제" onclick="location.href='/freedelete?bno=${board.bno}';">
 							</c:if>
 						</div>
+					
 					</div></li>
 
 				<li><i class="fa fa-clock-o bg-gray"></i></li>
