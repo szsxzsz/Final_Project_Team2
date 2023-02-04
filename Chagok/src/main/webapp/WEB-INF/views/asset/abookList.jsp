@@ -15,7 +15,7 @@
 	<div class="row">
 		<div class=col-lg-6 >
 			<h3 class="box-title"
-			style="font-size: 25px; margin: 10px;" >목록형 가계부</h3>
+			style="font-size: 25px; margin: 10px;" >목록형 가계부</h3> 
 		</div>
 		
 		<div class=col-lg-6>
