@@ -5,7 +5,7 @@
 
 
 
-<!-- 블로그 로딩 코드 start -->
+<!-- 로딩 코드 start -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <style type="text/css">
 #waiting {
@@ -37,7 +37,7 @@
         }, 300);
     });
 </script>
-<!-- 블로그 로딩 코드 end -->
+<!-- 로딩 코드 end -->
 
 
 

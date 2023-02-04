@@ -253,7 +253,7 @@ $("#jqGrid").jqGrid({
 				total:'total', // 총 페이지 Count
 				records:'records' // 총 Row Count
 				},
-    height: 440, 
+    height: 372, 
     width: 820,
     colNames : ['num','분류','날짜','내용','금액','거래수단','ctno','카테고리','소분류','메모'], 
     colModel:[
@@ -285,7 +285,7 @@ $("#jqGrid").jqGrid({
         {name:"ab_method",index:"ab_method",width : 15,align:'center',edittype: "select", formatter: "select",editoptions:{value:"1:카드;2:현금;3:계좌"},hidden:false,editable:true},
 	    {name : 'ctno', index : 'ctno',width : 0, align : 'center',hidden:true}, 
 		{name: "ct_top", label: 'ct_top', width: 20, align: "center",/* formatter: "select", */ 
-				editable: true, edittype: "select", 
+				editable: false, edittype: "select", 
 				editoptions:{  dataUrl: '/asset/cateSelect',
 				buildSelect:function (data){
 				 			let key = JSON.parse(data)
@@ -300,7 +300,7 @@ $("#jqGrid").jqGrid({
 				}	// edit
 		}}, //name
 
-		{name:"ct_bottom",index:"ct_bottom",width:20,align:'center', editable: true, edittype: "select", /* formatter: "select", */
+		{name:"ct_bottom",index:"ct_bottom",width:20,align:'center', editable: false, edittype: "select", /* formatter: "select", */
 	
 			    	editoptions:{
 			    		dataUrl: '/asset/catebottom',
@@ -733,7 +733,7 @@ function getintype() {
 }
 </script>
 
-<script type="text/javascript"> 
+	<script type="text/javascript"> 
 var result = '${result}';
 if(result == 'createOK'){
 	Swal.fire({
@@ -743,49 +743,20 @@ if(result == 'createOK'){
 }
 </script>
 
+<script>
+function clickCheck(target) {
+    document.querySelectorAll(`input[type=checkbox]`)
+        .forEach(el => el.checked = false);
 
-
-<!-- 블로그 로딩 코드 start -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<style type="text/css">
-#waiting {
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    position: fixed;
-    display: flex;
-    background: white;
-    z-index: 999;
-    opacity: 0.9;
+    target.checked = true;
 }
-#waiting > img {
-    display: flex;
-    width: fit-content;
-    height: fit-content;
-    margin: auto;
-}
-</style>
-<div id="waiting">
-   <img src="../resources/imgUpload/new-loading.gif">
-</div>
-
-<script type="text/javascript">
-    $(window).on('load', function() {
-        setTimeout(function(){
-            $("#waiting").fadeOut();
-        }, 300);
-    });
 </script>
-<!-- 블로그 로딩 코드 end -->
-
-
-
 
 	<style>
 .content-wrapper2, .right-side {
 	/*     min-height: 100%; */
 	background-color: #ffffff;
+	    margin-bottom: 150px;
 	z-index: 800;
 }
 
