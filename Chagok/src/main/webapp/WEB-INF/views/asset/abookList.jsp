@@ -4,7 +4,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <%@ include file="../include/header.jsp"%>
-<%@ include file="../include/sidebarAsset.jsp"%>
+<%@ include file="../include/sidebarGrid.jsp"%>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.js"></script>  
 <link rel="stylesheet" type="text/css" media="screen" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
@@ -86,7 +87,9 @@
 			<div class="form-group2">
 			              <div class="form-group2 focused">
 			                <label class="form-control-label" for="input-username" ></label>
-			                <select name="b_ctno_out" id="sel_ab_out" class="form-control2 form-control-alternative" >
+			                <select name="b
+			                
+			                _ctno_out" id="sel_ab_out" class="form-control2 form-control-alternative" >
 			                   <option value="none">지출 카테고리</option>
 			                   <option value="1">식비</option>
 							   <option value="2">의복/미용</option>
@@ -191,9 +194,6 @@ $(document).ready(function(){
 </script>
 
 
-
-
-
 <!-- jQuary+grid -->
 <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" /> -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.css" />
@@ -215,7 +215,7 @@ $("#jqGrid").jqGrid({
 				total:'total', // 총 페이지 Count
 				records:'records' // 총 Row Count
 				},
-    height: 410, 
+    height: 440, 
     width: 1000,
     colNames : ['num','분류','날짜','내용','금액','거래수단','ctno','카테고리','소분류','메모'], 
     colModel:[
@@ -229,7 +229,7 @@ $("#jqGrid").jqGrid({
 	        hidden:false,editable:true},
         {name:'ab_date', index:'ab_date', width:70, align:'center',editable:true, formatoptions:{newformat: 'Y-M-d h:i'}, 
 	        	editoptions:{size:20, dataInit:function(el){ 
-                     $(el).datetimepicker({dateFormat:'yy-mm-dd', onClose :grid_Datepicker}); 
+                     $(el).datetimepicker({dateFormat:'yy-mm-d d', onClose :grid_Datepicker}); 
                      
                }, 
                defaultValue: function(){ 
@@ -320,14 +320,14 @@ $("#jqGrid").jqGrid({
     loadtext: "조회 중..",
     caption: "　",
     multiselect : true, // 그리드 왼쪽부분에 셀렉트 박스가 생겨 다중선택이 가능해진다
-    emptyrecode : "작성된 내역이 없습니다!", // 뿌려줄 데이터가 없을 경우 보여줄 문자열 지정
+    emptyrecords : "작성된 내역이 없습니다!", // 뿌려줄 데이터가 없을 경우 보여줄 문자열 지정
 //     pager:"#gridpager",
 	scroll:true,
 //     rowNum:20,
     rownumbers : true, 
     rowNum:10000,
     cellEdit: true,
-    cellsubmit:'clientArray',
+    cellsubmit:'clientArray', 
 //     cellurl:'/asset/updateGrid',
     
     /* 수정 후 cell 다시 editable flase 로 변경 */
@@ -353,6 +353,9 @@ $("#jqGrid").jqGrid({
 	       return [(aResult.msg == "success") ? true : false, userMsg];
 	   },
 
+	   
+	   
+	   
     sortable: true
     //hidegrid:true
     // =================================================
@@ -362,14 +365,6 @@ $("#jqGrid").jqGrid({
 //         jQuery("#jqGrid").jqGrid( 'setGridWidth', $(".main-panel").width() - 100 );
 //     },
    
- 	// 리로딩 처리
-    function reload() {
-    jQuery("#jqGrid").trigger('reloadGrid');
-    
-	$('#jqGrid').jqGrid('setGridParam', { 'datatype' : 'json' });
-	
-    }//setGridParam 
-	 
 	// 저장하고 컨트롤러로 보내는 코드 
 	function save(){
 		var data =  $("#jqGrid").getRowData();
@@ -393,7 +388,7 @@ $("#jqGrid").jqGrid({
 			}
 			})
 			
-	jQuery("#jqGrid").trigger('reloadGrid');	
+// 	jQuery("#jqGrid").trigger('reloadGrid');	
 	}
 	
 	// col edit 가능하게 일괄 처리하기 
@@ -441,8 +436,8 @@ $("#jqGrid").jqGrid({
 			data : {test:data},
 			success:function(val){
 // 				alert("입력 성공!");
-			},error:function(err){
 		         $('#jqGrid').trigger('reloadGrid');
+			},error:function(err){
 // 				  alert("err");
 			      console.log(err);
 			}
@@ -556,7 +551,6 @@ $(function(){
     });
 });
 </script>
-
 
 <script type="text/javascript">
 function getAgreeType() {    
@@ -724,10 +718,21 @@ function clickCheck(target) {
 }
 </script>
 	
-	
-	
-	
 <style>
+
+.content-wrapper2, .right-side {
+/*     min-height: 100%; */
+    background-color: #ffffff;
+    z-index: 800;
+}
+.content-wrapper2, .right-side, .main-footer {
+    -webkit-transition: -webkit-transform .3s ease-in-out, margin .3s ease-in-out;
+    -moz-transition: -moz-transform .3s ease-in-out, margin .3s ease-in-out;
+    -o-transition: -o-transform .3s ease-in-out, margin .3s ease-in-out;
+    transition: transform .3s ease-in-out, margin .3s ease-in-out;
+    margin-left: 230px;
+    z-index: 820;
+}
 
 .btn-info {
     color: #666;
@@ -893,7 +898,6 @@ th {
 
 
 <!-- </section> -->
-</div>
 </div>
 
 
