@@ -62,6 +62,16 @@
     font-weight: 400;
     cursor: pointer;
  }
+ 
+ .login-logo2 {
+    border: 0;
+    width: 150px;
+    margin-right: 15px;
+    text-align: center;
+    display: block; 
+    margin: 0px auto;
+}
+ 
  </style>
  
   
@@ -110,8 +120,8 @@
 
 <body class="hold-transition login-page" style="font-family: 'GmarketSans';">
 <div class="login-box">
-  <div class="login-logo">
-  	<a href="#" style="font-family: 'GmarketSans';"><img src="${pageContext.request.contextPath }/resources/plugins/img/chagok_pig-removebg.png"><b>차곡</b></a>
+  <div class="login-logo2" text-align: center;>
+  	<a href="#" style="font-family: 'GmarketSans';"><img src="${pageContext.request.contextPath }/resources/dist/img/login-logo.png" class="login-logo2"></a>
   </div>
   <!-- /.login-logo -->
   <div class="login-box-body">

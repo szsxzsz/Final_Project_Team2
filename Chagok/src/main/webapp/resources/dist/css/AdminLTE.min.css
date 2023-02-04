@@ -3426,7 +3426,8 @@ table.text-center, table.text-center td, table.text-center th {
 	padding: 20px;
 	color: #444;
 	border-top: 0;
-	color: #666
+	color: #666;
+	margin-top: 10px;
 }
 
 .login-box-body .form-control-feedback, .register-box-body .form-control-feedback
