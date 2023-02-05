@@ -108,11 +108,11 @@
 								</select>
 							</div>
 
-							<div class="pl-lg-4" style="display: flex;">
+							<div class="pl-lg-4" style="display: flex; justify-content: flex-start;">
 
 								<!-- 지출 카테고리 -->
-								<div class="form-group2" style="margin-right: 20px;">
-									<div class="form-group2 focused">
+								<div class="form-group2" >
+									<div class="form-group2 focused"> 
 										<label class="form-control-label" for="input-username"></label>
 										<select name="b_ctno_out" id="sel_ab_out"
 											class="form-control2 form-control-alternative">
