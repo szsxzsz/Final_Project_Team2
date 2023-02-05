@@ -112,7 +112,7 @@
 
 								<!-- 지출 카테고리 -->
 								<div class="form-group2" >
-									<div class="form-group2 focused">
+									<div class="form-group2 focused"> 
 										<label class="form-control-label" for="input-username"></label>
 										<select name="b_ctno_out" id="sel_ab_out"
 											class="form-control2 form-control-alternative">
