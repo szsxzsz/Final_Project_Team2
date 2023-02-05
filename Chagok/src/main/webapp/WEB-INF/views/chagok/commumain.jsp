@@ -67,12 +67,16 @@
 	  </div>
 </div>
 <!-- 명예의 전당 -->
-<%-- ${cListM } --%>
+<%-- ${cListM} --%>
 
 <!-- 챌린지 리스트 -->
   <h2 class="visually-hidden"></h2>
   <div class="row row-cols-lg-4 g-2">
+  
+
+  
   <c:forEach var="vo" items="${cListM }">
+  
   <!-- 날짜 계산하기 -->
 		<jsp:useBean id="now" class="java.util.Date" />
 			 <fmt:parseNumber value="${now.time / (1000*60*60*24)}" integerOnly="true" var="nowfmtTime" scope="request"/>
@@ -101,13 +105,19 @@
       	<c:if test="${startTime - nowfmtTime == 1}">
       		<p class="card-item-chevron--new-2"><b>오늘<br>마감</b></p>
       	</c:if>
+      	<c:if test="${startTime - nowfmtTime <= 0}">
+      		<p class="card-item-chevron--new-3"><b>종료</b></p>
+      	</c:if>
         <a class="card-item-link" href="/challenge/detail?cno=${vo.cno }">
         
           <c:if test="${startTime - nowfmtTime >= 2}">
-      		<img class="card-img-top img-fluid" src="${vo.c_thumbFile }" alt="" aria-labelledby="title_1" id="c_img">
+      		<img class="card-img-top img-fluid" src="${pageContext.request.contextPath}/resources${vo.c_thumbFile}" alt="" aria-labelledby="title_1" id="c_img">_img">
       	  </c:if>
       	  <c:if test="${startTime - nowfmtTime == 1}">
-      		<img class="card-img-top img-fluid-2" src="${vo.c_thumbFile }" alt="" aria-labelledby="title_1" id="c_img">
+      		<img class="card-img-top img-fluid-2" src="${pageContext.request.contextPath}/resources${vo.c_thumbFile}" alt="" aria-labelledby="title_1" id="c_img">
+      	  </c:if>
+      	  <c:if test="${startTime - nowfmtTime <= 0}">
+      		<img class="card-img-top img-fluid-3" src="${pageContext.request.contextPath}/resources${vo.c_thumbFile}" alt="" aria-labelledby="title_1" id="c_img">
       	  </c:if>
         
         </a>
@@ -217,6 +227,13 @@ body {
   height: 240px;
   object-fit: scale-down;
   background-color: #dd4b3921;
+}
+
+.img-fluid-3 {
+  width: 270px;
+  height: 240px;
+  object-fit: scale-down;
+  background-color: #d2d6de;
 }
 
 main {
@@ -700,6 +717,28 @@ main .card .card-item-chevron--new-2 {
     line-height: 1.4;
     width: 5rem;
     height: 5rem;
+    text-align: center;
+}
+
+main .card .card-item-chevron--new-3 {
+	background-color: #333;
+    position: absolute;
+    z-index: 2;
+    top: 180px;
+    right: 15px;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 15px 0px;
+    -webkit-border-radius: 4px;
+    border-radius: 5rem;
+    color: #ffffff;
+    /* font-family: "Noto Sans", "Arial", sans-serif; */
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1.4;
+    width: 5rem;
+    /* height: 5rem; */
     text-align: center;
 }
 
