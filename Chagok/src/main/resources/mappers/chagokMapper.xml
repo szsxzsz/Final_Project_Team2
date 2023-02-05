@@ -251,21 +251,32 @@
 		 FROM (
 				SELECT *, @rownum := @rownum + 1 AS RNUM FROM chl 
 				JOIN ( SELECT @rownum := 0) R
-				WHERE c_status=1 OR c_status=7
+				WHERE (c_status=1 OR c_status=7)
+				<include refid="search"></include>
 													) MP
-		         		<include refid="search"></include>
+		         		
       WHERE RNUM BETWEEN #{rowStart} AND #{rowEnd}
-      ORDER BY cno
+      ORDER BY c_status
 	</select>
 	
 	<!-- 메인 검색2 -->
 	<select id="cListCountM" resultType="Integer" parameterType="com.chagok.domain.SearchCriteria">
 		SELECT COUNT(c_status=1 OR c_status=7) AS c_status
 		   FROM challenge
-		   WHERE  c_status=1 OR c_status=7
+		   WHERE (c_status=1 OR c_status=7)
 		<include refid="search"></include>	
 		   AND cno > 0
 	</select>
+	
+	<sql id="search">
+		<if test="searchType != null">
+			<if test="searchType == 'c_title'.toString()">AND c_title LIKE CONCAT('%', #{keyword}, '%')</if>
+			<if test="searchType == 'c_content'.toString()">AND c_content LIKE CONCAT('%', #{keyword}, '%')</if>
+<!-- 			<if test="searchType == 'c_host'.toString()">AND c_host LIKE CONCAT('%', #{keyword}, '%')</if> -->
+			<if test="searchType == 'c_titlec_content'.toString()">AND (c_title LIKE CONCAT('%', #{keyword}, '%')) or (c_content LIKE CONCAT('%', #{keyword}, '%'))</if>
+		</if>
+	</sql>
+	
 	
 	<!-- 검색1 -->
 	<select id="cList" resultType="com.chagok.domain.ChallengeVO" parameterType="com.chagok.domain.SearchCriteria">
@@ -287,17 +298,6 @@
 		<include refid="search"></include>	
 		   AND cno > 0
 	</select>
-	
-	
-	<sql id="search">
-		<if test="searchType != null">
-			<if test="searchType == 'c_title'.toString()">AND c_title LIKE CONCAT('%', #{keyword}, '%')</if>
-			<if test="searchType == 'c_content'.toString()">AND c_content LIKE CONCAT('%', #{keyword}, '%')</if>
-<!-- 			<if test="searchType == 'c_host'.toString()">AND c_host LIKE CONCAT('%', #{keyword}, '%')</if> -->
-			<if test="searchType == 'c_titlec_content'.toString()">AND (c_title LIKE CONCAT('%', #{keyword}, '%')) or (c_content LIKE CONCAT('%', #{keyword}, '%'))</if>
-		</if>
-	</sql>
-	
 
 <!-- 	챌린지 성공여부 (절약형) -->
 	<select id="getMoney" resultType="ChallengeVO">

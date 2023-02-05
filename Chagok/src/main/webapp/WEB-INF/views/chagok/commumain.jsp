@@ -63,17 +63,17 @@
 
 <form method="get">
   <div class="search">
-<!--     <select name="searchType"> -->
-<%--       <option value="n"<c:out value="${scri.searchType == null ? 'selected' : ''}"/>>-----</option> --%>
-<%--       <option value="c_title"<c:out value="${scri.searchType eq 'c_title' ? 'selected' : ''}"/>>제목</option> --%>
-<%--       <option value="c_content"<c:out value="${scri.searchType eq 'c_content' ? 'selected' : ''}"/>>내용</option> --%>
+    <select name="searchType">
+      <option value="n"<c:out value="${scri.searchType == null ? 'selected' : ''}"/>>-----</option>
+      <option value="c_title"<c:out value="${scri.searchType eq 'c_title' ? 'selected' : ''}"/>>제목</option>
+      <option value="c_content"<c:out value="${scri.searchType eq 'c_content' ? 'selected' : ''}"/>>내용</option>
 <%--       <option value="c_host"<c:out value="${scri.searchType eq 'c_host' ? 'selected' : ''}"/>>작성자</option> --%>
-<%--       <option value="c_titlec_content"<c:out value="${scri.searchType eq 'c_titlec_content' ? 'selected' : ''}"/>>제목+내용</option> --%>
-<!--     </select> -->
+      <option value="c_titlec_content"<c:out value="${scri.searchType eq 'c_titlec_content' ? 'selected' : ''}"/>>제목+내용</option>
+    </select>
 
-<%--     <input type="text" name="keyword" id="keywordInput" value="${scri.keyword}"/> --%>
+    <input type="text" name="keyword" id="keywordInput" value="${scri.keyword}"/>
 
-<!--     <button id="searchBtn" type="button">검색</button> -->
+    <button id="searchBtn" type="button">검색</button>
     <script>
       $(function(){
         $('#searchBtn').click(function() {
@@ -152,7 +152,7 @@
         <a class="card-item-link" href="/challenge/detail?cno=${vo.cno }">
         
           <c:if test="${startTime - nowfmtTime >= 2}">
-      		<img class="card-img-top img-fluid" src="${pageContext.request.contextPath}/resources${vo.c_thumbFile}" alt="" aria-labelledby="title_1" id="c_img">_img">
+      		<img class="card-img-top img-fluid" src="${pageContext.request.contextPath}/resources${vo.c_thumbFile}" alt="" aria-labelledby="title_1" id="c_img">
       	  </c:if>
       	  <c:if test="${startTime - nowfmtTime == 1}">
       		<img class="card-img-top img-fluid-2" src="${pageContext.request.contextPath}/resources${vo.c_thumbFile}" alt="" aria-labelledby="title_1" id="c_img">
