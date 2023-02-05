@@ -63,17 +63,17 @@
 
 <form method="get">
   <div class="search">
-<!--     <select name="searchType"> -->
-<%--       <option value="n"<c:out value="${scri.searchType == null ? 'selected' : ''}"/>>-----</option> --%>
-<%--       <option value="c_title"<c:out value="${scri.searchType eq 'c_title' ? 'selected' : ''}"/>>제목</option> --%>
-<%--       <option value="c_content"<c:out value="${scri.searchType eq 'c_content' ? 'selected' : ''}"/>>내용</option> --%>
+    <select name="searchType">
+      <option value="n"<c:out value="${scri.searchType == null ? 'selected' : ''}"/>>-----</option>
+      <option value="c_title"<c:out value="${scri.searchType eq 'c_title' ? 'selected' : ''}"/>>제목</option>
+      <option value="c_content"<c:out value="${scri.searchType eq 'c_content' ? 'selected' : ''}"/>>내용</option>
 <%--       <option value="c_host"<c:out value="${scri.searchType eq 'c_host' ? 'selected' : ''}"/>>작성자</option> --%>
-<%--       <option value="c_titlec_content"<c:out value="${scri.searchType eq 'c_titlec_content' ? 'selected' : ''}"/>>제목+내용</option> --%>
-<!--     </select> -->
+      <option value="c_titlec_content"<c:out value="${scri.searchType eq 'c_titlec_content' ? 'selected' : ''}"/>>제목+내용</option>
+    </select>
 
-<%--     <input type="text" name="keyword" id="keywordInput" value="${scri.keyword}"/> --%>
+    <input type="text" name="keyword" id="keywordInput" value="${scri.keyword}"/>
 
-<!--     <button id="searchBtn" type="button">검색</button> -->
+    <button id="searchBtn" type="button">검색</button>
     <script>
       $(function(){
         $('#searchBtn').click(function() {
@@ -90,7 +90,14 @@
 <c:forEach var="uvo" items="${ranking }" begin="0" end="2">
       <div class="clprofile-card">
 <%--       <c:if test="${uvo.f != null}"> --%>
-        <img src="https://i.imgur.com/bZBG9PE.jpg" alt="image1" class="clprofile-icon" />
+        <img 
+	        <c:if test="${uvo.profile != null }">
+				src="${pageContext.request.contextPath }/resources${uvo.profile }"
+			</c:if>
+			<c:if test="${uvo.profile == null }">
+				src="https://ptetutorials.com/images/user-profile.png"
+			</c:if>
+        	alt="image1" class="clprofile-icon" />
         <div class="clprofile-name">${uvo.nick }</div>
         <div class="clprofile-position"><b>${uvo.success_cnt }</b> 번 도전에 성공하셨습니다.</div>
       </div>
@@ -101,12 +108,16 @@
 	  </div>
 </div>
 <!-- 명예의 전당 -->
-<%-- ${cListM } --%>
+<%-- ${cListM} --%>
 
 <!-- 챌린지 리스트 -->
   <h2 class="visually-hidden"></h2>
   <div class="row row-cols-lg-4 g-2">
+  
+
+  
   <c:forEach var="vo" items="${cListM }">
+  
   <!-- 날짜 계산하기 -->
 		<jsp:useBean id="now" class="java.util.Date" />
 			 <fmt:parseNumber value="${now.time / (1000*60*60*24)}" integerOnly="true" var="nowfmtTime" scope="request"/>
@@ -135,13 +146,19 @@
       	<c:if test="${startTime - nowfmtTime == 1}">
       		<p class="card-item-chevron--new-2"><b>오늘<br>마감</b></p>
       	</c:if>
+      	<c:if test="${startTime - nowfmtTime <= 0}">
+      		<p class="card-item-chevron--new-3"><b>종료</b></p>
+      	</c:if>
         <a class="card-item-link" href="/challenge/detail?cno=${vo.cno }">
         
           <c:if test="${startTime - nowfmtTime >= 2}">
-      		<img class="card-img-top img-fluid" src="${vo.c_thumbFile }" alt="" aria-labelledby="title_1" id="c_img">
+      		<img class="card-img-top img-fluid" src="${pageContext.request.contextPath}/resources${vo.c_thumbFile}" alt="" aria-labelledby="title_1" id="c_img">
       	  </c:if>
       	  <c:if test="${startTime - nowfmtTime == 1}">
-      		<img class="card-img-top img-fluid-2" src="${vo.c_thumbFile }" alt="" aria-labelledby="title_1" id="c_img">
+      		<img class="card-img-top img-fluid-2" src="${pageContext.request.contextPath}/resources${vo.c_thumbFile}" alt="" aria-labelledby="title_1" id="c_img">
+      	  </c:if>
+      	  <c:if test="${startTime - nowfmtTime <= 0}">
+      		<img class="card-img-top img-fluid-3" src="${pageContext.request.contextPath}/resources${vo.c_thumbFile}" alt="" aria-labelledby="title_1" id="c_img">
       	  </c:if>
         
         </a>
@@ -251,6 +268,13 @@ body {
   height: 240px;
   object-fit: scale-down;
   background-color: #dd4b3921;
+}
+
+.img-fluid-3 {
+  width: 270px;
+  height: 240px;
+  object-fit: scale-down;
+  background-color: #d2d6de;
 }
 
 main {
@@ -734,6 +758,28 @@ main .card .card-item-chevron--new-2 {
     line-height: 1.4;
     width: 5rem;
     height: 5rem;
+    text-align: center;
+}
+
+main .card .card-item-chevron--new-3 {
+	background-color: #333;
+    position: absolute;
+    z-index: 2;
+    top: 180px;
+    right: 15px;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 15px 0px;
+    -webkit-border-radius: 4px;
+    border-radius: 5rem;
+    color: #ffffff;
+    /* font-family: "Noto Sans", "Arial", sans-serif; */
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1.4;
+    width: 5rem;
+    /* height: 5rem; */
     text-align: center;
 }
 

@@ -113,6 +113,14 @@
     background-color: #fff;
     color: #FFDB83;
 }
+
+footer {
+    width: 100%;
+    height: 10px; /* footer의 높이 */
+    position: absolute;  
+    bottom: 10px;
+    left: 0;
+}
 </style>
  
  <body>
@@ -122,6 +130,7 @@
             <p> 한 눈에 보는 커뮤니티 </p>
         </div>
 	</div>
+<div style="width:100%; height:100%;">
 
 <!-- 게시판 내용 (후기) -->
 	<table class="table table-hover" style="float:left; margin-left:30px; border-bottom: 1px solid #ddd;border-top: 2px solid #66BB7A; width:45%;">
@@ -258,5 +267,5 @@
 		</tbody>
 		
 	</table>
-
+</div>
 <%@ include file="../include/footer.jsp" %>
