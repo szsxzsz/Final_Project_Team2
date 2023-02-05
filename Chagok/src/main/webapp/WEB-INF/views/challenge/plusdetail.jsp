@@ -75,35 +75,35 @@
              <div class="progress-group" style="width: 280px;">
                <span class="progress-text">챌린지 장 </span>
                <span class="progress-number"><b>${host.nick }</b>님</span>
-            </div>
+             </div>
              <div class="progress-group" style="width: 280px;">
                <span class="progress-text">챌린지 인원</span>
                <span class="progress-number"><b>${vo.c_cnt }</b>/ ${vo.c_pcnt }</span>
-               </div>
+             </div>
              <div class="progress-group" style="width: 280px;">
                <span class="progress-text">예치금</span>
                <span class="progress-number"><b>${vo.c_deposit }</b>꿀</span>
-               </div>
+             </div>
           	 <div class="progress-group" style="width: 280px;">
                <span class="progress-text">챌린지 기간</span>
                <span class="progress-number"><b>${vo.c_period }</b>주</span>
-              </div> 
+             </div> 
              <div class="progress-group" style="width: 280px;">
                <span class="progress-text">챌린지 시작일</span>
                <span class="progress-number">
 	              <b><fmt:formatDate value="${startDate }" pattern="YYYY-MM-dd"/></b>
                </span>
-              </div>
-               <div class="progress-group" style="width: 280px;">
+             </div>
+             <div class="progress-group" style="width: 280px;">
 	               <span class="progress-text">챌린지 종료일</span>
 	               <span class="progress-number">
 	               	<b><fmt:formatDate value="${c_end }" pattern="YYYY-MM-dd"/></b>
 	               </span>
-	           </div>
-       </div>
-			</div>
+	         </div>
+       		</div>
 		</div>
-	</div>
+	  </div>
+</div>
 
     <div class="box box-default" style="margin-top:30px; border-top-width: 0px; margin-left: 45px;">
 		<div class="box-header with-border" style="background: #66BB7A; height: 50px; opacity: 85%; color: #fff; width: 1127px;">
@@ -222,6 +222,8 @@ ex) 저축형 챌린지 [교통] 카테고리 참여 중이라면 절약형 [교
 			  container: '#kakaotalk-sharing-btn',
 			  templateId: ${87844},
 			  templateArgs: {
+// 			  file: '${pageContext.request.contextPath }/resources${vo.c_thumbFile}',
+			  file: '${vo.c_thumbFile}',
 			  title: '${vo.c_title}',
 			  description: '지금 친구와 함께 챌린지에 도전해보세요! ( ´͈ ᵕ `͈ )◞♡ '
 			  
