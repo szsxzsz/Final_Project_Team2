@@ -8,6 +8,11 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
+<!-- sweetalert -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
+
+
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath }/resources/bkcss/bkcss1.css">
 <link rel="stylesheet" type="text/css"

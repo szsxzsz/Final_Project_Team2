@@ -56,7 +56,14 @@
 <c:forEach var="uvo" items="${ranking }" begin="0" end="2">
       <div class="clprofile-card">
 <%--       <c:if test="${uvo.f != null}"> --%>
-        <img src="https://i.imgur.com/bZBG9PE.jpg" alt="image1" class="clprofile-icon" />
+        <img 
+	        <c:if test="${uvo.profile != null }">
+				src="${pageContext.request.contextPath }/resources${uvo.profile }"
+			</c:if>
+			<c:if test="${uvo.profile == null }">
+				src="https://ptetutorials.com/images/user-profile.png"
+			</c:if>
+        	alt="image1" class="clprofile-icon" />
         <div class="clprofile-name">${uvo.nick }</div>
         <div class="clprofile-position"><b>${uvo.success_cnt }</b> 번 도전에 성공하셨습니다.</div>
       </div>
