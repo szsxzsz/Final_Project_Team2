@@ -94,8 +94,8 @@
 <!-- 탭 -->
 <section class="container">
   <ul class="tabs">
-    <li class="tab-item"><a href="/commumain" class="actives">전체보기</a></li>
-    <li class="tab-item"><a href="/comnumain" >진행중 챌린지</a></li>
+    <li class="tab-item"><a href="/commumain">전체보기</a></li>
+    <li class="tab-item"><a href="/comnumain"  class="actives">진행중 챌린지</a></li>
     <li class="tab-item"><a href="/conmumain">종료된 챌린지</a></li>
   </ul>
 </section>
@@ -128,7 +128,7 @@
   <h2 class="visually-hidden"></h2>
   <div class="row row-cols-lg-4 g-2" style="margin-top: 10px;">
   
-  <c:forEach var="vo" items="${cListM }">
+  <c:forEach var="vo" items="${cListMp }">
   
   <!-- 날짜 계산하기 -->
 		<jsp:useBean id="now" class="java.util.Date" />

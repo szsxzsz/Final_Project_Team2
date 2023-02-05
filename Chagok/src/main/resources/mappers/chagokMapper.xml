@@ -245,7 +245,7 @@
 		delete from user where mno = #{mno} and pw = #{pw}
 	</delete>
 	
-	<!-- 메인 검색1 -->
+	<!-- 챌린지 메인1 -->
 	<select id="cListM" resultType="com.chagok.domain.ChallengeVO" parameterType="com.chagok.domain.SearchCriteria">
 	SELECT  *
 		 FROM (
@@ -259,7 +259,7 @@
       ORDER BY c_status
 	</select>
 	
-	<!-- 메인 검색2 -->
+	<!-- 챌린지 메인2 -->
 	<select id="cListCountM" resultType="Integer" parameterType="com.chagok.domain.SearchCriteria">
 		SELECT COUNT(c_status=1 OR c_status=7) AS c_status
 		   FROM challenge
@@ -268,34 +268,76 @@
 		   AND cno > 0
 	</select>
 	
+	<!-- 챌린지 메인 진행중 1 -->
+	<select id="cListMp" resultType="com.chagok.domain.ChallengeVO" parameterType="com.chagok.domain.SearchCriteria">
+	SELECT  *
+		 FROM (
+				SELECT *, @rownum := @rownum + 1 AS RNUM FROM chl 
+				JOIN ( SELECT @rownum := 0) R
+				WHERE c_status=1
+				<include refid="search"></include>
+													) MP
+		         		
+      WHERE RNUM BETWEEN #{rowStart} AND #{rowEnd}
+      ORDER BY cno
+	</select>
+	
+	<!-- 챌린지 메인 진행중 2 -->
+	<select id="cListCountMp" resultType="Integer" parameterType="com.chagok.domain.SearchCriteria">
+		SELECT COUNT(c_status=1)
+		   FROM challenge
+		   WHERE c_status=1
+		<include refid="search"></include>	
+		   AND cno > 0
+	</select>
+	
+	<!-- 챌린지 메인 종료 1 -->
+	<select id="cListMe" resultType="com.chagok.domain.ChallengeVO" parameterType="com.chagok.domain.SearchCriteria">
+	SELECT  *
+		 FROM (
+				SELECT *, @rownum := @rownum + 1 AS RNUM FROM chl 
+				JOIN ( SELECT @rownum := 0) R
+				WHERE c_status=7
+				<include refid="search"></include>
+													) MP
+		         		
+      WHERE RNUM BETWEEN #{rowStart} AND #{rowEnd}
+      ORDER BY cno
+	</select>
+	
+	<!-- 챌린지 메인 종료 2 -->
+	<select id="cListCountMe" resultType="Integer" parameterType="com.chagok.domain.SearchCriteria">
+		SELECT COUNT(c_status=7)
+		   FROM challenge
+		   WHERE c_status=7
+		<include refid="search"></include>	
+		   AND cno > 0
+	</select>
+	
 	<sql id="search">
 		<if test="searchType != null">
 			<if test="searchType == 'c_title'.toString()">AND c_title LIKE CONCAT('%', #{keyword}, '%')</if>
 			<if test="searchType == 'c_content'.toString()">AND c_content LIKE CONCAT('%', #{keyword}, '%')</if>
-<!-- 			<if test="searchType == 'c_host'.toString()">AND c_host LIKE CONCAT('%', #{keyword}, '%')</if> -->
 			<if test="searchType == 'c_titlec_content'.toString()">AND (c_title LIKE CONCAT('%', #{keyword}, '%')) or (c_content LIKE CONCAT('%', #{keyword}, '%'))</if>
 		</if>
 	</sql>
 	
-	
-	<!-- 검색1 -->
+	<!-- 페이징1 -->
 	<select id="cList" resultType="com.chagok.domain.ChallengeVO" parameterType="com.chagok.domain.SearchCriteria">
 	SELECT  *
 		 FROM (
 				select *, @rownum := @rownum + 1 AS RNUM from chl 
 				JOIN ( SELECT @rownum := 0) R
 													) MP
-		         		<include refid="search"></include>
       WHERE RNUM BETWEEN #{rowStart} AND #{rowEnd}
       ORDER BY cno
 	</select>
 	
-	<!-- 검색2 -->
+	<!-- 페이징2 -->
 	<select id="cListCount" resultType="Integer" parameterType="com.chagok.domain.SearchCriteria">
         SELECT COUNT(cno)
 		   FROM challenge
 		   WHERE 1=1
-		<include refid="search"></include>	
 		   AND cno > 0
 	</select>
 

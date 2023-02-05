@@ -154,7 +154,7 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 		
 		return challengeList;
 	}
-
+	
 	// 챌린지 참여 인원 조회(checkfeed 용)
 	@Override
 	public int getCList(Integer cno) throws Exception {
@@ -215,23 +215,52 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 	}
 
 	
-	
-	// 챌린지 목록 (페이징)
+	// 챌린지 메인(페이징)
 	@Override
 	public List<ChallengeVO> cListM(SearchCriteria scri) throws Exception {
-		mylog.debug(" cLisMt(SearchCriteria scri) 호출 ");
 		List<ChallengeVO> cListM = sqlSession.selectList(NAMESPACE +".cListM", scri);
 		
 		return cListM;
 	}
 
-	// 챌린지 총 갯수 (페이징)
+	// 챌린지 메인 총 개수(페이징)
 	@Override
 	public Integer cListCountM(SearchCriteria scri) throws Exception {
-		mylog.debug("cListCountM(SearchCriteria scri) 호출 ");
 		Integer cListCountM = sqlSession.selectOne(NAMESPACE + ".cListCountM", scri);
 		
 		return cListCountM;
+	}
+	
+	// 챌린지 메인 진행중(페이징)
+	@Override
+	public List<ChallengeVO> cListMp(SearchCriteria scri) throws Exception {
+		List<ChallengeVO> cListMp = sqlSession.selectList(NAMESPACE +".cListMp", scri);
+		
+		return cListMp;
+	}
+
+	// 챌린지 메인 진행중 총 개수(페이징)
+	@Override
+	public Integer cListCountMp(SearchCriteria scri) throws Exception {
+		Integer cListCountMp = sqlSession.selectOne(NAMESPACE + ".cListCountMp", scri);
+		
+		return cListCountMp;
+	}
+	
+	// 챌린지 메인 종료(페이징)
+	@Override
+	public List<ChallengeVO> cListMe(SearchCriteria scri) throws Exception {
+		List<ChallengeVO> cListMe = sqlSession.selectList(NAMESPACE +".cListMe", scri);
+		
+		return cListMe;
+	}
+
+	// 챌린지 메인 종료 총 개수(페이징)
+	@Override
+	public Integer cListCountMe(SearchCriteria scri) throws Exception {
+		Integer cListCountMe = sqlSession.selectOne(NAMESPACE + ".cListCountMe", scri);
+		
+		return cListCountMe;
 	}
 	
 	// 챌린지 목록 (페이징)

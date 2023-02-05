@@ -231,20 +231,16 @@ public class ChagokController {
 	}
 
 
-	// 챌린지 목록 불러오기 (커뮤메인)
+	// 챌린지 메인
 	// http://localhost:8080/commumain
 	@GetMapping(value="/commumain")
 	public String getChallengeList(Model model, HttpSession session, @ModelAttribute("scri") SearchCriteria scri, RedirectAttributes rttr) throws Exception {
-		mylog.debug(" /commumain 호출 ");
-				
 		List<ChallengeVO> challengeList = service2.getChallengeList();
 		List<UserVO> ranking = service2.ranking();
-//		List<ChallengeVO> cList = service2.cList(scri);
 		ingChallenge();
 		
 		model.addAttribute("challengeList", challengeList);
 		model.addAttribute("ranking", ranking);
-//		model.addAttribute("cList", cList);
 		model.addAttribute("cListM", service2.cListM(scri));
 		
 		// 페이징 처리
@@ -255,6 +251,50 @@ public class ChagokController {
 		model.addAttribute("pageMaker", pageMaker);	
 		
 		return "/chagok/commumain";
+	}
+	
+	// 챌린지 메인 (진행중)
+	// http://localhost:8080/comnumain
+	@GetMapping(value="/comnumain")
+	public String getChallengeList2(Model model, HttpSession session, @ModelAttribute("scri") SearchCriteria scri, RedirectAttributes rttr) throws Exception {
+		List<ChallengeVO> challengeList = service2.getChallengeList();
+		List<UserVO> ranking = service2.ranking();
+		ingChallenge();
+		
+		model.addAttribute("challengeList", challengeList);
+		model.addAttribute("ranking", ranking);
+		model.addAttribute("cListMp", service2.cListMp(scri));
+		
+		// 페이징 처리
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCri(scri);
+		pageMaker.setTotalCount(service2.cListCountMp(scri));
+		
+		model.addAttribute("pageMaker", pageMaker);	
+		
+		return "/chagok/comnumain";
+	}
+	
+	// 챌린지 메인 (종료)
+	// http://localhost:8080/conmumain
+	@GetMapping(value="/conmumain")
+	public String getChallengeList3(Model model, HttpSession session, @ModelAttribute("scri") SearchCriteria scri, RedirectAttributes rttr) throws Exception {
+		List<ChallengeVO> challengeList = service2.getChallengeList();
+		List<UserVO> ranking = service2.ranking();
+		ingChallenge();
+		
+		model.addAttribute("challengeList", challengeList);
+		model.addAttribute("ranking", ranking);
+		model.addAttribute("cListMe", service2.cListMe(scri));
+		
+		// 페이징 처리
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCri(scri);
+		pageMaker.setTotalCount(service2.cListCountMe(scri));
+		
+		model.addAttribute("pageMaker", pageMaker);	
+		
+		return "/chagok/conmumain";
 	}
 	
 	
