@@ -66,5 +66,8 @@ public interface BoardService {
 		
 	// 내가 쓴 글 개수 조회
 	public int MyBoardWriteCnt() throws Exception;
+	
+	// 전체 게시판 조회
+	public List<BoardVO> getAllboardList(Criteria cri) throws Exception;
 }
 

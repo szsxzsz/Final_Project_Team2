@@ -69,5 +69,8 @@ public interface BoardDAO {
 	
 	// 댓글 조회
 	
+	// 모든 게시판 글 조회(종류불문)
+	public List<BoardVO> getAllboardList(Criteria cri) throws Exception;
+	
 
 }

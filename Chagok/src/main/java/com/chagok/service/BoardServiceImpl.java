@@ -150,6 +150,13 @@ public class BoardServiceImpl implements BoardService{
 		mylog.debug(" MyBoardWriteCnt() 호출");
 		return dao.MyBoardWriteCnt();
 	}
+
+	// 전체 게시판 조회
+	@Override
+	public List<BoardVO> getAllboardList(Criteria cri) throws Exception {
+		
+		return dao.getAllboardList(cri);
+	}
 	
 	
 

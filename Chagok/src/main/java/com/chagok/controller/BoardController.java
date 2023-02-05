@@ -53,7 +53,6 @@ public class BoardController {
 	// http://localhost:8080/reviewboard
 	@GetMapping(value = "/reviewboard")
 	public String reviewboardGET(HttpSession session,Model model,Criteria cri) throws Exception {
-		mylog.debug(" /reviewboard 호출");
 		
 		List<Map<String, Object>> boardList2 = Bservice.getRBoardPage(cri);	
 		
@@ -63,8 +62,6 @@ public class BoardController {
 		pageMaker.setDisplayPageNum(10);
 		pageMaker.setCri(cri);
 		pageMaker.setTotalCount(Bservice.RboardCount());
-		mylog.debug("@@@@@@@@@@@@@@@@");
-		mylog.debug("totalCnt : "+Bservice.RboardCount());
 		model.addAttribute("pageMaker", pageMaker);
 					
 		model.addAttribute("boardList2", boardList2);
@@ -78,7 +75,6 @@ public class BoardController {
 	public String reviewGET(@RequestParam("cno") int cno, Model model, HttpSession session) throws Exception {
 		Integer mno = (Integer) session.getAttribute("mno");
 		
-		mylog.debug(cno + "reviewGET 호출");
 		ChallengeVO vo2 = service.getCt_top(cno);
 		
 		Map<String, Object> result = service.challengeResult(cno, mno);
@@ -94,11 +90,8 @@ public class BoardController {
 	// 후기글 작성 POST
 	@PostMapping(value = "/review")
 	public String reviewPOST(BoardVO vo, RedirectAttributes rttr) throws Exception {
-		mylog.debug(" reviewPOST 호출");
-
+		
 		Bservice.createReview(vo);
-
-		mylog.debug("게시판 글쓰기 완료");
 
 		rttr.addFlashAttribute("result", "createOK");
 
@@ -111,9 +104,7 @@ public class BoardController {
 	@GetMapping(value= "/reviewupdate")
 	public String reviewupdateGET(@RequestParam("bno") int bno, Model model, HttpSession session,Integer cno) throws Exception{
 					
-		mylog.debug(" reviewupdateGET 호출");
 			
-		mylog.debug(bno+"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 		Map<String, Object> boardChallenge = Bservice.getBoardChallenge(bno);
 		
 		Integer Success = service.getSuccess(cno);
@@ -134,8 +125,6 @@ public class BoardController {
 	@PostMapping(value = "/reviewupdate")
 	public String reviewupdatePOST(BoardVO vo,RedirectAttributes rttr,HttpSession session) throws Exception{
 			
-		mylog.debug("reviewupdatePOST 호출");
-			
 		Integer result = Bservice.updateBoard(vo);
 					
 		if(result > 0) {
@@ -152,7 +141,6 @@ public class BoardController {
 	// http://localhost:8080/reviewremove?bno=4
 	@GetMapping(value = "/reviewremove")
 	public String reviewremovePOST(int bno,RedirectAttributes rttr) throws Exception{
-		mylog.debug(bno+"");
 					
 		Bservice.deleteBoard(bno);
 					
@@ -166,7 +154,6 @@ public class BoardController {
 	// http://localhost:8080/reviewcontent?bno=1
 	@GetMapping(value = "/reviewcontent")
 	public String reviewcontentGET(HttpSession session,Model model,@RequestParam("cno") int cno,Integer bno) throws Exception {
-		mylog.debug("reviewcontent 호출");	
 		Map<String, Object> boardChallenge = Bservice.getBoardChallenge(bno);
 		Integer Success = service.getSuccess(cno);
 
@@ -205,8 +192,6 @@ public class BoardController {
 		pageMaker.setDisplayPageNum(10);
 		pageMaker.setCri(cri);
 		pageMaker.setTotalCount(Bservice.NboardCount());
-		mylog.debug(pageMaker+"");
-		mylog.debug("totalCnt : "+Bservice.NboardCount());
 		model.addAttribute("pageMaker", pageMaker);
 			
 		model.addAttribute("boardList2", boardList2);
@@ -238,10 +223,6 @@ public class BoardController {
 	@GetMapping(value = "/noticewrite")
 	public String noticewriteGET(Model model, HttpSession session,HttpServletRequest request) throws Exception {
 		
-		mylog.debug(" noticewriteGET 호출");
-		
-		
-		
 		return "/community/noticewrite";
 			
 	}
@@ -250,8 +231,6 @@ public class BoardController {
 	@PostMapping(value = "/noticewrite")
 	public String registPOST(BoardVO vo, RedirectAttributes rttr,HttpSession session) throws Exception {
 			
-		mylog.debug(" noticewriteGET -> noticewritePOST 호출 ");
-				
 		Bservice.insertBoard(vo);
 			
 		rttr.addFlashAttribute("result", "createOK");
@@ -263,10 +242,6 @@ public class BoardController {
 	// http://localhost:8080/noticeupdate?bno=4
 	@GetMapping(value = "/noticeupdate")
 	public String noticeupdateGET(@RequestParam("bno") int bno, Model model, HttpSession session) throws Exception{
-		mylog.debug("noticeupdate GET 호출");
-			
-		mylog.debug(bno+"");
-			
 		model.addAttribute("board", Bservice.getBoardContent(bno));
 		
 		return "/community/noticeupdate";
@@ -276,7 +251,6 @@ public class BoardController {
 	// 공지 글 수정하기 POST
 	@PostMapping(value = "/noticeupdate")
 	public String noticeupdatePOST(BoardVO vo,RedirectAttributes rttr,HttpSession session) throws Exception {
-		mylog.debug("noticeupdate POST 호출");
 				
 		Integer result = Bservice.updateBoard(vo);
 					
@@ -294,7 +268,6 @@ public class BoardController {
 	// http://localhost:8080/noticedelete
 	@PostMapping(value = "/noticedelete")
 	public String noticedeleteGET(int bno,RedirectAttributes rttr,HttpSession session) throws Exception {
-		mylog.debug(bno+"");
 			
 		Bservice.deleteBoard(bno);
 					
@@ -310,7 +283,6 @@ public class BoardController {
 	//  http://localhost:8080/freeboard
 	@GetMapping(value = "/freeboard")
 	public String FreeBoardGET(HttpSession session,Model model,Criteria cri) throws Exception {
-		mylog.debug(" /freeboard 호출");
 			
 		List<BoardVO> boardList = Bservice.getFBoardPage(cri);	
 		
@@ -321,7 +293,6 @@ public class BoardController {
 		pageMaker.setDisplayPageNum(10);
 		pageMaker.setCri(cri);
 		pageMaker.setTotalCount(Bservice.RboardCount());
-		mylog.debug("totalCnt : "+Bservice.RboardCount());
 		model.addAttribute("pageMaker", pageMaker);
 			
 		return "/community/freeboard";
@@ -332,19 +303,14 @@ public class BoardController {
 	@GetMapping(value = "/freeboardwrite")
 	public String freeboardwriteGET(HttpSession session,Model model) throws Exception {
 		
-		mylog.debug(" freeboardwriteGET 호출");
-		
 		return "/community/freeboardwrite";
 	}
 	
 	// 자유게시판 글 작성 POST
 	@PostMapping(value = "/freeboardwrite")
 	public String freeboardwritePOST(BoardVO vo, RedirectAttributes rttr,HttpSession session) throws Exception {
-		mylog.debug(" freeboardwritePOST 호출");
-
+		
 		Bservice.createReview(vo);
-
-		mylog.debug("자유게시판 글쓰기 완료");
 
 		rttr.addFlashAttribute("result", "createOK");
 
@@ -355,9 +321,6 @@ public class BoardController {
 	// http://localhost:8080/freeboardupdate?bno=4
 	@GetMapping(value = "/freeboardupdate")
 	public String freeboardupdateGET(@RequestParam("bno") int bno, Model model, HttpSession session) throws Exception{
-		mylog.debug(" freeboardupdateGET 호출");
-				
-		mylog.debug(bno+"");
 		BoardVO board = Bservice.getBoardContent(bno);
 				
 		model.addAttribute("board", board);
@@ -369,8 +332,6 @@ public class BoardController {
 	// 자유 게시판 글 수정하기 POST
 	@PostMapping(value = "/freeboardupdate")
 	public String freeboardupdatePOST(BoardVO vo,RedirectAttributes rttr,HttpSession session) throws Exception {
-		mylog.debug(" freeboardupdatePOST 호출 ");
-		
 		Integer result = Bservice.updateBoard(vo);
 						
 		if(result > 0) {
@@ -386,7 +347,6 @@ public class BoardController {
 	// 자유 게시판 삭제
 	@GetMapping(value = "/freedelete")
 	public String freedeleteGET(int bno,RedirectAttributes rttr,HttpSession session) throws Exception {
-		mylog.debug(bno+"");
 		
 		Bservice.deleteBoard(bno);
 				
@@ -401,8 +361,6 @@ public class BoardController {
 	// 경제 게시판 보드
 	@GetMapping(value = "/economy")
 	public String EconomyGET(HttpSession session,Model model,Criteria cri) throws Exception {
-		mylog.debug(" /economy 호출");
-			
 		List<BoardVO> boardList = Bservice.getEBoardPage(cri);	
 		
 		model.addAttribute("boardList", boardList);
@@ -412,8 +370,6 @@ public class BoardController {
 		pageMaker.setDisplayPageNum(10);
 		pageMaker.setCri(cri);
 		pageMaker.setTotalCount(Bservice.EboardCount());
-		mylog.debug(pageMaker+"economy");
-		mylog.debug("totalCnt : "+Bservice.EboardCount());
 		model.addAttribute("pageMaker", pageMaker);
 			
 		return "/community/economy";
@@ -424,10 +380,6 @@ public class BoardController {
 	@GetMapping(value = "/economywrite")
 	public String economywriteGET(Model model, HttpSession session,HttpServletRequest request) throws Exception {
 			
-		mylog.debug(" economywriteGET 호출");
-			
-			
-			
 		return "/community/economywrite";
 				
 	}
@@ -435,8 +387,6 @@ public class BoardController {
 	// 경제 글 작성하기 (post)
 	@PostMapping(value = "/economywrite")
 	public String economywritePOST(BoardVO vo, RedirectAttributes rttr,HttpSession session) throws Exception {
-				
-		mylog.debug(" economywritePOST 호출 ");
 				
 		Bservice.insertBoard(vo);
 			
@@ -462,9 +412,7 @@ public class BoardController {
 	// http://localhost:8080/economyupdate?bno=33
 	@GetMapping(value = "/economyupdate")
 	public String economyupdateGET(@RequestParam("bno") int bno, Model model, HttpSession session) throws Exception{
-		mylog.debug(" economyupdateGET 호출");
-					
-		mylog.debug(bno+"economyupdateGET");
+		
 		BoardVO vo = Bservice.getBoardContent(bno);
 					
 		model.addAttribute("vo", vo);
@@ -476,8 +424,7 @@ public class BoardController {
 	// 경제 게시판 글 수정하기 POST
 	@PostMapping(value = "/economyupdate")
 	public String economyupdatePOST(BoardVO vo,RedirectAttributes rttr,HttpSession session) throws Exception {
-		mylog.debug(" economyupdatePOST 호출 ");
-			
+		
 		Integer result = Bservice.updateBoard(vo);
 							
 		if(result > 0) {
@@ -493,7 +440,6 @@ public class BoardController {
 	// 경제 게시판 삭제
 	@GetMapping(value = "/economydelete")
 	public String economydeleteGET(int bno,RedirectAttributes rttr,HttpSession session) throws Exception {
-		mylog.debug(bno+"");
 			
 		Bservice.deleteBoard(bno);
 					

@@ -323,7 +323,7 @@
 <!-- 	가계부 값 연동하기  -->
 	<update id="updateMoney">
 		update minus set m_sum =
-		(select m_sum-#{ab_amount} from (select * from minus) m where m.mno = #{mno})
+		(select m_sum-#{ab_amount} from (select * from minus) m where m.mno = #{mno} and m.cno=#{cno})
 		where mno = #{mno} and cno = #{cno}
 	</update>
 	
@@ -609,6 +609,14 @@
   	<!-- 댓글 리스트 조회 -->
   	<select id="">
   	
+  	
   	</select>
+  	
+  	<!-- 모든 게시판 작성물 확인 -->
+  	<select id="AllboardList" resultType="com.chagok.domain.BoardVO">
+		select * from board
+		order by b_date desc
+		limit 0,5
+	</select>
   	
  </mapper>
