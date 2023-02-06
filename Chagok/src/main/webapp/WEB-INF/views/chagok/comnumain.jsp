@@ -726,6 +726,7 @@ main .card .card-item-chevron--new-3 {
 }
 </style>
 
+
 <main>
 
 <!-- 로딩 코드 start -->
@@ -806,8 +807,8 @@ main .card .card-item-chevron--new-3 {
 <!-- 탭 -->
 <section class="container">
   <ul class="tabs">
-    <li class="tab-item"><a href="/commumain" class="actives">전체보기</a></li>
-    <li class="tab-item"><a href="/comnumain" >진행중 챌린지</a></li>
+    <li class="tab-item"><a href="/commumain">전체보기</a></li>
+    <li class="tab-item"><a href="/comnumain"  class="actives">진행중 챌린지</a></li>
     <li class="tab-item"><a href="/conmumain">종료된 챌린지</a></li>
   </ul>
 </section>
@@ -831,7 +832,7 @@ main .card .card-item-chevron--new-3 {
     <script>
       $(function(){
         $('#searchBtn').click(function() {
-          self.location = "commumain" + '${pageMaker.makeQuery(1)}' + "&searchType=" + $("select option:selected").val() + "&keyword=" + encodeURIComponent($('#keywordInput').val());
+          self.location = "comnumain" + '${pageMaker.makeQuery(1)}' + "&searchType=" + $("select option:selected").val() + "&keyword=" + encodeURIComponent($('#keywordInput').val());
         });
       });   
     </script>
@@ -839,11 +840,11 @@ main .card .card-item-chevron--new-3 {
 </div>
 <!-- 검색 -->
 
-
+  
 <!-- 챌린지 리스트 -->
   <div class="row row-cols-lg-4 g-2" style="margin-top: 10px;">
   
-  <c:forEach var="vo" items="${cListM }">
+  <c:forEach var="vo" items="${cListMp }">
   
   <!-- 날짜 계산하기 -->
 		<jsp:useBean id="now" class="java.util.Date" />
@@ -924,23 +925,23 @@ main .card .card-item-chevron--new-3 {
 
 
 <!-- 페이징 -->
- <div class="box-footer clearfix">
-   <ul class="pagination pagination-sm no-margin pull-right">
-     
-     <c:if test="${pageMaker.prev}">
-     	<li><a href="/commumain${pageMaker.makeSearch(pageMaker.startPage - 1)}">«</a></li>
-     </c:if>
-     
-     <c:forEach var="idx" begin="${pageMaker.startPage}" end="${pageMaker.endPage}" step="1">
-    		<li><a href="/commumain${pageMaker.makeSearch(idx)}">${idx}</a></li>
-     </c:forEach>
-     
-     <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
-     	<li><a href="/commumain${pageMaker.makeSearch(pageMaker.endPage + 1)}">»</a></li>
-     </c:if>
-     
-   </ul>
- </div>
+<div class="box-footer clearfix">
+  <ul class="pagination pagination-sm no-margin pull-right">
+    
+    <c:if test="${pageMaker.prev}">
+    	<li><a href="/commumain${pageMaker.makeSearch(pageMaker.startPage - 1)}">«</a></li>
+    </c:if>
+    
+    <c:forEach var="idx" begin="${pageMaker.startPage}" end="${pageMaker.endPage}" step="1">
+   		<li><a href="/commumain${pageMaker.makeSearch(idx)}">${idx}</a></li>
+    </c:forEach>
+    
+    <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
+    	<li><a href="/commumain${pageMaker.makeSearch(pageMaker.endPage + 1)}">»</a></li>
+    </c:if>
+    
+  </ul>
+</div>
 <!-- 페이징 -->
 
 
