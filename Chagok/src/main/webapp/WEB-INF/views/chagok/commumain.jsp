@@ -764,8 +764,8 @@ main .card .card-item-chevron--new-3 {
 
 <!-- 중복챌린지 제어 -->
 <script type="text/javascript">
-   var result = '${result}';
-   if(result == 'overlap'){
+   var overlap = '${overlap}';
+   if(overlap == 'overlap'){
 	   Swal.fire({
 	        title: '중복 챌린지는 개설 불가능합니다.', 
 	        icon: 'error'

@@ -251,12 +251,13 @@
 		 FROM (
 				SELECT *, @rownum := @rownum + 1 AS RNUM FROM chl 
 				JOIN ( SELECT @rownum := 0) R
-				WHERE (c_status=1 OR c_status=7)
+				WHERE (c_status=1 OR c_status=7) 
 				<include refid="search"></include>
+				ORDER BY c_status
 													) MP
 		         		
       WHERE RNUM BETWEEN #{rowStart} AND #{rowEnd}
-      ORDER BY c_status
+      ORDER BY c_status, cno
 	</select>
 	
 	<!-- 챌린지 메인2 -->

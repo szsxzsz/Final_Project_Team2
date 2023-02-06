@@ -366,14 +366,14 @@ public class ChallengeController {
 		map.put("mno", mno);
 		map.put("ctno", vo.getCtno());
 		
-		Integer result = service.samechallenge(map);
+		Integer overlap = service.samechallenge(map);
 		
-		if(result != null) {
-			rttr.addFlashAttribute("result", "overlap");
+		if(overlap != null) {
+			rttr.addFlashAttribute("overlap", "overlap");
 			
 			return "redirect:/commumain";
 		}
-		rttr.addFlashAttribute("result", "Noverlap");
+		rttr.addFlashAttribute("overlap", "Noverlap");
 			
 		// 사진등록
 		String imgUploadPath = uploadPath + File.separator + "imgUpload";
@@ -391,7 +391,6 @@ public class ChallengeController {
 		vo.setC_thumbFile(File.separator + "imgUpload" + ymdPath + File.separator + "s" + File.separator + "s_" + fileName);
 		
 		// 챌린지 등록
-		mylog.debug(vo.toString());
 		service.challengeRegist(vo);
 		
 		// plus 테이블에 정보 추가
@@ -428,14 +427,14 @@ public class ChallengeController {
 		map.put("mno", mno);
 		map.put("ctno", vo.getCtno());
 		
-		Integer result = service.samechallenge(map);
+		Integer overlap = service.samechallenge(map);
 		
-		if(result != null) {
-			rttr.addFlashAttribute("result", "overlap");
+		if(overlap != null) {
+			rttr.addFlashAttribute("overlap", "overlap");
 			
 			return "redirect:/commumain";
 		}
-		rttr.addFlashAttribute("result", "Noverlap");
+		rttr.addFlashAttribute("overlap", "Noverlap");
 		
 		// 사진등록
 		String imgUploadPath = uploadPath + File.separator + "imgUpload";
@@ -452,7 +451,6 @@ public class ChallengeController {
 		vo.setC_thumbFile(File.separator + "imgUpload" + ymdPath + File.separator + "s" + File.separator + "s_" + fileName);
 		
 		// 챌린지 등록
-		mylog.debug(vo.toString());
 		service.challengeRegist(vo);
 		
 		// minus 테이블에 정보 추가
