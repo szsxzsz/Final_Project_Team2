@@ -612,11 +612,34 @@
   	
   	</select>
   	
-  	<!-- 모든 게시판 작성물 확인 -->
-  	<select id="AllboardList" resultType="com.chagok.domain.BoardVO">
-		select * from board
-		order by b_date desc
-		limit 0,5
+  	<!-- 모든 게시판 페이징(후기) -->
+  	<select id="MrboardPageNo" resultType="com.chagok.domain.BoardVO">
+	  	select * from board b inner join challenge c
+		where b_sort = 1 and b.cno = c.cno
+		order by bno desc, b_date desc
+		limit #{pageStart},5
 	</select>
+	
+	<!-- 모든 게시판 페이징(공지) -->
+  	<select id="MnboardPageNo" resultType="com.chagok.domain.BoardVO">
+		select * from board
+		where b_sort = 2
+		order by bno desc, b_date desc
+		limit #{pageStart},5
+	</select>
+  	<!-- 모든 게시판 페이징(자유) -->
+  	<select id="MfboardPageNo" resultType="com.chagok.domain.BoardVO">
+		select * from board
+		where b_sort = 3
+		order by bno desc, b_date desc
+		limit #{pageStart},5
+	</select>	
   	
+  	<!-- 모든 게시판 페이징(경제) -->
+  	<select id="MeboardPageNo" resultType="com.chagok.domain.BoardVO">
+		select * from board
+		where b_sort = 4
+		order by bno desc, b_date desc
+		limit #{pageStart},5
+	</select>	
  </mapper>

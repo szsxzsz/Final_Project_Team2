@@ -691,10 +691,10 @@ public class ChagokController {
 	@GetMapping("/boardMain")
 	public String AllBoardList(HttpSession session, Model model,Criteria cri) throws Exception {
 		
-		List<BoardVO> NboardList = service3.getNBoardPage(cri);
-		List<BoardVO> FboardList = service3.getFBoardPage(cri);
-		List<BoardVO> EboardList = service3.getEBoardPage(cri);
-		List<Map<String, Object>> RboardList = service3.getRBoardPage(cri);
+		List<BoardVO> NboardList = service3.getMNBoardPage(cri);
+		List<BoardVO> FboardList = service3.getMFBoardPage(cri);
+		List<BoardVO> EboardList = service3.getMEBoardPage(cri);
+		List<Map<String, Object>> RboardList = service3.getMRBoardPage(cri);
 		   
 		model.addAttribute("NboardList", NboardList);
 		model.addAttribute("FboardList", FboardList);
@@ -704,10 +704,7 @@ public class ChagokController {
 		PageMaker pageMaker = new PageMaker();
 		cri.setPerPageNum(5);
 		pageMaker.setDisplayPageNum(5);
-//		pageMaker.setTotalCount(service3.NboardCount());
-//		pageMaker.setTotalCount(service3.FboardCount());
-//		pageMaker.setTotalCount(service3.EboardCount());
-//		pageMaker.setTotalCount(service3.RboardCount());
+		pageMaker.setCri(cri);
 		model.addAttribute("pageMaker", pageMaker);
 		return "/chagok/boardMain";
 	}
