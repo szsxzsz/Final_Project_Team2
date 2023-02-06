@@ -14,220 +14,6 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
 
-<h1 class="visually-hidden"></h1>
-<main>
-
-<!-- 로딩 코드 start -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<style type="text/css">
-#waiting {
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    position: fixed;
-    display: flex;
-    background: white;
-    z-index: 999;
-    opacity: 0.9;
-}
-#waiting > img {
-    display: flex;
-    width: fit-content;
-    height: fit-content;
-    margin: auto;
-}
-</style>
-<div id="waiting">
-   <img src="./resources/imgUpload/new-loading.gif">
-</div>
-
-<script type="text/javascript">
-    $(window).on('load', function() {
-        setTimeout(function(){
-            $("#waiting").fadeOut();
-        }, 300);
-    });
-</script>
-<!-- 로딩 코드 end -->
-
-<script type="text/javascript">
-   var result = '${result}';
-   if(result == 'overlap'){
-	   Swal.fire({
-	        title: '중복 챌린지는 개설 불가능합니다.', 
-	        icon: 'error'
-	      });
-   }
-</script>
-
-<form method="get">
-
-
-<!-- 명예의 전당 -->
-<h2 style="margin-left: 30px;">명예의 전당</h2>
-
-<div class="clprofile-container">
-<c:forEach var="uvo" items="${ranking }" begin="0" end="2">
-      <div class="clprofile-card">
-<%--       <c:if test="${uvo.f != null}"> --%>
-        <img 
-	        <c:if test="${uvo.profile != null }">
-				src="${pageContext.request.contextPath }/resources${uvo.profile }"
-			</c:if>
-			<c:if test="${uvo.profile == null }">
-				src="https://ptetutorials.com/images/user-profile.png"
-			</c:if>
-        	alt="image1" class="clprofile-icon" />
-        <div class="clprofile-name">${uvo.nick }</div>
-        <div class="clprofile-position"><b>${uvo.success_cnt }</b> 번 도전에 성공하셨습니다.</div>
-      </div>
-</c:forEach>
-
-      <div class="ranking-button">
-		<button type="button" class="btn btn-success btn-lg" onclick="location.href='/challenge/plusregist';">저축형 등록</button>
-		<button type="button" class="btn btn-warning btn-lg" onclick="location.href='/challenge/minusregist';">절약형 등록</button>
-	  </div>
-</div>
-<!-- 명예의 전당 -->
-
-<!-- 탭 -->
-<section class="container">
-  <ul class="tabs">
-    <li class="tab-item"><a href="/commumain">전체보기</a></li>
-    <li class="tab-item"><a href="/comnumain">진행중 챌린지</a></li>
-    <li class="tab-item"><a href="/conmumain" class="actives">종료된 챌린지</a></li>
-  </ul>
-</section>
-<!-- 탭 -->
-
-  <div class="clprofile-container2">
-  <input type="text" style="width:400px;border: none;background: transparent;" disabled>
-  <div class="green_window">
-    <select name="searchType" class="input_text">
-      <option value="n"<c:out value="${scri.searchType == null ? 'selected' : ''}"/>>-----</option>
-      <option value="c_title"<c:out value="${scri.searchType eq 'c_title' ? 'selected' : ''}"/>>제목</option>
-      <option value="c_content"<c:out value="${scri.searchType eq 'c_content' ? 'selected' : ''}"/>>내용</option>
-      <option value="c_titlec_content"<c:out value="${scri.searchType eq 'c_titlec_content' ? 'selected' : ''}"/>>제목+내용</option>
-    </select>
-
-    <input type="text" class="input_text" name="keyword" id="keywordInput" value="${scri.keyword}"/>
-    
-    <button class="sch_smit" id="searchBtn" type="button">검색</button>
-    <script>
-      $(function(){
-        $('#searchBtn').click(function() {
-          self.location = "conmumain" + '${pageMaker.makeQuery(1)}' + "&searchType=" + $("select option:selected").val() + "&keyword=" + encodeURIComponent($('#keywordInput').val());
-        });
-      });   
-    </script>
-  </div> 
-</div>
-  
-<!-- 챌린지 리스트 -->
-  <h2 class="visually-hidden"></h2>
-  <div class="row row-cols-lg-4 g-2" style="margin-top: 10px;">
-  
-  <c:forEach var="vo" items="${cListMe }">
-  
-  <!-- 날짜 계산하기 -->
-		<jsp:useBean id="now" class="java.util.Date" />
-			 <fmt:parseNumber value="${now.time / (1000*60*60*24)}" integerOnly="true" var="nowfmtTime" scope="request"/>
-			 <fmt:parseDate value="${vo.c_start}" var="startDate" pattern="yyyy-MM-dd"/>
-			 <fmt:parseNumber value="${(startDate.time + 1000*60*60*24)/ (1000*60*60*24)}" integerOnly="true" var="startTime" scope="request"/>
-			 <fmt:parseNumber value="${c_end.time / (1000*60*60*24)}" integerOnly="true" var="endTime" scope="request" />
-  
-    <div class="col">
-      <div class="card">
-      
-      	<c:if test="${vo.c_sort eq 0 }">
-      		<p class="card-item-chevron card-item-chevron--hit" >저축형</p>
-      	</c:if>
-      	<c:if test="${vo.c_sort eq 1 }">
-      		<p class="card-item-chevron card-item-chevron--sale">절약형</p>
-      	</c:if>
-
-      	<c:if test="${startTime - nowfmtTime >= 2}">
-      		<p class="card-item-chevron--new">D - <b>${startTime - nowfmtTime }</b></p>
-      	</c:if>
-      	<c:if test="${startTime - nowfmtTime == 1}">
-      		<p class="card-item-chevron--new-2"><b>오늘<br>마감</b></p>
-      	</c:if>
-      	<c:if test="${startTime - nowfmtTime <= 0}">
-      		<p class="card-item-chevron--new-3"><b>종 료</b></p>
-      	</c:if>
-        <a class="card-item-link" href="/challenge/detail?cno=${vo.cno }">
-        
-          <c:if test="${startTime - nowfmtTime >= 2}">
-      		<img class="card-img-top img-fluid" src="${pageContext.request.contextPath}/resources${vo.c_thumbFile}" alt="" aria-labelledby="title_1" id="c_img">
-      	  </c:if>
-      	  <c:if test="${startTime - nowfmtTime == 1}">
-      		<img class="card-img-top img-fluid-2" src="${pageContext.request.contextPath}/resources${vo.c_thumbFile}" alt="" aria-labelledby="title_1" id="c_img">
-      	  </c:if>
-      	  <c:if test="${startTime - nowfmtTime <= 0}">
-      		<img class="card-img-top img-fluid-3" src="${pageContext.request.contextPath}/resources${vo.c_thumbFile}" alt="" aria-labelledby="title_1" id="c_img">
-      	  </c:if>
-        
-        </a>
-        <div class="card-body">
-        <div class="card-item-header">
-       
-            <p class="card-item-code">[${vo.ct_top}]</p>
-
-            <div class="rate">
-             	<p class="card-item-rating">
-                <img src="https://png.pngtree.com/png-clipart/20190705/original/pngtree-vector-business-men-icon-png-image_4186858.jpg" alt=""> </p> 
-              	<p class="card-item-rating"> <b>${vo.c_cnt }</b> / ${vo.c_pcnt } 명</p>
-            </div>
-          </div>
-          <h3 class="card-title" id="title_1">${vo.c_title }</h3>
-          <div class="card-item-footer">
-            <p class="card-item-period" >
-           		<c:if test="${vo.c_period eq 2 }">
-      			2주
-      			</c:if>
-      			<c:if test="${vo.c_period eq 4 }">
-      			4주
-      			</c:if>
-      			<c:if test="${vo.c_period eq 8 }">
-      			2달
-      			</c:if>
-      			<c:if test="${vo.c_period eq 12 }">
-      			3달
-      			</c:if>
-      		<s></s></p>
-			
-            <p style="text-align:right;" class="card-item-price" ><b>${vo.c_deposit }</b> 원</p>
-          </div>
-          </div>
-        </div>
-      </div>
-   </c:forEach>
- </div>        
-</form>
-</main>
-
-            <div class="box-footer clearfix">
-              <ul class="pagination pagination-sm no-margin pull-right">
-                
-                <c:if test="${pageMaker.prev}">
-                	<li><a href="/commumain${pageMaker.makeSearch(pageMaker.startPage - 1)}">«</a></li>
-                </c:if>
-                
-                <c:forEach var="idx" begin="${pageMaker.startPage}" end="${pageMaker.endPage}" step="1">
-               		<li><a href="/commumain${pageMaker.makeSearch(idx)}">${idx}</a></li>
-                </c:forEach>
-                
-                <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
-                	<li><a href="/commumain${pageMaker.makeSearch(pageMaker.endPage + 1)}">»</a></li>
-                </c:if>
-                
-              </ul>
-            </div>
-
-
-</div>
-<%@ include file="../include/footer.jsp" %>
 
 <style>
 
@@ -941,4 +727,220 @@ main .card .card-item-chevron--new-3 {
     background: #458554;
 }
 </style>
+
+<h1 class="visually-hidden"></h1>
+<main>
+
+<!-- 로딩 코드 start -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<style type="text/css">
+#waiting {
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    position: fixed;
+    display: flex;
+    background: white;
+    z-index: 999;
+    opacity: 0.9;
+}
+#waiting > img {
+    display: flex;
+    width: fit-content;
+    height: fit-content;
+    margin: auto;
+}
+</style>
+<div id="waiting">
+   <img src="./resources/imgUpload/new-loading.gif">
+</div>
+
+<script type="text/javascript">
+    $(window).on('load', function() {
+        setTimeout(function(){
+            $("#waiting").fadeOut();
+        }, 300);
+    });
+</script>
+<!-- 로딩 코드 end -->
+
+<script type="text/javascript">
+   var result = '${result}';
+   if(result == 'overlap'){
+	   Swal.fire({
+	        title: '중복 챌린지는 개설 불가능합니다.', 
+	        icon: 'error'
+	      });
+   }
+</script>
+
+<form method="get">
+
+
+<!-- 명예의 전당 -->
+<h2 style="margin-left: 30px;">명예의 전당</h2>
+
+<div class="clprofile-container">
+<c:forEach var="uvo" items="${ranking }" begin="0" end="2">
+      <div class="clprofile-card">
+<%--       <c:if test="${uvo.f != null}"> --%>
+        <img 
+	        <c:if test="${uvo.profile != null }">
+				src="${pageContext.request.contextPath }/resources${uvo.profile }"
+			</c:if>
+			<c:if test="${uvo.profile == null }">
+				src="https://ptetutorials.com/images/user-profile.png"
+			</c:if>
+        	alt="image1" class="clprofile-icon" />
+        <div class="clprofile-name">${uvo.nick }</div>
+        <div class="clprofile-position"><b>${uvo.success_cnt }</b> 번 도전에 성공하셨습니다.</div>
+      </div>
+</c:forEach>
+
+      <div class="ranking-button">
+		<button type="button" class="btn btn-success btn-lg" onclick="location.href='/challenge/plusregist';">저축형 등록</button>
+		<button type="button" class="btn btn-warning btn-lg" onclick="location.href='/challenge/minusregist';">절약형 등록</button>
+	  </div>
+</div>
+<!-- 명예의 전당 -->
+
+<!-- 탭 -->
+<section class="container">
+  <ul class="tabs">
+    <li class="tab-item"><a href="/commumain">전체보기</a></li>
+    <li class="tab-item"><a href="/comnumain">진행중 챌린지</a></li>
+    <li class="tab-item"><a href="/conmumain" class="actives">종료된 챌린지</a></li>
+  </ul>
+</section>
+<!-- 탭 -->
+
+  <div class="clprofile-container2">
+  <input type="text" style="width:400px;border: none;background: transparent;" disabled>
+  <div class="green_window">
+    <select name="searchType" class="input_text">
+      <option value="n"<c:out value="${scri.searchType == null ? 'selected' : ''}"/>>-----</option>
+      <option value="c_title"<c:out value="${scri.searchType eq 'c_title' ? 'selected' : ''}"/>>제목</option>
+      <option value="c_content"<c:out value="${scri.searchType eq 'c_content' ? 'selected' : ''}"/>>내용</option>
+      <option value="c_titlec_content"<c:out value="${scri.searchType eq 'c_titlec_content' ? 'selected' : ''}"/>>제목+내용</option>
+    </select>
+
+    <input type="text" class="input_text" name="keyword" id="keywordInput" value="${scri.keyword}"/>
+    
+    <button class="sch_smit" id="searchBtn" type="button">검색</button>
+    <script>
+      $(function(){
+        $('#searchBtn').click(function() {
+          self.location = "conmumain" + '${pageMaker.makeQuery(1)}' + "&searchType=" + $("select option:selected").val() + "&keyword=" + encodeURIComponent($('#keywordInput').val());
+        });
+      });   
+    </script>
+  </div> 
+</div>
+  
+<!-- 챌린지 리스트 -->
+  <h2 class="visually-hidden"></h2>
+  <div class="row row-cols-lg-4 g-2" style="margin-top: 10px;">
+  
+  <c:forEach var="vo" items="${cListMe }">
+  
+  <!-- 날짜 계산하기 -->
+		<jsp:useBean id="now" class="java.util.Date" />
+			 <fmt:parseNumber value="${now.time / (1000*60*60*24)}" integerOnly="true" var="nowfmtTime" scope="request"/>
+			 <fmt:parseDate value="${vo.c_start}" var="startDate" pattern="yyyy-MM-dd"/>
+			 <fmt:parseNumber value="${(startDate.time + 1000*60*60*24)/ (1000*60*60*24)}" integerOnly="true" var="startTime" scope="request"/>
+			 <fmt:parseNumber value="${c_end.time / (1000*60*60*24)}" integerOnly="true" var="endTime" scope="request" />
+  
+    <div class="col">
+      <div class="card">
+      
+      	<c:if test="${vo.c_sort eq 0 }">
+      		<p class="card-item-chevron card-item-chevron--hit" >저축형</p>
+      	</c:if>
+      	<c:if test="${vo.c_sort eq 1 }">
+      		<p class="card-item-chevron card-item-chevron--sale">절약형</p>
+      	</c:if>
+
+      	<c:if test="${startTime - nowfmtTime >= 2}">
+      		<p class="card-item-chevron--new">D - <b>${startTime - nowfmtTime }</b></p>
+      	</c:if>
+      	<c:if test="${startTime - nowfmtTime == 1}">
+      		<p class="card-item-chevron--new-2"><b>오늘<br>마감</b></p>
+      	</c:if>
+      	<c:if test="${startTime - nowfmtTime <= 0}">
+      		<p class="card-item-chevron--new-3"><b>종 료</b></p>
+      	</c:if>
+        <a class="card-item-link" href="/challenge/detail?cno=${vo.cno }">
+        
+          <c:if test="${startTime - nowfmtTime >= 2}">
+      		<img class="card-img-top img-fluid" src="${pageContext.request.contextPath}/resources${vo.c_thumbFile}" alt="" aria-labelledby="title_1" id="c_img">
+      	  </c:if>
+      	  <c:if test="${startTime - nowfmtTime == 1}">
+      		<img class="card-img-top img-fluid-2" src="${pageContext.request.contextPath}/resources${vo.c_thumbFile}" alt="" aria-labelledby="title_1" id="c_img">
+      	  </c:if>
+      	  <c:if test="${startTime - nowfmtTime <= 0}">
+      		<img class="card-img-top img-fluid-3" src="${pageContext.request.contextPath}/resources${vo.c_thumbFile}" alt="" aria-labelledby="title_1" id="c_img">
+      	  </c:if>
+        
+        </a>
+        <div class="card-body">
+        <div class="card-item-header">
+       
+            <p class="card-item-code">[${vo.ct_top}]</p>
+
+            <div class="rate">
+             	<p class="card-item-rating">
+                <img src="https://png.pngtree.com/png-clipart/20190705/original/pngtree-vector-business-men-icon-png-image_4186858.jpg" alt=""> </p> 
+              	<p class="card-item-rating"> <b>${vo.c_cnt }</b> / ${vo.c_pcnt } 명</p>
+            </div>
+          </div>
+          <h3 class="card-title" id="title_1">${vo.c_title }</h3>
+          <div class="card-item-footer">
+            <p class="card-item-period" >
+           		<c:if test="${vo.c_period eq 2 }">
+      			2주
+      			</c:if>
+      			<c:if test="${vo.c_period eq 4 }">
+      			4주
+      			</c:if>
+      			<c:if test="${vo.c_period eq 8 }">
+      			2달
+      			</c:if>
+      			<c:if test="${vo.c_period eq 12 }">
+      			3달
+      			</c:if>
+      		<s></s></p>
+			
+            <p style="text-align:right;" class="card-item-price" ><b>${vo.c_deposit }</b> 원</p>
+          </div>
+          </div>
+        </div>
+      </div>
+   </c:forEach>
+ </div>        
+</form>
+</main>
+
+            <div class="box-footer clearfix">
+              <ul class="pagination pagination-sm no-margin pull-right">
+                
+                <c:if test="${pageMaker.prev}">
+                	<li><a href="/commumain${pageMaker.makeSearch(pageMaker.startPage - 1)}">«</a></li>
+                </c:if>
+                
+                <c:forEach var="idx" begin="${pageMaker.startPage}" end="${pageMaker.endPage}" step="1">
+               		<li><a href="/commumain${pageMaker.makeSearch(idx)}">${idx}</a></li>
+                </c:forEach>
+                
+                <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
+                	<li><a href="/commumain${pageMaker.makeSearch(pageMaker.endPage + 1)}">»</a></li>
+                </c:if>
+                
+              </ul>
+            </div>
+
+
+</div>
+<%@ include file="../include/footer.jsp" %>
+
 
