@@ -808,9 +808,9 @@ main .card .card-item-chevron--new-3 {
 <!-- 탭 -->
 <section class="container">
   <ul class="tabs">
-    <li class="tab-item"><a href="/commumain" class="actives">전체보기</a></li>
-    <li class="tab-item"><a href="/comnumain" >진행중 챌린지</a></li>
-    <li class="tab-item"><a href="/conmumain">종료된 챌린지</a></li>
+    <li class="tab-item"><a href="/commumain">전체보기</a></li>
+    <li class="tab-item"><a href="/comnumain">진행중 챌린지</a></li>
+    <li class="tab-item"><a href="/conmumain" class="actives">종료된 챌린지</a></li>
   </ul>
 </section>
 <!-- 탭 -->
@@ -831,7 +831,7 @@ main .card .card-item-chevron--new-3 {
     <script>
       $(function(){
         $('#searchBtn').click(function() {
-          self.location = "commumain" + '${pageMaker.makeQuery(1)}' + "&searchType=" + $("select option:selected").val() + "&keyword=" + encodeURIComponent($('#keywordInput').val());
+          self.location = "conmumain" + '${pageMaker.makeQuery(1)}' + "&searchType=" + $("select option:selected").val() + "&keyword=" + encodeURIComponent($('#keywordInput').val());
         });
       });   
     </script>
@@ -842,7 +842,7 @@ main .card .card-item-chevron--new-3 {
   <h2 class="visually-hidden"></h2>
   <div class="row row-cols-lg-4 g-2" style="margin-top: 10px;">
   
-  <c:forEach var="vo" items="${cListM }">
+  <c:forEach var="vo" items="${cListMe }">
   
   <!-- 날짜 계산하기 -->
 		<jsp:useBean id="now" class="java.util.Date" />
