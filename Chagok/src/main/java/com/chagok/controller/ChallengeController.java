@@ -128,6 +128,11 @@ public class ChallengeController {
 	public String minusFeed(Model model,@RequestParam("cno") int cno,HttpSession session,ChallengeVO cvo,MinusVO mvo) throws Exception {
 		mylog.debug(" 수 지 : minusFeed Get 호출 ");
 		
+		// 로그인 확인
+		if(session.getAttribute("mno")==null) {
+			return "/chagok/login";
+		}
+		
 		Integer mmno = service.getChallengeInfo(cno).getMno();
 		ChallengeVO vo = service.getChallengeInfo(cno);
 		List<Map<String, Object>> minusPeoList = service.getMinusPeople(cno);
@@ -346,7 +351,6 @@ public class ChallengeController {
 	// http://localhost:8080/challenge/plusregist
 	@GetMapping(value="/plusregist")
 	public String plusRegistGET() throws Exception{
-		mylog.debug(" /challenge/plusRegistGET 호출 -> 페이지 이동 ");
 		
 		return "/challenge/plusRegist";
 	}
@@ -354,7 +358,6 @@ public class ChallengeController {
 	// 챌린지 등록 (저축형) - POST
 	@RequestMapping(value = "/plusregist", method=RequestMethod.POST)
 	public String plusRegistPOST(ChallengeVO vo, MultipartFile file, HttpSession session, Model model, Map<String, Object> map, RedirectAttributes rttr) throws Exception{
-		mylog.debug(" /challenge/plusRegist(POST) 호출 ");	
 		
 		// 회원정보 저장
 		int mno = (Integer)session.getAttribute("mno");
@@ -368,14 +371,14 @@ public class ChallengeController {
 		map.put("mno", mno);
 		map.put("ctno", vo.getCtno());
 		
-		Integer result = service.samechallenge(map);
+		Integer overlap = service.samechallenge(map);
 		
-		if(result != null) {
-			rttr.addFlashAttribute("result", "overlap");
+		if(overlap != null) {
+			rttr.addFlashAttribute("overlap", "overlap");
 			
 			return "redirect:/commumain";
 		}
-		rttr.addFlashAttribute("result", "Noverlap");
+		rttr.addFlashAttribute("overlap", "Noverlap");
 			
 		// 사진등록
 		String imgUploadPath = uploadPath + File.separator + "imgUpload";
@@ -393,11 +396,7 @@ public class ChallengeController {
 		vo.setC_thumbFile(File.separator + "imgUpload" + ymdPath + File.separator + "s" + File.separator + "s_" + fileName);
 		
 		// 챌린지 등록
-		mylog.debug(vo.toString());
 		service.challengeRegist(vo);
-		//mylog.debug(cno.toString());
-		
-		mylog.debug(" 챌린지 등록(저축형) 완료! ");
 		
 		// plus 테이블에 정보 추가
 		Map<String, Object> plus = new HashMap<String, Object>();
@@ -413,7 +412,6 @@ public class ChallengeController {
 	// http://localhost:8080/challenge/minusregist
 	@GetMapping(value="/minusregist")
 	public String minusRegistGET() throws Exception{
-		mylog.debug(" /challenge/minusRegistGET 호출 -> 페이지 이동 ");
 		
 		return "/challenge/minusRegist";
 	}
@@ -421,7 +419,6 @@ public class ChallengeController {
 	// 챌린지 등록 (절약형) - POST
 	@RequestMapping(value = "/minusregist", method=RequestMethod.POST)
 	public String minusRegistPOST(ChallengeVO vo, MultipartFile file, HttpSession session, Model model, Map<String, Object> map, RedirectAttributes rttr) throws Exception{
-		mylog.debug(" /challenge/minusRegist(POST) 호출 ");	
 		
 		// 회원정보 저장
 		int mno = (Integer)session.getAttribute("mno");
@@ -435,14 +432,14 @@ public class ChallengeController {
 		map.put("mno", mno);
 		map.put("ctno", vo.getCtno());
 		
-		Integer result = service.samechallenge(map);
+		Integer overlap = service.samechallenge(map);
 		
-		if(result != null) {
-			rttr.addFlashAttribute("result", "overlap");
+		if(overlap != null) {
+			rttr.addFlashAttribute("overlap", "overlap");
 			
 			return "redirect:/commumain";
 		}
-		rttr.addFlashAttribute("result", "Noverlap");
+		rttr.addFlashAttribute("overlap", "Noverlap");
 		
 		// 사진등록
 		String imgUploadPath = uploadPath + File.separator + "imgUpload";
@@ -459,9 +456,7 @@ public class ChallengeController {
 		vo.setC_thumbFile(File.separator + "imgUpload" + ymdPath + File.separator + "s" + File.separator + "s_" + fileName);
 		
 		// 챌린지 등록
-		mylog.debug(vo.toString());
 		service.challengeRegist(vo);
-		mylog.debug(" 챌린지 등록(절약형) 완료! ");
 		
 		// minus 테이블에 정보 추가
 		Map<String, Object> minus = new HashMap<String, Object>();
