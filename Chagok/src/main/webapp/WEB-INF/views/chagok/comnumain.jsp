@@ -16,8 +16,6 @@
 
 
 <style>
-
-
 *,
 html {
   margin: 0;
@@ -729,7 +727,6 @@ main .card .card-item-chevron--new-3 {
 </style>
 
 
-<h1 class="visually-hidden"></h1>
 <main>
 
 <!-- 로딩 코드 start -->
@@ -766,6 +763,7 @@ main .card .card-item-chevron--new-3 {
 </script>
 <!-- 로딩 코드 end -->
 
+<!-- 중복챌린지 제어 -->
 <script type="text/javascript">
    var result = '${result}';
    if(result == 'overlap'){
@@ -776,12 +774,11 @@ main .card .card-item-chevron--new-3 {
    }
 </script>
 
-<form method="get">
 
+<form method="get">
 
 <!-- 명예의 전당 -->
 <h2 style="margin-left: 30px;">명예의 전당</h2>
-
 <div class="clprofile-container">
 <c:forEach var="uvo" items="${ranking }" begin="0" end="2">
       <div class="clprofile-card">
@@ -806,6 +803,7 @@ main .card .card-item-chevron--new-3 {
 </div>
 <!-- 명예의 전당 -->
 
+
 <!-- 탭 -->
 <section class="container">
   <ul class="tabs">
@@ -816,6 +814,8 @@ main .card .card-item-chevron--new-3 {
 </section>
 <!-- 탭 -->
 
+
+<!-- 검색 -->
   <div class="clprofile-container2">
   <input type="text" style="width:400px;border: none;background: transparent;" disabled>
   <div class="green_window">
@@ -838,9 +838,10 @@ main .card .card-item-chevron--new-3 {
     </script>
   </div> 
 </div>
+<!-- 검색 -->
+
   
 <!-- 챌린지 리스트 -->
-  <h2 class="visually-hidden"></h2>
   <div class="row row-cols-lg-4 g-2" style="margin-top: 10px;">
   
   <c:forEach var="vo" items="${cListMp }">
@@ -910,7 +911,7 @@ main .card .card-item-chevron--new-3 {
       			<c:if test="${vo.c_period eq 12 }">
       			3달
       			</c:if>
-      		<s></s></p>
+      		</p>
 			
             <p style="text-align:right;" class="card-item-price" ><b>${vo.c_deposit }</b> 원</p>
           </div>
@@ -922,25 +923,28 @@ main .card .card-item-chevron--new-3 {
 </form>
 </main>
 
-            <div class="box-footer clearfix">
-              <ul class="pagination pagination-sm no-margin pull-right">
-                
-                <c:if test="${pageMaker.prev}">
-                	<li><a href="/commumain${pageMaker.makeSearch(pageMaker.startPage - 1)}">«</a></li>
-                </c:if>
-                
-                <c:forEach var="idx" begin="${pageMaker.startPage}" end="${pageMaker.endPage}" step="1">
-               		<li><a href="/commumain${pageMaker.makeSearch(idx)}">${idx}</a></li>
-                </c:forEach>
-                
-                <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
-                	<li><a href="/commumain${pageMaker.makeSearch(pageMaker.endPage + 1)}">»</a></li>
-                </c:if>
-                
-              </ul>
-            </div>
+
+<!-- 페이징 -->
+<div class="box-footer clearfix">
+  <ul class="pagination pagination-sm no-margin pull-right">
+    
+    <c:if test="${pageMaker.prev}">
+    	<li><a href="/commumain${pageMaker.makeSearch(pageMaker.startPage - 1)}">«</a></li>
+    </c:if>
+    
+    <c:forEach var="idx" begin="${pageMaker.startPage}" end="${pageMaker.endPage}" step="1">
+   		<li><a href="/commumain${pageMaker.makeSearch(idx)}">${idx}</a></li>
+    </c:forEach>
+    
+    <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
+    	<li><a href="/commumain${pageMaker.makeSearch(pageMaker.endPage + 1)}">»</a></li>
+    </c:if>
+    
+  </ul>
+</div>
+<!-- 페이징 -->
+
 
 
 </div>
 <%@ include file="../include/footer.jsp" %>
-

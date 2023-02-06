@@ -346,7 +346,6 @@ public class ChallengeController {
 	// http://localhost:8080/challenge/plusregist
 	@GetMapping(value="/plusregist")
 	public String plusRegistGET() throws Exception{
-		mylog.debug(" /challenge/plusRegistGET 호출 -> 페이지 이동 ");
 		
 		return "/challenge/plusRegist";
 	}
@@ -354,7 +353,6 @@ public class ChallengeController {
 	// 챌린지 등록 (저축형) - POST
 	@RequestMapping(value = "/plusregist", method=RequestMethod.POST)
 	public String plusRegistPOST(ChallengeVO vo, MultipartFile file, HttpSession session, Model model, Map<String, Object> map, RedirectAttributes rttr) throws Exception{
-		mylog.debug(" /challenge/plusRegist(POST) 호출 ");	
 		
 		// 회원정보 저장
 		int mno = (Integer)session.getAttribute("mno");
@@ -395,9 +393,6 @@ public class ChallengeController {
 		// 챌린지 등록
 		mylog.debug(vo.toString());
 		service.challengeRegist(vo);
-		//mylog.debug(cno.toString());
-		
-		mylog.debug(" 챌린지 등록(저축형) 완료! ");
 		
 		// plus 테이블에 정보 추가
 		Map<String, Object> plus = new HashMap<String, Object>();
@@ -413,7 +408,6 @@ public class ChallengeController {
 	// http://localhost:8080/challenge/minusregist
 	@GetMapping(value="/minusregist")
 	public String minusRegistGET() throws Exception{
-		mylog.debug(" /challenge/minusRegistGET 호출 -> 페이지 이동 ");
 		
 		return "/challenge/minusRegist";
 	}
@@ -421,7 +415,6 @@ public class ChallengeController {
 	// 챌린지 등록 (절약형) - POST
 	@RequestMapping(value = "/minusregist", method=RequestMethod.POST)
 	public String minusRegistPOST(ChallengeVO vo, MultipartFile file, HttpSession session, Model model, Map<String, Object> map, RedirectAttributes rttr) throws Exception{
-		mylog.debug(" /challenge/minusRegist(POST) 호출 ");	
 		
 		// 회원정보 저장
 		int mno = (Integer)session.getAttribute("mno");
@@ -461,7 +454,6 @@ public class ChallengeController {
 		// 챌린지 등록
 		mylog.debug(vo.toString());
 		service.challengeRegist(vo);
-		mylog.debug(" 챌린지 등록(절약형) 완료! ");
 		
 		// minus 테이블에 정보 추가
 		Map<String, Object> minus = new HashMap<String, Object>();
