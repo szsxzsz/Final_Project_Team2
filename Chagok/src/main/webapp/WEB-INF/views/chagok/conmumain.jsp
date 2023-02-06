@@ -117,7 +117,7 @@
     <script>
       $(function(){
         $('#searchBtn').click(function() {
-          self.location = "commumain" + '${pageMaker.makeQuery(1)}' + "&searchType=" + $("select option:selected").val() + "&keyword=" + encodeURIComponent($('#keywordInput').val());
+          self.location = "conmumain" + '${pageMaker.makeQuery(1)}' + "&searchType=" + $("select option:selected").val() + "&keyword=" + encodeURIComponent($('#keywordInput').val());
         });
       });   
     </script>
@@ -165,7 +165,7 @@
       		<img class="card-img-top img-fluid-2" src="${pageContext.request.contextPath}/resources${vo.c_thumbFile}" alt="" aria-labelledby="title_1" id="c_img">
       	  </c:if>
       	  <c:if test="${startTime - nowfmtTime <= 0}">
-      		<img class="card-img-top img-fluid-3" src="${pageContext.request.contextPath}/resources${vo.c_thumbFile}" alt="" aria-labelledby="title_1" id="c_img">
+      		<img class="card-img-top img-fluid-3" src="${vo.c_thumbFile}" alt="" aria-labelledby="title_1" id="c_img">
       	  </c:if>
         
         </a>

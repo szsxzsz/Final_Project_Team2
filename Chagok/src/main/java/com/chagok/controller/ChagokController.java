@@ -235,11 +235,9 @@ public class ChagokController {
 	// http://localhost:8080/commumain
 	@GetMapping(value="/commumain")
 	public String getChallengeList(Model model, HttpSession session, @ModelAttribute("scri") SearchCriteria scri, RedirectAttributes rttr) throws Exception {
-		List<ChallengeVO> challengeList = service2.getChallengeList();
 		List<UserVO> ranking = service2.ranking();
 		ingChallenge();
 		
-		model.addAttribute("challengeList", challengeList);
 		model.addAttribute("ranking", ranking);
 		model.addAttribute("cListM", service2.cListM(scri));
 		
@@ -257,11 +255,9 @@ public class ChagokController {
 	// http://localhost:8080/comnumain
 	@GetMapping(value="/comnumain")
 	public String getChallengeList2(Model model, HttpSession session, @ModelAttribute("scri") SearchCriteria scri, RedirectAttributes rttr) throws Exception {
-		List<ChallengeVO> challengeList = service2.getChallengeList();
 		List<UserVO> ranking = service2.ranking();
 		ingChallenge();
 		
-		model.addAttribute("challengeList", challengeList);
 		model.addAttribute("ranking", ranking);
 		model.addAttribute("cListMp", service2.cListMp(scri));
 		
@@ -279,11 +275,9 @@ public class ChagokController {
 	// http://localhost:8080/conmumain
 	@GetMapping(value="/conmumain")
 	public String getChallengeList3(Model model, HttpSession session, @ModelAttribute("scri") SearchCriteria scri, RedirectAttributes rttr) throws Exception {
-		List<ChallengeVO> challengeList = service2.getChallengeList();
 		List<UserVO> ranking = service2.ranking();
 		ingChallenge();
 		
-		model.addAttribute("challengeList", challengeList);
 		model.addAttribute("ranking", ranking);
 		model.addAttribute("cListMe", service2.cListMe(scri));
 		
