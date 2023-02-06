@@ -128,6 +128,11 @@ public class ChallengeController {
 	public String minusFeed(Model model,@RequestParam("cno") int cno,HttpSession session,ChallengeVO cvo,MinusVO mvo) throws Exception {
 		mylog.debug(" 수 지 : minusFeed Get 호출 ");
 		
+		// 로그인 확인
+		if(session.getAttribute("mno")==null) {
+			return "/chagok/login";
+		}
+		
 		Integer mmno = service.getChallengeInfo(cno).getMno();
 		ChallengeVO vo = service.getChallengeInfo(cno);
 		List<Map<String, Object>> minusPeoList = service.getMinusPeople(cno);
