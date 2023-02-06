@@ -70,16 +70,28 @@ public interface ChallengeDAO {
 	// 명예의 전당 순위
 	public List<UserVO> ranking() throws Exception;
 	
-	// 챌린지 목록 (페이징)
+	// 챌린지 메인 (페이징)
 	public List<ChallengeVO> cListM(SearchCriteria scri) throws Exception;
 	
-	// 챌린지 총 갯수 (페이징)
+	// 챌린지 메인 총 개수 (페이징)
 	public Integer cListCountM(SearchCriteria scri) throws Exception;
+	
+	// 챌린지 메인 진행중 (페이징)
+	public List<ChallengeVO> cListMp(SearchCriteria scri) throws Exception;
+	
+	// 챌린지 메인 진행중 총 개수 (페이징)
+	public Integer cListCountMp(SearchCriteria scri) throws Exception;
+	
+	// 챌린지 메인 종료 (페이징)
+	public List<ChallengeVO> cListMe(SearchCriteria scri) throws Exception;
+	
+	// 챌린지 메인 종료 총 개수 (페이징)
+	public Integer cListCountMe(SearchCriteria scri) throws Exception;
 	
 	// 챌린지 목록 (페이징)
 	public List<ChallengeVO> cList(SearchCriteria scri) throws Exception;
 	
-	// 챌린지 총 갯수 (페이징)
+	// 챌린지 총 개수 (페이징)
 	public Integer cListCount(SearchCriteria scri) throws Exception;
 	
 	// 챌린지 예치금 합산
