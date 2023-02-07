@@ -954,7 +954,7 @@ main .card .card-item-chevron--new-4 {
 
 
 <!-- 페이징 -->
- <div class="box-footer clearfix">
+ <div class="box-footer clearfix" style="display: flex; justify-content: center;">
    <ul class="pagination pagination-sm no-margin pull-right">
      
      <c:if test="${pageMaker.prev}">

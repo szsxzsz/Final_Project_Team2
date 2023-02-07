@@ -274,7 +274,7 @@
 													) MP
 		         		
       WHERE RNUM BETWEEN #{rowStart} AND #{rowEnd}
-      ORDER BY c_status, cno
+      ORDER BY c_status, c_start, cno
 	</select>
 	
 	<!-- 챌린지 메인2 -->
@@ -297,7 +297,7 @@
 													) MP
 		         		
       WHERE RNUM BETWEEN #{rowStart} AND #{rowEnd}
-      ORDER BY cno
+      ORDER BY c_start
 	</select>
 	
 	<!-- 챌린지 메인 진행중 2 -->
