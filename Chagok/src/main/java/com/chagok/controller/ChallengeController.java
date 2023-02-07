@@ -473,10 +473,10 @@ public class ChallengeController {
 	}
 	
 	// 챌린지 결과(성공)
-	// http://localhost:8080/challenge/success?cno=1
-	@GetMapping(value="/success")
-	public String victoryGET(Model model, @RequestParam("cno") int cno, HttpSession session) throws Exception{
-		Integer mno = (Integer) session.getAttribute("mno");
+		// http://localhost:8080/challenge/success?cno=1
+		@GetMapping(value="/success")
+		public String victoryGET(Model model, @RequestParam("cno") int cno, HttpSession session) throws Exception{
+			Integer mno = (Integer) session.getAttribute("mno");
 		
 		ChallengeVO vo = service.getChallengeInfo(cno);
 		List<ChallengeVO> challengeList = service.getChallengeList(cno);
@@ -494,9 +494,10 @@ public class ChallengeController {
 		model.addAttribute("Success", Success); // 성공인원
 		model.addAttribute("result", result);
 		
+		// 포인트 처리(biz계좌)
 		Map<String, Object> giveInfo = new HashMap<String, Object>();
 	    giveInfo.put("mno", mno);
-	    giveInfo.put("getpoint", (ChallengeMoney/Success));
+	    giveInfo.put("getpoint", (ChallengeMoney/Success)*0.9);
 	    
 		uservice.givePoint(giveInfo);
 		
