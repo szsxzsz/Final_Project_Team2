@@ -7,6 +7,7 @@
 <%@ include file="../include/header.jsp"%>
 <%@ include file="../include/sidebar.jsp"%>
 
+
 <!-- sweetalert -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
@@ -110,6 +111,39 @@
 
 </head>
 
+<!-- 로딩 코드 start -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<style type="text/css">
+#waiting {
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    position: fixed;
+    display: flex;
+    background: white;
+    z-index: 999;
+    opacity: 0.9;
+}
+#waiting > img {
+    display: flex;
+    width: fit-content;
+    height: fit-content;
+    margin: auto;
+}
+</style>
+<div id="waiting">
+   <img src="../resources/imgUpload/new-loading.gif">
+</div>
+
+<script type="text/javascript">
+    $(window).on('load', function() {
+        setTimeout(function(){
+            $("#waiting").fadeOut();
+        }, 300);
+    });
+</script>
+<!-- 로딩 코드 end -->
 
 <script type="text/javascript">
 	$(document).ready(function(){
@@ -173,8 +207,8 @@
  <script src="../assets/js/theme.min.js"></script>
 
 <script type="text/javascript">
-   var result = '${result}';
-   if(result == 'Noverlap'){
+   var overlap = '${overlap}';
+   if(overlap == 'Noverlap'){
 	   Swal.fire({
 	        title: '1일 이내로 승인이 완료된 후 챌린지가 등록되니 잠시만 기다려주세요.', 
 	        icon: 'info'
@@ -293,24 +327,23 @@
 <!-- 게시판 내용 -->
 
 					
-<!-- 페이징 -->					
-<!-- 		  <div class="board_page">
-                	<ul class= "pagination pagination-sm no-margin pull-right">
-					<c:if test="${pagevo.prev }">
-			            <li><a href="/bizAccount?page=${pagevo.startPage-1 }">«</a></li>
-			        </c:if>
-					<c:forEach var="idx" begin="${pagevo.startPage }" end="${pagevo.endPage }" step="1">
-						<li
-							<c:out value="${idx == pagevo.cri.page? 'class=active':'' }"/>
-							>
-							<a href="/bizAccount?page=${idx }">${idx }</a>
-						</li>
-					</c:forEach>
-			        <c:if test="${pagevo.next }">
-			            <li><a href="/bizAccount?page=${pagevo.endPage+1 }">»</a></li>
-			        </c:if>
+<!-- 페이징 -->		
+<%-- ${pagevo }			 --%>
+  <div class="board_page" style="text-align:center;" >
+               <ul class= "pagination pagination-sm no-margin pull-center" >
+               <c:if test="${pagevo.prev }">
+					<li><a href="/mychallenge?page=${pagevo.startPage-1 }">«</a></li>
+				</c:if>
+               <c:forEach var="idx" begin="${pagevo.startPage }" end="${pagevo.endPage }" step="1">
+					<li 
+						<c:out value="${idx == pagevo.cri.page? 'class=active':'' }"/>
+						><a href="/mychallenge?page=${idx }">${idx }</a></li>
+				</c:forEach>
+                <c:if test="${pagevo.next }">
+					<li><a href="/mychallenge?page=${pagevo.endPage+1 }">»</a></li>
+				</c:if>
                 </ul>
-           </div> -->
+  </div>           
  <!-- 페이징 -->
  
  </body>
