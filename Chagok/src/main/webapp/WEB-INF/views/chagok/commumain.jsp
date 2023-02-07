@@ -65,6 +65,14 @@ body {
   height: 240px;
   object-fit: scale-down;
   background-color: #d2d6de;
+  filter: grayscale(70%);
+}
+
+.img-fluid-4 {
+  width: 270px;
+  height: 240px;
+  object-fit: scale-down;
+  background-color: #d2d6de;
   filter: grayscale(100%);
 }
 
@@ -559,6 +567,22 @@ main .card .card-item-chevron--new-3 {
     box-sizing: border-box;
     margin: 0;
     -webkit-border-radius: 4px;
+    color: #FFDB83;
+    text-shadow: 2px 2px 1px #000;
+    font-size: 45px;
+    line-height: 1.4;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+main .card .card-item-chevron--new-4 {
+	position: absolute;
+    z-index: 2;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    margin: 0;
+    -webkit-border-radius: 4px;
     color: #fff;
     text-shadow: 2px 2px 1px #000;
     font-size: 45px;
@@ -808,7 +832,7 @@ main .card .card-item-chevron--new-3 {
   <ul class="tabs">
     <li class="tab-item"><a href="/commumain" class="actives">전체보기</a></li>
     <li class="tab-item"><a href="/comnumain" >모집중 챌린지</a></li>
-    <li class="tab-item"><a href="/conmumain">종료된 챌린지</a></li>
+    <li class="tab-item"><a href="/conmumain">마감된 챌린지</a></li>
   </ul>
 </section>
 <!-- 탭 -->
@@ -862,25 +886,31 @@ main .card .card-item-chevron--new-3 {
       		<p class="card-item-chevron card-item-chevron--sale">절약형</p>
       	</c:if>
 
-      	<c:if test="${startTime - nowfmtTime >= 2}">
+      	<c:if test="${vo.c_status eq 1 && startTime - nowfmtTime >= 2}">
       		<p class="card-item-chevron--new">D - <b>${startTime - nowfmtTime }</b></p>
       	</c:if>
-      	<c:if test="${startTime - nowfmtTime == 1}">
+      	<c:if test="${vo.c_status eq 1 && startTime - nowfmtTime == 1}">
       		<p class="card-item-chevron--new-2"><b>오늘<br>마감</b></p>
       	</c:if>
-      	<c:if test="${startTime - nowfmtTime <= 0}">
-      		<p class="card-item-chevron--new-3"><b>종 료</b></p>
+      	<c:if test="${vo.c_status eq 2}">
+      		<p class="card-item-chevron--new-3"><b>진행중</b></p>
+      	</c:if>
+      	<c:if test="${vo.c_status eq 7}">
+      		<p class="card-item-chevron--new-4"><b>종 료</b></p>
       	</c:if>
         <a class="card-item-link" href="/challenge/detail?cno=${vo.cno }">
         
-          <c:if test="${startTime - nowfmtTime >= 2}">
+          <c:if test="${vo.c_status eq 1 && startTime - nowfmtTime >= 2}">
       		<img class="card-img-top img-fluid" src="${pageContext.request.contextPath}/resources${vo.c_thumbFile}" alt="" aria-labelledby="title_1" id="c_img">
       	  </c:if>
-      	  <c:if test="${startTime - nowfmtTime == 1}">
+      	  <c:if test="${vo.c_status eq 1 && startTime - nowfmtTime == 1}">
       		<img class="card-img-top img-fluid-2" src="${pageContext.request.contextPath}/resources${vo.c_thumbFile}" alt="" aria-labelledby="title_1" id="c_img">
       	  </c:if>
-      	  <c:if test="${startTime - nowfmtTime <= 0}">
+      	  <c:if test="${vo.c_status eq 2}">
       		<img class="card-img-top img-fluid-3" src="${pageContext.request.contextPath}/resources${vo.c_thumbFile}" alt="" aria-labelledby="title_1" id="c_img">
+      	  </c:if>
+      	  <c:if test="${vo.c_status eq 7}">
+      		<img class="card-img-top img-fluid-4" src="${pageContext.request.contextPath}/resources${vo.c_thumbFile}" alt="" aria-labelledby="title_1" id="c_img">
       	  </c:if>
         
         </a>
