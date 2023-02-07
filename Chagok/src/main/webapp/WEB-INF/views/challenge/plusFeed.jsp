@@ -4,6 +4,7 @@
 <%@ include file="../include/sidebar.jsp" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <!-- sweetalert -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
@@ -86,7 +87,6 @@
 
 
 <h1 style="padding: 0 15px 0 15px;"> 저축형 차곡 챌린지 </h1>
-
 
  <!-- Main content -->
 <section class="content">
@@ -188,7 +188,7 @@
 						<div class="whitespace" id="whitespace">
 						<h5>차곡은행 (차곡 챌린지 계좌)</h5>
   						<h3>1234-1231-12345</h3>
-  						<h4>보내는 사람 : ${nick}</h4>
+  						<h4>보내는 사람 : <sec:authentication property="principal.user.nick"/></h4>
   					</div>
 						<div class="result2" id="result" align="right"><fmt:formatNumber value="${vo.c_amount}" pattern=",000"/></div>
 							<div class="calc-wrap" id="calc-wrap">
@@ -222,13 +222,6 @@
               <h3 class="box-title">챌린지 진행상황</h3>
 
               <div class="box-tools">
-<!--                 <div class="input-group input-group-sm hidden-xs" style="width: 150px;"> -->
-<!--                   <input type="text" name="table_search" class="form-control pull-right" placeholder="Search"> -->
-
-<!--                   <div class="input-group-btn"> -->
-<!--                     <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button> -->
-<!--                   </div> -->
-<!--                 </div> -->
               </div>
             </div>
             <!-- /.box-header -->
@@ -251,7 +244,7 @@
                   <!-- 참가자명  -->
                    <td>${plusPeoList.nick }</td> 
                    <fmt:formatNumber value="${vo.c_period*7 /vo.c_freq }" pattern="0" var="total" />
-                   <!-- 프로그래스바  -->
+                   <!-- 프로그래스바(진행률)  -->
                    <td> 
                    <!-- 기간 내   -->
                   	  <c:if test="${startTime - nowfmtTime <= 0 && nowfmtTime - endTime <= 0}"> <!-- 진행중  -->
@@ -272,6 +265,7 @@
 			                    </div>
 		                  	</c:if>
 	                  	</c:if>
+	                  	<c:if test="${saveMoney != vo.c_amount }">
 		                    <c:if test="${plusPeoList.pl_sum!=0 }">
 			                    <div class="progress progress-xs ">
 			                      <div class="progress-bar progress-bar-primary" style="width: ${(plusPeoList.pl_cnt / total)*100}%"></div>
@@ -283,7 +277,9 @@
 			                    </div>
 		                  	</c:if>
 	                  </c:if>
-	                  <c:if test="${nowfmtTime - endTime > 0}"> <!-- 종료시 -->
+                   </c:if>
+	                  <!-- 종료시 -->
+	                  <c:if test="${nowfmtTime - endTime > 0}"> 
 	                  	<c:if test="${saveMoney == vo.c_amount }">
 	                  		<div class="progress progress-xs">
 		                      <div class="progress-bar progress-bar-success" style="width: 100%"></div>
@@ -295,7 +291,8 @@
 		                    </div>
 	                  	</c:if> 
 	                  </c:if>
-	                  <c:if test="${nowfmtTime - endTime >= 0}"> <!-- 기간 전 -->
+	                  <!-- 기간 전 -->
+	                  <c:if test="${startTime - nowfmtTime > 0}"> 
 	                  	<c:if test="${saveMoney == vo.c_amount }">
 	                  		<div class="progress progress-xs">
 		                      <div class="progress-bar progress-bar-success" style="width: 100%"></div>
@@ -321,7 +318,6 @@
                		</c:if>
                		<c:if test="${nowfmtTime - endTime < 0}"> <!-- 진행중  -->
                   		<c:if test="${saveMoney == vo.c_amount}">
-<%-- 	                  		<span class="badge bg-light-blue">${plusPeoList.pl_cnt} / ${vo.c_total }</span> --%>
 	                  		<span class="badge bg-green">${plusPeoList.pl_cnt} / ${total}</span>
 	                  	</c:if>
 	                  	<c:if test="${saveMoney != vo.c_amount && plusPeoList.pl_finish == false}">
@@ -335,7 +331,8 @@
                   
                   <!-- status -->
                   <td>
-                  	<c:if test="${nowfmtTime - endTime > 0}"> <!-- 종료시 -->
+                  	<!-- 종료시 -->
+                  	<c:if test="${nowfmtTime - endTime > 0}"> 
 	                  	<c:if test="${saveMoney == vo.c_amount && plusPeoList.pl_finish == true }">
 	                  		<span class="label label-success">성공</span>
 	                  	</c:if>
@@ -343,7 +340,8 @@
 	                  		<span class="label label-primary">실패</span>
 	                  	</c:if>
                   	</c:if>
-                  	<c:if test="${nowfmtTime - endTime <= 0}"> <!-- 진행중  -->
+                  	<!-- 진행중  -->
+                  	<c:if test="${startTime - nowfmtTime <= 0 && nowfmtTime - endTime <= 0}"> 
                   		<c:if test="${saveMoney == vo.c_amount }">
 	                  		<span class="label label-primary">진행중</span>
 	                  	</c:if>
@@ -351,6 +349,10 @@
 	                  		<span class="label label-primary">진행중</span>
 	                  	</c:if>
                   	</c:if>
+                  	<!-- 기간 전 -->
+                  	<c:if test="${startTime - nowfmtTime > 0}"> 
+                  		<span class="label label-warning">진행예정</span>
+	                </c:if>
                   </td>
                   
                 </tr>
@@ -366,7 +368,7 @@
     <!-- /.content -->
     
     
- <!-- 칭찬하기/주시하기  @@@@@@@@@@@@@@@@@@@@@@@@@ -->
+ <!-- 칭찬하기/주시하기 -->
     <div class="col-xs-12" style="margin-left: 10px; ">
 	 <div class="row">
 	  <h3 class=" text-center"> << ${vo.c_title } >> </h3>
@@ -385,17 +387,14 @@
 	              <div class="chat_people">
 	                <div class="chat_img"> 
 	                <c:if test="${plusPeoList.profile != null }">
-	                	<img src="/${plusPeoList.profile }" alt="sunil"> 
+	                	<img src="{pageContext.request.contextPath }/resources${plusPeoList.profile }" alt="sunil"> 
 	                </c:if>
 	                <c:if test="${plusPeoList.profile == null }">
 	                	<img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> 
 	                </c:if>
 	                </div>
 	                <div class="chat_ib">
-<%-- 	                  <h5>${plusPeoList.nick} <span class="chat_date"><fmt:formatDate value="${now }" pattern="MMM DD일"/></span></h5><!-- 최근 접속일자로 바꿀 것 --> --%>
 	                  <h5>${plusPeoList.nick} <span class="chat_date"></h5><!-- 최근 접속일자로 바꿀 것 -->
-<!-- 	                  <a href="#"><i class="fa fa-circle text-success"></i> Online</a></span> -->
-<!-- 	                  <a href="#"><i class="fa fa-circle text-gray"></i> Offline</a> -->
 	                </div>
 	              </div>
 	            </div>
@@ -421,7 +420,7 @@
 	        </div>
 	      </div>
 	      </div>
-	  <!-- <!-- 칭찬하기/주시하기  @@@@@@@@@@@@@@@@@@@@@@@@@ -->
+	  <!-- <!-- 칭찬하기/주시하기  -->
 	  <!-- /.content-wrapper -->
 	</div>
 </div>
