@@ -2189,7 +2189,7 @@ p {
 <script type="text/javascript">
     $(window).on('load', function() {
         setTimeout(function(){
-            $("#waiting").fadeOut();
+            $("#waiting").fadeOut(); 
         }, 300);
     });
 </script>
