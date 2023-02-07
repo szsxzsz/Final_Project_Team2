@@ -279,12 +279,13 @@
 		 FROM (
 				SELECT *, @rownum := @rownum + 1 AS RNUM FROM chl 
 				JOIN ( SELECT @rownum := 0) R
-				WHERE (c_status=1 OR c_status=7)
+				WHERE (c_status=1 OR c_status=7) 
 				<include refid="search"></include>
+				ORDER BY c_status
 													) MP
 		         		
       WHERE RNUM BETWEEN #{rowStart} AND #{rowEnd}
-      ORDER BY c_status
+      ORDER BY c_status, cno
 	</select>
 	
 	<!-- 챌린지 메인2 -->
@@ -682,11 +683,34 @@
   	
   	</select>
   	
-  	<!-- 모든 게시판 작성물 확인 -->
-  	<select id="AllboardList" resultType="com.chagok.domain.BoardVO">
-		select * from board
-		order by b_date desc
-		limit 0,5
+  	<!-- 모든 게시판 페이징(후기) -->
+  	<select id="MrboardPageNo" resultType="com.chagok.domain.BoardVO">
+	  	select * from board b inner join challenge c
+		where b_sort = 1 and b.cno = c.cno
+		order by bno desc, b_date desc
+		limit #{pageStart},5
 	</select>
+	
+	<!-- 모든 게시판 페이징(공지) -->
+  	<select id="MnboardPageNo" resultType="com.chagok.domain.BoardVO">
+		select * from board
+		where b_sort = 2
+		order by bno desc, b_date desc
+		limit #{pageStart},5
+	</select>
+  	<!-- 모든 게시판 페이징(자유) -->
+  	<select id="MfboardPageNo" resultType="com.chagok.domain.BoardVO">
+		select * from board
+		where b_sort = 3
+		order by bno desc, b_date desc
+		limit #{pageStart},5
+	</select>	
   	
+  	<!-- 모든 게시판 페이징(경제) -->
+  	<select id="MeboardPageNo" resultType="com.chagok.domain.BoardVO">
+		select * from board
+		where b_sort = 4
+		order by bno desc, b_date desc
+		limit #{pageStart},5
+	</select>	
  </mapper>

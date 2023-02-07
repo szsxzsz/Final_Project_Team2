@@ -133,23 +133,15 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 	// 챌린지 등록
 	@Override
    public Integer challengeRegist(ChallengeVO vo) throws Exception {
-      mylog.debug(" challengeRegist(ChallengeVO vo) 호출 ");
-      
       sqlSession.insert(NAMESPACE + ".challengeRegist", vo);
-      
       Integer cno = vo.getCno();
-      
-      mylog.debug(cno + "번 챌린지 등록 완료! ");
       
       return cno;
    }
 
-	
 	// 챌린지 목록
 	@Override
 	public List<ChallengeVO> getChallengeList() throws Exception {
-		mylog.debug(" getChallengeList() 호출 ");
-		
 		List<ChallengeVO> challengeList = sqlSession.selectList(NAMESPACE +".getChallengeList");
 		
 		return challengeList;
@@ -207,8 +199,6 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 	// 명예의 전당 순위
 	@Override
 	public List<UserVO> ranking() throws Exception {
-		mylog.debug(" ranking() 호출 ");
-		
 		List<UserVO> ranking = sqlSession.selectList(NAMESPACE +".ranking");
 		
 		return ranking;
@@ -280,7 +270,6 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 	// 챌린지 목록 (페이징)
 	@Override
 	public List<ChallengeVO> cList(SearchCriteria scri) throws Exception {
-		mylog.debug(" cList(SearchCriteria scri) 호출 ");
 		List<ChallengeVO> cList = sqlSession.selectList(NAMESPACE +".cList", scri);
 		
 		return cList;
@@ -289,7 +278,6 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 	// 챌린지 총 갯수 (페이징)
 	@Override
 	public Integer cListCount(SearchCriteria scri) throws Exception {
-		mylog.debug("cListCount(SearchCriteria scri) 호출 ");
 		Integer cListCount = sqlSession.selectOne(NAMESPACE + ".cListCount", scri);
 		
 		return cListCount;
