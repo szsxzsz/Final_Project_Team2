@@ -251,7 +251,7 @@
    		on A.ctno = B.ctno
    		where c_person like concat('%',#{nick},'%')
    		order by cno desc
-   		limit #{pageStart}, #{perPageNum}
+   		limit 1,10
 	</select>
 
 <!-- 	<select id="mychallengeAll" resultType="com.chagok.domain.ChallengeVO"> -->
