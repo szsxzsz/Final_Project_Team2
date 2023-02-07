@@ -332,15 +332,15 @@
   <div class="board_page" style="text-align:center;" >
                <ul class= "pagination pagination-sm no-margin pull-center" >
                <c:if test="${pagevo.prev }">
-					<li><a href="/mychallenge?page=${pagevo.startPage-1 }">«</a></li>
+					<li><a href="/challenge/mychallenge?page=${pagevo.startPage-1 }">«</a></li>
 				</c:if>
                <c:forEach var="idx" begin="${pagevo.startPage }" end="${pagevo.endPage }" step="1">
 					<li 
 						<c:out value="${idx == pagevo.cri.page? 'class=active':'' }"/>
-						><a href="/mychallenge?page=${idx }">${idx }</a></li>
+						><a href="/challenge/mychallenge?page=${idx }">${idx }</a></li>
 				</c:forEach>
                 <c:if test="${pagevo.next }">
-					<li><a href="/mychallenge?page=${pagevo.endPage+1 }">»</a></li>
+					<li><a href="/challenge/mychallenge?page=${pagevo.endPage+1 }">»</a></li>
 				</c:if>
                 </ul>
   </div>           

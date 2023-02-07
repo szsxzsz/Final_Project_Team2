@@ -293,7 +293,7 @@ public class ChallengeController {
 			mylog.debug(pagevo.toString()+"///"+mychallengeAll.size());
 			
 			model.addAttribute("pagevo", pagevo);
-//			model.addAttribute("mychallengeAll", mychallengeAll);
+			model.addAttribute("mychallengeAll", mychallengeAll);
 			
 			if(nick != null) {
 				List<ChallengeVO> mychallengeList = service.getmyChallenge(nick);
