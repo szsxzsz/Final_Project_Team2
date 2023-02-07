@@ -116,9 +116,7 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 
 	@Override
 	public Date getChallengeEndDate(Integer cno) {
-		mylog.debug("getChallengeEndDate(cno) 호출");
 		Date end = sqlSession.selectOne(NAMESPACE+".getChallengeEndDate", cno);
-		mylog.debug(cno+"번 챌린지 종료일자 : "+end);
 		
 		return end;
 	}
@@ -324,7 +322,7 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 		map.put("c_status", status);
 		map.put("cno", cno);
 		sqlSession.update(NAMESPACE+".confirmChallenge", map);
-		mylog.debug("status : "+status+", cno : "+cno);
+		//mylog.debug("status : "+status+", cno : "+cno);
 	}
 	
 	// 관리자 모달창 회원mno
