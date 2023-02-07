@@ -4,7 +4,6 @@
 <%@ include file="../include/sidebar.jsp" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <!-- sweetalert -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
@@ -225,7 +224,7 @@
 						<div class="whitespace" id="whitespace">
 						<h5>차곡은행 (차곡 챌린지 계좌)</h5>
   						<h3>1234-1231-12345</h3>
-  						<h4>보내는 사람 : <sec:authentication property="principal.user.nick"/></h4>
+  						<h4>보내는 사람 : ${nick} </h4>
   					</div>
 						<div class="result2" id="result" align="right"><fmt:formatNumber value="${vo.c_amount}" pattern=",000"/></div>
 							<div class="calc-wrap" id="calc-wrap">

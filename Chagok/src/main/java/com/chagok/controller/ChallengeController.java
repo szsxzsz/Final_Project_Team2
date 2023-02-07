@@ -71,9 +71,6 @@ public class ChallengeController {
 			HttpServletRequest req ) throws Exception {
 		mylog.debug("plusfeedGET() 호출");
 		
-		// ServletContext appliation = req.getSession().getServletContext();
-	    // appliation.setAttribute("alertAPP", "test"); >> 알림용
-
 		List<Map<String, Object>> plusPeoList = service.getPlusPeople(cno);
 		Integer mno = service.getChallengeInfo(cno).getMno();
 		
