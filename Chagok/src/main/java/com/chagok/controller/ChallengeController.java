@@ -281,16 +281,17 @@ public class ChallengeController {
 			mylog.debug("mychallenge "+nick);
 			Integer mno	= (Integer)session.getAttribute("mno");
 			List<Map<String, Object>> challengeResultList = new ArrayList<Map<String,Object>>();
-			List<ChallengeVO> mychallengeAll = service.mychallengeAll(cri,nick);
 			
 			// 페이징 처리
 			cri.setPerPageNum(10);
+			List<ChallengeVO> mychallengeAll = service.mychallengeAll(cri,nick);
 			PageMaker pagevo = new PageMaker();
 			pagevo.setDisplayPageNum(10);
 			pagevo.setCri(cri);
 			pagevo.setTotalCount(service.mychallengecnt(nick));
 			
-			mylog.debug(pagevo.toString()+"///"+mychallengeAll.size());
+			mylog.debug(pagevo.toString());
+			mylog.debug(""+mychallengeAll);
 			
 			model.addAttribute("pagevo", pagevo);
 			model.addAttribute("mychallengeAll", mychallengeAll);
