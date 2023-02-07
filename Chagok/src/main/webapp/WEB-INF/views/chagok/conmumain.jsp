@@ -390,11 +390,11 @@ main .card .card-body .card-title {
   margin: 0;
   padding: 10px 10px;
   height: 80px;
-/*   font-family: "Noto Sans", "Arial", sans-serif; */
   font-size: 18px;
   font-style: normal;
   font-weight: 600;
   color: #0d0417;
+  word-break: keep-all;
 }
 
 main .card .card-body .card-item-footer {
