@@ -166,8 +166,7 @@ $(document).ready(function(){
 <!--           <select id="pcurrency-one"> -->
 <!--             <option value="ggul">꿀</option> -->
 <!--           </select> -->
-		 <fmt:formatNumber value="${getpoint*0.9 }" var="point" pattern="0"/>
-          <input type="text" name="getpoint" id="pamount_one" placeholder="${point}" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"/> 꿀
+          <input type="text" name="getpoint" id="pamount_one" placeholder="${getPoint}" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"/> 꿀
         </div>
         <div style="display: flex; justify-content: center;">
 			<img src="${pageContext.request.contextPath }/resources/plugins/img/down-arrow.png" style="justify-content: center; width: 30px;">
