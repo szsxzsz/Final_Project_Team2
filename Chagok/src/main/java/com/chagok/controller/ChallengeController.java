@@ -278,6 +278,8 @@ public class ChallengeController {
 		@GetMapping("/mychallenge")
 		public String mychallengeGET(Model model, HttpSession session, RedirectAttributes rttr,Criteria cri) throws Exception {
 			
+//			mylog.debug(cri+": 마이챌린지 cri");
+			
 			String nick = (String)session.getAttribute("nick");
 			mylog.debug("mychallenge "+nick);
 			Integer mno	= (Integer)session.getAttribute("mno");
@@ -294,7 +296,7 @@ public class ChallengeController {
 			mylog.debug(pagevo.toString()+"///"+mychallengeAll.size());
 			
 			model.addAttribute("pagevo", pagevo);
-			model.addAttribute("mychallengeAll", mychallengeAll);
+//			model.addAttribute("mychallengeAll", mychallengeAll);
 			
 			if(nick != null) {
 				List<ChallengeVO> mychallengeList = service.getmyChallenge(nick);

@@ -208,8 +208,10 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 	@Override
 	public List<ChallengeVO> mychallengeAll(Criteria cri, String nick) throws Exception {
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("cri", cri);
-		map.put("nick", nick);
+//		map.put("cri", cri);
+//		map.put("nick", nick);
+		map.put("pageStart", cri.getPageStart());
+		map.put("perPageNum", cri.getPerPageNum());
 		return sqlSession.selectList(NAMESPACE + ".mychallengeAll", map);
 	}
 	

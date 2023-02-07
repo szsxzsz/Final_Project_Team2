@@ -252,22 +252,10 @@
    		on A.ctno = B.ctno
    		where c_person like concat('%',#{nick},'%')
    		order by cno desc
-   		limit 1,10
+		limit #{pageStart},#{perPageNum}
 	</select>
-
-<!-- 	<select id="mychallengeAll" resultType="com.chagok.domain.ChallengeVO"> -->
-<!-- 		select * from chl -->
-<!-- 		where c_person like concat('%',#{nick},'%') -->
-<!-- 		order by cno desc -->
-<!-- 		limit #{pageStart}, 10; -->
-<!-- 	</select> -->
 	
 	<!-- 내 챌린지 총 개수 페이징 -->
-<!-- 	<select id="mychallengecnt" resultType="Integer"> -->
-<!-- 		select count(*) from chl -->
-<!-- 		where c_person=#{nick} -->
-<!-- 	</select> -->
-
 	<select id="mychallengecnt" resultType="Integer">
 		select count(*) from challenge A join category B
 		on A.ctno = B.ctno
