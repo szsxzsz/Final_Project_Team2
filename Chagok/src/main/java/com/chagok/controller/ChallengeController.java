@@ -29,8 +29,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.chagok.domain.BusinessAccountVO;
 import com.chagok.domain.ChallengeVO;
+import com.chagok.domain.Criteria;
 import com.chagok.domain.MessageVO;
 import com.chagok.domain.MinusVO;
+import com.chagok.domain.PageMaker;
 import com.chagok.domain.PlusVO;
 import com.chagok.domain.SysLogVO;
 import com.chagok.domain.UserVO;
@@ -101,8 +103,7 @@ public class ChallengeController {
 
 	@GetMapping(value = "/plusdetail")
 	public String plusdetailGET(Model model, @RequestParam("cno") Integer cno, HttpSession session) throws Exception {
-		mylog.debug("plusdetailGET 호출");
-		mylog.debug(cno + "");
+		mylog.debug("plusdetailGET 호출" + cno);
 		
 		Integer mno = service.getChallengeInfo(cno).getMno();
 		ChallengeVO vo = service.getChallengeInfo(cno);
@@ -181,8 +182,7 @@ public class ChallengeController {
 	@PostMapping(value = "/plusdetailPOST")
 	@ResponseBody // ajax 값을 바로 jsp에 보내기 위해 사용@RequestParam("ctno") int ctno, 
 	public String plusdetailPOST(@RequestBody Map<String, Object> map,HttpSession session) throws Exception {
-		mylog.debug("plusdetailPOST 호출");
-		mylog.debug(map+"");
+		mylog.debug("plusdetailPOST 호출" + map);
 		
 		String result="";
 		
@@ -193,20 +193,19 @@ public class ChallengeController {
 		}else {
 			result = "N";
 
-			mylog.debug(map+"");
+//			mylog.debug(map+"");
 			service.joinplusInsert(map); // mno랑 cno필요
 			service.joinplusUpdate(map); // nick이랑 cno
 		}
 	
-		mylog.debug(result);
+//		mylog.debug(result);
 		return result;
 	}
 
 	// http://localhost:8080/challenge/minusdetail?cno=1
 	@GetMapping(value = "/minusdetail")
 	public String minusdetailGET(Model model,@RequestParam("cno") int cno, HttpSession session) throws Exception {
-		mylog.debug("minusdetailGET 호출");
-		mylog.debug("cno : "+cno);
+		mylog.debug("minusdetailGET 호출"+cno);
 		
 		ChallengeVO vo = service.getChallengeInfo(cno);
 		model.addAttribute("user", uservice.getUser(vo.getMno())); 
@@ -224,24 +223,22 @@ public class ChallengeController {
 	@PostMapping(value = "/minusdetailPOST")
 	@ResponseBody // ajax 값을 바로 jsp에 보내기 위해 사용@RequestParam("ctno") int ctno, 
 	public String minusdetailPOST(@RequestBody Map<String, Object> map,HttpSession session) throws Exception {
-		mylog.debug("minusdetailPOST 호출");
-		mylog.debug("map1 : "+map);
-		// service.updateMsum(map);
+		mylog.debug("minusdetailPOST 호출" + map);
+
 		String result="";
-		
 		Integer gctno = service.samechallenge(map);	
 		mylog.debug("gctno : "+gctno);
+		
 		if(gctno != null) {
 			result = "Y";
 		}else {
 			result = "N";
 
-			mylog.debug("map2 : "+map);
 			service.joinminusInsert(map); // mno랑 cno필요
 			service.joinplusUpdate(map); // nick이랑 cno
 		}
 	
-		mylog.debug(result);
+//		mylog.debug(result);
 		return result;
 }
 	
@@ -274,12 +271,25 @@ public class ChallengeController {
 
 	// http://localhost:8080/challenge/mychallenge
 		@GetMapping("/mychallenge")
-		public String mychallengeGET(Model model, HttpSession session, RedirectAttributes rttr) throws Exception {
+		public String mychallengeGET(Model model, HttpSession session, RedirectAttributes rttr,Criteria cri) throws Exception {
 			
 			String nick = (String)session.getAttribute("nick");
-			mylog.debug("nick : "+nick);
+			mylog.debug("mychallenge "+nick);
 			Integer mno	= (Integer)session.getAttribute("mno");
 			List<Map<String, Object>> challengeResultList = new ArrayList<Map<String,Object>>();
+			List<ChallengeVO> mychallengeAll = service.mychallengeAll(cri,nick);
+			
+			// 페이징 처리
+			cri.setPerPageNum(10);
+			PageMaker pagevo = new PageMaker();
+			pagevo.setDisplayPageNum(10);
+			pagevo.setCri(cri);
+			pagevo.setTotalCount(service.mychallengecnt(nick));
+			
+			mylog.debug(pagevo.toString()+"///"+mychallengeAll.size());
+			
+			model.addAttribute("pagevo", pagevo);
+			model.addAttribute("mychallengeAll", mychallengeAll);
 			
 			if(nick != null) {
 				List<ChallengeVO> mychallengeList = service.getmyChallenge(nick);

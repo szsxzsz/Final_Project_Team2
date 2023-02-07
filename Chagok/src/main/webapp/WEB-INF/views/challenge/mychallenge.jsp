@@ -296,23 +296,24 @@
 
 					
 <!-- 페이징 -->					
-<!-- 		  <div class="board_page">
-                	<ul class= "pagination pagination-sm no-margin pull-right">
-					<c:if test="${pagevo.prev }">
-			            <li><a href="/bizAccount?page=${pagevo.startPage-1 }">«</a></li>
-			        </c:if>
-					<c:forEach var="idx" begin="${pagevo.startPage }" end="${pagevo.endPage }" step="1">
-						<li
-							<c:out value="${idx == pagevo.cri.page? 'class=active':'' }"/>
-							>
-							<a href="/bizAccount?page=${idx }">${idx }</a>
-						</li>
-					</c:forEach>
-			        <c:if test="${pagevo.next }">
-			            <li><a href="/bizAccount?page=${pagevo.endPage+1 }">»</a></li>
-			        </c:if>
+  <div class="board_page" style="text-align:center;" >
+<!--                 	<ul class= "pagination pagination-sm no-margin pull-right" > -->
+                	<ul class= "pagination pagination-sm no-margin pull-center" >
+<!--                 <a href="#" class="bt first"><<</a> -->
+                	<c:if test="${pagevo.prev }">
+					<li><a href="/mychallenge?page=${pagevo.startPage-1 }"class="bt prev"><</a></li>
+					</c:if>
+               <c:forEach var="idx" begin="${pagevo.startPage }" end="${pagevo.endPage }" step="1">
+					<li 
+						<c:out value="${idx == pagevo.cri.page? 'class=active':'' }"/>
+						><a href="/mychallenge?page=${idx }" class="num">${idx }</a></li>
+				</c:forEach>
+                <c:if test="${pagevo.next }">
+					<li><a href="/mychallenge?page=${pagevo.endPage+1 }" class="bt next">></a></li>
+				</c:if>
+<!--                 <a href="#" class="bt last">>></a> -->
                 </ul>
-           </div> -->
+  </div>           
  <!-- 페이징 -->
  
  </body>

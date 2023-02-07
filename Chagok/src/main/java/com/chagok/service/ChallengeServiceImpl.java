@@ -180,7 +180,18 @@ public class ChallengeServiceImpl implements ChallengeService{
 		return dao.ranking();
 	}
 
+	// 내 챌린지 (페이징)
+	@Override
+	public List<ChallengeVO> mychallengeAll(Criteria cri, String nick) throws Exception {
+		return dao.mychallengeAll(cri, nick);
+	}
 	
+	// 내 챌린지 총 개수 (페이징)
+	@Override
+	public Integer mychallengecnt(String nick) throws Exception {
+		return dao.mychallengecnt(nick);
+	}
+
 	// 챌린지 메인 (페이징)
 	@Override
 	public List<ChallengeVO> cListM(SearchCriteria scri) throws Exception {

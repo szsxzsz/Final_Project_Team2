@@ -214,7 +214,21 @@ public class ChallengeDAOImpl implements ChallengeDAO{
 		return ranking;
 	}
 
+	// 내 챌린지 (페이징)
+	@Override
+	public List<ChallengeVO> mychallengeAll(Criteria cri, String nick) throws Exception {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("cri", cri);
+		map.put("nick", nick);
+		return sqlSession.selectList(NAMESPACE + ".mychallengeAll", map);
+	}
 	
+	// 내 챌린지 총 개수 (페이징)
+	@Override
+	public Integer mychallengecnt(String nick) throws Exception {
+		return sqlSession.selectOne(NAMESPACE + ".mychallengecnt", nick);
+	}
+
 	// 챌린지 메인(페이징)
 	@Override
 	public List<ChallengeVO> cListM(SearchCriteria scri) throws Exception {
