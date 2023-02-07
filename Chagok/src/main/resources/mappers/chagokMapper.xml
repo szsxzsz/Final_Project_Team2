@@ -246,7 +246,7 @@
 		delete from user where mno = #{mno} and pw = #{pw}
 	</delete>
 	
-	<!-- 내챌린지 페이징 -->
+<!-- 	내챌린지 페이징 -->
 	<select id="mychallengeAll" resultType="map">
 		select * from challenge A join category B
    		on A.ctno = B.ctno
@@ -580,20 +580,20 @@
 	</insert>
 	
 	<!-- 내가 쓴 글 리스트 -->
-<!-- 	<select id ="myBoardWrite" resultType="com.chagok.domain.BoardVO"> -->
+	<select id ="myBoardWrite" resultType="com.chagok.domain.BoardVO">
+		select * from board b inner join user u
+		on b.b_writer = u.nick
+		where u.nick = #{nick}
+		order by b_date desc
+		limit #{pageStart},10
+	</select>
+<!-- 	<select id ="myBoardWrite" resultType="map"> -->
 <!-- 		select * from board b inner join user u -->
 <!-- 		on b.b_writer = u.nick -->
 <!-- 		where u.nick = #{nick} -->
 <!-- 		order by b_date desc -->
 <!-- 		limit 0,10; -->
 <!-- 	</select> -->
-	<select id ="myBoardWrite" resultType="map">
-		select * from board b inner join user u
-		on b.b_writer = u.nick
-		where u.nick = #{nick}
-		order by b_date desc
-		limit 0,10;
-	</select>
 	
 	<!-- 내가 쓴 글 전체 개수 -->
 	<select id="myBoardWriteCnt" resultType="int">
