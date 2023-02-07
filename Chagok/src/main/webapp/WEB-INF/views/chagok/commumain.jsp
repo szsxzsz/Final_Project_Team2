@@ -807,7 +807,7 @@ main .card .card-item-chevron--new-3 {
 <section class="container">
   <ul class="tabs">
     <li class="tab-item"><a href="/commumain" class="actives">전체보기</a></li>
-    <li class="tab-item"><a href="/comnumain" >진행중 챌린지</a></li>
+    <li class="tab-item"><a href="/comnumain" >모집중 챌린지</a></li>
     <li class="tab-item"><a href="/conmumain">종료된 챌린지</a></li>
   </ul>
 </section>
