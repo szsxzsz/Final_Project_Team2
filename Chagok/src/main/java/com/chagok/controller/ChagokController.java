@@ -234,7 +234,7 @@ public class ChagokController {
 	// 챌린지 메인
 	// http://localhost:8080/commumain
 	@GetMapping(value="/commumain")
-	public String getChallengeList(Model model, HttpSession session, @ModelAttribute("scri") SearchCriteria scri, RedirectAttributes rttr) throws Exception {
+	public String getChallengeList(Model model, HttpSession session, @ModelAttribute("scri") SearchCriteria scri) throws Exception {
 		List<UserVO> ranking = service2.ranking();
 		ingChallenge();
 		
@@ -254,7 +254,7 @@ public class ChagokController {
 	// 챌린지 메인 (진행중)
 	// http://localhost:8080/comnumain
 	@GetMapping(value="/comnumain")
-	public String getChallengeList2(Model model, HttpSession session, @ModelAttribute("scri") SearchCriteria scri, RedirectAttributes rttr) throws Exception {
+	public String getChallengeList2(Model model, HttpSession session, @ModelAttribute("scri") SearchCriteria scri) throws Exception {
 		List<UserVO> ranking = service2.ranking();
 		ingChallenge();
 		
@@ -274,7 +274,7 @@ public class ChagokController {
 	// 챌린지 메인 (종료)
 	// http://localhost:8080/conmumain
 	@GetMapping(value="/conmumain")
-	public String getChallengeList3(Model model, HttpSession session, @ModelAttribute("scri") SearchCriteria scri, RedirectAttributes rttr) throws Exception {
+	public String getChallengeList3(Model model, HttpSession session, @ModelAttribute("scri") SearchCriteria scri) throws Exception {
 		List<UserVO> ranking = service2.ranking();
 		ingChallenge();
 		
@@ -725,10 +725,10 @@ public class ChagokController {
 	@GetMapping("/boardMain")
 	public String AllBoardList(HttpSession session, Model model,Criteria cri) throws Exception {
 		
-		List<BoardVO> NboardList = service3.getNBoardPage(cri);
-		List<BoardVO> FboardList = service3.getFBoardPage(cri);
-		List<BoardVO> EboardList = service3.getEBoardPage(cri);
-		List<Map<String, Object>> RboardList = service3.getRBoardPage(cri);
+		List<BoardVO> NboardList = service3.getMNBoardPage(cri);
+		List<BoardVO> FboardList = service3.getMFBoardPage(cri);
+		List<BoardVO> EboardList = service3.getMEBoardPage(cri);
+		List<Map<String, Object>> RboardList = service3.getMRBoardPage(cri);
 		   
 		model.addAttribute("NboardList", NboardList);
 		model.addAttribute("FboardList", FboardList);
@@ -738,10 +738,7 @@ public class ChagokController {
 		PageMaker pageMaker = new PageMaker();
 		cri.setPerPageNum(5);
 		pageMaker.setDisplayPageNum(5);
-//		pageMaker.setTotalCount(service3.NboardCount());
-//		pageMaker.setTotalCount(service3.FboardCount());
-//		pageMaker.setTotalCount(service3.EboardCount());
-//		pageMaker.setTotalCount(service3.RboardCount());
+		pageMaker.setCri(cri);
 		model.addAttribute("pageMaker", pageMaker);
 		return "/chagok/boardMain";
 	}
