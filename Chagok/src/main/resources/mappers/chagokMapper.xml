@@ -75,6 +75,7 @@
    select * from challenge A join category B
    on A.ctno = B.ctno
    where c_person like concat('%',#{nick},'%')
+   order by cno desc
    </select>
    
     <!-- 챌린지 신청 취소 닉네임 잘라내고 c_cnt-1 (콤마는 앞에서 연결해서 nick으로 받아줄 것)-->
@@ -244,6 +245,22 @@
 	<delete id="unregistUser">
 		delete from user where mno = #{mno} and pw = #{pw}
 	</delete>
+	
+	<!-- 내챌린지 페이징 -->
+	<select id="mychallengeAll" resultType="map">
+		select * from challenge A join category B
+   		on A.ctno = B.ctno
+   		where c_person like concat('%',#{nick},'%')
+   		order by cno desc
+		limit #{pageStart},#{perPageNum}
+	</select>
+	
+	<!-- 내 챌린지 총 개수 페이징 -->
+	<select id="mychallengecnt" resultType="Integer">
+		select count(*) from challenge A join category B
+		on A.ctno = B.ctno
+   		where c_person like concat('%',#{nick},'%')
+	</select>
 	
 	<!-- 챌린지 메인1 -->
 	<select id="cListM" resultType="com.chagok.domain.ChallengeVO" parameterType="com.chagok.domain.SearchCriteria">

@@ -2183,13 +2183,13 @@ p {
 }
 </style>
 <div id="waiting">
-   <img src="./resources/imgUpload/new-loading.gif">
+   <img src="../resources/imgUpload/new-loading.gif">
 </div>
 
 <script type="text/javascript">
     $(window).on('load', function() {
         setTimeout(function(){
-            $("#waiting").fadeOut();
+            $("#waiting").fadeOut(); 
         }, 300);
     });
 </script>
